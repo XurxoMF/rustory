@@ -23,7 +23,7 @@
   "app": {
     "windows": [
       {
-        "title": "rustory",
+        "title": "Rusotry",
         "width": 1280,
         "height": 720,
         "center": true,
