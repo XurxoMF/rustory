@@ -1,0 +1,37 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-3xl: 120rem;
+
+  --color-vs: #7e501e;
+  --color-vsl: #ad7639;
+  --color-vsd: #4f3110;
+  --color-zinc-750: #313136;
+  --color-zinc-850: #212122;
+
+  --background-image-image-vs: url("./assets/background.jpg");
+}
+
+@layer utilities {
+  .scrollbar-none {
+    scrollbar-width: none !important;
+    scrollbar-color: transparent transparent !important;
+  }
+}
+
+/* Custom scale options */
+html[data-uiscale="50"] {
+  font-size: 8px;
+}
+html[data-uiscale="75"] {
+  font-size: 12px;
+}
+html[data-uiscale="100"] {
+  font-size: 16px;
+}
+html[data-uiscale="125"] {
+  font-size: 20px;
+}
+html[data-uiscale="150"] {
+  font-size: 24px;
+}
