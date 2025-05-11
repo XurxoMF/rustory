@@ -23,6 +23,7 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "Rustory",
         "width": 1280,
         "height": 720,
