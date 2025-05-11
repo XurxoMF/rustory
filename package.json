@@ -16,8 +16,7 @@
     "@tailwindcss/vite": "^4.1.6",
     "@tauri-apps/api": "^2",
     "@tauri-apps/plugin-opener": "^2",
-    "@tauri-apps/plugin-updater": "^2.7.1",
-    "tailwindcss": "^4.1.6"
+    "@tauri-apps/plugin-updater": "^2.7.1"
   },
   "devDependencies": {
     "@sveltejs/adapter-static": "^3.0.6",
@@ -26,6 +25,7 @@
     "@tauri-apps/cli": "^2",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
+    "tailwindcss": "^4.1.6",
     "typescript": "~5.6.2",
     "vite": "^6.0.3"
   }
