@@ -39,7 +39,7 @@ This project follows a [Code of Conduct](./CODE_OF_CONDUCT.md). By contributing,
 
 ## Contact
 
-If you have any questions, you can reach out to the maintainers via email help@rustory.xyz or open an issue on this repo.
+If you have any questions, you can reach out to the maintainers via email contact@rustory.xyz or open an issue on this repo.
 
 ---
 

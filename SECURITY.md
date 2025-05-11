@@ -14,4 +14,4 @@ version.
 ## Reporting a Vulnerability
 
 If you find any bug or vinerability create a new issue on the Issues tab
-or report it to the Launcher creator at help@rustory.xyz.
+or report it to the Launcher creator at contact@rustory.xyz.
