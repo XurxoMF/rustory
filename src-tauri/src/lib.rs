@@ -3,10 +3,21 @@ use tauri::{
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
     Manager, WindowEvent,
 };
+use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(
+            tauri_plugin_window_state::Builder::new()
+                .with_state_flags(
+                    StateFlags::FULLSCREEN
+                        | StateFlags::MAXIMIZED
+                        | StateFlags::POSITION
+                        | StateFlags::SIZE,
+                )
+                .build(),
+        )
         .setup(|app| {
             let open_i = MenuItem::with_id(app, "open", "Open", true, None::<&str>)?;
             let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
