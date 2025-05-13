@@ -56,8 +56,8 @@ jobs:
 
         with:
           tagName: "__VERSION__"
-          releaseName: "v__VERSION__ - EDIT TITLE"
-          releaseBody: "New Rustory update!"
+          releaseName: "v__VERSION__"
+          releaseBody: "Rustory __VERSION__ is now live!"
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
