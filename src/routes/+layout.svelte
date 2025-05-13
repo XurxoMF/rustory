@@ -1,19 +1,32 @@
 <script lang="ts">
-  import "../app.css";
   import { getCurrentWindow } from "@tauri-apps/api/window";
+  import { onMount } from "svelte";
 
-  const appWindow = getCurrentWindow();
+  import "../app.css";
+
+  import WindowBar from "$modules/layout/components/WindowBar.svelte";
+  import MainNav from "$modules/layout/components/MainNav.svelte";
 
   let { children } = $props();
+
+  let maximized = $state(false);
+
+  onMount(async () => (maximized = await getCurrentWindow().isMaximized()));
 </script>
 
-<div class="w-screen h-screen overflow-hidden">
-  <div class="titlebar">
-    <div data-tauri-drag-region>Hola</div>
-    <button onclick={() => appWindow.minimize()}>_</button>
-    <button onclick={() => appWindow.toggleMaximize()}>^</button>
-    <button onclick={() => appWindow.close()}>x</button>
-  </div>
+<div
+  class={[
+    "w-screen h-screen overflow-hidden text-zinc-200 bg-zinc-900 flex flex-col select-none",
+    !maximized && "rounded-md border-2 border-zinc-800",
+  ]}
+>
+  <WindowBar bind:maximized />
 
-  {@render children()}
+  <div class="w-full h-full flex">
+    <MainNav />
+
+    <main class="w-full h-full bg-zinc-850 rounded-tl-lg p-2 inset-shadow-sm/25">
+      {@render children()}
+    </main>
+  </div>
 </div>

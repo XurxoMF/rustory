@@ -11,6 +11,7 @@ const config = {
     adapter: adapter(),
     alias: {
       "$modules/*": "src/modules/*",
+      $i18n: "src/i18n/",
     },
   },
 };

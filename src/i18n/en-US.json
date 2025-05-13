@@ -1,0 +1,9 @@
+{
+  "common": {
+    "Minimize": "Minimize",
+    "Maximize": "Maximize",
+    "Close": "Close",
+    "Hide": "Hide",
+    "Open": "Open"
+  }
+}
