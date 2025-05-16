@@ -11,7 +11,6 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "tauri": "tauri"
   },
-  "license": "MIT",
   "dependencies": {
     "@iconify/svelte": "^5.0.0-beta.1",
     "@tailwindcss/vite": "^4.1.6",
@@ -19,6 +18,7 @@
     "@tauri-apps/plugin-opener": "^2",
     "@tauri-apps/plugin-updater": "^2.7.1",
     "@tauri-apps/plugin-window-state": "^2.2.2",
+    "gsap": "^3.13.0",
     "i18next": "^25.1.2",
     "svelte-i18next": "^2.2.2"
   },
@@ -27,6 +27,7 @@
     "@sveltejs/kit": "^2.9.0",
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "@tauri-apps/cli": "^2",
+    "prettier": "^3.5.3",
     "svelte": "^5.0.0",
     "svelte-check": "^4.0.0",
     "tailwindcss": "^4.1.6",

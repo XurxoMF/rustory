@@ -1,7 +1,4 @@
 <script lang="ts">
-  import i18n from "$i18n";
-
-  import Button from "$modules/basics/components/forms/Button.svelte";
   import Icon from "$modules/basics/components/Icon.svelte";
 
   let open = $state(false);
@@ -9,37 +6,25 @@
 
 <nav
   class={[
-    "shrink-0 h-full flex flex-col items-center justify-between gap-2 p-2 overflow-hidden duration-200",
-    open ? "w-60" : "w-11",
+    "relative shrink-0 h-full flex flex-col px-2 pb-2 pt-1 items-center justify-between gap-2 duration-200",
+    open ? "w-60" : "w-14",
   ]}
+  onmouseenter={() => (open = true)}
+  onmouseleave={() => (open = false)}
 >
-  <div class="w-full flex flex-col items-start justify-center gap-2">
-    {@render MainNavButton("ph:arrow-fat-line-right-duotone", "right", $i18n.t("common.Close"))}
-  </div>
-
-  <div class="w-full flex flex-col items-start justify-center gap-2">
-    {@render MainNavButton("ph:arrow-fat-line-right-duotone", "right", $i18n.t("common.Close"))}
+  <div class="w-full flex flex-col items-start justify-center gap-1">
+    {@render MainNavButton("ph:house-duotone", "Example link")}
   </div>
 </nav>
 
-{#snippet MainNavButton(icon: string, iconSide: "left" | "right", text: string)}
-  <Button
-    class={[
-      "w-full relative flex items-center gap-2 overflow-hidden whitespace-nowrap",
-      iconSide === "left" ? "justify-start" : "justify-end",
-    ]}
-    onclick={() => (open = !open)}
+{#snippet MainNavButton(icon: string, text: string)}
+  <button
+    class="relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm duration-200 opacity-50 hover:opacity-100 hover:bg-zinc-850 hover:shadow-md"
   >
-    {#if iconSide === "left"}
-      <Icon {icon} class={["text-2xl duration-200", open && "rotate-180"]} />
-    {/if}
+    <Icon {icon} class="shrink-0 text-2xl duration-200" />
 
-    <p class={["duration-200", open ? "opacity-100" : "opacity-0"]}>
+    <p class={["text-start duration-200", open ? "opacity-100" : "opacity-0"]}>
       {text}
     </p>
-
-    {#if iconSide === "right"}
-      <Icon {icon} class={["text-2xl duration-200", open && "rotate-180"]} />
-    {/if}
-  </Button>
+  </button>
 {/snippet}
