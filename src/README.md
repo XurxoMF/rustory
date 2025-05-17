@@ -27,6 +27,12 @@ On **dark** themes, colors will be the following ones:
 - **x-800** for the sub-background colors and `hover:` colors on buttons and similars. An example is the `<main>` background color o the `routes/+layout.svelte`.
 - **x-100** for the font color.
 
+On `both` themes we'll use this styles:
+
+- **x-black/50** for shadows.
+- **opacity-50** for disabled elements.
+- **hover:scale-105** for hover styles. Mostly on buttons. We can still use other styles like MainNav links.
+
 > [!WARNING]
 > It's EXTREMELY important to set `duration-200` and both `t-theme:text-x-x` if it has text or Icons.  
 > If you don't do this, the transition when changing themes will not be smooth.
