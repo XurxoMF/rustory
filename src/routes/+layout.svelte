@@ -1,17 +1,38 @@
 <script lang="ts">
   import { getCurrentWindow } from "@tauri-apps/api/window";
+  import { app } from "@tauri-apps/api";
   import { onMount } from "svelte";
   import "../app.css";
 
+  import { loader, incrementLoader, resetLoader } from "$modules/layout/stores/Loader.svelte";
+
   import WindowBar from "$modules/layout/components/WindowBar.svelte";
   import MainNav from "$modules/layout/components/MainNav.svelte";
+  import Loader from "$modules/layout/components/Loader.svelte";
 
   let { children } = $props();
 
   let maximized = $state(false);
+  let appVersion = $state("X.X.X");
 
-  onMount(async () => (maximized = await getCurrentWindow().isMaximized()));
+  onMount(() => {
+    (async () => {
+      maximized = await getCurrentWindow().isMaximized();
+      appVersion = await app.getVersion();
+      incrementLoader(1);
+
+      setTimeout(() => {
+        incrementLoader(1);
+      }, 500);
+    })();
+
+    return () => {
+      resetLoader();
+    };
+  });
 </script>
+
+<Loader {maximized} />
 
 <div
   class={[
@@ -19,7 +40,7 @@
     !maximized && "rounded-md",
   ]}
 >
-  <WindowBar bind:maximized />
+  <WindowBar bind:maximized {appVersion} />
 
   <div class="w-full h-full flex">
     <MainNav />

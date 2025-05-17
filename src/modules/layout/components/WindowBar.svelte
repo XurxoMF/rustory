@@ -1,20 +1,19 @@
 <script lang="ts">
   import { getCurrentWindow } from "@tauri-apps/api/window";
-  import { app } from "@tauri-apps/api";
-  import { onMount } from "svelte";
   import i18n from "$i18n";
 
   import Icon from "$modules/basics/components/Icon.svelte";
   import Breadcrumbs from "$modules/layout/components/Breadcrumbs.svelte";
   import Button from "$modules/basics/components/Button.svelte";
 
-  let { maximized = $bindable() }: { maximized: boolean } = $props();
+  const APP_NAME = "Rustory";
 
   const appWindow = getCurrentWindow();
-  const appName = "Rustory";
-  let appVersion = $state("X.X.X");
 
-  onMount(async () => (appVersion = await app.getVersion()));
+  let {
+    maximized = $bindable(),
+    appVersion = "X.X.X",
+  }: { maximized: boolean; appVersion: string } = $props();
 </script>
 
 <div
@@ -32,11 +31,11 @@
       <img
         data-tauri-drag-region
         src="/img/icon.png"
-        alt={`${appName} · ${appVersion}`}
+        alt={`${APP_NAME} · ${appVersion}`}
         class="w-5"
       />
       <p data-tauri-drag-region class="text-sm">
-        {`${appName} · ${appVersion}`}
+        {`${APP_NAME} · ${appVersion}`}
       </p>
     </div>
   </div>

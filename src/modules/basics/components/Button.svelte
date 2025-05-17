@@ -7,10 +7,9 @@
    * - `danger`: Red button.
    * - `success`: Green button.
    */
-  type ModeTypes = "transparent" | "neutral" | "warning" | "danger" | "success";
+  type ModeTypes = "transparent" | "warning" | "danger" | "success";
   const MODE_CLASSES: { [key in ModeTypes]: string } = {
-    transparent: "hover:bg-zinc-800",
-    neutral: "bg-zinc-800/50 hover:bg-zinc-800",
+    transparent: "hover:bg-zinc-850",
     danger: "bg-red-700/50 hover:bg-red-700",
     warning: "bg-yellow-500/50 hover:bg-yellow-500",
     success: "bg-green-700/50 hover:bg-green-700",
