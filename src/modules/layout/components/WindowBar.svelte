@@ -6,6 +6,7 @@
 
   import Icon from "$modules/basics/components/Icon.svelte";
   import Breadcrumbs from "$modules/layout/components/Breadcrumbs.svelte";
+  import Button from "$modules/basics/components/Button.svelte";
 
   let { maximized = $bindable() }: { maximized: boolean } = $props();
 
@@ -80,11 +81,7 @@
   icon: string;
   action: () => void;
 })}
-  <button
-    onclick={action}
-    {title}
-    class="cursor-pointer rounded-full duration-200 hover:bg-zinc-800 p-1"
-  >
+  <Button rounded="circle" action={{ type: "action", action }} {title}>
     <Icon {icon} />
-  </button>
+  </Button>
 {/snippet}

@@ -1,5 +1,7 @@
 <script lang="ts">
   import { breadcrumbs } from "$modules/layout/stores/BreadcrumbsStore.svelte";
+
+  import Button from "$modules/basics/components/Button.svelte";
 </script>
 
 <div class="w-fit flex items-center justify-center flex-nowrap whitespace-nowrap">
@@ -7,8 +9,8 @@
     {#if index > 1}
       <span class="px-1">/</span>
     {/if}
-    <a class="px-1 rounded-sm duration-200 hover:bg-zinc-800" href={segment.href}>
+    <Button action={{ type: "link", href: segment.href }}>
       {segment.label}
-    </a>
+    </Button>
   {/each}
 </div>
