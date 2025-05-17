@@ -7,7 +7,7 @@
     {#if index > 1}
       <span class="px-1">/</span>
     {/if}
-    <a class="px-1 rounded-sm duration-200 hover:bg-zinc-850" href={segment.href}>
+    <a class="px-1 rounded-sm duration-200 hover:bg-zinc-800" href={segment.href}>
       {segment.label}
     </a>
   {/each}

@@ -83,7 +83,7 @@
   <button
     onclick={action}
     {title}
-    class="cursor-pointer rounded-full duration-200 hover:bg-zinc-850 p-1"
+    class="cursor-pointer rounded-full duration-200 hover:bg-zinc-800 p-1"
   >
     <Icon {icon} />
   </button>
