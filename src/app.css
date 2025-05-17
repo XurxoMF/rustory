@@ -1,17 +1,50 @@
 @import "tailwindcss";
 
+/* Custom variables */
 @theme {
   --breakpoint-3xl: 120rem;
 
-  --color-vs: #7e501e;
-  --color-vsl: #ad7639;
-  --color-vsd: #4f3110;
-  --color-zinc-750: #333338;
-  --color-zinc-850: #202023;
+  --color-rust-50: #fdfdf5;
+  --color-rust-100: #fbfaeb;
+  --color-rust-200: #f0e9b0;
+  --color-rust-300: #e9d97c;
+  --color-rust-400: #e0c141;
+  --color-rust-500: #cfa92d;
+  --color-rust-600: #b68721;
+  --color-rust-700: #926420;
+  --color-rust-800: #805422;
+  --color-rust-900: #64411f;
+  --color-rust-950: #4b2b12;
 
   --background-image-image-vs: url("./assets/background.jpg");
 }
 
+/* Custom theme variants */
+@custom-variant t-dark {
+  &:where([data-theme="dark"] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-light {
+  &:where([data-theme="light"] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-rust {
+  &:where([data-theme="rust"] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-midnight {
+  &:where([data-theme="midnight"] *) {
+    @slot;
+  }
+}
+
+/* Custom scrollbar class */
 @layer utilities {
   .scrollbar-none {
     scrollbar-width: none !important;

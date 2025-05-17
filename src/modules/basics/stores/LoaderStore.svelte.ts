@@ -1,4 +1,4 @@
-type LoaderType = {
+type LoaderStoreType = {
   completed: number;
   total: number;
 };
@@ -9,7 +9,7 @@ type LoaderType = {
  */
 const TOTAL_TASKS = 2;
 
-export const loader = $state<LoaderType>({ completed: 0, total: TOTAL_TASKS });
+export const loader = $state<LoaderStoreType>({ completed: 0, total: TOTAL_TASKS });
 
 /**
  * Increments the loader's completed tasks by the specified number.

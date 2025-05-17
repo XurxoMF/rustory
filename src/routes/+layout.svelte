@@ -4,11 +4,12 @@
   import { onMount } from "svelte";
   import "../app.css";
 
-  import { incrementLoader, resetLoader } from "$modules/layout/stores/LoaderStore.svelte";
+  import { incrementLoader, resetLoader } from "$modules/basics/stores/LoaderStore.svelte";
+  import { setTheme } from "$modules/basics/stores/ThemeStore.svelte";
 
-  import WindowBar from "$modules/layout/components/WindowBar.svelte";
-  import MainNav from "$modules/layout/components/MainNav.svelte";
-  import Loader from "$modules/layout/components/Loader.svelte";
+  import WindowBar from "$modules/basics/components/layout/WindowBar.svelte";
+  import MainNav from "$modules/basics/components/layout/MainNav.svelte";
+  import Loader from "$modules/basics/components/layout/Loader.svelte";
 
   let { children } = $props();
 
@@ -16,6 +17,9 @@
   let appVersion = $state("X.X.X");
 
   onMount(() => {
+    let theme = localStorage.getItem("theme");
+    setTheme(theme);
+
     (async () => {
       maximized = await getCurrentWindow().isMaximized();
       appVersion = await app.getVersion();
@@ -23,7 +27,7 @@
 
       setTimeout(() => {
         incrementLoader(1);
-      }, 500);
+      }, 5_000);
     })();
 
     return () => {
@@ -36,7 +40,11 @@
 
 <div
   class={[
-    "w-screen h-screen overflow-hidden text-zinc-200 bg-zinc-900 flex flex-col select-none",
+    "w-screen h-screen overflow-hidden flex flex-col select-none duration-200",
+    "t-dark:text-zinc-100 t-dark:bg-zinc-900",
+    "t-light:text-zinc-900 t-light:bg-zinc-100",
+    "t-rust:text-rust-100 t-rust:bg-rust-900",
+    "t-midnight:text-gray-100 t-midnight:bg-gray-900",
     !maximized && "rounded-md",
   ]}
 >
@@ -45,7 +53,15 @@
   <div class="w-full h-full flex">
     <MainNav />
 
-    <main class="w-full h-full bg-zinc-850 rounded-tl-lg p-2 inset-shadow-sm/25">
+    <main
+      class={[
+        "w-full h-full rounded-tl-lg p-2 inset-shadow-sm/25 duration-200",
+        "t-dark:text-zinc-100 t-dark:bg-zinc-800",
+        "t-light:text-zinc-900 t-light:bg-zinc-200",
+        "t-rust:text-rust-100 t-rust:bg-rust-800",
+        "t-midnight:text-gray-100 t-midnight:bg-gray-800",
+      ]}
+    >
       {@render children()}
     </main>
   </div>

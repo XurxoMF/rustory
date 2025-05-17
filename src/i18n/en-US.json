@@ -8,5 +8,11 @@
     "Config": "Config",
     "Home": "Home",
     "Loading": "Loading"
+  },
+  "themes": {
+    "Dark": "Dark",
+    "Light": "Light",
+    "Rust": "Rust",
+    "Midnight": "Midnight"
   }
 }

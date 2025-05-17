@@ -1,13 +1,13 @@
-type BreadcrumbSegmentType = {
+type BreadcrumbStoreSegmentType = {
   label: string;
   href: string;
 };
 
 type BreadcrumbsStoreType = {
-  value: BreadcrumbSegmentType[];
+  value: BreadcrumbStoreSegmentType[];
 };
 
-const ROOT_BREADCRUMB_SEGMENT: BreadcrumbSegmentType = { label: "/", href: "/" };
+const ROOT_BREADCRUMB_SEGMENT: BreadcrumbStoreSegmentType = { label: "/", href: "/" };
 
 export const breadcrumbs = $state<BreadcrumbsStoreType>({
   value: [ROOT_BREADCRUMB_SEGMENT],
@@ -18,6 +18,6 @@ export const breadcrumbs = $state<BreadcrumbsStoreType>({
  *
  * @param newBreadcrumbs - The new breadcrumbs to set
  */
-export const setBreadcrumbs = (newBreadcrumbs: BreadcrumbSegmentType[]): void => {
+export const setBreadcrumbs = (newBreadcrumbs: BreadcrumbStoreSegmentType[]): void => {
   breadcrumbs.value = [ROOT_BREADCRUMB_SEGMENT, ...newBreadcrumbs];
 };

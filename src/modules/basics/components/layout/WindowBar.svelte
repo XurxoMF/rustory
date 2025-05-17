@@ -3,7 +3,7 @@
   import i18n from "$i18n";
 
   import Icon from "$modules/basics/components/Icon.svelte";
-  import Breadcrumbs from "$modules/layout/components/Breadcrumbs.svelte";
+  import Breadcrumbs from "$modules/basics/components/layout/Breadcrumbs.svelte";
   import Button from "$modules/basics/components/Button.svelte";
 
   const APP_NAME = "Rustory";

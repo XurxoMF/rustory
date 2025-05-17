@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
+
   /**
    * Mode style of the button.
    * - `transparent` (default): Transparent button.
@@ -8,11 +10,11 @@
    * - `success`: Green button.
    */
   type ModeTypes = "transparent" | "warning" | "danger" | "success";
-  const MODE_CLASSES: { [key in ModeTypes]: string } = {
-    transparent: "hover:bg-zinc-850",
-    danger: "bg-red-700/50 hover:bg-red-700",
-    warning: "bg-yellow-500/50 hover:bg-yellow-500",
-    success: "bg-green-700/50 hover:bg-green-700",
+  const MODE_CLASSES: { [key in ModeTypes]: string[] } = {
+    transparent: [""],
+    danger: ["bg-red-700"],
+    warning: ["bg-yellow-500"],
+    success: ["bg-green-700"],
   };
 
   /**
@@ -21,9 +23,9 @@
    * - `circle`: Circular button corners.
    */
   type RoundedTypes = "regular" | "circle";
-  const ROUNDED_CLASSES: { [key in RoundedTypes]: string } = {
-    regular: "rounded-sm",
-    circle: "rounded-full",
+  const ROUNDED_CLASSES: { [key in RoundedTypes]: string[] } = {
+    regular: ["rounded-sm"],
+    circle: ["rounded-full"],
   };
 
   type LinkType = {
@@ -40,35 +42,34 @@
     children: () => any;
     action: ActionTypes;
     title?: string;
+    disabled?: boolean;
     mode?: ModeTypes;
     rounded?: RoundedTypes;
+    shadow?: boolean;
   };
 
-  let { children, action, title, mode = "transparent", rounded = "regular" }: PropsType = $props();
+  let {
+    children,
+    action,
+    title,
+    disabled = false,
+    mode = "transparent",
+    rounded = "regular",
+    shadow = false,
+  }: PropsType = $props();
 </script>
 
-{#if action.type === "link"}
-  <a
-    href={action.href}
-    {title}
-    class={[
-      "w-fit flex items-center justify-center cursor-pointer p-1 duration-200",
-      MODE_CLASSES[mode],
-      ROUNDED_CLASSES[rounded],
-    ]}
-  >
-    {@render children()}
-  </a>
-{:else}
-  <button
-    onclick={action.action}
-    {title}
-    class={[
-      "w-fit flex items-center justify-center cursor-pointer p-1 duration-200",
-      MODE_CLASSES[mode],
-      ROUNDED_CLASSES[rounded],
-    ]}
-  >
-    {@render children()}
-  </button>
-{/if}
+<button
+  onclick={action.type === "action" ? action.action : () => goto(action.href)}
+  {title}
+  {disabled}
+  aria-label={title}
+  class={[
+    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 duration-200",
+    ...MODE_CLASSES[mode],
+    ...ROUNDED_CLASSES[rounded],
+    shadow && "enabled:shadow-sm enabled:shadow-black/50",
+  ]}
+>
+  {@render children()}
+</button>

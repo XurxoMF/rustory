@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { breadcrumbs } from "$modules/layout/stores/BreadcrumbsStore.svelte";
+  import { breadcrumbs } from "$modules/basics/stores/BreadcrumbsStore.svelte";
 
   import Button from "$modules/basics/components/Button.svelte";
 </script>
