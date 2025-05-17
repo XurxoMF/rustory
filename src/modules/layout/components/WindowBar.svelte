@@ -34,7 +34,7 @@
         alt={`${appName} · ${appVersion}`}
         class="w-5"
       />
-      <p data-tauri-drag-region class="opacity-50 text-sm">
+      <p data-tauri-drag-region class="text-sm">
         {`${appName} · ${appVersion}`}
       </p>
     </div>
@@ -83,7 +83,7 @@
   <button
     onclick={action}
     {title}
-    class="cursor-pointer opacity-50 rounded-full duration-200 hover:opacity-100 hover:bg-zinc-850 p-1"
+    class="cursor-pointer rounded-full duration-200 hover:bg-zinc-850 p-1"
   >
     <Icon {icon} />
   </button>

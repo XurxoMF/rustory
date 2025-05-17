@@ -23,7 +23,7 @@
 {#snippet MainNavButton(icon: string, text: string, link: string = "/")}
   <a
     href={link}
-    class="relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm duration-200 opacity-50 hover:opacity-100 hover:bg-zinc-850"
+    class="relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm duration-200 hover:bg-zinc-850"
   >
     <Icon {icon} class="shrink-0 text-2xl duration-200" />
 
