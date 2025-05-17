@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import "../app.css";
 
-  import { loader, incrementLoader, resetLoader } from "$modules/layout/stores/Loader.svelte";
+  import { incrementLoader, resetLoader } from "$modules/layout/stores/Loader.svelte";
 
   import WindowBar from "$modules/layout/components/WindowBar.svelte";
   import MainNav from "$modules/layout/components/MainNav.svelte";
