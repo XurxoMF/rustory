@@ -1,7 +1,7 @@
 <script lang="ts">
-  import { breadcrumbs } from "$modules/layout/stores/Breadcrumbs";
+  import { setBreadcrumbs } from "$modules/layout/stores/BreadcrumbsStore.svelte";
 
-  breadcrumbs.set([{ label: "/", href: "/" }]);
+  setBreadcrumbs([]);
 </script>
 
 <p>Hola Mundo!</p>
