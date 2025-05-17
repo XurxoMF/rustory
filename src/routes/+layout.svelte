@@ -1,7 +1,6 @@
 <script lang="ts">
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import { onMount } from "svelte";
-
   import "../app.css";
 
   import WindowBar from "$modules/layout/components/WindowBar.svelte";
@@ -17,7 +16,7 @@
 <div
   class={[
     "w-screen h-screen overflow-hidden text-zinc-200 bg-zinc-900 flex flex-col select-none",
-    !maximized && "rounded-md border-2 border-zinc-800",
+    !maximized && "rounded-md",
   ]}
 >
   <WindowBar bind:maximized />
