@@ -3,7 +3,7 @@
   import i18n from "$i18n";
   import gsap from "gsap";
 
-  import { loader } from "$modules/layout/stores/Loader.svelte";
+  import { loader } from "$modules/layout/stores/LoaderStore.svelte";
 
   let { maximized }: { maximized: boolean } = $props();
 
