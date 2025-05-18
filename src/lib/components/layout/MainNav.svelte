@@ -1,9 +1,25 @@
 <script lang="ts">
   import i18n from "$i18n";
+  import { page } from "$app/state";
 
   import Icon from "$lib/components/ui/Icon.svelte";
 
   let open = $state(false);
+
+  const isCurrent = (currentUrl: string, linkUrl: string): boolean => {
+    console.log(currentUrl, linkUrl);
+
+    // If we are on the main page return true.
+    if (linkUrl === "/") {
+      console.log(currentUrl === "/");
+
+      return currentUrl === "/";
+    }
+    // If we are on any other page return true if the current page URL starts with the menu option URL.
+    console.log(currentUrl.startsWith(linkUrl));
+
+    return currentUrl.startsWith(linkUrl);
+  };
 </script>
 
 <nav
@@ -23,12 +39,13 @@
 {#snippet MainNavButton(icon: string, text: string, link: string = "/")}
   <a
     href={link}
+    data-currenturl={isCurrent(page.url.pathname, link)}
     class={[
       "relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm duration-200",
-      "t-dark:text-zinc-100 t-dark:hover:bg-zinc-800",
-      "t-light:text-zinc-900 t-light:hover:bg-zinc-300",
-      "t-rust:text-rust-100 t-rust:hover:bg-rust-800",
-      "t-midnight:text-gray-100 t-midnight:hover:bg-gray-800",
+      't-dark:text-zinc-100 t-dark:hover:bg-zinc-800 t-dark:data-[currenturl="true"]:bg-zinc-800',
+      't-light:text-zinc-900 t-light:hover:bg-zinc-300 t-light:data-[currenturl="true"]:bg-zinc-300',
+      't-rust:text-rust-100 t-rust:hover:bg-rust-800 t-rust:data-[currenturl="true"]:bg-rust-800',
+      't-midnight:text-gray-100 t-midnight:hover:bg-gray-800 t-midnight:data-[currenturl="true"]:bg-gray-800',
     ]}
   >
     <Icon {icon} class="shrink-0 text-2xl" />
