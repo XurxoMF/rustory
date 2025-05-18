@@ -57,7 +57,7 @@
       class={[
         "w-full h-full rounded-tl-lg p-2 inset-shadow-sm/25 duration-200",
         "t-dark:text-zinc-100 t-dark:bg-zinc-800",
-        "t-light:text-zinc-900 t-light:bg-zinc-200",
+        "t-light:text-zinc-900 t-light:bg-zinc-300",
         "t-rust:text-rust-100 t-rust:bg-rust-800",
         "t-midnight:text-gray-100 t-midnight:bg-gray-800",
       ]}

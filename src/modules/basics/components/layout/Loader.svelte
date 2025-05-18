@@ -40,7 +40,7 @@
       class={[
         "w-60 h-2 rounded-full overflow-hidden duration-200",
         "t-dark:bg-zinc-700",
-        "t-light:bg-zinc-300",
+        "t-light:bg-zinc-400",
         "t-rust:bg-rust-700",
         "t-midnight:bg-gray-700",
       ]}
@@ -50,7 +50,7 @@
         class={[
           "h-full w-0 duration-200",
           "t-dark:bg-zinc-800",
-          "t-light:bg-zinc-200",
+          "t-light:bg-zinc-300",
           "t-rust:bg-rust-800",
           "t-midnight:bg-gray-800",
         ]}

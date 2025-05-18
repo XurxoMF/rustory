@@ -18,7 +18,7 @@ Color palettes must be formed by 11 variants: **50**, **100**, **200**, **300**,
 On **light** themes, colors will be the following ones:
 
 - `bg-<color>-100` for the background colors.
-- `bg-<color>-200` for the sub-background colors and `hover:` colors on buttons and similar.
+- `bg-<color>-300` for the sub-background colors and `hover:` colors on buttons and similar.
 - `text-<color>-900` for the font color.
 
 On **dark** themes, colors will be the following ones:

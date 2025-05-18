@@ -1,46 +1,27 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
-
-  /**
-   * Mode style of the button.
-   * - `transparent` (default): Transparent button.
-   * - `neutral`: Neutral button.
-   * - `warning`: Yellow button.
-   * - `danger`: Red button.
-   * - `success`: Green button.
-   */
-  type ModeTypes = "transparent" | "warning" | "danger" | "success";
-  const MODE_CLASSES: { [key in ModeTypes]: string[] } = {
-    transparent: [""],
+  const MODE_CLASSES = {
+    transparent: [
+      "t-dark:hover:bg-zinc-800",
+      "t-light:hover:bg-zinc-300",
+      "t-rust:hover:bg-rust-800",
+      "t-midnight:hover:bg-gray-800",
+    ],
     danger: ["bg-red-700"],
     warning: ["bg-yellow-500"],
+    neutral: ["bg-blue-700"],
     success: ["bg-green-700"],
-  };
+  } as const;
+  type ModeTypes = keyof typeof MODE_CLASSES;
 
-  /**
-   * Rounded style of the button.
-   * - `regular` (default): Regular button corners.
-   * - `circle`: Circular button corners.
-   */
-  type RoundedTypes = "regular" | "circle";
-  const ROUNDED_CLASSES: { [key in RoundedTypes]: string[] } = {
+  const ROUNDED_CLASSES = {
     regular: ["rounded-sm"],
     circle: ["rounded-full"],
-  };
-
-  type LinkType = {
-    type: "link";
-    href: string;
-  };
-  type ActionType = {
-    type: "action";
-    action: () => any;
-  };
-  type ActionTypes = LinkType | ActionType;
+  } as const;
+  type RoundedTypes = keyof typeof ROUNDED_CLASSES;
 
   type PropsType = {
     children: () => any;
-    action: ActionTypes;
+    action: () => void;
     title?: string;
     disabled?: boolean;
     mode?: ModeTypes;
@@ -60,7 +41,7 @@
 </script>
 
 <button
-  onclick={action.type === "action" ? action.action : () => goto(action.href)}
+  onclick={action}
   {title}
   {disabled}
   aria-label={title}
