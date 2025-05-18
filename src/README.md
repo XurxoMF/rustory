@@ -17,25 +17,27 @@ Color palettes must be formed by 11 variants: **50**, **100**, **200**, **300**,
 
 On **light** themes, colors will be the following ones:
 
-- **x-100** for the background colors.
-- **x-200** for the sub-background colors and `hover:` colors on buttons and similars. An example is the `<main>` background color o the `routes/+layout.svelte`.
-- **x-900** for the font color.
+- `bg-<color>-100` for the background colors.
+- `bg-<color>-200` for the sub-background colors and `hover:` colors on buttons and similar.
+- `text-<color>-900` for the font color.
 
 On **dark** themes, colors will be the following ones:
 
-- **x-900** for the background colors.
-- **x-800** for the sub-background colors and `hover:` colors on buttons and similars. An example is the `<main>` background color o the `routes/+layout.svelte`.
-- **x-100** for the font color.
+- `bg-<color>-900` for the background colors.
+- `bg-<color>-800` for the sub-background colors and `hover:` colors on buttons and similar.
+- `text-<color>-100` for the font color.
 
-On `both` themes we'll use this styles:
+On **both** themes we'll use this styles:
 
-- **x-black/50** for shadows.
-- **opacity-50** for disabled elements.
-- **hover:scale-105** for hover styles. Mostly on buttons. We can still use other styles like MainNav links.
+- `enabled:shadow-sm enabled:shadow-black/50` for shadows.
+- `disabled:opacity-50` for disabled elements.
+- `enabled:hover:scale-105` for button hover styles.
 
 > [!WARNING]
-> It's EXTREMELY important to set `duration-200` and both `t-theme:text-x-x` if it has text or Icons.  
-> If you don't do this, the transition when changing themes will not be smooth.
+> If you set a `duration-<time>` that affect colors it's extremely important to set `t-<theme>:text-<color>-<variant>` if th element contains text or Icons, otherwise the color change animation of those will take double the time.  
+> This is a bug or something on CSS. If an element with a `duration-<time>` has a text color and a child element has another `duration-<time>` but inheriths the text color of the parent element the child `duration-<time>` will be added to the parent one increasing the duration time of the text color changing of the children. If you have 2 `duration-[2s]` the child text animation will take 4 seconds for example.  
+> Changing the color of the child element(even if the color is the same one) will break this bug and work normally.  
+> This may happen on `bg-<color>-<variant>` too, I didn't tested it.
 
 _Any element not listed here can use any color from the same palette!_
 
