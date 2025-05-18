@@ -33,7 +33,7 @@
       "t-midnight:text-gray-100 t-midnight:bg-gray-900",
       !maximized && "rounded-md",
     ]}
-    transition:fade
+    transition:fade={{ duration: 200, delay: 500 }}
   >
     <h1 class="text-xl">{`${$i18n.t("common.Loading")}...`}</h1>
     <div
