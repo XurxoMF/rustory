@@ -4,12 +4,10 @@
   import { onMount } from "svelte";
   import "../app.css";
 
-  import { incrementLoader, resetLoader } from "$modules/basics/stores/LoaderStore.svelte";
-  import { setTheme } from "$modules/basics/stores/ThemeStore.svelte";
-
-  import WindowBar from "$modules/basics/components/layout/WindowBar.svelte";
-  import MainNav from "$modules/basics/components/layout/MainNav.svelte";
-  import Loader from "$modules/basics/components/layout/Loader.svelte";
+  import WindowBar from "$lib/components/layout/WindowBar.svelte";
+  import MainNav from "$lib/components/layout/MainNav.svelte";
+  import Loader, { incrementLoader, resetLoader } from "$lib/components/layout/Loader.svelte";
+  import { setTheme } from "$lib/components/settings/Theme.svelte";
 
   let { children } = $props();
 

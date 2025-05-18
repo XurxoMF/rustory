@@ -1,9 +1,34 @@
+<script lang="ts" module>
+  type LoaderType = {
+    completed: number;
+    total: number;
+  };
+
+  const TOTAL_TASKS = 2;
+
+  export const loader = $state<LoaderType>({ completed: 0, total: TOTAL_TASKS });
+
+  /**
+   * Increments the loader's completed tasks by the specified number.
+   *
+   * @param by - Number of tasks completed.
+   */
+  export const incrementLoader = (by: number) => {
+    loader.completed += by;
+  };
+
+  /**
+   * Resets the loader's completed tasks.
+   */
+  export const resetLoader = () => {
+    loader.completed = 0;
+  };
+</script>
+
 <script lang="ts">
   import { fade } from "svelte/transition";
   import i18n from "$i18n";
   import gsap from "gsap";
-
-  import { loader } from "$modules/basics/stores/LoaderStore.svelte";
 
   let { maximized }: { maximized: boolean } = $props();
 

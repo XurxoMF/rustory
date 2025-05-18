@@ -1,7 +1,8 @@
 <script lang="ts">
   import i18n from "$i18n";
 
-  import { setBreadcrumbs } from "$modules/basics/stores/BreadcrumbsStore.svelte";
+  import { setBreadcrumbs } from "$lib/components/layout/Breadcrumbs.svelte";
+
   setBreadcrumbs([{ label: $i18n.t("common.Config"), href: "/config" }]);
 </script>
 

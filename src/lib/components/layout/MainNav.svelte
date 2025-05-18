@@ -1,7 +1,7 @@
 <script lang="ts">
   import i18n from "$i18n";
 
-  import Icon from "$modules/basics/components/Icon.svelte";
+  import Icon from "$lib/components/ui/Icon.svelte";
 
   let open = $state(false);
 </script>

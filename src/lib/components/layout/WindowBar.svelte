@@ -2,8 +2,8 @@
   import { getCurrentWindow } from "@tauri-apps/api/window";
   import i18n from "$i18n";
 
-  import Breadcrumbs from "$modules/basics/components/layout/Breadcrumbs.svelte";
-  import Button from "$modules/basics/components/Button.svelte";
+  import Breadcrumbs from "$lib/components/layout/Breadcrumbs.svelte";
+  import Button from "$lib/components/ui/Button.svelte";
 
   const APP_NAME = "Rustory";
 

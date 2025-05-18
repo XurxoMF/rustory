@@ -1,54 +1,39 @@
 # FOLDER DISTRIBUTION
 
-This folder contains all the component types used by the app categorized by "modules".
+This folder contains all the logic used by different modules.
 
 ## What are modules?
 
 Modules are like features. For example:
 
-- Basics
 - Versions
 - Installations
 - Mods
 - Backups
-- Etc...
+- ...
 
-## What are the component types?
+## What are the logic types?
 
-Component types are, liek the name says, types of components xD For example:
+Logic types depends on the function of the files. For example:
 
-- Components (.svelte)
+- Components
 - Utils
-- Contexts
-- Etc...
+- Stores
+- ...
 
 ## Example of the folder categories
 
 ```
-
 modules/
-├── basics/
-│   ├── components/
-│   │   ├── forms/
-│   │   │   ├── Input.svelte
-│   │   │   ├── Button.svelte
-│   │   │   └── ...
-│   │   ├── Dropdown.svelte
-│   │   └── ...
-│   ├── utils/
-│   │   ├── something.ts
-│   │   └── ...
-│   └── ...
 ├── versions/
 │   ├── components/
 │   │   ├── VersionsList.svelte
 │   ├── utils/
-│   │   └── ...
 │   │   ├── versionsInstall.ts
 │   │   ├── versionsUninstall.ts
 │   │   └── ...
-│   ├── contexts/
-│   │   ├── versionsContext.ts
+│   ├── stores/
+│   │   ├── VersionsStore.ts
 │   │   └── ...
 │   └── ...
 └── ...

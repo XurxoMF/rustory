@@ -1,10 +1,15 @@
 <script lang="ts">
-  import { setBreadcrumbs } from "$modules/basics/stores/BreadcrumbsStore.svelte";
-  setBreadcrumbs([]);
+  import ThemeSelector from "$lib/components/settings/Theme.svelte";
+  import Collapsible from "$lib/components/ui/Collapsible.svelte";
+  import { setBreadcrumbs } from "$lib/components/layout/Breadcrumbs.svelte";
 
-  import ThemeSelector from "$modules/basics/components/ThemeSelector.svelte";
+  setBreadcrumbs([]);
 </script>
 
 <p>Hola Mundo!</p>
 
 <ThemeSelector />
+
+<Collapsible title="Título">
+  <p>Hola Mundo!</p>
+</Collapsible>
