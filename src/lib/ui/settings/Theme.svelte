@@ -10,7 +10,7 @@
     { key: "midnight", localesKey: "themes.Midnight", color: "bg-gray-900" },
   ];
 
-  export const theme = $state<ThemeType>({ current: "dark" });
+  export const theme: ThemeType = $state({ current: "dark" });
 
   /**
    * Sets the new theme and saves it on the localStorage. If no theme is passed as parameter, "dark" will be used.

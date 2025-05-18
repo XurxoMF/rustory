@@ -10,8 +10,6 @@ const config = {
   kit: {
     adapter: adapter(),
     alias: {
-      "$lib/*": "src/lib/*",
-      "$modules/*": "src/modules/*",
       $i18n: "src/i18n/",
     },
   },

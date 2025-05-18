@@ -4,14 +4,15 @@
   import { onMount } from "svelte";
   import "../app.css";
 
-  import WindowBar from "$lib/components/layout/WindowBar.svelte";
-  import MainNav from "$lib/components/layout/MainNav.svelte";
-  import Loader, { incrementLoader, resetLoader } from "$lib/components/layout/Loader.svelte";
-  import { setTheme } from "$lib/components/settings/Theme.svelte";
+  import { maximized } from "$lib/stores/MaximizedStateStore.svelte";
+
+  import WindowBar from "$lib/ui/app/WindowBar.svelte";
+  import MainNav from "$lib/ui/app/MainNav.svelte";
+  import Loader, { incrementLoader, resetLoader } from "$lib/ui/app/Loader.svelte";
+  import { setTheme } from "$lib/ui/settings/Theme.svelte";
 
   let { children } = $props();
 
-  let maximized = $state(false);
   let appVersion = $state("X.X.X");
 
   onMount(() => {
@@ -19,13 +20,13 @@
     setTheme(theme);
 
     (async () => {
-      maximized = await getCurrentWindow().isMaximized();
+      maximized.value = await getCurrentWindow().isMaximized();
       appVersion = await app.getVersion();
       incrementLoader(1);
 
       setTimeout(() => {
         incrementLoader(1);
-      }, 5_000);
+      }, 500);
     })();
 
     return () => {
@@ -34,7 +35,7 @@
   });
 </script>
 
-<Loader {maximized} />
+<Loader />
 
 <div
   class={[
@@ -46,7 +47,7 @@
     !maximized && "rounded-md",
   ]}
 >
-  <WindowBar bind:maximized {appVersion} />
+  <WindowBar {appVersion} />
 
   <div class="w-full h-full flex">
     <MainNav />

@@ -6,7 +6,7 @@
 
   const TOTAL_TASKS = 2;
 
-  export const loader = $state<LoaderType>({ completed: 0, total: TOTAL_TASKS });
+  export const loader: LoaderType = $state({ completed: 0, total: TOTAL_TASKS });
 
   /**
    * Increments the loader's completed tasks by the specified number.
@@ -30,9 +30,9 @@
   import i18n from "$i18n";
   import gsap from "gsap";
 
-  let { maximized }: { maximized: boolean } = $props();
+  import { maximized } from "$lib/stores/MaximizedStateStore.svelte";
 
-  let loaderBar = $state<HTMLDivElement>();
+  let loaderBar: HTMLDivElement | undefined = $state();
   let loaderAnimation: gsap.core.Tween;
 
   $effect(() => {
@@ -56,7 +56,7 @@
       "t-light:text-zinc-900 t-light:bg-zinc-100",
       "t-rust:text-rust-100 t-rust:bg-rust-900",
       "t-midnight:text-gray-100 t-midnight:bg-gray-900",
-      !maximized && "rounded-md",
+      !maximized.value && "rounded-md",
     ]}
     transition:fade={{ duration: 200, delay: 500 }}
   >

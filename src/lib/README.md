@@ -1,36 +1,5 @@
 # FOLDER DISTRIBUTION
 
-This folder contains all the rehusable basic logic and components. This are, for example, buttons, inputs, dropdowns, theme selectors and stores, generic utils...
+This folder contains all the **components**, **helpers**, **utils**, **stores**... of the APP.
 
-## How is this folder structured?
-
-Each folder contain one type of component/logic. For example:
-
-- Components
-- Utils
-- Stores
-- ...
-
-## Example of the folder categories
-
-```
-lib/
-├── components/
-│   ├── layout/
-│   │   ├── MainNav.svelte
-│   ├── settings/
-│   │   ├── Theme.ts
-│   │   ├── Language.ts
-│   │   └── ...
-│   ├── stores/
-│   │   ├── VersionsStore.ts
-│   │   └── ...
-│   └── ...
-├── stores/
-│   └── ...
-└── ...
-```
-
-```
-
-```
+On each folder you'll find a `README.md` explaining what's inside if it's needed.

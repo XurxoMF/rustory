@@ -10,7 +10,7 @@
 
   const ROOT_BREADCRUMB_SEGMENT: BreadcrumbsSegmentType = { label: "/", href: "/" };
 
-  export const breadcrumbs = $state<BreadcrumbsType>({
+  export const breadcrumbs: BreadcrumbsType = $state({
     value: [ROOT_BREADCRUMB_SEGMENT],
   });
 
@@ -27,7 +27,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
 
-  import Button from "$lib/components/ui/Button.svelte";
+  import { ButtonTransparent } from "$lib/ui/form/Button";
 </script>
 
 <div class="w-fit flex items-center justify-center flex-nowrap whitespace-nowrap">
@@ -35,8 +35,8 @@
     {#if index > 1}
       <span class="px-1">/</span>
     {/if}
-    <Button action={() => goto(segment.href)}>
+    <ButtonTransparent onclick={() => goto(segment.href)}>
       {segment.label}
-    </Button>
+    </ButtonTransparent>
   {/each}
 </div>

@@ -2,7 +2,7 @@
   import i18n from "$i18n";
   import { page } from "$app/state";
 
-  import Icon from "$lib/components/ui/Icon.svelte";
+  import Icon from "$lib/ui/base/Icon.svelte";
 
   let open = $state(false);
 
