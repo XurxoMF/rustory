@@ -4,7 +4,7 @@
   import { onMount } from "svelte";
   import "../app.css";
 
-  import { maximized } from "$lib/stores/MaximizedStateStore.svelte";
+  import { maximized, setMaximized } from "$lib/stores/MaximizedStateStore.svelte";
 
   import WindowBar from "$lib/ui/app/WindowBar.svelte";
   import MainNav from "$lib/ui/app/MainNav.svelte";
@@ -20,7 +20,7 @@
     setTheme(theme);
 
     (async () => {
-      maximized.value = await getCurrentWindow().isMaximized();
+      setMaximized(await getCurrentWindow().isMaximized());
       appVersion = await app.getVersion();
       incrementLoader(1);
 
@@ -44,7 +44,7 @@
     "t-light:text-zinc-900 t-light:bg-zinc-100",
     "t-rust:text-rust-100 t-rust:bg-rust-900",
     "t-midnight:text-gray-100 t-midnight:bg-gray-900",
-    !maximized && "rounded-md",
+    !maximized.value && "rounded-md",
   ]}
 >
   <WindowBar {appVersion} />

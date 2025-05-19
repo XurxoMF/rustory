@@ -48,7 +48,7 @@ pub fn run() {
                             let _ = window.set_focus();
                         }
                     }
-                    _ => println!("Unhandled tray event {:?}", event),
+                    _ => {}
                 })
                 .show_menu_on_left_click(false)
                 .build(app)?;

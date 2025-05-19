@@ -7,17 +7,9 @@
   let open = $state(false);
 
   const isCurrent = (currentUrl: string, linkUrl: string): boolean => {
-    console.log(currentUrl, linkUrl);
-
     // If we are on the main page return true.
-    if (linkUrl === "/") {
-      console.log(currentUrl === "/");
-
-      return currentUrl === "/";
-    }
+    if (linkUrl === "/") return currentUrl === "/";
     // If we are on any other page return true if the current page URL starts with the menu option URL.
-    console.log(currentUrl.startsWith(linkUrl));
-
     return currentUrl.startsWith(linkUrl);
   };
 </script>

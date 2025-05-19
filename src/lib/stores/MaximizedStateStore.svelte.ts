@@ -9,3 +9,10 @@ export const maximized: { value: boolean } = $state({ value: false });
 export const toggleMaximized = () => {
   maximized.value = !maximized.value;
 };
+
+/**
+ * Sets the maximized state.
+ */
+export const setMaximized = (state: boolean) => {
+  maximized.value = state;
+};
