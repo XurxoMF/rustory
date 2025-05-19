@@ -9,5 +9,20 @@
     "Home": "Inicio",
     "Loading": "Cargando",
     "MinimizeOrMaximize": "Maximizar/Minimizar"
+  },
+  "generic": {
+    "WelcomeToRustory": "¡Bienvenido a Rustory!"
+  },
+  "loader": {
+    "tasks": {
+      "AppDataDescription": "Cargando los datos de Rustory",
+      "TimeoutDescription": "Renderizando la UI"
+    }
+  },
+  "themes": {
+    "Dark": "Oscuro",
+    "Light": "Claro",
+    "Midnight": "Media noche",
+    "Rust": "Óxido"
   }
 }

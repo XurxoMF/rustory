@@ -1,10 +1,7 @@
 <script lang="ts">
+  import { appName, appVersion } from "$lib/stores/AppStore.svelte";
   import Breadcrumbs from "$lib/ui/display/Breadcrumbs.svelte";
   import WindowControls from "../display/WindowControls.svelte";
-
-  const APP_NAME = "Rustory";
-
-  let { appVersion = "X.X.X" }: { appVersion: string } = $props();
 </script>
 
 <div
@@ -22,11 +19,11 @@
       <img
         data-tauri-drag-region
         src="/img/icon.png"
-        alt={`${APP_NAME} · ${appVersion}`}
+        alt={`${appName} · ${appVersion.value}`}
         class="w-5"
       />
       <p data-tauri-drag-region class="text-sm">
-        {`${APP_NAME} · ${appVersion}`}
+        {`${appName} · ${appVersion.value}`}
       </p>
     </div>
   </div>

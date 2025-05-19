@@ -2,7 +2,7 @@
   import i18n from "$i18n";
   import { getCurrentWindow } from "@tauri-apps/api/window";
 
-  import { maximized, toggleMaximized } from "$lib/stores/MaximizedStateStore.svelte";
+  import { appMaximized, toggleAppMaximized } from "$lib/stores/AppStore.svelte";
 
   import { ButtonSuccess, ButtonDanger, ButtonNeutral, ButtonWarning } from "$lib/ui/form/Button";
 
@@ -20,9 +20,9 @@
   rounded="circle"
   onclick={() => {
     appWindow.toggleMaximize();
-    toggleMaximized();
+    toggleAppMaximized();
   }}
-  title={maximized.value ? $i18n.t("common.Minimize") : $i18n.t("common.Maximize")}
+  title={appMaximized.value ? $i18n.t("common.Minimize") : $i18n.t("common.Maximize")}
 >
   <span class="w-2 h-2"></span>
 </ButtonWarning>

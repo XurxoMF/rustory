@@ -15,5 +15,14 @@
     "Light": "Light",
     "Rust": "Rust",
     "Midnight": "Midnight"
+  },
+  "loader": {
+    "tasks": {
+      "AppDataDescription": "Loading Rustory data",
+      "TimeoutDescription": "Rendering the UI"
+    }
+  },
+  "generic": {
+    "WelcomeToRustory": "Welcome to Rustory!"
   }
 }
