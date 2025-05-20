@@ -12,6 +12,10 @@
 >
   <Icon icon="ph:caret-left-bold" />
 </ButtonTransparent>
-<ButtonTransparent rounded="circle" onclick={() => history.forward} title={$i18n.t("common.Next")}>
+<ButtonTransparent
+  rounded="circle"
+  onclick={() => history.forward()}
+  title={$i18n.t("common.Next")}
+>
   <Icon icon="ph:caret-right-bold" />
 </ButtonTransparent>
