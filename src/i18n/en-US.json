@@ -8,7 +8,11 @@
     "Config": "Config",
     "Home": "Home",
     "Loading": "Loading",
-    "MinimizeOrMaximize": "Maximize/Minimize"
+    "MinimizeOrMaximize": "Maximize/Minimize",
+    "Back": "Back",
+    "Forward": "Forward",
+    "Previous": "Previous",
+    "Next": "Next"
   },
   "themes": {
     "Dark": "Dark",

@@ -39,7 +39,7 @@
 
 <div
   class={[
-    "w-screen h-screen overflow-hidden flex flex-col select-none duration-200",
+    "w-screen h-screen flex flex-col select-none overflow-hidden duration-200",
     "t-dark:text-zinc-100 t-dark:bg-zinc-900",
     "t-light:text-zinc-900 t-light:bg-zinc-100",
     "t-rust:text-rust-100 t-rust:bg-rust-900",
@@ -49,12 +49,12 @@
 >
   <WindowBar />
 
-  <div class="w-full h-full flex">
+  <div class="w-full h-full flex overflow-hidden">
     <MainNav />
 
     <main
       class={[
-        "w-full h-full rounded-tl-lg p-2 inset-shadow-sm/25 duration-200",
+        "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden duration-200",
         "t-dark:text-zinc-100 t-dark:bg-zinc-800",
         "t-light:text-zinc-900 t-light:bg-zinc-300",
         "t-rust:text-rust-100 t-rust:bg-rust-800",
@@ -65,4 +65,3 @@
     </main>
   </div>
 </div>
-r

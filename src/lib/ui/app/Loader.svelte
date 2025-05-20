@@ -100,8 +100,6 @@
   let loaderBar: HTMLDivElement | undefined = $state();
   let loaderAnimation: gsap.core.Tween;
 
-  $inspect(completed.ids);
-
   $effect(() => {
     if (loaderBar) {
       const progressPercent = TOTAL > 0 ? (completed.ids.length / TOTAL) * 100 : 0;

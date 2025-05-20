@@ -16,15 +16,19 @@
 
 <nav
   class={[
-    "relative shrink-0 h-full flex flex-col px-2 pb-2 pt-1 items-center justify-between gap-2 overflow-hidden transition-[width] duration-200",
+    "relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden transition-[width] duration-200",
+    "t-dark:text-zinc-100",
+    "t-light:text-zinc-900",
+    "t-rust:text-rust-100",
+    "t-midnight:text-gray-100",
     open ? "w-60" : "w-14",
   ]}
   onmouseenter={() => (open = true)}
   onmouseleave={() => (open = false)}
 >
   <div class="w-full flex flex-col items-start justify-center gap-1">
-    {@render MainNavButton("ph:house-duotone", $i18n.t("common.Home"), "/")}
-    {@render MainNavButton("ph:gear-duotone", $i18n.t("common.Config"), "/config")}
+    {@render MainNavButton("ph:house", $i18n.t("common.Home"), "/")}
+    {@render MainNavButton("ph:gear", $i18n.t("common.Config"), "/config")}
   </div>
 </nav>
 
@@ -42,7 +46,16 @@
   >
     <Icon {icon} class="shrink-0 text-2xl" />
 
-    <p class={["text-start transition-opacity duration-200", open ? "opacity-100" : "opacity-0"]}>
+    <p
+      class={[
+        "text-start transition-opacity duration-200",
+        "t-dark:text-zinc-100",
+        "t-light:text-zinc-900",
+        "t-rust:text-rust-100",
+        "t-midnight:text-gray-100",
+        open ? "opacity-100" : "opacity-0",
+      ]}
+    >
       {text}
     </p>
   </a>

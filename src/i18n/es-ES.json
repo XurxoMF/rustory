@@ -8,7 +8,11 @@
     "Config": "Configuración",
     "Home": "Inicio",
     "Loading": "Cargando",
-    "MinimizeOrMaximize": "Maximizar/Minimizar"
+    "MinimizeOrMaximize": "Maximizar/Minimizar",
+    "Back": "Atrás",
+    "Forward": "Adelante",
+    "Previous": "Anterior",
+    "Next": "Siguiente"
   },
   "generic": {
     "WelcomeToRustory": "¡Bienvenido a Rustory!"

@@ -4,19 +4,20 @@
 
   import { appMaximized, toggleAppMaximized } from "$lib/stores/AppStore.svelte";
 
-  import { ButtonSuccess, ButtonDanger, ButtonNeutral, ButtonWarning } from "$lib/ui/form/Button";
+  import { ButtonTransparent } from "$lib/ui/form/Button";
+  import Icon from "$lib/ui/base/Icon.svelte";
 
   const appWindow = getCurrentWindow();
 </script>
 
-<ButtonSuccess
+<ButtonTransparent
   rounded="circle"
   onclick={() => appWindow.minimize()}
   title={$i18n.t("common.Minimize")}
 >
-  <span class="w-2 h-2"></span>
-</ButtonSuccess>
-<ButtonWarning
+  <Icon icon="material-symbols:minimize-rounded" />
+</ButtonTransparent>
+<ButtonTransparent
   rounded="circle"
   onclick={() => {
     appWindow.toggleMaximize();
@@ -24,11 +25,19 @@
   }}
   title={appMaximized.value ? $i18n.t("common.Minimize") : $i18n.t("common.Maximize")}
 >
-  <span class="w-2 h-2"></span>
-</ButtonWarning>
-<ButtonNeutral rounded="circle" onclick={() => appWindow.hide()} title={$i18n.t("common.Hide")}>
-  <span class="w-2 h-2"></span>
-</ButtonNeutral>
-<ButtonDanger rounded="circle" onclick={() => appWindow.close()} title={$i18n.t("common.Close")}>
-  <span class="w-2 h-2"></span>
-</ButtonDanger>
+  <Icon
+    icon={appMaximized.value
+      ? "material-symbols:collapse-content-rounded"
+      : "material-symbols:expand-content-rounded"}
+  />
+</ButtonTransparent>
+<ButtonTransparent rounded="circle" onclick={() => appWindow.hide()} title={$i18n.t("common.Hide")}>
+  <Icon icon="material-symbols:visibility-off-outline-rounded" />
+</ButtonTransparent>
+<ButtonTransparent
+  rounded="circle"
+  onclick={() => appWindow.close()}
+  title={$i18n.t("common.Close")}
+>
+  <Icon icon="material-symbols:close-rounded" />
+</ButtonTransparent>

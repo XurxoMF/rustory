@@ -20,10 +20,10 @@
   {...restProps}
   class={[
     "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 duration-200",
-    "t-dark:hover:bg-zinc-800",
-    "t-light:hover:bg-zinc-300",
-    "t-rust:hover:bg-rust-800",
-    "t-midnight:hover:bg-gray-800",
+    "t-dark:text-zinc-100 t-dark:hover:bg-zinc-800",
+    "t-light:text-zinc-900 t-light:hover:bg-zinc-300",
+    "t-rust:text-rust-100 t-rust:hover:bg-rust-800",
+    "t-midnight:text-gray-100 t-midnight:hover:bg-gray-800",
     ...ROUNDED_CLASSES[rounded],
   ]}
 >

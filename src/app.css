@@ -68,3 +68,35 @@ html[data-uiscale="125"] {
 html[data-uiscale="150"] {
   font-size: 24px;
 }
+
+/* Custom scrollbar styles */
+*::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+
+/* Custom themed scrollbar styles */
+body[data-theme="dark"] *::-webkit-scrollbar-thumb {
+  @apply bg-zinc-700;
+}
+
+body[data-theme="light"] *::-webkit-scrollbar-thumb {
+  @apply bg-zinc-400;
+}
+
+body[data-theme="rust"] *::-webkit-scrollbar-thumb {
+  @apply bg-rust-700;
+}
+
+body[data-theme="rust"] *::-webkit-scrollbar-thumb {
+  @apply bg-rust-700;
+}
+
+body[data-theme="midnight"] *::-webkit-scrollbar-thumb {
+  @apply bg-gray-700;
+}

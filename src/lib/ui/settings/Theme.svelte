@@ -31,17 +31,20 @@
   import i18n from "$i18n";
 </script>
 
-<div class="flex items-center gap-2">
-  {#each THEMES_DATA as THEME}
-    <button
-      class={[
-        "w-8 h-8 rounded-full cursor-pointer border border-zinc-500 enabled:shadow-sm enabled:shadow-black/50 disabled:opacity-50 enabled:hover:scale-105 duration-200",
-        THEME.color,
-      ]}
-      onclick={() => setTheme(THEME.key)}
-      title={$i18n.t(THEME.localesKey)}
-      aria-label={$i18n.t(THEME.localesKey)}
-      disabled={THEME.key === theme.current}
-    ></button>
-  {/each}
-</div>
+{#each THEMES_DATA as THEME}
+  <button
+    class={[
+      "w-8 h-8 rounded-full cursor-pointer border border-zinc-500 enabled:shadow-sm enabled:shadow-black/50 disabled:opacity-50 enabled:hover:scale-105 duration-200",
+      "t-dark:text-zinc-100",
+      "t-light:text-zinc-900",
+      "t-rust:text-rust-100",
+      "t-midnight:text-gray-100",
+      ,
+      THEME.color,
+    ]}
+    onclick={() => setTheme(THEME.key)}
+    title={$i18n.t(THEME.localesKey)}
+    aria-label={$i18n.t(THEME.localesKey)}
+    disabled={THEME.key === theme.current}
+  ></button>
+{/each}
