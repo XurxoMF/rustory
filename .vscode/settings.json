@@ -3,5 +3,15 @@
   "i18n-ally.localesPaths": [
     "src/i18n"
   ],
-  "i18n-ally.keystyle": "nested"
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.keysInUse": [
+    "themes.Dark",
+    "themes.Light",
+    "themes.Rust",
+    "themes.Midnight",
+    "loader.tasks.TimeoutDescription",
+    "loader.tasks.AppConfigDescription",
+    "loader.tasks.AppWindowDescription",
+    "loader.tasks.AppInfoDescription"
+  ]
 }

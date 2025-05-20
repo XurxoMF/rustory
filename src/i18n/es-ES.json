@@ -4,23 +4,21 @@
     "Maximize": "Maximizar",
     "Close": "Cerrar",
     "Hide": "Ocultar",
-    "Open": "Abrir",
     "Config": "Configuración",
     "Home": "Inicio",
-    "Loading": "Cargando",
-    "MinimizeOrMaximize": "Maximizar/Minimizar",
-    "Back": "Atrás",
-    "Forward": "Adelante",
     "Previous": "Anterior",
-    "Next": "Siguiente"
+    "Next": "Siguiente",
+    "Reload": "Recargar"
   },
   "generic": {
     "WelcomeToRustory": "¡Bienvenido a Rustory!"
   },
   "loader": {
     "tasks": {
-      "AppDataDescription": "Cargando los datos de Rustory",
-      "TimeoutDescription": "Renderizando la UI"
+      "TimeoutDescription": "Renderizando la UI",
+      "AppInfoDescription": "Cargando información de la APP",
+      "AppConfigDescription": "Cargando configuración",
+      "AppWindowDescription": "Cargando el estado de la ventada"
     }
   },
   "themes": {

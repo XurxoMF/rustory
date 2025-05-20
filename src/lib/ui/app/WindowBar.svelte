@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { appName, appVersion } from "$lib/stores/AppStore.svelte";
+  import { rustory } from "$lib/stores/rustory";
+
   import Breadcrumbs from "$lib/ui/display/Breadcrumbs.svelte";
   import HistoryControlls from "../display/HistoryControls.svelte";
   import WindowControls from "../display/WindowControls.svelte";
@@ -12,15 +13,11 @@
 >
   <div data-tauri-drag-region class="flex-1 flex items-center justify-start gap-6">
     <div data-tauri-drag-region class="w-fit flex items-center gap-2">
-      <div class="w-fit flex items-center justify-center gap-1 flex-nowrap">
-        <RustoryIcon class="text-xl" />
-      </div>
-
-      <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
-        <HistoryControlls />
-      </div>
+      <RustoryIcon class="text-xl" />
 
       <div class="w-fit flex items-center justify-center flex-nowrap opacity-50">
+        <HistoryControlls />
+
         <Breadcrumbs />
       </div>
     </div>
@@ -30,7 +27,7 @@
     <div data-tauri-drag-region class="w-fit flex items-center gap-2">
       <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
         <p data-tauri-drag-region>
-          {`${appName} ${appVersion.value}`}
+          {`${rustory.mainWindow.title} ${rustory.info.version}`}
         </p>
       </div>
     </div>

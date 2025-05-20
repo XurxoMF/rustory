@@ -1,67 +1,121 @@
 <script lang="ts">
-  import { getCurrentWindow } from "@tauri-apps/api/window";
-  import { app } from "@tauri-apps/api";
+  import { fade } from "svelte/transition";
   import { onMount } from "svelte";
+  import gsap from "gsap";
+
   import "../app.css";
 
-  import { appMaximized, setAppMaximized, setAppVersion } from "$lib/stores/AppStore.svelte";
+  import i18n from "$i18n";
+
+  import { rustory } from "$lib/stores/rustory";
+  import { loader } from "$lib/stores/loader";
+
+  import { sleep } from "$lib/utils/basics";
 
   import WindowBar from "$lib/ui/app/WindowBar.svelte";
   import MainNav from "$lib/ui/app/MainNav.svelte";
-  import Loader, { completeTask, resetCompletedTasks } from "$lib/ui/app/Loader.svelte";
-  import { setTheme } from "$lib/ui/settings/Theme.svelte";
+  import Icon from "$lib/ui/base/Icon.svelte";
+  import { Loader } from "$lib/classes/Loader.svelte";
 
   let { children } = $props();
 
-  onMount(() => {
-    let theme = localStorage.getItem("theme");
-    setTheme(theme);
+  // Start loading the UI after all the data was loaded.
+  let loadUI: boolean = $state(false);
 
-    (async () => {
-      setAppMaximized(await getCurrentWindow().isMaximized());
-      setAppVersion(await app.getVersion());
-      completeTask("app-data");
+  // Loader bar components and animations.
+  let loaderBar: HTMLDivElement | undefined = $state();
+  let loaderAnimation: gsap.core.Tween;
 
-      setTimeout(() => {
-        // Small timeout to ensure the APP UI is fully rendered before hiding the Loader.
-        completeTask("timeout");
-      }, 500);
-    })();
+  $effect(() => {
+    if (loaderBar) {
+      const progressPercent =
+        Loader.TOTAL_TASKS > 0 ? (loader.completedTasks.length / Loader.TOTAL_TASKS) * 100 : 0;
 
-    return () => {
-      // Clear the completed tasks so the Loader shows up as loading again.
-      resetCompletedTasks();
-    };
+      loaderAnimation?.kill();
+      loaderAnimation = gsap.to(loaderBar, {
+        width: `${progressPercent}%`,
+        duration: 0.2,
+      });
+    }
+  });
+
+  // Load all the data ince the loader is mounted.
+  onMount(async () => {
+    // Ensure the tasks list is empty. Some times it may be completed if the APP reloaded incorrectly.
+    loader.resetCompletedTasks();
+
+    await rustory.info.init();
+    loader.completeTask("app-info-init");
+
+    await rustory.config.init();
+    loader.completeTask("app-config-init");
+
+    await rustory.mainWindow.init();
+    loader.completeTask("app-main-window-init");
+
+    loadUI = true;
+
+    await sleep(500);
+    loader.completeTask("timeout");
   });
 </script>
 
-<Loader />
+<!-- Show the loader while there are some taks running on the intializing process. -->
+{#if loader.isVisible}
+  <div
+    class="fixed z-[1000] text-[16px] w-full h-full flex flex-col items-center justify-center gap-[32px] text-zinc-100 bg-zinc-900"
+    transition:fade={{ duration: 200, delay: 200 }}
+  >
+    <img src="/img/icon.png" alt="Rustory" class="w-[144px] h-[144px]" />
 
-<div
-  class={[
-    "w-screen h-screen flex flex-col select-none overflow-hidden duration-200",
-    "t-dark:text-zinc-100 t-dark:bg-zinc-900",
-    "t-light:text-zinc-900 t-light:bg-zinc-100",
-    "t-rust:text-rust-100 t-rust:bg-rust-900",
-    "t-midnight:text-gray-100 t-midnight:bg-gray-900",
-    !appMaximized.value && "rounded-md",
-  ]}
->
-  <WindowBar />
+    <div class="w-1/3 h-[8px] rounded-full overflow-hidden bg-zinc-800">
+      <div bind:this={loaderBar} class="h-full w-0 bg-zinc-700"></div>
+    </div>
 
-  <div class="w-full h-full flex overflow-hidden">
-    <MainNav />
+    <div class="w-full max-h-[160px] flex flex-col items-center justify-center overflow-y-scroll">
+      {#each Loader.TASKS as TASK}
+        {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
-    <main
-      class={[
-        "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden duration-200",
-        "t-dark:text-zinc-100 t-dark:bg-zinc-800",
-        "t-light:text-zinc-900 t-light:bg-zinc-300",
-        "t-rust:text-rust-100 t-rust:bg-rust-800",
-        "t-midnight:text-gray-100 t-midnight:bg-gray-800",
-      ]}
-    >
-      {@render children()}
-    </main>
+        <div class="w-fit flex items-center gap-[4px]">
+          <Icon
+            class={["text-[18px]", isCompleted && "text-green-700"]}
+            icon={isCompleted ? "fluent:checkmark-circle-48-regular" : "svg-spinners:6-dots-scale"}
+          />
+          <p>{$i18n.t(TASK.localesDescriptionKey)}</p>
+        </div>
+      {/each}
+    </div>
   </div>
-</div>
+{/if}
+
+<!-- Start loading the data when all the data is loaded. Preloader will stay for 1 second while the UI is loading. -->
+{#if loadUI}
+  <div
+    class={[
+      "w-screen h-screen flex flex-col select-none overflow-hidden duration-200",
+      "t-dark:text-zinc-100 t-dark:bg-zinc-900",
+      "t-light:text-zinc-900 t-light:bg-zinc-100",
+      "t-rust:text-rust-100 t-rust:bg-rust-900",
+      "t-midnight:text-gray-100 t-midnight:bg-gray-900",
+      !rustory.mainWindow.isMaximized && "rounded-md",
+    ]}
+  >
+    <WindowBar />
+
+    <div class="w-full h-full flex overflow-hidden">
+      <MainNav />
+
+      <main
+        class={[
+          "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden duration-200",
+          "t-dark:text-zinc-100 t-dark:bg-zinc-800",
+          "t-light:text-zinc-900 t-light:bg-zinc-300",
+          "t-rust:text-rust-100 t-rust:bg-rust-800",
+          "t-midnight:text-gray-100 t-midnight:bg-gray-800",
+        ]}
+      >
+        {@render children()}
+      </main>
+    </div>
+  </div>
+{/if}

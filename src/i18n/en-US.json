@@ -4,15 +4,11 @@
     "Maximize": "Maximize",
     "Close": "Close",
     "Hide": "Hide",
-    "Open": "Open",
     "Config": "Config",
     "Home": "Home",
-    "Loading": "Loading",
-    "MinimizeOrMaximize": "Maximize/Minimize",
-    "Back": "Back",
-    "Forward": "Forward",
     "Previous": "Previous",
-    "Next": "Next"
+    "Next": "Next",
+    "Reload": "Reload"
   },
   "themes": {
     "Dark": "Dark",
@@ -22,8 +18,10 @@
   },
   "loader": {
     "tasks": {
-      "AppDataDescription": "Loading Rustory data",
-      "TimeoutDescription": "Rendering the UI"
+      "TimeoutDescription": "Rendering the UI",
+      "AppConfigDescription": "Loading configuration",
+      "AppWindowDescription": "Loading window state",
+      "AppInfoDescription": "Loading APP info"
     }
   },
   "generic": {

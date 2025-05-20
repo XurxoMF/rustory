@@ -1,39 +1,17 @@
-<script lang="ts" module>
-  type BreadcrumbsSegmentType = {
-    label: string;
-    href: string;
-  };
-
-  type BreadcrumbsType = {
-    value: BreadcrumbsSegmentType[];
-  };
-
-  export const breadcrumbs: BreadcrumbsType = $state({
-    value: [],
-  });
-
-  /**
-   * The root breadcrumb segment will always be added to you MUST not add it
-   *
-   * @param newBreadcrumbs - The new breadcrumbs to set
-   */
-  export const setBreadcrumbs = (newBreadcrumbs: BreadcrumbsSegmentType[]): void => {
-    breadcrumbs.value = [...newBreadcrumbs];
-  };
-</script>
-
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { fly } from "svelte/transition";
+
+  import { rustory } from "$lib/stores/rustory";
 
   import { ButtonTransparent } from "$lib/ui/form/Button";
   import Icon from "$lib/ui/base/Icon.svelte";
-  import { fly } from "svelte/transition";
 </script>
 
 <ButtonTransparent onclick={() => goto("/")}>
   <Icon icon="ph:house" />
 </ButtonTransparent>
-{#each breadcrumbs.value as segment, index}
+{#each rustory.mainWindow.breadcrumbs.segments as segment (segment.href + segment.label)}
   <span
     in:fly={{ duration: 200, opacity: 0, x: -5 }}
     out:fly={{ duration: 200, opacity: 0, x: -5 }}

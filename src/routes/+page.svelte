@@ -1,8 +1,9 @@
 <script lang="ts">
-  import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
-  import { setBreadcrumbs } from "$lib/ui/display/Breadcrumbs.svelte";
+  import { rustory } from "$lib/stores/rustory";
 
-  setBreadcrumbs([]);
+  import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
+
+  rustory.mainWindow.breadcrumbs.segments = [];
 </script>
 
 <PageWrapper scrollable={false}>

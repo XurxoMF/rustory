@@ -1,8 +1,9 @@
 <script lang="ts">
   import i18n from "$i18n";
 
+  import { rustory } from "$lib/stores/rustory";
+
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
-  import { setBreadcrumbs } from "$lib/ui/display/Breadcrumbs.svelte";
   import ThemeSelector from "$lib/ui/settings/Theme.svelte";
   import {
     CollapsibleRoot,
@@ -11,7 +12,7 @@
   } from "$lib/ui/base/Collapsible";
   import Icon from "$lib/ui/base/Icon.svelte";
 
-  setBreadcrumbs([{ label: $i18n.t("common.Config"), href: "/config" }]);
+  rustory.mainWindow.breadcrumbs.segments = [{ label: $i18n.t("common.Config"), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={false}>

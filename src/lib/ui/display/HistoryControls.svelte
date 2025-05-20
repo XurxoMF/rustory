@@ -7,6 +7,13 @@
 
 <ButtonTransparent
   rounded="circle"
+  onclick={() => window.location.reload()}
+  title={$i18n.t("common.Reload")}
+>
+  <Icon icon="ph:arrow-clockwise-bold" />
+</ButtonTransparent>
+<ButtonTransparent
+  rounded="circle"
   onclick={() => history.back()}
   title={$i18n.t("common.Previous")}
 >
