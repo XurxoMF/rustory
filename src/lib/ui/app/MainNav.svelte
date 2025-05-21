@@ -1,6 +1,8 @@
 <script lang="ts">
   import { page } from "$app/state";
 
+  import { m } from "$lib/paraglide/messages";
+
   import Icon from "$lib/ui/base/Icon.svelte";
 
   let open = $state(false);
@@ -26,9 +28,8 @@
   onmouseleave={() => (open = false)}
 >
   <div class="w-full flex flex-col items-start justify-center gap-1">
-    <!-- TODO: paraglide -->
-    {@render MainNavButton("ph:house", "common.Home", "/")}
-    {@render MainNavButton("ph:gear", "common.Config", "/config")}
+    {@render MainNavButton("ph:house", m.common__home(), "/")}
+    {@render MainNavButton("ph:gear", m.common__config(), "/config")}
   </div>
 </nav>
 

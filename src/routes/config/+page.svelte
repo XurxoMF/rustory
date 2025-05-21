@@ -1,4 +1,8 @@
 <script lang="ts">
+  import { m } from "$lib/paraglide/messages";
+
+  import { localesMeta } from "$lib/i18n/localesMeta";
+
   import { rustory } from "$lib/stores/rustory";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
@@ -6,7 +10,7 @@
   import CollapsibleSection from "$lib/ui/layout/CollapsibleSection.svelte";
   import ButtonTransparent from "$lib/ui/form/Button/ButtonTransparent.svelte";
 
-  rustory.mainWindow.breadcrumbs.segments = [{ label: "common.Config", href: "/config" }];
+  rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={false}>
@@ -25,12 +29,11 @@
 
           <div class="w-full flex items-center justify-start flex-wrap gap-2">
             <p>Language</p>
-            <!-- TODO: paraglide -->
-            <!-- {#each getLanguages() as language}
-              <ButtonTransparent onclick={() => (rustory.config.lang = language.code)}>
-                <p>{`${language.name} · ${language.credits}`}</p>
+            {#each localesMeta as locale}
+              <ButtonTransparent onclick={() => (rustory.config.lang = locale.locale)}>
+                <p>{`${locale.name} · ${locale.credits.join(", ")}`}</p>
               </ButtonTransparent>
-            {/each} -->
+            {/each}
           </div>
         </div>
       {/snippet}

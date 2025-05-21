@@ -25,7 +25,6 @@
     class="text-[.72em]"
   >
     <ButtonTransparent onclick={() => goto(segment.href)}>
-      <!-- TODO: paraglide -->
       {segment.label}
     </ButtonTransparent>
   </span>

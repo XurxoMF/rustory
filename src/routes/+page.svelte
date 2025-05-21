@@ -8,6 +8,6 @@
 
 <PageWrapper scrollable={false}>
   <div class="w-full h-full p-2">
-    <p>Hola Mundo!</p>
+    <p>¡Hola Mundo!</p>
   </div>
 </PageWrapper>

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://inlang.com/schema/project-settings",
+  "baseLocale": "en",
+  "locales": [
+    "en",
+    "es"
+  ],
+  "modules": [
+    "https://cdn.jsdelivr.net/npm/@inlang/plugin-message-format@4/dist/index.js",
+    "https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@latest/dist/index.js"
+  ],
+  "plugin.inlang.messageFormat": {
+    "pathPattern": "./messages/{locale}.json"
+  },
+  "sherlock.editorColors": {
+    "info": {
+      "foreground": "#66074b",
+      "background": "rgba(102, 7, 75, 0.2)",
+      "border": "#e807a8"
+    },
+    "error": {
+      "foreground": "#3b0204",
+      "background": "rgba(173, 21, 26, 0.2)",
+      "border": "#ad0e13"
+    }
+  },
+  "sherlock.extract.autoHumanId.enabled": false
+}

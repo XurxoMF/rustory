@@ -1,3 +1,5 @@
+import { isLocale, locales, setLocale, type Locale } from "$lib/paraglide/runtime";
+
 export class RustoryConfig {
   /**
    * List of all the available themes.
@@ -17,7 +19,7 @@ export class RustoryConfig {
   /**
    * Key of the selected language.
    */
-  private _lang: string = $state("en-EN");
+  private _lang: Locale = $state("en");
 
   /**
    * Loads all the configs on this instance of RustoryInfo.
@@ -29,7 +31,7 @@ export class RustoryConfig {
 
     let lang = localStorage.getItem("lang");
     lang = RustoryConfig.changeLanguage(lang);
-    this._lang = lang;
+    this._lang = lang as Locale;
   }
 
   /**
@@ -54,40 +56,41 @@ export class RustoryConfig {
   /**
    * Key of the selected language.
    */
-  get lang(): string {
+  get lang(): Locale {
     return this._lang;
   }
 
   /**
    * Changes the language to the one with the provided key.
    *
-   * If no key or an invalidad key is provided it'll default to "en-EN".
+   * If no key or an invalidad key is provided it'll default to "en".
    *
    * @param lang - The key of the langueage to apply.
    */
-  set lang(lang: string) {
+  set lang(lang: Locale | string) {
     lang = RustoryConfig.changeLanguage(lang);
-    this._lang = lang;
+    this._lang = lang as Locale;
   }
 
   /**
-   * Checks if the provided language is valid and changes it. If it's not valid it'll default to "en-EN".
+   * Checks if the provided language is valid and changes it. If it's not valid it'll default to "en".
    *
    * @param theme - The key of the language to change to.
    * @returns - The key of the new language.
    */
-  private static changeLanguage(lang: string | null | undefined): string {
-    // TODO: paraglide
-    if (!lang /* || !getLanguages().some((l) => l.code === lang) */) lang = "en-EN";
+  private static changeLanguage(lang: Locale | string | null | undefined): Locale {
+    let locale: Locale = "en";
 
-    localStorage.setItem("lang", lang);
-    /* i18next.changeLanguage(lang); */
+    if (isLocale(lang)) locale = lang as Locale;
 
-    return lang;
+    localStorage.setItem("lang", locale);
+    setLocale(locale);
+
+    return locale;
   }
 
   /**
-   * Checks if the provided theme is valid and applies it. If it's not valid it'll default to "en-EN".
+   * Checks if the provided theme is valid and applies it. If it's not valid it'll default to "en".
    *
    * @param theme - The key of the theme to apply.
    * @returns - The key of the applied theme.

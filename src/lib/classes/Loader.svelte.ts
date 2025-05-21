@@ -1,3 +1,5 @@
+import { m } from "$lib/paraglide/messages";
+
 export class Loader {
   /**
    * List of tasks to complete.
@@ -5,10 +7,10 @@ export class Loader {
    * If you want to add a new tasks to the list just add a new task here.
    */
   static TASKS = [
-    { id: "app-info-init", localesDescriptionKey: "loader.tasks.AppInfoDescription" },
-    { id: "app-config-init", localesDescriptionKey: "loader.tasks.AppConfigDescription" },
-    { id: "app-main-window-init", localesDescriptionKey: "loader.tasks.AppWindowDescription" },
-    { id: "timeout", localesDescriptionKey: "loader.tasks.TimeoutDescription" },
+    { id: "app-config-init", description: m.loader__tasks__desc__config_init() },
+    { id: "app-info-init", description: m.loader__tasks__desc__info_init() },
+    { id: "app-main-window-init", description: m.loader__tasks__desc__main_window_init() },
+    { id: "timeout", description: m.loader__tasks__desc__timeout() },
   ] as const;
 
   /**

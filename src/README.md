@@ -94,7 +94,7 @@ export const THEMES_DATA = [
 > _Replace `<themename>` with the name of the theme. Only letters and lowercase._  
 > _Replace `<Themename>` with the name of the theme. Only letters and lowercase with the first letter uppercase._  
 > _Replace `<color/themename>` and `<variant>` with the name and variant of the background color used on the first div of the `router/+layout.svelte` element of the app. That's the main background color. Usually `bg-<color/themename>-900` on dark themes and `bg-<color/themename>-100` on light themes._  
-> _Translate the `localesKey` using `i18n Ally` or on the `i18n/en-EN.json`. Use another theme key as example._
+> _Translate the `localesKey` using `i18n Ally` or on the `i18n/en.json`. Use another theme key as example._
 
 #### Add the theme styles all over the app `.svelte` files as needed like this:
 
