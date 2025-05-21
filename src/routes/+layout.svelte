@@ -5,8 +5,6 @@
 
   import "../app.css";
 
-  import i18n from "$i18n";
-
   import { rustory } from "$lib/stores/rustory";
   import { loader } from "$lib/stores/loader";
 
@@ -75,7 +73,8 @@
             class={["text-[18px]", isCompleted && "text-green-700"]}
             icon={isCompleted ? "fluent:checkmark-circle-48-regular" : "svg-spinners:6-dots-scale"}
           />
-          <p>{$i18n.t(TASK.localesDescriptionKey)}</p>
+          <!-- TODO: paraglide -->
+          <p>{TASK.localesDescriptionKey}</p>
         </div>
       {/each}
     </div>

@@ -9,9 +9,7 @@ const config = {
   preprocess: vitePreprocess(),
   kit: {
     adapter: adapter(),
-    alias: {
-      $i18n: "src/i18n/",
-    },
+    alias: {},
   },
 };
 

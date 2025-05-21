@@ -1,6 +1,4 @@
 <script lang="ts">
-  import i18n from "$i18n";
-
   import { RustoryConfig } from "$lib/classes/RustoryConfig.svelte";
 
   import { rustory } from "$lib/stores/rustory";
@@ -18,8 +16,9 @@
       THEME.color,
     ]}
     onclick={() => (rustory.config.theme = THEME.key)}
-    title={$i18n.t(THEME.localesKey)}
-    aria-label={$i18n.t(THEME.localesKey)}
+    title={THEME.localesKey}
+    aria-label={THEME.localesKey}
     disabled={THEME.key === rustory.config.theme}
   ></button>
+  <!-- TODO: paraglide -->
 {/each}

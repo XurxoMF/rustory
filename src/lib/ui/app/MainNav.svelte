@@ -1,5 +1,4 @@
 <script lang="ts">
-  import i18n from "$i18n";
   import { page } from "$app/state";
 
   import Icon from "$lib/ui/base/Icon.svelte";
@@ -27,8 +26,9 @@
   onmouseleave={() => (open = false)}
 >
   <div class="w-full flex flex-col items-start justify-center gap-1">
-    {@render MainNavButton("ph:house", $i18n.t("common.Home"), "/")}
-    {@render MainNavButton("ph:gear", $i18n.t("common.Config"), "/config")}
+    <!-- TODO: paraglide -->
+    {@render MainNavButton("ph:house", "common.Home", "/")}
+    {@render MainNavButton("ph:gear", "common.Config", "/config")}
   </div>
 </nav>
 

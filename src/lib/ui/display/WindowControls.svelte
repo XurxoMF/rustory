@@ -1,5 +1,4 @@
 <script lang="ts">
-  import i18n from "$i18n";
   import { getCurrentWindow } from "@tauri-apps/api/window";
 
   import { rustory } from "$lib/stores/rustory";
@@ -10,11 +9,8 @@
   const appWindow = getCurrentWindow();
 </script>
 
-<ButtonTransparent
-  rounded="circle"
-  onclick={() => appWindow.minimize()}
-  title={$i18n.t("common.Minimize")}
->
+<!-- TODO: paraglide -->
+<ButtonTransparent rounded="circle" onclick={() => appWindow.minimize()} title={"common.Minimize"}>
   <Icon icon="ph:minus-bold" />
 </ButtonTransparent>
 <ButtonTransparent
@@ -23,19 +19,15 @@
     appWindow.toggleMaximize();
     rustory.mainWindow.isMaximized = !rustory.mainWindow.isMaximized;
   }}
-  title={rustory.mainWindow.isMaximized ? $i18n.t("common.Minimize") : $i18n.t("common.Maximize")}
+  title={rustory.mainWindow.isMaximized ? "common.Minimize" : "common.Maximize"}
 >
   <Icon
     icon={rustory.mainWindow.isMaximized ? "ph:arrows-in-simple-bold" : "ph:arrows-out-simple-bold"}
   />
 </ButtonTransparent>
-<ButtonTransparent rounded="circle" onclick={() => appWindow.hide()} title={$i18n.t("common.Hide")}>
+<ButtonTransparent rounded="circle" onclick={() => appWindow.hide()} title={"common.Hide"}>
   <Icon icon="ph:eye-slash-bold" />
 </ButtonTransparent>
-<ButtonTransparent
-  rounded="circle"
-  onclick={() => appWindow.close()}
-  title={$i18n.t("common.Close")}
->
+<ButtonTransparent rounded="circle" onclick={() => appWindow.close()} title={"common.Close"}>
   <Icon icon="ph:x-bold" />
 </ButtonTransparent>
