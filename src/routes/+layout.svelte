@@ -1,6 +1,6 @@
 <script lang="ts">
   import { fade } from "svelte/transition";
-  import { onMount } from "svelte";
+  import { onMount, untrack } from "svelte";
   import gsap from "gsap";
 
   import "../app.css";
@@ -21,23 +21,6 @@
 
   // Start loading the UI after all the data was loaded.
   let loadUI: boolean = $state(false);
-
-  // Loader bar components and animations.
-  let loaderBar: HTMLDivElement | undefined = $state();
-  let loaderAnimation: gsap.core.Tween;
-
-  $effect(() => {
-    if (loaderBar) {
-      const progressPercent =
-        Loader.TOTAL_TASKS > 0 ? (loader.completedTasks.length / Loader.TOTAL_TASKS) * 100 : 0;
-
-      loaderAnimation?.kill();
-      loaderAnimation = gsap.to(loaderBar, {
-        width: `${progressPercent}%`,
-        duration: 0.2,
-      });
-    }
-  });
 
   // Load all the data ince the loader is mounted.
   onMount(async () => {
@@ -69,7 +52,18 @@
     <img src="/img/icon.png" alt="Rustory" class="w-[144px] h-[144px]" />
 
     <div class="w-1/3 h-[8px] rounded-full overflow-hidden bg-zinc-800">
-      <div bind:this={loaderBar} class="h-full w-0 bg-zinc-700"></div>
+      <div
+        {@attach (element: HTMLDivElement) => {
+          const progressPercent = (loader.completedTasks.length / Loader.TOTAL_TASKS) * 100;
+
+          gsap.to(element, {
+            width: `${progressPercent}%`,
+            duration: 0.2,
+            overwrite: "auto",
+          });
+        }}
+        class="h-full w-0 bg-zinc-700"
+      ></div>
     </div>
 
     <div class="w-full max-h-[160px] flex flex-col items-center justify-center overflow-y-scroll">
