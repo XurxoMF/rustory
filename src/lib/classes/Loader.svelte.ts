@@ -7,9 +7,7 @@ export class Loader {
    * If you want to add a new tasks to the list just add a new task here.
    */
   static TASKS = [
-    { id: "app-config-init", description: m.loader__tasks__desc__config_init() },
-    { id: "app-info-init", description: m.loader__tasks__desc__info_init() },
-    { id: "app-main-window-init", description: m.loader__tasks__desc__main_window_init() },
+    { id: "app-init", description: m.loader__tasks__desc__app_init() },
     { id: "timeout", description: m.loader__tasks__desc__timeout() },
   ] as const;
 
