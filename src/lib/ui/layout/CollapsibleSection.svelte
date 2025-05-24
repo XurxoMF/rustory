@@ -4,7 +4,10 @@
   import Icon from "$lib/ui/base/Icon.svelte";
   import { slide } from "svelte/transition";
 
-  type CollapsibleSectionProps = WithoutChild<Collapsible.RootProps> & {
+  type CollapsibleSectionProps = Pick<
+    WithoutChild<Collapsible.RootProps>,
+    "open" | "ref" | "children"
+  > & {
     buttonText: string;
   };
 
@@ -13,14 +16,12 @@
     ref = $bindable(null),
     buttonText,
     children,
-    ...restProps
   }: CollapsibleSectionProps = $props();
 </script>
 
 <Collapsible.Root
   bind:open
   bind:ref
-  {...restProps}
   class={[
     "w-full rounded-sm shadow-sm shadow-black/50 overflow-hidden transition-[background-color] duration-200",
     "t-dark:bg-zinc-900",
