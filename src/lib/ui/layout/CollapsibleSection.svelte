@@ -4,7 +4,7 @@
   import Icon from "$lib/ui/base/Icon.svelte";
   import { slide } from "svelte/transition";
 
-  type Props = WithoutChild<Collapsible.RootProps> & {
+  type CollapsibleSectionProps = WithoutChild<Collapsible.RootProps> & {
     buttonText: string;
   };
 
@@ -14,7 +14,7 @@
     buttonText,
     children,
     ...restProps
-  }: Props = $props();
+  }: CollapsibleSectionProps = $props();
 </script>
 
 <Collapsible.Root
