@@ -8,9 +8,16 @@
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
   import ThemeSelector from "$lib/ui/settings/Theme.svelte";
   import CollapsibleSection from "$lib/ui/layout/CollapsibleSection.svelte";
-  import ButtonTransparent from "$lib/ui/form/Button/ButtonTransparent.svelte";
+  import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
 
   rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
+
+  let items: SelectItemType[] = localesMeta.map((locale) => ({
+    value: locale.locale,
+    label: locale.name,
+  }));
+
+  let lang: string | undefined = rustory.config.lang;
 </script>
 
 <PageWrapper scrollable={false}>
@@ -22,13 +29,17 @@
           <ThemeSelector />
         </div>
 
-        <div class="w-full flex items-center justify-start flex-wrap gap-2">
+        <div class="w-full flex items-center justify-start gap-2">
           <p>Language</p>
-          {#each localesMeta as locale}
-            <ButtonTransparent onclick={() => (rustory.config.lang = locale.locale)}>
-              <p>{`${locale.name} · ${locale.credits.join(", ")}`}</p>
-            </ButtonTransparent>
-          {/each}
+          <Select
+            placeholder="Hola"
+            {items}
+            bind:value={lang}
+            onValueChange={(e) => {
+              if (e !== undefined) rustory.config.lang = e;
+            }}
+            variant="base"
+          />
         </div>
       </div>
     </CollapsibleSection>

@@ -19,7 +19,7 @@
 <button
   {...restProps}
   class={[
-    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale,shadow,background-color] duration-200",
+    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale,background-color] duration-200",
     "t-dark:hover:bg-zinc-800",
     "t-light:hover:bg-zinc-300",
     "t-rust:hover:bg-rust-800",

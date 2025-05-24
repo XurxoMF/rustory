@@ -45,14 +45,6 @@
   }
 }
 
-/* Custom scrollbar class */
-@layer utilities {
-  .scrollbar-none {
-    scrollbar-width: none !important;
-    scrollbar-color: transparent transparent !important;
-  }
-}
-
 /* Custom scale options */
 html[data-uiscale="50"] {
   font-size: 8px;
@@ -72,32 +64,5 @@ html[data-uiscale="150"] {
 
 /* Custom scrollbar styles */
 *::-webkit-scrollbar {
-  width: 0.4rem;
-  height: 0.4rem;
-  background-color: transparent;
-}
-
-*::-webkit-scrollbar-thumb {
-  border-radius: 5px;
-}
-
-/* Custom themed scrollbar styles */
-body[data-theme="dark"] *::-webkit-scrollbar-thumb {
-  @apply bg-zinc-700;
-}
-
-body[data-theme="light"] *::-webkit-scrollbar-thumb {
-  @apply bg-zinc-400;
-}
-
-body[data-theme="rust"] *::-webkit-scrollbar-thumb {
-  @apply bg-rust-700;
-}
-
-body[data-theme="rust"] *::-webkit-scrollbar-thumb {
-  @apply bg-rust-700;
-}
-
-body[data-theme="midnight"] *::-webkit-scrollbar-thumb {
-  @apply bg-gray-700;
+  display: none;
 }

@@ -9,12 +9,14 @@
     "open" | "ref" | "children"
   > & {
     buttonText: string;
+    variant?: "base" | "special";
   };
 
   let {
     open = $bindable(false),
     ref = $bindable(null),
     buttonText,
+    variant = "special",
     children,
   }: CollapsibleSectionProps = $props();
 </script>
@@ -24,10 +26,19 @@
   bind:ref
   class={[
     "w-full rounded-sm shadow-sm shadow-black/50 overflow-hidden transition-[background-color] duration-200",
-    "t-dark:bg-zinc-900",
-    "t-light:bg-zinc-100",
-    "t-rust:bg-rust-900",
-    "t-midnight:bg-gray-900",
+    variant === "base"
+      ? [
+          "t-dark:bg-zinc-800",
+          "t-light:bg-zinc-300",
+          "t-rust:bg-rust-800",
+          "t-midnight:bg-gray-800",
+        ]
+      : [
+          "t-dark:bg-zinc-900",
+          "t-light:bg-zinc-100",
+          "t-rust:bg-rust-900",
+          "t-midnight:bg-gray-900",
+        ],
   ]}
 >
   <Collapsible.Trigger
@@ -47,10 +58,20 @@
           <div
             class={[
               "w-full p-2 border-t-2 transition-[border] duration-200",
-              "t-dark:border-zinc-800",
-              "t-light:border-zinc-200",
-              "t-rust:border-rust-800",
-              "t-midnight:border-gray-800",
+
+              variant === "base"
+                ? [
+                    "t-dark:border-zinc-900",
+                    "t-light:border-zinc-100",
+                    "t-rust:border-rust-900",
+                    "t-midnight:border-gray-900",
+                  ]
+                : [
+                    "t-dark:border-zinc-800",
+                    "t-light:border-zinc-300",
+                    "t-rust:border-rust-800",
+                    "t-midnight:border-gray-800",
+                  ],
             ]}
           >
             {@render children?.()}

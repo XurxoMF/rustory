@@ -25,7 +25,7 @@
 <button
   {...restProps}
   class={[
-    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale,shadow] duration-200 bg-green-700",
+    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale] duration-200 bg-green-700",
     ...ROUNDED_CLASSES[rounded],
     shadow && "enabled:shadow-sm enabled:shadow-black/50",
   ]}
