@@ -13,6 +13,7 @@ export default defineConfig(async () => ({
       project: "./rustory.inlang",
       outdir: "./src/lib/paraglide",
       strategy: ["localStorage", "baseLocale"],
+      disableAsyncLocalStorage: true,
     }),
     sveltekit(),
     tailwindcss(),

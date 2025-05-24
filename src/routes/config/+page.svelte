@@ -15,28 +15,22 @@
 
 <PageWrapper scrollable={false}>
   <div class="w-full h-full p-2">
-    <CollapsibleSection>
-      {#snippet title()}
-        <h2 class="font-bold">Settings</h2>
-      {/snippet}
-
-      {#snippet content()}
-        <div class="flex flex-col gap-2">
-          <div class="w-full flex items-center justify-start flex-wrap gap-2">
-            <p>Theme</p>
-            <ThemeSelector />
-          </div>
-
-          <div class="w-full flex items-center justify-start flex-wrap gap-2">
-            <p>Language</p>
-            {#each localesMeta as locale}
-              <ButtonTransparent onclick={() => (rustory.config.lang = locale.locale)}>
-                <p>{`${locale.name} · ${locale.credits.join(", ")}`}</p>
-              </ButtonTransparent>
-            {/each}
-          </div>
+    <CollapsibleSection buttonText="Settings">
+      <div class="flex flex-col gap-2">
+        <div class="w-full flex items-center justify-start flex-wrap gap-2">
+          <p>Theme</p>
+          <ThemeSelector />
         </div>
-      {/snippet}
+
+        <div class="w-full flex items-center justify-start flex-wrap gap-2">
+          <p>Language</p>
+          {#each localesMeta as locale}
+            <ButtonTransparent onclick={() => (rustory.config.lang = locale.locale)}>
+              <p>{`${locale.name} · ${locale.credits.join(", ")}`}</p>
+            </ButtonTransparent>
+          {/each}
+        </div>
+      </div>
     </CollapsibleSection>
   </div>
 </PageWrapper>
