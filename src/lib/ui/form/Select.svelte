@@ -46,7 +46,7 @@
   </Select.Trigger>
   <Select.Content
     class={[
-      "max-h-60 m-2 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border] duration-200",
+      "max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border] duration-200",
       "t-dark:border-zinc-800",
       "t-light:border-zinc-300",
       "t-rust:border-rust-800",

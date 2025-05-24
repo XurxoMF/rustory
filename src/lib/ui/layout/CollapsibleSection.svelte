@@ -8,13 +8,13 @@
     WithoutChild<Collapsible.RootProps>,
     "open" | "ref" | "children"
   > & {
-    buttonText: string;
+    title: string;
   };
 
   let {
     open = $bindable(false),
     ref = $bindable(null),
-    buttonText,
+    title,
     children,
   }: CollapsibleSectionProps = $props();
 </script>
@@ -31,7 +31,7 @@
   ]}
 >
   <Collapsible.Trigger class="w-full flex items-center justify-between p-2 cursor-pointer">
-    {buttonText}
+    {title}
     <Icon
       icon="ph:caret-down-bold"
       class={["transition-transform duration-200", open && "rotate-180"]}

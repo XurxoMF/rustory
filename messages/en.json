@@ -19,5 +19,7 @@
   "lang__spanish": "Spanish",
   "placeholders__select_one": "Select one...",
   "settings__language": "Language",
-  "settings__theme": "Theme"
+  "settings__theme": "Theme",
+  "settings__interface": "Interface",
+  "settings__lang_restart_needed": "A restart or reload is needed for the language to fully change!"
 }

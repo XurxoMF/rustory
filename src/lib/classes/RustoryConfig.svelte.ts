@@ -94,7 +94,7 @@ export class RustoryConfig {
     if (isLocale(lang)) locale = lang as Locale;
 
     localStorage.setItem("lang", locale);
-    setLocale(locale);
+    setLocale(locale, { reload: false });
 
     return locale;
   }
