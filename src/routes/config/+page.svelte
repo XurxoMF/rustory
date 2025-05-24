@@ -15,7 +15,7 @@
 
 <PageWrapper scrollable={false}>
   <div class="w-full h-full p-2">
-    <CollapsibleSection buttonText="Settings">
+    <CollapsibleSection buttonText="Settings" open>
       <div class="flex flex-col gap-2">
         <div class="w-full flex items-center justify-start flex-wrap gap-2">
           <p>Theme</p>

@@ -70,11 +70,11 @@
         <div class="w-full flex flex-col items-center justify-start gap-4">
           <div
             class={[
-              "w-1/3 h-2 rounded-full overflow-hidden transition-colors duration-200",
-              "t-dark:text-zinc-100 t-dark:bg-zinc-800",
-              "t-light:text-zinc-900 t-light:bg-zinc-300",
-              "t-rust:text-rust-100 t-rust:bg-rust-800",
-              "t-midnight:text-gray-100 t-midnight:bg-gray-800",
+              "w-1/3 h-2 rounded-full overflow-hidden transition-[background-color] duration-200",
+              "t-dark:bg-zinc-800",
+              "t-light:bg-zinc-300",
+              "t-rust:bg-rust-800",
+              "t-midnight:bg-gray-800",
             ]}
           >
             <div
@@ -124,7 +124,7 @@
 {#if loadUI}
   <div
     class={[
-      "w-screen h-screen flex flex-col select-none overflow-hidden duration-200",
+      "w-screen h-screen flex flex-col select-none overflow-hidden transition-colors duration-200",
       "t-dark:text-zinc-100 t-dark:bg-zinc-900",
       "t-light:text-zinc-900 t-light:bg-zinc-100",
       "t-rust:text-rust-100 t-rust:bg-rust-900",
@@ -139,11 +139,11 @@
 
       <main
         class={[
-          "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden duration-200",
-          "t-dark:text-zinc-100 t-dark:bg-zinc-800",
-          "t-light:text-zinc-900 t-light:bg-zinc-300",
-          "t-rust:text-rust-100 t-rust:bg-rust-800",
-          "t-midnight:text-gray-100 t-midnight:bg-gray-800",
+          "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden transition-[background-color] duration-200",
+          "t-dark:bg-zinc-800",
+          "t-light:bg-zinc-300",
+          "t-rust:bg-rust-800",
+          "t-midnight:bg-gray-800",
         ]}
       >
         {@render children()}

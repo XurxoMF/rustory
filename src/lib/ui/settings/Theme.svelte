@@ -7,12 +7,7 @@
 {#each RustoryConfig.THEMES as THEME}
   <button
     class={[
-      "w-8 h-8 rounded-full cursor-pointer border border-zinc-500 enabled:shadow-sm enabled:shadow-black/50 disabled:opacity-50 enabled:hover:scale-105 duration-200",
-      "t-dark:text-zinc-100",
-      "t-light:text-zinc-900",
-      "t-rust:text-rust-100",
-      "t-midnight:text-gray-100",
-      ,
+      "w-8 h-8 rounded-full cursor-pointer border border-zinc-500 enabled:shadow-sm enabled:shadow-black/50 disabled:opacity-50 enabled:hover:scale-105 transition-[scale,opacity,shadow] duration-200",
       THEME.color,
     ]}
     onclick={() => (rustory.config.theme = THEME.key)}

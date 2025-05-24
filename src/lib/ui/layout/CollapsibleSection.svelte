@@ -22,11 +22,11 @@
   bind:ref
   {...restProps}
   class={[
-    "w-full rounded-sm shadow-sm shadow-black/50 overflow-hidden duration-200",
-    "t-dark:text-zinc-100 t-dark:bg-zinc-900",
-    "t-light:text-zinc-900 t-light:bg-zinc-100",
-    "t-rust:text-rust-100 t-rust:bg-rust-900",
-    "t-midnight:text-gray-100 t-midnight:bg-gray-900",
+    "w-full rounded-sm shadow-sm shadow-black/50 overflow-hidden transition-[background-color] duration-200",
+    "t-dark:bg-zinc-900",
+    "t-light:bg-zinc-100",
+    "t-rust:bg-rust-900",
+    "t-midnight:bg-gray-900",
   ]}
 >
   <Collapsible.Trigger
@@ -35,14 +35,7 @@
     {buttonText}
     <Icon
       icon="ph:caret-down-bold"
-      class={[
-        "duration-200",
-        "t-dark:text-zinc-100",
-        "t-light:text-zinc-900",
-        "t-rust:text-rust-100",
-        "t-midnight:text-gray-100",
-        open && "rotate-180",
-      ]}
+      class={["transition-transform duration-200", open && "rotate-180"]}
     />
   </Collapsible.Trigger>
 
@@ -52,11 +45,11 @@
         <div transition:slide={{ duration: 200 }} {...props}>
           <div
             class={[
-              "w-full p-2 border-t-2 duration-200",
-              "t-dark:text-zinc-100 t-dark:border-zinc-800",
-              "t-light:text-zinc-900 t-light:border-zinc-200",
-              "t-rust:text-rust-100 t-rust:border-rust-800",
-              "t-midnight:text-gray-100 t-midnight:border-gray-800",
+              "w-full p-2 border-t-2 transition-[border] duration-200",
+              "t-dark:border-zinc-800",
+              "t-light:border-zinc-200",
+              "t-rust:border-rust-800",
+              "t-midnight:border-gray-800",
             ]}
           >
             {@render children?.()}
