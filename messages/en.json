@@ -10,5 +10,14 @@
   "common__minimize": "Minimize",
   "common_maximize": "Maximize",
   "common__hide": "Hide",
-  "common__close": "Close"
+  "common__close": "Close",
+  "themes__dark": "Dark",
+  "themes__light": "Light",
+  "themes__rust": "Rust",
+  "theme__midnight": "Midnight",
+  "lang__english": "English",
+  "lang__spanish": "Spanish",
+  "placeholders__select_one": "Select one...",
+  "settings__language": "Language",
+  "settings__theme": "Theme"
 }

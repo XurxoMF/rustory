@@ -8,26 +8,26 @@
   } as const;
   type RoundedTypes = keyof typeof ROUNDED_CLASSES;
 
-  type ButtonDnagerPropsType = HTMLButtonAttributes & {
+  type ButtonDangerPropsType = HTMLButtonAttributes & {
     children: Snippet<[]>;
     rounded?: RoundedTypes;
-    shadow?: boolean;
+    icon?: boolean;
   };
 
   let {
     children,
     rounded = "regular",
-    shadow = false,
+    icon = false,
     ...restProps
-  }: ButtonDnagerPropsType = $props();
+  }: ButtonDangerPropsType = $props();
 </script>
 
 <button
   {...restProps}
   class={[
-    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale] duration-200 bg-red-700",
+    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-red-900 bg-red-900/20 enabled:hover:bg-red-900 transition-[opacity,border,background-color] duration-200",
+    icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
-    shadow && "enabled:shadow-sm enabled:shadow-black/50",
   ]}
 >
   {@render children()}

@@ -1,14 +1,24 @@
-import { isLocale, locales, setLocale, type Locale } from "$lib/paraglide/runtime";
+import { m } from "$lib/paraglide/messages";
+
+import { isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
 
 export class RustoryConfig {
   /**
    * List of all the available themes.
    */
   static THEMES = [
-    { key: "dark", localesKey: "themes.Dark", color: "bg-zinc-900" },
-    { key: "light", localesKey: "themes.Light", color: "bg-zinc-100" },
-    { key: "rust", localesKey: "themes.Rust", color: "bg-rust-900" },
-    { key: "midnight", localesKey: "themes.Midnight", color: "bg-gray-900" },
+    { key: "dark", name: m.themes__dark(), color: "bg-zinc-900" },
+    { key: "light", name: m.themes__light(), color: "bg-zinc-100" },
+    { key: "rust", name: m.themes__rust(), color: "bg-rust-900" },
+    { key: "midnight", name: m.theme__midnight(), color: "bg-gray-900" },
+  ];
+
+  /**
+   * List of all the available locales with their data.
+   */
+  static LANGUAGES_DATA: LanguagesDataType[] = [
+    { lang: "en", name: m.lang__english(), credits: ["XurxoMF"] },
+    { lang: "es", name: m.lang__spanish(), credits: ["XurxoMF"] },
   ];
 
   /**
@@ -104,3 +114,5 @@ export class RustoryConfig {
     return theme;
   }
 }
+
+type LanguagesDataType = { lang: Locale; name: string; credits: string[] };

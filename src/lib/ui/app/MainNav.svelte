@@ -17,7 +17,11 @@
 
 <nav
   class={[
-    "relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden transition-[width] duration-200",
+    "relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden border-r transition-[width,border] duration-200",
+    "t-dark:border-r-zinc-800",
+    "t-light:border-r-zinc-300",
+    "t-rust:border-r-rust-800",
+    "t-midnight:border-r-gray-800",
     open ? "w-60" : "w-14",
   ]}
   onmouseenter={() => (open = true)}

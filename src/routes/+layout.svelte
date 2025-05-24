@@ -2,7 +2,6 @@
   import { fade, slide } from "svelte/transition";
   import { quadOut } from "svelte/easing";
   import { onMount } from "svelte";
-  import gsap from "gsap";
 
   import "../app.css";
 
@@ -16,6 +15,7 @@
   import WindowBar from "$lib/ui/app/WindowBar.svelte";
   import MainNav from "$lib/ui/app/MainNav.svelte";
   import Icon from "$lib/ui/base/Icon.svelte";
+  import ProgressBar from "$lib/ui/form/ProgressBar.svelte";
 
   let { children } = $props();
 
@@ -67,34 +67,9 @@
 
     {#if showTasks}
       <div in:slide={{ duration: 500, easing: quadOut }} class="w-full">
-        <div class="w-full flex flex-col items-center justify-start gap-4">
-          <div
-            class={[
-              "w-1/3 h-2 rounded-full overflow-hidden transition-[background-color] duration-200",
-              "t-dark:bg-zinc-800",
-              "t-light:bg-zinc-300",
-              "t-rust:bg-rust-800",
-              "t-midnight:bg-gray-800",
-            ]}
-          >
-            <div
-              {@attach (element: HTMLDivElement) => {
-                const progressPercent = (loader.completedTasks.length / Loader.TOTAL_TASKS) * 100;
-
-                gsap.to(element, {
-                  width: `${progressPercent}%`,
-                  duration: 0.5,
-                  overwrite: "auto",
-                });
-              }}
-              class={[
-                "h-full w-0 transition-[background-color] rounded-r-full duration-200",
-                "t-dark:bg-zinc-700",
-                "t-light:bg-zinc-400",
-                "t-rust:bg-rust-700",
-                "t-midnight:bg-gray-700",
-              ]}
-            ></div>
+        <div class="flex flex-col items-center justify-center gap-8">
+          <div class="w-1/3">
+            <ProgressBar progress={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
           </div>
 
           <div class="w-full max-h-40">
@@ -137,15 +112,7 @@
     <div class="w-full h-full flex overflow-hidden">
       <MainNav />
 
-      <main
-        class={[
-          "w-full h-full rounded-tl-lg inset-shadow-sm/25 overflow-hidden transition-[background-color] duration-200",
-          "t-dark:bg-zinc-800",
-          "t-light:bg-zinc-300",
-          "t-rust:bg-rust-800",
-          "t-midnight:bg-gray-800",
-        ]}
-      >
+      <main class="w-full h-full overflow-hidden">
         {@render children()}
       </main>
     </div>

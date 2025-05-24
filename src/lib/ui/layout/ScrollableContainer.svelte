@@ -23,15 +23,15 @@
   {#if orientation === "vertical" || orientation === "both"}
     <ScrollArea.Scrollbar
       orientation="vertical"
-      class="h-2 hover:h-3 flex border-l border-l-transparent p-px transition-[height] duration-200"
+      class="h-2 flex p-px transition-[height] duration-200"
     >
       <ScrollArea.Thumb
         class={[
           "flex-1 rounded-full transition-[background] duration-200",
-          "t-dark:bg-zinc-700",
-          "t-light:bg-zinc-400",
-          "t-rust:bg-rust-700",
-          "t-midnight:bg-gray-700",
+          "t-dark:bg-zinc-800",
+          "t-light:bg-zinc-300",
+          "t-rust:bg-rust-800",
+          "t-midnight:bg-gray-800",
         ]}
       />
     </ScrollArea.Scrollbar>
@@ -39,15 +39,15 @@
   {#if orientation === "horizontal" || orientation === "both"}
     <ScrollArea.Scrollbar
       orientation="horizontal"
-      class="w-2 hover:w-3 flex border-t border-t-transparent p-px transition-[width] duration-200"
+      class="w-2 flex p-px transition-[width] duration-200"
     >
       <ScrollArea.Thumb
         class={[
           "rounded-full transition-[background] duration-200",
-          "t-dark:bg-zinc-700",
-          "t-light:bg-zinc-400",
-          "t-rust:bg-rust-700",
-          "t-midnight:bg-gray-700",
+          "t-dark:bg-zinc-800",
+          "t-light:bg-zinc-300",
+          "t-rust:bg-rust-800",
+          "t-midnight:bg-gray-800",
         ]}
       />
     </ScrollArea.Scrollbar>

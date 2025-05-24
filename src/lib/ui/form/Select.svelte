@@ -11,16 +11,9 @@
     onValueChange?: (value: string | undefined) => void;
     placeholder: string;
     items: SelectItemType[];
-    variant?: "base" | "special";
   };
 
-  let {
-    value = $bindable(),
-    onValueChange,
-    items,
-    placeholder,
-    variant = "base",
-  }: SelectProps = $props();
+  let { value = $bindable(), onValueChange, items, placeholder }: SelectProps = $props();
 
   let isOpen = $state(false);
 
@@ -38,20 +31,11 @@
 >
   <Select.Trigger
     class={[
-      "w-full flex items-center justify-between gap-2 px-2 py-1 rounded-sm shadow-sm shadow-black/50 transition-[background-color] duration-200",
-      variant === "base"
-        ? [
-            "t-dark:bg-zinc-800",
-            "t-light:bg-zinc-300",
-            "t-rust:bg-rust-800",
-            "t-midnight:bg-gray-800",
-          ]
-        : [
-            "t-dark:bg-zinc-900",
-            "t-light:bg-zinc-100",
-            "t-rust:bg-rust-900",
-            "t-midnight:bg-gray-900",
-          ],
+      "w-full flex items-center justify-between gap-2 px-2 py-1 rounded-sm cursor-pointer border transition-[border] duration-200",
+      "t-dark:border-zinc-800",
+      "t-light:border-zinc-300",
+      "t-rust:border-rust-800",
+      "t-midnight:border-gray-800",
     ]}
   >
     {selectedLabel ? selectedLabel : placeholder}
@@ -62,20 +46,11 @@
   </Select.Trigger>
   <Select.Content
     class={[
-      "max-h-60 m-2 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/50 transition-[background-color] duration-200",
-      variant === "base"
-        ? [
-            "t-dark:bg-zinc-800",
-            "t-light:bg-zinc-300",
-            "t-rust:bg-rust-800",
-            "t-midnight:bg-gray-800",
-          ]
-        : [
-            "t-dark:bg-zinc-900",
-            "t-light:bg-zinc-100",
-            "t-rust:bg-rust-900",
-            "t-midnight:bg-gray-900",
-          ],
+      "max-h-60 m-2 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border] duration-200",
+      "t-dark:border-zinc-800",
+      "t-light:border-zinc-300",
+      "t-rust:border-rust-800",
+      "t-midnight:border-gray-800",
     ]}
     forceMount
   >
@@ -90,21 +65,11 @@
                   {label}
                   {disabled}
                   class={[
-                    "w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-start gap-2 px-2 py-1 cursor-pointer transition-[background-color] duration-200",
-
-                    variant === "base"
-                      ? [
-                          "t-dark:hover:bg-zinc-900",
-                          "t-light:hover:bg-zinc-100",
-                          "t-rust:hover:bg-rust-900",
-                          "t-midnight:hover:bg-gray-900",
-                        ]
-                      : [
-                          "t-dark:hover:bg-zinc-800",
-                          "t-light:hover:bg-zinc-300",
-                          "t-rust:hover:bg-rust-800",
-                          "t-midnight:hover:bg-gray-800",
-                        ],
+                    "w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-start gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200",
+                    "t-dark:not-last:border-b-zinc-800 t-dark:bg-zinc-900",
+                    "t-light:not-last:border-b-zinc-300 t-light:bg-zinc-100",
+                    "t-rust:not-last:border-b-rust-800 t-rust:bg-rust-900",
+                    "t-midnight:not-last:border-b-gray-800 t-midnight:bg-gray-900",
                   ]}
                 >
                   {#snippet children({ selected })}

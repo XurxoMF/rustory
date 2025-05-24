@@ -11,13 +11,13 @@
   type ButtonDnagerPropsType = HTMLButtonAttributes & {
     children: Snippet<[]>;
     rounded?: RoundedTypes;
-    shadow?: boolean;
+    icon?: boolean;
   };
 
   let {
     children,
     rounded = "regular",
-    shadow = false,
+    icon = false,
     ...restProps
   }: ButtonDnagerPropsType = $props();
 </script>
@@ -25,9 +25,9 @@
 <button
   {...restProps}
   class={[
-    "w-fit flex items-center justify-center cursor-pointer p-1 disabled:opacity-50 enabled:hover:scale-105 transition-[opacity,scale] duration-200 bg-yellow-500",
+    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-yellow-500 bg-yellow-500/20 enabled:hover:bg-yellow-500 transition-[opacity,border,background-color] duration-200",
+    icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
-    shadow && "enabled:shadow-sm enabled:shadow-black/50",
   ]}
 >
   {@render children()}

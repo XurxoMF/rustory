@@ -7,13 +7,16 @@
 {#each RustoryConfig.THEMES as THEME}
   <button
     class={[
-      "w-8 h-8 rounded-full cursor-pointer border border-zinc-500 enabled:shadow-sm enabled:shadow-black/50 disabled:opacity-50 enabled:hover:scale-105 transition-[scale,opacity] duration-200",
+      "w-8 h-8 rounded-full cursor-pointer disabled:opacity-50 border transition-[opacity,border] duration-200",
+      "t-dark:border-zinc-800",
+      "t-light:border-zinc-300",
+      "t-rust:border-rust-800",
+      "t-midnight:border-gray-800",
       THEME.color,
     ]}
     onclick={() => (rustory.config.theme = THEME.key)}
-    title={THEME.localesKey}
-    aria-label={THEME.localesKey}
+    title={THEME.name}
+    aria-label={THEME.name}
     disabled={THEME.key === rustory.config.theme}
   ></button>
-  <!-- TODO: paraglide -->
 {/each}
