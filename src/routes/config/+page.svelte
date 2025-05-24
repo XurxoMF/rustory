@@ -8,10 +8,8 @@
   import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
   import { RustoryConfig } from "$lib/classes/RustoryConfig.svelte";
   import CollapsibleSection from "$lib/ui/layout/CollapsibleSection.svelte";
-  import TwoColumnGrid from "$lib/ui/layout/Grids/TwoColumnGrid.svelte";
-  import FieldsColumn from "$lib/ui/form/Layout/FieldsColumn.svelte";
-  import FieldsTitle from "$lib/ui/form/Layout/FieldsTitle.svelte";
-  import FieldsDescription from "$lib/ui/form/Layout/FieldsDescription.svelte";
+  import { TwoColumnGrid } from "$lib/ui/layout/Grids";
+  import { FieldsColumn, FieldsTitle, FieldsDescription } from "$lib/ui/form/Layout";
 
   rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 

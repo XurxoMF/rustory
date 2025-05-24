@@ -10,11 +10,11 @@
 
 <div
   class={[
-    "w-full h-2 rounded-full overflow-hidden transition-[background-color] duration-200",
-    "t-dark:bg-zinc-800",
-    "t-light:bg-zinc-300",
-    "t-rust:bg-rust-800",
-    "t-midnight:bg-gray-800",
+    "w-full h-2 rounded-full overflow-hidden border transition-[border] duration-200",
+    "t-dark:border-zinc-800",
+    "t-light:border-zinc-300",
+    "t-rust:border-rust-800",
+    "t-midnight:border-gray-800",
   ]}
 >
   <div
@@ -27,10 +27,10 @@
     }}
     class={[
       "w-0 h-full rounded-full transition-[background-color] duration-200",
-      "t-dark:bg-zinc-700",
-      "t-light:bg-zinc-400",
-      "t-rust:bg-rust-700",
-      "t-midnight:bg-gray-700",
+      "t-dark:bg-zinc-800",
+      "t-light:bg-zinc-300",
+      "t-rust:bg-rust-800",
+      "t-midnight:bg-gray-800",
     ]}
   ></div>
 </div>
