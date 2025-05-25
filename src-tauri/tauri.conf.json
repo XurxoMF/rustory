@@ -37,7 +37,19 @@
       }
     ],
     "security": {
-      "csp": null
+      "csp": {
+        "img-src": [
+          "'self'",
+          "asset:",
+          "http://asset.localhost"
+        ]
+      },
+      "assetProtocol": {
+        "enable": true,
+        "scope": {
+          "allow": []
+        }
+      }
     }
   },
   "bundle": {

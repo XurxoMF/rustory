@@ -10,6 +10,8 @@
   ],
   "permissions": [
     "updater:default",
-    "window-state:default"
+    "window-state:default",
+    "log:default",
+    "notification:default"
   ]
 }

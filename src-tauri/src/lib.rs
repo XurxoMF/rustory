@@ -7,7 +7,17 @@ use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let mut builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default().plugin(tauri_plugin_notification::init());
+
+    builder = builder.plugin(
+        tauri_plugin_log::Builder::new()
+            .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
+            .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
+            .format(|out, message, record| {
+                out.finish(format_args!("[{}] {}", record.level(), message))
+            })
+            .build(),
+    );
 
     #[cfg(desktop)]
     {
