@@ -25,7 +25,7 @@
 <button
   {...restProps}
   class={[
-    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-yellow-500 bg-yellow-500/20 enabled:hover:bg-yellow-500 transition-[opacity,border,background-color] duration-200",
+    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-yellow-400 bg-yellow-500/75 enabled:hover:bg-yellow-500 transition-[opacity,border,background-color] duration-200",
     icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
   ]}

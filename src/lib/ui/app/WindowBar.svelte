@@ -10,11 +10,11 @@
 <div
   data-tauri-drag-region
   class={[
-    "shrink-0 w-full flex items-center justify-between gap-6 p-2 text-sm border-b transition-[border] duration-200",
-    "t-dark:border-b-zinc-800",
-    "t-light:border-b-zinc-300",
-    "t-rust:border-b-rust-800",
-    "t-midnight:border-b-gray-800",
+    "shrink-0 w-full flex items-center justify-between gap-6 p-2 text-sm border-b transition-[border,background-color] duration-200",
+    "t-dark:bg-zinc-850 t-dark:border-b-zinc-750",
+    "t-light:bg-zinc-150 t-light:border-b-zinc-250",
+    "t-rust:bg-rust-850 t-rust:border-b-rust-750",
+    "t-midnight:bg-gray-850 t-midnight:border-b-gray-750",
   ]}
 >
   <div data-tauri-drag-region class="flex-1 flex items-center justify-start gap-6">

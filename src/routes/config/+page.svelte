@@ -4,36 +4,21 @@
   import { rustory } from "$lib/stores/rustory";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
-  import ThemeSelector from "$lib/ui/settings/Theme.svelte";
-  import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
-  import { RustoryConfig } from "$lib/classes/RustoryConfig.svelte";
-  import CollapsibleSection from "$lib/ui/layout/CollapsibleSection.svelte";
-  import { TwoColumnGrid } from "$lib/ui/layout/Grids";
+  import { CollapsibleSection, GridSection } from "$lib/ui/layout/Sections";
   import { FieldsColumn, FieldsTitle, FieldsDescription } from "$lib/ui/form/Layout";
+  import Lang from "$lib/ui/settings/Lang.svelte";
+  import ThemeSelector from "$lib/ui/settings/Theme.svelte";
 
   rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
-
-  let langs: SelectItemType[] = RustoryConfig.LANGUAGES_DATA.map((lang) => ({
-    value: lang.lang,
-    label: lang.name,
-  }));
-  let lang: string | undefined = rustory.config.lang;
 </script>
 
 <PageWrapper scrollable={true}>
-  <div class="w-full flex flex-col items-center justify-center gap-2">
+  <div class="w-full space-y-2">
     <CollapsibleSection title={m.settings__interface()} open>
-      <TwoColumnGrid>
+      <GridSection columns={2}>
         <FieldsColumn>
           <FieldsTitle>{m.settings__language()}</FieldsTitle>
-          <Select
-            placeholder={m.placeholders__select_one()}
-            items={langs}
-            bind:value={lang}
-            onValueChange={(e) => {
-              if (e !== undefined) rustory.config.lang = e;
-            }}
-          />
+          <Lang />
           <FieldsDescription>{m.settings__lang_restart_needed()}</FieldsDescription>
         </FieldsColumn>
 
@@ -43,7 +28,7 @@
             <ThemeSelector />
           </div>
         </FieldsColumn>
-      </TwoColumnGrid>
+      </GridSection>
     </CollapsibleSection>
   </div>
 </PageWrapper>

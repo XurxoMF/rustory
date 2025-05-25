@@ -17,11 +17,11 @@
 
 <nav
   class={[
-    "relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden border-r transition-[width,border] duration-200",
-    "t-dark:border-r-zinc-800",
-    "t-light:border-r-zinc-300",
-    "t-rust:border-r-rust-800",
-    "t-midnight:border-r-gray-800",
+    "relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden border-r transition-[width,border,background-color] duration-200",
+    "t-dark:bg-zinc-850 t-dark:border-r-zinc-750",
+    "t-light:bg-zinc-150 t-light:border-r-zinc-250",
+    "t-rust:bg-rust-850 t-rust:border-r-rust-750",
+    "t-midnight:bg-gray-850 t-midnight:border-r-gray-750",
     open ? "w-60" : "w-14",
   ]}
   onmouseenter={() => (open = true)}
@@ -40,7 +40,7 @@
     class={[
       "relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm transition-[background-color] duration-200",
       't-dark:hover:bg-zinc-800 t-dark:data-[currenturl="true"]:bg-zinc-800',
-      't-light:hover:bg-zinc-300 t-light:data-[currenturl="true"]:bg-zinc-300',
+      't-light:hover:bg-zinc-200 t-light:data-[currenturl="true"]:bg-zinc-200',
       't-rust:hover:bg-rust-800 t-rust:data-[currenturl="true"]:bg-rust-800',
       't-midnight:hover:bg-gray-800 t-midnight:data-[currenturl="true"]:bg-gray-800',
     ]}

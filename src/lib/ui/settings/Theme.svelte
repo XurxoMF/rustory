@@ -8,10 +8,10 @@
   <button
     class={[
       "w-8 h-8 rounded-full cursor-pointer disabled:opacity-50 border transition-[opacity,border] duration-200",
-      "t-dark:border-zinc-800",
-      "t-light:border-zinc-300",
-      "t-rust:border-rust-800",
-      "t-midnight:border-gray-800",
+      "t-dark:border-zinc-750",
+      "t-light:border-zinc-250",
+      "t-rust:border-rust-750",
+      "t-midnight:border-gray-750",
       THEME.color,
     ]}
     onclick={() => (rustory.config.theme = THEME.key)}
