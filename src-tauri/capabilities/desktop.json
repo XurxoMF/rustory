@@ -12,6 +12,7 @@
     "updater:default",
     "window-state:default",
     "log:default",
-    "notification:default"
+    "notification:default",
+    "opener:default"
   ]
 }
