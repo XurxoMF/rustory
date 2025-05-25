@@ -8,7 +8,9 @@ use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let mut builder = tauri::Builder::default().plugin(tauri_plugin_notification::init());
+    let mut builder = tauri::Builder::default();
+
+    builder = builder.plugin(tauri_plugin_notification::init());
 
     builder = builder.plugin(
         tauri_plugin_log::Builder::new()
