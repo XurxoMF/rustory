@@ -1,3 +1,4 @@
+use chrono::Local;
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
@@ -12,9 +13,13 @@ pub fn run() {
     builder = builder.plugin(
         tauri_plugin_log::Builder::new()
             .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
-            .timezone_strategy(tauri_plugin_log::TimezoneStrategy::UseLocal)
             .format(|out, message, record| {
-                out.finish(format_args!("[{}] {}", record.level(), message))
+                out.finish(format_args!(
+                    "[{}][{}] {}",
+                    Local::now().format("%Y-%m-%d %H:%M:%S"),
+                    record.level(),
+                    message
+                ));
             })
             .build(),
     );

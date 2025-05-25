@@ -9,11 +9,5 @@
 <PageWrapper scrollable={false}>
   <p>¡Hola Mundo!</p>
 
-  <button
-    onclick={() => {
-      rustory.notify("Título", "Contido");
-    }}
-  >
-    notificación
-  </button>
+  <button onclick={() => rustory.log("info", "Hola")}> Log </button>
 </PageWrapper>
