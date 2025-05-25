@@ -5,9 +5,10 @@
   type SectionProps = {
     children: Snippet<[]>;
     title?: string;
+    isContainer?: boolean;
   };
 
-  let { children, title }: SectionProps = $props();
+  let { children, title, isContainer = false }: SectionProps = $props();
 </script>
 
 <div
@@ -34,6 +35,7 @@
         "t-light:border-t-zinc-250",
         "t-rust:border-t-rust-750",
         "t-midnight:border-t-gray-750",
+        isContainer && "@container",
       ],
     ]}
   >

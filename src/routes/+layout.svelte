@@ -116,5 +116,7 @@
         {@render children()}
       </main>
     </div>
+
+    <div id="portal"></div>
   </div>
 {/if}

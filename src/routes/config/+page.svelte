@@ -7,15 +7,16 @@
   import { CollapsibleSection, GridSection } from "$lib/ui/layout/Sections";
   import { FieldsColumn, FieldsTitle, FieldsDescription } from "$lib/ui/form/Layout";
   import Lang from "$lib/ui/settings/Lang.svelte";
-  import ThemeSelector from "$lib/ui/settings/Theme.svelte";
+  import Scale from "$lib/ui/settings/Scale.svelte";
+  import Theme from "$lib/ui/settings/Theme.svelte";
 
   rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={true}>
-  <div class="w-full space-y-2">
+  <div class="w-full flex flex-col gap-2">
     <CollapsibleSection title={m.settings__interface()} open>
-      <GridSection columns={2}>
+      <GridSection columns={3}>
         <FieldsColumn>
           <FieldsTitle>{m.settings__language()}</FieldsTitle>
           <Lang />
@@ -23,9 +24,14 @@
         </FieldsColumn>
 
         <FieldsColumn>
+          <FieldsTitle>{m.settings__uiscale()}</FieldsTitle>
+          <Scale />
+        </FieldsColumn>
+
+        <FieldsColumn>
           <FieldsTitle>{m.settings__theme()}</FieldsTitle>
           <div class="w-full flex items-center gap-2">
-            <ThemeSelector />
+            <Theme />
           </div>
         </FieldsColumn>
       </GridSection>

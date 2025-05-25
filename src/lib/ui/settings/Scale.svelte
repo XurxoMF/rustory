@@ -7,19 +7,18 @@
 
   import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
 
-  let langs: SelectItemType[] = RustoryConfig.LANGUAGES_DATA.map((LANG) => ({
-    value: LANG.lang,
-    label: LANG.name,
-    comment: LANG.credits.join(", "),
+  let scales: SelectItemType[] = RustoryConfig.SCALES.map((SCALE) => ({
+    value: SCALE.scale,
+    label: SCALE.name,
   }));
-  let lang: string | undefined = rustory.config.lang;
+  let scale: string | undefined = rustory.config.scale;
 </script>
 
 <Select
   placeholder={m.placeholders__select_one()}
-  items={langs}
-  bind:value={lang}
+  items={scales}
+  bind:value={scale}
   onValueChange={(e) => {
-    if (e !== undefined) rustory.config.lang = e;
+    if (e !== undefined) rustory.config.scale = e;
   }}
 />

@@ -4,9 +4,13 @@
 
   import ScrollableContainer from "$lib/ui/base/ScrollableContainer.svelte";
 
-  type PageWrapperPropsType = { children: Snippet<[]>; scrollable?: boolean };
+  type PageWrapperPropsType = {
+    children: Snippet<[]>;
+    isContainer?: boolean;
+    scrollable?: boolean;
+  };
 
-  let { children, scrollable = true }: PageWrapperPropsType = $props();
+  let { children, isContainer = false, scrollable = true }: PageWrapperPropsType = $props();
 
   const ANIMATION_DURATION: number = 100;
 </script>
@@ -19,7 +23,7 @@
   {#if scrollable}
     <ScrollableContainer
       orientation="vertical"
-      class="w-full h-full overflow-hidden"
+      class={["w-full h-full overflow-hidden", isContainer && "@container"]}
       viewportClasses="w-full h-full p-2"
     >
       {@render children()}

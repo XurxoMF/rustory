@@ -21,5 +21,6 @@
   "settings__theme": "Tema",
   "settings__language": "Idioma",
   "settings__interface": "Interfaz",
-  "settings__lang_restart_needed": "¡Es necesario reiniciar o recargar para que el idioma cambie completamente!"
+  "settings__lang_restart_needed": "¡Es necesario reiniciar o recargar para que el idioma cambie completamente!",
+  "settings__uiscale": "Escala de la UI"
 }

@@ -11,15 +11,26 @@ export class RustoryConfig {
     { key: "light", name: m.themes__light(), color: "bg-zinc-100" },
     { key: "rust", name: m.themes__rust(), color: "bg-rust-900" },
     { key: "midnight", name: m.theme__midnight(), color: "bg-gray-900" },
-  ];
+  ] as const;
 
   /**
    * List of all the available locales with their data.
    */
-  static LANGUAGES_DATA: LanguagesDataType[] = [
+  static LANGUAGES_DATA = [
     { lang: "en", name: m.lang__english(), credits: ["XurxoMF"] },
     { lang: "es", name: m.lang__spanish(), credits: ["XurxoMF"] },
-  ];
+  ] as const;
+
+  /**
+   * List of scales for the UI.
+   */
+  static SCALES = [
+    { scale: "50", name: "50%" },
+    { scale: "75", name: "75%" },
+    { scale: "100", name: "100%" },
+    { scale: "125", name: "125%" },
+    { scale: "150", name: "150%" },
+  ] as const;
 
   /**
    * Key of the current used theme.
@@ -32,6 +43,11 @@ export class RustoryConfig {
   private _lang: Locale = $state("en");
 
   /**
+   * Key of the selected scale.
+   */
+  private _scale: string = $state("100");
+
+  /**
    * Loads all the configs on this instance of RustoryInfo.
    */
   async init(): Promise<void> {
@@ -42,6 +58,10 @@ export class RustoryConfig {
     let lang = localStorage.getItem("lang");
     lang = RustoryConfig.changeLanguage(lang);
     this._lang = lang as Locale;
+
+    let scale = localStorage.getItem("uiscale");
+    scale = RustoryConfig.applyScale(scale);
+    this._scale = scale;
   }
 
   /**
@@ -83,6 +103,25 @@ export class RustoryConfig {
   }
 
   /**
+   * Key of the selected scale.
+   */
+  get scale(): string {
+    return this._scale;
+  }
+
+  /**
+   * Changes the scale to the one with the provided key.
+   *
+   * If no key or an invalidad key is provided it'll default to "100".
+   *
+   * @param scale - The key of the scale to apply.
+   */
+  set scale(scale: string) {
+    scale = RustoryConfig.applyScale(scale);
+    this._scale = scale;
+  }
+
+  /**
    * Checks if the provided language is valid and changes it. If it's not valid it'll default to "en".
    *
    * @param theme - The key of the language to change to.
@@ -113,6 +152,19 @@ export class RustoryConfig {
 
     return theme;
   }
-}
 
-type LanguagesDataType = { lang: Locale; name: string; credits: string[] };
+  /**
+   * Checks if the provided scale is valid and applies it. If it's not valid it'll default to "100".
+   *
+   * @param scale - The key of the scale to apply.
+   * @returns - The key of the applied scale.
+   */
+  private static applyScale(scale: string | null | undefined): string {
+    if (!scale || !RustoryConfig.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
+
+    localStorage.setItem("uiscale", scale);
+    document.documentElement.setAttribute("data-uiscale", scale);
+
+    return scale;
+  }
+}

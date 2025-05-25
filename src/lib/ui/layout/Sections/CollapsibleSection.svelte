@@ -9,12 +9,14 @@
     "open" | "ref" | "children"
   > & {
     title: string;
+    isContainer?: boolean;
   };
 
   let {
     open = $bindable(false),
     ref = $bindable(null),
     title,
+    isContainer = false,
     children,
   }: CollapsibleSectionProps = $props();
 </script>
@@ -49,6 +51,7 @@
               "t-light:border-t-zinc-250",
               "t-rust:border-t-rust-750",
               "t-midnight:border-t-gray-750",
+              isContainer && "@container",
             ]}
           >
             {@render children?.()}

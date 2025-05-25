@@ -5,10 +5,11 @@
 
   type ScrollableSectionPropsType = {
     orientation: "vertical" | "horizontal" | "both";
+    isContainer?: boolean;
     children: Snippet<[]>;
   };
 
-  let { orientation, children }: ScrollableSectionPropsType = $props();
+  let { orientation, isContainer = false, children }: ScrollableSectionPropsType = $props();
 </script>
 
 <ScrollableContainer
@@ -19,8 +20,9 @@
     "t-light:bg-zinc-150 t-light:border-zinc-250",
     "t-rust:bg-rust-850 t-rust:border-rust-750",
     "t-midnight:bg-gray-850 t-midnight:border-gray-750",
+    isContainer && "@container",
   ]}
-  viewportClasses="w-full h-full"
+  viewportClasses={"w-full h-full"}
 >
   {@render children()}
 </ScrollableContainer>

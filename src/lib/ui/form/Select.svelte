@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Select } from "bits-ui";
+  import { Portal, Select } from "bits-ui";
   import { slide } from "svelte/transition";
 
   import Icon from "$lib/ui/base/Icon.svelte";
@@ -49,45 +49,51 @@
       class={["transition-transform duration-200", isOpen && "rotate-180"]}
     />
   </Select.Trigger>
-  <Select.Content
-    class={[
-      "max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border,background-color] duration-200",
-      "t-dark:bg-zinc-800 t-dark:border-zinc-750",
-      "t-light:bg-zinc-200 t-light:border-zinc-250",
-      "t-rust:bg-rust-800 t-rust:border-rust-750",
-      "t-midnight:bg-gray-800 t-midnight:border-gray-750",
-    ]}
-    forceMount
-  >
-    {#snippet child({ props, wrapperProps })}
-      {#if isOpen}
-        <div {...wrapperProps}>
-          <div {...props} transition:slide={{ duration: 200 }}>
-            <Select.Viewport>
-              {#each items as { value, label, comment, disabled } (value)}
-                <Select.Item
-                  {value}
-                  {label}
-                  {disabled}
-                  class={[
-                    "w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-start gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200",
-                    "t-dark:not-last:border-b-zinc-750",
-                    "t-light:not-last:border-b-zinc-250",
-                    "t-rust:not-last:border-b-rust-750",
-                    "t-midnight:not-last:border-b-gray-750",
-                  ]}
-                >
-                  {#snippet children({ selected })}
-                    {selected ? "✅" : ""}
+  <Select.Portal to="#portal">
+    <Select.Content
+      class={[
+        "max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border,background-color] duration-200",
+        "t-dark:bg-zinc-800 t-dark:border-zinc-750",
+        "t-light:bg-zinc-200 t-light:border-zinc-250",
+        "t-rust:bg-rust-800 t-rust:border-rust-750",
+        "t-midnight:bg-gray-800 t-midnight:border-gray-750",
+      ]}
+      forceMount
+    >
+      {#snippet child({ props, wrapperProps })}
+        {#if isOpen}
+          <div {...wrapperProps}>
+            <div {...props} transition:slide={{ duration: 200 }}>
+              <Select.Viewport>
+                {#each items as { value, label, comment, disabled } (value)}
+                  <Select.Item
+                    {value}
                     {label}
-                    <span class="text-xs opacity-50">{comment}</span>
-                  {/snippet}
-                </Select.Item>
-              {/each}
-            </Select.Viewport>
+                    {disabled}
+                    class={[
+                      "w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200",
+                      "t-dark:not-last:border-b-zinc-750",
+                      "t-light:not-last:border-b-zinc-250",
+                      "t-rust:not-last:border-b-rust-750",
+                      "t-midnight:not-last:border-b-gray-750",
+                    ]}
+                  >
+                    {#snippet children({ selected })}
+                      <div class="flex items-center justify-start gap-2">
+                        {label}
+                        <span class="text-xs opacity-50">{comment}</span>
+                      </div>
+                      {#if selected}
+                        <Icon icon="ph:check-bold" />
+                      {/if}
+                    {/snippet}
+                  </Select.Item>
+                {/each}
+              </Select.Viewport>
+            </div>
           </div>
-        </div>
-      {/if}
-    {/snippet}
-  </Select.Content>
+        {/if}
+      {/snippet}
+    </Select.Content>
+  </Select.Portal>
 </Select.Root>
