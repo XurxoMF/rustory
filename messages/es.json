@@ -29,5 +29,6 @@
   "settings__servers_folder": "Carpeta de Servidores",
   "settings__default_folder_servers": "Carpeta de Servidores por defecto",
   "settings__theme_description": "Color principal de la APP",
-  "settings__scale_description": "Escala de la UI de la APP"
+  "settings__scale_description": "Escala de la UI de la APP",
+  "common__select_folder": "Selecciona una carpeta"
 }

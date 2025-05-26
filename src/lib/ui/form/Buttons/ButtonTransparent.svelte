@@ -8,7 +8,7 @@
   } as const;
   type RoundedTypes = keyof typeof ROUNDED_CLASSES;
 
-  type ButtonTransparentPropsType = HTMLButtonAttributes & {
+  type ButtonTransparentPropsType = Omit<HTMLButtonAttributes, "class"> & {
     children: Snippet<[]>;
     rounded?: RoundedTypes;
     icon?: boolean;
@@ -23,7 +23,6 @@
 </script>
 
 <button
-  {...restProps}
   class={[
     "w-fit flex items-center justify-center enabled:cursor-pointer  disabled:opacity-50 border transition-[opacity,border,background-color] duration-200",
     "t-dark:border-zinc-750 t-dark:enabled:hover:bg-zinc-800",
@@ -33,6 +32,7 @@
     icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
   ]}
+  {...restProps}
 >
   {@render children()}
 </button>

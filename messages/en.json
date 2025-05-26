@@ -29,5 +29,6 @@
   "settings__servers_folder": "Servers folder",
   "settings__default_folder_servers": "Default folder for Server",
   "settings__theme_description": "Main color of the APP",
-  "settings__scale_description": "Scale of the APP UI"
+  "settings__scale_description": "Scale of the APP UI",
+  "common__select_folder": "Select a folder"
 }

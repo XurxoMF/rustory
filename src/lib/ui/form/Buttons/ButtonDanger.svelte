@@ -8,7 +8,7 @@
   } as const;
   type RoundedTypes = keyof typeof ROUNDED_CLASSES;
 
-  type ButtonSuccessPropsType = HTMLButtonAttributes & {
+  type ButtonDangerPropsType = Omit<HTMLButtonAttributes, "class"> & {
     children: Snippet<[]>;
     rounded?: RoundedTypes;
     icon?: boolean;
@@ -19,16 +19,16 @@
     rounded = "regular",
     icon = false,
     ...restProps
-  }: ButtonSuccessPropsType = $props();
+  }: ButtonDangerPropsType = $props();
 </script>
 
 <button
-  {...restProps}
   class={[
-    "w-fit flex items-center justify-center enabled:cursor-pointer px-2 py-1 disabled:opacity-50 border border-green-600 bg-green-700/75 enabled:hover:bg-green-700 transition-[opacity,border,background-color] duration-200",
+    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-red-700 bg-red-800/75 enabled:hover:bg-red-800 transition-[opacity,border,background-color] duration-200",
     icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
   ]}
+  {...restProps}
 >
   {@render children()}
 </button>

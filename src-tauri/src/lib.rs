@@ -10,6 +10,8 @@ use tauri_plugin_window_state::StateFlags;
 pub fn run() {
     let mut builder = tauri::Builder::default();
 
+    builder = builder.plugin(tauri_plugin_dialog::init());
+
     builder = builder.plugin(tauri_plugin_notification::init());
 
     builder = builder.plugin(

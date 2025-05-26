@@ -10,6 +10,10 @@
   import Lang from "$lib/ui/settings/Lang.svelte";
   import Scale from "$lib/ui/settings/Scale.svelte";
   import Theme from "$lib/ui/settings/Theme.svelte";
+  import { TextInput } from "$lib/ui/form/Inputs";
+  import { ButtonNeutral } from "$lib/ui/form/Buttons";
+  import Icon from "$lib/ui/base/Icon.svelte";
+  import { open } from "@tauri-apps/plugin-dialog";
 
   rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
@@ -37,7 +41,7 @@
         <GridItem>
           <FieldsWrapper>
             <FieldsTitle>{m.settings__theme()}</FieldsTitle>
-            <div class="w-full flex items-center gap-2">
+            <div class="w-full flex items-center gap-1">
               <Theme />
             </div>
             <FieldsDescription>{m.settings__theme_description()}</FieldsDescription>
@@ -51,20 +55,27 @@
         <GridItem>
           <FieldsWrapper>
             <FieldsTitle>{m.settings__instances_folder()}</FieldsTitle>
-            <input
-              type="text"
-              class={[
-                "w-full flex items-center justify-between gap-2 px-2 py-1 rounded-sm cursor-pointer border transition-[border,background-color] duration-200",
-                "t-dark:bg-zinc-800 t-dark:border-zinc-750",
-                "t-light:bg-zinc-200 t-light:border-zinc-250",
-                "t-rust:bg-rust-800 t-rust:border-rust-750",
-                "t-midnight:bg-gray-800 t-midnight:border-gray-750",
-              ]}
-              name={m.settings__instances_folder()}
-              placeholder={m.settings__instances_folder()}
-              value={rustory.config.instancesPath}
-              onchange={(e) => (rustory.config.instancesPath = e.currentTarget.value)}
-            />
+            <FieldsWrapper direction="x">
+              <ButtonNeutral
+                title={m.common__select_folder()}
+                onclick={async () => {
+                  const folder = await open({
+                    directory: true,
+                    title: m.settings__instances_folder(),
+                  });
+                  if (!folder) return;
+                  rustory.config.instancesPath = folder;
+                }}
+              >
+                <Icon icon="ph:magnifying-glass" />
+              </ButtonNeutral>
+              <TextInput
+                name={m.settings__instances_folder()}
+                placeholder={m.settings__instances_folder()}
+                value={rustory.config.instancesPath}
+                onchange={(e) => (rustory.config.instancesPath = e.currentTarget.value)}
+              />
+            </FieldsWrapper>
             <FieldsDescription>{m.settings__default_folder_instances()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
@@ -72,20 +83,28 @@
         <GridItem>
           <FieldsWrapper>
             <FieldsTitle>{m.settings__servers_folder()}</FieldsTitle>
-            <input
-              type="text"
-              class={[
-                "w-full flex items-center justify-between gap-2 px-2 py-1 rounded-sm cursor-pointer border transition-[border,background-color] duration-200",
-                "t-dark:bg-zinc-800 t-dark:border-zinc-750",
-                "t-light:bg-zinc-200 t-light:border-zinc-250",
-                "t-rust:bg-rust-800 t-rust:border-rust-750",
-                "t-midnight:bg-gray-800 t-midnight:border-gray-750",
-              ]}
-              name={m.settings__servers_folder()}
-              placeholder={m.settings__servers_folder()}
-              value={rustory.config.serversPath}
-              onchange={(e) => (rustory.config.serversPath = e.currentTarget.value)}
-            />
+            <FieldsWrapper direction="x">
+              <ButtonNeutral
+                title={m.common__select_folder()}
+                onclick={async () => {
+                  const folder = await open({
+                    directory: true,
+                    title: m.settings__servers_folder(),
+                  });
+                  if (!folder) return;
+                  rustory.config.serversPath = folder;
+                }}
+              >
+                <Icon icon="ph:magnifying-glass" />
+              </ButtonNeutral>
+              <TextInput
+                name={m.settings__servers_folder()}
+                placeholder={m.settings__servers_folder()}
+                value={rustory.config.serversPath}
+                onchange={(e) => (rustory.config.serversPath = e.currentTarget.value)}
+              />
+            </FieldsWrapper>
+
             <FieldsDescription>{m.settings__default_folder_servers()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>

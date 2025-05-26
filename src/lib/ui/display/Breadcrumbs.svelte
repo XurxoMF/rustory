@@ -4,7 +4,7 @@
 
   import { rustory } from "$lib/stores/rustory";
 
-  import { ButtonUnstyled } from "$lib/ui/form/Button";
+  import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
 </script>
 

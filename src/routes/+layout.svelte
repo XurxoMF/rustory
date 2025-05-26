@@ -54,11 +54,11 @@
 {#if loader.isVisible}
   <div
     class={[
-      "fixed z-[1000] w-full h-full flex flex-col items-center justify-center gap-8 transition-colors duration-200",
-      "t-dark:text-zinc-100 t-dark:bg-zinc-900",
-      "t-light:text-zinc-900 t-light:bg-zinc-100",
-      "t-rust:text-rust-100 t-rust:bg-rust-900",
-      "t-midnight:text-gray-100 t-midnight:bg-gray-900",
+      "fixed z-[1000] w-full h-full flex flex-col items-center justify-center gap-8 border transition-[color,background-color,border] duration-200",
+      "t-dark:text-zinc-100 t-dark:bg-zinc-900 t-dark:border-zinc-750",
+      "t-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250",
+      "t-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750",
+      "t-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750",
       !rustory.mainWindow.isMaximized && "rounded-md",
     ]}
     out:fade={{ duration: 200, delay: 200 }}
@@ -99,11 +99,11 @@
 {#if loadUI}
   <div
     class={[
-      "w-screen h-screen flex flex-col select-none overflow-hidden transition-colors duration-200",
-      "t-dark:text-zinc-100 t-dark:bg-zinc-900",
-      "t-light:text-zinc-900 t-light:bg-zinc-100",
-      "t-rust:text-rust-100 t-rust:bg-rust-900",
-      "t-midnight:text-gray-100 t-midnight:bg-gray-900",
+      "w-screen h-screen flex flex-col select-none overflow-hidden border transition-[color,background-color,border] duration-200",
+      "t-dark:text-zinc-100 t-dark:bg-zinc-900 t-dark:border-zinc-750",
+      "t-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250",
+      "t-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750",
+      "t-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750",
       !rustory.mainWindow.isMaximized && "rounded-md",
     ]}
   >

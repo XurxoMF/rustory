@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { ButtonUnstyled } from "$lib/ui/form/Button";
+  import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
 </script>
 
