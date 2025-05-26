@@ -24,12 +24,12 @@
     <ScrollableContainer
       orientation="vertical"
       class={["w-full h-full overflow-hidden", isContainer && "@container"]}
-      viewportClasses="w-full h-full p-2"
+      viewportClasses="w-full h-full"
     >
       {@render children()}
     </ScrollableContainer>
   {:else}
-    <div class="w-full h-full p-2">
+    <div class="w-full h-full">
       {@render children()}
     </div>
   {/if}

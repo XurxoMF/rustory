@@ -1,6 +1,7 @@
 import { m } from "$lib/paraglide/messages";
+import { appDataDir, join } from "@tauri-apps/api/path";
 
-import { isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
+import { getLocale, isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
 
 export class RustoryConfig {
   /**
@@ -48,20 +49,29 @@ export class RustoryConfig {
   private _scale: string = $state("100");
 
   /**
+   * Path where Instances will be saved.
+   */
+  private _instancesPath: string = $state("");
+
+  /**
+   * Path where Servers will be saved.
+   */
+  private _serversPath: string = $state("");
+
+  /**
    * Loads all the configs on this instance of RustoryInfo.
    */
   async init(): Promise<void> {
-    let theme = localStorage.getItem("theme");
-    theme = RustoryConfig.applyTheme(theme);
-    this._theme = theme;
+    this.theme = localStorage.getItem("theme");
+    this.lang = getLocale();
+    this.scale = localStorage.getItem("uiscale");
 
-    let lang = localStorage.getItem("lang");
-    lang = RustoryConfig.changeLanguage(lang);
-    this._lang = lang as Locale;
+    let appDataDirPath = await appDataDir();
 
-    let scale = localStorage.getItem("uiscale");
-    scale = RustoryConfig.applyScale(scale);
-    this._scale = scale;
+    this.instancesPath =
+      localStorage.getItem("instances-path") ?? (await join(appDataDirPath, "Instances"));
+    this.serversPath =
+      localStorage.getItem("servers-path") ?? (await join(appDataDirPath, "Servers"));
   }
 
   /**
@@ -78,7 +88,7 @@ export class RustoryConfig {
    *
    * @param theme - The key of the theme to apply.
    */
-  set theme(theme: string) {
+  set theme(theme: string | null | undefined) {
     theme = RustoryConfig.applyTheme(theme);
     this._theme = theme;
   }
@@ -97,7 +107,7 @@ export class RustoryConfig {
    *
    * @param lang - The key of the langueage to apply.
    */
-  set lang(lang: Locale | string) {
+  set lang(lang: Locale | string | null | undefined) {
     lang = RustoryConfig.changeLanguage(lang);
     this._lang = lang as Locale;
   }
@@ -116,9 +126,43 @@ export class RustoryConfig {
    *
    * @param scale - The key of the scale to apply.
    */
-  set scale(scale: string) {
+  set scale(scale: string | null | undefined) {
     scale = RustoryConfig.applyScale(scale);
     this._scale = scale;
+  }
+
+  /**
+   * Path where Instances will be saved.
+   */
+  get instancesPath(): string {
+    return this._instancesPath;
+  }
+
+  /**
+   * Sets the path where Instances will be saved.
+   *
+   * @param path - The path to set for Instances.
+   */
+  set instancesPath(path: string) {
+    localStorage.setItem("instances-path", path);
+    this._instancesPath = path;
+  }
+
+  /**
+   * Path where Servers will be saved.
+   */
+  get serversPath(): string {
+    return this._serversPath;
+  }
+
+  /**
+   * Sets the path where Servers will be saved.
+   *
+   * @param path - The path to set for Servers.
+   */
+  set serversPath(path: string) {
+    localStorage.setItem("servers-path", path);
+    this._serversPath = path;
   }
 
   /**
@@ -129,12 +173,8 @@ export class RustoryConfig {
    */
   private static changeLanguage(lang: Locale | string | null | undefined): Locale {
     let locale: Locale = "en";
-
     if (isLocale(lang)) locale = lang as Locale;
-
-    localStorage.setItem("lang", locale);
     setLocale(locale, { reload: false });
-
     return locale;
   }
 
@@ -146,10 +186,8 @@ export class RustoryConfig {
    */
   private static applyTheme(theme: string | null | undefined): string {
     if (!theme || !RustoryConfig.THEMES.some((THEME) => THEME.key === theme)) theme = "dark";
-
     localStorage.setItem("theme", theme);
     document.body.setAttribute("data-theme", theme);
-
     return theme;
   }
 
@@ -161,10 +199,8 @@ export class RustoryConfig {
    */
   private static applyScale(scale: string | null | undefined): string {
     if (!scale || !RustoryConfig.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
-
     localStorage.setItem("uiscale", scale);
     document.documentElement.setAttribute("data-uiscale", scale);
-
     return scale;
   }
 }

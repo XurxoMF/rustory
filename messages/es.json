@@ -21,6 +21,13 @@
   "settings__theme": "Tema",
   "settings__language": "Idioma",
   "settings__interface": "Interfaz",
-  "settings__lang_restart_needed": "¡Es necesario reiniciar o recargar para que el idioma cambie completamente!",
-  "settings__uiscale": "Escala de la UI"
+  "settings__lang_restart_needed": "Idioma de la APP. ¡Necesita un reinicio!",
+  "settings__uiscale": "Escala de la UI",
+  "settings__folders": "Carpeta",
+  "settings__instances_folder": "Carpeta de Instancias",
+  "settings__default_folder_instances": "Carpeta de Instancias por defecto",
+  "settings__servers_folder": "Carpeta de Servidores",
+  "settings__default_folder_servers": "Carpeta de Servidores por defecto",
+  "settings__theme_description": "Color principal de la APP",
+  "settings__scale_description": "Escala de la UI de la APP"
 }

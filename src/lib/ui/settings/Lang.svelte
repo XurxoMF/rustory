@@ -12,13 +12,12 @@
     label: LANG.name,
     comment: LANG.credits.join(", "),
   }));
-  let lang: string | undefined = rustory.config.lang;
 </script>
 
 <Select
   placeholder={m.placeholders__select_one()}
   items={langs}
-  bind:value={lang}
+  value={rustory.config.lang}
   onValueChange={(e) => {
     if (e !== undefined) rustory.config.lang = e;
   }}

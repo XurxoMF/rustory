@@ -11,13 +11,12 @@
     value: SCALE.scale,
     label: SCALE.name,
   }));
-  let scale: string | undefined = rustory.config.scale;
 </script>
 
 <Select
   placeholder={m.placeholders__select_one()}
   items={scales}
-  bind:value={scale}
+  value={rustory.config.scale}
   onValueChange={(e) => {
     if (e !== undefined) rustory.config.scale = e;
   }}
