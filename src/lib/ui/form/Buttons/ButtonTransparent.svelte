@@ -24,11 +24,11 @@
 
 <button
   class={[
-    "w-fit flex items-center justify-center enabled:cursor-pointer  disabled:opacity-50 border transition-[opacity,border,background-color] duration-200",
-    "t-dark:border-zinc-750 t-dark:enabled:hover:bg-zinc-800",
-    "t-light:border-zinc-250 t-light:enabled:hover:bg-zinc-200",
-    "t-rust:border-rust-750 t-rust:enabled:hover:bg-rust-800",
-    "t-midnight:border-gray-750 t-midnight:enabled:hover:bg-gray-800",
+    "w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border transition-[opacity,border] duration-200",
+    "t-dark:border-zinc-750",
+    "t-light:border-zinc-250",
+    "t-rust:border-rust-750",
+    "t-midnight:border-gray-750",
     icon ? "p-1" : "px-2 py-1",
     ...ROUNDED_CLASSES[rounded],
   ]}
