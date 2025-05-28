@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { RustoryUser } from "$lib/classes/RustoryUser.svelte";
   import { rustory } from "$lib/stores/rustory";
   import ButtonNeutral from "$lib/ui/form/Buttons/ButtonNeutral.svelte";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
-  import { open } from "@tauri-apps/plugin-dialog";
 
   rustory.mainWindow.breadcrumbs.segments = [];
 </script>
@@ -13,11 +13,7 @@
 
   <ButtonNeutral
     onclick={async () => {
-      const file = await open({
-        directory: true,
-      });
-
-      console.log("User answered:", file);
+      RustoryUser.startLoginWithDiscord();
     }}
   >
     Test thigns

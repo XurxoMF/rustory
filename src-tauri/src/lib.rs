@@ -8,7 +8,19 @@ use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    let mut builder = tauri::Builder::default();
+    let mut builder = tauri::Builder::default().plugin(tauri_plugin_http::init());
+
+    #[cfg(desktop)]
+    {
+        builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            let _ = app
+                .get_webview_window("main")
+                .expect("No main window")
+                .set_focus();
+        }));
+    }
+
+    builder = builder.plugin(tauri_plugin_deep_link::init());
 
     builder = builder.plugin(tauri_plugin_dialog::init());
 
@@ -28,16 +40,6 @@ pub fn run() {
             .build(),
     );
 
-    #[cfg(desktop)]
-    {
-        builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
-            let _ = app
-                .get_webview_window("main")
-                .expect("No main window")
-                .set_focus();
-        }));
-    }
-
     builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
 
     builder = builder.plugin(tauri_plugin_opener::init());
@@ -54,11 +56,21 @@ pub fn run() {
     );
 
     builder = builder.setup(|app| {
+        // Register deep-links on runtime
+        #[cfg(any(windows, target_os = "linux"))]
+        {
+            use tauri_plugin_deep_link::DeepLinkExt;
+            app.deep_link().register_all()?;
+        }
+
+        // Tray menu item
         let open_i = MenuItem::with_id(app, "open", "Open", true, None::<&str>)?;
         let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
 
+        // Tray menu
         let menu = Menu::with_items(app, &[&open_i, &quit_i])?;
 
+        // Tray builder
         TrayIconBuilder::new()
             .icon(app.default_window_icon().unwrap().clone())
             .menu(&menu)

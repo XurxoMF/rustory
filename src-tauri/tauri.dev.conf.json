@@ -1,0 +1,13 @@
+{
+  "productName": "Rustory DEV",
+  "identifier": "xyz.rustory.appdev",
+  "app": {
+    "security": {
+      "capabilities": [
+        "default",
+        "desktop-capability",
+        "dev"
+      ]
+    }
+  }
+}

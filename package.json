@@ -4,6 +4,7 @@
   "description": "Launcher for Vintage Story. Everything you need, one click away!",
   "type": "module",
   "scripts": {
+    "dev:tauri": "npm run tauri dev -- --config src-tauri/tauri.dev.conf.json",
     "dev": "vite dev",
     "build": "vite build",
     "preview": "vite preview",
@@ -16,7 +17,9 @@
     "@floating-ui/dom": "^1.7.0",
     "@iconify/svelte": "^5.0.0-beta.1",
     "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-deep-link": "^2.3.0",
     "@tauri-apps/plugin-dialog": "^2.2.2",
+    "@tauri-apps/plugin-http": "^2.4.4",
     "@tauri-apps/plugin-log": "^2.4.0",
     "@tauri-apps/plugin-notification": "^2.2.2",
     "@tauri-apps/plugin-opener": "^2.2.7",

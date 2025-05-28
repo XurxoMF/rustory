@@ -1,5 +1,7 @@
 {
+  "$schema": "../gen/schemas/desktop-schema.json",
   "identifier": "desktop-capability",
+  "description": "Capability for the desktop apps",
   "platforms": [
     "macOS",
     "windows",
@@ -9,11 +11,6 @@
     "main"
   ],
   "permissions": [
-    "updater:default",
-    "window-state:default",
-    "log:default",
-    "notification:default",
-    "opener:default",
-    "dialog:default"
+    "updater:default"
   ]
 }

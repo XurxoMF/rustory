@@ -18,6 +18,13 @@
       "windows": {
         "installMode": "passive"
       }
+    },
+    "deep-link": {
+      "desktop": {
+        "schemes": [
+          "rustory"
+        ]
+      }
     }
   },
   "app": {
@@ -49,7 +56,11 @@
         "scope": {
           "allow": []
         }
-      }
+      },
+      "capabilities": [
+        "default",
+        "desktop-capability"
+      ]
     }
   },
   "bundle": {

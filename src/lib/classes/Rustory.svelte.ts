@@ -1,22 +1,14 @@
-import {
-  info as logInfo,
-  warn as logWarn,
-  error as logError,
-  debug as logDebug,
-  trace as logTrace,
-} from "@tauri-apps/plugin-log";
-
 import { RustoryWindow } from "./RustoryWindow.svelte";
 import { RustoryInfo } from "./RustoryInfo.svelte";
 import { RustoryConfig } from "./RustoryConfig.svelte";
-import {
-  isPermissionGranted,
-  requestPermission,
-  sendNotification,
-  type Attachment,
-} from "@tauri-apps/plugin-notification";
+import { RustoryUser } from "./RustoryUser.svelte";
 
 export class Rustory {
+  /**
+   * The Rustory API URL to fetch thing to it.
+   */
+  static API_BASE = import.meta.env.VITE_RUSTORY_API;
+
   /**
    * Info about Rustory.
    */
@@ -33,6 +25,11 @@ export class Rustory {
   mainWindow: RustoryWindow;
 
   /**
+   * The user account.
+   */
+  user: RustoryUser;
+
+  /**
    * Creates a new instance of Rustory.
    *
    * Data is not loaded! Execute the .init() method of each property to load the data.
@@ -41,52 +38,6 @@ export class Rustory {
     this.info = new RustoryInfo();
     this.config = new RustoryConfig();
     this.mainWindow = new RustoryWindow();
-  }
-
-  /**
-   * Logs a message to the console and log file.
-   *
-   * @param type - Log level.
-   * @param message - Message to log.
-   */
-  log(type: "info" | "warn" | "error" | "debug" | "trace", message: string): void {
-    switch (type) {
-      case "info":
-        logInfo(message);
-        break;
-      case "warn":
-        logWarn(message);
-        break;
-      case "error":
-        logError(message);
-        break;
-      case "debug":
-        logDebug(message);
-        break;
-      case "trace":
-        logTrace(message);
-        break;
-      default:
-        logInfo(message);
-    }
-  }
-
-  /**
-   * Send a notification to the user using native OS notifications.
-   *
-   * @param title - The notification title.
-   * @param body - The notification body.
-   */
-  async notify(title: string, body: string, attachments?: Attachment[]): Promise<void> {
-    let permissionGranted = await isPermissionGranted();
-
-    if (!permissionGranted) {
-      const permission = await requestPermission();
-      permissionGranted = permission === "granted";
-    }
-
-    if (permissionGranted) {
-      sendNotification({ title, body, attachments });
-    }
+    this.user = new RustoryUser();
   }
 }

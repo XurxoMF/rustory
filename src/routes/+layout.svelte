@@ -1,5 +1,6 @@
 <script lang="ts">
   import { fade, slide } from "svelte/transition";
+  import { onOpenUrl } from "@tauri-apps/plugin-deep-link";
   import { quadOut } from "svelte/easing";
   import { onMount } from "svelte";
 
@@ -11,6 +12,8 @@
   import { loader } from "$lib/stores/loader";
 
   import { sleep } from "$lib/utils/basics";
+  import { manageDeepLinks } from "$lib/utils/deep-links";
+  import { log } from "$lib/utils/logger";
 
   import WindowBar from "$lib/ui/app/WindowBar.svelte";
   import MainNav from "$lib/ui/app/MainNav.svelte";
@@ -42,6 +45,15 @@
     loader.completeTask("app-init");
 
     // Here will be added the future tasks like Instance and Server loading, app updating, check mod updates...
+
+    // Get the user data and tokens
+    await rustory.user.init();
+
+    // Add listener for deep-links
+    await onOpenUrl((urls) => {
+      log("info", `Opened a deep-link!`);
+      manageDeepLinks(urls);
+    });
 
     // Start preloading the UI on the background, wait a few ms for it to load and then complete the last task.
     loadUI = true;
