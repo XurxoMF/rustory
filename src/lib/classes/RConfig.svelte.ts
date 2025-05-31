@@ -3,7 +3,16 @@ import { appDataDir, join } from "@tauri-apps/api/path";
 
 import { getLocale, isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
 
-export class RustoryConfig {
+export class RConfig {
+  private static instance: RConfig | null = null;
+
+  static getInstance(): RConfig {
+    if (RConfig.instance === null) {
+      RConfig.instance = new RConfig();
+    }
+    return RConfig.instance;
+  }
+
   /**
    * List of all the available themes.
    */
@@ -58,6 +67,8 @@ export class RustoryConfig {
    */
   private _serversPath: string = $state("");
 
+  private constructor() {}
+
   /**
    * Loads all the configs on this instance of RustoryInfo.
    */
@@ -89,7 +100,7 @@ export class RustoryConfig {
    * @param theme - The key of the theme to apply.
    */
   set theme(theme: string | null | undefined) {
-    theme = RustoryConfig.applyTheme(theme);
+    theme = RConfig.applyTheme(theme);
     this._theme = theme;
   }
 
@@ -108,7 +119,7 @@ export class RustoryConfig {
    * @param lang - The key of the langueage to apply.
    */
   set lang(lang: Locale | string | null | undefined) {
-    lang = RustoryConfig.changeLanguage(lang);
+    lang = RConfig.changeLanguage(lang);
     this._lang = lang as Locale;
   }
 
@@ -127,7 +138,7 @@ export class RustoryConfig {
    * @param scale - The key of the scale to apply.
    */
   set scale(scale: string | null | undefined) {
-    scale = RustoryConfig.applyScale(scale);
+    scale = RConfig.applyScale(scale);
     this._scale = scale;
   }
 
@@ -185,7 +196,7 @@ export class RustoryConfig {
    * @returns - The key of the applied theme.
    */
   private static applyTheme(theme: string | null | undefined): string {
-    if (!theme || !RustoryConfig.THEMES.some((THEME) => THEME.key === theme)) theme = "dark";
+    if (!theme || !RConfig.THEMES.some((THEME) => THEME.key === theme)) theme = "dark";
     localStorage.setItem("theme", theme);
     document.body.setAttribute("data-theme", theme);
     return theme;
@@ -198,7 +209,7 @@ export class RustoryConfig {
    * @returns - The key of the applied scale.
    */
   private static applyScale(scale: string | null | undefined): string {
-    if (!scale || !RustoryConfig.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
+    if (!scale || !RConfig.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
     localStorage.setItem("uiscale", scale);
     document.documentElement.setAttribute("data-uiscale", scale);
     return scale;

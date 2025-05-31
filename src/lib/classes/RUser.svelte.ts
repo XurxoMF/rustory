@@ -1,10 +1,20 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 
-import { Rustory } from "$lib/classes/Rustory.svelte";
+import { API_BASE } from "$lib/GLOBALS";
+
 import { log } from "$lib/utils/logger";
 
-export class RustoryUser {
+export class RUser {
+  private static instance: RUser | null = null;
+
+  static getInstance(): RUser {
+    if (RUser.instance === null) {
+      RUser.instance = new RUser();
+    }
+    return RUser.instance;
+  }
+
   /**
    * The URI where auth tokens will be redirected to.
    */
@@ -24,6 +34,8 @@ export class RustoryUser {
    * Token used to refresh the access token if this one expires.
    */
   private _refreshToken: string | null = $state(null);
+
+  private constructor() {}
 
   /**
    * The data of the user like Name, Avatar and ID.
@@ -147,7 +159,7 @@ export class RustoryUser {
       "info",
       "[src/lib/classes/RustoryUser.svelte.ts > startLoginWithDiscord()] User logging in with Discord..."
     );
-    const loginUrl = `${Rustory.API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(RustoryUser.REDIRECT_URI)}`;
+    const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(RUser.REDIRECT_URI)}`;
     openUrl(loginUrl);
   }
 
@@ -195,7 +207,7 @@ export class RustoryUser {
       return "no-refresh-token";
     }
 
-    const refreshRes = await fetchPro(`${Rustory.API_BASE}/auth/discord/refresh`, {
+    const refreshRes = await fetchPro(`${API_BASE}/auth/discord/refresh`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ refreshToken: this._refreshToken }),

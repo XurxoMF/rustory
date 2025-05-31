@@ -1,6 +1,6 @@
-import { RustoryUser } from "$lib/classes/RustoryUser.svelte";
+import { RUser } from "$lib/classes/RUser.svelte";
 
-import { rustory } from "$lib/stores/rustory";
+import { rUser } from "$lib/stores/rustory.svelte";
 
 import { log } from "$lib/utils//logger";
 
@@ -8,8 +8,8 @@ export function manageDeepLinks(urls: string[]) {
   for (const url of urls) {
     if (url.startsWith("rustory://auth/discord/callback?")) {
       log("info", "Opened a discord auth deep-link!");
-      const tokens = RustoryUser.getTokensFromDeepLink(url);
-      rustory.user.setTokens(tokens);
+      const tokens = RUser.getTokensFromDeepLink(url);
+      rUser.setTokens(tokens);
     }
   }
 }

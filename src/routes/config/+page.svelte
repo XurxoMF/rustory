@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { rustory } from "$lib/stores/rustory";
+  import { rConfig, rMainWindow } from "$lib/stores/rustory.svelte";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
   import { CollapsibleSection } from "$lib/ui/layout/Sections";
@@ -15,7 +15,7 @@
   import Icon from "$lib/ui/base/Icon.svelte";
   import { open } from "@tauri-apps/plugin-dialog";
 
-  rustory.mainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
+  rMainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={true}>
@@ -64,7 +64,7 @@
                     title: m.settings__instances_folder(),
                   });
                   if (!folder) return;
-                  rustory.config.instancesPath = folder;
+                  rConfig.instancesPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -72,8 +72,8 @@
               <TextInput
                 name={m.settings__instances_folder()}
                 placeholder={m.settings__instances_folder()}
-                value={rustory.config.instancesPath}
-                onchange={(e) => (rustory.config.instancesPath = e.currentTarget.value)}
+                value={rConfig.instancesPath}
+                onchange={(e) => (rConfig.instancesPath = e.currentTarget.value)}
               />
             </FieldsWrapper>
             <FieldsDescription>{m.settings__default_folder_instances()}</FieldsDescription>
@@ -92,7 +92,7 @@
                     title: m.settings__servers_folder(),
                   });
                   if (!folder) return;
-                  rustory.config.serversPath = folder;
+                  rConfig.serversPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -100,8 +100,8 @@
               <TextInput
                 name={m.settings__servers_folder()}
                 placeholder={m.settings__servers_folder()}
-                value={rustory.config.serversPath}
-                onchange={(e) => (rustory.config.serversPath = e.currentTarget.value)}
+                value={rConfig.serversPath}
+                onchange={(e) => (rConfig.serversPath = e.currentTarget.value)}
               />
             </FieldsWrapper>
 

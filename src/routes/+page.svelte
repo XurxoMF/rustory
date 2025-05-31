@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { RustoryUser } from "$lib/classes/RustoryUser.svelte";
-  import { rustory } from "$lib/stores/rustory";
-  import ButtonNeutral from "$lib/ui/form/Buttons/ButtonNeutral.svelte";
+  import { RUser } from "$lib/classes/RUser.svelte";
 
+  import { rMainWindow } from "$lib/stores/rustory.svelte";
+
+  import ButtonNeutral from "$lib/ui/form/Buttons/ButtonNeutral.svelte";
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
 
-  rustory.mainWindow.breadcrumbs.segments = [];
+  rMainWindow.breadcrumbs.segments = [];
 </script>
 
 <PageWrapper scrollable={false}>
@@ -13,7 +14,7 @@
 
   <ButtonNeutral
     onclick={async () => {
-      RustoryUser.startLoginWithDiscord();
+      RUser.startLoginWithDiscord();
     }}
   >
     Test thigns

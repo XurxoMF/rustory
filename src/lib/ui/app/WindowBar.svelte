@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { rustory } from "$lib/stores/rustory";
+  import { rMainWindow, rInfo } from "$lib/stores/rustory.svelte";
 
   import Breadcrumbs from "$lib/ui/display/Breadcrumbs.svelte";
   import HistoryControlls from "../display/HistoryControls.svelte";
@@ -33,7 +33,7 @@
     <div data-tauri-drag-region class="w-fit flex items-center gap-2">
       <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
         <p data-tauri-drag-region>
-          {`${rustory.mainWindow.title} ${rustory.info.version}`}
+          {`${rMainWindow.title} ${rInfo.version}`}
         </p>
       </div>
     </div>

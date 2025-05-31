@@ -2,7 +2,7 @@
   import { goto } from "$app/navigation";
   import { fly } from "svelte/transition";
 
-  import { rustory } from "$lib/stores/rustory";
+  import { rMainWindow } from "$lib/stores/rustory.svelte";
 
   import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
@@ -11,7 +11,7 @@
 <ButtonUnstyled icon onclick={() => goto("/")}>
   <Icon icon="ph:house" />
 </ButtonUnstyled>
-{#each rustory.mainWindow.breadcrumbs.segments as segment (segment.href + segment.label)}
+{#each rMainWindow.breadcrumbs.segments as segment (segment.href + segment.label)}
   <span
     in:fly={{ duration: 200, opacity: 0, x: -5 }}
     out:fly={{ duration: 200, opacity: 0, x: -5 }}

@@ -2,7 +2,16 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
 
-export class RustoryWindow {
+export class RWindow {
+  private static instance: RWindow | null = null;
+
+  static getInstance(): RWindow {
+    if (RWindow.instance === null) {
+      RWindow.instance = new RWindow();
+    }
+    return RWindow.instance;
+  }
+
   /**
    * The label of this window.
    */
@@ -23,12 +32,12 @@ export class RustoryWindow {
    */
   breadcrumbs: Breadcrumbs;
 
-  constructor() {
+  private constructor() {
     this.breadcrumbs = new Breadcrumbs();
   }
 
   /**
-   * Loads all the Window info on this instance of RustoryWindow.
+   * Loads all the Window info on this instance of RWindow.
    */
   async init(): Promise<void> {
     const currentWindow = getCurrentWindow();

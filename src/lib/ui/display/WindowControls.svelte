@@ -3,7 +3,7 @@
 
   import { m } from "$lib/paraglide/messages";
 
-  import { rustory } from "$lib/stores/rustory";
+  import { rMainWindow } from "$lib/stores/rustory.svelte";
 
   import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
@@ -18,13 +18,11 @@
   icon
   onclick={() => {
     appWindow.toggleMaximize();
-    rustory.mainWindow.isMaximized = !rustory.mainWindow.isMaximized;
+    rMainWindow.isMaximized = !rMainWindow.isMaximized;
   }}
-  title={rustory.mainWindow.isMaximized ? m.common__minimize() : m.common_maximize()}
+  title={rMainWindow.isMaximized ? m.common__minimize() : m.common_maximize()}
 >
-  <Icon
-    icon={rustory.mainWindow.isMaximized ? "ph:arrows-in-simple-bold" : "ph:arrows-out-simple-bold"}
-  />
+  <Icon icon={rMainWindow.isMaximized ? "ph:arrows-in-simple-bold" : "ph:arrows-out-simple-bold"} />
 </ButtonUnstyled>
 <ButtonUnstyled icon onclick={() => appWindow.hide()} title={m.common__hide()}>
   <Icon icon="ph:eye-slash-bold" />
