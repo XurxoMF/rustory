@@ -105,7 +105,7 @@ export class RUser {
     this.refreshToken = refreshToken;
     this.refreshAccessToken();
 
-    // TODO: Get the user data!
+    // TODO: Get the user data! First it needs the API implementation.
   }
 
   /**
@@ -161,6 +161,9 @@ export class RUser {
     );
     const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(RUser.REDIRECT_URI)}`;
     openUrl(loginUrl);
+    // After the user logs in on the opened window, a deep-link will be opened.
+    // This will trigger the getTokensFromDeepLink() and then the setTokens() with the obtained tokens.
+    // This is done on the src/lib/utils/deep-link.ts on the manageDeepLinks() function.
   }
 
   /**

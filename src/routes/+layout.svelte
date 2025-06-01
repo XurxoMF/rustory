@@ -32,11 +32,12 @@
     loader.showTasks = false;
 
     // Load the app data and wait a bit so the theme and localization get's correctly changed.
-    // Show the tasks list and loader bar, wait for them to be shown and then check the first task(app data loading) as completed.
     await rConfig.init();
     await rInfo.init();
     await rMainWindow.init();
     await sleep(500);
+
+    // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app data loading).
     loader.showTasks = true;
     await sleep(500);
     loader.completeTask("app-init");

@@ -7,6 +7,7 @@ import { log } from "$lib/utils//logger";
 export function manageDeepLinks(urls: string[]) {
   for (const url of urls) {
     if (url.startsWith("rustory://auth/discord/callback?")) {
+      // Opened after the user logs in in Discord.
       log("info", "Opened a discord auth deep-link!");
       const tokens = RUser.getTokensFromDeepLink(url);
       rUser.setTokens(tokens);
