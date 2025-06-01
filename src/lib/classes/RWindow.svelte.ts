@@ -3,15 +3,6 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
 
 export class RWindow {
-  private static instance: RWindow | null = null;
-
-  static getInstance(): RWindow {
-    if (RWindow.instance === null) {
-      RWindow.instance = new RWindow();
-    }
-    return RWindow.instance;
-  }
-
   /**
    * The label of this window.
    */
@@ -28,12 +19,46 @@ export class RWindow {
   isMaximized: boolean = $state(false);
 
   /**
-   *
+   * The Window Breadcrumbs.
    */
-  breadcrumbs: Breadcrumbs;
+  breadcrumbs: Breadcrumbs = new Breadcrumbs();
 
-  private constructor() {
-    this.breadcrumbs = new Breadcrumbs();
+  /**
+   * The callbacks that will be executed when the page is reloaded.
+   */
+  private _onReaload: OnReloadAction[] = [];
+
+  /**
+   * The callbacks that will be executed when the page is reloaded.
+   *
+   * @returns The list of OnReloadFunctions.
+   */
+  get onReload(): OnReloadAction[] {
+    return this._onReaload;
+  }
+
+  /**
+   * Add a new task to the onRealod list.
+   *
+   * @param task - The task to add to the onReload list
+   */
+  addOnReload(task: OnReloadAction) {
+    this._onReaload.push(task);
+  }
+
+  /**
+   * Remove a task from the onRealod list.
+   *
+   * @param id - The if of the task to remove from the onReload list
+   */
+  removeOnReload(id: string) {
+    this._onReaload = this._onReaload.filter((task) => task.id !== id);
+  }
+
+  executeOnReload() {
+    for (const task of this._onReaload) {
+      task.action();
+    }
   }
 
   /**
@@ -47,3 +72,5 @@ export class RWindow {
     this.isMaximized = await getCurrentWindow().isMaximized();
   }
 }
+
+export type OnReloadAction = { id: string; action: () => void | Promise<void> };

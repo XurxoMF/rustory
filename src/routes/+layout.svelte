@@ -11,6 +11,7 @@
   import { rConfig, rInfo, rMainWindow, rUser } from "$lib/stores/rustory.svelte";
   import { loader } from "$lib/stores/loader.svelte";
 
+  import { getDefaultTrayIconOptions, setTrayIcon } from "$lib/utils/trayIcon";
   import { sleep } from "$lib/utils/basics";
   import { manageDeepLinks } from "$lib/utils/deep-links";
   import { log } from "$lib/utils/logger";
@@ -48,6 +49,10 @@
 
     // Get the user data and tokens
     await rUser.init();
+
+    // Set the TrayIcon
+    const trayIconOptions = await getDefaultTrayIconOptions();
+    await setTrayIcon(trayIconOptions);
 
     // Add listener for deep-links
     await onOpenUrl((urls) => {

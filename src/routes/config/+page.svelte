@@ -14,6 +14,7 @@
   import { ButtonNeutral } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
   import { open } from "@tauri-apps/plugin-dialog";
+  import { onMount } from "svelte";
 
   rMainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>

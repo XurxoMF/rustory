@@ -48,7 +48,8 @@
         "img-src": [
           "'self'",
           "asset:",
-          "http://asset.localhost"
+          "http://asset.localhost",
+          "https://api.unisvg.com"
         ]
       },
       "assetProtocol": {

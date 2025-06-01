@@ -16,6 +16,7 @@
     "core:window:allow-show",
     "core:window:allow-start-dragging",
     "core:window:allow-hide",
+    "core:app:allow-default-window-icon",
     "log:default",
     "notification:default",
     "dialog:default",
@@ -30,6 +31,7 @@
           "url": "https://mods.vintagestory.at"
         }
       ]
-    }
+    },
+    "process:default"
   ]
 }

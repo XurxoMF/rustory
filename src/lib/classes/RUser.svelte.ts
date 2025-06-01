@@ -114,7 +114,7 @@ export class RUser {
    * @param url - The URL where params will be extracted from.
    * @returns null if no params were found or the accessToken and refreshToken.
    */
-  static getTokensFromDeepLink(url: string): TOKENS_TYPE | null {
+  static getTokensFromDeepLink(url: string): TokensType | null {
     log(
       "info",
       "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
@@ -178,7 +178,7 @@ export class RUser {
    *
    * @param tokens - The tokens.
    */
-  setTokens(tokens: TOKENS_TYPE | null | undefined): void {
+  setTokens(tokens: TokensType | null | undefined): void {
     if (!tokens)
       return log(
         "error",
@@ -234,10 +234,10 @@ export class RUser {
   }
 }
 
-type DiscordUser = {
+export type DiscordUser = {
   id: string;
   name: string;
   avatar: string;
 };
 
-type TOKENS_TYPE = { accessToken: string | null; refreshToken: string | null };
+export type TokensType = { accessToken: string | null; refreshToken: string | null };

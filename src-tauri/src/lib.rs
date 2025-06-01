@@ -2,29 +2,34 @@ pub mod modules;
 
 use chrono::Local;
 use specta_typescript::Typescript;
-use tauri::{
-    menu::{Menu, MenuItem},
-    tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
-    AppHandle, Manager, Runtime,
-};
+use tauri::Manager;
 use tauri_plugin_window_state::StateFlags;
-use tauri_specta::{collect_commands, Builder};
+use tauri_specta::{collect_commands, collect_events, Builder};
 
 use modules::utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    // tauri_specta builder
     let mut ts_builder = Builder::<tauri::Wry>::new();
 
-    ts_builder = ts_builder.commands(collect_commands![utils::greet]);
+    // Resgister commands on tauri_specta
+    ts_builder = ts_builder.commands(collect_commands![utils::greet,]);
 
+    // Register event on tauri_specta
+    ts_builder = ts_builder.events(collect_events![]);
+
+    // On non-release, create the ts file to access commands
     #[cfg(debug_assertions)]
     ts_builder
         .export(Typescript::default(), "../src/lib/ipc.ts")
         .expect("Failed to export typescript bindings");
 
+    // Tauri builder
     let mut builder = tauri::Builder::default();
 
+    // Init single instance plugin on desktop only
+    // KEEP THIS AS THE FIRST LOADED PLUGIN!!!
     #[cfg(desktop)]
     {
         builder = builder.plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
@@ -35,14 +40,22 @@ pub fn run() {
         }));
     }
 
+    // Init deep-link plugin
     builder = builder.plugin(tauri_plugin_deep_link::init());
 
+    // Init process plugin
+    builder = builder.plugin(tauri_plugin_process::init());
+
+    // Init http plugin
     builder = builder.plugin(tauri_plugin_http::init());
 
+    // Init dialog plugin
     builder = builder.plugin(tauri_plugin_dialog::init());
 
+    // Init notification plugin
     builder = builder.plugin(tauri_plugin_notification::init());
 
+    // Init and configure log plugin
     builder = builder.plugin(
         tauri_plugin_log::Builder::new()
             .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
@@ -57,10 +70,13 @@ pub fn run() {
             .build(),
     );
 
+    // Init updater plugin
     builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
 
+    // Init opener plugin
     builder = builder.plugin(tauri_plugin_opener::init());
 
+    // Init window state plugin
     builder = builder.plugin(
         tauri_plugin_window_state::Builder::new()
             .with_state_flags(
@@ -72,9 +88,12 @@ pub fn run() {
             .build(),
     );
 
+    // Add commands registered on tauri_specta to Tauri
     builder = builder.invoke_handler(ts_builder.invoke_handler());
 
+    // Tauri setup
     builder = builder.setup(move |app| {
+        // Add events registered on tauri_specta no Tauri
         ts_builder.mount_events(app);
 
         // Register deep-links on runtime
@@ -84,51 +103,11 @@ pub fn run() {
             app.deep_link().register_all()?;
         }
 
-        setup_tray(app.handle())?;
-
         Ok(())
     });
 
+    // Start the app
     builder
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
-}
-
-/// Creates and manages the Tray icon and Menu
-fn setup_tray<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<()> {
-    let open_i = MenuItem::with_id(app, "open", "Open", true, None::<&str>)?;
-    let quit_i = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-
-    let menu = Menu::with_items(app, &[&open_i, &quit_i])?;
-
-    TrayIconBuilder::new()
-        .icon(app.default_window_icon().unwrap().clone())
-        .menu(&menu)
-        .on_menu_event(|app, event| match event.id.as_ref() {
-            "quit" => app.exit(0),
-            "open" => {
-                if let Some(window) = app.get_webview_window("main") {
-                    let _ = window.show();
-                    let _ = window.set_focus();
-                }
-            }
-            _ => println!("Menu item {:?} not handled", event.id),
-        })
-        .on_tray_icon_event(|tray, event| match event {
-            TrayIconEvent::Click {
-                button: MouseButton::Left,
-                ..
-            } => {
-                let app = tray.app_handle();
-                if let Some(window) = app.get_webview_window("main") {
-                    let _ = window.show();
-                    let _ = window.set_focus();
-                }
-            }
-            _ => {}
-        })
-        .show_menu_on_left_click(false)
-        .build(app)?;
-
-    Ok(())
 }

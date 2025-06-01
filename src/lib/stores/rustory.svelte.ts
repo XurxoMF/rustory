@@ -9,4 +9,4 @@ export const rConfig = RConfig.getInstance();
 
 export const rUser = RUser.getInstance();
 
-export const rMainWindow = RWindow.getInstance();
+export const rMainWindow = new RWindow();
