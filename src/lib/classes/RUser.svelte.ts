@@ -1,7 +1,7 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 
-import { API_BASE } from "$lib/GLOBALS";
+import { API_BASE } from "$lib/globals";
 
 import { log } from "$lib/utils/logger";
 
