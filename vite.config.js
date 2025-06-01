@@ -37,7 +37,8 @@ export default defineConfig(async () => ({
       : undefined,
     watch: {
       // 3. tell vite to ignore watching `src-tauri`
-      ignored: ["**/src-tauri/**", "**/*.md"],
+      // Also ignore .md files and the ipc exported. This last one is to prevent the app from loading when opening a deep-link.
+      ignored: ["**/src-tauri/**", "**/*.md", "**/src/lib/ipc.ts"],
     },
   },
 }));

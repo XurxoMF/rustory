@@ -1,16 +1,16 @@
 pub mod modules;
 
 use chrono::Local;
-// use specta_typescript::Typescript;
+use specta_typescript::Typescript;
 use tauri::Manager;
 use tauri_plugin_window_state::StateFlags;
-// use tauri_specta::{collect_commands, collect_events, Builder};
+use tauri_specta::{collect_commands, collect_events, Builder};
 
-// use modules::utils;
+use modules::utils;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
-    /*     // tauri_specta builder
+    // tauri_specta builder
     let mut ts_builder = Builder::<tauri::Wry>::new();
 
     // Resgister commands on tauri_specta
@@ -26,7 +26,7 @@ pub fn run() {
         if let Err(e) = export_result {
             println!("Could not export the TS bindings: {e}");
         }
-    } */
+    }
 
     // Tauri builder
     let mut builder = tauri::Builder::default();
@@ -92,12 +92,12 @@ pub fn run() {
     );
 
     // Add commands registered on tauri_specta to Tauri
-    // builder = builder.invoke_handler(ts_builder.invoke_handler());
+    builder = builder.invoke_handler(ts_builder.invoke_handler());
 
     // Tauri setup
     builder = builder.setup(move |app| {
         // Add events registered on tauri_specta no Tauri
-        // ts_builder.mount_events(app);
+        ts_builder.mount_events(app);
 
         // Register deep-links on runtime
         #[cfg(any(windows, target_os = "linux"))]
