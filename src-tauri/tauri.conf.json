@@ -45,11 +45,24 @@
     ],
     "security": {
       "csp": {
+        "default-src": [
+          "'self'",
+          "asset:"
+        ],
+        "connect-src": [
+          "ipc:",
+          "http://ipc.localhost"
+        ],
         "img-src": [
           "'self'",
           "asset:",
           "http://asset.localhost",
           "https://api.unisvg.com"
+        ],
+        "style-src": [
+          "'unsafe-inline'",
+          "'self'",
+          "https://fonts.googleapis.com"
         ]
       },
       "assetProtocol": {

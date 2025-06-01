@@ -9,6 +9,8 @@ import { exit } from "@tauri-apps/plugin-process";
 // Instance of the TrayIcon. This is to ensure only one TrayIcon is created
 let trayIconInstance: TrayIcon | null = null;
 
+export const TRAY_ICON_ID = "TRAYICON";
+
 // Event Manager for TrayIconEvents
 export function manageTrayIconEvents(e: TrayIconEvent) {
   switch (e.type) {
@@ -51,6 +53,7 @@ export async function getDefaultTrayIconOptions(): Promise<TrayIconOptions> {
   const defaultTrayIconMenu = await getDefaultTrayIconMenu();
 
   return {
+    id: TRAY_ICON_ID,
     menu: defaultTrayIconMenu,
     showMenuOnLeftClick: false,
     icon: icon ?? undefined,
@@ -73,5 +76,10 @@ export async function getTrayIcon() {
  * @param options - The TrayIconOptions to use on the TrayIcon
  */
 export async function setTrayIcon(options: TrayIconOptions) {
+  // TODO: Find a way to remove the old try icon if the frontend reloads to avoid errors.
+  const oldTrayIcon = await TrayIcon.getById(TRAY_ICON_ID);
+  if (oldTrayIcon) {
+    await oldTrayIcon.close();
+  }
   trayIconInstance = await TrayIcon.new(options);
 }

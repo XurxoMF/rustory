@@ -29,7 +29,7 @@ export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
   // If the API returned a 401 Not autenticated.
   const refreshed = await rUser.refreshAccessToken();
 
-  if (refreshed !== "ok") throw new Error("The user is not autenticated!");
+  if (!refreshed) throw new Error("The user is not autenticated!");
 
   return fetchPro(input, {
     ...init,
