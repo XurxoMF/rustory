@@ -1,32 +1,28 @@
 <script lang="ts">
-  import { RUser } from "$lib/classes/RUser.svelte";
-  import { commands } from "$lib/ipc";
-
   import { rMainWindow } from "$lib/stores/rustory.svelte";
 
   import ButtonNeutral from "$lib/ui/form/Buttons/ButtonNeutral.svelte";
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
-  import { onMount } from "svelte";
 
   rMainWindow.breadcrumbs.segments = [];
 
-  let greet = $state("");
-
-  onMount(() => {
-    (async () => {
-      greet = await commands.greet("Hola Mundo!");
-    })();
-  });
+  let taskId: string = "";
 </script>
 
 <PageWrapper scrollable={false}>
-  <p>{greet}</p>
+  <ButtonNeutral
+    onclick={async () => {
+      taskId = rMainWindow.preventClose.addTask("Test");
+    }}
+  >
+    Add task
+  </ButtonNeutral>
 
   <ButtonNeutral
     onclick={async () => {
-      RUser.startLoginWithDiscord();
+      rMainWindow.preventClose.removeTask(taskId);
     }}
   >
-    Test thigns
+    Remove task
   </ButtonNeutral>
 </PageWrapper>

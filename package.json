@@ -27,7 +27,8 @@
     "@tauri-apps/plugin-updater": "^2.7.1",
     "@tauri-apps/plugin-window-state": "^2.2.2",
     "bits-ui": "^1.7.0",
-    "gsap": "^3.13.0"
+    "gsap": "^3.13.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@inlang/cli": "^3.0.0",

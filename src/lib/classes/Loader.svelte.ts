@@ -31,6 +31,16 @@ export class Loader {
   private _isVisible: boolean = $state(true);
 
   /**
+   * If we should show tasks or not.
+   */
+  showTasks: boolean = $state(false);
+
+  /**
+   * Start loading the UI after all the data was loaded.
+   */
+  loadUI: boolean = $state(false);
+
+  /**
    * List of completed task IDs.
    */
   get completedTasks(): string[] {

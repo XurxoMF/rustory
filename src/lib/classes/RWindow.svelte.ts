@@ -1,6 +1,7 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
+import { PreventClose } from "$lib/classes/PreventClose.svelte";
 
 export class RWindow {
   /**
@@ -22,6 +23,11 @@ export class RWindow {
    * The Window Breadcrumbs.
    */
   breadcrumbs: Breadcrumbs = new Breadcrumbs();
+
+  /**
+   * The Window PreventClose tasks.
+   */
+  preventClose: PreventClose = new PreventClose();
 
   /**
    * The callbacks that will be executed when the page is reloaded.

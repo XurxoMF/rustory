@@ -1,4 +1,5 @@
 import { m } from "$lib/paraglide/messages";
+import { rMainWindow } from "$lib/stores/rustory.svelte";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, type TrayIconEvent, type TrayIconOptions } from "@tauri-apps/api/tray";
@@ -27,7 +28,8 @@ export async function getDefaultTrayIconMenu(): Promise<Menu> {
         id: "quit",
         text: m.common__quit(),
         action: () => {
-          exit(0);
+          // TODO: If the close is prevented show a notification.
+          if (!rMainWindow.preventClose.prevented) return exit(0);
         },
       },
       {
