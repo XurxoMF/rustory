@@ -74,7 +74,7 @@
                 name={m.settings__instances_folder()}
                 placeholder={m.settings__instances_folder()}
                 value={rConfig.instancesPath}
-                onchange={(e) => (rConfig.instancesPath = e.currentTarget.value)}
+                readonly
               />
             </FieldsWrapper>
             <FieldsDescription>{m.settings__default_folder_instances()}</FieldsDescription>
@@ -102,7 +102,7 @@
                 name={m.settings__servers_folder()}
                 placeholder={m.settings__servers_folder()}
                 value={rConfig.serversPath}
-                onchange={(e) => (rConfig.serversPath = e.currentTarget.value)}
+                readonly
               />
             </FieldsWrapper>
 
