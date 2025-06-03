@@ -1,13 +1,17 @@
 import { app } from "@tauri-apps/api";
 
-export class RInfo {
-  private static instance: RInfo | null = null;
+export class Info {
+  /**
+   * Singleton instance of the Info.
+   */
+  private static _instance: Info | null = null;
 
-  static getInstance(): RInfo {
-    if (RInfo.instance === null) {
-      RInfo.instance = new RInfo();
-    }
-    return RInfo.instance;
+  /**
+   * Get the instance of the Info.
+   */
+  static get instance(): Info {
+    if (Info._instance === null) Info._instance = new Info();
+    return Info._instance;
   }
 
   /**
@@ -23,7 +27,7 @@ export class RInfo {
   private constructor() {}
 
   /**
-   * Loads all the info about Rustory on this instance of RustoryInfo.
+   * Loads all the info about Rustory on this instance.
    */
   async init(): Promise<void> {
     this.name = await app.getName();

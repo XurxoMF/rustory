@@ -1,21 +1,21 @@
 <script lang="ts">
-  import { rMainWindow, rUser } from "$lib/stores/rustory.svelte";
+  import { rustory } from "$lib/stores/rustory.svelte";
 
   import ButtonNeutral from "$lib/ui/form/Buttons/ButtonNeutral.svelte";
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
 
-  rMainWindow.breadcrumbs.segments = [];
+  rustory.window.breadcrumbs.segments = [];
 
   let taskId: string = "";
 </script>
 
 <PageWrapper scrollable={false}>
-  <p>{rUser.accessToken ?? "No access token"}</p>
-  <p>{rUser.refreshToken ?? "No access token"}</p>
+  <p>{rustory.user.accessToken ?? "No access token"}</p>
+  <p>{rustory.user.refreshToken ?? "No access token"}</p>
 
   <ButtonNeutral
     onclick={async () => {
-      rUser.loginWithDiscord();
+      rustory.user.loginWithDiscord();
     }}
   >
     Log in
@@ -23,7 +23,7 @@
 
   <ButtonNeutral
     onclick={async () => {
-      rUser.logoutFromDiscord();
+      rustory.user.logoutFromDiscord();
     }}
   >
     Log out
@@ -31,7 +31,7 @@
 
   <ButtonNeutral
     onclick={async () => {
-      taskId = rMainWindow.preventClose.addTask("Test");
+      taskId = rustory.window.preventClose.addTask("Test");
     }}
   >
     Add task
@@ -39,7 +39,7 @@
 
   <ButtonNeutral
     onclick={async () => {
-      rMainWindow.preventClose.removeTask(taskId);
+      rustory.window.preventClose.removeTask(taskId);
     }}
   >
     Remove task

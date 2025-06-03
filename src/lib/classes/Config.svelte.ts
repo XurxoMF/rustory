@@ -3,14 +3,18 @@ import { appDataDir, join } from "@tauri-apps/api/path";
 
 import { getLocale, isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
 
-export class RConfig {
-  private static instance: RConfig | null = null;
+export class Config {
+  /**
+   * Singleton instance of the Config.
+   */
+  private static _instance: Config | null = null;
 
-  static getInstance(): RConfig {
-    if (RConfig.instance === null) {
-      RConfig.instance = new RConfig();
-    }
-    return RConfig.instance;
+  /**
+   * Get the instance of the Config.
+   */
+  static get instance(): Config {
+    if (Config._instance === null) Config._instance = new Config();
+    return Config._instance;
   }
 
   /**
@@ -26,7 +30,7 @@ export class RConfig {
   /**
    * List of all the available locales with their data.
    */
-  static LANGUAGES_DATA = [
+  static LANGUAGES = [
     { lang: "en", name: m.lang__english(), credits: ["XurxoMF"] },
     { lang: "es", name: m.lang__spanish(), credits: ["XurxoMF"] },
   ] as const;
@@ -70,7 +74,7 @@ export class RConfig {
   private constructor() {}
 
   /**
-   * Loads all the configs on this instance of RustoryInfo.
+   * Loads all the configs on this instance.
    */
   async init(): Promise<void> {
     this.theme = localStorage.getItem("theme");
@@ -100,7 +104,7 @@ export class RConfig {
    * @param theme - The key of the theme to apply.
    */
   set theme(theme: string | null | undefined) {
-    theme = RConfig.applyTheme(theme);
+    theme = Config.applyTheme(theme);
     this._theme = theme;
   }
 
@@ -119,7 +123,7 @@ export class RConfig {
    * @param lang - The key of the langueage to apply.
    */
   set lang(lang: Locale | string | null | undefined) {
-    lang = RConfig.changeLanguage(lang);
+    lang = Config.changeLanguage(lang);
     this._lang = lang as Locale;
   }
 
@@ -138,7 +142,7 @@ export class RConfig {
    * @param scale - The key of the scale to apply.
    */
   set scale(scale: string | null | undefined) {
-    scale = RConfig.applyScale(scale);
+    scale = Config.applyScale(scale);
     this._scale = scale;
   }
 
@@ -196,7 +200,7 @@ export class RConfig {
    * @returns - The key of the applied theme.
    */
   private static applyTheme(theme: string | null | undefined): string {
-    if (!theme || !RConfig.THEMES.some((THEME) => THEME.key === theme)) theme = "dark";
+    if (!theme || !Config.THEMES.some((THEME) => THEME.key === theme)) theme = "dark";
     localStorage.setItem("theme", theme);
     document.body.setAttribute("data-theme", theme);
     return theme;
@@ -209,7 +213,7 @@ export class RConfig {
    * @returns - The key of the applied scale.
    */
   private static applyScale(scale: string | null | undefined): string {
-    if (!scale || !RConfig.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
+    if (!scale || !Config.SCALES.some((SCALE) => SCALE.scale === scale)) scale = "100";
     localStorage.setItem("uiscale", scale);
     document.documentElement.setAttribute("data-uiscale", scale);
     return scale;

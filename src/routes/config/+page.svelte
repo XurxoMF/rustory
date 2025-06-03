@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { rConfig, rMainWindow } from "$lib/stores/rustory.svelte";
+  import { rustory } from "$lib/stores/rustory.svelte";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
   import { CollapsibleSection } from "$lib/ui/layout/Sections";
@@ -14,9 +14,8 @@
   import { ButtonNeutral } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
   import { open } from "@tauri-apps/plugin-dialog";
-  import { onMount } from "svelte";
 
-  rMainWindow.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
+  rustory.window.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={true}>
@@ -65,7 +64,7 @@
                     title: m.settings__instances_folder(),
                   });
                   if (!folder) return;
-                  rConfig.instancesPath = folder;
+                  rustory.config.instancesPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -73,7 +72,7 @@
               <TextInput
                 name={m.settings__instances_folder()}
                 placeholder={m.settings__instances_folder()}
-                value={rConfig.instancesPath}
+                value={rustory.config.instancesPath}
                 readonly
               />
             </FieldsWrapper>
@@ -93,7 +92,7 @@
                     title: m.settings__servers_folder(),
                   });
                   if (!folder) return;
-                  rConfig.serversPath = folder;
+                  rustory.config.serversPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -101,7 +100,7 @@
               <TextInput
                 name={m.settings__servers_folder()}
                 placeholder={m.settings__servers_folder()}
-                value={rConfig.serversPath}
+                value={rustory.config.serversPath}
                 readonly
               />
             </FieldsWrapper>

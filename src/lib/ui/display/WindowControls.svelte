@@ -3,9 +3,7 @@
 
   import { m } from "$lib/paraglide/messages";
 
-  import { log } from "$lib/utils/logger";
-
-  import { rMainWindow } from "$lib/stores/rustory.svelte";
+  import { rustory } from "$lib/stores/rustory.svelte";
 
   import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
@@ -21,11 +19,13 @@
   icon
   onclick={() => {
     appWindow.toggleMaximize();
-    rMainWindow.isMaximized = !rMainWindow.isMaximized;
+    rustory.window.isMaximized = !rustory.window.isMaximized;
   }}
-  title={rMainWindow.isMaximized ? m.common__minimize() : m.common_maximize()}
+  title={rustory.window.isMaximized ? m.common__minimize() : m.common_maximize()}
 >
-  <Icon icon={rMainWindow.isMaximized ? "ph:arrows-in-simple-bold" : "ph:arrows-out-simple-bold"} />
+  <Icon
+    icon={rustory.window.isMaximized ? "ph:arrows-in-simple-bold" : "ph:arrows-out-simple-bold"}
+  />
 </ButtonUnstyled>
 
 <ButtonUnstyled icon onclick={() => appWindow.hide()} title={m.common__hide()}>
@@ -36,7 +36,7 @@
   icon
   onclick={() => {
     // TODO: If the close is prevented show a notification.
-    if (!rMainWindow.preventClose.prevented) return appWindow.close();
+    if (!rustory.window.preventClose.prevented) return appWindow.close();
   }}
   title={m.common__close()}
 >

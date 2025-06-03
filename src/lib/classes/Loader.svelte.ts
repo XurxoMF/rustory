@@ -2,6 +2,19 @@ import { m } from "$lib/paraglide/messages";
 
 export class Loader {
   /**
+   * Singleton instance of the Loader.
+   */
+  private static _instance: Loader | null = null;
+
+  /**
+   * Get the instance of the Loader.
+   */
+  static get instance(): Loader {
+    if (Loader._instance === null) Loader._instance = new Loader();
+    return Loader._instance;
+  }
+
+  /**
    * List of tasks to complete.
    *
    * If you want to add a new tasks to the list just add a new task here.
@@ -79,7 +92,7 @@ export class Loader {
   }
 }
 
-namespace Loader {
+export namespace Loader {
   export type TasksType = typeof Loader.TASKS;
   export type TaskType = TasksType[number];
   export type TaskIdType = TaskType["id"];

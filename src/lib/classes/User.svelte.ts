@@ -5,14 +5,18 @@ import { API_BASE } from "$lib/globals";
 
 import { log } from "$lib/utils/logger";
 
-export class RUser {
-  private static instance: RUser | null = null;
+export class User {
+  /**
+   * Singleton instance of the User.
+   */
+  private static _instance: User | null = null;
 
-  static getInstance(): RUser {
-    if (RUser.instance === null) {
-      RUser.instance = new RUser();
-    }
-    return RUser.instance;
+  /**
+   * Get the instance of the User.
+   */
+  static get instance(): User {
+    if (User._instance === null) User._instance = new User();
+    return User._instance;
   }
 
   /**
@@ -23,7 +27,7 @@ export class RUser {
   /**
    * The data of the user like Name, Avatar and ID.
    */
-  private _data: DiscordUser | null = $state(null);
+  private _data: User.DiscordUser | null = $state(null);
 
   /**
    * The access token. Used to autenticate requests.
@@ -38,9 +42,25 @@ export class RUser {
   private constructor() {}
 
   /**
-   * The data of the user like Name, Avatar and ID.
+   * Loads all the user data and tokens on this instance.
    */
-  get data(): DiscordUser | null {
+  async init(): Promise<void> {
+    log("info", "[src/lib/classes/RustoryUser.svelte.ts > init()] Loading Rustory User...");
+
+    let refreshToken = localStorage.getItem("refreshToken");
+    this.refreshToken = refreshToken;
+
+    const refreshed = await this.refreshAccessToken();
+
+    if (refreshed) {
+      // TODO: Get the user data! First it needs the API implementation.
+    }
+  }
+
+  /**
+   * The data of the user.
+   */
+  get data(): User.DiscordUser | null {
     return this._data;
   }
 
@@ -49,7 +69,7 @@ export class RUser {
    *
    * @param data - The data of the user.
    */
-  set data(data: DiscordUser | null) {
+  set data(data: User.DiscordUser | null) {
     this._data = data;
   }
 
@@ -96,28 +116,12 @@ export class RUser {
   }
 
   /**
-   * Loads all the user data and tokens on this instance of RustoryInfo.
-   */
-  async init(): Promise<void> {
-    log("info", "[src/lib/classes/RustoryUser.svelte.ts > init()] Loading Rustory User...");
-
-    let refreshToken = localStorage.getItem("refreshToken");
-    this.refreshToken = refreshToken;
-
-    const refreshed = await this.refreshAccessToken();
-
-    if (refreshed) {
-      // TODO: Get the user data! First it needs the API implementation.
-    }
-  }
-
-  /**
    * Extracts the accessToken and refreshToken from the selected URL.
    *
    * @param url - The URL where params will be extracted from.
    * @returns null if no params were found or the accessToken and refreshToken.
    */
-  static getTokensFromDeepLink(url: string): TokensType | null {
+  static getTokensFromDeepLink(url: string): User.TokensType | null {
     log(
       "info",
       "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
@@ -166,7 +170,7 @@ export class RUser {
         "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] User logging in with Discord..."
       );
 
-      const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(RUser.REDIRECT_URI)}`;
+      const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(User.REDIRECT_URI)}`;
       openUrl(loginUrl);
       return;
     }
@@ -176,7 +180,7 @@ export class RUser {
       "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] User logged in with Discord. Saving tokens..."
     );
 
-    const tokens = RUser.getTokensFromDeepLink(deepLinkUrl);
+    const tokens = User.getTokensFromDeepLink(deepLinkUrl);
     if (!tokens) {
       log(
         "error",
@@ -285,10 +289,7 @@ export class RUser {
   }
 }
 
-export type DiscordUser = {
-  id: string;
-  name: string;
-  avatar: string;
-};
-
-export type TokensType = { accessToken: string | null; refreshToken: string | null };
+export namespace User {
+  export type DiscordUser = { id: string; name: string; avatar: string };
+  export type TokensType = { accessToken: string | null; refreshToken: string | null };
+}

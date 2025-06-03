@@ -1,13 +1,13 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { RConfig } from "$lib/classes/RConfig.svelte";
+  import { Config } from "$lib/classes/Config.svelte";
 
-  import { rConfig } from "$lib/stores/rustory.svelte";
+  import { rustory } from "$lib/stores/rustory.svelte";
 
   import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
 
-  let scales: SelectItemType[] = RConfig.SCALES.map((SCALE) => ({
+  let scales: SelectItemType[] = Config.SCALES.map((SCALE) => ({
     value: SCALE.scale,
     label: SCALE.name,
   }));
@@ -16,8 +16,8 @@
 <Select
   placeholder={m.placeholders__select_one()}
   items={scales}
-  value={rConfig.scale}
+  value={rustory.config.scale}
   onValueChange={(e) => {
-    if (e !== undefined) rConfig.scale = e;
+    if (e !== undefined) rustory.config.scale = e;
   }}
 />

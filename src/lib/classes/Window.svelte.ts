@@ -3,7 +3,20 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
 import { PreventClose } from "$lib/classes/PreventClose.svelte";
 
-export class RWindow {
+export class Window {
+  /**
+   * Singleton instance of the Window.
+   */
+  private static _instance: Window | null = null;
+
+  /**
+   * Get the instance of the Window.
+   */
+  static get instance(): Window {
+    if (Window._instance === null) Window._instance = new Window();
+    return Window._instance;
+  }
+
   /**
    * The label of this window.
    */
@@ -34,6 +47,19 @@ export class RWindow {
    */
   private _onReaload: OnReloadAction[] = [];
 
+  constructor() {}
+
+  /**
+   * Loads all the info on this instance.
+   */
+  async init(): Promise<void> {
+    const window = getCurrentWindow();
+
+    this.label = window.label;
+    this.title = await window.title();
+    this.isMaximized = await window.isMaximized();
+  }
+
   /**
    * The callbacks that will be executed when the page is reloaded.
    *
@@ -61,21 +87,13 @@ export class RWindow {
     this._onReaload = this._onReaload.filter((task) => task.id !== id);
   }
 
+  /**
+   * Executes the reload tasks.
+   */
   executeOnReload() {
     for (const task of this._onReaload) {
       task.action();
     }
-  }
-
-  /**
-   * Loads all the Window info on this instance of RWindow.
-   */
-  async init(): Promise<void> {
-    const currentWindow = getCurrentWindow();
-
-    this.label = currentWindow.label;
-    this.title = await currentWindow.title();
-    this.isMaximized = await getCurrentWindow().isMaximized();
   }
 }
 

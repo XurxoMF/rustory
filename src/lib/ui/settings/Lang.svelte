@@ -1,13 +1,13 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { RConfig } from "$lib/classes/RConfig.svelte";
+  import { Config } from "$lib/classes/Config.svelte";
 
-  import { rConfig } from "$lib/stores/rustory.svelte";
+  import { rustory } from "$lib/stores/rustory.svelte";
 
   import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
 
-  let langs: SelectItemType[] = RConfig.LANGUAGES_DATA.map((LANG) => ({
+  let langs: SelectItemType[] = Config.LANGUAGES.map((LANG) => ({
     value: LANG.lang,
     label: LANG.name,
     comment: LANG.credits.join(", "),
@@ -17,8 +17,8 @@
 <Select
   placeholder={m.placeholders__select_one()}
   items={langs}
-  value={rConfig.lang}
+  value={rustory.config.lang}
   onValueChange={(e) => {
-    if (e !== undefined) rConfig.lang = e;
+    if (e !== undefined) rustory.config.lang = e;
   }}
 />

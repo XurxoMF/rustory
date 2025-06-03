@@ -1,11 +1,10 @@
-import { log } from "$lib/utils/logger";
 import { v4 as uuidv4 } from "uuid";
 
 export class PreventClose {
   /**
    * List of tasks that prevent the app from closing.
    */
-  private _tasks: PreventCloseTaskType[] = $state([]);
+  private _tasks: PreventClose.PreventCloseTaskType[] = $state([]);
 
   /**
    * If the app can be closed or not.
@@ -15,7 +14,7 @@ export class PreventClose {
   /**
    * List of tasks that prevent the app from closing.
    */
-  get tasks(): PreventCloseTaskType[] {
+  get tasks(): PreventClose.PreventCloseTaskType[] {
     return this._tasks;
   }
 
@@ -48,7 +47,6 @@ export class PreventClose {
   }
 }
 
-export type PreventCloseTaskType = {
-  id: string;
-  reason: string;
-};
+export namespace PreventClose {
+  export type PreventCloseTaskType = { id: string; reason: string };
+}
