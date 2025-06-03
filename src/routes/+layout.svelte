@@ -13,7 +13,7 @@
   import { getDefaultTrayIconOptions, setTrayIcon } from "$lib/utils/trayIcon";
   import { sleep } from "$lib/utils/basics";
   import { manageDeepLinks } from "$lib/utils/deep-links";
-  import { log } from "$lib/utils/logger";
+  import { log } from "$lib/utils/basics";
 
   import WindowBar from "$lib/ui/app/WindowBar.svelte";
   import MainNav from "$lib/ui/app/MainNav.svelte";
@@ -22,6 +22,9 @@
 
   let { children } = $props();
 
+  /**
+   * Loader data manager.
+   */
   const loader = Loader.instance;
 
   // Load all the data ince the loader is mounted.
@@ -29,6 +32,10 @@
     // Ensure the tasks list is empty. Some times it may be completed if the APP reloaded incorrectly.
     loader.resetCompletedTasks();
     loader.showTasks = false;
+
+    // Load the DB.
+    await rustory.db.init();
+    loader.completeTask("db-init");
 
     // Load the app data and wait a bit so the theme and localization get's correctly changed.
     await rustory.config.init();

@@ -3,7 +3,7 @@ import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 
 import { API_BASE } from "$lib/globals";
 
-import { log } from "$lib/utils/logger";
+import { log } from "$lib/utils/basics";
 
 export class User {
   /**
@@ -45,7 +45,7 @@ export class User {
    * Loads all the user data and tokens on this instance.
    */
   async init(): Promise<void> {
-    log("info", "[src/lib/classes/RustoryUser.svelte.ts > init()] Loading Rustory User...");
+    log("info", "[src/lib/classes/User.svelte.ts > init()] Loading Rustory User...");
 
     let refreshToken = localStorage.getItem("refreshToken");
     this.refreshToken = refreshToken;
@@ -124,7 +124,7 @@ export class User {
   static getTokensFromDeepLink(url: string): User.TokensType | null {
     log(
       "info",
-      "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
+      "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
     );
 
     try {
@@ -137,21 +137,21 @@ export class User {
       if (!accessToken || !refreshToken) {
         log(
           "error",
-          "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] There is no access token or refresh token on that URL!"
+          "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] There is no access token or refresh token on that URL!"
         );
         return null;
       }
 
       log(
         "info",
-        "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] Tokens extracted successfully!"
+        "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Tokens extracted successfully!"
       );
 
       return { accessToken, refreshToken };
     } catch (err) {
       log(
         "error",
-        "[src/lib/classes/RustoryUser.svelte.ts > getTokensFromDeepLink()] Something whent wrong while getting the access and refresh tokens!"
+        "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Something whent wrong while getting the access and refresh tokens!"
       );
       log("debug", JSON.stringify(err));
       return null;
@@ -167,7 +167,7 @@ export class User {
     if (!deepLinkUrl) {
       log(
         "info",
-        "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] User logging in with Discord..."
+        "[src/lib/classes/User.svelte.ts > loginWithDiscord()] User logging in with Discord..."
       );
 
       const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(User.REDIRECT_URI)}`;
@@ -177,15 +177,12 @@ export class User {
 
     log(
       "info",
-      "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] User logged in with Discord. Saving tokens..."
+      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] User logged in with Discord. Saving tokens..."
     );
 
     const tokens = User.getTokensFromDeepLink(deepLinkUrl);
     if (!tokens) {
-      log(
-        "error",
-        "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] No tokens provided!"
-      );
+      log("error", "[src/lib/classes/User.svelte.ts > loginWithDiscord()] No tokens provided!");
       return;
     }
 
@@ -194,14 +191,14 @@ export class User {
 
     log(
       "info",
-      "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] Tokens saved. Getting user info..."
+      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] Tokens saved. Getting user info..."
     );
 
     // TODO: Get the user data! First it needs the API implementation.
 
     log(
       "info",
-      "[src/lib/classes/RustoryUser.svelte.ts > loginWithDiscord()] Saved user info. User logged in!"
+      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] Saved user info. User logged in!"
     );
   }
 
@@ -209,13 +206,13 @@ export class User {
    * Closes the session and removes all the tokens and user data.
    */
   logoutFromDiscord() {
-    log("info", "[src/lib/classes/RustoryUser.svelte.ts > logout()] User logging out...");
+    log("info", "[src/lib/classes/User.svelte.ts > logout()] User logging out...");
 
     this.accessToken = null;
     this.refreshToken = null;
     this.data = null;
 
-    log("info", "[src/lib/classes/RustoryUser.svelte.ts > logout()] User logged out!");
+    log("info", "[src/lib/classes/User.svelte.ts > logout()] User logged out!");
   }
 
   /**
@@ -226,13 +223,13 @@ export class User {
   async refreshAccessToken(): Promise<boolean> {
     log(
       "info",
-      "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] Refreshing the access token using the refresh token..."
+      "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Refreshing the access token using the refresh token..."
     );
 
     if (!this._refreshToken) {
       log(
         "error",
-        "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] No refresh token available to refresh the access token! Logging out!"
+        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] No refresh token available to refresh the access token! Logging out!"
       );
 
       // If there is no refreshToken, ensure the user is not autenticated.
@@ -250,7 +247,7 @@ export class User {
       if (refreshRes.status === 401) {
         log(
           "error",
-          "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] Refresh token is invalid or expired! Logging out!"
+          "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Refresh token is invalid or expired! Logging out!"
         );
 
         // If the token is invalid or expired, log out the user.
@@ -261,7 +258,7 @@ export class User {
       if (!refreshRes.ok) {
         log(
           "error",
-          "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
+          "[src/lib/classes/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
         );
 
         return false;
@@ -273,14 +270,14 @@ export class User {
 
       log(
         "info",
-        "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] Access token refreshed succesfully!"
+        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Access token refreshed succesfully!"
       );
 
       return true;
     } catch (err) {
       log(
         "error",
-        "[src/lib/classes/RustoryUser.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
+        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
       );
       log("debug", JSON.stringify(err));
 

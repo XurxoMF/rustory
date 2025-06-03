@@ -46,6 +46,12 @@ pub fn run() {
     // Init deep-link plugin
     builder = builder.plugin(tauri_plugin_deep_link::init());
 
+    // Init SQL plugin
+    builder = builder.plugin(tauri_plugin_sql::Builder::new().build());
+
+    // Init FS plugin
+    builder = builder.plugin(tauri_plugin_fs::init());
+
     // Init process plugin
     builder = builder.plugin(tauri_plugin_process::init());
 

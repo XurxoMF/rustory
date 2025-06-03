@@ -20,6 +20,7 @@ export class Loader {
    * If you want to add a new tasks to the list just add a new task here.
    */
   static TASKS = [
+    { id: "db-init", description: m.loader__tasks__desc__db_init() },
     { id: "app-init", description: m.loader__tasks__desc__app_init() },
     { id: "timeout", description: m.loader__tasks__desc__timeout() },
   ] as const;

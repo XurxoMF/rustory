@@ -32,5 +32,6 @@
   "settings__scale_description": "Scale of the APP UI",
   "common__select_folder": "Select a folder",
   "common__quit": "Quit",
-  "common__open": "Open"
+  "common__open": "Open",
+  "loader__tasks__desc__db_init": "Loading DB"
 }

@@ -32,6 +32,15 @@
         }
       ]
     },
-    "process:default"
+    "process:default",
+    "sql:default",
+    "sql:allow-execute",
+    "fs:default",
+    "fs:allow-appdata-read-recursive",
+    "fs:allow-appdata-write-recursive",
+    "fs:allow-config-read-recursive",
+    "fs:allow-config-write-recursive",
+    "fs:allow-cache-read-recursive",
+    "fs:allow-cache-write-recursive"
   ]
 }

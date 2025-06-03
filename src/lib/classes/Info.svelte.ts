@@ -1,4 +1,4 @@
-import { app } from "@tauri-apps/api";
+import { app, path } from "@tauri-apps/api";
 
 export class Info {
   /**
@@ -24,6 +24,12 @@ export class Info {
    */
   version: string = $state("");
 
+  dataPath: string = $state("");
+
+  configPath: string = $state("");
+
+  cachePath: string = $state("");
+
   private constructor() {}
 
   /**
@@ -32,5 +38,8 @@ export class Info {
   async init(): Promise<void> {
     this.name = await app.getName();
     this.version = await app.getVersion();
+    this.dataPath = await path.appDataDir();
+    this.configPath = await path.appConfigDir();
+    this.cachePath = await path.appCacheDir();
   }
 }

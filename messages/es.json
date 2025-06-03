@@ -32,5 +32,6 @@
   "settings__scale_description": "Escala de la UI de la APP",
   "common__select_folder": "Selecciona una carpeta",
   "common__quit": "Salir",
-  "common__open": "Abrir"
+  "common__open": "Abrir",
+  "loader__tasks__desc__db_init": "Cargando DB"
 }
