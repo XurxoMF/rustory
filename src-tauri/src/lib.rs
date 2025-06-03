@@ -52,6 +52,9 @@ pub fn run() {
     // Init FS plugin
     builder = builder.plugin(tauri_plugin_fs::init());
 
+    // Init Persisted Scope plugin.
+    builder = builder.plugin(tauri_plugin_persisted_scope::init());
+
     // Init process plugin
     builder = builder.plugin(tauri_plugin_process::init());
 
