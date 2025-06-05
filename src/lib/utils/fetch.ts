@@ -1,6 +1,6 @@
 import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 
-import { rustory } from "$lib/stores/rustory.svelte";
+import { User } from "$lib/classes/Rustory";
 
 /**
  * Makes a fetch query. If the response is 401, refreshes the access token and tries again.
@@ -14,7 +14,7 @@ import { rustory } from "$lib/stores/rustory.svelte";
  * @returns The data returned by the fetch.
  */
 export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
-  const token = rustory.user.accessToken;
+  const token = User.instance.accessToken;
 
   const res = await fetchPro(input, {
     ...init,
@@ -27,7 +27,7 @@ export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
   if (res.status !== 401) return res;
 
   // If the API returned a 401 Not autenticated.
-  const refreshed = await rustory.user.refreshAccessToken();
+  const refreshed = await User.instance.refreshAccessToken();
 
   if (!refreshed) throw new Error("The user is not autenticated!");
 
@@ -35,7 +35,7 @@ export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
     ...init,
     headers: {
       ...init.headers,
-      Authorization: `Bearer ${rustory.user.accessToken}`,
+      Authorization: `Bearer ${User.instance.accessToken}`,
     },
   });
 }

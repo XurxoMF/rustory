@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Window } from "$lib/classes/Rustory";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
 
-  rustory.window.breadcrumbs.segments = [];
+  Window.instance.breadcrumbs.segments = [];
 </script>
 
 <PageWrapper scrollable={false}>

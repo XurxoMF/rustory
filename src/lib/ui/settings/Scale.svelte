@@ -1,9 +1,7 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { Config } from "$lib/classes/Config.svelte";
-
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Config } from "$lib/classes/Rustory";
 
   import Select, { type SelectItemType } from "$lib/ui/form/Select.svelte";
 
@@ -16,8 +14,8 @@
 <Select
   placeholder={m.placeholders__select_one()}
   items={scales}
-  value={rustory.config.scale}
+  value={Config.instance.scale}
   onValueChange={(e) => {
-    if (e !== undefined) rustory.config.scale = e;
+    if (e !== undefined) Config.instance.scale = e;
   }}
 />

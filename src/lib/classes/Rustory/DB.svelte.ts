@@ -1,7 +1,7 @@
 import Database from "@tauri-apps/plugin-sql";
 
 // Migrations imports
-// Example: import { up as up001 } from "$lib/migrations/001_test";
+// Example: import { up as up001 } from "$lib/db/migrations/001_test";
 
 import { log } from "$lib/utils/basics";
 
@@ -29,7 +29,7 @@ export class DB {
    */
   private _connection: Database | null = null;
 
-  constructor() {}
+  private constructor() {}
 
   /**
    * Get's the database instance and applies migrations.

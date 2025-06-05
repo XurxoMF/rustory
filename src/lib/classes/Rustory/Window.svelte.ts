@@ -47,7 +47,7 @@ export class Window {
    */
   private _onReaload: OnReloadAction[] = [];
 
-  constructor() {}
+  private constructor() {}
 
   /**
    * Loads all the info on this instance.

@@ -54,6 +54,8 @@ export class Loader {
    */
   loadUI: boolean = $state(false);
 
+  private constructor() {}
+
   /**
    * List of completed task IDs.
    */

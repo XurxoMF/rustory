@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { Config } from "$lib/classes/Config.svelte";
-
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Config } from "$lib/classes/Rustory";
 </script>
 
 {#each Config.THEMES as THEME}
@@ -14,9 +12,9 @@
       "t-midnight:border-gray-750",
       THEME.color,
     ]}
-    onclick={() => (rustory.config.theme = THEME.key)}
+    onclick={() => (Config.instance.theme = THEME.key)}
     title={THEME.name}
     aria-label={THEME.name}
-    disabled={THEME.key === rustory.config.theme}
+    disabled={THEME.key === Config.instance.theme}
   ></button>
 {/each}

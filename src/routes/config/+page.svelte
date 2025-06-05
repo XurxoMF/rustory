@@ -1,7 +1,8 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
+  import { open } from "@tauri-apps/plugin-dialog";
 
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Config, Window } from "$lib/classes/Rustory";
 
   import PageWrapper from "$lib/ui/layout/PageWrapper.svelte";
   import { CollapsibleSection } from "$lib/ui/layout/Sections";
@@ -13,9 +14,8 @@
   import { TextInput } from "$lib/ui/form/Inputs";
   import { ButtonNeutral } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
-  import { open } from "@tauri-apps/plugin-dialog";
 
-  rustory.window.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
+  Window.instance.breadcrumbs.segments = [{ label: m.common__config(), href: "/config" }];
 </script>
 
 <PageWrapper scrollable={true}>
@@ -64,7 +64,7 @@
                     title: m.settings__instances_folder(),
                   });
                   if (!folder) return;
-                  rustory.config.instancesPath = folder;
+                  Config.instance.instancesPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -72,7 +72,7 @@
               <TextInput
                 name={m.settings__instances_folder()}
                 placeholder={m.settings__instances_folder()}
-                value={rustory.config.instancesPath}
+                value={Config.instance.instancesPath}
                 readonly
               />
             </FieldsWrapper>
@@ -92,7 +92,7 @@
                     title: m.settings__servers_folder(),
                   });
                   if (!folder) return;
-                  rustory.config.serversPath = folder;
+                  Config.instance.serversPath = folder;
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
@@ -100,7 +100,7 @@
               <TextInput
                 name={m.settings__servers_folder()}
                 placeholder={m.settings__servers_folder()}
-                value={rustory.config.serversPath}
+                value={Config.instance.serversPath}
                 readonly
               />
             </FieldsWrapper>

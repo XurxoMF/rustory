@@ -6,9 +6,7 @@
 
   import "../app.css";
 
-  import { rustory } from "$lib/stores/rustory.svelte";
-
-  import { Loader } from "$lib/classes/Loader.svelte";
+  import { Loader, DB, Info, Window, User, Config } from "$lib/classes/Rustory";
 
   import { getDefaultTrayIconOptions, setTrayIcon } from "$lib/utils/trayIcon";
   import { sleep } from "$lib/utils/basics";
@@ -34,13 +32,13 @@
     loader.showTasks = false;
 
     // Load the DB.
-    await rustory.db.init();
+    await DB.instance.init();
     loader.completeTask("db-init");
 
     // Load the app data and wait a bit so the theme and localization get's correctly changed.
-    await rustory.config.init();
-    await rustory.info.init();
-    await rustory.window.init();
+    await Config.instance.init();
+    await Info.instance.init();
+    await Window.instance.init();
 
     // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app data loading).
     loader.showTasks = true;
@@ -50,7 +48,7 @@
     // Here will be added the future tasks like Instance and Server loading, app updating, check mod updates...
 
     // Get the user data and tokens
-    await rustory.user.init();
+    await User.instance.init();
 
     // Set the TrayIcon
     const trayIconOptions = await getDefaultTrayIconOptions();
@@ -78,7 +76,7 @@
       "t-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250",
       "t-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750",
       "t-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750",
-      !rustory.window.isMaximized && "rounded-md",
+      !Window.instance.isMaximized && "rounded-md",
     ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
@@ -123,7 +121,7 @@
       "t-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250",
       "t-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750",
       "t-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750",
-      !rustory.window.isMaximized && "rounded-md",
+      !Window.instance.isMaximized && "rounded-md",
     ]}
   >
     <WindowBar />

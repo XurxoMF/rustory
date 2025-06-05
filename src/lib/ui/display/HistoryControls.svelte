@@ -1,13 +1,13 @@
 <script lang="ts">
   import { m } from "$lib/paraglide/messages";
 
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Window } from "$lib/classes/Rustory";
 
   import { ButtonUnstyled } from "$lib/ui/form/Buttons";
   import Icon from "$lib/ui/base/Icon.svelte";
 </script>
 
-<ButtonUnstyled icon onclick={() => rustory.window.executeOnReload()} title={m.common__reload()}>
+<ButtonUnstyled icon onclick={() => Window.instance.executeOnReload()} title={m.common__reload()}>
   <Icon icon="ph:arrow-clockwise-bold" />
 </ButtonUnstyled>
 <ButtonUnstyled icon onclick={() => history.back()} title={m.common__previous()}>

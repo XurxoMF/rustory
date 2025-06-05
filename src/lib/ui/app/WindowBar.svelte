@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { rustory } from "$lib/stores/rustory.svelte";
+  import { Info, Window } from "$lib/classes/Rustory";
 
   import Breadcrumbs from "$lib/ui/display/Breadcrumbs.svelte";
-  import HistoryControlls from "../display/HistoryControls.svelte";
-  import WindowControls from "../display/WindowControls.svelte";
-  import RustoryIcon from "../RustoryIcon.svelte";
+  import HistoryControlls from "$lib/ui/display/HistoryControls.svelte";
+  import WindowControls from "$lib/ui/display/WindowControls.svelte";
+  import RustoryIcon from "$lib/ui/RustoryIcon.svelte";
 </script>
 
 <div
@@ -33,7 +33,7 @@
     <div data-tauri-drag-region class="w-fit flex items-center gap-2">
       <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
         <p data-tauri-drag-region>
-          {`${rustory.window.title} ${rustory.info.version}`}
+          {`${Window.instance.title} ${Info.instance.version}`}
         </p>
       </div>
     </div>

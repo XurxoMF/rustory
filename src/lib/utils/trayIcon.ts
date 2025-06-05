@@ -1,10 +1,11 @@
 import { m } from "$lib/paraglide/messages";
-import { rustory } from "$lib/stores/rustory.svelte";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, type TrayIconEvent, type TrayIconOptions } from "@tauri-apps/api/tray";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { exit } from "@tauri-apps/plugin-process";
+
+import { Window } from "$lib/classes/Rustory";
 
 // Instance of the TrayIcon. This is to ensure only one TrayIcon is created
 let trayIconInstance: TrayIcon | null = null;
@@ -31,7 +32,7 @@ export async function getDefaultTrayIconMenu(): Promise<Menu> {
         text: m.common__quit(),
         action: () => {
           // TODO: If the close is prevented show a notification.
-          if (!rustory.window.preventClose.prevented) return exit(0);
+          if (!Window.instance.preventClose.prevented) return exit(0);
         },
       },
       {
