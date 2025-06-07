@@ -4,6 +4,7 @@ import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 import { API_BASE } from "$lib/globals";
 
 import { log } from "$lib/utils/basics";
+import { rustoryAPIFetch } from "$lib/utils/fetch";
 
 export class User {
   /**
@@ -45,7 +46,7 @@ export class User {
    * Loads all the user data and tokens on this instance.
    */
   async init(): Promise<void> {
-    log("info", "[src/lib/classes/User.svelte.ts > init()] Loading Rustory User...");
+    log("info", "[src/lib/classes/Rustory/User.svelte.ts > init()] Loading Rustory User...");
 
     let refreshToken = localStorage.getItem("refreshToken");
     this.refreshToken = refreshToken;
@@ -53,7 +54,11 @@ export class User {
     const refreshed = await this.refreshAccessToken();
 
     if (refreshed) {
-      // TODO: Get the user data! First it needs the API implementation.
+      const userData = await this.getDiscordUserData();
+
+      if (!userData) return this.loginWithDiscord();
+
+      this.data = userData;
     }
   }
 
@@ -124,7 +129,7 @@ export class User {
   static getTokensFromDeepLink(url: string): User.TokensType | null {
     log(
       "info",
-      "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
+      "[src/lib/classes/Rustory/User.svelte.ts > getTokensFromDeepLink()] Extracting tokens from the URL..."
     );
 
     try {
@@ -137,21 +142,21 @@ export class User {
       if (!accessToken || !refreshToken) {
         log(
           "error",
-          "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] There is no access token or refresh token on that URL!"
+          "[src/lib/classes/Rustory/User.svelte.ts > getTokensFromDeepLink()] There is no access token or refresh token on that URL!"
         );
         return null;
       }
 
       log(
         "info",
-        "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Tokens extracted successfully!"
+        "[src/lib/classes/Rustory/User.svelte.ts > getTokensFromDeepLink()] Tokens extracted successfully!"
       );
 
       return { accessToken, refreshToken };
     } catch (err) {
       log(
         "error",
-        "[src/lib/classes/User.svelte.ts > getTokensFromDeepLink()] Something whent wrong while getting the access and refresh tokens!"
+        "[src/lib/classes/Rustory/User.svelte.ts > getTokensFromDeepLink()] Something whent wrong while getting the access and refresh tokens!"
       );
       log("debug", JSON.stringify(err));
       return null;
@@ -167,7 +172,7 @@ export class User {
     if (!deepLinkUrl) {
       log(
         "info",
-        "[src/lib/classes/User.svelte.ts > loginWithDiscord()] User logging in with Discord..."
+        "[src/lib/classes/Rustory/User.svelte.ts > loginWithDiscord()] User logging in with Discord..."
       );
 
       const loginUrl = `${API_BASE}/auth/discord?redirect_uri=${encodeURIComponent(User.REDIRECT_URI)}`;
@@ -177,12 +182,15 @@ export class User {
 
     log(
       "info",
-      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] User logged in with Discord. Saving tokens..."
+      "[src/lib/classes/Rustory/User.svelte.ts > loginWithDiscord()] User logged in with Discord. Saving tokens..."
     );
 
     const tokens = User.getTokensFromDeepLink(deepLinkUrl);
     if (!tokens) {
-      log("error", "[src/lib/classes/User.svelte.ts > loginWithDiscord()] No tokens provided!");
+      log(
+        "error",
+        "[src/lib/classes/Rustory/User.svelte.ts > loginWithDiscord()] No tokens provided!"
+      );
       return;
     }
 
@@ -191,14 +199,18 @@ export class User {
 
     log(
       "info",
-      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] Tokens saved. Getting user info..."
+      "[src/lib/classes/Rustory/User.svelte.ts > loginWithDiscord()] Tokens saved. Getting user info..."
     );
 
-    // TODO: Get the user data! First it needs the API implementation.
+    const userData = await this.getDiscordUserData();
+
+    if (!userData) return this.logoutFromDiscord();
+
+    this.data = userData;
 
     log(
       "info",
-      "[src/lib/classes/User.svelte.ts > loginWithDiscord()] Saved user info. User logged in!"
+      "[src/lib/classes/Rustory/User.svelte.ts > loginWithDiscord()] Saved user info. User logged in!"
     );
   }
 
@@ -206,13 +218,13 @@ export class User {
    * Closes the session and removes all the tokens and user data.
    */
   logoutFromDiscord() {
-    log("info", "[src/lib/classes/User.svelte.ts > logout()] User logging out...");
+    log("info", "[src/lib/classes/Rustory/User.svelte.ts > logout()] User logging out...");
 
     this.accessToken = null;
     this.refreshToken = null;
     this.data = null;
 
-    log("info", "[src/lib/classes/User.svelte.ts > logout()] User logged out!");
+    log("info", "[src/lib/classes/Rustory/User.svelte.ts > logout()] User logged out!");
   }
 
   /**
@@ -223,13 +235,13 @@ export class User {
   async refreshAccessToken(): Promise<boolean> {
     log(
       "info",
-      "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Refreshing the access token using the refresh token..."
+      "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] Refreshing the access token using the refresh token..."
     );
 
     if (!this._refreshToken) {
       log(
         "error",
-        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] No refresh token available to refresh the access token! Logging out!"
+        "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] No refresh token available to refresh the access token! Logging out!"
       );
 
       // If there is no refreshToken, ensure the user is not autenticated.
@@ -247,8 +259,10 @@ export class User {
       if (refreshRes.status === 401) {
         log(
           "error",
-          "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Refresh token is invalid or expired! Logging out!"
+          "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] Refresh token is invalid or expired! Logging out!"
         );
+
+        console.log(JSON.stringify(refreshRes));
 
         // If the token is invalid or expired, log out the user.
         this.logoutFromDiscord();
@@ -258,7 +272,7 @@ export class User {
       if (!refreshRes.ok) {
         log(
           "error",
-          "[src/lib/classes/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
+          "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
         );
 
         return false;
@@ -268,25 +282,62 @@ export class User {
 
       this.accessToken = accessToken;
 
+      const userData = await this.getDiscordUserData();
+
+      if (!userData) {
+        this.logoutFromDiscord();
+        return false;
+      }
+
+      this.data = userData;
+
       log(
         "info",
-        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] Access token refreshed succesfully!"
+        "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] Access token refreshed succesfully!"
       );
 
       return true;
     } catch (err) {
       log(
         "error",
-        "[src/lib/classes/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
+        "[src/lib/classes/Rustory/User.svelte.ts > refreshAccessToken()] There was an error refreshing the access token!"
       );
       log("debug", JSON.stringify(err));
 
       return false;
     }
   }
+
+  async getDiscordUserData(): Promise<User.DiscordUser | null> {
+    log(
+      "info",
+      "[src/lib/classes/Rustory/User.svelte.ts > getDiscordUserData()] Loading User data..."
+    );
+
+    const res = await rustoryAPIFetch("/auth/discord/data");
+
+    if (res.status !== 200) {
+      log("error", "[src/lib/classes/Rustory/User.svelte.ts > init()] Error getting User data!");
+      return null;
+    }
+
+    const data = await res.json();
+
+    log(
+      "info",
+      "[src/lib/classes/Rustory/User.svelte.ts > getDiscordUserData()] User data loaded successfully."
+    );
+
+    return {
+      id: data.id,
+      username: data.username,
+      avatar: data.avatar,
+      roles: data.roles,
+    };
+  }
 }
 
 export namespace User {
-  export type DiscordUser = { id: string; name: string; avatar: string };
+  export type DiscordUser = { id: string; username: string; avatar: string; roles: string[] };
   export type TokensType = { accessToken: string | null; refreshToken: string | null };
 }

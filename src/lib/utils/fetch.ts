@@ -1,5 +1,7 @@
 import { fetch as fetchPro } from "@tauri-apps/plugin-http";
 
+import { API_BASE } from "$lib/globals";
+
 import { User } from "$lib/classes/Rustory";
 
 /**
@@ -9,14 +11,15 @@ import { User } from "$lib/classes/Rustory";
  * 1. There is no refresh token to use.
  * 2. The refresh token is not valid so the access token could not be refreshed.
  *
- * @param input - The URL to fetch. MUST be a Rustory API URL.
+ * @param input - The URL to fetch. Only the path is needed, the base URL is set in the ENV file. Example: "/some/path"
  * @param init - Fetch parameters like headers, type...
  * @returns The data returned by the fetch.
  */
 export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
   const token = User.instance.accessToken;
+  const url = API_BASE + input;
 
-  const res = await fetchPro(input, {
+  const res = await fetchPro(url, {
     ...init,
     headers: {
       ...init.headers,
@@ -31,7 +34,7 @@ export async function rustoryAPIFetch(input: string, init: RequestInit = {}) {
 
   if (!refreshed) throw new Error("The user is not autenticated!");
 
-  return fetchPro(input, {
+  return fetchPro(url, {
     ...init,
     headers: {
       ...init.headers,

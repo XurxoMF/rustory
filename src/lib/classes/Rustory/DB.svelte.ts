@@ -36,7 +36,7 @@ export class DB {
    */
   async init() {
     try {
-      log("info", "[src/lib/classes/DB.svelte.ts > init()] Loading DB...");
+      log("info", "[src/lib/classes/Rustory/DB.svelte.ts > init()] Loading DB...");
 
       this._connection = await Database.load("sqlite:database.sqlite");
 
@@ -56,14 +56,14 @@ export class DB {
 
       log(
         "info",
-        `[src/lib/classes/DB.svelte.ts > init()] Migrations applied: ${appliedMigrations.length}/${DB.MIGRATIONS.length}...`
+        `[src/lib/classes/Rustory/DB.svelte.ts > init()] Migrations applied: ${appliedMigrations.length}/${DB.MIGRATIONS.length}...`
       );
 
       for (const migration of DB.MIGRATIONS) {
         if (!appliedNames.includes(migration.name)) {
           log(
             "info",
-            `[src/lib/classes/DB.svelte.ts > init()] Applying migration ${migration.name}...`
+            `[src/lib/classes/Rustory/DB.svelte.ts > init()] Applying migration ${migration.name}...`
           );
           await migration.up(this._connection);
           await this._connection.execute(`INSERT INTO migrations (name) VALUES ($1);`, [
@@ -72,9 +72,9 @@ export class DB {
         }
       }
 
-      log("info", "[src/lib/classes/DB.svelte.ts > init()] DB loaded.");
+      log("info", "[src/lib/classes/Rustory/DB.svelte.ts > init()] DB loaded.");
     } catch (e) {
-      log("error", "[src/lib/classes/DB.svelte.ts > init()] Error loading DB!");
+      log("error", "[src/lib/classes/Rustory/DB.svelte.ts > init()] Error loading DB!");
       log("debug", JSON.stringify(e));
       throw e;
     }
