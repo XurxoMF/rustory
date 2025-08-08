@@ -39,7 +39,6 @@ linux:
   target:
     - AppImage
     - deb
-    - flatpak
     - rpm
   maintainer: XurxoMF
   category: Game

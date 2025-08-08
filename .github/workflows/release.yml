@@ -28,18 +28,6 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Prepare Linux build env
-        if: matrix.os == 'ubuntu-latest'
-        run: |
-          sudo apt update
-          sudo apt install -y \
-            libarchive-tools \
-            rpm \
-            flatpak \
-            xz-utils \
-            fakeroot
-          flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-
       - name: build-linux
         if: matrix.os == 'ubuntu-latest'
         run: npm run build:linux
