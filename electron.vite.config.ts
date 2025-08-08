@@ -11,7 +11,7 @@ export default defineConfig({
         targets: [
           {
             src: 'src/migrations',
-            dest: 'migrations'
+            dest: '.'
           }
         ]
       })
