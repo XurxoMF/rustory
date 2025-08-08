@@ -32,11 +32,6 @@ export default defineConfig({
     }
   },
   renderer: {
-    build: {
-      rollupOptions: {
-        external: ['*.json']
-      }
-    },
     resolve: {
       alias: {
         '@renderer': resolve(__dirname, 'src/renderer/src')

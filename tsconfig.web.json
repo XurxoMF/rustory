@@ -12,7 +12,6 @@
     "useDefineForClassFields": true,
     "strict": false,
     "allowJs": true,
-    "checkJs": true,
     "lib": [
       "ESNext",
       "DOM",
