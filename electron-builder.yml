@@ -40,6 +40,7 @@ linux:
     - AppImage
     - deb
     - flatpak
+    - rpm
   maintainer: XurxoMF
   category: Game
   icon: resources/icon.icns
