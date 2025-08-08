@@ -4,9 +4,14 @@ import { electronAPI } from '@electron-toolkit/preload'
 import { IPC_CHANNELS } from '@main/ipc/channels'
 
 // Custom APIs for renderer
+// There is no need to specify the parameters for the functions. Just use ...params -> params
 const api: BridgeAPI = {
-  test: {
-    ping: (test: string) => ipcRenderer.send(IPC_CHANNELS.test.ping, test)
+  logger: {
+    info: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.info, params),
+    warn: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.warn, params),
+    error: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.error, params),
+    debug: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.debug, params),
+    verbose: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.verbose, params)
   }
 }
 

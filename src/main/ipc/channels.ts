@@ -1,5 +1,9 @@
 export const IPC_CHANNELS = {
-  test: {
-    ping: 'ping'
+  logger: {
+    info: 'logger-info',
+    warn: 'logger-warn',
+    error: 'logger-error',
+    debug: 'logger-debug',
+    verbose: 'logger-verbose'
   }
 }

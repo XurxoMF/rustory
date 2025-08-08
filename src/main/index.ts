@@ -31,7 +31,7 @@ Logger.transports.file.resolvePathFn = (_variables, message): string => {
 
 // Set up the logger for auto-updater
 autoUpdater.logger = logger
-autoUpdater.logger.info('Logger configured for auto-updater')
+logger.info('Logger configured for auto-updater.')
 
 // Constants
 const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json')
@@ -59,19 +59,19 @@ function createWindow(): void {
   })
 
   mainWindow.on('ready-to-show', async () => {
-    logger.info('Main window ready to show. Getting previous window state.')
+    logger.info('Main window ready to show! Getting previous window state...')
 
     let oldState: TMainWindowState | null = await readJSON(MAIN_WINDOW_STATE_PATH)
 
     if (oldState) {
-      logger.info('Previous window state found. Restoring dimensions and position.')
+      logger.info('Previous window state found! Restoring dimensions and position...')
 
       mainWindow.setBounds({ width: oldState.width, height: oldState.height }, true)
       mainWindow.setPosition(oldState.x, oldState.y, true)
       if (oldState.maximized) mainWindow.maximize()
     }
 
-    logger.info('Main window ready. Showing it.')
+    logger.info('Main window ready! Showing it...')
     mainWindow.show()
   })
 
@@ -102,7 +102,7 @@ app.whenReady().then(async () => {
   // Initialize the IPCs
   await initIPCs()
 
-  logger.info('Electron is ready. Creating main window.')
+  logger.info('Electron is ready! Creating main window...')
 
   // Set app user model id for windows
   electronApp.setAppUserModelId('xyz.rustory')
@@ -132,7 +132,7 @@ app.on('window-all-closed', () => {
  * Saves the current window state to a JSON file.
  */
 async function saveCurrentWindowState(): Promise<void> {
-  logger.info('Saving current window state.')
+  logger.info('Saving current window state...')
 
   const { width, height } = mainWindow.getBounds()
   const [x, y] = mainWindow.getPosition()
@@ -148,6 +148,6 @@ async function saveCurrentWindowState(): Promise<void> {
 
   const res = await writeJSON(MAIN_WINDOW_STATE_PATH, newState)
 
-  if (!res) return logger.error('Current window state could not be saved.')
-  return logger.info('Current window state saved successfully.')
+  if (!res) return logger.error('Current window state could not be saved!')
+  return logger.info('Current window state saved successfully!')
 }

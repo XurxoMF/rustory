@@ -20,14 +20,14 @@ async function initDB(): Promise<void> {
     // Load the database
     db = drizzle(`file:${join(app.getPath('userData'), 'rustory.db')}`)
 
-    logger.info(`Database loaded! Applying migrations...`)
+    logger.info('Database loaded! Applying migrations...')
 
     // Migrations
     migrate(db, { migrationsFolder: join(__dirname, 'migrations') })
 
     logger.info('Migrations applied successfully!')
   } catch (err) {
-    logger.error(`Failed to load database.`)
+    logger.error('Failed to load database!')
     logger.debug(`Failed to load database: ${JSON.stringify(err)}`)
     app.exit(1)
   }
