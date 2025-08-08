@@ -45,14 +45,9 @@ linux:
   icon: resources/icon.icns
 appImage:
   artifactName: ${name}-${version}.${ext}
-flatpak:
-  artifactName: ${name}-${version}.${ext}
-  runtime: org.freedesktop.Platform
-  runtimeVersion: '23.08'
-  sdk: org.freedesktop.Sdk
-  base: org.electronjs.Electron2.BaseApp
-  baseVersion: '23.08'
 deb:
+  artifactName: ${name}-${version}.${ext}
+rpm:
   artifactName: ${name}-${version}.${ext}
 npmRebuild: false
 publish:

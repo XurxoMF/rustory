@@ -40,10 +40,16 @@ jobs:
         if: matrix.os == 'windows-latest'
         run: npm run build:win
 
+      - name: Get version from package.json
+        id: get_version
+        run: echo "VERSION=$(jq -r '.version' package.json)" >> $GITHUB_ENV
+
       - name: release
         uses: softprops/action-gh-release@v1
         with:
           draft: true
+          tag_name: ${{ env.VERSION }}
+          name: ${{ env.VERSION }}
           files: |
             dist/*.exe
             dist/*.zip
