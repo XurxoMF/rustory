@@ -10,8 +10,8 @@ export default defineConfig({
       viteStaticCopy({
         targets: [
           {
-            src: resolve(__dirname, 'src/migrations'),
-            dest: './'
+            src: 'src/migrations',
+            dest: 'migrations'
           }
         ]
       })
