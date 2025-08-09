@@ -1,5 +1,10 @@
 appId: xyz.rustory.app
 productName: Rustory
+copyright: Copyright © 2025 - Today ${author}
+
+artifactName: ${productName}-${version}.${ext}
+icon: resources/icon.png
+
 directories:
   buildResources: build
 files:
@@ -12,20 +17,26 @@ files:
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
 asarUnpack:
   - resources/**
+npmRebuild: false
+
 win:
-  executableName: Rustory
+  target:
+    - nsis
+    - zip
   icon: resources/icon.ico
+
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
-  shortcutName: ${productName}
   uninstallDisplayName: ${productName}
-  createDesktopShortcut: true
-  createStartMenuShortcut: true
   allowToChangeInstallationDirectory: true
   installerIcon: resources/icon.ico
   oneClick: false
-  runAfterFinish: true
+
 mac:
+  target:
+    - dmg
+    - zip
+  category: public.app-category.games
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
     - NSCameraUsageDescription: Application requests access to the device's camera.
@@ -33,26 +44,20 @@ mac:
     - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
     - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
   notarize: false
-dmg:
-  artifactName: ${name}-${version}.${ext}
+
 linux:
   target:
     - AppImage
     - deb
     - rpm
-  maintainer: XurxoMF
+    - tar.gz
   category: Game
   icon: resources/icon.icns
-appImage:
-  artifactName: ${name}-${version}.${ext}
-deb:
-  artifactName: ${name}-${version}.${ext}
-rpm:
-  artifactName: ${name}-${version}.${ext}
-npmRebuild: false
+
 publish:
   provider: github
   owner: XurxoMF
   repo: rustory
+
 electronDownload:
   mirror: https://npmmirror.com/mirrors/electron/
