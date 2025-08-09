@@ -26,8 +26,7 @@ win:
   icon: resources/icon.ico
 
 nsis:
-  artifactName: ${name}-${version}-setup-${os}-${arch}.${ext}
-  uninstallDisplayName: ${productName}
+  artifactName: ${productName}-${version}-setup-${os}-${arch}.${ext}
   allowToChangeInstallationDirectory: true
   installerIcon: resources/icon.ico
   oneClick: false
