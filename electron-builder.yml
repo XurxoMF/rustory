@@ -23,6 +23,7 @@ win:
   target:
     - nsis
     - zip
+    - portable
   icon: resources/icon.ico
 
 nsis:
