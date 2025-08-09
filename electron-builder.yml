@@ -2,7 +2,7 @@ appId: xyz.rustory.app
 productName: Rustory
 copyright: Copyright © 2025 - Today ${author}
 
-artifactName: ${productName}-${version}.${ext}
+artifactName: ${productName}-${version}-${os}-${arch}.${ext}
 icon: resources/icon.png
 
 directories:
@@ -23,11 +23,10 @@ win:
   target:
     - nsis
     - zip
-    - portable
   icon: resources/icon.ico
 
 nsis:
-  artifactName: ${name}-${version}-setup.${ext}
+  artifactName: ${name}-${version}-setup-${os}-${arch}.${ext}
   uninstallDisplayName: ${productName}
   allowToChangeInstallationDirectory: true
   installerIcon: resources/icon.ico
