@@ -6,6 +6,8 @@ declare global {
     y: number
     maximized: boolean
   }
+
+  type TSizeUits = 'KB' | 'MB' | 'GB' | 'TB'
 }
 
 export {}

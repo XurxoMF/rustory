@@ -10,6 +10,19 @@ declare global {
       debug: (message: string) => void
       verbose: (message: string) => void
     }
+    fs: {
+      readJSON: (filePath: string) => Promise<any | null>
+      writeJSON: (filePath: string, content: any) => Promise<boolean>
+    }
+    system: {
+      getOSInfo: () => Promise<Systeminformation.OsData | null>
+      getCPUInfo: () => Promise<Systeminformation.CpuData | null>
+      getRAMInfo: () => Promise<Systeminformation.MemData | null>
+      getGPUsInfo: () => Promise<Systeminformation.GraphicsData | null>
+      getVolumesInfo: () => Promise<Systeminformation.FsSizeData[] | null>
+      getNETSDKsInfo: () => Promise<string[] | null>
+      getNETRuntimesInfo: () => Promise<string[] | null>
+    }
   }
 
   interface Window {

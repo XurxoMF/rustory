@@ -4,9 +4,11 @@
     "electron.vite.config.*",
     "src/main/**/*",
     "src/preload/**/*",
+    "src/shared/**/*",
     "src/global.d.ts"
   ],
   "compilerOptions": {
+    "outDir": "out",
     "composite": true,
     "types": [
       "electron-vite/node"
@@ -15,6 +17,9 @@
     "paths": {
       "@main/*": [
         "src/main/*"
+      ],
+      "@shared/*": [
+        "src/shared/*"
       ]
     }
   }

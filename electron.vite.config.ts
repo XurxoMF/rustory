@@ -19,7 +19,8 @@ export default defineConfig({
     ],
     resolve: {
       alias: {
-        '@main': resolve(__dirname, 'src/main')
+        '@main': resolve(__dirname, 'src/main'),
+        '@shared': resolve(__dirname, 'src/shared')
       }
     }
   },
@@ -27,14 +28,16 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()],
     resolve: {
       alias: {
-        '@main': resolve(__dirname, 'src/main')
+        '@main': resolve(__dirname, 'src/main'),
+        '@shared': resolve(__dirname, 'src/shared')
       }
     }
   },
   renderer: {
     resolve: {
       alias: {
-        '@renderer': resolve(__dirname, 'src/renderer/src')
+        '@renderer': resolve(__dirname, 'src/renderer/src'),
+        '@shared': resolve(__dirname, 'src/shared')
       }
     },
     plugins: [

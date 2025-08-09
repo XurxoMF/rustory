@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { goto, Router, type RouteConfig } from '@mateothegreat/svelte5-router'
+  import { route, Router, type RouteConfig } from '@mateothegreat/svelte5-router'
 
   import Home from '@renderer/pages/Home.svelte'
   import Test from '@renderer/pages/Test.svelte'
@@ -12,10 +12,10 @@
 <div class="bg-red-500 w-1/2">
   <h1>APP</h1>
 
-  <button onclick={() => goto('/')}>INCIO</button>
-  <button onclick={() => goto('/test/123')}>TEST</button>
+  <a href="/" use:route={{ active: { absolute: true, class: 'text-white' } }}>INCIO</a>
+  <a href="/test/123" use:route={{ active: { absolute: true, class: 'text-white' } }}>TEST</a>
 
-  <button onclick={() => count++}>{count}</button>
+  <button onclick={() => count++}>{`Total: ${count}`}</button>
 
   <Router {routes} />
 </div>

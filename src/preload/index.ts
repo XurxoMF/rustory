@@ -12,6 +12,19 @@ const api: BridgeAPI = {
     error: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.error, params),
     debug: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.debug, params),
     verbose: (...params) => ipcRenderer.send(IPC_CHANNELS.logger.verbose, params)
+  },
+  fs: {
+    readJSON: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.readJSON, params),
+    writeJSON: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.writeJSON, params)
+  },
+  system: {
+    getOSInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getOSInfo),
+    getCPUInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getCPUInfo),
+    getRAMInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getRAMInfo),
+    getGPUsInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getGPUsInfo),
+    getVolumesInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getVolumesInfo),
+    getNETSDKsInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getNETSDKsInfo),
+    getNETRuntimesInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getNETRuntimesInfo)
   }
 }
 

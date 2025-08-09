@@ -5,7 +5,7 @@ import { autoUpdater } from 'electron-updater'
 import Logger from 'electron-log'
 
 // Change the name if on development mode to not confict with production data
-if (process.env['DEV'] == 'true') app.setName('rustory-dev')
+if (!app.isPackaged && process.env['DEV'] == 'true') app.setName('rustory-dev')
 
 // Ensure there is only 1 instance of the app running
 const gotTheLock = app.requestSingleInstanceLock()
@@ -15,10 +15,13 @@ if (!gotTheLock) app.quit()
 import icon from '../../resources/icon.png?asset'
 
 // Other imports
-import { logger } from '@main/utils/logger'
 import { initDB } from '@main/db'
 import { initIPCs } from '@main/ipc'
+import { logger } from '@main/utils/logger'
 import { readJSON, writeJSON } from '@main/utils/fs'
+import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo, getRAMInfo, getVolumesInfo } from '@main/utils/system'
+import { bytesToX } from '@shared/utils/math'
+import { padRight } from '@shared/utils/string'
 
 // Configure the logger to write logs to a specific folder
 Logger.transports.file.resolvePathFn = (_variables, message): string => {
@@ -31,7 +34,6 @@ Logger.transports.file.resolvePathFn = (_variables, message): string => {
 
 // Set up the logger for auto-updater
 autoUpdater.logger = logger
-logger.info('Logger configured for auto-updater.')
 
 // Constants
 const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json')
@@ -94,12 +96,10 @@ function createWindow(): void {
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  // TODO: Show a loader while the app is initializing everything.
+  await logOSInfo()
 
-  // Initialize the database
   await initDB()
 
-  // Initialize the IPCs
   await initIPCs()
 
   logger.info('Electron is ready! Creating main window...')
@@ -127,6 +127,50 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+async function logOSInfo() {
+  const WIDTH = 120
+  const SEPARATOR = `+${'-'.repeat(WIDTH + 2)}+`
+  const VERSION: string = `Version: v${app.getVersion()}`
+
+  const os = await getOSInfo()
+  const osInfo: string = os ? `OS: ${os.distro} ${os.platform} · ${os.release} · ${os.arch}` : 'OS: Unknown'
+
+  const cpu = await getCPUInfo()
+  const cpuInfo: string = cpu ? `CPU: ${cpu.processors} x ${cpu.manufacturer} ${cpu.brand} ${cpu.physicalCores}C/${cpu.cores}T ${cpu.speed}GHz* ${cpu.speedMax}GHz` : 'CPU: Unknown'
+
+  const ram = await getRAMInfo()
+  let ramInfo: string = ram ? `RAM: ${bytesToX(ram.total, 'MB').toLocaleString('es-ES')}MB total` : 'RAM: Unknown'
+
+  const gpus = await getGPUsInfo()
+  const gpusInfo: string[] = gpus ? gpus.controllers.map((c, i) => `GPU ${i}: ${c.vendor} ${c.model} ${c.vram}MB*`) : ['GPU: Unknown']
+
+  const volumes = await getVolumesInfo()
+  const volumesInfo: string[] = volumes ? volumes.map((v, i) => `VOL ${i}: ${v.fs} ${v.type} ${v.mount} ${bytesToX(v.used, 'GB')}GB/${bytesToX(v.size, 'GB')}GB`) : ['VOL: Unknown']
+
+  const dotnetSDKs = await getNETSDKsInfo()
+  const dotnetSDKsInfo: string[] = dotnetSDKs ? dotnetSDKs.map((sdk) => `.NET SDK ${sdk}`) : ['.NET SDK: Unknown']
+
+  const dotnetRuntimes = await getNETRuntimesInfo()
+  const dotnetRuntimesInfo: string[] = dotnetRuntimes ? dotnetRuntimes.map((rt) => `.NET Runtime ${rt}`) : ['.NET Runtime: Unknown']
+
+  logger.info(SEPARATOR)
+  logger.info(`| ${padRight('    ____  __  _________________  ______  __', WIDTH)} |`)
+  logger.info(`| ${padRight('   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️', WIDTH + 1)} |`)
+  logger.info(`| ${padRight('  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF', WIDTH)} |`)
+  logger.info(`| ${padRight(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${VERSION}`, WIDTH)} |`)
+  logger.info(`| ${padRight('/_/ |_|\\____//____//_/  \\____/_/ |_| /_/', WIDTH)} |`)
+  logger.info(SEPARATOR)
+  logger.info(`| ${padRight(osInfo, WIDTH)} |`)
+  logger.info(`| ${padRight(cpuInfo, WIDTH)} |`)
+  logger.info(`| ${padRight(ramInfo, WIDTH)} |`)
+  gpusInfo.forEach((gpu) => logger.info(`| ${padRight(gpu, WIDTH)} |`))
+  volumesInfo.forEach((vol) => logger.info(`| ${padRight(vol, WIDTH)} |`))
+  logger.info(SEPARATOR)
+  dotnetSDKsInfo.forEach((sdk) => logger.info(`| ${padRight(sdk, WIDTH)} |`))
+  dotnetRuntimesInfo.forEach((rt) => logger.info(`| ${padRight(rt, WIDTH)} |`))
+  logger.info(SEPARATOR)
+}
 
 /**
  * Saves the current window state to a JSON file.
