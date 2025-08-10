@@ -18,4 +18,6 @@ export async function registerWindowHandlers(): Promise<void> {
   ipcMain.on(IPC_CHANNELS.window.hide, (_event) => mainWindow.hide())
 
   ipcMain.on(IPC_CHANNELS.window.close, (_event) => mainWindow.close())
+
+  ipcMain.handle(IPC_CHANNELS.window.getName, (_event): string => mainWindow.title)
 }

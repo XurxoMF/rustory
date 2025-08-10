@@ -3,7 +3,6 @@
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { route } from '@mateothegreat/svelte5-router'
-  import clsx from 'clsx'
 
   let open = $state(false)
 </script>
@@ -30,7 +29,7 @@
   <a
     href={link}
     use:route={{
-      active: { absolute: true, class: clsx('t-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800') }
+      active: { absolute: true, class: ['t-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800'] }
     }}
     class={[
       'relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-sm transition-[background-color] duration-200',

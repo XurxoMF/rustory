@@ -19,7 +19,7 @@ export function createWindow(): void {
     center: true,
     width: 1600,
     height: 900,
-    title: `Rustory - ${app.getVersion()}`,
+    title: `Rustory`,
     show: false,
     autoHideMenuBar: true,
     fullscreenable: false,

@@ -19,7 +19,7 @@
 
 <button
   class={[
-    'w-fit flex items-center justify-center enabled:cursor-pointer px-2 py-1 disabled:opacity-50 border border-green-600 bg-green-700transition-[opacity,border] duration-200',
+    'w-fit flex items-center justify-center enabled:cursor-pointer px-2 py-1 disabled:opacity-50 border border-green-600 bg-green-700 transition-[opacity,border] duration-200',
     icon ? 'p-1' : 'px-2 py-1',
     ...ROUNDED_CLASSES[rounded]
   ]}

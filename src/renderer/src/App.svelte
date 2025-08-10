@@ -17,9 +17,11 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
 
-  import Home from '@renderer/pages/Home.svelte'
+  import HomePage from '@renderer/pages/Home.svelte'
+  import ConfigPage from '@renderer/pages/Config.svelte'
+  import clsx from 'clsx'
 
-  const routes: RouteConfig[] = [{ component: Home }]
+  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/config', component: ConfigPage }]
 
   // Loader data manager.
   const loader = Loader.instance
@@ -68,7 +70,7 @@
       <div in:slide={{ duration: 500, easing: quadOut }} class="w-full">
         <div class="flex flex-col items-center justify-center gap-8">
           <div class="w-1/3">
-            <ProgressBar max={Loader.TOTAL_TASKS} min={0} value={loader.completeTask.length} label="Loader progress" />
+            <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
           </div>
 
           <div class="w-full max-h-40">
@@ -93,12 +95,12 @@
 {#if loader.loadUI}
   <div
     class={[
-      'w-screen h-screen flex flex-col select-none overflow-hidden border transition-[color,background-color,border] duration-200',
-      't-dark:text-zinc-100 t-dark:bg-zinc-900 t-dark:border-zinc-750',
-      't-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250',
-      't-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750',
-      't-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750',
-      !Window.instance.isMaximized && 'rounded-md'
+      'w-screen h-screen flex flex-col select-none overflow-hidden transition-[color,background-color] duration-200',
+      't-dark:text-zinc-100 t-dark:bg-zinc-900',
+      't-light:text-zinc-900 t-light:bg-zinc-100',
+      't-rust:text-rust-100 t-rust:bg-rust-900',
+      't-midnight:text-gray-100 t-midnight:bg-gray-900',
+      !Window.instance.isMaximized && clsx('rounded-md border transition-[border] duration-200 t-dark:border-zinc-750 t-light:border-zinc-250 t-rust:border-rust-750 t-midnight:border-gray-750')
     ]}
   >
     <WindowBar />

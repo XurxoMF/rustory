@@ -28,7 +28,7 @@ export async function initIPCs(): Promise<void> {
     logger.info('Registering shell handlers...')
     await registerShellHandlers()
 
-    logger.info('Registering Rustory handlers...')
+    logger.info('Registering rustory handlers...')
     await registerRustoryHandlers()
 
     logger.info('All IPCs initialized successfully!')

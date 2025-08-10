@@ -27,7 +27,8 @@ export const IPC_CHANNELS = {
     maximize: 'window-maximize',
     isMaximized: 'window-is-maximized',
     hide: 'window-hide',
-    close: 'window-close'
+    close: 'window-close',
+    getName: 'window-get-name'
   },
   rustory: {
     getName: 'rustory-get-name',

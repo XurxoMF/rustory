@@ -50,6 +50,18 @@
   --background-image-image-vs: url('./assets/background.jpg');
 }
 
+@layer utilities {
+  .app-drag {
+    /* It's not an error. This class is used by electron to make the window draggable. */
+    app-region: drag;
+  }
+
+  .app-no-drag {
+    /* It's not an error. This class is used by electron to explude a component from the draggable area. */
+    app-region: no-drag;
+  }
+}
+
 /* Custom theme variants */
 @custom-variant t-dark {
   &:where([data-theme='dark'] *) {

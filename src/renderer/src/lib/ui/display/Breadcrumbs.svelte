@@ -16,7 +16,7 @@
     <Icon icon="material-symbols:chevron-right-rounded" />
   </span>
 
-  <span in:fly={{ duration: 200, opacity: 0, x: -5 }} out:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs font-thin">
+  <span in:fly={{ duration: 200, opacity: 0, x: -5 }} out:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs">
     <ButtonUnstyled icon onclick={() => goto(segment.href)}>
       {segment.label}
     </ButtonUnstyled>
