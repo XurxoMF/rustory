@@ -8,7 +8,10 @@ export const IPC_CHANNELS = {
   },
   fs: {
     readJSON: 'fs-read-json',
-    writeJSON: 'fs-write-json'
+    writeJSON: 'fs-write-json',
+    showDialog: 'fs-show-dialog',
+    join: 'fs-join',
+    getPath: 'fs-get-path'
   },
   system: {
     getOSInfo: 'system-get-os-info',
@@ -18,5 +21,20 @@ export const IPC_CHANNELS = {
     getVolumesInfo: 'system-get-volumes-info',
     getNETSDKsInfo: 'system-get-netsdks-info',
     getNETRuntimesInfo: 'system-get-netruntimes-info'
+  },
+  window: {
+    minimize: 'window-minimize',
+    maximize: 'window-maximize',
+    isMaximized: 'window-is-maximized',
+    hide: 'window-hide',
+    close: 'window-close'
+  },
+  rustory: {
+    getName: 'rustory-get-name',
+    getVersion: 'rustory-get-version'
+  },
+  shell: {
+    openURL: 'shell-open-url',
+    openPath: 'shell-open-path'
   }
 }

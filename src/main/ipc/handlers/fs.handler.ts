@@ -1,9 +1,19 @@
-import { ipcMain } from 'electron'
+import { app, ipcMain } from 'electron'
 import { IPC_CHANNELS } from '../channels'
-import { readJSON, writeJSON } from '@main/utils/fs'
+import { openDialog, readJSON, writeJSON } from '@main/utils/fs'
+import { join } from 'path'
 
 export async function registerFSHandlers(): Promise<void> {
   ipcMain.handle(IPC_CHANNELS.fs.readJSON, async (_event, filePath: string): Promise<any | null> => await readJSON(filePath))
 
   ipcMain.handle(IPC_CHANNELS.fs.writeJSON, async (_event, filePath: string, content: any): Promise<boolean> => await writeJSON(filePath, content))
+
+  ipcMain.handle(
+    IPC_CHANNELS.fs.showDialog,
+    async (_event, title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | null> => await openDialog(title, type, multiple, extensions)
+  )
+
+  ipcMain.handle(IPC_CHANNELS.fs.join, (_event, ...parts: string[]): string => join(...parts))
+
+  ipcMain.handle(IPC_CHANNELS.fs.getPath, (_event, path: TPaths): string => app.getPath(path))
 }

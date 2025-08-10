@@ -1,4 +1,5 @@
 import fse from 'fs-extra'
+import { dialog } from 'electron'
 
 import { logger } from '@main/utils/logger'
 
@@ -51,5 +52,43 @@ export async function writeJSON(filePath: string, content: any): Promise<boolean
     logger.error(`Error writing JSON file at ${filePath}!`)
     logger.debug(`Error writing JSON file at ${filePath}:\n${JSON.stringify(err)}`)
     return false
+  }
+}
+
+/**
+ * Open a file explorer dialog to select files or folders.
+ *
+ * @param title Title to show on the dialog
+ * @param type Files or folders
+ * @param multiple Multiple items or single item
+ * @param extensions List of required file extensions
+ * @returns The selected files/folders or null if the users selected nothing or an error ocurred
+ */
+export async function openDialog(title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | null> {
+  try {
+    logger.info('Opening file/folder selection dialog...')
+
+    const properties: ('openFile' | 'openDirectory' | 'multiSelections')[] = []
+    properties.push(type)
+    if (multiple) properties.push('multiSelections')
+
+    const result = await dialog.showOpenDialog({
+      title,
+      properties,
+      filters: extensions && [{ name: extensions.join(', '), extensions: extensions }]
+    })
+
+    if (result.canceled) {
+      logger.warn('No file/folder was selected!')
+      return null
+    }
+
+    logger.info(`Files/folders ${result.filePaths.join(', ')} selected!`)
+
+    return result.filePaths
+  } catch (err) {
+    logger.error('Error opening file/folder selection dialog!')
+    logger.debug(`Error file/folder selection dialog:\n${JSON.stringify(err)}`)
+    return null
   }
 }

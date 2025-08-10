@@ -1,25 +1,22 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
 import Logger from 'electron-log'
 
 // Change the name if on development mode to not confict with production data
-if (!app.isPackaged && process.env['DEV'] == 'true') app.setName('rustory-dev')
+if (!app.isPackaged && is.dev) app.setName('rustory-dev')
 
 // Ensure there is only 1 instance of the app running
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock) app.quit()
 
-// Assets
-import icon from '../../resources/icon.png?asset'
-
 // Other imports
 import { initDB } from '@main/db'
 import { initIPCs } from '@main/ipc'
 import { logger } from '@main/utils/logger'
-import { readJSON, writeJSON } from '@main/utils/fs'
 import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo, getRAMInfo, getVolumesInfo } from '@main/utils/system'
+import { createWindow } from '@main/windows/mainWindow'
 import { bytesToX } from '@shared/utils/math'
 import { padRight } from '@shared/utils/string'
 
@@ -34,64 +31,6 @@ Logger.transports.file.resolvePathFn = (_variables, message): string => {
 
 // Set up the logger for auto-updater
 autoUpdater.logger = logger
-
-// Constants
-const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json')
-
-let mainWindow: BrowserWindow
-
-function createWindow(): void {
-  // Create the browser window.
-  mainWindow = new BrowserWindow({
-    center: true,
-    width: 1280,
-    height: 720,
-    title: `Rustory - ${app.getVersion()}`,
-    show: false,
-    autoHideMenuBar: true,
-    fullscreenable: false,
-    minWidth: 1024,
-    minHeight: 600,
-    icon: icon,
-    ...(process.platform === 'linux' ? { icon } : {}),
-    webPreferences: {
-      sandbox: false,
-      preload: join(__dirname, '../preload/index.js')
-    }
-  })
-
-  mainWindow.on('ready-to-show', async () => {
-    logger.info('Main window ready to show! Getting previous window state...')
-
-    let oldState: TMainWindowState | null = await readJSON(MAIN_WINDOW_STATE_PATH)
-
-    if (oldState) {
-      logger.info('Previous window state found! Restoring dimensions and position...')
-
-      mainWindow.setBounds({ width: oldState.width, height: oldState.height }, true)
-      mainWindow.setPosition(oldState.x, oldState.y, true)
-      if (oldState.maximized) mainWindow.maximize()
-    }
-
-    logger.info('Main window ready! Showing it...')
-    mainWindow.show()
-  })
-
-  // Before closing the window, save the current state
-  mainWindow.on('close', async () => await saveCurrentWindowState())
-
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
-
-  // HMR for renderer base on electron-vite cli. Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
-  } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
-  }
-}
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
@@ -154,6 +93,7 @@ async function logOSInfo() {
   const dotnetRuntimes = await getNETRuntimesInfo()
   const dotnetRuntimesInfo: string[] = dotnetRuntimes ? dotnetRuntimes.map((rt) => `.NET Runtime ${rt}`) : ['.NET Runtime: Unknown']
 
+  // Emojis use 2 spaces for some reason so + 1 to width
   logger.info(SEPARATOR)
   logger.info(`| ${padRight('    ____  __  _________________  ______  __', WIDTH)} |`)
   logger.info(`| ${padRight('   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️', WIDTH + 1)} |`)
@@ -170,28 +110,4 @@ async function logOSInfo() {
   dotnetSDKsInfo.forEach((sdk) => logger.info(`| ${padRight(sdk, WIDTH)} |`))
   dotnetRuntimesInfo.forEach((rt) => logger.info(`| ${padRight(rt, WIDTH)} |`))
   logger.info(SEPARATOR)
-}
-
-/**
- * Saves the current window state to a JSON file.
- */
-async function saveCurrentWindowState(): Promise<void> {
-  logger.info('Saving current window state...')
-
-  const { width, height } = mainWindow.getBounds()
-  const [x, y] = mainWindow.getPosition()
-  const maximized = mainWindow.isMaximized()
-
-  const newState: TMainWindowState = {
-    width,
-    height,
-    x,
-    y,
-    maximized
-  }
-
-  const res = await writeJSON(MAIN_WINDOW_STATE_PATH, newState)
-
-  if (!res) return logger.error('Current window state could not be saved!')
-  return logger.info('Current window state saved successfully!')
 }

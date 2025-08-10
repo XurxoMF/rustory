@@ -14,7 +14,7 @@ export async function getOSInfo(): Promise<si.Systeminformation.OsData | null> {
     return await si.osInfo()
   } catch (err) {
     logger.warn('Error fetching OS info!')
-    logger.debug(`Error fetching OS info: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching OS info\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -29,7 +29,7 @@ export async function getCPUInfo(): Promise<si.Systeminformation.CpuData | null>
     return await si.cpu()
   } catch (err) {
     logger.warn('Error fetching CPU info!')
-    logger.debug(`Error fetching CPU info: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching CPU info:\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -44,7 +44,7 @@ export async function getRAMInfo(): Promise<si.Systeminformation.MemData | null>
     return await si.mem()
   } catch (err) {
     logger.warn('Error fetching RAM info!')
-    logger.debug(`Error fetching RAM info: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching RAM info:\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -59,7 +59,7 @@ export async function getGPUsInfo(): Promise<si.Systeminformation.GraphicsData |
     return await si.graphics()
   } catch (err) {
     logger.warn('Error fetching GPUs info!')
-    logger.debug(`Error fetching GPUs info: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching GPUs info:\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -75,7 +75,7 @@ export async function getVolumesInfo(): Promise<si.Systeminformation.FsSizeData[
     return volumes.filter((v) => bytesToX(v.size, 'GB') > 0)
   } catch (err) {
     logger.warn('Error fetching volumes info!')
-    logger.debug(`Error fetching volumes info: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching volumes info:\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -90,7 +90,7 @@ export async function getNETSDKsInfo(): Promise<string[] | null> {
     return execSync('dotnet --list-sdks', { encoding: 'utf-8' }).trim().split('\n')
   } catch (err) {
     logger.warn('Error fetching .NET SDKs!')
-    logger.debug(`Error fetching .NET SDKs: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching .NET SDKs:\n${JSON.stringify(err)}`)
     return null
   }
 }
@@ -108,7 +108,7 @@ export async function getNETRuntimesInfo(): Promise<string[] | null> {
       .map((rt) => rt.replace('Microsoft.NETCore.App ', ''))
   } catch (err) {
     logger.warn('Error fetching .NET Runtimes!')
-    logger.debug(`Error fetching .NET Runtimes: ${JSON.stringify(err)}`)
+    logger.debug(`Error fetching .NET Runtimes:\n${JSON.stringify(err)}`)
     return null
   }
 }

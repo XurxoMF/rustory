@@ -1,5 +1,4 @@
 import { ipcMain } from 'electron'
-
 import { IPC_CHANNELS } from '@main/ipc/channels'
 import { logger } from '@main/utils/logger'
 

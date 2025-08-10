@@ -14,6 +14,7 @@
     "useDefineForClassFields": true,
     "strict": false,
     "allowJs": true,
+    "isolatedModules": true,
     "lib": [
       "ESNext",
       "DOM",

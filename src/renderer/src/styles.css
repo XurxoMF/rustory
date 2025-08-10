@@ -1,1 +1,103 @@
 @import 'tailwindcss';
+
+/* Custom variables */
+@theme {
+  --font-ubuntu: 'Ubuntu', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+
+  --breakpoint-3xl: 120rem;
+
+  --container-8xl: 90rem;
+  --container-9xl: 100rem;
+
+  --color-zinc-150: #ececee;
+  --color-zinc-250: #dcdce0;
+  --color-zinc-350: #bbbbc1;
+  --color-zinc-450: #898992;
+  --color-zinc-550: #62626b;
+  --color-zinc-650: #494951;
+  --color-zinc-750: #333338;
+  --color-zinc-850: #202023;
+
+  --color-gray-150: #eceef1;
+  --color-gray-250: #dbdee3;
+  --color-gray-350: #b7bcc5;
+  --color-gray-450: #848b98;
+  --color-gray-550: #5b6472;
+  --color-gray-650: #414b5a;
+  --color-gray-750: #2b3544;
+  --color-gray-850: #18212f;
+
+  --color-rust-50: #fdfdf5;
+  --color-rust-100: #faf8e2;
+  --color-rust-150: #f6f2ce;
+  --color-rust-200: #f0e9b0;
+  --color-rust-250: #ede196;
+  --color-rust-300: #e9d97c;
+  --color-rust-350: #e5cd5f;
+  --color-rust-400: #e0c141;
+  --color-rust-450: #d8b537;
+  --color-rust-500: #cfa92d;
+  --color-rust-550: #c39827;
+  --color-rust-600: #b68721;
+  --color-rust-650: #a47621;
+  --color-rust-700: #926420;
+  --color-rust-750: #895c21;
+  --color-rust-800: #805422;
+  --color-rust-850: #724b21;
+  --color-rust-900: #64411f;
+  --color-rust-950: #4b2b12;
+
+  --background-image-image-vs: url('./assets/background.jpg');
+}
+
+/* Custom theme variants */
+@custom-variant t-dark {
+  &:where([data-theme='dark'] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-light {
+  &:where([data-theme='light'] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-rust {
+  &:where([data-theme='rust'] *) {
+    @slot;
+  }
+}
+
+@custom-variant t-midnight {
+  &:where([data-theme='midnight'] *) {
+    @slot;
+  }
+}
+
+/* Custom scale options */
+html[data-uiscale='50'] {
+  font-size: 8px;
+}
+html[data-uiscale='75'] {
+  font-size: 12px;
+}
+html[data-uiscale='100'] {
+  font-size: 16px;
+}
+html[data-uiscale='125'] {
+  font-size: 20px;
+}
+html[data-uiscale='150'] {
+  font-size: 24px;
+}
+
+/* Custom scrollbar styles */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom styles */
+body {
+  @apply font-ubuntu subpixel-antialiased;
+}

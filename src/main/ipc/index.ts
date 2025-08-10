@@ -5,6 +5,9 @@ import { logger } from '@main/utils/logger'
 import { registerLoggerHandlers } from './handlers/logger.handlers'
 import { registerFSHandlers } from './handlers/fs.handler'
 import { registerSystemHandlers } from './handlers/system.handlers'
+import { registerWindowHandlers } from './handlers/window.handler'
+import { registerShellHandlers } from './handlers/shell.handlers'
+import { registerRustoryHandlers } from './handlers/rustory.handlers'
 
 export async function initIPCs(): Promise<void> {
   try {
@@ -19,10 +22,19 @@ export async function initIPCs(): Promise<void> {
     logger.info('Registering system handlers...')
     await registerSystemHandlers()
 
+    logger.info('Registering window handlers...')
+    await registerWindowHandlers()
+
+    logger.info('Registering shell handlers...')
+    await registerShellHandlers()
+
+    logger.info('Registering Rustory handlers...')
+    await registerRustoryHandlers()
+
     logger.info('All IPCs initialized successfully!')
   } catch (err) {
     logger.error('Error initializing IPCs!')
-    logger.debug(`Error initializing IPCs: ${JSON.stringify(err)}`)
+    logger.debug(`Error initializing IPCs:\n${JSON.stringify(err)}`)
     app.exit(1)
   }
 }

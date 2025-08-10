@@ -13,6 +13,9 @@ declare global {
     fs: {
       readJSON: (filePath: string) => Promise<any | null>
       writeJSON: (filePath: string, content: any) => Promise<boolean>
+      showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[] | null>
+      join: (...parts: string[]) => Promise<string>
+      getPath: (path: TPaths) => Promise<string>
     }
     system: {
       getOSInfo: () => Promise<Systeminformation.OsData | null>
@@ -22,6 +25,21 @@ declare global {
       getVolumesInfo: () => Promise<Systeminformation.FsSizeData[] | null>
       getNETSDKsInfo: () => Promise<string[] | null>
       getNETRuntimesInfo: () => Promise<string[] | null>
+    }
+    window: {
+      minimize: () => void
+      maximize: () => void
+      isMaximized: () => Promise<boolean>
+      hide: () => void
+      close: () => void
+    }
+    rustory: {
+      getName: () => Promise<string>
+      getVersion: () => Promise<string>
+    }
+    shell: {
+      openURL: (url: string) => void
+      openPath: (path: string) => void
     }
   }
 

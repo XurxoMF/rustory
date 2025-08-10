@@ -28,7 +28,7 @@ async function initDB(): Promise<void> {
     logger.info('Migrations applied successfully!')
   } catch (err) {
     logger.error('Failed to load database!')
-    logger.debug(`Failed to load database: ${JSON.stringify(err)}`)
+    logger.debug(`Failed to load database:\n${JSON.stringify(err)}`)
     app.exit(1)
   }
 }
