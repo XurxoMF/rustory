@@ -13,14 +13,25 @@ const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json'
 
 export let mainWindow: BrowserWindow
 
-export function createWindow(): void {
+export async function createMainWindow(): Promise<void> {
+  logger.info('Getting old state...')
+
+  let oldState: TMainWindowState | null = await readJSON(MAIN_WINDOW_STATE_PATH)
+
+  let width = oldState?.width ?? 1600
+  let height = oldState?.height ?? 900
+  let x = oldState?.x
+  let y = oldState?.y
+  let maximized = oldState?.maximized ?? true
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
     center: true,
-    width: 1600,
-    height: 900,
+    width,
+    height,
+    x,
+    y,
     title: `Rustory ${app.getVersion()}`,
-    show: false,
     autoHideMenuBar: true,
     fullscreenable: false,
     minWidth: 1024,
@@ -36,21 +47,10 @@ export function createWindow(): void {
     }
   })
 
+  logger.info('Main window ready!')
+
   mainWindow.on('ready-to-show', async () => {
-    logger.info('Main window ready to show! Getting previous window state...')
-
-    let oldState: TMainWindowState | null = await readJSON(MAIN_WINDOW_STATE_PATH)
-
-    if (oldState) {
-      logger.info('Previous window state found! Restoring dimensions and position...')
-
-      mainWindow.setBounds({ width: oldState.width, height: oldState.height }, true)
-      mainWindow.setPosition(oldState.x, oldState.y, true)
-      if (oldState.maximized) mainWindow.maximize()
-    }
-
-    logger.info('Main window ready! Showing it...')
-    mainWindow?.show()
+    if (maximized) mainWindow.maximize()
   })
 
   // Before closing the window, save the current state
@@ -73,8 +73,6 @@ export function createWindow(): void {
  * Saves the current window state to a JSON file.
  */
 async function saveCurrentWindowState(): Promise<void> {
-  logger.info('Saving current window state...')
-
   const { width, height } = mainWindow.getBounds()
   const [x, y] = mainWindow.getPosition()
   const maximized = mainWindow.isMaximized()

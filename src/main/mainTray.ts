@@ -6,7 +6,7 @@ import icon from '../../resources/icon.png?asset'
 
 export let tray: Tray
 
-export function createTray(): void {
+export async function createTray(): Promise<void> {
   tray = new Tray(icon)
 
   const contextMenu = Menu.buildFromTemplate([

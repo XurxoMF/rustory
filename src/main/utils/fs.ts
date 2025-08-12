@@ -11,16 +11,12 @@ import { logger } from '@main/utils/logger'
  */
 export async function readJSON(filePath: string): Promise<any | null> {
   try {
-    logger.info(`Reading JSON file at ${filePath}...`)
-
     if (!fse.existsSync(filePath)) {
       logger.warn(`JSON file at ${filePath} does not exist!`)
       return null
     }
 
     const json = await fse.readJSON(filePath, 'utf-8')
-
-    logger.info(`Successfully read JSON file at ${filePath}!`)
 
     return json
   } catch (err) {
@@ -39,13 +35,9 @@ export async function readJSON(filePath: string): Promise<any | null> {
  */
 export async function writeJSON(filePath: string, content: any): Promise<boolean> {
   try {
-    logger.info(`Writing JSON file at ${filePath}...`)
-
     await fse.ensureFile(filePath)
 
     await fse.writeJSON(filePath, content, { spaces: 2 })
-
-    logger.info(`Successfully wrote JSON file at ${filePath}!`)
 
     return true
   } catch (err) {
@@ -66,8 +58,6 @@ export async function writeJSON(filePath: string, content: any): Promise<boolean
  */
 export async function openDialog(title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | null> {
   try {
-    logger.info('Opening file/folder selection dialog...')
-
     const properties: ('openFile' | 'openDirectory' | 'multiSelections')[] = []
     properties.push(type)
     if (multiple) properties.push('multiSelections')
@@ -79,11 +69,9 @@ export async function openDialog(title: string, type: 'openFile' | 'openDirector
     })
 
     if (result.canceled) {
-      logger.warn('No file/folder was selected!')
+      logger.warn('No file/folder was selected by the user!')
       return null
     }
-
-    logger.info(`Files/folders ${result.filePaths.join(', ')} selected!`)
 
     return result.filePaths
   } catch (err) {

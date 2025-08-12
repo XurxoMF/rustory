@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu } from 'electron'
 import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
 import Logger from 'electron-log'
 
@@ -9,13 +9,10 @@ import { initDB } from '@main/db'
 import { initIPCs } from '@main/ipc'
 import { logger } from '@main/utils/logger'
 import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo, getRAMInfo, getVolumesInfo } from '@main/utils/system'
-import { createWindow } from '@main/mainWindow'
+import { createMainWindow } from '@main/mainWindow'
 import { createTray } from '@main/mainTray'
 import { bytesToX } from '@shared/utils/math'
 import { padRight } from '@shared/utils/string'
-
-// Change the name if on development mode to not confict with production data
-if (!app.isPackaged && is.dev) app.setName('rustory-dev')
 
 // Ensure there is only 1 instance of the app running
 const gotTheLock = app.requestSingleInstanceLock()
@@ -40,7 +37,7 @@ autoUpdater.logger = logger
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  createTray()
+  await createTray()
 
   await logOSInfo()
 
@@ -58,11 +55,11 @@ app.whenReady().then(async () => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  createWindow()
+  await createMainWindow()
 
-  app.on('activate', function () {
+  app.on('activate', async () => {
     // On macOS it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) await createMainWindow()
   })
 })
 
@@ -103,7 +100,7 @@ async function logOSInfo() {
   // Emojis use 2 spaces for some reason so + 1 to width
   logger.info(SEPARATOR)
   logger.info(`| ${padRight('    ____  __  _________________  ______  __', WIDTH)} |`)
-  logger.info(`| ${padRight('   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️', WIDTH + 1)} |`)
+  logger.info(`| ${padRight('   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️', WIDTH)} |`)
   logger.info(`| ${padRight('  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF', WIDTH)} |`)
   logger.info(`| ${padRight(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${VERSION}`, WIDTH)} |`)
   logger.info(`| ${padRight('/_/ |_|\\____//____//_/  \\____/_/ |_| /_/', WIDTH)} |`)

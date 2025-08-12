@@ -32,7 +32,7 @@
     <div class="w-fit flex items-center gap-2">
       <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
         <p>
-          {`${Info.instance.productName} ${Info.instance.version}`}
+          {`${Info.instance.name} ${Info.instance.version}`}
         </p>
       </div>
     </div>

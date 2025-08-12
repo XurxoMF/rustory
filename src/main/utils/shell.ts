@@ -8,9 +8,7 @@ import { logger } from '@main/utils/logger'
  */
 export function openURL(url: string): void {
   try {
-    logger.info(`Opening external URL: ${url}...`)
     shell.openExternal(url)
-    logger.info(`Opened external URL: ${url}!`)
   } catch (err) {
     logger.error(`Error opening external URL: ${url}!`)
     logger.debug(`Error opening external URL: ${url}:\n${JSON.stringify(err)}`)
@@ -24,10 +22,8 @@ export function openURL(url: string): void {
  */
 export async function openPath(path: string): Promise<void> {
   try {
-    logger.info(`Opening path: ${path}...`)
     const err = await shell.openPath(path)
     if (err) throw err
-    logger.info(`Opened path: ${path}!`)
   } catch (err) {
     logger.error(`Error opening path: ${path}!`)
     logger.debug(`Error opening path: ${path}:\n${JSON.stringify(err)}`)

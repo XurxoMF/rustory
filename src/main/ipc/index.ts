@@ -3,7 +3,7 @@ import { app } from 'electron'
 import { logger } from '@main/utils/logger'
 
 import { registerLoggerHandlers } from './handlers/logger.handlers'
-import { registerFSHandlers } from './handlers/fs.handler'
+import { registerFSHandlers } from './handlers/fs.handlers'
 import { registerSystemHandlers } from './handlers/system.handlers'
 import { registerWindowHandlers } from './handlers/window.handler'
 import { registerShellHandlers } from './handlers/shell.handlers'

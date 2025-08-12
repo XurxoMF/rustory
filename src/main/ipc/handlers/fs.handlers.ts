@@ -1,5 +1,5 @@
 import { app, ipcMain } from 'electron'
-import { IPC_CHANNELS } from '../channels'
+import { IPC_CHANNELS } from '@main/ipc/channels'
 import { openDialog, readJSON, writeJSON } from '@main/utils/fs'
 import { join } from 'path'
 
