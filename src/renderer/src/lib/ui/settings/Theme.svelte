@@ -12,7 +12,7 @@
       't-midnight:border-gray-750',
       THEME.color
     ]}
-    onclick={() => (Config.instance.theme = THEME.key)}
+    onclick={() => Config.instance.setTheme(THEME.key)}
     title={THEME.name}
     aria-label={THEME.name}
     disabled={THEME.key === Config.instance.theme}

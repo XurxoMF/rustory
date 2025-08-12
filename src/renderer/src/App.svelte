@@ -3,6 +3,7 @@
   import { quadOut } from 'svelte/easing'
   import { onMount } from 'svelte'
   import { Router, type RouteConfig } from '@mateothegreat/svelte5-router'
+  import clsx from 'clsx'
 
   import './styles.css'
 
@@ -17,10 +18,10 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
 
-  import HomePage from '@renderer/pages/Home.svelte'
-  import ConfigPage from '@renderer/pages/Config.svelte'
-  import clsx from 'clsx'
+  import HomePage from '@renderer/lib/ui/pages/Home.svelte'
+  import ConfigPage from '@renderer/lib/ui/pages/Config.svelte'
 
+  // Routes of the page
   const routes: RouteConfig[] = [{ component: HomePage }, { path: '/config', component: ConfigPage }]
 
   // Loader data manager.

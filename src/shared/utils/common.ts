@@ -4,7 +4,7 @@
  * Use it with await sleep(x).
  *
  * @param ms - Miliseconds to sleep.
- * @returns - A new Promise that resolvers after the ms time.
+ * @returns A new Promise that resolvers after the ms time.
  */
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))

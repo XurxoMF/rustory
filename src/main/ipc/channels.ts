@@ -37,5 +37,11 @@ export const IPC_CHANNELS = {
   shell: {
     openURL: 'shell-open-url',
     openPath: 'shell-open-path'
+  },
+  db: {
+    config: {
+      setItem: 'db-config-set-item',
+      getItem: 'db-config-get-item'
+    }
   }
 }

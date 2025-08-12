@@ -13,36 +13,11 @@ Most of the Rustory themes use Tailwind CSS default colors but some others, like
 The custom color palette can be defined on the `app.css` file on this folder. Check the rust palette and use it as a base.  
 Color palettes must be formed by 19 variants: **50**, **100**, **150**, **200**, **250**, **300**, **350**, **400**, **450**, **500**, **550**, **600**, **650**, **700**, **750**, **800**, **850**, **900** and **950**.
 
-### How to use color palettes
-
-On **light** themes, colors will be the following ones:
-
-- `bg-<color>-100` for the main background color.
-- `bg-<color>-150` for the sections background color.
-- `bg-<color>-200` for the background of form components like Buttons, Selects...
-- `bg-<color>-250` for the border colors and small details like Scroll Bars, Progress Bars... where the font color is too much.
-- `text-<color>-900` for the font color.
-
-On **dark** themes, colors will be the following ones:
-
-- `bg-<color>-900` for the main background color.
-- `bg-<color>-850` for the sections background color.
-- `bg-<color>-800` for the background of form components like Buttons, Selects...
-- `bg-<color>-750` for the border colors and small details like Scroll Bars, Progress Bars... where the font color is too much.
-- `text-<color>-100` for the font color.
-
-On **both** themes we'll use this styles:
-
-- `shadow-sm shadow-black/25` for shadows on Popups, Dropdowns...
-- `opacity-50` for disabled elements or id applied on `<p>`, `<span>` to style info like descriptions and so on.
-
 > [!WARNING]
 > If you set a `duration-<time>` that affect colors it's extremely important to set `t-<themename>:text-<color>-<variant>` if the element contains text or Icons, otherwise the color change animation of those will take more time than expected to change the color.  
 > This is a bug or something on CSS. If an element with a `duration-<time>` has a text color and a child element has another `duration-<time>` but inheriths the text color of the parent element the child `duration-<time>` will be added to the parent one increasing the duration time of the animation. If you have 2 `duration-[2s]` the child text animation will take 4 seconds for example.  
 > Changing the color of the child element(even if the color is the same one) will break this bug and work normally.  
 > This may happen on `bg-<color>-<variant>` too, I didn't tested it.
-
-_Any element not listed here can use any color from the same palette!_
 
 ### Create a new theme
 

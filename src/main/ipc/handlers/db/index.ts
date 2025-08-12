@@ -1,3 +1,8 @@
-// import { logger } from '@main/utils/logger'
+import { logger } from '@main/utils/logger'
 
-export async function registerDBHandlers() {}
+import { registerConfigHandlers } from './config.handlers'
+
+export async function registerDBHandlers() {
+  logger.info('Registering config db handlers...')
+  await registerConfigHandlers()
+}

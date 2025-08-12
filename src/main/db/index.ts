@@ -6,9 +6,9 @@ import { join } from 'path'
 import { logger } from '@main/utils/logger'
 
 // Schema imports
-import { test } from './schemas/test.schema'
+import { config } from './schemas/config.schema'
 
-let db: LibSQLDatabase<Record<string, unknown>> | null = null
+let db: LibSQLDatabase<Record<string, unknown>>
 
 async function initDB(): Promise<void> {
   // If the database is already initialized, return
@@ -23,7 +23,7 @@ async function initDB(): Promise<void> {
     logger.info('Database loaded! Applying migrations...')
 
     // Migrations
-    migrate(db, { migrationsFolder: join(__dirname, 'migrations') })
+    await migrate(db, { migrationsFolder: join(__dirname, 'migrations') })
 
     logger.info('Migrations applied successfully!')
   } catch (err) {
@@ -33,4 +33,4 @@ async function initDB(): Promise<void> {
   }
 }
 
-export { initDB, db, test }
+export { initDB, db, config }

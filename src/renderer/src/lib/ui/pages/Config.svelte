@@ -60,7 +60,7 @@
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__instances_folder(), 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
-                  Config.instance.instancesPath = folder[0]
+                  Config.instance.setInstancesPath(folder[0])
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />

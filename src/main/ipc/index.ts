@@ -8,6 +8,7 @@ import { registerSystemHandlers } from './handlers/system.handlers'
 import { registerWindowHandlers } from './handlers/window.handler'
 import { registerShellHandlers } from './handlers/shell.handlers'
 import { registerRustoryHandlers } from './handlers/rustory.handlers'
+import { registerDBHandlers } from './handlers/db'
 
 export async function initIPCs(): Promise<void> {
   try {
@@ -30,6 +31,9 @@ export async function initIPCs(): Promise<void> {
 
     logger.info('Registering rustory handlers...')
     await registerRustoryHandlers()
+
+    logger.info('Registering db handlers...')
+    await registerDBHandlers()
 
     logger.info('All IPCs initialized successfully!')
   } catch (err) {

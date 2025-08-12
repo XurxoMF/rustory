@@ -52,7 +52,7 @@ export class Config {
   /**
    * Key of the selected language.
    */
-  private _lang: Locale = $state('en')
+  private _locale: Locale = $state('en')
 
   /**
    * Key of the selected scale.
@@ -70,13 +70,26 @@ export class Config {
    * Loads all the configs on this instance.
    */
   async init(): Promise<void> {
-    this.theme = localStorage.getItem('theme') || Config.THEMES[0].key
-    this.lang = getLocale()
-    this.scale = localStorage.getItem('uiscale') || Config.SCALES[2].scale
+    // Locale is loaded Paraglide on startup so just save the value
+    this._locale = getLocale()
 
-    const defaultUserDataPath = await window.api.fs.getPath('userData')
-    const defaultInstancePath = await window.api.fs.join(defaultUserDataPath, 'Instances')
-    this.instancesPath = localStorage.getItem('instances-path') ?? defaultInstancePath
+    // Get and apply the theme
+    this._theme = localStorage.getItem('theme') || Config.THEMES[0].key
+    Config.applyTheme(this._theme)
+
+    // Get and apply the scale
+    this._scale = localStorage.getItem('uiscale') || Config.SCALES[2].scale
+    Config.applyScale(this._scale)
+
+    // Get and apply the instancesPath
+    const instancesPath = await window.api.db.config.getItem('instances-path')
+    if (instancesPath) {
+      this._instancesPath = instancesPath
+    } else {
+      const defaultUserDataPath = await window.api.fs.getPath('userData')
+      const defaultInstancePath = await window.api.fs.join(defaultUserDataPath, 'Instances')
+      await this.setInstancesPath(defaultInstancePath)
+    }
   }
 
   /**
@@ -87,34 +100,54 @@ export class Config {
   }
 
   /**
-   * Changes the theme to the one with the provided key.
-   *
-   * If no key or an invalidad key is provided it'll default to "dark".
+   * Set a new theme.
    *
    * @param theme - The key of the theme to apply.
+   * @returns If the new value was applied or not.
    */
-  set theme(theme: string | null | undefined) {
-    theme = Config.applyTheme(theme)
+  async setTheme(theme: string): Promise<void> {
+    localStorage.setItem('theme', theme)
+    Config.applyTheme(theme)
     this._theme = theme
+  }
+
+  /**
+   * Apply a theme.
+   *
+   * @param theme The theme to apply.
+   */
+  private static applyTheme(theme: string): void {
+    document.body.setAttribute('data-theme', theme)
   }
 
   /**
    * Key of the selected language.
    */
-  get lang(): Locale {
-    return this._lang
+  get locale(): Locale {
+    return this._locale
   }
 
   /**
-   * Changes the language to the one with the provided key.
+   * Set a new language.
    *
-   * If no key or an invalidad key is provided it'll default to "en".
-   *
-   * @param lang - The key of the langueage to apply.
+   * @param locale - The key of the language to change to.
+   * @returns If the new value was applied or not.
    */
-  set lang(lang: Locale | string | null | undefined) {
-    lang = Config.changeLanguage(lang)
-    this._lang = lang as Locale
+  async setLocale(locale: Locale | string): Promise<void> {
+    if (!locale) locale = 'en'
+    if (isLocale(locale)) {
+      Config.applyLocale(locale)
+      this._locale = locale
+    }
+  }
+
+  /**
+   * Apply a locale.
+   *
+   * @param locale The locale to apply.
+   */
+  private static applyLocale(locale: Locale): void {
+    setLocale(locale, { reload: false })
   }
 
   /**
@@ -125,15 +158,24 @@ export class Config {
   }
 
   /**
-   * Changes the scale to the one with the provided key.
-   *
-   * If no key or an invalidad key is provided it'll default to "100".
+   * Set a new UI scale.
    *
    * @param scale - The key of the scale to apply.
+   * @returns If the new value was applied or not.
    */
-  set scale(scale: string | null | undefined) {
-    scale = Config.applyScale(scale)
+  setScale(scale: string): void {
+    localStorage.setItem('uiscale', scale)
+    Config.applyScale(scale)
     this._scale = scale
+  }
+
+  /**
+   * Apply a scale.
+   *
+   * @param scale The scale to apply.
+   */
+  private static applyScale(scale: string): void {
+    document.documentElement.setAttribute('data-uiscale', scale)
   }
 
   /**
@@ -144,51 +186,13 @@ export class Config {
   }
 
   /**
-   * Sets the path where Instances will be saved.
+   * Set a new path for the Instances.
    *
-   * @param path - The path to set for Instances.
+   * @param scale - The path to save.
+   * @returns If the new value was applied or not.
    */
-  set instancesPath(path: string) {
-    localStorage.setItem('instances-path', path)
+  async setInstancesPath(path: string): Promise<void> {
+    await window.api.db.config.setItem('instances-path', path)
     this._instancesPath = path
-  }
-
-  /**
-   * Checks if the provided language is valid and changes it. If it's not valid it'll default to "en".
-   *
-   * @param theme - The key of the language to change to.
-   * @returns - The key of the new language.
-   */
-  private static changeLanguage(lang: Locale | string | null | undefined): Locale {
-    let locale: Locale = 'en'
-    if (isLocale(lang)) locale = lang as Locale
-    setLocale(locale, { reload: false })
-    return locale
-  }
-
-  /**
-   * Checks if the provided theme is valid and applies it. If it's not valid it'll default to "en".
-   *
-   * @param theme - The key of the theme to apply.
-   * @returns - The key of the applied theme.
-   */
-  private static applyTheme(theme: string | null | undefined): string {
-    if (!theme || !Config.THEMES.some((THEME) => THEME.key === theme)) theme = 'dark'
-    localStorage.setItem('theme', theme)
-    document.body.setAttribute('data-theme', theme)
-    return theme
-  }
-
-  /**
-   * Checks if the provided scale is valid and applies it. If it's not valid it'll default to "100".
-   *
-   * @param scale - The key of the scale to apply.
-   * @returns - The key of the applied scale.
-   */
-  private static applyScale(scale: string | null | undefined): string {
-    if (!scale || !Config.SCALES.some((SCALE) => SCALE.scale === scale)) scale = '100'
-    localStorage.setItem('uiscale', scale)
-    document.documentElement.setAttribute('data-uiscale', scale)
-    return scale
   }
 }

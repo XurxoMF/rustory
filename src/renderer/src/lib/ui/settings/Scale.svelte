@@ -16,6 +16,6 @@
   items={scales}
   value={Config.instance.scale}
   onValueChange={(e) => {
-    if (e !== undefined) Config.instance.scale = e
+    if (e !== undefined) Config.instance.setScale(e)
   }}
 />

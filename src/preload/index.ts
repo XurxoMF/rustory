@@ -44,6 +44,12 @@ const api: BridgeAPI = {
   shell: {
     openURL: (...params) => ipcRenderer.send(IPC_CHANNELS.shell.openURL, ...params),
     openPath: (...params) => ipcRenderer.send(IPC_CHANNELS.shell.openPath, ...params)
+  },
+  db: {
+    config: {
+      getItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.getItem, ...params),
+      setItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.setItem, ...params)
+    }
   }
 }
 

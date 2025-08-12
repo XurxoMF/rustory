@@ -42,6 +42,12 @@ declare global {
       openURL: (url: string) => void
       openPath: (path: string) => void
     }
+    db: {
+      config: {
+        getItem: (key: string) => Promise<string | null>
+        setItem: (key: string, value: string) => Promise<boolean>
+      }
+    }
   }
 
   interface Window {

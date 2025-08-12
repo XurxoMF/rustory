@@ -15,8 +15,8 @@
 <Select
   placeholder={m.placeholders__select_one()}
   items={langs}
-  value={Config.instance.lang}
+  value={Config.instance.locale}
   onValueChange={(e) => {
-    if (e !== undefined) Config.instance.lang = e
+    if (e !== undefined) Config.instance.setLocale(e)
   }}
 />
