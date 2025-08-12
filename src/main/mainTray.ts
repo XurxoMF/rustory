@@ -11,7 +11,7 @@ export async function createTray(): Promise<void> {
 
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Open', toolTip: 'Open Rustory', type: 'normal', click: () => mainWindow.show() },
-    { label: 'Close', toolTip: 'Close Rsutory', click: () => app.quit() }
+    { label: 'Close', toolTip: 'Close Rsutory', type: 'normal', click: () => app.quit() }
   ])
 
   tray.setContextMenu(contextMenu)
