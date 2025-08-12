@@ -1,15 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
 import Logger from 'electron-log'
-
-// Change the name if on development mode to not confict with production data
-if (!app.isPackaged && is.dev) app.setName('rustory-dev')
-
-// Ensure there is only 1 instance of the app running
-const gotTheLock = app.requestSingleInstanceLock()
-if (!gotTheLock) app.quit()
 
 // Other imports
 import { initDB } from '@main/db'
@@ -19,6 +12,16 @@ import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo,
 import { createWindow } from '@main/windows/mainWindow'
 import { bytesToX } from '@shared/utils/math'
 import { padRight } from '@shared/utils/string'
+
+// Change the name if on development mode to not confict with production data
+if (!app.isPackaged && is.dev) app.setName('rustory-dev')
+
+// Ensure there is only 1 instance of the app running
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock) app.quit()
+
+// Remove the default APP menu as we don't need it
+Menu.setApplicationMenu(null)
 
 // Configure the logger to write logs to a specific folder
 Logger.transports.file.resolvePathFn = (_variables, message): string => {
