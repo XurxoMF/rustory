@@ -6,7 +6,7 @@ import { logger } from '@main/utils/logger'
 import { readJSON, writeJSON } from '@main/utils/fs'
 
 // Assets
-import icon from '../../../resources/icon.png?asset'
+import icon from '../../resources/icon.png?asset'
 
 // Constants
 const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json')
@@ -19,7 +19,7 @@ export function createWindow(): void {
     center: true,
     width: 1600,
     height: 900,
-    title: `Rustory`,
+    title: `Rustory ${app.getVersion()}`,
     show: false,
     autoHideMenuBar: true,
     fullscreenable: false,

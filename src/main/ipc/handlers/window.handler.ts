@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 import { IPC_CHANNELS } from '../channels'
-import { mainWindow } from '@main/windows/mainWindow'
+import { mainWindow } from '@main/mainWindow'
 
 export async function registerWindowHandlers(): Promise<void> {
   ipcMain.on(IPC_CHANNELS.window.minimize, (_event) => mainWindow.minimize())

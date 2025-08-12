@@ -16,11 +16,6 @@ export class Window {
   }
 
   /**
-   * The string of this window.
-   */
-  name: string = $state('')
-
-  /**
    * If this window is maximized or not.
    */
   isMaximized: boolean = $state(false)
@@ -46,7 +41,6 @@ export class Window {
    * Loads all the info on this instance.
    */
   async init(): Promise<void> {
-    this.name = await window.api.window.getName()
     this.isMaximized = await window.api.window.isMaximized()
   }
 

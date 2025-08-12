@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Info, Window } from '@renderer/lib/classes/Rustory'
+  import { Info } from '@renderer/lib/classes/Rustory'
 
   import Breadcrumbs from '@renderer/lib/ui/display/Breadcrumbs.svelte'
   import HistoryControlls from '@renderer/lib/ui/display/HistoryControls.svelte'
@@ -32,7 +32,7 @@
     <div class="w-fit flex items-center gap-2">
       <div class="w-fit flex items-center justify-center gap-1 flex-nowrap opacity-50">
         <p>
-          {`${Window.instance.name} ${Info.instance.version}`}
+          {`${Info.instance.productName} ${Info.instance.version}`}
         </p>
       </div>
     </div>

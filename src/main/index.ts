@@ -9,7 +9,8 @@ import { initDB } from '@main/db'
 import { initIPCs } from '@main/ipc'
 import { logger } from '@main/utils/logger'
 import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo, getRAMInfo, getVolumesInfo } from '@main/utils/system'
-import { createWindow } from '@main/windows/mainWindow'
+import { createWindow } from '@main/mainWindow'
+import { createTray } from '@main/mainTray'
 import { bytesToX } from '@shared/utils/math'
 import { padRight } from '@shared/utils/string'
 
@@ -23,7 +24,8 @@ if (!gotTheLock) app.quit()
 // Remove the default APP menu as we don't need it
 Menu.setApplicationMenu(null)
 
-// Configure the logger to write logs to a specific folder
+// Configure the logger folder and files
+app.setAppLogsPath(join(app.getPath('userData'), 'Logs'))
 Logger.transports.file.resolvePathFn = (_variables, message): string => {
   const logsPath = app.getPath('logs')
   if (message && (message.level === 'debug' || message.level === 'verbose')) {
@@ -38,6 +40,8 @@ autoUpdater.logger = logger
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
+  createTray()
+
   await logOSInfo()
 
   await initDB()
