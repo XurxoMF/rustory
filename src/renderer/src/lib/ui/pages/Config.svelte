@@ -87,7 +87,7 @@
               </ButtonNeutral>
               <TextInput name={m.settings__versions_folder()} placeholder={m.settings__versions_folder()} value={Config.instance.versionsPath} readonly />
             </FieldsWrapper>
-            <FieldsDescription>{m.settings__default_versions_folder()}</FieldsDescription>
+            <FieldsDescription>{m.settings__versions_folder_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
 
