@@ -16,11 +16,6 @@ export class Window {
   }
 
   /**
-   * If this window is maximized or not.
-   */
-  isMaximized: boolean = $state(false)
-
-  /**
    * The Window Breadcrumbs.
    */
   breadcrumbs: Breadcrumbs = new Breadcrumbs()
@@ -40,9 +35,7 @@ export class Window {
   /**
    * Loads all the info on this instance.
    */
-  async init(): Promise<void> {
-    this.isMaximized = await window.api.window.isMaximized()
-  }
+  async init(): Promise<void> {}
 
   /**
    * The callbacks that will be executed when the page is reloaded.

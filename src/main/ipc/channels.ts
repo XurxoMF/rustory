@@ -25,7 +25,6 @@ export const IPC_CHANNELS = {
   window: {
     minimize: 'window-minimize',
     maximize: 'window-maximize',
-    isMaximized: 'window-is-maximized',
     hide: 'window-hide',
     close: 'window-close',
     getName: 'window-get-name'

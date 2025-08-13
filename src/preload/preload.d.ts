@@ -29,7 +29,6 @@ declare global {
     window: {
       minimize: () => void
       maximize: () => void
-      isMaximized: () => Promise<boolean>
       hide: () => void
       close: () => void
       getName: () => Promise<string>

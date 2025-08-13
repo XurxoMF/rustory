@@ -13,8 +13,6 @@ export async function registerWindowHandlers(): Promise<void> {
     }
   })
 
-  ipcMain.handle(IPC_CHANNELS.window.isMaximized, async (_event): Promise<boolean> => mainWindow.isMaximized())
-
   ipcMain.on(IPC_CHANNELS.window.hide, (_event) => mainWindow.hide())
 
   ipcMain.on(IPC_CHANNELS.window.close, (_event) => mainWindow.close())

@@ -15,11 +15,10 @@
   icon
   onclick={() => {
     window.api.window.maximize()
-    Window.instance.isMaximized = !Window.instance.isMaximized
   }}
-  title={Window.instance.isMaximized ? m.common__minimize() : m.common__maximize()}
+  title={m.common__maximize()}
 >
-  <Icon icon={Window.instance.isMaximized ? 'ph:arrows-in-simple-bold' : 'ph:arrows-out-simple-bold'} />
+  <Icon icon="ph:arrows-out-simple-bold" />
 </ButtonUnstyled>
 
 <ButtonUnstyled icon onclick={() => window.api.window.hide()} title={m.common__hide()}>
