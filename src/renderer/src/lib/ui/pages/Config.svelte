@@ -50,7 +50,7 @@
     </CollapsibleSection>
 
     <CollapsibleSection title={m.settings__folders()} open>
-      <GridContainer>
+      <GridContainer columns={3}>
         <GridItem>
           <FieldsWrapper>
             <FieldsTitle>{m.settings__instances_folder()}</FieldsTitle>

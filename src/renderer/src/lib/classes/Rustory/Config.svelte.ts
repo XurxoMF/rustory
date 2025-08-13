@@ -135,6 +135,7 @@ export class Config {
    */
   async setTheme(theme: string): Promise<void> {
     localStorage.setItem('theme', theme)
+    Config.applyTheme(theme)
     this._theme = theme
   }
 
@@ -181,6 +182,7 @@ export class Config {
    */
   setScale(scale: string): void {
     localStorage.setItem('uiscale', scale)
+    Config.applyScale(scale)
     this._scale = scale
   }
 

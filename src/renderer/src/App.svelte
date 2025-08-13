@@ -94,7 +94,7 @@
 {#if loader.loadUI}
   <div
     class={[
-      'w-screen h-screen overflow-hidden',
+      'w-screen h-screen overflow-hidden bg-cover',
       't-dark:bg-image-dark',
       't-light:bg-image-light',
       't-rust:bg-image-rust',
