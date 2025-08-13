@@ -10,7 +10,7 @@
     "format": "prettier --plugin prettier-plugin-svelte --write .",
     "lint": "eslint --cache .",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
-    "svelte-check": "svelte-check --tsconfig ./tsconfig.json",
+    "svelte-check": "svelte-check --tsconfig ./tsconfig.web.json",
     "typecheck": "npm run typecheck:node && npm run svelte-check",
     "postinstall": "electron-builder install-app-deps",
     "paraglide:compile": "npx paraglide-js compile --project ./project.inlang --outdir ./src/renderer/src/paraglide --strategy localStorage preferredLanguage baseLocale",

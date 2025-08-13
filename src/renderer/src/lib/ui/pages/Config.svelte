@@ -25,7 +25,7 @@
           <FieldsWrapper>
             <FieldsTitle>{m.settings__language()}</FieldsTitle>
             <Lang />
-            <FieldsDescription>{m.settings__lang_restart_needed()}</FieldsDescription>
+            <FieldsDescription>{m.settings__language_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
 
@@ -33,7 +33,7 @@
           <FieldsWrapper>
             <FieldsTitle>{m.settings__uiscale()}</FieldsTitle>
             <Scale />
-            <FieldsDescription>{m.settings__scale_description()}</FieldsDescription>
+            <FieldsDescription>{m.settings__uiscale_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
 
@@ -67,7 +67,47 @@
               </ButtonNeutral>
               <TextInput name={m.settings__instances_folder()} placeholder={m.settings__instances_folder()} value={Config.instance.instancesPath} readonly />
             </FieldsWrapper>
-            <FieldsDescription>{m.settings__default_folder_instances()}</FieldsDescription>
+            <FieldsDescription>{m.settings__instances_folder_description()}</FieldsDescription>
+          </FieldsWrapper>
+        </GridItem>
+
+        <GridItem>
+          <FieldsWrapper>
+            <FieldsTitle>{m.settings__versions_folder()}</FieldsTitle>
+            <FieldsWrapper direction="x">
+              <ButtonNeutral
+                title={m.common__select_folder()}
+                onclick={async () => {
+                  const folder = await window.api.fs.showDialog(m.settings__versions_folder(), 'openDirectory', false, [])
+                  if (!folder || folder.length < 1) return
+                  Config.instance.setVersionsPath(folder[0])
+                }}
+              >
+                <Icon icon="ph:magnifying-glass" />
+              </ButtonNeutral>
+              <TextInput name={m.settings__versions_folder()} placeholder={m.settings__versions_folder()} value={Config.instance.versionsPath} readonly />
+            </FieldsWrapper>
+            <FieldsDescription>{m.settings__default_versions_folder()}</FieldsDescription>
+          </FieldsWrapper>
+        </GridItem>
+
+        <GridItem>
+          <FieldsWrapper>
+            <FieldsTitle>{m.settings__backups_folder()}</FieldsTitle>
+            <FieldsWrapper direction="x">
+              <ButtonNeutral
+                title={m.common__select_folder()}
+                onclick={async () => {
+                  const folder = await window.api.fs.showDialog(m.settings__backups_folder(), 'openDirectory', false, [])
+                  if (!folder || folder.length < 1) return
+                  Config.instance.setBackupsPath(folder[0])
+                }}
+              >
+                <Icon icon="ph:magnifying-glass" />
+              </ButtonNeutral>
+              <TextInput name={m.settings__backups_folder()} placeholder={m.settings__backups_folder()} value={Config.instance.backupsPath} readonly />
+            </FieldsWrapper>
+            <FieldsDescription>{m.settings__backups_folder_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
       </GridContainer>

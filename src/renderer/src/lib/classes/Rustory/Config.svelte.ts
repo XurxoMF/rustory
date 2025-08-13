@@ -108,16 +108,16 @@ export class Config {
       this._versionsPath = versionsPath
     } else {
       const defaultVersionsPath = await window.api.fs.join(defaultUserDataPath, 'Versions')
-      await this.setInstancesPath(defaultVersionsPath)
+      await this.setVersionsPath(defaultVersionsPath)
     }
 
     // Get and apply the backupsPath
     const backupsPath = await window.api.db.config.getItem('backups-path')
     if (backupsPath) {
-      this._instancesPath = backupsPath
+      this._backupsPath = backupsPath
     } else {
       const defaultBackupsPath = await window.api.fs.join(defaultUserDataPath, 'Backups')
-      await this.setInstancesPath(defaultBackupsPath)
+      await this.setBackupsPath(defaultBackupsPath)
     }
   }
 
