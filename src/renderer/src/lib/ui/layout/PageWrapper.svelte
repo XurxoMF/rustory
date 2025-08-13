@@ -2,7 +2,7 @@
   import { type Snippet } from 'svelte'
   import { fade } from 'svelte/transition'
 
-  import ScrollableContainer from '@renderer/lib/ui/base/ScrollableContainer.svelte'
+  import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
 
   type PageWrapperPropsType = {
     children: Snippet<[]>

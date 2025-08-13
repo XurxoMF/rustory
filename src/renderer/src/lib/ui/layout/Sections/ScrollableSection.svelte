@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type Snippet } from 'svelte'
 
-  import ScrollableContainer from '@renderer/lib/ui/base/ScrollableContainer.svelte'
+  import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
 
   type ScrollableSectionPropsType = {
     orientation: 'vertical' | 'horizontal' | 'both'
