@@ -14,7 +14,6 @@
   "themes__dark": "Oscuro",
   "themes__light": "Claro",
   "themes__rust": "Óxido",
-  "theme__midnight": "Media noche",
   "placeholders__select_one": "Selecciona uno...",
   "settings__theme": "Tema",
   "settings__language": "Idioma",
@@ -26,10 +25,11 @@
   "settings__default_folder_instances": "Carpeta de Instancias por defecto",
   "settings__servers_folder": "Carpeta de Servidores",
   "settings__default_folder_servers": "Carpeta de Servidores por defecto",
-  "settings__theme_description": "Color principal de la APP",
-  "settings__scale_description": "Escala de la UI de la APP",
+  "settings__theme_description": "Color principal de la APP. ¡Necesita un reinicio!",
+  "settings__scale_description": "Escala de la UI de la APP. ¡Necesita un reinicio!",
   "common__select_folder": "Selecciona una carpeta",
   "common__quit": "Salir",
   "common__open": "Abrir",
-  "loader__tasks__desc__db_init": "Cargando DB"
+  "loader__tasks__desc__db_init": "Cargando DB",
+  "themes__midnight": "Media noche"
 }

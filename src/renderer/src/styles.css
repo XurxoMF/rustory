@@ -47,7 +47,10 @@
   --color-rust-900: #64411f;
   --color-rust-950: #4b2b12;
 
-  --background-image-image-vs: url('./assets/background.jpg');
+  --background-image-image-dark: url('./assets/background-dark.png');
+  --background-image-image-light: url('./assets/background-light.png');
+  --background-image-image-rust: url('./assets/background-rust.png');
+  --background-image-image-midnight: url('./assets/background-midnight.png');
 }
 
 @layer utilities {

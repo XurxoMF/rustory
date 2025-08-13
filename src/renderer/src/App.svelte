@@ -54,66 +54,69 @@
 
 <!-- Show the loader while there are some taks running on the intializing process. -->
 {#if loader.isVisible}
-  <div
-    class={[
-      'fixed z-[1000] w-full h-full flex flex-col items-center justify-center gap-8 border transition-[color,background-color,border] duration-200',
-      't-dark:text-zinc-100 t-dark:bg-zinc-900 t-dark:border-zinc-750',
-      't-light:text-zinc-900 t-light:bg-zinc-100 t-light:border-zinc-250',
-      't-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750',
-      't-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750',
-      !Window.instance.isMaximized && 'rounded-md'
-    ]}
-    out:fade={{ duration: 200, delay: 200 }}
-  >
-    <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
+  <div class={['fixed z-[1000] w-screen h-screen', 't-dark:bg-image-dark', 't-light:bg-image-light', 't-rust:bg-image-rust', 't-midnight:bg-image-midnight']} out:fade={{ duration: 200, delay: 200 }}>
+    <div
+      class={[
+        'w-full h-full flex flex-col items-center justify-center gap-8 border backdrop-blur-xs transition-[color,background-color,border] duration-200',
+        't-dark:text-zinc-100 t-dark:bg-zinc-900/80 t-dark:border-zinc-750',
+        't-light:text-zinc-900 t-light:bg-zinc-100/80 t-light:border-zinc-250',
+        't-rust:text-rust-100 t-rust:bg-rust-900/80 t-rust:border-rust-750',
+        't-midnight:text-gray-100 t-midnight:bg-gray-900/80 t-midnight:border-gray-750',
+        !Window.instance.isMaximized && 'rounded-md'
+      ]}
+    >
+      <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
 
-    {#if loader.showTasks}
-      <div in:slide={{ duration: 500, easing: quadOut }} class="w-full">
-        <div class="flex flex-col items-center justify-center gap-8">
-          <div class="w-1/3">
-            <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
-          </div>
+      {#if loader.showTasks}
+        <div in:slide={{ duration: 500, easing: quadOut }} class="w-full">
+          <div class="flex flex-col items-center justify-center gap-8">
+            <div class="w-1/3">
+              <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
+            </div>
 
-          <div class="w-full max-h-40">
-            <div class="flex flex-col items-center justify-center overflow-y-scroll">
-              {#each Loader.TASKS as TASK (TASK.id)}
-                {@const isCompleted = loader.completedTasks.includes(TASK.id)}
+            <div class="w-full max-h-40">
+              <div class="flex flex-col items-center justify-center overflow-y-scroll">
+                {#each Loader.TASKS as TASK (TASK.id)}
+                  {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
-                <div class="w-fit flex items-center gap-1">
-                  <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'fluent:checkmark-circle-48-regular' : 'svg-spinners:6-dots-scale'} />
-                  <p>{TASK.description}</p>
-                </div>
-              {/each}
+                  <div class="w-fit flex items-center gap-1">
+                    <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'fluent:checkmark-circle-48-regular' : 'svg-spinners:6-dots-scale'} />
+                    <p>{TASK.description}</p>
+                  </div>
+                {/each}
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    {/if}
+      {/if}
+    </div>
   </div>
 {/if}
 
 <!-- Start loading the data when all the data is loaded. Preloader will stay for 1 second while the UI is loading. -->
 {#if loader.loadUI}
-  <div
-    class={[
-      'w-screen h-screen flex flex-col select-none overflow-hidden transition-[color,background-color] duration-200',
-      't-dark:text-zinc-100 t-dark:bg-zinc-900',
-      't-light:text-zinc-900 t-light:bg-zinc-100',
-      't-rust:text-rust-100 t-rust:bg-rust-900',
-      't-midnight:text-gray-100 t-midnight:bg-gray-900',
-      !Window.instance.isMaximized && clsx('rounded-md border transition-[border] duration-200 t-dark:border-zinc-750 t-light:border-zinc-250 t-rust:border-rust-750 t-midnight:border-gray-750')
-    ]}
-  >
-    <WindowBar />
+  <div class={['w-screen h-screen', 't-dark:bg-image-dark', 't-light:bg-image-light', 't-rust:bg-image-rust', 't-midnight:bg-image-midnight']}>
+    <div
+      class={[
+        'w-full h-full flex flex-col select-none overflow-hidden backdrop-blur-xs transition-[color,background-color] duration-200',
+        't-dark:text-zinc-100 t-dark:bg-zinc-900/80',
+        't-light:text-zinc-900 t-light:bg-zinc-100/80',
+        't-rust:text-rust-100 t-rust:bg-rust-900/80',
+        't-midnight:text-gray-100 t-midnight:bg-gray-900/80',
+        !Window.instance.isMaximized && clsx('rounded-md border transition-[border] duration-200 t-dark:border-zinc-750 t-light:border-zinc-250 t-rust:border-rust-750 t-midnight:border-gray-750')
+      ]}
+    >
+      <WindowBar />
 
-    <div class="w-full h-full flex overflow-hidden">
-      <MainNav />
+      <div class="w-full h-full flex overflow-hidden">
+        <MainNav />
 
-      <main class="w-full h-full overflow-hidden">
-        <Router {routes} />
-      </main>
+        <main class="w-full h-full overflow-hidden">
+          <Router {routes} />
+        </main>
+      </div>
+
+      <div id="portal"></div>
     </div>
-
-    <div id="portal"></div>
   </div>
 {/if}

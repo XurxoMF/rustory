@@ -22,7 +22,7 @@ export class Config {
     { key: 'dark', name: m.themes__dark(), color: 'bg-zinc-900' },
     { key: 'light', name: m.themes__light(), color: 'bg-zinc-100' },
     { key: 'rust', name: m.themes__rust(), color: 'bg-rust-900' },
-    { key: 'midnight', name: m.theme__midnight(), color: 'bg-gray-900' }
+    { key: 'midnight', name: m.themes__midnight(), color: 'bg-gray-900' }
   ] as const
 
   /**
@@ -64,6 +64,16 @@ export class Config {
    */
   private _instancesPath: string = $state('')
 
+  /**
+   * Path where Versions will be saved.
+   */
+  private _versionsPath: string = $state('')
+
+  /**
+   * Path where Backups will be saved.
+   */
+  private _backupsPath: string = $state('')
+
   private constructor() {}
 
   /**
@@ -81,14 +91,33 @@ export class Config {
     this._scale = localStorage.getItem('uiscale') || Config.SCALES[2].scale
     Config.applyScale(this._scale)
 
+    const defaultUserDataPath = await window.api.fs.getPath('userData')
+
     // Get and apply the instancesPath
     const instancesPath = await window.api.db.config.getItem('instances-path')
     if (instancesPath) {
       this._instancesPath = instancesPath
     } else {
-      const defaultUserDataPath = await window.api.fs.getPath('userData')
-      const defaultInstancePath = await window.api.fs.join(defaultUserDataPath, 'Instances')
-      await this.setInstancesPath(defaultInstancePath)
+      const defaultInstancesPath = await window.api.fs.join(defaultUserDataPath, 'Instances')
+      await this.setInstancesPath(defaultInstancesPath)
+    }
+
+    // Get and apply the versionsPath
+    const versionsPath = await window.api.db.config.getItem('versions-path')
+    if (versionsPath) {
+      this._versionsPath = versionsPath
+    } else {
+      const defaultVersionsPath = await window.api.fs.join(defaultUserDataPath, 'Versions')
+      await this.setInstancesPath(defaultVersionsPath)
+    }
+
+    // Get and apply the backupsPath
+    const backupsPath = await window.api.db.config.getItem('backups-path')
+    if (backupsPath) {
+      this._instancesPath = backupsPath
+    } else {
+      const defaultBackupsPath = await window.api.fs.join(defaultUserDataPath, 'Backups')
+      await this.setInstancesPath(defaultBackupsPath)
     }
   }
 
@@ -103,11 +132,9 @@ export class Config {
    * Set a new theme.
    *
    * @param theme - The key of the theme to apply.
-   * @returns If the new value was applied or not.
    */
   async setTheme(theme: string): Promise<void> {
     localStorage.setItem('theme', theme)
-    Config.applyTheme(theme)
     this._theme = theme
   }
 
@@ -131,23 +158,13 @@ export class Config {
    * Set a new language.
    *
    * @param locale - The key of the language to change to.
-   * @returns If the new value was applied or not.
    */
   async setLocale(locale: Locale | string): Promise<void> {
     if (!locale) locale = 'en'
     if (isLocale(locale)) {
-      Config.applyLocale(locale)
+      setLocale(locale, { reload: false })
       this._locale = locale
     }
-  }
-
-  /**
-   * Apply a locale.
-   *
-   * @param locale The locale to apply.
-   */
-  private static applyLocale(locale: Locale): void {
-    setLocale(locale, { reload: false })
   }
 
   /**
@@ -161,11 +178,9 @@ export class Config {
    * Set a new UI scale.
    *
    * @param scale - The key of the scale to apply.
-   * @returns If the new value was applied or not.
    */
   setScale(scale: string): void {
     localStorage.setItem('uiscale', scale)
-    Config.applyScale(scale)
     this._scale = scale
   }
 
@@ -189,10 +204,43 @@ export class Config {
    * Set a new path for the Instances.
    *
    * @param scale - The path to save.
-   * @returns If the new value was applied or not.
    */
   async setInstancesPath(path: string): Promise<void> {
     await window.api.db.config.setItem('instances-path', path)
     this._instancesPath = path
+  }
+
+  /**
+   * Path where Versions will be saved.
+   */
+  get versionsPath(): string {
+    return this._versionsPath
+  }
+
+  /**
+   * Set a new path for the Versions.
+   *
+   * @param scale - The path to save.
+   */
+  async setVersionsPath(path: string): Promise<void> {
+    await window.api.db.config.setItem('versions-path', path)
+    this._versionsPath = path
+  }
+
+  /**
+   * Path where Backups will be saved.
+   */
+  get backupsPath(): string {
+    return this._backupsPath
+  }
+
+  /**
+   * Set a new path for the Backups.
+   *
+   * @param scale - The path to save.
+   */
+  async setBackupsPath(path: string): Promise<void> {
+    await window.api.db.config.setItem('backups-path', path)
+    this._backupsPath = path
   }
 }
