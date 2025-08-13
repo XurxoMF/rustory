@@ -43,7 +43,7 @@ export default defineConfig({
     plugins: [
       svelte(),
       paraglideVitePlugin({
-        project: './project.inlang',
+        project: './renderer.inlang',
         outdir: './src/renderer/src/paraglide',
         strategy: ['localStorage', 'preferredLanguage', 'baseLocale']
       })

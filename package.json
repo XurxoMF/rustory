@@ -13,7 +13,7 @@
     "svelte-check": "svelte-check --tsconfig ./tsconfig.web.json",
     "typecheck": "npm run typecheck:node && npm run svelte-check",
     "postinstall": "electron-builder install-app-deps",
-    "paraglide:compile": "npx paraglide-js compile --project ./project.inlang --outdir ./src/renderer/src/paraglide --strategy localStorage preferredLanguage baseLocale",
+    "paraglide:compile": "npx paraglide-js compile --project ./renderer.inlang --outdir ./src/renderer/src/paraglide --strategy localStorage preferredLanguage baseLocale",
     "migration:generate": "drizzle-kit generate",
     "start": "electron-vite preview",
     "dev": "electron-vite dev",
