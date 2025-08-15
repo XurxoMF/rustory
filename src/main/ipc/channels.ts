@@ -66,6 +66,9 @@ export const IPC_CHANNELS = {
     }
   },
   notifications: {
-    notify: 'notifications-notify'
+    notify: 'notifications-notify',
+    on: {
+      click: 'notifications-on-click'
+    }
   }
 }

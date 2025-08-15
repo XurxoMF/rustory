@@ -73,7 +73,10 @@ const api: BridgeAPI = {
     }
   },
   notifications: {
-    notify: (...params) => ipcRenderer.send(IPC_CHANNELS.notifications.notify, ...params)
+    notify: (...params) => ipcRenderer.invoke(IPC_CHANNELS.notifications.notify, ...params),
+    on: {
+      click: (...params) => ipcRenderer.on(IPC_CHANNELS.notifications.on.click, ...params)
+    }
   }
 }
 

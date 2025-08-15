@@ -2,12 +2,12 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class PreventClose {
   /**
-   * Singleton instance of the Info.
+   * Singleton instance of the PreventClose.
    */
   private static _instance: PreventClose | null = null
 
   /**
-   * Get the instance of the Info.
+   * Get the instance of the PreventClose.
    */
   static get instance(): PreventClose {
     if (PreventClose._instance === null) PreventClose._instance = new PreventClose()

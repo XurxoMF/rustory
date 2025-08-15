@@ -70,7 +70,10 @@ declare global {
       }
     }
     notifications: {
-      notify: (title: string, body: string, onClick: () => void) => void
+      notify: (title: string, body: string) => Promise<string>
+      on: {
+        click: (callback: (event: Electron.IpcRendererEvent, id: string) => void) => void
+      }
     }
   }
 

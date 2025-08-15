@@ -1,11 +1,11 @@
 export class Breadcrumbs {
   /**
-   * Singleton instance of the Info.
+   * Singleton instance of the Breadcrumbs.
    */
   private static _instance: Breadcrumbs | null = null
 
   /**
-   * Get the instance of the Info.
+   * Get the instance of the Breadcrumbs.
    */
   static get instance(): Breadcrumbs {
     if (Breadcrumbs._instance === null) Breadcrumbs._instance = new Breadcrumbs()
