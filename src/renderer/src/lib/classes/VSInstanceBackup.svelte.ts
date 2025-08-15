@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSInstanceBackupType}
+ */
 export class VSInstanceBackup {
   private _id: string
 

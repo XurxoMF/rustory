@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSModGameVersionType}
+ */
 export class VSModGameVersion {
   private _tagid: string
 

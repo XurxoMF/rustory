@@ -1,6 +1,9 @@
 import type { VSModRelease } from './VSModRelease.svelte'
 import type { VSModScreenshot } from './VSModScreenshot.svelte'
 
+/**
+ * Must have the same properties as {@link VSModType}
+ */
 export class VSMod {
   private _modid: number
 

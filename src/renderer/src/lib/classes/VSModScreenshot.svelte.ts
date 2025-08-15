@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSModScreenshotType}
+ */
 export class VSModScreenshot {
   private _fileid: number
 

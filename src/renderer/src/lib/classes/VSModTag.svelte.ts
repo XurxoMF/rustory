@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSModTageType}
+ */
 export class VSModTag {
   private _tagid: number
 

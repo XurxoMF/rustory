@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSModAuthorType}
+ */
 export class VSModAuthor {
   private _userid: string
 

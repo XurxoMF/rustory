@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSModReleaseType}
+ */
 export class VSModRelease {
   private _releaseid: number
 

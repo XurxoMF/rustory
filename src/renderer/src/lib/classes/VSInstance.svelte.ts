@@ -1,6 +1,9 @@
 import type { VSInstanceBackup } from './VSInstanceBackup.svelte'
 import type { VSModInstalled } from './VSModInstalled.svelte'
 
+/**
+ * Must have the same properties as {@link VSInstanceType}
+ */
 export class VSInstance {
   private _id: string
 

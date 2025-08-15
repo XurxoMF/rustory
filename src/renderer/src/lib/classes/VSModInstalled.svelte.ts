@@ -1,5 +1,8 @@
 import type { VSMod } from './VSMod.svelte'
 
+/**
+ * Must have the same properties as {@link VSModInstalledType}
+ */
 export class VSModInstalled {
   private _name: string
 

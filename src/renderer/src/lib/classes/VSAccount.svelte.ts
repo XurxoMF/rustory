@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSAccountType}
+ */
 export class VSAccount {
   private _email: string
 

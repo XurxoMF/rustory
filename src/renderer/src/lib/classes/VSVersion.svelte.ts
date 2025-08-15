@@ -1,3 +1,6 @@
+/**
+ * Must have the same properties as {@link VSVersionType}
+ */
 export class VSVersion {
   private _version: string
 
