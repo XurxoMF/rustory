@@ -27,8 +27,7 @@ export const IPC_CHANNELS = {
     minimize: 'window-minimize',
     maximize: 'window-maximize',
     hide: 'window-hide',
-    close: 'window-close',
-    getName: 'window-get-name'
+    close: 'window-close'
   },
   rustory: {
     getName: 'rustory-get-name',
@@ -65,5 +64,8 @@ export const IPC_CHANNELS = {
         progress: 'new-downloader-on-progress'
       }
     }
+  },
+  notifications: {
+    notify: 'notifications-notify'
   }
 }

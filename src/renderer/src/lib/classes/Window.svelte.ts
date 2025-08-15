@@ -1,6 +1,3 @@
-import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
-import { PreventClose } from '@renderer/lib/classes/PreventClose.svelte'
-
 export class Window {
   /**
    * Singleton instance of the Window.

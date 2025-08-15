@@ -32,7 +32,6 @@ declare global {
       maximize: () => void
       hide: () => void
       close: () => void
-      getName: () => Promise<string>
     }
     rustory: {
       getName: () => Promise<string>

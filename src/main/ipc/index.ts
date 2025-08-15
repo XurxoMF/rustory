@@ -11,6 +11,7 @@ import { registerRustoryHandlers } from './handlers/rustory.handlers'
 import { registerDBHandlers } from './handlers/db'
 import { registerZipHandlers } from './handlers/zip.handlers'
 import { registerNetHandlers } from './handlers/net.handler'
+import { registerNotificationsHandlers } from './handlers/notifications.handler'
 
 export async function initIPCs(): Promise<void> {
   try {
@@ -42,6 +43,9 @@ export async function initIPCs(): Promise<void> {
 
     logger.info('Registering net handlers...')
     await registerNetHandlers()
+
+    logger.info('Registering notifications handlers...')
+    await registerNotificationsHandlers()
 
     logger.info('All IPCs initialized successfully!')
   } catch (err) {
