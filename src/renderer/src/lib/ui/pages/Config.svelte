@@ -1,7 +1,8 @@
 <script lang="ts">
   import { m } from '@renderer/paraglide/messages'
 
-  import { Config, Window } from '@renderer/lib/classes/Rustory'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
+  import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
   import { CollapsibleSection } from '@renderer/lib/ui/layout/Sections'
@@ -14,7 +15,7 @@
   import { ButtonNeutral } from '@renderer/lib/ui/form/Buttons'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  Window.instance.breadcrumbs.segments = [{ label: m.common__config(), href: '/config' }]
+  Breadcrumbs.instance.segments = [{ label: m.common__config(), href: '/config' }]
 </script>
 
 <PageWrapper scrollable={true}>

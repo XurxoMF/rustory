@@ -16,16 +16,6 @@ export class Window {
   }
 
   /**
-   * The Window Breadcrumbs.
-   */
-  breadcrumbs: Breadcrumbs = new Breadcrumbs()
-
-  /**
-   * The Window PreventClose tasks.
-   */
-  preventClose: PreventClose = new PreventClose()
-
-  /**
    * The callbacks that will be executed when the page is reloaded.
    */
   private _onReaload: OnReloadAction[] = []

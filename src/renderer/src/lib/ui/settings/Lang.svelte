@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from '@renderer/paraglide/messages'
 
-  import { Config } from '@renderer/lib/classes/Rustory'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
 
   import Select, { type SelectItemType } from '@renderer/lib/ui/form/Select.svelte'
 

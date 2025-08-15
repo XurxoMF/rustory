@@ -8,7 +8,10 @@
 
   import RustoryIcon from '@renderer/assets/icon.png'
 
-  import { Loader, Info, Window, Config } from '@renderer/lib/classes/Rustory'
+  import { Loader } from '@renderer/lib/classes/Loader.svelte'
+  import { Info } from '@renderer/lib/classes/Info.svelte'
+  import { Window } from '@renderer/lib/classes/Window.svelte'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
 
   import { sleep } from '@shared/utils/common'
 

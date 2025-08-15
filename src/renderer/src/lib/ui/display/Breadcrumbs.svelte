@@ -2,7 +2,7 @@
   import { goto } from '@mateothegreat/svelte5-router'
   import { fly } from 'svelte/transition'
 
-  import { Window } from '@renderer/lib/classes/Rustory'
+  import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import { ButtonUnstyled } from '@renderer/lib/ui/form/Buttons'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
@@ -11,7 +11,7 @@
 <ButtonUnstyled icon onclick={() => goto('/')}>
   <Icon icon="ph:house" />
 </ButtonUnstyled>
-{#each Window.instance.breadcrumbs.segments as segment (segment.href + segment.label)}
+{#each Breadcrumbs.instance.segments as segment (segment.href + segment.label)}
   <span in:fly={{ duration: 200, opacity: 0, x: -5 }} out:fly={{ duration: 200, opacity: 0, x: -5 }}>
     <Icon icon="material-symbols:chevron-right-rounded" />
   </span>

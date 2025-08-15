@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { Window } from '@renderer/lib/classes/Rustory'
+  import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
 
-  Window.instance.breadcrumbs.segments = []
+  Breadcrumbs.instance.segments = []
 </script>
 
 <PageWrapper scrollable={false}>

@@ -2,6 +2,19 @@ import { v4 as uuidv4 } from 'uuid'
 
 export class PreventClose {
   /**
+   * Singleton instance of the Info.
+   */
+  private static _instance: PreventClose | null = null
+
+  /**
+   * Get the instance of the Info.
+   */
+  static get instance(): PreventClose {
+    if (PreventClose._instance === null) PreventClose._instance = new PreventClose()
+    return PreventClose._instance
+  }
+
+  /**
    * List of tasks that prevent the app from closing.
    */
   private _tasks: PreventClose.PreventCloseTaskType[] = $state([])
@@ -10,6 +23,8 @@ export class PreventClose {
    * If the app can be closed or not.
    */
   private _prevented: boolean = $derived(this._tasks.length >= 1)
+
+  private constructor() {}
 
   /**
    * List of tasks that prevent the app from closing.

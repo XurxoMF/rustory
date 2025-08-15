@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Config } from '@renderer/lib/classes/Rustory'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
 </script>
 
 {#each Config.THEMES as THEME (THEME.key)}

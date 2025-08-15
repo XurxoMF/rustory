@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from '@renderer/paraglide/messages'
 
-  import { Window } from '@renderer/lib/classes/Rustory'
+  import { PreventClose } from '@renderer/lib/classes/PreventClose.svelte'
 
   import { ButtonUnstyled } from '@renderer/lib/ui/form/Buttons'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
@@ -29,7 +29,7 @@
   icon
   onclick={() => {
     window.api.window.close()
-    if (!Window.instance.preventClose.prevented) return /* appWindow.close() */
+    if (!PreventClose.instance.prevented) return /* appWindow.close() */
   }}
   title={m.common__close()}
 >

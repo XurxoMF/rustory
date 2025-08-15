@@ -1,7 +1,7 @@
 <script lang="ts">
   import { m } from '@renderer/paraglide/messages'
 
-  import { Window } from '@renderer/lib/classes/Rustory'
+  import { Window } from '@renderer/lib/classes/Window.svelte'
 
   import { ButtonUnstyled } from '@renderer/lib/ui/form/Buttons'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'

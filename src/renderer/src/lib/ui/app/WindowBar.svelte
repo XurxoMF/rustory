@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Info } from '@renderer/lib/classes/Rustory'
+  import { Info } from '@renderer/lib/classes/Info.svelte'
 
   import Breadcrumbs from '@renderer/lib/ui/display/Breadcrumbs.svelte'
   import HistoryControlls from '@renderer/lib/ui/display/HistoryControls.svelte'
