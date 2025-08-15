@@ -1,5 +1,5 @@
-import type { VSModRelease } from './VSModRelease.svelte'
-import type { VSModScreenshot } from './VSModScreenshot.svelte'
+import { VSModRelease } from './VSModRelease.svelte'
+import { VSModScreenshot } from './VSModScreenshot.svelte'
 
 /**
  * Must have the same properties as {@link VSModType}
@@ -108,73 +108,165 @@ export class VSMod {
   public get modid(): number {
     return this._modid
   }
+
   public get assetid(): number {
     return this._assetid
   }
+
   public get name(): string {
     return this._name
   }
+
   public get text(): string {
     return this._text
   }
+
   public get author(): string {
     return this._author
   }
+
   public get urlalias(): string | null {
     return this._urlalias
   }
+
   public get logofilename(): string | null {
     return this._logofilename
   }
+
   public get logofile(): string | null {
     return this._logofile
   }
+
   public get homepageurl(): string | null {
     return this._homepageurl
   }
+
   public get sourcecodeurl(): string | null {
     return this._sourcecodeurl
   }
+
   public get trailervideourl(): string | null {
     return this._trailervideourl
   }
+
   public get issuetrackerurl(): string | null {
     return this._issuetrackerurl
   }
+
   public get wikiurl(): string | null {
     return this._wikiurl
   }
+
   public get downloads(): number {
     return this._downloads
   }
+
   public get follows(): number {
     return this._follows
   }
+
   public get trendingpoints(): number {
     return this._trendingpoints
   }
+
   public get comments(): number {
     return this._comments
   }
+
   public get side(): string {
     return this._side
   }
+
   public get type(): string {
     return this._type
   }
+
   public get createdat(): string {
     return this._createdat
   }
+
   public get lastmodified(): string {
     return this._lastmodified
   }
+
   public get tags(): string[] {
     return this._tags
   }
+
   public get releases(): VSModRelease[] {
     return this._releases
   }
+
   public get screenshots(): VSModScreenshot[] {
     return this._screenshots
+  }
+
+  /**
+   * Convert this {@link VSMod} into a {@link VSModType} json
+   *
+   * @returns The {@link VSModType} json
+   */
+  toJSON(): VSModType {
+    return {
+      modid: this._modid,
+      assetid: this._assetid,
+      name: this._name,
+      text: this._text,
+      author: this._author,
+      urlalias: this._urlalias,
+      logofilename: this._logofilename,
+      logofile: this._logofile,
+      homepageurl: this._homepageurl,
+      sourcecodeurl: this._sourcecodeurl,
+      trailervideourl: this._trailervideourl,
+      issuetrackerurl: this._issuetrackerurl,
+      wikiurl: this._wikiurl,
+      downloads: this._downloads,
+      follows: this._follows,
+      trendingpoints: this._trendingpoints,
+      comments: this._comments,
+      side: this._side,
+      type: this._type,
+      createdat: this._createdat,
+      lastmodified: this._lastmodified,
+      tags: this._tags,
+      releases: this._releases,
+      screenshots: this._screenshots
+    }
+  }
+
+  /**
+   * Converts a {@link VSModType} json to a {@link VSMod}
+   *
+   * @param json The {@link VSModType} to convert
+   * @returns The {@link VSMod}
+   */
+  static fromJSON(json: VSModType): VSMod {
+    return new VSMod(
+      json.modid,
+      json.assetid,
+      json.name,
+      json.text,
+      json.author,
+      json.urlalias,
+      json.logofilename,
+      json.logofile,
+      json.homepageurl,
+      json.sourcecodeurl,
+      json.trailervideourl,
+      json.issuetrackerurl,
+      json.wikiurl,
+      json.downloads,
+      json.follows,
+      json.trendingpoints,
+      json.comments,
+      json.side,
+      json.type,
+      json.createdat,
+      json.lastmodified,
+      json.tags,
+      json.releases.map((release) => VSModRelease.fromJSON(release)),
+      json.screenshots.map((screenshot) => VSModScreenshot.fromJSON(screenshot))
+    )
   }
 }

@@ -18,4 +18,26 @@ export class VSModAuthor {
   public get name(): string {
     return this._name
   }
+
+  /**
+   * Convert this {@link VSModAuthor} into a {@link VSModAuthorType} json
+   *
+   * @returns The {@link VSModAuthorType} json
+   */
+  toJSON(): VSModAuthorType {
+    return {
+      userid: this._userid,
+      name: this._name
+    }
+  }
+
+  /**
+   * Converts a {@link VSModAuthorType} json to a {@link VSModAuthor}
+   *
+   * @param json The {@link VSModAuthorType} to convert
+   * @returns The {@link VSModAuthor}
+   */
+  static fromJSON(json: VSModAuthorType): VSModAuthor {
+    return new VSModAuthor(json.userid, json.name)
+  }
 }

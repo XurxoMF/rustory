@@ -25,4 +25,27 @@ export class VSModGameVersion {
   public get color(): string {
     return this._color
   }
+
+  /**
+   * Convert this {@link VSModGameVersion} into a {@link VSModGameVersionType} json
+   *
+   * @returns The {@link VSModGameVersionType} json
+   */
+  toJSON(): VSModGameVersionType {
+    return {
+      tagid: this._tagid,
+      name: this._name,
+      color: this._color
+    }
+  }
+
+  /**
+   * Converts a {@link VSModGameVersionType} json to a {@link VSModGameVersion}
+   *
+   * @param json The {@link VSModGameVersionType} to convert
+   * @returns The {@link VSModGameVersion}
+   */
+  static fromJSON(json: VSModGameVersionType): VSModGameVersion {
+    return new VSModGameVersion(json.tagid, json.name, json.color)
+  }
 }

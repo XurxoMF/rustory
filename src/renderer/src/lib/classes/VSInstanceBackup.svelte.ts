@@ -25,4 +25,27 @@ export class VSInstanceBackup {
   public get path(): string {
     return this._path
   }
+
+  /**
+   * Convert this {@link VSInstanceBackup} into a {@link VSInstanceBackupType} json
+   *
+   * @returns The {@link VSInstanceBackupType} json
+   */
+  toJSON(): VSInstanceBackupType {
+    return {
+      id: this._id,
+      date: this._date,
+      path: this._path
+    }
+  }
+
+  /**
+   * Converts a {@link VSInstanceBackupType} json to a {@link VSInstanceBackup}
+   *
+   * @param json The {@link VSInstanceBackupType} to convert
+   * @returns The {@link VSInstanceBackup}
+   */
+  static fromJSON(json: VSInstanceBackupType): VSInstanceBackup {
+    return new VSInstanceBackup(json.id, json.date, json.path)
+  }
 }

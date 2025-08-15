@@ -1,5 +1,5 @@
-import type { VSInstanceBackup } from './VSInstanceBackup.svelte'
-import type { VSModInstalled } from './VSModInstalled.svelte'
+import { VSInstanceBackup } from './VSInstanceBackup.svelte'
+import { VSModInstalled } from './VSModInstalled.svelte'
 
 /**
  * Must have the same properties as {@link VSInstanceType}
@@ -125,5 +125,54 @@ export class VSInstance {
 
   public get envVars(): string {
     return this._envVars
+  }
+
+  /**
+   * Convert this {@link VSInstance} into a {@link VSInstanceType} json
+   *
+   * @returns The {@link VSInstanceType} json
+   */
+  toJSON(): VSInstanceType {
+    return {
+      id: this._id,
+      name: this._name,
+      path: this._path,
+      version: this._version,
+      startParams: this._startParams,
+      backupsLimit: this._backupsLimit,
+      backupsAuto: this._backupsAuto,
+      compressionLevel: this._compressionLevel,
+      backups: this._backups,
+      mods: this._mods,
+      lastTimePlayed: this._lastTimePlayed,
+      totalTimePlayed: this._totalTimePlayed,
+      mesaGlThread: this._mesaGlThread,
+      envVars: this._envVars
+    }
+  }
+
+  /**
+   * Converts a {@link VSInstanceType} json to a {@link VSInstance}
+   *
+   * @param json The {@link VSInstanceType} to convert
+   * @returns The {@link VSInstance}
+   */
+  static fromJSON(json: VSInstanceType): VSInstance {
+    return new VSInstance(
+      json.id,
+      json.name,
+      json.path,
+      json.version,
+      json.startParams,
+      json.backupsLimit,
+      json.backupsAuto,
+      json.compressionLevel,
+      json.backups.map((backup) => VSInstanceBackup.fromJSON(backup)),
+      json.mods.map((mod) => VSModInstalled.fromJSON(mod)),
+      json.lastTimePlayed,
+      json.totalTimePlayed,
+      json.mesaGlThread,
+      json.envVars
+    )
   }
 }

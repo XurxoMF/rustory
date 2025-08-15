@@ -1,4 +1,4 @@
-import type { VSMod } from './VSMod.svelte'
+import { VSMod } from './VSMod.svelte'
 
 /**
  * Must have the same properties as {@link VSModInstalledType}
@@ -55,34 +55,75 @@ export class VSModInstalled {
   public get name(): string {
     return this._name
   }
+
   public get modid(): string {
     return this._modid
   }
+
   public get version(): string {
     return this._version
   }
+
   public get path(): string {
     return this._path
   }
+
   public get description(): string | null {
     return this._description
   }
+
   public get side(): string | null {
     return this._side
   }
+
   public get authors(): string[] {
     return this._authors
   }
+
   public get contributors(): string[] {
     return this._contributors
   }
+
   public get type(): string | null {
     return this._type
   }
+
   public get image(): string | null {
     return this._image
   }
+
   public get mod(): VSMod {
     return this._mod
+  }
+
+  /**
+   * Convert this {@link VSModInstalled} into a {@link VSModInstalledType} json
+   *
+   * @returns The {@link VSModInstalledType} json
+   */
+  toJSON(): VSModInstalledType {
+    return {
+      name: this._name,
+      modid: this._modid,
+      version: this._version,
+      path: this._path,
+      description: this._description,
+      side: this._side,
+      authors: this._authors,
+      contributors: this._contributors,
+      type: this._type,
+      image: this._image,
+      mod: this._mod
+    }
+  }
+
+  /**
+   * Converts a {@link VSModInstalledType} json to a {@link VSModInstalled}
+   *
+   * @param json The {@link VSModInstalledType} to convert
+   * @returns The {@link VSModInstalled}
+   */
+  static fromJSON(json: VSModInstalledType): VSModInstalled {
+    return new VSModInstalled(json.name, json.modid, json.version, json.path, json.description, json.side, json.authors, json.contributors, json.type, json.image, VSMod.fromJSON(json.mod))
   }
 }
