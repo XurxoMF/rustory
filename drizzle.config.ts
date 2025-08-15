@@ -4,5 +4,6 @@ import { defineConfig } from 'drizzle-kit'
 export default defineConfig({
   out: './src/migrations',
   schema: './src/main/db/schemas',
-  dialect: 'sqlite'
+  dialect: 'sqlite',
+  casing: 'snake_case'
 })

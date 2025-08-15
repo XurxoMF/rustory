@@ -2,6 +2,8 @@
  * Must have the same properties as {@link VSAccountType}
  */
 export class VSAccount {
+  private _id: number
+
   private _email: string
 
   private _playerName: string
@@ -18,7 +20,18 @@ export class VSAccount {
 
   private _hostGameServer: boolean
 
-  constructor(email: string, playerName: string, playerUid: string, playerEntitlements: string, sessionKey: string, sessionSignature: string, mptoken: string | null, hostGameServer: boolean) {
+  constructor(
+    id: number,
+    email: string,
+    playerName: string,
+    playerUid: string,
+    playerEntitlements: string,
+    sessionKey: string,
+    sessionSignature: string,
+    mptoken: string | null,
+    hostGameServer: boolean
+  ) {
+    this._id = $state(id)
     this._email = $state(email)
     this._playerName = $state(playerName)
     this._playerUid = $state(playerUid)
@@ -27,6 +40,10 @@ export class VSAccount {
     this._sessionSignature = $state(sessionSignature)
     this._mptoken = $state(mptoken)
     this._hostGameServer = $state(hostGameServer)
+  }
+
+  get id(): number {
+    return this._id
   }
 
   get email(): string {
@@ -68,6 +85,7 @@ export class VSAccount {
    */
   toJSON(): VSAccountType {
     return {
+      id: this._id,
       email: this._email,
       playerName: this._playerName,
       playerUid: this._playerUid,
@@ -86,6 +104,6 @@ export class VSAccount {
    * @returns The {@link VSAccount}
    */
   static fromJSON(json: VSAccountType): VSAccount {
-    return new VSAccount(json.email, json.playerName, json.playerUid, json.playerEntitlements, json.sessionKey, json.sessionSignature, json.mptoken, json.hostGameServer)
+    return new VSAccount(json.id, json.email, json.playerName, json.playerUid, json.playerEntitlements, json.sessionKey, json.sessionSignature, json.mptoken, json.hostGameServer)
   }
 }

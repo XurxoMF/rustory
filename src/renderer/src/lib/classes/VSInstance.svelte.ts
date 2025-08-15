@@ -5,7 +5,7 @@ import { VSModInstalled } from './VSModInstalled.svelte'
  * Must have the same properties as {@link VSInstanceType}
  */
 export class VSInstance {
-  private _id: string
+  private _id: number
 
   private _name: string
 
@@ -36,7 +36,7 @@ export class VSInstance {
   private _envVars: string
 
   constructor(
-    id: string,
+    id: number,
     name: string,
     path: string,
     versions: string,
@@ -67,7 +67,7 @@ export class VSInstance {
     this._envVars = $state(envVars)
   }
 
-  public get id(): string {
+  public get id(): number {
     return this._id
   }
 

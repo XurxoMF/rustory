@@ -12,6 +12,7 @@ declare global {
   type TPaths = 'home' | 'appData' | 'userData' | 'temp' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'logs'
 
   type VSAccountType = {
+    id: number
     email: string
     playerName: string
     playerUid: string
@@ -23,7 +24,7 @@ declare global {
   }
 
   type VSInstanceType = {
-    id: string
+    id: number
     name: string
     // icon: string
     path: string
@@ -41,7 +42,7 @@ declare global {
   }
 
   type VSInstanceBackupType = {
-    id: string
+    id: number
     date: number
     path: string
   }
