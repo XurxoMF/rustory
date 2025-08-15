@@ -11,7 +11,8 @@ export const IPC_CHANNELS = {
     writeJSON: 'fs-write-json',
     showDialog: 'fs-show-dialog',
     join: 'fs-join',
-    getPath: 'fs-get-path'
+    getPath: 'fs-get-path',
+    changePerms: 'fs-change-perms'
   },
   system: {
     getOSInfo: 'system-get-os-info',
@@ -41,6 +42,28 @@ export const IPC_CHANNELS = {
     config: {
       setItem: 'db-config-set-item',
       getItem: 'db-config-get-item'
+    }
+  },
+  zip: {
+    extractor: {
+      extract: 'zip-extractor-extract',
+      on: {
+        progress: 'zip-extractor-on-progress'
+      }
+    },
+    compressor: {
+      compress: 'zip-compressor-compress',
+      on: {
+        progress: 'zip-compressor-on-progress'
+      }
+    }
+  },
+  net: {
+    downloader: {
+      download: 'net-downloader-download',
+      on: {
+        progress: 'new-downloader-on-progress'
+      }
     }
   }
 }

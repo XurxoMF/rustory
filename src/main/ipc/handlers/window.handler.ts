@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'
-import { IPC_CHANNELS } from '../channels'
+import { IPC_CHANNELS } from '@main/ipc/channels'
 import { mainWindow } from '@main/mainWindow'
 
 export async function registerWindowHandlers(): Promise<void> {

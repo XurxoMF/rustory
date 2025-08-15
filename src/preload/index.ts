@@ -18,7 +18,8 @@ const api: BridgeAPI = {
     writeJSON: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.writeJSON, ...params),
     showDialog: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.showDialog, ...params),
     join: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.join, ...params),
-    getPath: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.getPath, ...params)
+    getPath: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.getPath, ...params),
+    changePerms: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.changePerms, ...params)
   },
   system: {
     getOSInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getOSInfo),
@@ -48,6 +49,28 @@ const api: BridgeAPI = {
     config: {
       getItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.getItem, ...params),
       setItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.setItem, ...params)
+    }
+  },
+  zip: {
+    extractor: {
+      extract: (...params) => ipcRenderer.invoke(IPC_CHANNELS.zip.extractor.extract, ...params),
+      on: {
+        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+      }
+    },
+    compressor: {
+      compress: (...params) => ipcRenderer.invoke(IPC_CHANNELS.zip.compressor.compress, ...params),
+      on: {
+        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+      }
+    }
+  },
+  net: {
+    downloader: {
+      download: (...params) => ipcRenderer.invoke(IPC_CHANNELS.net.downloader.download, ...params),
+      on: {
+        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.net.downloader.on.progress, ...params)
+      }
     }
   }
 }

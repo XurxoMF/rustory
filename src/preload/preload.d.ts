@@ -16,6 +16,7 @@ declare global {
       showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[] | null>
       join: (...parts: string[]) => Promise<string>
       getPath: (path: TPaths) => Promise<string>
+      changePerms: (paths: string[], perms: number) => Promise<boolean>
     }
     system: {
       getOSInfo: () => Promise<Systeminformation.OsData | null>
@@ -45,6 +46,28 @@ declare global {
       config: {
         getItem: (key: string) => Promise<string | null>
         setItem: (key: string, value: string) => Promise<boolean>
+      }
+    }
+    zip: {
+      extractor: {
+        extract: (id: string, filePath: string, outputPath: string, deleteZip: boolean) => Promise<boolean>
+        on: {
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+        }
+      }
+      compressor: {
+        compress: (id: string, inputPath: string, outputPath: string, outputFileName: string, compressionLevel?: number) => Promise<boolean>
+        on: {
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+        }
+      }
+    }
+    net: {
+      downloader: {
+        download: (id: string, url: string, outputPath: string, fileName: string) => Promise<boolean>
+        on: {
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+        }
       }
     }
   }

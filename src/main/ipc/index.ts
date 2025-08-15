@@ -9,6 +9,8 @@ import { registerWindowHandlers } from './handlers/window.handler'
 import { registerShellHandlers } from './handlers/shell.handlers'
 import { registerRustoryHandlers } from './handlers/rustory.handlers'
 import { registerDBHandlers } from './handlers/db'
+import { registerZipHandlers } from './handlers/zip.handlers'
+import { registerNetHandlers } from './handlers/net.handler'
 
 export async function initIPCs(): Promise<void> {
   try {
@@ -34,6 +36,12 @@ export async function initIPCs(): Promise<void> {
 
     logger.info('Registering db handlers...')
     await registerDBHandlers()
+
+    logger.info('Registering zip handlers...')
+    await registerZipHandlers()
+
+    logger.info('Registering net handlers...')
+    await registerNetHandlers()
 
     logger.info('All IPCs initialized successfully!')
   } catch (err) {
