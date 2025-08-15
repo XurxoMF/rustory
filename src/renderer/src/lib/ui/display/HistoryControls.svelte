@@ -1,13 +1,13 @@
 <script lang="ts">
   import { m } from '@renderer/paraglide/messages'
 
-  import { Window } from '@renderer/lib/classes/Window.svelte'
+  import { Reloader } from '@renderer/lib/classes/Reloader.svelte'
 
   import { ButtonUnstyled } from '@renderer/lib/ui/form/Buttons'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-<ButtonUnstyled icon onclick={() => Window.instance.executeOnReload()} title={m.common__reload()}>
+<ButtonUnstyled icon onclick={() => Reloader.instance.executeTasks()} title={m.common__reload()}>
   <Icon icon="ph:arrow-clockwise-bold" />
 </ButtonUnstyled>
 <ButtonUnstyled icon onclick={() => history.back()} title={m.common__previous()}>

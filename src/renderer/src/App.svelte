@@ -10,7 +10,6 @@
 
   import { Loader } from '@renderer/lib/classes/Loader.svelte'
   import { Info } from '@renderer/lib/classes/Info.svelte'
-  import { Window } from '@renderer/lib/classes/Window.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
   import { sleep } from '@shared/utils/common'
@@ -38,7 +37,6 @@
     // Load the app data and wait a bit so the theme and localization get's correctly changed.
     await Config.instance.init()
     await Info.instance.init()
-    await Window.instance.init()
 
     // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app data loading).
     loader.showTasks = true
