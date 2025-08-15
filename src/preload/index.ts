@@ -71,6 +71,9 @@ const api: BridgeAPI = {
         progress: (...params) => ipcRenderer.on(IPC_CHANNELS.net.downloader.on.progress, ...params)
       }
     }
+  },
+  notifications: {
+    notify: (...params) => ipcRenderer.send(IPC_CHANNELS.notifications.notify, ...params)
   }
 }
 

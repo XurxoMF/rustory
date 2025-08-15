@@ -69,6 +69,9 @@ declare global {
         }
       }
     }
+    notifications: {
+      notify: (title: string, body: string, onClick: () => void) => void
+    }
   }
 
   interface Window {
