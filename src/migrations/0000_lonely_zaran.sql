@@ -18,7 +18,7 @@ CREATE TABLE `vs_account` (
 --> statement-breakpoint
 CREATE UNIQUE INDEX `vs_account_id_unique` ON `vs_account` (`id`);--> statement-breakpoint
 CREATE TABLE `vs_instance` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
 	`path` text NOT NULL,
 	`version` text NOT NULL,
@@ -34,7 +34,7 @@ CREATE TABLE `vs_instance` (
 --> statement-breakpoint
 CREATE UNIQUE INDEX `vs_instance_id_unique` ON `vs_instance` (`id`);--> statement-breakpoint
 CREATE TABLE `vs_instance_backup` (
-	`id` integer PRIMARY KEY AUTOINCREMENT NOT NULL,
+	`id` text PRIMARY KEY NOT NULL,
 	`vs_instance_id` integer,
 	`date` integer NOT NULL,
 	`path` text NOT NULL,

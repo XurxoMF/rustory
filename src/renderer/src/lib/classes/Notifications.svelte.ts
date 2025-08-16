@@ -1,3 +1,5 @@
+import { SvelteMap } from 'svelte/reactivity'
+
 export class Notifications {
   /**
    * Singleton instance of the Notifications.
@@ -15,7 +17,7 @@ export class Notifications {
   /**
    * List of id <-> callback to execute when a notification is clicked-
    */
-  private clickCallbacks = new Map<string, Notifications.NotificationCallback>()
+  private clickCallbacks = new SvelteMap<string, Notifications.NotificationCallback>()
 
   constructor() {
     window.api.notifications.on.click((_event, id) => {

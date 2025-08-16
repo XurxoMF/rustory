@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
-
 export class PreventClose {
   /**
    * Singleton instance of the PreventClose.
@@ -40,7 +38,7 @@ export class PreventClose {
    * @returns The id of the new task. Used to remove the task.
    */
   addTask(reason: string): string {
-    const id: string = uuidv4()
+    const id: string = crypto.randomUUID()
     this._tasks.push({ id, reason })
     return id
   }
