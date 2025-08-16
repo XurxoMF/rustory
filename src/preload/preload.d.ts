@@ -11,21 +11,21 @@ declare global {
       verbose: (message: string) => void
     }
     fs: {
-      readJSON: (filePath: string) => Promise<any | null>
+      readJSON: (filePath: string) => Promise<any | undefined>
       writeJSON: (filePath: string, content: any) => Promise<boolean>
-      showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[] | null>
+      showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[] | undefined>
       join: (...parts: string[]) => Promise<string>
       getPath: (path: TPaths) => Promise<string>
       changePerms: (paths: string[], perms: number) => Promise<boolean>
     }
     system: {
-      getOSInfo: () => Promise<Systeminformation.OsData | null>
-      getCPUInfo: () => Promise<Systeminformation.CpuData | null>
-      getRAMInfo: () => Promise<Systeminformation.MemData | null>
-      getGPUsInfo: () => Promise<Systeminformation.GraphicsData | null>
-      getVolumesInfo: () => Promise<Systeminformation.FsSizeData[] | null>
-      getNETSDKsInfo: () => Promise<string[] | null>
-      getNETRuntimesInfo: () => Promise<string[] | null>
+      getOSInfo: () => Promise<Systeminformation.OsData | undefined>
+      getCPUInfo: () => Promise<Systeminformation.CpuData | undefined>
+      getRAMInfo: () => Promise<Systeminformation.MemData | undefined>
+      getGPUsInfo: () => Promise<Systeminformation.GraphicsData | undefined>
+      getVolumesInfo: () => Promise<Systeminformation.FsSizeData[] | undefined>
+      getNETSDKsInfo: () => Promise<string[] | undefined>
+      getNETRuntimesInfo: () => Promise<string[] | undefined>
     }
     window: {
       minimize: () => void
@@ -43,7 +43,7 @@ declare global {
     }
     db: {
       config: {
-        getItem: (key: string) => Promise<string | null>
+        getItem: (key: string) => Promise<string | undefined>
         setItem: (key: string, value: string) => Promise<boolean>
       }
     }

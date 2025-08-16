@@ -22,9 +22,9 @@ export class TaskCompress implements TaskBase {
    */
   private _progress: number
 
-  constructor(id: string, target: TaskTarget) {
-    this._id = $state(id)
-    this._target = $state(target)
+  constructor(taskCompress: { id: string; target: TaskTarget }) {
+    this._id = $state(taskCompress.id)
+    this._target = $state(taskCompress.target)
     this._status = $state(TaskBase.Status.PENDING)
     this._progress = $state(0)
   }

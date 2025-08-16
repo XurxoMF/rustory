@@ -6,9 +6,9 @@ export class VSModAuthor {
 
   private _name: string
 
-  constructor(userid: string, name: string) {
-    this._userid = $state(userid)
-    this._name = $state(name)
+  constructor(vsModAuthor: { userid: string; name: string }) {
+    this._userid = $state(vsModAuthor.userid)
+    this._name = $state(vsModAuthor.name)
   }
 
   public get userid(): string {
@@ -38,6 +38,9 @@ export class VSModAuthor {
    * @returns The {@link VSModAuthor}
    */
   static fromJSON(json: VSModAuthorType): VSModAuthor {
-    return new VSModAuthor(json.userid, json.name)
+    return new VSModAuthor({
+      userid: json.userid,
+      name: json.name
+    })
   }
 }

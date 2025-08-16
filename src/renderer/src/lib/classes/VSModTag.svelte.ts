@@ -8,10 +8,10 @@ export class VSModTag {
 
   private _color: string
 
-  constructor(tagid: number, name: string, color: string) {
-    this._tagid = $state(tagid)
-    this._name = $state(name)
-    this._color = $state(color)
+  constructor(vsModTag: { tagid: number; name: string; color: string }) {
+    this._tagid = $state(vsModTag.tagid)
+    this._name = $state(vsModTag.name)
+    this._color = $state(vsModTag.color)
   }
 
   public get tagid(): number {
@@ -46,6 +46,10 @@ export class VSModTag {
    * @returns The {@link VSModTag}
    */
   static fromJSON(json: VSModTagType): VSModTag {
-    return new VSModTag(json.tagid, json.name, json.color)
+    return new VSModTag({
+      tagid: json.tagid,
+      name: json.name,
+      color: json.color
+    })
   }
 }

@@ -11,7 +11,7 @@ export async function registerFSHandlers(): Promise<void> {
 
   ipcMain.handle(
     IPC_CHANNELS.fs.showDialog,
-    async (_event, title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | null> => await openDialog(title, type, multiple, extensions)
+    async (_event, title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | undefined> => await openDialog(title, type, multiple, extensions)
   )
 
   ipcMain.handle(IPC_CHANNELS.fs.join, (_event, ...parts: string[]): string => join(...parts))

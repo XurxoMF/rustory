@@ -12,44 +12,44 @@ export class VSModInstalled {
 
   private _path: string
 
-  private _description: string | null
+  private _description: string | undefined
 
-  private _side: string | null
+  private _side: string | undefined
 
   private _authors: string[]
 
   private _contributors: string[]
 
-  private _type: string | null
+  private _type: string | undefined
 
-  private _image: string | null
+  private _image: string | undefined
 
   private _mod: VSMod
 
-  constructor(
-    name: string,
-    modid: string,
-    version: string,
-    path: string,
-    description: string | null,
-    side: string | null,
-    authors: string[],
-    contributors: string[],
-    type: string | null,
-    image: string | null,
+  constructor(vsModInstalled: {
+    name: string
+    modid: string
+    version: string
+    path: string
+    description: string | undefined
+    side: string | undefined
+    authors: string[]
+    contributors: string[]
+    type: string | undefined
+    image: string | undefined
     mod: VSMod
-  ) {
-    this._name = $state(name)
-    this._modid = $state(modid)
-    this._version = $state(version)
-    this._path = $state(path)
-    this._description = $state(description)
-    this._side = $state(side)
-    this._authors = $state(authors)
-    this._contributors = $state(contributors)
-    this._type = $state(type)
-    this._image = $state(image)
-    this._mod = $state(mod)
+  }) {
+    this._name = $state(vsModInstalled.name)
+    this._modid = $state(vsModInstalled.modid)
+    this._version = $state(vsModInstalled.version)
+    this._path = $state(vsModInstalled.path)
+    this._description = $state(vsModInstalled.description)
+    this._side = $state(vsModInstalled.side)
+    this._authors = $state(vsModInstalled.authors)
+    this._contributors = $state(vsModInstalled.contributors)
+    this._type = $state(vsModInstalled.type)
+    this._image = $state(vsModInstalled.image)
+    this._mod = $state(vsModInstalled.mod)
   }
 
   public get name(): string {
@@ -68,11 +68,11 @@ export class VSModInstalled {
     return this._path
   }
 
-  public get description(): string | null {
+  public get description(): string | undefined {
     return this._description
   }
 
-  public get side(): string | null {
+  public get side(): string | undefined {
     return this._side
   }
 
@@ -84,11 +84,11 @@ export class VSModInstalled {
     return this._contributors
   }
 
-  public get type(): string | null {
+  public get type(): string | undefined {
     return this._type
   }
 
-  public get image(): string | null {
+  public get image(): string | undefined {
     return this._image
   }
 
@@ -124,6 +124,18 @@ export class VSModInstalled {
    * @returns The {@link VSModInstalled}
    */
   static fromJSON(json: VSModInstalledType): VSModInstalled {
-    return new VSModInstalled(json.name, json.modid, json.version, json.path, json.description, json.side, json.authors, json.contributors, json.type, json.image, VSMod.fromJSON(json.mod))
+    return new VSModInstalled({
+      name: json.name,
+      modid: json.modid,
+      version: json.version,
+      path: json.path,
+      description: json.description,
+      side: json.side,
+      authors: json.authors,
+      contributors: json.contributors,
+      type: json.type,
+      image: json.image,
+      mod: VSMod.fromJSON(json.mod)
+    })
   }
 }

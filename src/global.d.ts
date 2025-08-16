@@ -19,14 +19,13 @@ declare global {
     playerEntitlements: string
     sessionKey: string
     sessionSignature: string
-    mptoken: string | null
+    mptoken: string | undefined
     hostGameServer: boolean
   }
 
   type VSInstanceType = {
     id: number
     name: string
-    // icon: string
     path: string
     version: string
     startParams: string
@@ -55,10 +54,10 @@ declare global {
     trendingpoints: number
     comments: number
     name: string
-    summary: string | null
+    summary: string | undefined
     modidstrs: string[]
     author: string
-    urlalias: string | null
+    urlalias: string | undefined
     side: string
     type: string
     logo: string
@@ -72,14 +71,14 @@ declare global {
     name: string
     text: string
     author: string
-    urlalias: string | null
-    logofilename: string | null
-    logofile: string | null
-    homepageurl: string | null
-    sourcecodeurl: string | null
-    trailervideourl: string | null
-    issuetrackerurl: string | null
-    wikiurl: string | null
+    urlalias: string | undefined
+    logofilename: string | undefined
+    logofile: string | undefined
+    homepageurl: string | undefined
+    sourcecodeurl: string | undefined
+    trailervideourl: string | undefined
+    issuetrackerurl: string | undefined
+    wikiurl: string | undefined
     downloads: number
     follows: number
     trendingpoints: number
@@ -109,12 +108,12 @@ declare global {
     modid: string
     version: string
     path: string
-    description: string | null
-    side: string | null
+    description: string | undefined
+    side: string | undefined
     authors: string[]
     contributors: string[]
-    type: string | null
-    image: string | null
+    type: string | undefined
+    image: string | undefined
     mod: VSModType
   }
 

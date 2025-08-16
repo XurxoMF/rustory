@@ -22,17 +22,28 @@ export class VSModRelease {
 
   private _changelog: string
 
-  constructor(releaseid: number, mainfile: string, filename: string, fileid: number, downloads: number, tags: string[], modidstr: string, modversion: string, created: string, changelog: string) {
-    this._releaseid = $state(releaseid)
-    this._mainfile = $state(mainfile)
-    this._filename = $state(filename)
-    this._fileid = $state(fileid)
-    this._downloads = $state(downloads)
-    this._tags = $state(tags)
-    this._modidstr = $state(modidstr)
-    this._modversion = $state(modversion)
-    this._created = $state(created)
-    this._changelog = $state(changelog)
+  constructor(vsModRelease: {
+    releaseid: number
+    mainfile: string
+    filename: string
+    fileid: number
+    downloads: number
+    tags: string[]
+    modidstr: string
+    modversion: string
+    created: string
+    changelog: string
+  }) {
+    this._releaseid = $state(vsModRelease.releaseid)
+    this._mainfile = $state(vsModRelease.mainfile)
+    this._filename = $state(vsModRelease.filename)
+    this._fileid = $state(vsModRelease.fileid)
+    this._downloads = $state(vsModRelease.downloads)
+    this._tags = $state(vsModRelease.tags)
+    this._modidstr = $state(vsModRelease.modidstr)
+    this._modversion = $state(vsModRelease.modversion)
+    this._created = $state(vsModRelease.created)
+    this._changelog = $state(vsModRelease.changelog)
   }
 
   public get releaseid(): number {
@@ -102,6 +113,17 @@ export class VSModRelease {
    * @returns The {@link VSModRelease}
    */
   static fromJSON(json: VSModReleaseType): VSModRelease {
-    return new VSModRelease(json.releaseid, json.mainfile, json.filename, json.fileid, json.downloads, json.tags, json.modidstr, json.modversion, json.created, json.changelog)
+    return new VSModRelease({
+      releaseid: json.releaseid,
+      mainfile: json.mainfile,
+      filename: json.filename,
+      fileid: json.fileid,
+      downloads: json.downloads,
+      tags: json.tags,
+      modidstr: json.modidstr,
+      modversion: json.modversion,
+      created: json.created,
+      changelog: json.changelog
+    })
   }
 }

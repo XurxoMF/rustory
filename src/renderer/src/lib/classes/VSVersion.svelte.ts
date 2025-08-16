@@ -6,9 +6,9 @@ export class VSVersion {
 
   private _path: string
 
-  constructor(version: string, path: string) {
-    this._version = $state(version)
-    this._path = $state(path)
+  constructor(vsVersion: { version: string; path: string }) {
+    this._version = $state(vsVersion.version)
+    this._path = $state(vsVersion.path)
   }
 
   public get version(): string {
@@ -38,6 +38,9 @@ export class VSVersion {
    * @returns The {@link VSVersion}
    */
   static fromJSON(json: VSVersionType): VSVersion {
-    return new VSVersion(json.version, json.path)
+    return new VSVersion({
+      version: json.version,
+      path: json.path
+    })
   }
 }

@@ -22,9 +22,9 @@ export class TaskExtract implements TaskBase {
    */
   private _progress: number
 
-  constructor(id: string, target: TaskTarget) {
-    this._id = $state(id)
-    this._target = $state(target)
+  constructor(taskExtract: { id: string; target: TaskTarget }) {
+    this._id = $state(taskExtract.id)
+    this._target = $state(taskExtract.target)
     this._status = $state(TaskBase.Status.PENDING)
     this._progress = $state(0)
   }

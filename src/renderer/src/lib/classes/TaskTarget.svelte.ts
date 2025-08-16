@@ -9,9 +9,9 @@ export class TaskTarget {
    */
   private _id: string
 
-  constructor(type: TaskTarget.TypeType, id: string) {
-    this._type = type
-    this._id = id
+  constructor(taskTarget: { type: TaskTarget.TypeType; id: string }) {
+    this._type = taskTarget.type
+    this._id = taskTarget.id
   }
 
   /**

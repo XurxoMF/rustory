@@ -15,21 +15,21 @@ export class VSMod {
 
   private _author: string
 
-  private _urlalias: string | null
+  private _urlalias: string | undefined
 
-  private _logofilename: string | null
+  private _logofilename: string | undefined
 
-  private _logofile: string | null
+  private _logofile: string | undefined
 
-  private _homepageurl: string | null
+  private _homepageurl: string | undefined
 
-  private _sourcecodeurl: string | null
+  private _sourcecodeurl: string | undefined
 
-  private _trailervideourl: string | null
+  private _trailervideourl: string | undefined
 
-  private _issuetrackerurl: string | null
+  private _issuetrackerurl: string | undefined
 
-  private _wikiurl: string | null
+  private _wikiurl: string | undefined
 
   private _downloads: number
 
@@ -53,56 +53,56 @@ export class VSMod {
 
   private _screenshots: VSModScreenshot[]
 
-  constructor(
-    modid: number,
-    assetid: number,
-    name: string,
-    text: string,
-    author: string,
-    urlalias: string | null,
-    logofilename: string | null,
-    logofile: string | null,
-    homepageurl: string | null,
-    sourcecodeurl: string | null,
-    trailervideourl: string | null,
-    issuetrackerurl: string | null,
-    wikiurl: string | null,
-    downloads: number,
-    follows: number,
-    trendingpoints: number,
-    comments: number,
-    side: string,
-    type: string,
-    createdat: string,
-    lastmodified: string,
-    tags: string[],
-    releases: VSModRelease[],
+  constructor(vsMod: {
+    modid: number
+    assetid: number
+    name: string
+    text: string
+    author: string
+    urlalias: string | undefined
+    logofilename: string | undefined
+    logofile: string | undefined
+    homepageurl: string | undefined
+    sourcecodeurl: string | undefined
+    trailervideourl: string | undefined
+    issuetrackerurl: string | undefined
+    wikiurl: string | undefined
+    downloads: number
+    follows: number
+    trendingpoints: number
+    comments: number
+    side: string
+    type: string
+    createdat: string
+    lastmodified: string
+    tags: string[]
+    releases: VSModRelease[]
     screenshots: VSModScreenshot[]
-  ) {
-    this._modid = $state(modid)
-    this._assetid = $state(assetid)
-    this._name = $state(name)
-    this._text = $state(text)
-    this._author = $state(author)
-    this._urlalias = $state(urlalias)
-    this._logofilename = $state(logofilename)
-    this._logofile = $state(logofile)
-    this._homepageurl = $state(homepageurl)
-    this._sourcecodeurl = $state(sourcecodeurl)
-    this._trailervideourl = $state(trailervideourl)
-    this._issuetrackerurl = $state(issuetrackerurl)
-    this._wikiurl = $state(wikiurl)
-    this._downloads = $state(downloads)
-    this._follows = $state(follows)
-    this._trendingpoints = $state(trendingpoints)
-    this._comments = $state(comments)
-    this._side = $state(side)
-    this._type = $state(type)
-    this._createdat = $state(createdat)
-    this._lastmodified = $state(lastmodified)
-    this._tags = $state(tags)
-    this._releases = $state(releases)
-    this._screenshots = $state(screenshots)
+  }) {
+    this._modid = $state(vsMod.modid)
+    this._assetid = $state(vsMod.assetid)
+    this._name = $state(vsMod.name)
+    this._text = $state(vsMod.text)
+    this._author = $state(vsMod.author)
+    this._urlalias = $state(vsMod.urlalias)
+    this._logofilename = $state(vsMod.logofilename)
+    this._logofile = $state(vsMod.logofile)
+    this._homepageurl = $state(vsMod.homepageurl)
+    this._sourcecodeurl = $state(vsMod.sourcecodeurl)
+    this._trailervideourl = $state(vsMod.trailervideourl)
+    this._issuetrackerurl = $state(vsMod.issuetrackerurl)
+    this._wikiurl = $state(vsMod.wikiurl)
+    this._downloads = $state(vsMod.downloads)
+    this._follows = $state(vsMod.follows)
+    this._trendingpoints = $state(vsMod.trendingpoints)
+    this._comments = $state(vsMod.comments)
+    this._side = $state(vsMod.side)
+    this._type = $state(vsMod.type)
+    this._createdat = $state(vsMod.createdat)
+    this._lastmodified = $state(vsMod.lastmodified)
+    this._tags = $state(vsMod.tags)
+    this._releases = $state(vsMod.releases)
+    this._screenshots = $state(vsMod.screenshots)
   }
 
   public get modid(): number {
@@ -125,35 +125,35 @@ export class VSMod {
     return this._author
   }
 
-  public get urlalias(): string | null {
+  public get urlalias(): string | undefined {
     return this._urlalias
   }
 
-  public get logofilename(): string | null {
+  public get logofilename(): string | undefined {
     return this._logofilename
   }
 
-  public get logofile(): string | null {
+  public get logofile(): string | undefined {
     return this._logofile
   }
 
-  public get homepageurl(): string | null {
+  public get homepageurl(): string | undefined {
     return this._homepageurl
   }
 
-  public get sourcecodeurl(): string | null {
+  public get sourcecodeurl(): string | undefined {
     return this._sourcecodeurl
   }
 
-  public get trailervideourl(): string | null {
+  public get trailervideourl(): string | undefined {
     return this._trailervideourl
   }
 
-  public get issuetrackerurl(): string | null {
+  public get issuetrackerurl(): string | undefined {
     return this._issuetrackerurl
   }
 
-  public get wikiurl(): string | null {
+  public get wikiurl(): string | undefined {
     return this._wikiurl
   }
 
@@ -242,31 +242,31 @@ export class VSMod {
    * @returns The {@link VSMod}
    */
   static fromJSON(json: VSModType): VSMod {
-    return new VSMod(
-      json.modid,
-      json.assetid,
-      json.name,
-      json.text,
-      json.author,
-      json.urlalias,
-      json.logofilename,
-      json.logofile,
-      json.homepageurl,
-      json.sourcecodeurl,
-      json.trailervideourl,
-      json.issuetrackerurl,
-      json.wikiurl,
-      json.downloads,
-      json.follows,
-      json.trendingpoints,
-      json.comments,
-      json.side,
-      json.type,
-      json.createdat,
-      json.lastmodified,
-      json.tags,
-      json.releases.map((release) => VSModRelease.fromJSON(release)),
-      json.screenshots.map((screenshot) => VSModScreenshot.fromJSON(screenshot))
-    )
+    return new VSMod({
+      modid: json.modid,
+      assetid: json.assetid,
+      name: json.name,
+      text: json.text,
+      author: json.author,
+      urlalias: json.urlalias,
+      logofilename: json.logofilename,
+      logofile: json.logofile,
+      homepageurl: json.homepageurl,
+      sourcecodeurl: json.sourcecodeurl,
+      trailervideourl: json.trailervideourl,
+      issuetrackerurl: json.issuetrackerurl,
+      wikiurl: json.wikiurl,
+      downloads: json.downloads,
+      follows: json.follows,
+      trendingpoints: json.trendingpoints,
+      comments: json.comments,
+      side: json.side,
+      type: json.type,
+      createdat: json.createdat,
+      lastmodified: json.lastmodified,
+      tags: json.tags,
+      releases: json.releases.map((release) => VSModRelease.fromJSON(release)),
+      screenshots: json.screenshots.map((screenshot) => VSModScreenshot.fromJSON(screenshot))
+    })
   }
 }

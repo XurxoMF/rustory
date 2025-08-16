@@ -16,30 +16,20 @@ export class VSAccount {
 
   private _sessionSignature: string
 
-  private _mptoken: string | null
+  private _mptoken: string | undefined
 
   private _hostGameServer: boolean
 
-  constructor(
-    id: number,
-    email: string,
-    playerName: string,
-    playerUid: string,
-    playerEntitlements: string,
-    sessionKey: string,
-    sessionSignature: string,
-    mptoken: string | null,
-    hostGameServer: boolean
-  ) {
-    this._id = $state(id)
-    this._email = $state(email)
-    this._playerName = $state(playerName)
-    this._playerUid = $state(playerUid)
-    this._playerEntitlements = $state(playerEntitlements)
-    this._sessionKey = $state(sessionKey)
-    this._sessionSignature = $state(sessionSignature)
-    this._mptoken = $state(mptoken)
-    this._hostGameServer = $state(hostGameServer)
+  constructor(vsAccount: VSAccountType) {
+    this._id = $state(vsAccount.id)
+    this._email = $state(vsAccount.email)
+    this._playerName = $state(vsAccount.playerName)
+    this._playerUid = $state(vsAccount.playerUid)
+    this._playerEntitlements = $state(vsAccount.playerEntitlements)
+    this._sessionKey = $state(vsAccount.sessionKey)
+    this._sessionSignature = $state(vsAccount.sessionSignature)
+    this._mptoken = $state(vsAccount.mptoken)
+    this._hostGameServer = $state(vsAccount.hostGameServer)
   }
 
   get id(): number {
@@ -70,7 +60,7 @@ export class VSAccount {
     return this._sessionSignature
   }
 
-  get mptoken(): string | null {
+  get mptoken(): string | undefined {
     return this._mptoken
   }
 
@@ -104,6 +94,16 @@ export class VSAccount {
    * @returns The {@link VSAccount}
    */
   static fromJSON(json: VSAccountType): VSAccount {
-    return new VSAccount(json.id, json.email, json.playerName, json.playerUid, json.playerEntitlements, json.sessionKey, json.sessionSignature, json.mptoken, json.hostGameServer)
+    return new VSAccount({
+      id: json.id,
+      email: json.email,
+      playerName: json.playerName,
+      playerUid: json.playerUid,
+      playerEntitlements: json.playerEntitlements,
+      sessionKey: json.sessionKey,
+      sessionSignature: json.sessionSignature,
+      mptoken: json.mptoken,
+      hostGameServer: json.hostGameServer
+    })
   }
 }

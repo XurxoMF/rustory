@@ -9,8 +9,6 @@ export class VSInstance {
 
   private _name: string
 
-  // private _icon: string
-
   private _path: string
 
   private _version: string
@@ -35,36 +33,36 @@ export class VSInstance {
 
   private _envVars: string
 
-  constructor(
-    id: number,
-    name: string,
-    path: string,
-    versions: string,
-    startParams: string,
-    backupsLimit: number,
-    backupsAuto: boolean,
-    compressionLevel: number,
-    backups: VSInstanceBackup[],
-    mods: VSModInstalled[],
-    lastTimePlayed: number,
-    totalTimePlayed: number,
-    mesaGlThread: boolean,
+  constructor(vsInstance: {
+    id: number
+    name: string
+    path: string
+    version: string
+    startParams: string
+    backupsLimit: number
+    backupsAuto: boolean
+    compressionLevel: number
+    backups: VSInstanceBackup[]
+    mods: VSModInstalled[]
+    lastTimePlayed: number
+    totalTimePlayed: number
+    mesaGlThread: boolean
     envVars: string
-  ) {
-    this._id = $state(id)
-    this._name = $state(name)
-    this._path = $state(path)
-    this._version = $state(versions)
-    this._startParams = $state(startParams)
-    this._backupsLimit = $state(backupsLimit)
-    this._backupsAuto = $state(backupsAuto)
-    this._compressionLevel = $state(compressionLevel)
-    this._backups = $state(backups)
-    this._mods = $state(mods)
-    this._lastTimePlayed = $state(lastTimePlayed)
-    this._totalTimePlayed = $state(totalTimePlayed)
-    this._mesaGlThread = $state(mesaGlThread)
-    this._envVars = $state(envVars)
+  }) {
+    this._id = $state(vsInstance.id)
+    this._name = $state(vsInstance.name)
+    this._path = $state(vsInstance.path)
+    this._version = $state(vsInstance.version)
+    this._startParams = $state(vsInstance.startParams)
+    this._backupsLimit = $state(vsInstance.backupsLimit)
+    this._backupsAuto = $state(vsInstance.backupsAuto)
+    this._compressionLevel = $state(vsInstance.compressionLevel)
+    this._backups = $state(vsInstance.backups)
+    this._mods = $state(vsInstance.mods)
+    this._lastTimePlayed = $state(vsInstance.lastTimePlayed)
+    this._totalTimePlayed = $state(vsInstance.totalTimePlayed)
+    this._mesaGlThread = $state(vsInstance.mesaGlThread)
+    this._envVars = $state(vsInstance.envVars)
   }
 
   public get id(): number {
@@ -74,10 +72,6 @@ export class VSInstance {
   public get name(): string {
     return this._name
   }
-
-  // public get icon(): string {
-  //   return this._icon
-  // }
 
   public get path(): string {
     return this._path
@@ -158,21 +152,21 @@ export class VSInstance {
    * @returns The {@link VSInstance}
    */
   static fromJSON(json: VSInstanceType): VSInstance {
-    return new VSInstance(
-      json.id,
-      json.name,
-      json.path,
-      json.version,
-      json.startParams,
-      json.backupsLimit,
-      json.backupsAuto,
-      json.compressionLevel,
-      json.backups.map((backup) => VSInstanceBackup.fromJSON(backup)),
-      json.mods.map((mod) => VSModInstalled.fromJSON(mod)),
-      json.lastTimePlayed,
-      json.totalTimePlayed,
-      json.mesaGlThread,
-      json.envVars
-    )
+    return new VSInstance({
+      id: json.id,
+      name: json.name,
+      path: json.path,
+      version: json.version,
+      startParams: json.startParams,
+      backupsLimit: json.backupsLimit,
+      backupsAuto: json.backupsAuto,
+      compressionLevel: json.compressionLevel,
+      backups: json.backups.map((backup) => VSInstanceBackup.fromJSON(backup)),
+      mods: json.mods.map((mod) => VSModInstalled.fromJSON(mod)),
+      lastTimePlayed: json.lastTimePlayed,
+      totalTimePlayed: json.totalTimePlayed,
+      mesaGlThread: json.mesaGlThread,
+      envVars: json.envVars
+    })
   }
 }

@@ -12,12 +12,12 @@ export class VSModScreenshot {
 
   private _createdat: string
 
-  constructor(fileid: number, mainfile: string, filename: string, thumbnailfile: string, createdat: string) {
-    this._fileid = $state(fileid)
-    this._mainfile = $state(mainfile)
-    this._filename = $state(filename)
-    this._thumbnailfile = $state(thumbnailfile)
-    this._createdat = $state(createdat)
+  constructor(vsModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
+    this._fileid = $state(vsModScreenshot.fileid)
+    this._mainfile = $state(vsModScreenshot.mainfile)
+    this._filename = $state(vsModScreenshot.filename)
+    this._thumbnailfile = $state(vsModScreenshot.thumbnailfile)
+    this._createdat = $state(vsModScreenshot.createdat)
   }
 
   public get fileid(): number {
@@ -62,6 +62,12 @@ export class VSModScreenshot {
    * @returns The {@link VSModScreenshot}
    */
   static fromJSON(json: VSModScreenshotType): VSModScreenshot {
-    return new VSModScreenshot(json.fileid, json.mainfile, json.filename, json.thumbnailfile, json.createdat)
+    return new VSModScreenshot({
+      fileid: json.fileid,
+      mainfile: json.mainfile,
+      filename: json.filename,
+      thumbnailfile: json.thumbnailfile,
+      createdat: json.createdat
+    })
   }
 }

@@ -12,7 +12,7 @@ import { getOSInfo } from '@main/utils/system'
  * @param filePath Path to the JSON file
  * @returns The JSON content or null if the file does not exist or an error occurs
  */
-export async function readJSON(filePath: string): Promise<any | null> {
+export async function readJSON(filePath: string): Promise<any | undefined> {
   try {
     if (!fse.existsSync(filePath)) {
       logger.warn(`JSON file at ${filePath} does not exist!`)
@@ -57,9 +57,9 @@ export async function writeJSON(filePath: string, content: any): Promise<boolean
  * @param type Files or folders
  * @param multiple Multiple items or single item
  * @param extensions List of required file extensions
- * @returns The selected files/folders or null if the users selected nothing or an error ocurred
+ * @returns The selected files/folders or undefined if the users selected nothing or an error ocurred
  */
-export async function openDialog(title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | null> {
+export async function openDialog(title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]): Promise<string[] | undefined> {
   try {
     const properties: ('openFile' | 'openDirectory' | 'multiSelections')[] = []
     properties.push(type)
@@ -73,14 +73,14 @@ export async function openDialog(title: string, type: 'openFile' | 'openDirector
 
     if (result.canceled) {
       logger.warn('No file/folder was selected by the user!')
-      return null
+      return
     }
 
     return result.filePaths
   } catch (err) {
     logger.error('Error opening file/folder selection dialog!')
     logger.debug(`Error file/folder selection dialog:\n${JSON.stringify(err)}`)
-    return null
+    return
   }
 }
 
