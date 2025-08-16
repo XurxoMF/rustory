@@ -30,7 +30,7 @@
   "settings__instances_folder": "Carpeta de instancias",
   "settings__instances_folder_description": "Carpeta de instancias por defecto",
   "settings__versions_folder": "Carpeta de versiones",
-  "settings__default_versions_folder": "Carpeta de versiones por defecto",
+  "settings__versions_folder_description": "Carpeta de versiones por defecto",
   "settings__backups_folder": "Carpeta de copias de seguridad",
   "settings__backups_folder_description": "Carpeta de copias de srguridad por defecto"
 }
