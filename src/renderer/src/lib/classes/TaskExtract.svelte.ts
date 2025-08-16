@@ -1,7 +1,7 @@
-import { BaseTask } from './BaseTask.svelte'
+import { TaskBase } from './TaskBase.svelte'
 import type { TaskTarget } from './TaskTarget.svelte'
 
-export class ExtractTask implements BaseTask {
+export class TaskExtract implements TaskBase {
   /**
    * ID of the task.
    */
@@ -15,7 +15,7 @@ export class ExtractTask implements BaseTask {
   /**
    * Status of the task.
    */
-  private _status: BaseTask.Status
+  private _status: TaskBase.Status
 
   /**
    * Current progress of the task.
@@ -25,7 +25,7 @@ export class ExtractTask implements BaseTask {
   constructor(id: string, target: TaskTarget) {
     this._id = $state(id)
     this._target = $state(target)
-    this._status = $state(BaseTask.Status.PENDING)
+    this._status = $state(TaskBase.Status.PENDING)
     this._progress = $state(0)
   }
 
@@ -46,7 +46,7 @@ export class ExtractTask implements BaseTask {
   /**
    * Status of the task.
    */
-  get status(): BaseTask.Status {
+  get status(): TaskBase.Status {
     return this._status
   }
 

@@ -1,15 +1,15 @@
 import type { TaskTarget } from './TaskTarget.svelte'
 
-export interface BaseTask {
+export interface TaskBase {
   id: string
   target: TaskTarget
-  status: BaseTask.Status
+  status: TaskBase.Status
   progress: number
   start(): Promise<boolean>
   cancel(): Promise<boolean>
 }
 
-export namespace BaseTask {
+export namespace TaskBase {
   export enum Status {
     PENDING = 'pending',
     RUNNING = 'running',

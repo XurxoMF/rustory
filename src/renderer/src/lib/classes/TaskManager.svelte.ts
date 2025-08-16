@@ -1,6 +1,6 @@
 import { SvelteMap } from 'svelte/reactivity'
 
-import { BaseTask } from './BaseTask.svelte'
+import { TaskBase } from './TaskBase.svelte'
 import type { TaskTarget } from './TaskTarget.svelte'
 
 export class TaskManagerClass {
@@ -20,7 +20,7 @@ export class TaskManagerClass {
   /**
    * The list of ID <-> Task.
    */
-  private _tasks = new SvelteMap<string, BaseTask>()
+  private _tasks = new SvelteMap<string, TaskBase>()
 
   private constructor() {
     window.api.zip.compressor.on.progress((_event, id, progress) => this.setTaskProgress(id, progress))
@@ -33,7 +33,7 @@ export class TaskManagerClass {
    *
    * @returns The tasks.
    */
-  getAllTasks(): BaseTask[] {
+  getAllTasks(): TaskBase[] {
     return Array.from(this._tasks.values())
   }
 
@@ -43,7 +43,7 @@ export class TaskManagerClass {
    * @param type The type of the task.
    * @returns The tasks.
    */
-  getTasksByTarget(type: TaskTarget.TypeType): BaseTask[] {
+  getTasksByTarget(type: TaskTarget.TypeType): TaskBase[] {
     return Array.from(this._tasks.values()).filter((task) => task.target.type === type)
   }
 
@@ -53,7 +53,7 @@ export class TaskManagerClass {
    * @param id The ID of the task.
    * @returns The tasks.
    */
-  getTask(id: string): BaseTask | undefined {
+  getTask(id: string): TaskBase | undefined {
     return this._tasks.get(id)
   }
 
@@ -71,7 +71,7 @@ export class TaskManagerClass {
    */
   clearCompletedTasks(): void {
     for (const [id, task] of this._tasks) {
-      if (task.status === BaseTask.Status.COMPLETED) {
+      if (task.status === TaskBase.Status.COMPLETED) {
         this.removeTask(id)
       }
     }
