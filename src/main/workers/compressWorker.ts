@@ -1,9 +1,19 @@
 import { parentPort, workerData } from 'worker_threads'
 import archiver from 'archiver'
 import fse from 'fs-extra'
-import { join } from 'path'
+import { join, basename } from 'path'
 
-const { inputPath, outputPath, outputFileName, compressionLevel = 6 } = workerData
+const {
+  inputPaths,
+  outputPath,
+  outputFileName,
+  compressionLevel = 6
+} = workerData as {
+  inputPaths: string[]
+  outputPath: string
+  outputFileName: string
+  compressionLevel?: number
+}
 
 const output = fse.createWriteStream(join(outputPath, outputFileName))
 const archive = archiver('zip', { zlib: { level: compressionLevel } })
@@ -11,20 +21,23 @@ const archive = archiver('zip', { zlib: { level: compressionLevel } })
 let totalFiles = 0
 let lastReportedProgress = 0
 
-function countFiles(dirPath: string): void {
-  const entries = fse.readdirSync(dirPath, { withFileTypes: true })
+function countFiles(targetPath: string): void {
+  const stat = fse.statSync(targetPath)
 
-  for (const entry of entries) {
-    const fullPath = join(dirPath, entry.name)
-
+  if (stat.isDirectory()) {
+    const entries = fse.readdirSync(targetPath, { withFileTypes: true })
+    for (const entry of entries) {
+      countFiles(join(targetPath, entry.name))
+    }
+  } else {
     totalFiles++
-
-    if (entry.isDirectory()) countFiles(fullPath)
   }
 }
 
 try {
-  countFiles(inputPath)
+  for (const p of inputPaths) {
+    countFiles(p)
+  }
 
   if (!fse.existsSync(outputPath)) {
     fse.mkdirSync(outputPath, { recursive: true })
@@ -34,10 +47,7 @@ try {
     const progress = Math.floor((entries.processed / totalFiles) * 100)
     if (progress > lastReportedProgress) {
       lastReportedProgress = progress
-      parentPort?.postMessage({
-        type: 'progress',
-        progress
-      })
+      parentPort?.postMessage({ type: 'progress', progress })
     }
   })
 
@@ -52,7 +62,14 @@ try {
 
   archive.pipe(output)
 
-  archive.directory(inputPath, false)
+  for (const p of inputPaths) {
+    const stat = fse.statSync(p)
+    if (stat.isDirectory()) {
+      archive.directory(p, basename(p))
+    } else {
+      archive.file(p, { name: basename(p) })
+    }
+  }
 
   archive.finalize()
 } catch (err) {

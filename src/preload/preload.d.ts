@@ -55,7 +55,7 @@ declare global {
         }
       }
       compressor: {
-        compress: (id: string, inputPath: string, outputPath: string, outputFileName: string, compressionLevel?: number) => Promise<boolean>
+        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel?: number) => Promise<boolean>
         on: {
           progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
         }

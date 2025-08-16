@@ -66,7 +66,7 @@ export async function extract(onProgress: (id: string, progress: number) => void
 export async function compress(
   onProgress: (id: string, progress: number) => void,
   id: string,
-  inputPath: string,
+  inputPaths: string[],
   outputPath: string,
   outputFileName: string,
   compressionLevel: number = 6
@@ -74,34 +74,34 @@ export async function compress(
   return new Promise<boolean>((resolve, reject) => {
     const outFile = join(outputPath, outputFileName)
 
-    logger.info(`[${id}] Compressing ${inputPath} to ${outFile} with level ${compressionLevel}...`)
+    logger.info(`[${id}] Compressing ${inputPaths.length} paths to ${outFile} with level ${compressionLevel}...`)
 
     const worker = new Worker(compressWorker, {
-      workerData: { inputPath, outputPath, outputFileName, compressionLevel }
+      workerData: { inputPaths, outputPath, outputFileName, compressionLevel }
     })
 
     worker.on('message', (message) => {
       if (message.type === 'progress') {
         onProgress(id, message.progress)
       } else if (message.type === 'finished') {
-        logger.info(`[${id}] Compression of ${outFile} finished!`)
+        logger.info(`[${id}] Compression of ${inputPaths.length} paths finished!`)
         resolve(true)
       } else {
-        logger.error(`[${id}] Error compressing ${outFile}!`)
-        logger.debug(`[${id}] Error compressing ${outFile}:\n${JSON.stringify(message.error)}`)
+        logger.error(`[${id}] Error compressing ${inputPaths.length} paths!`)
+        logger.debug(`[${id}] Error compressing ${inputPaths.length} paths:\n${JSON.stringify(message.error)}`)
       }
     })
 
     worker.on('error', (err) => {
-      logger.error(`[${id}] Worker error compressing ${outFile}!`)
-      logger.debug(`[${id}] Worker error compressing ${outFile}:\n${JSON.stringify(err.message)}`)
+      logger.error(`[${id}] Worker error compressing ${inputPaths.length} paths!`)
+      logger.debug(`[${id}] Worker error compressing ${inputPaths.length} paths:\n${JSON.stringify(err.message)}`)
       reject(false)
     })
 
     worker.on('exit', (code) => {
       if (code !== 0) {
-        logger.warn(`[${id}] Worker exited with errors compressing ${outFile}!`)
-        logger.debug(`[${id}] Worker exited with errors compressing ${outFile}. Code: ${code}`)
+        logger.warn(`[${id}] Worker exited with errors compressing ${inputPaths.length} paths!`)
+        logger.debug(`[${id}] Worker exited with errors compressing ${inputPaths.length} paths. Code: ${code}`)
         reject(false)
       }
     })
