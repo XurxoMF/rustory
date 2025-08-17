@@ -5,7 +5,6 @@ import { eq } from 'drizzle-orm'
 
 /**
  * Search the DB for the pair key <-> value.
- *
  * @param key The key to search.
  * @returns The value found.
  * @throws A {@link RustoryDBError} error.
@@ -26,7 +25,6 @@ export async function getItem(key: string): Promise<string | undefined> {
 
 /**
  * Add or update a pair key <-> value to the DB.
- *
  * @param key The key to save.
  * @param value Thew value to save.
  * @returns If it was saved or not.

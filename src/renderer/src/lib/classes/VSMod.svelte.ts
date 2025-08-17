@@ -203,7 +203,6 @@ export class VSMod {
 
   /**
    * Convert this {@link VSMod} into a {@link VSModType} json
-   *
    * @returns The {@link VSModType} json
    */
   toJSON(): VSModType {
@@ -237,7 +236,6 @@ export class VSMod {
 
   /**
    * Converts a {@link VSModType} json to a {@link VSMod}
-   *
    * @param json The {@link VSModType} to convert
    * @returns The {@link VSMod}
    */

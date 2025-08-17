@@ -88,7 +88,6 @@ export class VSModRelease {
 
   /**
    * Convert this {@link VSModRelease} into a {@link VSModReleaseType} json
-   *
    * @returns The {@link VSModReleaseType} json
    */
   toJSON(): VSModReleaseType {
@@ -108,7 +107,6 @@ export class VSModRelease {
 
   /**
    * Converts a {@link VSModReleaseType} json to a {@link VSModRelease}
-   *
    * @param json The {@link VSModReleaseType} to convert
    * @returns The {@link VSModRelease}
    */

@@ -9,7 +9,6 @@ import { RustoryNetError } from '@shared/errors/RustoryNetError'
 
 /**
  * Download a file on the specified directory and reports the progress.
- *
  * @param onProgress Callback to execute to report progress updates.
  * @param id ID of the process.
  * @param url URL to download.
@@ -59,7 +58,6 @@ export async function download(onProgress: (id: string, progress: number) => voi
 
 /**
  * Request a URL and returns the data avoiding CORS.
- *
  * @param url The URL to request.
  * @returns The string returned by the request.
  * @throws A {@link RustoryNetError} error.

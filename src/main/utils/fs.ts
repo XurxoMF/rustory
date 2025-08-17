@@ -9,7 +9,6 @@ import { RustoryFSError } from '@shared/errors/RustoryFSError'
 
 /**
  * Reads a file as JSON and returns the content.
- *
  * @param filePath Path to the JSON file.
  * @returns The JSON content or undefined if the file does not exist or an error occurs.
  * @throws A {@link RustoryFSError} error.
@@ -33,7 +32,6 @@ export async function readJSON(filePath: string): Promise<any | undefined> {
 
 /**
  * Writes a JSON object to a file.
- *
  * @param filePath Path to the JSON file.
  * @param content JSON to write to the file.
  * @returns If the operation was successful ro not.
@@ -55,7 +53,6 @@ export async function writeJSON(filePath: string, content: any): Promise<boolean
 
 /**
  * Open a file explorer dialog to select files or folders.
- *
  * @param title Title to show on the dialog.
  * @param type Files or folders.
  * @param multiple Multiple items or single item.
@@ -90,7 +87,6 @@ export async function openDialog(title: string, type: 'openFile' | 'openDirector
 
 /**
  * Change permissions to the specified paths.
- *
  * @param paths Paths to change perms to.
  * @param perms The permissions to change to. Example: `0o755`.
  * @returns If permissions where changed sucessfully or not.

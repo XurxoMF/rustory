@@ -7,7 +7,6 @@ import { RustorySystemError } from '@shared/errors/RustorySystemError'
 
 /**
  * Get the OS info.
- *
  * @returns The OS info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -23,7 +22,6 @@ export async function getOSInfo(): Promise<si.Systeminformation.OsData> {
 
 /**
  * Get the CPU info.
- *
  * @returns The CPU info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -39,7 +37,6 @@ export async function getCPUInfo(): Promise<si.Systeminformation.CpuData> {
 
 /**
  * Get the RAM info.
- *
  * @returns The RAM info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -55,7 +52,6 @@ export async function getRAMInfo(): Promise<si.Systeminformation.MemData> {
 
 /**
  * Get the GPUs info.
- *
  * @returns The GPUs info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -71,7 +67,6 @@ export async function getGPUsInfo(): Promise<si.Systeminformation.GraphicsData> 
 
 /**
  * Get the Volumes info.
- *
  * @returns The Volumes info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -88,7 +83,6 @@ export async function getVolumesInfo(): Promise<si.Systeminformation.FsSizeData[
 
 /**
  * Get the .NET SDKs info.
- *
  * @returns The .NET SDKs info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */
@@ -104,7 +98,6 @@ export async function getNETSDKsInfo(): Promise<string[]> {
 
 /**
  * Get the .NET Runtimes info.
- *
  * @returns The .NET Runtimes info or undefined if this one could not be retrieved.
  * @throws A {@link RustorySystemError} error.
  */

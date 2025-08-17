@@ -59,7 +59,6 @@ export class TaskCompress implements TaskBase {
 
   /**
    * Current progress of the task.
-   *
    * @param progress The progress to set.
    */
   set progress(progress: number) {
@@ -69,7 +68,6 @@ export class TaskCompress implements TaskBase {
 
   /**
    * Starts the task.
-   *
    * @returns If the task could be started or not.
    */
   async start(): Promise<boolean> {
@@ -79,7 +77,6 @@ export class TaskCompress implements TaskBase {
 
   /**
    * Cancels the task.
-   *
    * @returns If the task could be calnceled or not.
    */
   async cancel(): Promise<boolean> {

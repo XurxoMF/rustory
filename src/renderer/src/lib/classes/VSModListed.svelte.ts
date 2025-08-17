@@ -136,7 +136,6 @@ export class VSModListed {
 
   /**
    * Convert this {@link VSModListed} into a {@link VSModListedType} json
-   *
    * @returns The {@link VSModListed} json
    */
   toJSON(): VSModListedType {
@@ -162,7 +161,6 @@ export class VSModListed {
 
   /**
    * Converts a {@link VSModListedType} json to a {@link VSModListed}
-   *
    * @param json The {@link VSModListedType} to convert
    * @returns The {@link VSModListed}
    */

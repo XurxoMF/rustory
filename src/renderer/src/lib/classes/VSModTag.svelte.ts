@@ -28,7 +28,6 @@ export class VSModTag {
 
   /**
    * Convert this {@link VSModTag} into a {@link VSModTagType} json
-   *
    * @returns The {@link VSModTagType} json
    */
   toJSON(): VSModTagType {
@@ -41,7 +40,6 @@ export class VSModTag {
 
   /**
    * Converts a {@link VSModTagType} json to a {@link VSModTag}
-   *
    * @param json The {@link VSModTagType} to convert
    * @returns The {@link VSModTag}
    */

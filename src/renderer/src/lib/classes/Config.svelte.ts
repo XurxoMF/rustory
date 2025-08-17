@@ -130,7 +130,6 @@ export class Config {
 
   /**
    * Set a new theme.
-   *
    * @param theme - The key of the theme to apply.
    */
   async setTheme(theme: string): Promise<void> {
@@ -141,7 +140,6 @@ export class Config {
 
   /**
    * Apply a theme.
-   *
    * @param theme The theme to apply.
    */
   private static applyTheme(theme: string): void {
@@ -157,7 +155,6 @@ export class Config {
 
   /**
    * Set a new language.
-   *
    * @param locale - The key of the language to change to.
    */
   async setLocale(locale: Locale | string): Promise<void> {
@@ -177,7 +174,6 @@ export class Config {
 
   /**
    * Set a new UI scale.
-   *
    * @param scale - The key of the scale to apply.
    */
   setScale(scale: string): void {
@@ -188,7 +184,6 @@ export class Config {
 
   /**
    * Apply a scale.
-   *
    * @param scale The scale to apply.
    */
   private static applyScale(scale: string): void {
@@ -204,7 +199,6 @@ export class Config {
 
   /**
    * Set a new path for the Instances.
-   *
    * @param scale - The path to save.
    */
   async setInstancesPath(path: string): Promise<void> {
@@ -221,7 +215,6 @@ export class Config {
 
   /**
    * Set a new path for the Versions.
-   *
    * @param scale - The path to save.
    */
   async setVersionsPath(path: string): Promise<void> {
@@ -238,7 +231,6 @@ export class Config {
 
   /**
    * Set a new path for the Backups.
-   *
    * @param scale - The path to save.
    */
   async setBackupsPath(path: string): Promise<void> {

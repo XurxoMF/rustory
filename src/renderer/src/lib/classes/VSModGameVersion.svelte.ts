@@ -28,7 +28,6 @@ export class VSModGameVersion {
 
   /**
    * Convert this {@link VSModGameVersion} into a {@link VSModGameVersionType} json
-   *
    * @returns The {@link VSModGameVersionType} json
    */
   toJSON(): VSModGameVersionType {
@@ -41,7 +40,6 @@ export class VSModGameVersion {
 
   /**
    * Converts a {@link VSModGameVersionType} json to a {@link VSModGameVersion}
-   *
    * @param json The {@link VSModGameVersionType} to convert
    * @returns The {@link VSModGameVersion}
    */

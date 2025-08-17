@@ -21,7 +21,6 @@ export class VSVersion {
 
   /**
    * Convert this {@link VSVersion} into a {@link VSVersionType} json
-   *
    * @returns The {@link VSVersionType} json
    */
   toJSON(): VSVersionType {
@@ -33,7 +32,6 @@ export class VSVersion {
 
   /**
    * Converts a {@link VSVersionType} json to a {@link VSVersion}
-   *
    * @param json The {@link VSVersionType} to convert
    * @returns The {@link VSVersion}
    */

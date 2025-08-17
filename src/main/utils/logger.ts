@@ -2,7 +2,6 @@ import Logger from 'electron-log'
 
 /**
  * Logs a message with info level.
- *
  * @param message The message to log.
  */
 function logInfo(message: string): void {
@@ -11,7 +10,6 @@ function logInfo(message: string): void {
 
 /**
  * Logs a message with warn level.
- *
  * @param message The message to log.
  */
 function logWarn(message: string): void {
@@ -20,7 +18,6 @@ function logWarn(message: string): void {
 
 /**
  * Logs a message with error level.
- *
  * @param message The message to log.
  */
 function logError(message: string): void {
@@ -29,7 +26,6 @@ function logError(message: string): void {
 
 /**
  * Logs a message with debug level.
- *
  * @param message The message to log.
  */
 function logDebug(message: string): void {
@@ -38,7 +34,6 @@ function logDebug(message: string): void {
 
 /**
  * Logs a message with verbose level.
- *
  * @param message The message to log.
  */
 function logVerbose(message: string): void {

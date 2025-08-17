@@ -30,7 +30,6 @@ export class TaskManagerClass {
 
   /**
    * Get a list with all the tasks.
-   *
    * @returns The tasks.
    */
   getAllTasks(): TaskBase[] {
@@ -39,7 +38,6 @@ export class TaskManagerClass {
 
   /**
    * Get a list with all the tasks of a specified type.
-   *
    * @param type The type of the task.
    * @returns The tasks.
    */
@@ -49,7 +47,6 @@ export class TaskManagerClass {
 
   /**
    * Get the tasks with the specified ID.
-   *
    * @param id The ID of the task.
    * @returns The tasks.
    */
@@ -59,7 +56,6 @@ export class TaskManagerClass {
 
   /**
    * Remove the task with the specified ID.
-   *
    * @param id The ID of the task.
    */
   removeTask(id: string): void {
@@ -79,7 +75,6 @@ export class TaskManagerClass {
 
   /**
    * Set the rpogress of a task by ID.
-   *
    * @param id The ID of the task.
    * @param progress The progress to set.
    */

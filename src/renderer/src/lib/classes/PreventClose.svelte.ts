@@ -33,7 +33,6 @@ export class PreventClose {
 
   /**
    * Add a new task that will prevent the app from closing.
-   *
    * @param reason - The reason why the app can't be closed. It'll be used on notifications.
    * @returns The id of the new task. Used to remove the task.
    */
@@ -45,7 +44,6 @@ export class PreventClose {
 
   /**
    * Removes a task that prevents the ap from closing.
-   *
    * @param id - The id of the task to remove.
    */
   removeTask(id: string) {

@@ -70,7 +70,6 @@ export class VSAccount {
 
   /**
    * Convert this {@link VSAccount} into a {@link VSAccountType} json
-   *
    * @returns The {@link VSAccountType} json
    */
   toJSON(): VSAccountType {
@@ -89,7 +88,6 @@ export class VSAccount {
 
   /**
    * Converts a {@link VSAccountType} json to a {@link VSAccount}
-   *
    * @param json The {@link VSAccountType} to convert
    * @returns The {@link VSAccount}
    */

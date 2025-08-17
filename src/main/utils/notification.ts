@@ -7,7 +7,6 @@ import { RustoryNotificationError } from '@shared/errors/RustoryNotificationErro
 
 /**
  * Shows a notification to the user.
- *
  * @param title Title of the notification.
  * @param body Body of the notification.
  * @param onClick Callback to execute when the notification is clicked.

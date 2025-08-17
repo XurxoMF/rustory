@@ -21,7 +21,6 @@ export class Reloader {
 
   /**
    * Add a new task to the reloader.
-   *
    * @param task - The task to add to the onReload list
    */
   addTask(task: Reloader.Action) {
@@ -30,7 +29,6 @@ export class Reloader {
 
   /**
    * Remove a task from the reloader.
-   *
    * @param id - The if of the task to remove from the onReload list
    */
   removeTask(id: string) {

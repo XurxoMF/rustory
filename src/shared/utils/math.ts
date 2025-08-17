@@ -1,6 +1,5 @@
 /**
  * Converts bytes to a specified unit.
- *
  * @param bytes Number of bytes to convert.
  * @param unit The unit to convert to. Defaults to 'MB'.
  * @returns Bytes converted to the selected unit.

@@ -42,7 +42,6 @@ export class VSModScreenshot {
 
   /**
    * Convert this {@link VSModScreenshot} into a {@link VSModScreenshotType} json
-   *
    * @returns The {@link VSModScreenshotType} json
    */
   toJSON(): VSModScreenshotType {
@@ -57,7 +56,6 @@ export class VSModScreenshot {
 
   /**
    * Converts a {@link VSModScreenshotType} json to a {@link VSModScreenshot}
-   *
    * @param json The {@link VSModScreenshotType} to convert
    * @returns The {@link VSModScreenshot}
    */

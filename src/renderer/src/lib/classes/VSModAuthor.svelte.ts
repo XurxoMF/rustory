@@ -21,7 +21,6 @@ export class VSModAuthor {
 
   /**
    * Convert this {@link VSModAuthor} into a {@link VSModAuthorType} json
-   *
    * @returns The {@link VSModAuthorType} json
    */
   toJSON(): VSModAuthorType {
@@ -33,7 +32,6 @@ export class VSModAuthor {
 
   /**
    * Converts a {@link VSModAuthorType} json to a {@link VSModAuthor}
-   *
    * @param json The {@link VSModAuthorType} to convert
    * @returns The {@link VSModAuthor}
    */

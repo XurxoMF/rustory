@@ -11,7 +11,6 @@ export let tray: Tray
 
 /**
  * Creates the tray icon and menu.
- *
  * @throws A {@link RustoryTrayError} error.
  */
 export async function createTray(): Promise<void> {

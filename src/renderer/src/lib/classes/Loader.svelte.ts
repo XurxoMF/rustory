@@ -16,7 +16,6 @@ export class Loader {
 
   /**
    * List of tasks to complete.
-   *
    * If you want to add a new tasks to the list just add a new task here.
    */
   static TASKS = [
@@ -36,9 +35,7 @@ export class Loader {
 
   /**
    * If the loader is visible or not.
-   *
    * This is not calculated using the completed.ids.length directly to fix a rendering bug.
-   *
    * If not used, the last task will not be changed to completed on the UI.
    */
   private _isVisible: boolean = $state(true)
@@ -64,9 +61,7 @@ export class Loader {
 
   /**
    * If the loader is visible or not.
-   *
    * This is not calculated using the completed.ids.length directly to fix a rendering bug.
-   *
    * If not used, the last task will not be changed to completed on the UI.
    */
   get isVisible(): boolean {
@@ -75,7 +70,6 @@ export class Loader {
 
   /**
    * Marks a task as completed and increments the completed tasks counter.
-   *
    * @param id - The id of the task you want to complete.
    */
   completeTask(id: Loader.TaskIdType): void {

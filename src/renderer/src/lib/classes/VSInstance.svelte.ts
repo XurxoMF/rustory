@@ -123,7 +123,6 @@ export class VSInstance {
 
   /**
    * Convert this {@link VSInstance} into a {@link VSInstanceType} json
-   *
    * @returns The {@link VSInstanceType} json
    */
   toJSON(): VSInstanceType {
@@ -147,7 +146,6 @@ export class VSInstance {
 
   /**
    * Converts a {@link VSInstanceType} json to a {@link VSInstance}
-   *
    * @param json The {@link VSInstanceType} to convert
    * @returns The {@link VSInstance}
    */

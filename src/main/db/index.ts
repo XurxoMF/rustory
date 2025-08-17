@@ -17,7 +17,6 @@ let db: LibSQLDatabase<Record<string, unknown>>
 
 /**
  * Loads the database and apply migrations.
- *
  * @throws A {@link RustoryDBError} error.
  */
 async function initDB(): Promise<void> {

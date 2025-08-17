@@ -31,7 +31,6 @@ export class Notifications {
 
   /**
    * Send a notification to the user.
-   *
    * @param title Title of the notification
    * @param body Body of the notification
    * @returns A list of events

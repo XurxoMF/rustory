@@ -98,7 +98,6 @@ export class VSModInstalled {
 
   /**
    * Convert this {@link VSModInstalled} into a {@link VSModInstalledType} json
-   *
    * @returns The {@link VSModInstalledType} json
    */
   toJSON(): VSModInstalledType {
@@ -119,7 +118,6 @@ export class VSModInstalled {
 
   /**
    * Converts a {@link VSModInstalledType} json to a {@link VSModInstalled}
-   *
    * @param json The {@link VSModInstalledType} to convert
    * @returns The {@link VSModInstalled}
    */

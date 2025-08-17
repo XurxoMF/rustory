@@ -9,7 +9,6 @@ import { RustoryZipError } from '@shared/errors/RustoryZipError'
 
 /**
  * Extracts a zip to the selected path and reports the progress.
- *
  * @param onProgress Callback to execute to report progress updates.
  * @param id ID of the process.
  * @param filePath Path of the zip to extract.
@@ -57,7 +56,6 @@ export async function extract(onProgress: (id: string, progress: number) => void
 
 /**
  * Compress a path as zip and reports the progress.
- *
  * @param onProgress Callback to execute to report progress updates.
  * @param id ID of the process.
  * @param inputPath Path to compress as zip.

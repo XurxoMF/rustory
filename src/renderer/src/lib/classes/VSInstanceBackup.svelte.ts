@@ -28,7 +28,6 @@ export class VSInstanceBackup {
 
   /**
    * Convert this {@link VSInstanceBackup} into a {@link VSInstanceBackupType} json
-   *
    * @returns The {@link VSInstanceBackupType} json
    */
   toJSON(): VSInstanceBackupType {
@@ -41,7 +40,6 @@ export class VSInstanceBackup {
 
   /**
    * Converts a {@link VSInstanceBackupType} json to a {@link VSInstanceBackup}
-   *
    * @param json The {@link VSInstanceBackupType} to convert
    * @returns The {@link VSInstanceBackup}
    */

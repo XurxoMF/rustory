@@ -29,12 +29,10 @@ export const IPC_CHANNELS = {
     hide: 'window-hide',
     close: 'window-close'
   },
-  app: {
-    exit: 'app-exit'
-  },
   rustory: {
     getName: 'rustory-get-name',
-    getVersion: 'rustory-get-version'
+    getVersion: 'rustory-get-version',
+    exit: 'app-exit'
   },
   shell: {
     openURL: 'shell-open-url',
