@@ -2,7 +2,7 @@
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
-  import ButtonNeutral from '../form/Buttons/ButtonNeutral.svelte'
+  import ButtonNeutral from '@renderer/lib/ui/form/Buttons/ButtonNeutral.svelte'
   import { Notifications } from '@renderer/lib/classes/Notifications.svelte'
 
   Breadcrumbs.instance.segments = []

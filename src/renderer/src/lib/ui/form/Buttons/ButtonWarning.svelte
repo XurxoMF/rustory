@@ -3,7 +3,7 @@
   import { type HTMLButtonAttributes } from 'svelte/elements'
 
   const ROUNDED_CLASSES = {
-    regular: ['rounded-sm'],
+    regular: ['rounded-md'],
     circle: ['rounded-full']
   } as const
   type RoundedTypes = keyof typeof ROUNDED_CLASSES

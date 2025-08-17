@@ -36,7 +36,7 @@
 >
   <Select.Trigger
     class={[
-      'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-sm cursor-pointer border transition-[border,background-color] duration-200',
+      'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md cursor-pointer border transition-[border,background-color] duration-200',
       't-dark:bg-zinc-800 t-dark:border-zinc-750',
       't-light:bg-zinc-200 t-light:border-zinc-250',
       't-rust:bg-rust-800 t-rust:border-rust-750',
@@ -49,7 +49,7 @@
   <Select.Portal to="#portal">
     <Select.Content
       class={[
-        'max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-sm shadow-sm shadow-black/25 border transition-[border,background-color] duration-200',
+        'max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-md shadow-sm shadow-black/25 border transition-[border,background-color] duration-200',
         't-dark:bg-zinc-800 t-dark:border-zinc-750',
         't-light:bg-zinc-200 t-light:border-zinc-250',
         't-rust:bg-rust-800 t-rust:border-rust-750',

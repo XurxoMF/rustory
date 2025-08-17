@@ -3,7 +3,7 @@
   import { type HTMLButtonAttributes } from 'svelte/elements'
 
   const ROUNDED_CLASSES = {
-    regular: ['rounded-sm'],
+    regular: ['rounded-md'],
     circle: ['rounded-full']
   } as const
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
@@ -19,7 +19,7 @@
 
 <button
   class={[
-    'w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border transition-[opacity,border,scale,background-color] duration-200',
+    'w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border transition-[opacity,border,background-color] duration-200',
     't-dark:bg-zinc-800 t-dark:border-zinc-750',
     't-light:bg-zinc-200 t-light:border-zinc-250',
     't-rust:bg-rust-800 t-rust:border-rust-750',

@@ -19,8 +19,8 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
 
-  import HomePage from '@renderer/lib/ui/pages/Home.svelte'
-  import ConfigPage from '@renderer/lib/ui/pages/Config.svelte'
+  import HomePage from '@renderer/pages/Home.svelte'
+  import ConfigPage from '@renderer/pages/Config.svelte'
 
   // Routes of the page
   const routes: RouteConfig[] = [{ component: HomePage }, { path: '/config', component: ConfigPage }]

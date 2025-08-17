@@ -12,7 +12,7 @@
 
 <div
   class={[
-    'w-full rounded-sm overflow-hidden border transition-[border,background-color] duration-200',
+    'w-full rounded-md overflow-hidden border transition-[border,background-color] duration-200',
     't-dark:bg-zinc-850 t-dark:border-zinc-750',
     't-light:bg-zinc-150 t-light:border-zinc-250',
     't-rust:bg-rust-850 t-rust:border-rust-750',
