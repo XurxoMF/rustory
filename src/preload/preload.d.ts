@@ -11,7 +11,7 @@ declare global {
       verbose: (message: string) => void
     }
     fs: {
-      readJSON: (filePath: string) => Promise<any>
+      readJSON: (filePath: string) => Promise<any | undefined>
       writeJSON: (filePath: string, content: any) => Promise<boolean>
       showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[]>
       join: (...parts: string[]) => Promise<string>
@@ -32,6 +32,9 @@ declare global {
       maximize: () => void
       hide: () => void
       close: () => void
+    }
+    app: {
+      exit: () => void
     }
     rustory: {
       getName: () => Promise<string>

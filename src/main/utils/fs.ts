@@ -14,7 +14,7 @@ import { RustoryFSError } from '@shared/errors/RustoryFSError'
  * @returns The JSON content or undefined if the file does not exist or an error occurs.
  * @throws A {@link RustoryFSError} error.
  */
-export async function readJSON(filePath: string): Promise<any> {
+export async function readJSON(filePath: string): Promise<any | undefined> {
   try {
     if (!fse.existsSync(filePath)) {
       logger.warn(`JSON file at ${filePath} does not exist!`)

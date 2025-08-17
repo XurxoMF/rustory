@@ -18,5 +18,5 @@ export async function registerNetHandlers(): Promise<void> {
       )
   )
 
-  ipcMain.handle(IPC_CHANNELS.net.request, async (_event, url: string): Promise<string> => request(url))
+  ipcMain.handle(IPC_CHANNELS.net.request, async (_event, url: string): Promise<string> => await request(url))
 }

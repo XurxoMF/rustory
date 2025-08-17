@@ -10,8 +10,9 @@ import { registerShellHandlers } from './handlers/shell.handlers'
 import { registerRustoryHandlers } from './handlers/rustory.handlers'
 import { registerDBHandlers } from './handlers/db'
 import { registerZipHandlers } from './handlers/zip.handlers'
-import { registerNetHandlers } from './handlers/net.handler'
-import { registerNotificationsHandlers } from './handlers/notifications.handler'
+import { registerNetHandlers } from './handlers/net.handlers'
+import { registerNotificationsHandlers } from './handlers/notifications.handlers'
+import { registerAppHandlers } from './handlers/app.handlers'
 
 export async function initIPCs(): Promise<void> {
   try {
@@ -28,6 +29,9 @@ export async function initIPCs(): Promise<void> {
 
     logger.info('Registering window handlers...')
     await registerWindowHandlers()
+
+    logger.info('Registering app handlers...')
+    await registerAppHandlers()
 
     logger.info('Registering shell handlers...')
     await registerShellHandlers()

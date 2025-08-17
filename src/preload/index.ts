@@ -36,6 +36,9 @@ const api: BridgeAPI = {
     hide: () => ipcRenderer.send(IPC_CHANNELS.window.hide),
     close: () => ipcRenderer.send(IPC_CHANNELS.window.close)
   },
+  app: {
+    exit: () => ipcRenderer.send(IPC_CHANNELS.app.exit)
+  },
   rustory: {
     getName: () => ipcRenderer.invoke(IPC_CHANNELS.rustory.getName),
     getVersion: () => ipcRenderer.invoke(IPC_CHANNELS.rustory.getVersion)
