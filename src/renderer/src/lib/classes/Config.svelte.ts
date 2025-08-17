@@ -1,5 +1,6 @@
 import { m } from '@renderer/paraglide/messages'
 import { getLocale, isLocale, setLocale, type Locale } from '@renderer/paraglide/runtime'
+import { RustoryConfigError } from '../../../../shared/errors/RustoryConfigError'
 
 export class Config {
   /**
@@ -80,44 +81,50 @@ export class Config {
    * Loads all the configs on this instance.
    */
   async init(): Promise<void> {
-    // Locale is loaded Paraglide on startup so just save the value
-    this._locale = getLocale()
+    try {
+      // Locale is loaded Paraglide on startup so just save the value
+      this._locale = getLocale()
 
-    // Get and apply the theme
-    this._theme = localStorage.getItem('theme') || Config.THEMES[0].key
-    Config.applyTheme(this._theme)
+      // Get and apply the theme
+      this._theme = localStorage.getItem('theme') || Config.THEMES[0].key
+      Config.applyTheme(this._theme)
 
-    // Get and apply the scale
-    this._scale = localStorage.getItem('uiscale') || Config.SCALES[2].scale
-    Config.applyScale(this._scale)
+      // Get and apply the scale
+      this._scale = localStorage.getItem('uiscale') || Config.SCALES[2].scale
+      Config.applyScale(this._scale)
 
-    const defaultUserDataPath = await window.api.fs.getPath('userData')
+      const defaultUserDataPath = await window.api.fs.getPath('userData')
 
-    // Get and apply the instancesPath
-    const instancesPath = await window.api.db.config.getItem('instances-path')
-    if (instancesPath) {
-      this._instancesPath = instancesPath
-    } else {
-      const defaultInstancesPath = await window.api.fs.join(defaultUserDataPath, 'Instances')
-      await this.setInstancesPath(defaultInstancesPath)
-    }
+      // Get and apply the instancesPath
+      const instancesPath = await window.api.db.config.getItem('instances-path')
+      if (instancesPath) {
+        this._instancesPath = instancesPath
+      } else {
+        const defaultInstancesPath = await window.api.fs.join(defaultUserDataPath, 'Instances')
+        await this.setInstancesPath(defaultInstancesPath)
+      }
 
-    // Get and apply the versionsPath
-    const versionsPath = await window.api.db.config.getItem('versions-path')
-    if (versionsPath) {
-      this._versionsPath = versionsPath
-    } else {
-      const defaultVersionsPath = await window.api.fs.join(defaultUserDataPath, 'Versions')
-      await this.setVersionsPath(defaultVersionsPath)
-    }
+      // Get and apply the versionsPath
+      const versionsPath = await window.api.db.config.getItem('versions-path')
+      if (versionsPath) {
+        this._versionsPath = versionsPath
+      } else {
+        const defaultVersionsPath = await window.api.fs.join(defaultUserDataPath, 'Versions')
+        await this.setVersionsPath(defaultVersionsPath)
+      }
 
-    // Get and apply the backupsPath
-    const backupsPath = await window.api.db.config.getItem('backups-path')
-    if (backupsPath) {
-      this._backupsPath = backupsPath
-    } else {
-      const defaultBackupsPath = await window.api.fs.join(defaultUserDataPath, 'Backups')
-      await this.setBackupsPath(defaultBackupsPath)
+      // Get and apply the backupsPath
+      const backupsPath = await window.api.db.config.getItem('backups-path')
+      if (backupsPath) {
+        this._backupsPath = backupsPath
+      } else {
+        const defaultBackupsPath = await window.api.fs.join(defaultUserDataPath, 'Backups')
+        await this.setBackupsPath(defaultBackupsPath)
+      }
+    } catch (err) {
+      window.api.logger.error('There was an error initializating the config! The app will be closed!')
+      window.api.logger.error(`There was an error initializating the config:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error initializating the config!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 
@@ -133,9 +140,15 @@ export class Config {
    * @param theme - The key of the theme to apply.
    */
   async setTheme(theme: string): Promise<void> {
-    localStorage.setItem('theme', theme)
-    Config.applyTheme(theme)
-    this._theme = theme
+    try {
+      localStorage.setItem('theme', theme)
+      Config.applyTheme(theme)
+      this._theme = theme
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new theme!')
+      window.api.logger.debug(`There was an error saving the new theme:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new theme!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
   }
 
   /**
@@ -158,10 +171,16 @@ export class Config {
    * @param locale - The key of the language to change to.
    */
   async setLocale(locale: Locale | string): Promise<void> {
-    if (!locale) locale = 'en'
-    if (isLocale(locale)) {
-      setLocale(locale, { reload: false })
-      this._locale = locale
+    try {
+      if (!locale) locale = 'en'
+      if (isLocale(locale)) {
+        setLocale(locale, { reload: false })
+        this._locale = locale
+      }
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new locale!')
+      window.api.logger.debug(`There was an error saving the new locale:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new locale!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 
@@ -177,9 +196,15 @@ export class Config {
    * @param scale - The key of the scale to apply.
    */
   setScale(scale: string): void {
-    localStorage.setItem('uiscale', scale)
-    Config.applyScale(scale)
-    this._scale = scale
+    try {
+      localStorage.setItem('uiscale', scale)
+      Config.applyScale(scale)
+      this._scale = scale
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new scale!')
+      window.api.logger.debug(`There was an error saving the new scale:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new scale!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
   }
 
   /**
@@ -202,8 +227,14 @@ export class Config {
    * @param scale - The path to save.
    */
   async setInstancesPath(path: string): Promise<void> {
-    await window.api.db.config.setItem('instances-path', path)
-    this._instancesPath = path
+    try {
+      await window.api.db.config.setItem('instances-path', path)
+      this._instancesPath = path
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new Instances path!')
+      window.api.logger.debug(`There was an error saving the new Instances path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new Instances path!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
   }
 
   /**
@@ -218,8 +249,14 @@ export class Config {
    * @param scale - The path to save.
    */
   async setVersionsPath(path: string): Promise<void> {
-    await window.api.db.config.setItem('versions-path', path)
-    this._versionsPath = path
+    try {
+      await window.api.db.config.setItem('versions-path', path)
+      this._versionsPath = path
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new Versions path!')
+      window.api.logger.debug(`There was an error saving the new Versions path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new Versions path!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
   }
 
   /**
@@ -234,7 +271,13 @@ export class Config {
    * @param scale - The path to save.
    */
   async setBackupsPath(path: string): Promise<void> {
-    await window.api.db.config.setItem('backups-path', path)
-    this._backupsPath = path
+    try {
+      await window.api.db.config.setItem('backups-path', path)
+      this._backupsPath = path
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new Backups path!')
+      window.api.logger.debug(`There was an error saving the new Backups path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new Backups path!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
   }
 }

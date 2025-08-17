@@ -39,7 +39,7 @@ const api: BridgeAPI = {
   rustory: {
     getName: () => ipcRenderer.invoke(IPC_CHANNELS.rustory.getName),
     getVersion: () => ipcRenderer.invoke(IPC_CHANNELS.rustory.getVersion),
-    exit: () => ipcRenderer.send(IPC_CHANNELS.rustory.exit)
+    exit: (...params) => ipcRenderer.send(IPC_CHANNELS.rustory.exit, ...params)
   },
   shell: {
     openURL: (...params) => ipcRenderer.send(IPC_CHANNELS.shell.openURL, ...params),

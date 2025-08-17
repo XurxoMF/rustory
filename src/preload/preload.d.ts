@@ -163,8 +163,9 @@ declare global {
       getVersion: () => Promise<string>
       /**
        * Close the app inmediatly.
+       * @param code The exit code. 0 means no errors, 1 means errors.
        */
-      exit: () => void
+      exit: (code: number) => void
     }
     /**
      * Execute programs and other shell action.

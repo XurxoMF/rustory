@@ -90,14 +90,20 @@ export class Info {
    * Loads all the info about Rustory on this instance.
    */
   async init(): Promise<void> {
-    this._name = await window.api.rustory.getName()
-    this._version = await window.api.rustory.getVersion()
+    try {
+      this._name = await window.api.rustory.getName()
+      this._version = await window.api.rustory.getVersion()
 
-    this._dataPath = await window.api.fs.getPath('userData')
-    this._cachePath = await window.api.fs.join(this.dataPath, 'Cache')
-    this._logsPath = await window.api.fs.getPath('logs')
+      this._dataPath = await window.api.fs.getPath('userData')
+      this._cachePath = await window.api.fs.join(this.dataPath, 'Cache')
+      this._logsPath = await window.api.fs.getPath('logs')
 
-    const temp = await window.api.fs.getPath('temp')
-    this._tempPath = await window.api.fs.join(temp, this._name)
+      const temp = await window.api.fs.getPath('temp')
+      this._tempPath = await window.api.fs.join(temp, this._name)
+    } catch (err) {
+      window.api.logger.error('There was an error initializating the info! The app will be closed!')
+      window.api.logger.error(`There was an error initializating the info:\n${JSON.stringify(err)}`)
+      window.api.rustory.exit(1)
+    }
   }
 }

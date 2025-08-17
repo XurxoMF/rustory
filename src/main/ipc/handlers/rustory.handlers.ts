@@ -6,5 +6,5 @@ export async function registerRustoryHandlers(): Promise<void> {
 
   ipcMain.handle(IPC_CHANNELS.rustory.getVersion, async (_event): Promise<string> => app.getVersion())
 
-  ipcMain.on(IPC_CHANNELS.rustory.exit, (_event): void => app.exit(1))
+  ipcMain.on(IPC_CHANNELS.rustory.exit, (_event, code: number): void => app.exit(code))
 }
