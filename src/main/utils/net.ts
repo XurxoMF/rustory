@@ -5,19 +5,21 @@ import { net } from 'electron'
 import { logger } from '@main/utils/logger'
 
 import downloadWorker from '@main/workers/downloadWorker?modulePath'
+import { RustoryNetError } from '@shared/errors/RustoryNetError'
 
 /**
  * Download a file on the specified directory and reports the progress.
  *
- * @param onProgress Callback to execute to report progress updates
- * @param id ID of the process
- * @param url URL to download
- * @param outputPath Path to download the file to
- * @param fileName Name of the resulting file
- * @returns If it was downloaded successfully or not
+ * @param onProgress Callback to execute to report progress updates.
+ * @param id ID of the process.
+ * @param url URL to download.
+ * @param outputPath Path to download the file to.
+ * @param fileName Name of the resulting file.
+ * @returns If it was downloaded successfully or not.
+ * @throws A {@link RustoryNetError} error.
  */
-export async function download(onProgress: (id: string, progress: number) => void, id: string, url: string, outputPath: string, fileName: string): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
+export async function download(onProgress: (id: string, progress: number) => void, id: string, url: string, outputPath: string, fileName: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     const outFile = join(outputPath, fileName)
 
     logger.info(`[${id}] Downloading ${url} on ${outFile}...`)
@@ -31,24 +33,25 @@ export async function download(onProgress: (id: string, progress: number) => voi
         onProgress(id, message.progress)
       } else if (message.type === 'finished') {
         logger.info(`[${id}] Download of ${url} finished!`)
-        resolve(true)
+        resolve()
       } else {
         logger.error(`[${id}] [${fileName}] Error downloading ${url}!`)
-        logger.debug(`[${id}] [${fileName}] Error downloading ${url}:\n${JSON.stringify(message.error)}`)
+        logger.debug(`[${id}] [${fileName}] Error downloading ${url}:\n${JSON.stringify(message)}`)
+        reject(new RustoryNetError(`Error downloading ${url}!`, RustoryNetError.Codes.NET_ERROR))
       }
     })
 
     worker.on('error', (err) => {
       logger.error(`[${id}] [${fileName}] Worker error downloading ${url}!`)
-      logger.debug(`[${id}] [${fileName}] Worker error downloading ${url}:\n${JSON.stringify(err.message)}`)
-      reject(false)
+      logger.debug(`[${id}] [${fileName}] Worker error downloading ${url}:\n${JSON.stringify(err)}`)
+      reject(new RustoryNetError(`Worker error downloading ${url}!`, RustoryNetError.Codes.NET_ERROR))
     })
 
     worker.on('exit', (code) => {
       if (code !== 0) {
-        logger.warn(`[${id}] [${fileName}] Worker exited with errors downloading ${url}!`)
+        logger.error(`[${id}] [${fileName}] Worker exited with errors downloading ${url}!`)
         logger.debug(`[${id}] [${fileName}] Worker exited with errors downloading ${url}. Code: ${code}`)
-        reject(false)
+        reject(new RustoryNetError(`Worker exited with errors downloading ${url}!`, RustoryNetError.Codes.NET_ERROR))
       }
     })
   })
@@ -57,36 +60,31 @@ export async function download(onProgress: (id: string, progress: number) => voi
 /**
  * Request a URL and returns the data avoiding CORS.
  *
- * @param url The URL to request
- * @returns The string returned by the request
+ * @param url The URL to request.
+ * @returns The string returned by the request.
+ * @throws A {@link RustoryNetError} error.
  */
 export async function request(url: string): Promise<string> {
   return new Promise<string>((resolve, reject) => {
-    try {
-      const request = net.request(url)
+    const request = net.request(url)
 
-      let data = ''
+    let data = ''
 
-      request.on('response', (response) => {
-        response.on('data', (chunk) => {
-          data += chunk
-        })
-        response.on('end', () => {
-          resolve(data)
-        })
+    request.on('response', (response) => {
+      response.on('data', (chunk) => {
+        data += chunk
       })
-
-      request.on('error', (err) => {
-        logger.error(`Error querying ${url}!`)
-        logger.debug(`Error querying ${url}:\n${JSON.stringify(err)}`)
-        reject(new Error('There was an error with the request!'))
+      response.on('end', () => {
+        resolve(data)
       })
+    })
 
-      request.end()
-    } catch (err) {
+    request.on('error', (err) => {
       logger.error(`Error querying ${url}!`)
       logger.debug(`Error querying ${url}:\n${JSON.stringify(err)}`)
-      reject(new Error('There was an error with the request!'))
-    }
+      reject(new RustoryNetError(`Error querying ${url}!`, RustoryNetError.Codes.NET_ERROR))
+    })
+
+    request.end()
   })
 }

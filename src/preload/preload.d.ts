@@ -11,21 +11,21 @@ declare global {
       verbose: (message: string) => void
     }
     fs: {
-      readJSON: (filePath: string) => Promise<any | undefined>
+      readJSON: (filePath: string) => Promise<any>
       writeJSON: (filePath: string, content: any) => Promise<boolean>
-      showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[] | undefined>
+      showDialog: (title: string, type: 'openFile' | 'openDirectory', multiple: boolean, extensions: string[]) => Promise<string[]>
       join: (...parts: string[]) => Promise<string>
       getPath: (path: TPaths) => Promise<string>
       changePerms: (paths: string[], perms: number) => Promise<boolean>
     }
     system: {
-      getOSInfo: () => Promise<Systeminformation.OsData | undefined>
-      getCPUInfo: () => Promise<Systeminformation.CpuData | undefined>
-      getRAMInfo: () => Promise<Systeminformation.MemData | undefined>
-      getGPUsInfo: () => Promise<Systeminformation.GraphicsData | undefined>
-      getVolumesInfo: () => Promise<Systeminformation.FsSizeData[] | undefined>
-      getNETSDKsInfo: () => Promise<string[] | undefined>
-      getNETRuntimesInfo: () => Promise<string[] | undefined>
+      getOSInfo: () => Promise<Systeminformation.OsData>
+      getCPUInfo: () => Promise<Systeminformation.CpuData>
+      getRAMInfo: () => Promise<Systeminformation.MemData>
+      getGPUsInfo: () => Promise<Systeminformation.GraphicsData>
+      getVolumesInfo: () => Promise<Systeminformation.FsSizeData[]>
+      getNETSDKsInfo: () => Promise<string[]>
+      getNETRuntimesInfo: () => Promise<string[]>
     }
     window: {
       minimize: () => void
@@ -64,7 +64,7 @@ declare global {
     net: {
       request: (url: string) => Promise<string>
       downloader: {
-        download: (id: string, url: string, outputPath: string, fileName: string) => Promise<boolean>
+        download: (id: string, url: string, outputPath: string, fileName: string) => Promise<void>
         on: {
           progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
         }

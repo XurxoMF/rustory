@@ -1,9 +1,9 @@
 /**
  * Converts bytes to a specified unit.
  *
- * @param bytes Number of bytes to convert
- * @param unit The unit to convert to. Defaults to 'MB'
- * @returns Bytes converted to the selected unit
+ * @param bytes Number of bytes to convert.
+ * @param unit The unit to convert to. Defaults to 'MB'.
+ * @returns Bytes converted to the selected unit.
  */
 export function bytesToX(bytes: number, unit: TSizeUits = 'MB'): number {
   const units: TSizeUits[] = ['KB', 'MB', 'GB', 'TB']

@@ -88,5 +88,6 @@ async function saveCurrentWindowState(): Promise<void> {
   const res = await writeJSON(MAIN_WINDOW_STATE_PATH, newState)
 
   if (!res) return logger.error('Current window state could not be saved!')
+
   return logger.info('Current window state saved successfully!')
 }

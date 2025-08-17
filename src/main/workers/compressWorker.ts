@@ -52,7 +52,7 @@ try {
   })
 
   archive.on('error', (err) => {
-    parentPort?.postMessage({ type: 'error', message: `Unexpected error: ${err}` })
+    parentPort?.postMessage({ type: 'error', error: err })
   })
 
   output.on('close', () => {
@@ -73,5 +73,5 @@ try {
 
   archive.finalize()
 } catch (err) {
-  parentPort?.postMessage({ type: 'error', message: `Unexpected error: ${err}` })
+  parentPort?.postMessage({ type: 'error', error: err })
 }

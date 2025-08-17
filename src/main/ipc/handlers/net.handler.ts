@@ -6,7 +6,7 @@ import { download, request } from '@main/utils/net'
 export async function registerNetHandlers(): Promise<void> {
   ipcMain.handle(
     IPC_CHANNELS.net.downloader.download,
-    async (event, id: string, url: string, outputPath: string, fileName: string): Promise<boolean> =>
+    async (event, id: string, url: string, outputPath: string, fileName: string): Promise<void> =>
       await download(
         (id, progress) => {
           event.sender.send(IPC_CHANNELS.net.downloader.on.progress, id, progress)

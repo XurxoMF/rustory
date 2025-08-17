@@ -9,7 +9,7 @@ const { id, filePath, outputPath, deleteZip } = workerData
 
 yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
   if (err) {
-    parentPort?.postMessage({ type: 'error', message: `Error opening ZIP file: ${err.message}` })
+    parentPort?.postMessage({ type: 'error', error: err })
     return
   }
 
@@ -42,7 +42,7 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
 
           fse.unlink(filePath, (err) => {
             if (err) {
-              parentPort?.postMessage({ type: 'error', message: `Error deleting ZIP file: ${err.message}` })
+              parentPort?.postMessage({ type: 'error', error: err })
               return
             }
           })
@@ -55,7 +55,7 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
     } else {
       zipfile.openReadStream(entry, (err, readStream) => {
         if (err) {
-          parentPort?.postMessage({ type: 'error', message: `Error opening file ${entry.fileName}: ${err.message}` })
+          parentPort?.postMessage({ type: 'error', error: err })
           zipfile.readEntry()
           return
         }
@@ -66,7 +66,7 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
         readStream.pipe(writeStream)
 
         writeStream.on('error', (err) => {
-          parentPort?.postMessage({ type: 'error', message: `Error writing file ${entry.fileName}: ${err.message}` })
+          parentPort?.postMessage({ type: 'error', error: err })
           zipfile.readEntry()
         })
 
@@ -87,7 +87,7 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
             if (deleteZip) {
               fse.unlink(filePath, (err) => {
                 if (err) {
-                  parentPort?.postMessage({ type: 'error', message: `Error deleting ZIP file: ${err.message}` })
+                  parentPort?.postMessage({ type: 'error', error: err })
                   return
                 }
               })
@@ -100,13 +100,13 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
         })
 
         writeStream.on('error', (err) => {
-          parentPort?.postMessage({ type: 'error', message: `Error writing file ${entry.fileName}: ${err.message}` })
+          parentPort?.postMessage({ type: 'error', error: err })
         })
       })
     }
   })
 
   zipfile.on('error', (err) => {
-    parentPort?.postMessage({ type: 'error', message: `Error while extracting: ${err.message}` })
+    parentPort?.postMessage({ type: 'error', error: err })
   })
 })

@@ -37,11 +37,22 @@ autoUpdater.logger = logger
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(async () => {
-  await createTray()
+  try {
+    await createTray()
+  } catch (_err) {
+    // Without tray a lot of errors may appear so close the APP.
+    // TODO: Improve this to just disable the hide() methods so the app can run normally.
+    app.exit(1)
+  }
 
   await logOSInfo()
 
-  await initDB()
+  try {
+    await initDB()
+  } catch (_err) {
+    // Without DB we can't do anything so cose the APP.
+    app.exit(1)
+  }
 
   await initIPCs()
 

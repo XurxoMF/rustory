@@ -1,9 +1,9 @@
 /**
  * Adds padding to the right side of a string until it reaches a specified length.
  *
- * @param str The string to add padding to
- * @param length The total length of the resulting string
- * @param padChar The character to use for padding (default is a space). Defaults to `' '`
+ * @param str The string to add padding to.
+ * @param length The total length of the resulting string.
+ * @param padChar The character to use for padding (default is a space). Defaults to `' '`.
  * @returns
  */
 export function padRight(str: string, length: number, padChar: string = ' '): string {
@@ -13,9 +13,9 @@ export function padRight(str: string, length: number, padChar: string = ' '): st
 /**
  * Adds padding to the left side of a string until it reaches a specified length.
  *
- * @param str The string to add padding to
- * @param length The total length of the resulting string
- * @param padChar The character to use for padding (default is a space). Defaults to `' '`
+ * @param str The string to add padding to.
+ * @param length The total length of the resulting string.
+ * @param padChar The character to use for padding (default is a space). Defaults to `' '`.
  * @returns
  */
 export function padLeft(str: string, length: number, padChar: string = ' '): string {
@@ -25,9 +25,9 @@ export function padLeft(str: string, length: number, padChar: string = ' '): str
 /**
  * Adds padding on the middle of a string until it reaches a specified length.
  *
- * @param str The string to add padding to
- * @param length The total length of the resulting string
- * @param padChar The character to use for padding (default is a space). Defaults to `' '`
+ * @param str The string to add padding to.
+ * @param length The total length of the resulting string.
+ * @param padChar The character to use for padding (default is a space). Defaults to `' '`.
  * @returns
  */
 export function padMid(strLeft: string, strRight: string, length: number, padChar: string = ' '): string {

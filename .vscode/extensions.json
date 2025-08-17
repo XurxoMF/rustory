@@ -1,3 +1,11 @@
 {
-  "recommendations": ["dbaeumer.vscode-eslint"]
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "aaron-bond.better-comments",
+    "bradlc.vscode-tailwindcss",
+    "esbenp.prettier-vscode",
+    "naumovs.color-highlight",
+    "stringham.move-ts",
+    "svelte.svelte-vscode"
+  ]
 }
