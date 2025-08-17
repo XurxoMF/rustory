@@ -62,6 +62,7 @@ declare global {
       }
     }
     net: {
+      request: (url: string) => Promise<string>
       downloader: {
         download: (id: string, url: string, outputPath: string, fileName: string) => Promise<boolean>
         on: {

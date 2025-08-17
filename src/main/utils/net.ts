@@ -1,5 +1,6 @@
 import { Worker } from 'worker_threads'
 import { join } from 'path'
+import { net } from 'electron'
 
 import { logger } from '@main/utils/logger'
 
@@ -50,5 +51,42 @@ export async function download(onProgress: (id: string, progress: number) => voi
         reject(false)
       }
     })
+  })
+}
+
+/**
+ * Request a URL and returns the data avoiding CORS.
+ *
+ * @param url The URL to request
+ * @returns The string returned by the request
+ */
+export async function request(url: string): Promise<string> {
+  return new Promise<string>((resolve, reject) => {
+    try {
+      const request = net.request(url)
+
+      let data = ''
+
+      request.on('response', (response) => {
+        response.on('data', (chunk) => {
+          data += chunk
+        })
+        response.on('end', () => {
+          resolve(data)
+        })
+      })
+
+      request.on('error', (err) => {
+        logger.error(`Error querying ${url}!`)
+        logger.debug(`Error querying ${url}:\n${JSON.stringify(err)}`)
+        reject(new Error('There was an error with the request!'))
+      })
+
+      request.end()
+    } catch (err) {
+      logger.error(`Error querying ${url}!`)
+      logger.debug(`Error querying ${url}:\n${JSON.stringify(err)}`)
+      reject(new Error('There was an error with the request!'))
+    }
   })
 }

@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 
 import { IPC_CHANNELS } from '@main/ipc/channels'
-import { download } from '@main/utils/net'
+import { download, request } from '@main/utils/net'
 
 export async function registerNetHandlers(): Promise<void> {
   ipcMain.handle(
@@ -17,4 +17,6 @@ export async function registerNetHandlers(): Promise<void> {
         fileName
       )
   )
+
+  ipcMain.handle(IPC_CHANNELS.net.request, async (_event, url: string): Promise<string> => request(url))
 }

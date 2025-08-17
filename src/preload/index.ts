@@ -65,6 +65,7 @@ const api: BridgeAPI = {
     }
   },
   net: {
+    request: (...params) => ipcRenderer.invoke(IPC_CHANNELS.net.request, ...params),
     downloader: {
       download: (...params) => ipcRenderer.invoke(IPC_CHANNELS.net.downloader.download, ...params),
       on: {

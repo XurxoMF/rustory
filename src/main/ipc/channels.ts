@@ -58,6 +58,7 @@ export const IPC_CHANNELS = {
     }
   },
   net: {
+    request: 'net-request',
     downloader: {
       download: 'net-downloader-download',
       on: {
