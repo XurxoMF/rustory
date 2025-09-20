@@ -6,15 +6,14 @@ import { compress, extract } from '@main/utils/zip'
 export async function registerZipHandlers(): Promise<void> {
   ipcMain.handle(
     IPC_CHANNELS.zip.extractor.extract,
-    async (event, id: string, filePath: string, outputPath: string, deleteZip: boolean): Promise<boolean> =>
+    async (event, id: string, filePath: string, outputPath: string): Promise<boolean> =>
       await extract(
         (id, progress) => {
           event.sender.send(IPC_CHANNELS.zip.extractor.on.progress, id, progress)
         },
         id,
         filePath,
-        outputPath,
-        deleteZip
+        outputPath
       )
   )
 

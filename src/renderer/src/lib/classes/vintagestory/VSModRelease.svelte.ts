@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSModReleaseType}
+ * Must have at least the same properties as {@link VSModReleaseType}
  */
 export class VSModRelease {
   private _releaseid: number
@@ -22,7 +22,7 @@ export class VSModRelease {
 
   private _changelog: string
 
-  constructor(vsModRelease: {
+  public constructor(data: {
     releaseid: number
     mainfile: string
     filename: string
@@ -34,16 +34,16 @@ export class VSModRelease {
     created: string
     changelog: string
   }) {
-    this._releaseid = $state(vsModRelease.releaseid)
-    this._mainfile = $state(vsModRelease.mainfile)
-    this._filename = $state(vsModRelease.filename)
-    this._fileid = $state(vsModRelease.fileid)
-    this._downloads = $state(vsModRelease.downloads)
-    this._tags = $state(vsModRelease.tags)
-    this._modidstr = $state(vsModRelease.modidstr)
-    this._modversion = $state(vsModRelease.modversion)
-    this._created = $state(vsModRelease.created)
-    this._changelog = $state(vsModRelease.changelog)
+    this._releaseid = $state(data.releaseid)
+    this._mainfile = $state(data.mainfile)
+    this._filename = $state(data.filename)
+    this._fileid = $state(data.fileid)
+    this._downloads = $state(data.downloads)
+    this._tags = $state(data.tags)
+    this._modidstr = $state(data.modidstr)
+    this._modversion = $state(data.modversion)
+    this._created = $state(data.created)
+    this._changelog = $state(data.changelog)
   }
 
   public get releaseid(): number {
@@ -90,7 +90,7 @@ export class VSModRelease {
    * Convert this {@link VSModRelease} into a {@link VSModReleaseType} json
    * @returns The {@link VSModReleaseType} json
    */
-  toJSON(): VSModReleaseType {
+  public toJSON(): VSModReleaseType {
     return {
       releaseid: this._releaseid,
       mainfile: this._mainfile,
@@ -110,7 +110,7 @@ export class VSModRelease {
    * @param json The {@link VSModReleaseType} to convert
    * @returns The {@link VSModRelease}
    */
-  static fromJSON(json: VSModReleaseType): VSModRelease {
+  public static fromJSON(json: VSModReleaseType): VSModRelease {
     return new VSModRelease({
       releaseid: json.releaseid,
       mainfile: json.mainfile,

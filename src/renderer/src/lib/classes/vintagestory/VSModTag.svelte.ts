@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSModTagType}
+ * Must have at least the same properties as {@link VSModTagType}
  */
 export class VSModTag {
   private _tagid: number
@@ -8,10 +8,10 @@ export class VSModTag {
 
   private _color: string
 
-  constructor(vsModTag: { tagid: number; name: string; color: string }) {
-    this._tagid = $state(vsModTag.tagid)
-    this._name = $state(vsModTag.name)
-    this._color = $state(vsModTag.color)
+  public constructor(data: { tagid: number; name: string; color: string }) {
+    this._tagid = $state(data.tagid)
+    this._name = $state(data.name)
+    this._color = $state(data.color)
   }
 
   public get tagid(): number {
@@ -30,7 +30,7 @@ export class VSModTag {
    * Convert this {@link VSModTag} into a {@link VSModTagType} json
    * @returns The {@link VSModTagType} json
    */
-  toJSON(): VSModTagType {
+  public toJSON(): VSModTagType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -43,7 +43,7 @@ export class VSModTag {
    * @param json The {@link VSModTagType} to convert
    * @returns The {@link VSModTag}
    */
-  static fromJSON(json: VSModTagType): VSModTag {
+  public static fromJSON(json: VSModTagType): VSModTag {
     return new VSModTag({
       tagid: json.tagid,
       name: json.name,

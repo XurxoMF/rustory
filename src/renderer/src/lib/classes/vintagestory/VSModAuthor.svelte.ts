@@ -1,14 +1,14 @@
 /**
- * Must have the same properties as {@link VSModAuthorType}
+ * Must have at least the same properties as {@link VSModAuthorType}
  */
 export class VSModAuthor {
   private _userid: string
 
   private _name: string
 
-  constructor(vsModAuthor: { userid: string; name: string }) {
-    this._userid = $state(vsModAuthor.userid)
-    this._name = $state(vsModAuthor.name)
+  public constructor(data: { userid: string; name: string }) {
+    this._userid = $state(data.userid)
+    this._name = $state(data.name)
   }
 
   public get userid(): string {
@@ -23,7 +23,7 @@ export class VSModAuthor {
    * Convert this {@link VSModAuthor} into a {@link VSModAuthorType} json
    * @returns The {@link VSModAuthorType} json
    */
-  toJSON(): VSModAuthorType {
+  public toJSON(): VSModAuthorType {
     return {
       userid: this._userid,
       name: this._name
@@ -35,7 +35,7 @@ export class VSModAuthor {
    * @param json The {@link VSModAuthorType} to convert
    * @returns The {@link VSModAuthor}
    */
-  static fromJSON(json: VSModAuthorType): VSModAuthor {
+  public static fromJSON(json: VSModAuthorType): VSModAuthor {
     return new VSModAuthor({
       userid: json.userid,
       name: json.name

@@ -5,7 +5,7 @@ import { join } from 'path'
 
 const { url, outputPath, fileName } = workerData
 
-const pathToDownload = join(outputPath, `${fileName}.zip`)
+const pathToDownload = join(outputPath, fileName)
 
 axios({
   url,

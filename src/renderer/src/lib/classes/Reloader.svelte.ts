@@ -7,7 +7,7 @@ export class Reloader {
   /**
    * Get the instance of the Window.
    */
-  static get instance(): Reloader {
+  public static get instance(): Reloader {
     if (Reloader._instance === null) Reloader._instance = new Reloader()
     return Reloader._instance
   }
@@ -23,7 +23,7 @@ export class Reloader {
    * Add a new task to the reloader.
    * @param task - The task to add to the onReload list
    */
-  addTask(task: Reloader.Action) {
+  public addTask(task: Reloader.Action) {
     this._callbacks.push(task)
   }
 
@@ -31,14 +31,14 @@ export class Reloader {
    * Remove a task from the reloader.
    * @param id - The if of the task to remove from the onReload list
    */
-  removeTask(id: string) {
+  public removeTask(id: string) {
     this._callbacks = this._callbacks.filter((task) => task.id !== id)
   }
 
   /**
    * Executes the reload tasks.
    */
-  executeTasks() {
+  public executeTasks() {
     for (const task of this._callbacks) {
       task.action()
     }

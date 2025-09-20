@@ -2,7 +2,7 @@
 // Query it with /api/mods
 
 /**
- * Must have the same properties as {@link VSModListedType}
+ * Must have at least the same properties as {@link VSModListedType}
  */
 export class VSModListed {
   private _modid: number
@@ -37,7 +37,7 @@ export class VSModListed {
 
   private _lastreleased: string
 
-  constructor(vsModListed: {
+  public constructor(data: {
     modid: number
     assetid: number
     downloads: number
@@ -55,85 +55,85 @@ export class VSModListed {
     tags: string[]
     lastreleased: string
   }) {
-    this._modid = $state(vsModListed.modid)
-    this._assetid = $state(vsModListed.assetid)
-    this._downloads = $state(vsModListed.downloads)
-    this._follows = $state(vsModListed.follows)
-    this._trendingpoints = $state(vsModListed.trendingpoints)
-    this._comments = $state(vsModListed.comments)
-    this._name = $state(vsModListed.name)
-    this._summary = $state(vsModListed.summary)
-    this._modidstrs = $state(vsModListed.modidstrs)
-    this._author = $state(vsModListed.author)
-    this._urlalias = $state(vsModListed.urlalias)
-    this._side = $state(vsModListed.side)
-    this._type = $state(vsModListed.type)
-    this._logo = $state(vsModListed.logo)
-    this._tags = $state(vsModListed.tags)
-    this._lastreleased = $state(vsModListed.lastreleased)
+    this._modid = $state(data.modid)
+    this._assetid = $state(data.assetid)
+    this._downloads = $state(data.downloads)
+    this._follows = $state(data.follows)
+    this._trendingpoints = $state(data.trendingpoints)
+    this._comments = $state(data.comments)
+    this._name = $state(data.name)
+    this._summary = $state(data.summary)
+    this._modidstrs = $state(data.modidstrs)
+    this._author = $state(data.author)
+    this._urlalias = $state(data.urlalias)
+    this._side = $state(data.side)
+    this._type = $state(data.type)
+    this._logo = $state(data.logo)
+    this._tags = $state(data.tags)
+    this._lastreleased = $state(data.lastreleased)
   }
 
   public get modid(): number {
     return this._modid
   }
 
-  get assetid(): number {
+  public get assetid(): number {
     return this._assetid
   }
 
-  get downloads(): number {
+  public get downloads(): number {
     return this._downloads
   }
 
-  get follows(): number {
+  public get follows(): number {
     return this._follows
   }
 
-  get trendingpoints(): number {
+  public get trendingpoints(): number {
     return this._trendingpoints
   }
 
-  get comments(): number {
+  public get comments(): number {
     return this._comments
   }
 
-  get name(): string {
+  public get name(): string {
     return this._name
   }
 
-  get summary(): string | undefined {
+  public get summary(): string | undefined {
     return this._summary
   }
 
-  get modidstrs(): string[] {
+  public get modidstrs(): string[] {
     return this._modidstrs
   }
 
-  get author(): string {
+  public get author(): string {
     return this._author
   }
 
-  get urlalias(): string | undefined {
+  public get urlalias(): string | undefined {
     return this._urlalias
   }
 
-  get side(): string {
+  public get side(): string {
     return this._side
   }
 
-  get type(): string {
+  public get type(): string {
     return this._type
   }
 
-  get logo(): string {
+  public get logo(): string {
     return this._logo
   }
 
-  get tags(): string[] {
+  public get tags(): string[] {
     return this._tags
   }
 
-  get lastreleased(): string {
+  public get lastreleased(): string {
     return this._lastreleased
   }
 
@@ -141,7 +141,7 @@ export class VSModListed {
    * Convert this {@link VSModListed} into a {@link VSModListedType} json
    * @returns The {@link VSModListed} json
    */
-  toJSON(): VSModListedType {
+  public toJSON(): VSModListedType {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -167,7 +167,7 @@ export class VSModListed {
    * @param json The {@link VSModListedType} to convert
    * @returns The {@link VSModListed}
    */
-  static fromJSON(json: VSModListedType): VSModListed {
+  public static fromJSON(json: VSModListedType): VSModListed {
     return new VSModListed({
       modid: json.modid,
       assetid: json.assetid,

@@ -217,15 +217,12 @@ declare global {
       extractor: {
         /**
          * Extracts a zip to the selected path and reports the progress.
-         * @param onProgress Callback to execute to report progress updates.
          * @param id ID of the process.
          * @param filePath Path of the zip to extract.
          * @param outputPath Path to extract the zip to.
-         * @param deleteZip If the zip should be removed after extracting.
-         * @returns If it was extracted or not.
          * @throws A RustoryZipError error.
          */
-        extract: (id: string, filePath: string, outputPath: string, deleteZip: boolean) => Promise<boolean>
+        extract: (id: string, filePath: string, outputPath: string) => Promise<void>
         /**
          * Subscribe to extraction events.
          */
@@ -236,7 +233,7 @@ declare global {
            * @param callback.id The id of the task.
            * @param callback The progress reported.
            */
-          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => () => void
         }
       }
       /**
@@ -245,16 +242,14 @@ declare global {
       compressor: {
         /**
          * Compress a path as zip and reports the progress.
-         * @param onProgress Callback to execute to report progress updates.
          * @param id ID of the process.
          * @param inputPath Path to compress as zip.
          * @param outputPath Path to compress to.
          * @param outputFileName Name of the zip file.
          * @param compressionLevel Compress level of the file.
-         * @returns If it was compressed or not.
          * @throws A RustoryZipError error.
          */
-        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel: number | undefined) => Promise<boolean>
+        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel: number | undefined) => Promise<void>
         /**
          * Subscribe to compression events.
          */
@@ -265,7 +260,7 @@ declare global {
            * @param callback.id The id of the task.
            * @param callback The progress reported.
            */
-          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => () => void
         }
       }
     }
@@ -280,15 +275,16 @@ declare global {
        * @throws A RustoryNetError error.
        */
       request: (url: string) => Promise<string>
+      /**
+       * Download files avoiding CORS.
+       */
       downloader: {
         /**
          * Download a file on the specified directory and reports the progress.
-         * @param onProgress Callback to execute to report progress updates.
          * @param id ID of the process.
          * @param url URL to download.
          * @param outputPath Path to download the file to.
          * @param fileName Name of the resulting file.
-         * @returns If it was downloaded successfully or not.
          * @throws A RustoryNetError error.
          */
         download: (id: string, url: string, outputPath: string, fileName: string) => Promise<void>
@@ -302,7 +298,7 @@ declare global {
            * @param callback.id The id of the task.
            * @param callback The progress reported.
            */
-          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => void
+          progress: (callback: (event: Electron.IpcRendererEvent, id: string, progress: number) => void) => () => void
         }
       }
     }
@@ -328,7 +324,7 @@ declare global {
          * @param callback The callback that will be executed.
          * @param callback.id The id of the notification.
          */
-        click: (callback: (event: Electron.IpcRendererEvent, id: string) => void) => void
+        click: (callback: (event: Electron.IpcRendererEvent, id: string) => void) => () => void
       }
     }
   }

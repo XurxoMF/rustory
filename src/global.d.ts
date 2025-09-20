@@ -148,6 +148,21 @@ declare global {
     version: string
     path: string
   }
+
+  type RAPIVSVersionTypeType = 'stable' | 'rc' | 'pre'
+
+  type RAPIVSVersionType = {
+    version: string
+    type: VSAPIVersionTypeType
+    releaseDate: number
+    importedDate: number
+    windows: string
+    windowsSha: string
+    linux: string
+    linuxSha: string
+    mac: string
+    macSha: string
+  }
 }
 
 export {}

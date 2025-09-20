@@ -7,7 +7,7 @@ export class PreventClose {
   /**
    * Get the instance of the PreventClose.
    */
-  static get instance(): PreventClose {
+  public static get instance(): PreventClose {
     if (PreventClose._instance === null) PreventClose._instance = new PreventClose()
     return PreventClose._instance
   }
@@ -27,7 +27,7 @@ export class PreventClose {
   /**
    * List of tasks that prevent the app from closing.
    */
-  get tasks(): PreventClose.PreventCloseTaskType[] {
+  public get tasks(): PreventClose.PreventCloseTaskType[] {
     return this._tasks
   }
 
@@ -36,7 +36,7 @@ export class PreventClose {
    * @param reason - The reason why the app can't be closed. It'll be used on notifications.
    * @returns The id of the new task. Used to remove the task.
    */
-  addTask(reason: string): string {
+  public addTask(reason: string): string {
     const id: string = crypto.randomUUID()
     this._tasks.push({ id, reason })
     return id
@@ -46,14 +46,14 @@ export class PreventClose {
    * Removes a task that prevents the ap from closing.
    * @param id - The id of the task to remove.
    */
-  removeTask(id: string) {
+  public removeTask(id: string) {
     this._tasks = this._tasks.filter((task) => task.id !== id)
   }
 
   /**
    * If the app can be closed or not.
    */
-  get prevented(): boolean {
+  public get prevented(): boolean {
     return this._prevented
   }
 }

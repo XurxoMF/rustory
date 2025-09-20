@@ -5,7 +5,7 @@ import { VSModScreenshot } from './VSModScreenshot.svelte'
 // Query it with /api/mods/{modid}
 
 /**
- * Must have the same properties as {@link VSModType}
+ * Must have at least the same properties as {@link VSModType}
  */
 export class VSMod {
   private _modid: number
@@ -56,7 +56,7 @@ export class VSMod {
 
   private _screenshots: VSModScreenshot[]
 
-  constructor(vsMod: {
+  public constructor(data: {
     modid: number
     assetid: number
     name: string
@@ -82,30 +82,30 @@ export class VSMod {
     releases: VSModRelease[]
     screenshots: VSModScreenshot[]
   }) {
-    this._modid = $state(vsMod.modid)
-    this._assetid = $state(vsMod.assetid)
-    this._name = $state(vsMod.name)
-    this._text = $state(vsMod.text)
-    this._author = $state(vsMod.author)
-    this._urlalias = $state(vsMod.urlalias)
-    this._logofilename = $state(vsMod.logofilename)
-    this._logofile = $state(vsMod.logofile)
-    this._homepageurl = $state(vsMod.homepageurl)
-    this._sourcecodeurl = $state(vsMod.sourcecodeurl)
-    this._trailervideourl = $state(vsMod.trailervideourl)
-    this._issuetrackerurl = $state(vsMod.issuetrackerurl)
-    this._wikiurl = $state(vsMod.wikiurl)
-    this._downloads = $state(vsMod.downloads)
-    this._follows = $state(vsMod.follows)
-    this._trendingpoints = $state(vsMod.trendingpoints)
-    this._comments = $state(vsMod.comments)
-    this._side = $state(vsMod.side)
-    this._type = $state(vsMod.type)
-    this._createdat = $state(vsMod.createdat)
-    this._lastmodified = $state(vsMod.lastmodified)
-    this._tags = $state(vsMod.tags)
-    this._releases = $state(vsMod.releases)
-    this._screenshots = $state(vsMod.screenshots)
+    this._modid = $state(data.modid)
+    this._assetid = $state(data.assetid)
+    this._name = $state(data.name)
+    this._text = $state(data.text)
+    this._author = $state(data.author)
+    this._urlalias = $state(data.urlalias)
+    this._logofilename = $state(data.logofilename)
+    this._logofile = $state(data.logofile)
+    this._homepageurl = $state(data.homepageurl)
+    this._sourcecodeurl = $state(data.sourcecodeurl)
+    this._trailervideourl = $state(data.trailervideourl)
+    this._issuetrackerurl = $state(data.issuetrackerurl)
+    this._wikiurl = $state(data.wikiurl)
+    this._downloads = $state(data.downloads)
+    this._follows = $state(data.follows)
+    this._trendingpoints = $state(data.trendingpoints)
+    this._comments = $state(data.comments)
+    this._side = $state(data.side)
+    this._type = $state(data.type)
+    this._createdat = $state(data.createdat)
+    this._lastmodified = $state(data.lastmodified)
+    this._tags = $state(data.tags)
+    this._releases = $state(data.releases)
+    this._screenshots = $state(data.screenshots)
   }
 
   public get modid(): number {
@@ -208,7 +208,7 @@ export class VSMod {
    * Convert this {@link VSMod} into a {@link VSModType} json
    * @returns The {@link VSModType} json
    */
-  toJSON(): VSModType {
+  public toJSON(): VSModType {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -242,7 +242,7 @@ export class VSMod {
    * @param json The {@link VSModType} to convert
    * @returns The {@link VSMod}
    */
-  static fromJSON(json: VSModType): VSMod {
+  public static fromJSON(json: VSModType): VSMod {
     return new VSMod({
       modid: json.modid,
       assetid: json.assetid,

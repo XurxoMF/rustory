@@ -6,7 +6,7 @@
 
   type CollapsibleSectionProps = Pick<WithoutChild<Collapsible.RootProps>, 'open' | 'ref' | 'children'> & {
     title: string
-    isContainer: boolean | undefined
+    isContainer?: boolean | undefined
   }
 
   let { open = $bindable(false), ref = $bindable(null), title, isContainer = false, children }: CollapsibleSectionProps = $props()

@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSAccountType}
+ * Must have at least the same properties as {@link VSAccountType}
  */
 export class VSAccount {
   private _id: number
@@ -20,51 +20,51 @@ export class VSAccount {
 
   private _hostGameServer: boolean
 
-  constructor(vsAccount: VSAccountType) {
-    this._id = $state(vsAccount.id)
-    this._email = $state(vsAccount.email)
-    this._playerName = $state(vsAccount.playerName)
-    this._playerUid = $state(vsAccount.playerUid)
-    this._playerEntitlements = $state(vsAccount.playerEntitlements)
-    this._sessionKey = $state(vsAccount.sessionKey)
-    this._sessionSignature = $state(vsAccount.sessionSignature)
-    this._mptoken = $state(vsAccount.mptoken)
-    this._hostGameServer = $state(vsAccount.hostGameServer)
+  public constructor(data: VSAccountType) {
+    this._id = $state(data.id)
+    this._email = $state(data.email)
+    this._playerName = $state(data.playerName)
+    this._playerUid = $state(data.playerUid)
+    this._playerEntitlements = $state(data.playerEntitlements)
+    this._sessionKey = $state(data.sessionKey)
+    this._sessionSignature = $state(data.sessionSignature)
+    this._mptoken = $state(data.mptoken)
+    this._hostGameServer = $state(data.hostGameServer)
   }
 
-  get id(): number {
+  public get id(): number {
     return this._id
   }
 
-  get email(): string {
+  public get email(): string {
     return this._email
   }
 
-  get playerName(): string {
+  public get playerName(): string {
     return this._playerName
   }
 
-  get playerUid(): string {
+  public get playerUid(): string {
     return this._playerUid
   }
 
-  get playerEntitlements(): string {
+  public get playerEntitlements(): string {
     return this._playerEntitlements
   }
 
-  get sessionKey(): string {
+  public get sessionKey(): string {
     return this._sessionKey
   }
 
-  get sessionSignature(): string {
+  public get sessionSignature(): string {
     return this._sessionSignature
   }
 
-  get mptoken(): string | undefined {
+  public get mptoken(): string | undefined {
     return this._mptoken
   }
 
-  get hostGameServer(): boolean {
+  public get hostGameServer(): boolean {
     return this._hostGameServer
   }
 
@@ -72,7 +72,7 @@ export class VSAccount {
    * Convert this {@link VSAccount} into a {@link VSAccountType} json
    * @returns The {@link VSAccountType} json
    */
-  toJSON(): VSAccountType {
+  public toJSON(): VSAccountType {
     return {
       id: this._id,
       email: this._email,
@@ -91,7 +91,7 @@ export class VSAccount {
    * @param json The {@link VSAccountType} to convert
    * @returns The {@link VSAccount}
    */
-  static fromJSON(json: VSAccountType): VSAccount {
+  public static fromJSON(json: VSAccountType): VSAccount {
     return new VSAccount({
       id: json.id,
       email: json.email,

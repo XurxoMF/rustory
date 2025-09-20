@@ -11,7 +11,7 @@ export class Config {
   /**
    * Get the instance of the Config.
    */
-  static get instance(): Config {
+  public static get instance(): Config {
     if (Config._instance === null) Config._instance = new Config()
     return Config._instance
   }
@@ -19,7 +19,7 @@ export class Config {
   /**
    * List of all the available themes.
    */
-  static THEMES = [
+  public static THEMES = [
     { key: 'dark', name: m.themes__dark(), color: 'bg-zinc-900' },
     { key: 'light', name: m.themes__light(), color: 'bg-zinc-100' },
     { key: 'rust', name: m.themes__rust(), color: 'bg-rust-900' },
@@ -29,7 +29,7 @@ export class Config {
   /**
    * List of all the available locales with their data.
    */
-  static LANGUAGES = [
+  public static LANGUAGES = [
     { lang: 'en', name: 'English', credits: ['XurxoMF'] },
     { lang: 'es', name: 'Español', credits: ['XurxoMF'] }
   ] as const
@@ -37,7 +37,7 @@ export class Config {
   /**
    * List of scales for the UI.
    */
-  static SCALES = [
+  public static SCALES = [
     { scale: '50', name: '50%' },
     { scale: '75', name: '75%' },
     { scale: '100', name: '100%' },
@@ -80,7 +80,7 @@ export class Config {
   /**
    * Loads all the configs on this instance.
    */
-  async init(): Promise<void> {
+  public async init(): Promise<void> {
     try {
       // Locale is loaded Paraglide on startup so just save the value
       this._locale = getLocale()
@@ -131,7 +131,7 @@ export class Config {
   /**
    * Key of the current used theme.
    */
-  get theme(): string {
+  public get theme(): string {
     return this._theme
   }
 
@@ -139,7 +139,7 @@ export class Config {
    * Set a new theme.
    * @param theme - The key of the theme to apply.
    */
-  async setTheme(theme: string): Promise<void> {
+  public async setTheme(theme: string): Promise<void> {
     try {
       localStorage.setItem('theme', theme)
       Config.applyTheme(theme)

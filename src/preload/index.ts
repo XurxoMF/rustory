@@ -55,13 +55,19 @@ const api: BridgeAPI = {
     extractor: {
       extract: (...params) => ipcRenderer.invoke(IPC_CHANNELS.zip.extractor.extract, ...params),
       on: {
-        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+        progress: (...params) => {
+          ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+          return () => ipcRenderer.off(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+        }
       }
     },
     compressor: {
       compress: (...params) => ipcRenderer.invoke(IPC_CHANNELS.zip.compressor.compress, ...params),
       on: {
-        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+        progress: (...params) => {
+          ipcRenderer.on(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+          return () => ipcRenderer.off(IPC_CHANNELS.zip.extractor.on.progress, ...params)
+        }
       }
     }
   },
@@ -70,14 +76,20 @@ const api: BridgeAPI = {
     downloader: {
       download: (...params) => ipcRenderer.invoke(IPC_CHANNELS.net.downloader.download, ...params),
       on: {
-        progress: (...params) => ipcRenderer.on(IPC_CHANNELS.net.downloader.on.progress, ...params)
+        progress: (...params) => {
+          ipcRenderer.on(IPC_CHANNELS.net.downloader.on.progress, ...params)
+          return () => ipcRenderer.off(IPC_CHANNELS.net.downloader.on.progress, ...params)
+        }
       }
     }
   },
   notifications: {
     notify: (...params) => ipcRenderer.invoke(IPC_CHANNELS.notifications.notify, ...params),
     on: {
-      click: (...params) => ipcRenderer.on(IPC_CHANNELS.notifications.on.click, ...params)
+      click: (...params) => {
+        ipcRenderer.on(IPC_CHANNELS.notifications.on.click, ...params)
+        return () => ipcRenderer.off(IPC_CHANNELS.notifications.on.click, ...params)
+      }
     }
   }
 }

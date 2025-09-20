@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSModScreenshotType}
+ * Must have at least the same properties as {@link VSModScreenshotType}
  */
 export class VSModScreenshot {
   private _fileid: number
@@ -12,12 +12,12 @@ export class VSModScreenshot {
 
   private _createdat: string
 
-  constructor(vsModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
-    this._fileid = $state(vsModScreenshot.fileid)
-    this._mainfile = $state(vsModScreenshot.mainfile)
-    this._filename = $state(vsModScreenshot.filename)
-    this._thumbnailfile = $state(vsModScreenshot.thumbnailfile)
-    this._createdat = $state(vsModScreenshot.createdat)
+  public constructor(data: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
+    this._fileid = $state(data.fileid)
+    this._mainfile = $state(data.mainfile)
+    this._filename = $state(data.filename)
+    this._thumbnailfile = $state(data.thumbnailfile)
+    this._createdat = $state(data.createdat)
   }
 
   public get fileid(): number {
@@ -44,7 +44,7 @@ export class VSModScreenshot {
    * Convert this {@link VSModScreenshot} into a {@link VSModScreenshotType} json
    * @returns The {@link VSModScreenshotType} json
    */
-  toJSON(): VSModScreenshotType {
+  public toJSON(): VSModScreenshotType {
     return {
       fileid: this._fileid,
       mainfile: this._mainfile,
@@ -59,7 +59,7 @@ export class VSModScreenshot {
    * @param json The {@link VSModScreenshotType} to convert
    * @returns The {@link VSModScreenshot}
    */
-  static fromJSON(json: VSModScreenshotType): VSModScreenshot {
+  public static fromJSON(json: VSModScreenshotType): VSModScreenshot {
     return new VSModScreenshot({
       fileid: json.fileid,
       mainfile: json.mainfile,

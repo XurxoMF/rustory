@@ -2,7 +2,7 @@ import { VSInstanceBackup } from './VSInstanceBackup.svelte'
 import { VSModInstalled } from './VSModInstalled.svelte'
 
 /**
- * Must have the same properties as {@link VSInstanceType}
+ * Must have at least the same properties as {@link VSInstanceType}
  */
 export class VSInstance {
   private _id: number
@@ -33,7 +33,7 @@ export class VSInstance {
 
   private _envVars: string
 
-  constructor(vsInstance: {
+  public constructor(data: {
     id: number
     name: string
     path: string
@@ -49,20 +49,20 @@ export class VSInstance {
     mesaGlThread: boolean
     envVars: string
   }) {
-    this._id = $state(vsInstance.id)
-    this._name = $state(vsInstance.name)
-    this._path = $state(vsInstance.path)
-    this._version = $state(vsInstance.version)
-    this._startParams = $state(vsInstance.startParams)
-    this._backupsLimit = $state(vsInstance.backupsLimit)
-    this._backupsAuto = $state(vsInstance.backupsAuto)
-    this._compressionLevel = $state(vsInstance.compressionLevel)
-    this._backups = $state(vsInstance.backups)
-    this._mods = $state(vsInstance.mods)
-    this._lastTimePlayed = $state(vsInstance.lastTimePlayed)
-    this._totalTimePlayed = $state(vsInstance.totalTimePlayed)
-    this._mesaGlThread = $state(vsInstance.mesaGlThread)
-    this._envVars = $state(vsInstance.envVars)
+    this._id = $state(data.id)
+    this._name = $state(data.name)
+    this._path = $state(data.path)
+    this._version = $state(data.version)
+    this._startParams = $state(data.startParams)
+    this._backupsLimit = $state(data.backupsLimit)
+    this._backupsAuto = $state(data.backupsAuto)
+    this._compressionLevel = $state(data.compressionLevel)
+    this._backups = $state(data.backups)
+    this._mods = $state(data.mods)
+    this._lastTimePlayed = $state(data.lastTimePlayed)
+    this._totalTimePlayed = $state(data.totalTimePlayed)
+    this._mesaGlThread = $state(data.mesaGlThread)
+    this._envVars = $state(data.envVars)
   }
 
   public get id(): number {
@@ -125,7 +125,7 @@ export class VSInstance {
    * Convert this {@link VSInstance} into a {@link VSInstanceType} json
    * @returns The {@link VSInstanceType} json
    */
-  toJSON(): VSInstanceType {
+  public toJSON(): VSInstanceType {
     return {
       id: this._id,
       name: this._name,
@@ -149,7 +149,7 @@ export class VSInstance {
    * @param json The {@link VSInstanceType} to convert
    * @returns The {@link VSInstance}
    */
-  static fromJSON(json: VSInstanceType): VSInstance {
+  public static fromJSON(json: VSInstanceType): VSInstance {
     return new VSInstance({
       id: json.id,
       name: json.name,

@@ -7,8 +7,8 @@
   export type SelectItemType = {
     value: string
     label: string
-    comment: string | undefined
-    disabled: boolean | undefined
+    comment?: string | undefined
+    disabled?: boolean | undefined
   }
 
   type SelectProps = {

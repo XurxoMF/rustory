@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSModGameVersionType}
+ * Must have at least the same properties as {@link VSModGameVersionType}
  */
 export class VSModGameVersion {
   private _tagid: string
@@ -8,10 +8,10 @@ export class VSModGameVersion {
 
   private _color: string
 
-  constructor(vsModGameVersion: { tagid: string; name: string; color: string }) {
-    this._tagid = $state(vsModGameVersion.tagid)
-    this._name = $state(vsModGameVersion.name)
-    this._color = $state(vsModGameVersion.color)
+  public constructor(data: { tagid: string; name: string; color: string }) {
+    this._tagid = $state(data.tagid)
+    this._name = $state(data.name)
+    this._color = $state(data.color)
   }
 
   public get tagid(): string {
@@ -30,7 +30,7 @@ export class VSModGameVersion {
    * Convert this {@link VSModGameVersion} into a {@link VSModGameVersionType} json
    * @returns The {@link VSModGameVersionType} json
    */
-  toJSON(): VSModGameVersionType {
+  public toJSON(): VSModGameVersionType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -43,7 +43,7 @@ export class VSModGameVersion {
    * @param json The {@link VSModGameVersionType} to convert
    * @returns The {@link VSModGameVersion}
    */
-  static fromJSON(json: VSModGameVersionType): VSModGameVersion {
+  public static fromJSON(json: VSModGameVersionType): VSModGameVersion {
     return new VSModGameVersion({
       tagid: json.tagid,
       name: json.name,

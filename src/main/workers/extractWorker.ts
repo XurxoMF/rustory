@@ -3,9 +3,7 @@ import yauzl from 'yauzl'
 import fse from 'fs-extra'
 import path from 'path'
 
-import { logger } from '@main/utils/logger'
-
-const { id, filePath, outputPath, deleteZip } = workerData
+const { filePath, outputPath } = workerData
 
 yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
   if (err) {
@@ -36,17 +34,6 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
 
       if (extractedCount === totalFiles) {
         zipfile.close()
-
-        if (deleteZip) {
-          logger.info(`[${id}] Deleting origin file ${filePath}...`)
-
-          fse.unlink(filePath, (err) => {
-            if (err) {
-              parentPort?.postMessage({ type: 'error', error: err })
-              return
-            }
-          })
-        }
 
         parentPort?.postMessage({ type: 'finished' })
       } else {
@@ -83,15 +70,6 @@ yauzl.open(filePath, { lazyEntries: true }, (err, zipfile) => {
 
           if (extractedCount === totalFiles) {
             zipfile.close()
-
-            if (deleteZip) {
-              fse.unlink(filePath, (err) => {
-                if (err) {
-                  parentPort?.postMessage({ type: 'error', error: err })
-                  return
-                }
-              })
-            }
 
             parentPort?.postMessage({ type: 'finished' })
           } else {

@@ -10,8 +10,8 @@
 
   type ButtonNeutralPropsType = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet<[]>
-    rounded: RoundedTypes | undefined
-    icon: boolean | undefined
+    rounded?: RoundedTypes | undefined
+    icon?: boolean | undefined
   }
 
   let { children, rounded = 'regular', icon = false, ...restProps }: ButtonNeutralPropsType = $props()

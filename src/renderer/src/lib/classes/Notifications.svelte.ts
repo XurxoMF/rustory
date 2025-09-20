@@ -9,7 +9,7 @@ export class Notifications {
   /**
    * Get the instance of the Notifications.
    */
-  static get instance(): Notifications {
+  public static get instance(): Notifications {
     if (Notifications._instance === null) Notifications._instance = new Notifications()
     return Notifications._instance
   }
@@ -19,7 +19,7 @@ export class Notifications {
    */
   private clickCallbacks = new SvelteMap<string, Notifications.NotificationCallback>()
 
-  constructor() {
+  public constructor() {
     window.api.notifications.on.click((_event, id) => {
       const cb = this.clickCallbacks.get(id)
       if (cb) {
@@ -35,7 +35,7 @@ export class Notifications {
    * @param body Body of the notification
    * @returns A list of events
    */
-  notify(title: string, body: string) {
+  public notify(title: string, body: string) {
     return {
       onClick: async (callback: Notifications.NotificationCallback) => {
         const id = await window.api.notifications.notify(title, body)

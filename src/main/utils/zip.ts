@@ -17,12 +17,12 @@ import { RustoryZipError } from '@shared/errors/RustoryZipError'
  * @returns If it was extracted or not.
  * @throws A {@link RustoryZipError} error.
  */
-export async function extract(onProgress: (id: string, progress: number) => void, id: string, filePath: string, outputPath: string, deleteZip: boolean): Promise<boolean> {
+export async function extract(onProgress: (id: string, progress: number) => void, id: string, filePath: string, outputPath: string): Promise<boolean> {
   return new Promise<boolean>((resolve, reject) => {
     logger.info(`[${id}] Extracting ${filePath} to ${outputPath}...`)
 
     const worker = new Worker(extractWorker, {
-      workerData: { filePath, outputPath, deleteZip }
+      workerData: { filePath, outputPath }
     })
 
     worker.on('message', (message) => {

@@ -4,7 +4,7 @@ import { VSMod } from './VSMod.svelte'
 // Get the modinfo.json properties from the mod .zip file
 
 /**
- * Must have the same properties as {@link VSModInstalledType}
+ * Must have at least the same properties as {@link VSModInstalledType}
  */
 export class VSModInstalled {
   private _name: string
@@ -29,7 +29,7 @@ export class VSModInstalled {
 
   private _mod: VSMod
 
-  constructor(vsModInstalled: {
+  public constructor(data: {
     name: string
     modid: string
     version: string
@@ -42,17 +42,17 @@ export class VSModInstalled {
     image: string | undefined
     mod: VSMod
   }) {
-    this._name = $state(vsModInstalled.name)
-    this._modid = $state(vsModInstalled.modid)
-    this._version = $state(vsModInstalled.version)
-    this._path = $state(vsModInstalled.path)
-    this._description = $state(vsModInstalled.description)
-    this._side = $state(vsModInstalled.side)
-    this._authors = $state(vsModInstalled.authors)
-    this._contributors = $state(vsModInstalled.contributors)
-    this._type = $state(vsModInstalled.type)
-    this._image = $state(vsModInstalled.image)
-    this._mod = $state(vsModInstalled.mod)
+    this._name = $state(data.name)
+    this._modid = $state(data.modid)
+    this._version = $state(data.version)
+    this._path = $state(data.path)
+    this._description = $state(data.description)
+    this._side = $state(data.side)
+    this._authors = $state(data.authors)
+    this._contributors = $state(data.contributors)
+    this._type = $state(data.type)
+    this._image = $state(data.image)
+    this._mod = $state(data.mod)
   }
 
   public get name(): string {
@@ -103,7 +103,7 @@ export class VSModInstalled {
    * Convert this {@link VSModInstalled} into a {@link VSModInstalledType} json
    * @returns The {@link VSModInstalledType} json
    */
-  toJSON(): VSModInstalledType {
+  public toJSON(): VSModInstalledType {
     return {
       name: this._name,
       modid: this._modid,
@@ -124,7 +124,7 @@ export class VSModInstalled {
    * @param json The {@link VSModInstalledType} to convert
    * @returns The {@link VSModInstalled}
    */
-  static fromJSON(json: VSModInstalledType): VSModInstalled {
+  public static fromJSON(json: VSModInstalledType): VSModInstalled {
     return new VSModInstalled({
       name: json.name,
       modid: json.modid,

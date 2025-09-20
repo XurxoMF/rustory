@@ -1,5 +1,5 @@
 /**
- * Must have the same properties as {@link VSInstanceBackupType}
+ * Must have at least the same properties as {@link VSInstanceBackupType}
  */
 export class VSInstanceBackup {
   private _id: number
@@ -8,10 +8,10 @@ export class VSInstanceBackup {
 
   private _path: string
 
-  constructor(vsInstaneBackup: { id: number; date: number; path: string }) {
-    this._id = $state(vsInstaneBackup.id)
-    this._date = $state(vsInstaneBackup.date)
-    this._path = $state(vsInstaneBackup.path)
+  public constructor(data: { id: number; date: number; path: string }) {
+    this._id = $state(data.id)
+    this._date = $state(data.date)
+    this._path = $state(data.path)
   }
 
   public get id(): number {
@@ -30,7 +30,7 @@ export class VSInstanceBackup {
    * Convert this {@link VSInstanceBackup} into a {@link VSInstanceBackupType} json
    * @returns The {@link VSInstanceBackupType} json
    */
-  toJSON(): VSInstanceBackupType {
+  public toJSON(): VSInstanceBackupType {
     return {
       id: this._id,
       date: this._date,
@@ -43,7 +43,7 @@ export class VSInstanceBackup {
    * @param json The {@link VSInstanceBackupType} to convert
    * @returns The {@link VSInstanceBackup}
    */
-  static fromJSON(json: VSInstanceBackupType): VSInstanceBackup {
+  public static fromJSON(json: VSInstanceBackupType): VSInstanceBackup {
     return new VSInstanceBackup({ id: json.id, date: json.date, path: json.path })
   }
 }

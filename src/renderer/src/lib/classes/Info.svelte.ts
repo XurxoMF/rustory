@@ -7,7 +7,7 @@ export class Info {
   /**
    * Get the instance of the Info.
    */
-  static get instance(): Info {
+  public static get instance(): Info {
     if (Info._instance === null) Info._instance = new Info()
     return Info._instance
   }
@@ -45,51 +45,9 @@ export class Info {
   private constructor() {}
 
   /**
-   * Name of the APP.
-   */
-  get name(): string {
-    return this._name
-  }
-
-  /**
-   * Current version of the APP.
-   */
-  get version(): string {
-    return this._version
-  }
-
-  /**
-   * Path for the APP data.
-   */
-  get dataPath(): string {
-    return this._dataPath
-  }
-
-  /**
-   * Path for the APP cache.
-   */
-  get cachePath(): string {
-    return this._cachePath
-  }
-
-  /**
-   * Path for the APP temporals.
-   */
-  get tempPath(): string {
-    return this._tempPath
-  }
-
-  /**
-   * Path for the APP logs.
-   */
-  get logsPaths(): string {
-    return this._logsPath
-  }
-
-  /**
    * Loads all the info about Rustory on this instance.
    */
-  async init(): Promise<void> {
+  public async init(): Promise<void> {
     try {
       this._name = await window.api.rustory.getName()
       this._version = await window.api.rustory.getVersion()
@@ -105,5 +63,47 @@ export class Info {
       window.api.logger.error(`There was an error initializating the info:\n${JSON.stringify(err)}`)
       window.api.rustory.exit(1)
     }
+  }
+
+  /**
+   * Name of the APP.
+   */
+  public get name(): string {
+    return this._name
+  }
+
+  /**
+   * Current version of the APP.
+   */
+  public get version(): string {
+    return this._version
+  }
+
+  /**
+   * Path for the APP data.
+   */
+  public get dataPath(): string {
+    return this._dataPath
+  }
+
+  /**
+   * Path for the APP cache.
+   */
+  public get cachePath(): string {
+    return this._cachePath
+  }
+
+  /**
+   * Path for the APP temporals.
+   */
+  public get tempPath(): string {
+    return this._tempPath
+  }
+
+  /**
+   * Path for the APP logs.
+   */
+  public get logsPaths(): string {
+    return this._logsPath
   }
 }
