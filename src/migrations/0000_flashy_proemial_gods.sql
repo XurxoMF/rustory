@@ -35,10 +35,9 @@ CREATE TABLE `vs_instance` (
 CREATE UNIQUE INDEX `vs_instance_id_unique` ON `vs_instance` (`id`);--> statement-breakpoint
 CREATE TABLE `vs_instance_backup` (
 	`id` text PRIMARY KEY NOT NULL,
-	`vs_instance_id` integer,
+	`vs_instance_id` integer NOT NULL,
 	`date` integer NOT NULL,
-	`path` text NOT NULL,
-	FOREIGN KEY (`vs_instance_id`) REFERENCES `vs_instance`(`id`) ON UPDATE cascade ON DELETE set null
+	`path` text NOT NULL
 );
 --> statement-breakpoint
 CREATE UNIQUE INDEX `vs_instance_backup_id_unique` ON `vs_instance_backup` (`id`);--> statement-breakpoint

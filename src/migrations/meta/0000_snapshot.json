@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "2e149658-9459-4fc3-bb7d-058a96196393",
+  "id": "5d9410f1-b57a-41a2-bf0c-3449ddf22aed",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "config": {
@@ -233,7 +233,7 @@
           "name": "vs_instance_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "date": {
@@ -260,21 +260,7 @@
           "isUnique": true
         }
       },
-      "foreignKeys": {
-        "vs_instance_backup_vs_instance_id_vs_instance_id_fk": {
-          "name": "vs_instance_backup_vs_instance_id_vs_instance_id_fk",
-          "tableFrom": "vs_instance_backup",
-          "tableTo": "vs_instance",
-          "columnsFrom": [
-            "vs_instance_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "set null",
-          "onUpdate": "cascade"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "checkConstraints": {}
