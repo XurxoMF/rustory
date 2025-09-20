@@ -6,8 +6,8 @@
 
   type PageWrapperPropsType = {
     children: Snippet<[]>
-    isContainer?: boolean
-    scrollable?: boolean
+    isContainer: boolean | undefined
+    scrollable: boolean | undefined
   }
 
   let { children, isContainer = false, scrollable = true }: PageWrapperPropsType = $props()

@@ -3,8 +3,8 @@
 
   type SectionProps = {
     children: Snippet<[]>
-    title?: string
-    isContainer?: boolean
+    title: string | undefined
+    isContainer: boolean | undefined
   }
 
   let { children, title, isContainer = false }: SectionProps = $props()

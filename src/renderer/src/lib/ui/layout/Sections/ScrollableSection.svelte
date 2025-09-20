@@ -5,7 +5,7 @@
 
   type ScrollableSectionPropsType = {
     orientation: 'vertical' | 'horizontal' | 'both'
-    isContainer?: boolean
+    isContainer: boolean | undefined
     children: Snippet<[]>
   }
 

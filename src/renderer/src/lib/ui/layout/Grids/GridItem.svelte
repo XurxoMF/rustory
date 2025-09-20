@@ -3,8 +3,8 @@
 
   type GridItemType = {
     children: Snippet<[]>
-    spanX?: 1 | 2 | 3 | 4 | 5
-    spanY?: 1 | 2 | 3 | 4 | 5
+    spanX: 1 | 2 | 3 | 4 | 5 | undefined
+    spanY: 1 | 2 | 3 | 4 | 5 | undefined
   }
 
   let { children, spanX = 1, spanY = 1 }: GridItemType = $props()

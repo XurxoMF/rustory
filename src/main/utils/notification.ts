@@ -13,7 +13,7 @@ import { RustoryNotificationError } from '@shared/errors/RustoryNotificationErro
  * @returns The id of the notification.
  * @throws A {@link RustoryNotificationError} error.
  */
-export function notify(title: string, body: string, onClick?: (id: string) => void): string {
+export function notify(title: string, body: string, onClick: (id: string) => void | undefined): string {
   try {
     const id = crypto.randomUUID()
 

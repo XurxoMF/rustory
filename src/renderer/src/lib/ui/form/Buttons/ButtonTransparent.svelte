@@ -10,8 +10,8 @@
 
   type ButtonTransparentPropsType = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet<[]>
-    rounded?: RoundedTypes
-    icon?: boolean
+    rounded: RoundedTypes | undefined
+    icon: boolean | undefined
   }
 
   let { children, rounded = 'regular', icon = false, ...restProps }: ButtonTransparentPropsType = $props()

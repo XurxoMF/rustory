@@ -4,7 +4,7 @@
 
   type ButtonUnstyledPropsType = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet<[]>
-    icon?: boolean
+    icon: boolean | undefined
   }
 
   let { children, icon = false, ...restProps }: ButtonUnstyledPropsType = $props()

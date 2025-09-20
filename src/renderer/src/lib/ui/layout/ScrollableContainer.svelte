@@ -3,7 +3,7 @@
 
   type ScrollableContainerPropsType = WithoutChild<ScrollArea.RootProps> & {
     orientation: 'vertical' | 'horizontal' | 'both'
-    viewportClasses?: string
+    viewportClasses: string | undefined
   }
 
   let { ref = $bindable(null), orientation = 'vertical', viewportClasses, children, ...restProps }: ScrollableContainerPropsType = $props()

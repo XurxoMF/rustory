@@ -7,13 +7,13 @@
   export type SelectItemType = {
     value: string
     label: string
-    comment?: string
-    disabled?: boolean
+    comment: string | undefined
+    disabled: boolean | undefined
   }
 
   type SelectProps = {
-    value?: string | undefined
-    onValueChange?: (value: string | undefined) => void
+    value: string | undefined
+    onValueChange: (value: string | undefined) => void | undefined
     placeholder: string
     items: SelectItemType[]
   }

@@ -254,7 +254,7 @@ declare global {
          * @returns If it was compressed or not.
          * @throws A RustoryZipError error.
          */
-        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel?: number) => Promise<boolean>
+        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel: number | undefined) => Promise<boolean>
         /**
          * Subscribe to compression events.
          */

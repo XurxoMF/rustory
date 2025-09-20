@@ -3,7 +3,7 @@
 
   type FieldsWrapperType = {
     children: Snippet<[]>
-    direction?: 'x' | 'y'
+    direction: 'x' | 'y' | undefined
   }
 
   let { children, direction = 'y' }: FieldsWrapperType = $props()
