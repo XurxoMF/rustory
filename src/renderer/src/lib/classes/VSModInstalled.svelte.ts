@@ -1,5 +1,8 @@
 import { VSMod } from './VSMod.svelte'
 
+// THIS IS THE INSTALLED MOD
+// Get the modinfo.json properties from the mod .zip file
+
 /**
  * Must have the same properties as {@link VSModInstalledType}
  */

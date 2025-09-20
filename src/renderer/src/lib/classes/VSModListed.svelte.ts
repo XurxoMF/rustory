@@ -1,3 +1,6 @@
+// THIS IS THE MODDB MOD BUT FROM THE MODS LIST
+// Query it with /api/mods
+
 /**
  * Must have the same properties as {@link VSModListedType}
  */

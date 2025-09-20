@@ -8,6 +8,7 @@
     "src/global.d.ts"
   ],
   "compilerOptions": {
+    "moduleResolution": "bundler",
     "outDir": "out",
     "composite": true,
     "verbatimModuleSyntax": true,

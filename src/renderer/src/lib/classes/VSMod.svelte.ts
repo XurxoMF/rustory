@@ -1,6 +1,9 @@
 import { VSModRelease } from './VSModRelease.svelte'
 import { VSModScreenshot } from './VSModScreenshot.svelte'
 
+// THIS IS THE MODDB MOD
+// Query it with /api/mods/{modid}
+
 /**
  * Must have the same properties as {@link VSModType}
  */
