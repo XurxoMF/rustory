@@ -26,6 +26,10 @@ export class VSVersion {
     return this._state
   }
 
+  public set state(state: VSVersion.State) {
+    this._state = state
+  }
+
   /**
    * Convert this {@link VSVersion} into a {@link VSVersionType} json
    * @returns The {@link VSVersionType} json

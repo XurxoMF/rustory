@@ -1,4 +1,6 @@
+import { Data } from '../Data.svelte'
 import { Info } from '../Info.svelte'
+import { VSVersion } from '../vintagestory/VSVersion.svelte'
 import { TaskBase } from './TaskBase.svelte'
 
 export class TaskInstallVersion implements TaskBase {
@@ -98,7 +100,9 @@ export class TaskInstallVersion implements TaskBase {
     const extractProgressEvent = window.api.zip.extractor.on.progress((_event, _id, progress) => (this._extractProgress = progress))
 
     try {
-      // TODO: Add the new version to the list of versions. DON'T ADD IT TO THE DB YET.
+      const vsVersion = new VSVersion({ version: this._version, path: this._outputPath })
+
+      Data.instance.vsVersions.push(vsVersion)
 
       const downloadOutputPath = Info.instance.tempPath
       const downloadFileName = `${this._id}.zip`
@@ -107,11 +111,14 @@ export class TaskInstallVersion implements TaskBase {
 
       const extractFlePath = await window.api.fs.join(downloadOutputPath, downloadFileName)
 
+      // TODO: Delete anything on the outputPath before installing.
+
       await window.api.zip.extractor.extract(this._id, extractFlePath, this._outputPath)
 
       // TODO: Delete the zip after extracting it.
 
       // TODO: Add the version to the database.
+      vsVersion.state = VSVersion.State.INSTALLED
 
       this._status = TaskBase.Status.COMPLETED
       this._downloadProgress = 100
