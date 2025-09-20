@@ -30,13 +30,11 @@ export async function getItem(key: string): Promise<string | undefined> {
  * @returns If it was saved or not.
  * @throws A {@link RustoryDBError} error.
  */
-export async function setItem(key: string, value: string): Promise<boolean> {
+export async function setItem(key: string, value: string): Promise<void> {
   try {
     const inserted = await db.insert(config).values({ key, value }).onConflictDoUpdate({ target: config.key, set: { key, value } })
 
-    if (inserted.rowsAffected < 1) return false
-
-    return true
+    if (inserted.rowsAffected < 1) throw new RustoryDBError('NO config was upserted on the DB!', RustoryDBError.Codes.DB_ERROR)
   } catch (err) {
     logger.error('Error upserting a config on the DB!')
     logger.debug(`Error upserting a config on the DB:\n${JSON.stringify(err)}`)

@@ -2,10 +2,19 @@
  * Must have at least the same properties as {@link VSInstanceBackupType}
  */
 export class VSInstanceBackup {
+  /**
+   * The id of the backup.
+   */
   private _id: number
 
+  /**
+   * The date of the backup.
+   */
   private _date: number
 
+  /**
+   * The path of the backup.
+   */
   private _path: string
 
   public constructor(data: { id: number; date: number; path: string }) {
@@ -14,14 +23,23 @@ export class VSInstanceBackup {
     this._path = $state(data.path)
   }
 
+  /**
+   * The id of the backup.
+   */
   public get id(): number {
     return this._id
   }
 
+  /**
+   * The date of the backup.
+   */
   public get date(): number {
     return this._date
   }
 
+  /**
+   * The path of the backup.
+   */
   public get path(): string {
     return this._path
   }

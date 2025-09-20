@@ -169,6 +169,7 @@ export class Config {
   /**
    * Set a new language.
    * @param locale - The key of the language to change to.
+   * @throws {RustoryConfigError} When there is an error saving the new locale.
    */
   async setLocale(locale: Locale | string): Promise<void> {
     try {
@@ -194,6 +195,7 @@ export class Config {
   /**
    * Set a new UI scale.
    * @param scale - The key of the scale to apply.
+   * @throws {RustoryConfigError} When there is an error saving the new scale.
    */
   setScale(scale: string): void {
     try {
@@ -225,6 +227,7 @@ export class Config {
   /**
    * Set a new path for the Instances.
    * @param scale - The path to save.
+   * @throws {RustoryConfigError} When there is an error saving the new Instances path.
    */
   async setInstancesPath(path: string): Promise<void> {
     try {
@@ -247,6 +250,7 @@ export class Config {
   /**
    * Set a new path for the Versions.
    * @param scale - The path to save.
+   * @throws {RustoryConfigError} When there is an error saving the new Versions path.
    */
   async setVersionsPath(path: string): Promise<void> {
     try {
@@ -269,6 +273,7 @@ export class Config {
   /**
    * Set a new path for the Backups.
    * @param scale - The path to save.
+   * @throws {RustoryConfigError} When there is an error saving the new Backups path.
    */
   async setBackupsPath(path: string): Promise<void> {
     try {

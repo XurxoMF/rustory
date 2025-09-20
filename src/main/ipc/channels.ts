@@ -12,7 +12,8 @@ export const IPC_CHANNELS = {
     showDialog: 'fs-show-dialog',
     join: 'fs-join',
     getPath: 'fs-get-path',
-    changePerms: 'fs-change-perms'
+    changePerms: 'fs-change-perms',
+    deletePaths: 'fs-delete-paths'
   },
   system: {
     getOSInfo: 'system-get-os-info',
@@ -42,6 +43,11 @@ export const IPC_CHANNELS = {
     config: {
       setItem: 'db-config-set-item',
       getItem: 'db-config-get-item'
+    },
+    vsVersion: {
+      saveVSVersion: 'db-vs-version-save-version',
+      deleteVSVersion: 'db-vs-version-delete-version',
+      getVSVersions: 'db-vs-version-get-versions'
     }
   },
   zip: {

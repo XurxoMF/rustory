@@ -2,24 +2,54 @@
  * Must have at least the same properties as {@link RAPIVSVersionType}
  */
 export class RAPIVSVersion {
+  /**
+   * The version string, e.g. "1.15.4".
+   */
   private _version: string
 
+  /**
+   * The type of the version.
+   */
   private _type: RAPIVSVersionTypeType
 
+  /**
+   * The release date of the version.
+   */
   private _releaseDate: number
 
+  /**
+   * The import date of the version.
+   */
   private _importedDate: number
 
+  /**
+   * The download link for Windows.
+   */
   private _windows: string
 
+  /**
+   * The sha256 checksum for Windows.
+   */
   private _windowsSha: string
 
+  /**
+   * The download link for Linux.
+   */
   private _linux: string
 
+  /**
+   * The sha256 checksum for Linux.
+   */
   private _linuxSha: string
 
+  /**
+   * The download link for macOS.
+   */
   private _mac: string
 
+  /**
+   * The sha256 checksum for macOS.
+   */
   private _macSha: string
 
   public constructor(data: {
@@ -46,42 +76,72 @@ export class RAPIVSVersion {
     this._macSha = data.macSha
   }
 
+  /**
+   * The version string, e.g. "1.15.4".
+   */
   public get version(): string {
     return this._version
   }
 
+  /**
+   * The type of the version.
+   */
   public get type(): RAPIVSVersionTypeType {
     return this._type
   }
 
+  /**
+   * The release date of the version.
+   */
   public get releaseDate(): number {
     return this._releaseDate
   }
 
+  /**
+   * The import date of the version.
+   */
   public get importedDate(): number {
     return this._importedDate
   }
 
+  /**
+   * The download link for Windows.
+   */
   public get windows(): string {
     return this._windows
   }
 
+  /**
+   * The sha256 checksum for Windows.
+   */
   public get windowsSha(): string {
     return this._windowsSha
   }
 
+  /**
+   * The download link for Linux.
+   */
   public get linux(): string {
     return this._linux
   }
 
+  /**
+   * The sha256 checksum for Linux.
+   */
   public get linuxSha(): string {
     return this._linuxSha
   }
 
+  /**
+   * The download link for macOS.
+   */
   public get mac(): string {
     return this._mac
   }
 
+  /**
+   * The sha256 checksum for macOS.
+   */
   public get macSha(): string {
     return this._macSha
   }

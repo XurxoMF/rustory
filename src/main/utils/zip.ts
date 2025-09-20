@@ -17,8 +17,8 @@ import { RustoryZipError } from '@shared/errors/RustoryZipError'
  * @returns If it was extracted or not.
  * @throws A {@link RustoryZipError} error.
  */
-export async function extract(onProgress: (id: string, progress: number) => void, id: string, filePath: string, outputPath: string): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
+export async function extract(onProgress: (id: string, progress: number) => void, id: string, filePath: string, outputPath: string): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     logger.info(`[${id}] Extracting ${filePath} to ${outputPath}...`)
 
     const worker = new Worker(extractWorker, {
@@ -30,7 +30,7 @@ export async function extract(onProgress: (id: string, progress: number) => void
         onProgress(id, message.progress)
       } else if (message.type === 'finished') {
         logger.info(`[${id}] Extraction of ${filePath} finished!`)
-        resolve(true)
+        resolve()
       } else {
         logger.error(`[${id}] Error extracting ${filePath}!`)
         logger.debug(`[${id}] Error extracting ${filePath}:\n${JSON.stringify(message)}`)
@@ -72,8 +72,8 @@ export async function compress(
   outputPath: string,
   outputFileName: string,
   compressionLevel: number = 6
-): Promise<boolean> {
-  return new Promise<boolean>((resolve, reject) => {
+): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
     const outFile = join(outputPath, outputFileName)
 
     logger.info(`[${id}] Compressing ${inputPaths.length} paths to ${outFile} with level ${compressionLevel}...`)
@@ -87,7 +87,7 @@ export async function compress(
         onProgress(id, message.progress)
       } else if (message.type === 'finished') {
         logger.info(`[${id}] Compression of ${inputPaths.length} paths finished!`)
-        resolve(true)
+        resolve()
       } else {
         logger.error(`[${id}] Error compressing ${inputPaths.length} paths!`)
         logger.debug(`[${id}] Error compressing ${inputPaths.length} paths:\n${JSON.stringify(message)}`)

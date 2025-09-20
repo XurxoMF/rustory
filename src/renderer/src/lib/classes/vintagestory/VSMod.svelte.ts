@@ -7,26 +7,59 @@ import { VSAPIMod } from '../api/VSAPIMod.svelte'
  * Must have at least the same properties as {@link VSModType}
  */
 export class VSMod {
+  /**
+   * The name of the mod.
+   */
   private _name: string
 
+  /**
+   * The modid of the mod.
+   */
   private _modid: string
 
+  /**
+   * The version of the mod.
+   */
   private _version: string
 
+  /**
+   * The path to the mod.
+   */
   private _path: string
 
+  /**
+   * The description of the mod.
+   */
   private _description: string | undefined
 
+  /**
+   * The side of the mod.
+   */
   private _side: string | undefined
 
+  /**
+   * The authors of the mod.
+   */
   private _authors: string[]
 
+  /**
+   * The contributors of the mod.
+   */
   private _contributors: string[]
 
+  /**
+   * The type of the mod.
+   */
   private _type: string | undefined
 
+  /**
+   * The image of the mod.
+   */
   private _image: string | undefined
 
+  /**
+   * The mod info from the ModDB.
+   */
   private _mod: VSAPIMod
 
   public constructor(data: {
@@ -55,46 +88,79 @@ export class VSMod {
     this._mod = $state(data.mod)
   }
 
+  /**
+   * The name of the mod.
+   */
   public get name(): string {
     return this._name
   }
 
+  /**
+   * The modid of the mod.
+   */
   public get modid(): string {
     return this._modid
   }
 
+  /**
+   * The version of the mod.
+   */
   public get version(): string {
     return this._version
   }
 
+  /**
+   * The path to the mod.
+   */
   public get path(): string {
     return this._path
   }
 
+  /**
+   * The description of the mod.
+   */
   public get description(): string | undefined {
     return this._description
   }
 
+  /**
+   * The side of the mod.
+   */
   public get side(): string | undefined {
     return this._side
   }
 
+  /**
+   * The authors of the mod.
+   */
   public get authors(): string[] {
     return this._authors
   }
 
+  /**
+   * The contributors of the mod.
+   */
   public get contributors(): string[] {
     return this._contributors
   }
 
+  /**
+   * The type of the mod.
+   */
   public get type(): string | undefined {
     return this._type
   }
 
+  /**
+   * The image of the mod.
+   */
   public get image(): string | undefined {
     return this._image
   }
 
+  /**
+   * The mod info from the ModDB.
+   */
   public get mod(): VSAPIMod {
     return this._mod
   }

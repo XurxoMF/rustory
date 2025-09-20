@@ -4,6 +4,7 @@ import { Worker } from 'worker_threads'
 
 import { logger } from '@main/utils/logger'
 import changePermsWorker from '@main/workers/changePermsWorker?modulePath'
+import downloadPathsWorker from '@main/workers/deletePathsWorker?modulePath'
 import { getOSInfo } from '@main/utils/system'
 import { RustoryFSError } from '@shared/errors/RustoryFSError'
 
@@ -92,11 +93,11 @@ export async function openDialog(title: string, type: 'openFile' | 'openDirector
  * @returns If permissions where changed sucessfully or not.
  * @throws A {@link RustoryFSError} error.
  */
-export async function changePerms(paths: string[], perms: number): Promise<boolean> {
+export async function changePerms(paths: string[], perms: number): Promise<void> {
   try {
     const os = await getOSInfo()
 
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<void>((resolve, reject) => {
       if (os.platform === 'linux') {
         logger.info(`Changing perms to ${paths.length} paths...`)
 
@@ -107,7 +108,7 @@ export async function changePerms(paths: string[], perms: number): Promise<boole
         worker.on('message', (message) => {
           if (message === 'done') {
             logger.info(`Perms succesfully changed to ${paths.length} paths!`)
-            resolve(true)
+            resolve()
           }
         })
 
@@ -130,5 +131,51 @@ export async function changePerms(paths: string[], perms: number): Promise<boole
     logger.warn(`Error changing perms to ${paths.length}!`)
     logger.debug(`Error changing perms to ${paths.length}:\n${JSON.stringify(err)}`)
     throw new RustoryFSError(`Error changing perms to ${paths.length}!`, RustoryFSError.Codes.FS_ERROR)
+  }
+}
+
+/**
+ * Delete the specified paths.
+ * @param paths Paths to delete.
+ * @throws A {@link RustoryFSError} error.
+ */
+export async function deletePaths(paths: string[]): Promise<void> {
+  try {
+    const os = await getOSInfo()
+
+    return new Promise<void>((resolve, reject) => {
+      if (os.platform === 'linux') {
+        logger.info(`Deleting ${paths.length} paths...`)
+
+        const worker = new Worker(downloadPathsWorker, {
+          workerData: { paths }
+        })
+
+        worker.on('message', (message) => {
+          if (message === 'done') {
+            logger.info(`${paths.length} paths succesfully deleted!`)
+            resolve()
+          }
+        })
+
+        worker.on('error', (err) => {
+          logger.error(`Worker error deleting ${paths.length} paths!`)
+          logger.debug(`Worker error deleting ${paths.length} paths:\n${JSON.stringify(err.message)}`)
+          reject(new RustoryFSError(`Worker error deleting ${paths.length} paths!`, RustoryFSError.Codes.FS_ERROR))
+        })
+
+        worker.on('exit', (code) => {
+          if (code !== 0) {
+            logger.warn(`Worker error deleting ${paths.length} paths!`)
+            logger.debug(`Worker error deleting ${paths.length} paths. Code: ${code}`)
+            reject(new RustoryFSError(`Worker error deleting ${paths.length} paths!`, RustoryFSError.Codes.FS_ERROR))
+          }
+        })
+      }
+    })
+  } catch (err) {
+    logger.warn(`Worker error deleting ${paths.length} paths!`)
+    logger.debug(`Worker error deleting ${paths.length} paths:\n${JSON.stringify(err)}`)
+    throw new RustoryFSError(`Worker error deleting ${paths.length} paths!`, RustoryFSError.Codes.FS_ERROR)
   }
 }

@@ -96,8 +96,8 @@ export class TaskInstallVersion implements TaskBase {
    * @returns The final status of the task.
    */
   public async execute(): Promise<TaskBase.Status> {
-    const downloadProgressEvent = window.api.net.downloader.on.progress((_event, _id, progress) => (this._downloadProgress = progress))
-    const extractProgressEvent = window.api.zip.extractor.on.progress((_event, _id, progress) => (this._extractProgress = progress))
+    const cleanDownloadProgressEvent = window.api.net.downloader.on.progress((_event, _id, progress) => (this._downloadProgress = progress))
+    const cleanExtractProgressEvent = window.api.zip.extractor.on.progress((_event, _id, progress) => (this._extractProgress = progress))
 
     try {
       const vsVersion = new VSVersion({ version: this._version, path: this._outputPath })
@@ -111,13 +111,14 @@ export class TaskInstallVersion implements TaskBase {
 
       const extractFlePath = await window.api.fs.join(downloadOutputPath, downloadFileName)
 
-      // TODO: Delete anything on the outputPath before installing.
+      await window.api.fs.deletePaths([this.outputPath])
 
       await window.api.zip.extractor.extract(this._id, extractFlePath, this._outputPath)
 
-      // TODO: Delete the zip after extracting it.
+      await window.api.fs.deletePaths([extractFlePath])
 
-      // TODO: Add the version to the database.
+      await vsVersion.save()
+
       vsVersion.state = VSVersion.State.INSTALLED
 
       this._status = TaskBase.Status.COMPLETED
@@ -130,9 +131,8 @@ export class TaskInstallVersion implements TaskBase {
       window.api.logger.error(`There was an error installing the version:\n${JSON.stringify(err)}`)
       this._status = TaskBase.Status.FAILED
     } finally {
-      // Clear progress event listeners and return the status.
-      downloadProgressEvent()
-      extractProgressEvent()
+      cleanDownloadProgressEvent()
+      cleanExtractProgressEvent()
       return this._status
     }
   }

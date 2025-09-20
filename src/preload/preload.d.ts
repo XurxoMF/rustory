@@ -74,10 +74,15 @@ declare global {
        * Change permissions to the specified paths.
        * @param paths Paths to change perms to.
        * @param perms The permissions to change to. Example: `0o755`.
-       * @returns If permissions where changed sucessfully or not.
        * @throws A RustoryFSError error.
        */
-      changePerms: (paths: string[], perms: number) => Promise<boolean>
+      changePerms: (paths: string[], perms: number) => Promise<void>
+      /**
+       * Delete the specified paths.
+       * @param paths Paths to change perms to.
+       * @throws A RustoryFSError error.
+       */
+      deletePaths: (paths: string[]) => Promise<void>
     }
     /**
      * Get the system info of various hardware and software components.
@@ -204,7 +209,31 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        setItem: (key: string, value: string) => Promise<boolean>
+        setItem: (key: string, value: string) => Promise<void>
+      }
+      /**
+       * Interact with the vsVersion table.
+       */
+      vsVersion: {
+        /**
+         * Add or update a version to the DB.
+         * @param version Thew version to save.
+         * @returns If it was saved or not.
+         * @throws A RustoryDBError error.
+         */
+        saveVSVersion: (version: VSVersionType) => Promise<void>
+        /**
+         * Delete a version from the DB.
+         * @param version The version to delete.
+         * @throws A RustoryDBError error.
+         */
+        deleteVSVersion: (version: VSVersionType) => Promise<void>
+        /**
+         * Get all the versions from the DB.
+         * @returns The versions found.
+         * @throws A RustoryDBError error.
+         */
+        getVSVersions: () => Promise<VSVersionType[]>
       }
     }
     /**

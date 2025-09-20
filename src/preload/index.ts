@@ -19,7 +19,8 @@ const api: BridgeAPI = {
     showDialog: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.showDialog, ...params),
     join: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.join, ...params),
     getPath: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.getPath, ...params),
-    changePerms: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.changePerms, ...params)
+    changePerms: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.changePerms, ...params),
+    deletePaths: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.deletePaths, ...params)
   },
   system: {
     getOSInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getOSInfo),
@@ -49,6 +50,11 @@ const api: BridgeAPI = {
     config: {
       getItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.getItem, ...params),
       setItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.setItem, ...params)
+    },
+    vsVersion: {
+      getVSVersions: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.getVSVersions, ...params),
+      saveVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.saveVSVersion, ...params),
+      deleteVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.deleteVSVersion, ...params)
     }
   },
   zip: {

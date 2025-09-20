@@ -2,10 +2,19 @@
  * Must have at least the same properties as {@link VSAPIModTagType}
  */
 export class VSAPIModTag {
+  /**
+   * The id of the tag.
+   */
   private _tagid: number
 
+  /**
+   * The name of the tag.
+   */
   private _name: string
 
+  /**
+   * The color of the tag.
+   */
   private _color: string
 
   public constructor(data: { tagid: number; name: string; color: string }) {
@@ -14,14 +23,23 @@ export class VSAPIModTag {
     this._color = $state(data.color)
   }
 
+  /**
+   * The id of the tag.
+   */
   public get tagid(): number {
     return this._tagid
   }
 
+  /**
+   * The name of the tag.
+   */
   public get name(): string {
     return this._name
   }
 
+  /**
+   * The color of the tag.
+   */
   public get color(): string {
     return this._color
   }

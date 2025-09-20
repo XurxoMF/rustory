@@ -5,32 +5,74 @@ import { VSMod } from './VSMod.svelte'
  * Must have at least the same properties as {@link VSInstanceType}
  */
 export class VSInstance {
+  /**
+   * The id of the instance.
+   */
   private _id: number
 
+  /**
+   * The name of the instance.
+   */
   private _name: string
 
+  /**
+   * The path of the instance.
+   */
   private _path: string
 
+  /**
+   * The version of the instance.
+   */
   private _version: string
 
+  /**
+   * The start parameters of the instance.
+   */
   private _startParams: string
 
+  /**
+   * The backups limit of the instance.
+   */
   private _backupsLimit: number
 
+  /**
+   * The backups auto of the instance.
+   */
   private _backupsAuto: boolean
 
+  /**
+   * The compression level of the instance.
+   */
   private _compressionLevel: number
 
+  /**
+   * The backups of the instance.
+   */
   private _backups: VSInstanceBackup[]
 
+  /**
+   * The mods of the instance.
+   */
   private _mods: VSMod[]
 
+  /**
+   * The last time played of the instance.
+   */
   private _lastTimePlayed: number
 
+  /**
+   * The total time played of the instance.
+   */
   private _totalTimePlayed: number
 
+  /**
+   * The mesa gl thread of the instance.
+   */
   private _mesaGlThread: boolean
 
+  /**
+   * The env vars of the instance.
+   */
   private _envVars: string
 
   public constructor(data: {
@@ -65,58 +107,100 @@ export class VSInstance {
     this._envVars = $state(data.envVars)
   }
 
+  /**
+   * The id of the instance.
+   */
   public get id(): number {
     return this._id
   }
 
+  /**
+   * The name of the instance.
+   */
   public get name(): string {
     return this._name
   }
 
+  /**
+   * The path of the instance.
+   */
   public get path(): string {
     return this._path
   }
 
+  /**
+   * The version of the instance.
+   */
   public get version(): string {
     return this._version
   }
 
+  /**
+   * The start parameters of the instance.
+   */
   public get startParams(): string {
     return this._startParams
   }
 
+  /**
+   * The backups limit of the instance.
+   */
   public get backupsLimit(): number {
     return this._backupsLimit
   }
 
+  /**
+   * The backups auto of the instance.
+   */
   public get backupsAuto(): boolean {
     return this._backupsAuto
   }
 
+  /**
+   * The compression level of the instance.
+   */
   public get compressionLevel(): number {
     return this._compressionLevel
   }
 
+  /**
+   * The backups of the instance.
+   */
   public get backups(): VSInstanceBackup[] {
     return this._backups
   }
 
+  /**
+   * The mods of the instance.
+   */
   public get mods(): VSMod[] {
     return this._mods
   }
 
+  /**
+   * The last time played of the instance.
+   */
   public get lastTimePlayed(): number {
     return this._lastTimePlayed
   }
 
+  /**
+   * The total time played of the instance.
+   */
   public get totalTimePlayed(): number {
     return this._totalTimePlayed
   }
 
+  /**
+   * The mesa gl thread of the instance.
+   */
   public get mesaGlThread(): boolean {
     return this._mesaGlThread
   }
 
+  /**
+   * The env vars of the instance.
+   */
   public get envVars(): string {
     return this._envVars
   }

@@ -2,8 +2,14 @@
  * Must have at least the same properties as {@link VSAPIModAuthorType}
  */
 export class VSAPIModAuthor {
+  /**
+   * The id of the author.
+   */
   private _userid: string
 
+  /**
+   * The name of the author.
+   */
   private _name: string
 
   public constructor(data: { userid: string; name: string }) {
@@ -11,10 +17,16 @@ export class VSAPIModAuthor {
     this._name = $state(data.name)
   }
 
+  /**
+   * The id of the author.
+   */
   public get userid(): string {
     return this._userid
   }
 
+  /**
+   * The name of the author.
+   */
   public get name(): string {
     return this._name
   }
