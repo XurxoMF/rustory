@@ -1,7 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSModScreenshotType}
+ * Must have at least the same properties as {@link VSAPIModScreenshotType}
  */
-export class VSModScreenshot {
+export class VSAPIModScreenshot {
   private _fileid: number
 
   private _mainfile: string
@@ -41,10 +41,10 @@ export class VSModScreenshot {
   }
 
   /**
-   * Convert this {@link VSModScreenshot} into a {@link VSModScreenshotType} json
-   * @returns The {@link VSModScreenshotType} json
+   * Convert this {@link VSAPIModScreenshot} into a {@link VSAPIModScreenshotType} json
+   * @returns The {@link VSAPIModScreenshotType} json
    */
-  public toJSON(): VSModScreenshotType {
+  public toJSON(): VSAPIModScreenshotType {
     return {
       fileid: this._fileid,
       mainfile: this._mainfile,
@@ -55,12 +55,12 @@ export class VSModScreenshot {
   }
 
   /**
-   * Converts a {@link VSModScreenshotType} json to a {@link VSModScreenshot}
-   * @param json The {@link VSModScreenshotType} to convert
-   * @returns The {@link VSModScreenshot}
+   * Converts a {@link VSAPIModScreenshotType} json to a {@link VSAPIModScreenshot}
+   * @param json The {@link VSAPIModScreenshotType} to convert
+   * @returns The {@link VSAPIModScreenshot}
    */
-  public static fromJSON(json: VSModScreenshotType): VSModScreenshot {
-    return new VSModScreenshot({
+  public static fromJSON(json: VSAPIModScreenshotType): VSAPIModScreenshot {
+    return new VSAPIModScreenshot({
       fileid: json.fileid,
       mainfile: json.mainfile,
       filename: json.filename,

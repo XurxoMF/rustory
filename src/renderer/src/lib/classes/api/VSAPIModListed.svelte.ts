@@ -2,9 +2,9 @@
 // Query it with /api/mods
 
 /**
- * Must have at least the same properties as {@link VSModListedType}
+ * Must have at least the same properties as {@link VSAPIModListedType}
  */
-export class VSModListed {
+export class VSAPIModListed {
   private _modid: number
 
   private _assetid: number
@@ -138,10 +138,10 @@ export class VSModListed {
   }
 
   /**
-   * Convert this {@link VSModListed} into a {@link VSModListedType} json
-   * @returns The {@link VSModListed} json
+   * Convert this {@link VSAPIModListed} into a {@link VSAPIModListedType} json
+   * @returns The {@link VSAPIModListed} json
    */
-  public toJSON(): VSModListedType {
+  public toJSON(): VSAPIModListedType {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -163,12 +163,12 @@ export class VSModListed {
   }
 
   /**
-   * Converts a {@link VSModListedType} json to a {@link VSModListed}
-   * @param json The {@link VSModListedType} to convert
-   * @returns The {@link VSModListed}
+   * Converts a {@link VSAPIModListedType} json to a {@link VSAPIModListed}
+   * @param json The {@link VSAPIModListedType} to convert
+   * @returns The {@link VSAPIModListed}
    */
-  public static fromJSON(json: VSModListedType): VSModListed {
-    return new VSModListed({
+  public static fromJSON(json: VSAPIModListedType): VSAPIModListed {
+    return new VSAPIModListed({
       modid: json.modid,
       assetid: json.assetid,
       downloads: json.downloads,

@@ -1,7 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSModGameVersionType}
+ * Must have at least the same properties as {@link VSAPIModGameVersionType}
  */
-export class VSModGameVersion {
+export class VSAPIModGameVersion {
   private _tagid: string
 
   private _name: string
@@ -27,10 +27,10 @@ export class VSModGameVersion {
   }
 
   /**
-   * Convert this {@link VSModGameVersion} into a {@link VSModGameVersionType} json
-   * @returns The {@link VSModGameVersionType} json
+   * Convert this {@link VSAPIModGameVersion} into a {@link VSAPIModGameVersionType} json
+   * @returns The {@link VSAPIModGameVersionType} json
    */
-  public toJSON(): VSModGameVersionType {
+  public toJSON(): VSAPIModGameVersionType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -39,12 +39,12 @@ export class VSModGameVersion {
   }
 
   /**
-   * Converts a {@link VSModGameVersionType} json to a {@link VSModGameVersion}
-   * @param json The {@link VSModGameVersionType} to convert
-   * @returns The {@link VSModGameVersion}
+   * Converts a {@link VSAPIModGameVersionType} json to a {@link VSAPIModGameVersion}
+   * @param json The {@link VSAPIModGameVersionType} to convert
+   * @returns The {@link VSAPIModGameVersion}
    */
-  public static fromJSON(json: VSModGameVersionType): VSModGameVersion {
-    return new VSModGameVersion({
+  public static fromJSON(json: VSAPIModGameVersionType): VSAPIModGameVersion {
+    return new VSAPIModGameVersion({
       tagid: json.tagid,
       name: json.name,
       color: json.color

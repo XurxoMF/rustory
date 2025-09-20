@@ -1,5 +1,5 @@
 import { VSInstanceBackup } from './VSInstanceBackup.svelte'
-import { VSModInstalled } from './VSModInstalled.svelte'
+import { VSMod } from './VSMod.svelte'
 
 /**
  * Must have at least the same properties as {@link VSInstanceType}
@@ -23,7 +23,7 @@ export class VSInstance {
 
   private _backups: VSInstanceBackup[]
 
-  private _mods: VSModInstalled[]
+  private _mods: VSMod[]
 
   private _lastTimePlayed: number
 
@@ -43,7 +43,7 @@ export class VSInstance {
     backupsAuto: boolean
     compressionLevel: number
     backups: VSInstanceBackup[]
-    mods: VSModInstalled[]
+    mods: VSMod[]
     lastTimePlayed: number
     totalTimePlayed: number
     mesaGlThread: boolean
@@ -101,7 +101,7 @@ export class VSInstance {
     return this._backups
   }
 
-  public get mods(): VSModInstalled[] {
+  public get mods(): VSMod[] {
     return this._mods
   }
 
@@ -160,7 +160,7 @@ export class VSInstance {
       backupsAuto: json.backupsAuto,
       compressionLevel: json.compressionLevel,
       backups: json.backups.map((backup) => VSInstanceBackup.fromJSON(backup)),
-      mods: json.mods.map((mod) => VSModInstalled.fromJSON(mod)),
+      mods: json.mods.map((mod) => VSMod.fromJSON(mod)),
       lastTimePlayed: json.lastTimePlayed,
       totalTimePlayed: json.totalTimePlayed,
       mesaGlThread: json.mesaGlThread,

@@ -33,7 +33,7 @@ declare global {
     backupsAuto: boolean
     compressionLevel: number
     backups: VSInstanceBackupType[]
-    mods: VSModInstalledType[]
+    mods: VSModType[]
     lastTimePlayed: number
     totalTimePlayed: number
     mesaGlThread: boolean
@@ -46,7 +46,7 @@ declare global {
     path: string
   }
 
-  type VSModListedType = {
+  type VSAPIModListedType = {
     modid: number
     assetid: number
     downloads: number
@@ -65,7 +65,7 @@ declare global {
     lastreleased: string
   }
 
-  type VSModType = {
+  type VSAPIModType = {
     modid: number
     assetid: number
     name: string
@@ -88,22 +88,22 @@ declare global {
     createdat: string
     lastmodified: string
     tags: string[]
-    releases: VSModReleaseType[]
-    screenshots: VSModScreenshotType[]
+    releases: VSAPIModReleaseType[]
+    screenshots: VSAPIModScreenshotType[]
   }
 
-  type VSModAuthorType = {
+  type VSAPIModAuthorType = {
     userid: string
     name: string
   }
 
-  type VSModGameVersionType = {
+  type VSAPIModGameVersionType = {
     tagid: string
     name: string
     color: string
   }
 
-  type VSModInstalledType = {
+  type VSModType = {
     name: string
     modid: string
     version: string
@@ -114,10 +114,10 @@ declare global {
     contributors: string[]
     type: string | undefined
     image: string | undefined
-    mod: VSModType
+    mod: VSAPIModType
   }
 
-  type VSModReleaseType = {
+  type VSAPIModReleaseType = {
     releaseid: number
     mainfile: string
     filename: string
@@ -130,7 +130,7 @@ declare global {
     changelog: string
   }
 
-  type VSModScreenshotType = {
+  type VSAPIModScreenshotType = {
     fileid: number
     mainfile: string
     filename: string
@@ -138,7 +138,7 @@ declare global {
     createdat: string
   }
 
-  type VSModTagType = {
+  type VSAPIModTagType = {
     tagid: number
     name: string
     color: string

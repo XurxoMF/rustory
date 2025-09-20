@@ -1,7 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSModTagType}
+ * Must have at least the same properties as {@link VSAPIModTagType}
  */
-export class VSModTag {
+export class VSAPIModTag {
   private _tagid: number
 
   private _name: string
@@ -27,10 +27,10 @@ export class VSModTag {
   }
 
   /**
-   * Convert this {@link VSModTag} into a {@link VSModTagType} json
-   * @returns The {@link VSModTagType} json
+   * Convert this {@link VSAPIModTag} into a {@link VSAPIModTagType} json
+   * @returns The {@link VSAPIModTagType} json
    */
-  public toJSON(): VSModTagType {
+  public toJSON(): VSAPIModTagType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -39,12 +39,12 @@ export class VSModTag {
   }
 
   /**
-   * Converts a {@link VSModTagType} json to a {@link VSModTag}
-   * @param json The {@link VSModTagType} to convert
-   * @returns The {@link VSModTag}
+   * Converts a {@link VSAPIModTagType} json to a {@link VSAPIModTag}
+   * @param json The {@link VSAPIModTagType} to convert
+   * @returns The {@link VSAPIModTag}
    */
-  public static fromJSON(json: VSModTagType): VSModTag {
-    return new VSModTag({
+  public static fromJSON(json: VSAPIModTagType): VSAPIModTag {
+    return new VSAPIModTag({
       tagid: json.tagid,
       name: json.name,
       color: json.color

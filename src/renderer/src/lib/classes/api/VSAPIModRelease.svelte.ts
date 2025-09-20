@@ -1,7 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSModReleaseType}
+ * Must have at least the same properties as {@link VSAPIModReleaseType}
  */
-export class VSModRelease {
+export class VSAPIModRelease {
   private _releaseid: number
 
   private _mainfile: string
@@ -87,10 +87,10 @@ export class VSModRelease {
   }
 
   /**
-   * Convert this {@link VSModRelease} into a {@link VSModReleaseType} json
-   * @returns The {@link VSModReleaseType} json
+   * Convert this {@link VSAPIModRelease} into a {@link VSAPIModReleaseType} json
+   * @returns The {@link VSAPIModReleaseType} json
    */
-  public toJSON(): VSModReleaseType {
+  public toJSON(): VSAPIModReleaseType {
     return {
       releaseid: this._releaseid,
       mainfile: this._mainfile,
@@ -106,12 +106,12 @@ export class VSModRelease {
   }
 
   /**
-   * Converts a {@link VSModReleaseType} json to a {@link VSModRelease}
-   * @param json The {@link VSModReleaseType} to convert
-   * @returns The {@link VSModRelease}
+   * Converts a {@link VSAPIModReleaseType} json to a {@link VSAPIModRelease}
+   * @param json The {@link VSAPIModReleaseType} to convert
+   * @returns The {@link VSAPIModRelease}
    */
-  public static fromJSON(json: VSModReleaseType): VSModRelease {
-    return new VSModRelease({
+  public static fromJSON(json: VSAPIModReleaseType): VSAPIModRelease {
+    return new VSAPIModRelease({
       releaseid: json.releaseid,
       mainfile: json.mainfile,
       filename: json.filename,
