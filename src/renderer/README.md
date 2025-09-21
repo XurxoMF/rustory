@@ -1,3 +1,3 @@
 # FOLDER DISTRIBUTION
 
-This folder contains all the **renderer** code aka the frontend.
+This folder contains all the **renderer** code AKA the frontend.
