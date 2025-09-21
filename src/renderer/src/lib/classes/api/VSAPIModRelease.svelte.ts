@@ -1,5 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSAPIModReleaseType}
+ * Mod Release queried from ModDB.
+ *
+ * Must have at least the same properties as {@link TVSAPIModRelease}.
  */
 export class VSAPIModRelease {
   /**
@@ -64,16 +66,16 @@ export class VSAPIModRelease {
     created: string
     changelog: string
   }) {
-    this._releaseid = $state(data.releaseid)
-    this._mainfile = $state(data.mainfile)
-    this._filename = $state(data.filename)
-    this._fileid = $state(data.fileid)
-    this._downloads = $state(data.downloads)
-    this._tags = $state(data.tags)
-    this._modidstr = $state(data.modidstr)
-    this._modversion = $state(data.modversion)
-    this._created = $state(data.created)
-    this._changelog = $state(data.changelog)
+    this._releaseid = data.releaseid
+    this._mainfile = data.mainfile
+    this._filename = data.filename
+    this._fileid = data.fileid
+    this._downloads = data.downloads
+    this._tags = data.tags
+    this._modidstr = data.modidstr
+    this._modversion = data.modversion
+    this._created = data.created
+    this._changelog = data.changelog
   }
 
   /**
@@ -147,10 +149,10 @@ export class VSAPIModRelease {
   }
 
   /**
-   * Convert this {@link VSAPIModRelease} into a {@link VSAPIModReleaseType} json
-   * @returns The {@link VSAPIModReleaseType} json
+   * Convert this {@link VSAPIModRelease} into a {@link TVSAPIModRelease} json.
+   * @returns The {@link TVSAPIModRelease} json.
    */
-  public toJSON(): VSAPIModReleaseType {
+  public toJSON(): TVSAPIModRelease {
     return {
       releaseid: this._releaseid,
       mainfile: this._mainfile,
@@ -166,11 +168,11 @@ export class VSAPIModRelease {
   }
 
   /**
-   * Converts a {@link VSAPIModReleaseType} json to a {@link VSAPIModRelease}
-   * @param json The {@link VSAPIModReleaseType} to convert
-   * @returns The {@link VSAPIModRelease}
+   * Converts a {@link TVSAPIModRelease} json to a {@link VSAPIModRelease}.
+   * @param json The {@link TVSAPIModRelease} to convert.
+   * @returns The {@link VSAPIModRelease}.
    */
-  public static fromJSON(json: VSAPIModReleaseType): VSAPIModRelease {
+  public static fromJSON(json: TVSAPIModRelease): VSAPIModRelease {
     return new VSAPIModRelease({
       releaseid: json.releaseid,
       mainfile: json.mainfile,

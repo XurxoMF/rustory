@@ -221,19 +221,19 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        saveVSVersion: (version: VSVersionType) => Promise<void>
+        saveVSVersion: (version: TVSVersion) => Promise<void>
         /**
          * Delete a version from the DB.
          * @param version The version to delete.
          * @throws A RustoryDBError error.
          */
-        deleteVSVersion: (version: VSVersionType) => Promise<void>
+        deleteVSVersion: (version: TVSVersion) => Promise<void>
         /**
          * Get all the versions from the DB.
          * @returns The versions found.
          * @throws A RustoryDBError error.
          */
-        getVSVersions: () => Promise<VSVersionType[]>
+        getVSVersions: () => Promise<TVSVersion[]>
       }
     }
     /**

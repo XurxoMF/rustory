@@ -1,3 +1,6 @@
+/**
+ * Store for the reaload functions.
+ */
 export class Reloader {
   /**
    * Singleton instance of the Window.
@@ -14,7 +17,7 @@ export class Reloader {
   /**
    * The callbacks that will be executed when the page is reloaded.
    */
-  private _callbacks: Reloader.Action[] = []
+  private _callbacks: Reloader.Task[] = []
 
   private constructor() {}
 
@@ -22,7 +25,7 @@ export class Reloader {
    * Add a new task to the reloader.
    * @param task - The task to add to the onReload list
    */
-  public addTask(task: Reloader.Action) {
+  public addTask(task: Reloader.Task) {
     this._callbacks.push(task)
   }
 
@@ -45,5 +48,8 @@ export class Reloader {
 }
 
 export namespace Reloader {
-  export type Action = { id: string; action: () => void | Promise<void> }
+  /**
+   * A task to executer when the page is reloaded.
+   */
+  export type Task = { id: string; action: () => void | Promise<void> }
 }

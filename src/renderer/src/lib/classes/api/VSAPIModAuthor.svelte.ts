@@ -1,5 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSAPIModAuthorType}
+ * Mod Author info queried from the ModDB.
+ *
+ * Must have at least the same properties as {@link TVSAPIModAuthor}.
  */
 export class VSAPIModAuthor {
   /**
@@ -13,8 +15,8 @@ export class VSAPIModAuthor {
   private _name: string
 
   public constructor(data: { userid: string; name: string }) {
-    this._userid = $state(data.userid)
-    this._name = $state(data.name)
+    this._userid = data.userid
+    this._name = data.name
   }
 
   /**
@@ -32,10 +34,10 @@ export class VSAPIModAuthor {
   }
 
   /**
-   * Convert this {@link VSAPIModAuthor} into a {@link VSAPIModAuthorType} json
-   * @returns The {@link VSAPIModAuthorType} json
+   * Convert this {@link VSAPIModAuthor} into a {@link TVSAPIModAuthor} json.
+   * @returns The {@link TVSAPIModAuthor} json.
    */
-  public toJSON(): VSAPIModAuthorType {
+  public toJSON(): TVSAPIModAuthor {
     return {
       userid: this._userid,
       name: this._name
@@ -43,11 +45,11 @@ export class VSAPIModAuthor {
   }
 
   /**
-   * Converts a {@link VSAPIModAuthorType} json to a {@link VSAPIModAuthor}
-   * @param json The {@link VSAPIModAuthorType} to convert
-   * @returns The {@link VSAPIModAuthor}
+   * Converts a {@link TVSAPIModAuthor} json to a {@link VSAPIModAuthor}.
+   * @param json The {@link TVSAPIModAuthor} to convert.
+   * @returns The {@link VSAPIModAuthor}.
    */
-  public static fromJSON(json: VSAPIModAuthorType): VSAPIModAuthor {
+  public static fromJSON(json: TVSAPIModAuthor): VSAPIModAuthor {
     return new VSAPIModAuthor({
       userid: json.userid,
       name: json.name

@@ -2,7 +2,9 @@ import { VSInstanceBackup } from './VSInstanceBackup.svelte'
 import { VSMod } from './VSMod.svelte'
 
 /**
- * Must have at least the same properties as {@link VSInstanceType}
+ * Vintage StoryInstance.
+ *
+ * Must have at least the same properties as {@link TVSInstance}.
  */
 export class VSInstance {
   /**
@@ -206,10 +208,10 @@ export class VSInstance {
   }
 
   /**
-   * Convert this {@link VSInstance} into a {@link VSInstanceType} json
-   * @returns The {@link VSInstanceType} json
+   * Convert this {@link VSInstance} into a {@link TVSInstance} json.
+   * @returns The {@link TVSInstance} json.
    */
-  public toJSON(): VSInstanceType {
+  public toJSON(): TVSInstance {
     return {
       id: this._id,
       name: this._name,
@@ -229,11 +231,11 @@ export class VSInstance {
   }
 
   /**
-   * Converts a {@link VSInstanceType} json to a {@link VSInstance}
-   * @param json The {@link VSInstanceType} to convert
-   * @returns The {@link VSInstance}
+   * Converts a {@link TVSInstance} json to a {@link VSInstance}.
+   * @param json The {@link TVSInstance} to convert.
+   * @returns The {@link VSInstance}.
    */
-  public static fromJSON(json: VSInstanceType): VSInstance {
+  public static fromJSON(json: TVSInstance): VSInstance {
     return new VSInstance({
       id: json.id,
       name: json.name,

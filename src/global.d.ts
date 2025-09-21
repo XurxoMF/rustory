@@ -11,7 +11,7 @@ declare global {
 
   type TPaths = 'home' | 'appData' | 'userData' | 'temp' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'logs'
 
-  type VSAccountType = {
+  type TVSAccount = {
     id: number
     email: string
     playerName: string
@@ -23,7 +23,7 @@ declare global {
     hostGameServer: boolean
   }
 
-  type VSInstanceType = {
+  type TVSInstance = {
     id: number
     name: string
     path: string
@@ -32,21 +32,21 @@ declare global {
     backupsLimit: number
     backupsAuto: boolean
     compressionLevel: number
-    backups: VSInstanceBackupType[]
-    mods: VSModType[]
+    backups: TVSInstanceBackup[]
+    mods: TVSMod[]
     lastTimePlayed: number
     totalTimePlayed: number
     mesaGlThread: boolean
     envVars: string
   }
 
-  type VSInstanceBackupType = {
+  type TVSInstanceBackup = {
     id: number
     date: number
     path: string
   }
 
-  type VSAPIModListedType = {
+  type TVSAPIModListed = {
     modid: number
     assetid: number
     downloads: number
@@ -65,7 +65,7 @@ declare global {
     lastreleased: string
   }
 
-  type VSAPIModType = {
+  type TVSAPIMod = {
     modid: number
     assetid: number
     name: string
@@ -88,22 +88,22 @@ declare global {
     createdat: string
     lastmodified: string
     tags: string[]
-    releases: VSAPIModReleaseType[]
-    screenshots: VSAPIModScreenshotType[]
+    releases: TVSAPIModRelease[]
+    screenshots: TVSAPIModScreenshot[]
   }
 
-  type VSAPIModAuthorType = {
+  type TVSAPIModAuthor = {
     userid: string
     name: string
   }
 
-  type VSAPIModGameVersionType = {
+  type TVSAPIModGameVersion = {
     tagid: string
     name: string
     color: string
   }
 
-  type VSModType = {
+  type TVSMod = {
     name: string
     modid: string
     version: string
@@ -114,10 +114,10 @@ declare global {
     contributors: string[]
     type: string | undefined
     image: string | undefined
-    mod: VSAPIModType
+    mod: TVSAPIMod
   }
 
-  type VSAPIModReleaseType = {
+  type TVSAPIModRelease = {
     releaseid: number
     mainfile: string
     filename: string
@@ -130,7 +130,7 @@ declare global {
     changelog: string
   }
 
-  type VSAPIModScreenshotType = {
+  type TVSAPIModScreenshot = {
     fileid: number
     mainfile: string
     filename: string
@@ -138,22 +138,22 @@ declare global {
     createdat: string
   }
 
-  type VSAPIModTagType = {
+  type TVSAPIModTag = {
     tagid: number
     name: string
     color: string
   }
 
-  type VSVersionType = {
+  type TVSVersion = {
     version: string
     path: string
   }
 
-  type RAPIVSVersionTypeType = 'stable' | 'rc' | 'pre'
+  type TRAPIVSVersionType = 'stable' | 'rc' | 'pre'
 
-  type RAPIVSVersionType = {
+  type TRAPIVSVersion = {
     version: string
-    type: VSAPIVersionTypeType
+    type: TRAPIVSVersionType
     releaseDate: number
     importedDate: number
     windows: string

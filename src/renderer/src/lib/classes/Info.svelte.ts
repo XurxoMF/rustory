@@ -1,6 +1,9 @@
 import { RustoryInfoError } from '@shared/errors/RustoryInfoError'
 import type { Systeminformation } from 'systeminformation'
 
+/**
+ * Info of the app.
+ */
 export class Info {
   /**
    * Singleton instance of the Info.

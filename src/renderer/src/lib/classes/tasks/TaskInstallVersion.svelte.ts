@@ -1,8 +1,9 @@
-import { Data } from '../Data.svelte'
 import { Info } from '../Info.svelte'
-import { VSVersion } from '../vintagestory/VSVersion.svelte'
 import { TaskBase } from './TaskBase.svelte'
 
+/**
+ * Task to install a VS Version.
+ */
 export class TaskInstallVersion implements TaskBase {
   /**
    * ID of the task.
@@ -135,7 +136,7 @@ export class TaskInstallVersion implements TaskBase {
 
   /**
    * Cancel the task if it's still pending. Can't be cancelled once started.
-   * @returns True if the task was cancelled, false otherwise.
+   * @returns If the task was cancelled or not.
    */
   public async cancel(): Promise<boolean> {
     if (this._status !== TaskBase.Status.PENDING) return false

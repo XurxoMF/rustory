@@ -1,5 +1,8 @@
 import { m } from '@renderer/paraglide/messages'
 
+/**
+ * Loader to manage the loading process.
+ */
 export class Loader {
   /**
    * Singleton instance of the Loader.
@@ -100,7 +103,7 @@ export class Loader {
    * Marks a task as completed and increments the completed tasks counter.
    * @param id - The id of the task you want to complete.
    */
-  public completeTask(id: Loader.TaskIdType): void {
+  public completeTask(id: Loader.TaskId): void {
     this._completedTasks.push(id)
     // Check the `visible` variable description to know why this is here xD
     if (this._completedTasks.length === Loader.TOTAL_TASKS) setTimeout(() => (this._isVisible = false), 100)
@@ -116,7 +119,16 @@ export class Loader {
 }
 
 export namespace Loader {
-  export type TasksType = typeof Loader.TASKS
-  export type TaskType = TasksType[number]
-  export type TaskIdType = TaskType['id']
+  /**
+   * List of tasks to complete.
+   */
+  export type Tasks = typeof Loader.TASKS
+  /**
+   * Basic task interface.
+   */
+  export type Task = Tasks[number]
+  /**
+   * Task IDs.
+   */
+  export type TaskId = Task['id']
 }

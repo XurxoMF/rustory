@@ -3,6 +3,9 @@ import type { TaskBase } from './tasks/TaskBase.svelte'
 import type { VSInstance } from './vintagestory/VSInstance.svelte'
 import { VSVersion } from './vintagestory/VSVersion.svelte'
 
+/**
+ * Data of the app.
+ */
 export class Data {
   /**
    * Singleton instance of the Data.

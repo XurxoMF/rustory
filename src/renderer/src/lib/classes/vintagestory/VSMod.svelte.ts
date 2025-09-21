@@ -1,10 +1,9 @@
 import { VSAPIMod } from '../api/VSAPIMod.svelte'
 
-// THIS IS THE INSTALLED MOD
-// Get the modinfo.json properties from the mod .zip file
-
 /**
- * Must have at least the same properties as {@link VSModType}
+ * Installed Mod info.
+ *
+ * Must have at least the same properties as {@link TVSMod}.
  */
 export class VSMod {
   /**
@@ -166,10 +165,10 @@ export class VSMod {
   }
 
   /**
-   * Convert this {@link VSMod} into a {@link VSModType} json
-   * @returns The {@link VSModType} json
+   * Convert this {@link VSMod} into a {@link TVSMod} json.
+   * @returns The {@link TVSMod} json.
    */
-  public toJSON(): VSModType {
+  public toJSON(): TVSMod {
     return {
       name: this._name,
       modid: this._modid,
@@ -186,11 +185,11 @@ export class VSMod {
   }
 
   /**
-   * Converts a {@link VSModType} json to a {@link VSMod}
-   * @param json The {@link VSModType} to convert
-   * @returns The {@link VSMod}
+   * Converts a {@link TVSMod} json to a {@link VSMod}.
+   * @param json The {@link TVSMod} to convert.
+   * @returns The {@link VSMod}.
    */
-  public static fromJSON(json: VSModType): VSMod {
+  public static fromJSON(json: TVSMod): VSMod {
     return new VSMod({
       name: json.name,
       modid: json.modid,

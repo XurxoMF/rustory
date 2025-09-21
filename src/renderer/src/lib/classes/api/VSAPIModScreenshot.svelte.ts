@@ -1,5 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSAPIModScreenshotType}
+ * Mod Screenshot queried from the ModDB.
+ *
+ * Must have at least the same properties as {@link TVSAPIModScreenshot}.
  */
 export class VSAPIModScreenshot {
   /**
@@ -28,11 +30,11 @@ export class VSAPIModScreenshot {
   private _createdat: string
 
   public constructor(data: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
-    this._fileid = $state(data.fileid)
-    this._mainfile = $state(data.mainfile)
-    this._filename = $state(data.filename)
-    this._thumbnailfile = $state(data.thumbnailfile)
-    this._createdat = $state(data.createdat)
+    this._fileid = data.fileid
+    this._mainfile = data.mainfile
+    this._filename = data.filename
+    this._thumbnailfile = data.thumbnailfile
+    this._createdat = data.createdat
   }
 
   /**
@@ -71,10 +73,10 @@ export class VSAPIModScreenshot {
   }
 
   /**
-   * Convert this {@link VSAPIModScreenshot} into a {@link VSAPIModScreenshotType} json
-   * @returns The {@link VSAPIModScreenshotType} json
+   * Convert this {@link VSAPIModScreenshot} into a {@link TVSAPIModScreenshot} json.
+   * @returns The {@link TVSAPIModScreenshot} json.
    */
-  public toJSON(): VSAPIModScreenshotType {
+  public toJSON(): TVSAPIModScreenshot {
     return {
       fileid: this._fileid,
       mainfile: this._mainfile,
@@ -85,11 +87,11 @@ export class VSAPIModScreenshot {
   }
 
   /**
-   * Converts a {@link VSAPIModScreenshotType} json to a {@link VSAPIModScreenshot}
-   * @param json The {@link VSAPIModScreenshotType} to convert
-   * @returns The {@link VSAPIModScreenshot}
+   * Converts a {@link TVSAPIModScreenshot} json to a {@link VSAPIModScreenshot}.
+   * @param json The {@link TVSAPIModScreenshot} to convert.
+   * @returns The {@link VSAPIModScreenshot}.
    */
-  public static fromJSON(json: VSAPIModScreenshotType): VSAPIModScreenshot {
+  public static fromJSON(json: TVSAPIModScreenshot): VSAPIModScreenshot {
     return new VSAPIModScreenshot({
       fileid: json.fileid,
       mainfile: json.mainfile,

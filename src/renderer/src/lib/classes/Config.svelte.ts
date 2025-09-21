@@ -2,6 +2,9 @@ import { m } from '@renderer/paraglide/messages'
 import { getLocale, isLocale, setLocale, type Locale } from '@renderer/paraglide/runtime'
 import { RustoryConfigError } from '@shared/errors/RustoryConfigError'
 
+/**
+ * Config of the app.
+ */
 export class Config {
   /**
    * Singleton instance of the Config.

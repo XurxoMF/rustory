@@ -1,8 +1,8 @@
-// THIS IS THE MODDB MOD BUT FROM THE MODS LIST
-// Query it with /api/mods
-
 /**
- * Must have at least the same properties as {@link VSAPIModListedType}
+ * Mod queried from the ModDB.
+ * This is the simplified mod from /api/mods.
+ *
+ * Must have at least the same properties as {@link TVSAPIModListed}.
  */
 export class VSAPIModListed {
   /**
@@ -103,22 +103,22 @@ export class VSAPIModListed {
     tags: string[]
     lastreleased: string
   }) {
-    this._modid = $state(data.modid)
-    this._assetid = $state(data.assetid)
-    this._downloads = $state(data.downloads)
-    this._follows = $state(data.follows)
-    this._trendingpoints = $state(data.trendingpoints)
-    this._comments = $state(data.comments)
-    this._name = $state(data.name)
-    this._summary = $state(data.summary)
-    this._modidstrs = $state(data.modidstrs)
-    this._author = $state(data.author)
-    this._urlalias = $state(data.urlalias)
-    this._side = $state(data.side)
-    this._type = $state(data.type)
-    this._logo = $state(data.logo)
-    this._tags = $state(data.tags)
-    this._lastreleased = $state(data.lastreleased)
+    this._modid = data.modid
+    this._assetid = data.assetid
+    this._downloads = data.downloads
+    this._follows = data.follows
+    this._trendingpoints = data.trendingpoints
+    this._comments = data.comments
+    this._name = data.name
+    this._summary = data.summary
+    this._modidstrs = data.modidstrs
+    this._author = data.author
+    this._urlalias = data.urlalias
+    this._side = data.side
+    this._type = data.type
+    this._logo = data.logo
+    this._tags = data.tags
+    this._lastreleased = data.lastreleased
   }
 
   /**
@@ -234,10 +234,10 @@ export class VSAPIModListed {
   }
 
   /**
-   * Convert this {@link VSAPIModListed} into a {@link VSAPIModListedType} json
+   * Convert this {@link VSAPIModListed} into a {@link TVSAPIModListed} json
    * @returns The {@link VSAPIModListed} json
    */
-  public toJSON(): VSAPIModListedType {
+  public toJSON(): TVSAPIModListed {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -259,11 +259,11 @@ export class VSAPIModListed {
   }
 
   /**
-   * Converts a {@link VSAPIModListedType} json to a {@link VSAPIModListed}
-   * @param json The {@link VSAPIModListedType} to convert
+   * Converts a {@link TVSAPIModListed} json to a {@link VSAPIModListed}
+   * @param json The {@link TVSAPIModListed} to convert
    * @returns The {@link VSAPIModListed}
    */
-  public static fromJSON(json: VSAPIModListedType): VSAPIModListed {
+  public static fromJSON(json: TVSAPIModListed): VSAPIModListed {
     return new VSAPIModListed({
       modid: json.modid,
       assetid: json.assetid,

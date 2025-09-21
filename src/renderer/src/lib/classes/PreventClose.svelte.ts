@@ -1,3 +1,6 @@
+/**
+ * Store to prevent the app from closing.
+ */
 export class PreventClose {
   /**
    * Singleton instance of the PreventClose.
@@ -14,7 +17,7 @@ export class PreventClose {
   /**
    * List of tasks that prevent the app from closing.
    */
-  private _tasks: PreventClose.PreventCloseTaskType[] = $state([])
+  private _tasks: PreventClose.Task[] = $state([])
 
   /**
    * If the app can be closed or not.
@@ -26,7 +29,7 @@ export class PreventClose {
   /**
    * List of tasks that prevent the app from closing.
    */
-  public get tasks(): PreventClose.PreventCloseTaskType[] {
+  public get tasks(): PreventClose.Task[] {
     return this._tasks
   }
 
@@ -58,5 +61,8 @@ export class PreventClose {
 }
 
 export namespace PreventClose {
-  export type PreventCloseTaskType = { id: string; reason: string }
+  /**
+   * A task that prevents the app from closing.
+   */
+  export type Task = { id: string; reason: string }
 }

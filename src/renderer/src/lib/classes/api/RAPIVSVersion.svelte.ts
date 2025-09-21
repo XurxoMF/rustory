@@ -4,7 +4,9 @@ import { Info } from '../Info.svelte'
 import { VSVersion } from '../vintagestory/VSVersion.svelte'
 import { Data } from '../Data.svelte'
 /**
- * Must have at least the same properties as {@link RAPIVSVersionType}
+ * Version queried from the Rustory API.
+ *
+ * Must have at least the same properties as {@link TRAPIVSVersion}.
  */
 export class RAPIVSVersion {
   /**
@@ -15,7 +17,7 @@ export class RAPIVSVersion {
   /**
    * The type of the version.
    */
-  private _type: RAPIVSVersionTypeType
+  private _type: RAPIVSVersion.Type
 
   /**
    * The release date of the version.
@@ -59,7 +61,7 @@ export class RAPIVSVersion {
 
   public constructor(data: {
     version: string
-    type: RAPIVSVersionTypeType
+    type: RAPIVSVersion.Type
     releaseDate: number
     importedDate: number
     windows: string
@@ -91,7 +93,7 @@ export class RAPIVSVersion {
   /**
    * The type of the version.
    */
-  public get type(): RAPIVSVersionTypeType {
+  public get type(): RAPIVSVersion.Type {
     return this._type
   }
 
@@ -152,13 +154,13 @@ export class RAPIVSVersion {
   }
 
   /**
-   * Convert this {@link RAPIVSVersion} into a {@link RAPIVSVersionType} json
-   * @returns The {@link RAPIVSVersionType} json
+   * Convert this {@link RAPIVSVersion} into a {@link TRAPIVSVersion} json.
+   * @returns The {@link TRAPIVSVersion} json.
    */
-  public toJSON(): RAPIVSVersionType {
+  public toJSON(): TRAPIVSVersion {
     return {
       version: this._version,
-      type: this._type,
+      type: this._type as TRAPIVSVersionType,
       releaseDate: this._releaseDate,
       importedDate: this._importedDate,
       windows: this._windows,
@@ -171,14 +173,14 @@ export class RAPIVSVersion {
   }
 
   /**
-   * Converts a {@link RAPIVSVersionType} json to a {@link RAPIVSVersion}
-   * @param json The {@link RAPIVSVersionType} to convert
-   * @returns The {@link RAPIVSVersion}
+   * Converts a {@link TRAPIVSVersion} json to a {@link RAPIVSVersion}.
+   * @param json The {@link TRAPIVSVersion} to convert.
+   * @returns The {@link RAPIVSVersion}.
    */
-  public static fromJSON(json: RAPIVSVersionType): RAPIVSVersion {
+  public static fromJSON(json: TRAPIVSVersion): RAPIVSVersion {
     return new RAPIVSVersion({
       version: json.version,
-      type: json.type,
+      type: json.type as RAPIVSVersion.Type,
       releaseDate: json.releaseDate,
       importedDate: json.importedDate,
       windows: json.windows,
@@ -222,4 +224,13 @@ export class RAPIVSVersion {
 
     await vsVersion.install(url)
   }
+}
+
+export namespace RAPIVSVersion {
+  /**
+   * Type of the version.
+   *
+   * Must have at least the same properties as {@link TRAPIVSVersionType}.
+   */
+  export type Type = 'release' | 'rc' | 'pre'
 }

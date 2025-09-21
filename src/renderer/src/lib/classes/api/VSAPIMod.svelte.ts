@@ -1,11 +1,11 @@
 import { VSAPIModRelease } from './VSAPIModRelease.svelte'
 import { VSAPIModScreenshot } from './VSAPIModScreenshot.svelte'
 
-// THIS IS THE MODDB MOD
-// Query it with /api/mods/{modid}
-
 /**
- * Must have at least the same properties as {@link VSAPIModType}
+ * Mod info queried from the ModDB.
+ * This is the complete mod from /api/mods/{modid}.
+ *
+ * Must have at least the same properties as {@link TVSAPIMod}.
  */
 export class VSAPIMod {
   /**
@@ -154,30 +154,30 @@ export class VSAPIMod {
     releases: VSAPIModRelease[]
     screenshots: VSAPIModScreenshot[]
   }) {
-    this._modid = $state(data.modid)
-    this._assetid = $state(data.assetid)
-    this._name = $state(data.name)
-    this._text = $state(data.text)
-    this._author = $state(data.author)
-    this._urlalias = $state(data.urlalias)
-    this._logofilename = $state(data.logofilename)
-    this._logofile = $state(data.logofile)
-    this._homepageurl = $state(data.homepageurl)
-    this._sourcecodeurl = $state(data.sourcecodeurl)
-    this._trailervideourl = $state(data.trailervideourl)
-    this._issuetrackerurl = $state(data.issuetrackerurl)
-    this._wikiurl = $state(data.wikiurl)
-    this._downloads = $state(data.downloads)
-    this._follows = $state(data.follows)
-    this._trendingpoints = $state(data.trendingpoints)
-    this._comments = $state(data.comments)
-    this._side = $state(data.side)
-    this._type = $state(data.type)
-    this._createdat = $state(data.createdat)
-    this._lastmodified = $state(data.lastmodified)
-    this._tags = $state(data.tags)
-    this._releases = $state(data.releases)
-    this._screenshots = $state(data.screenshots)
+    this._modid = data.modid
+    this._assetid = data.assetid
+    this._name = data.name
+    this._text = data.text
+    this._author = data.author
+    this._urlalias = data.urlalias
+    this._logofilename = data.logofilename
+    this._logofile = data.logofile
+    this._homepageurl = data.homepageurl
+    this._sourcecodeurl = data.sourcecodeurl
+    this._trailervideourl = data.trailervideourl
+    this._issuetrackerurl = data.issuetrackerurl
+    this._wikiurl = data.wikiurl
+    this._downloads = data.downloads
+    this._follows = data.follows
+    this._trendingpoints = data.trendingpoints
+    this._comments = data.comments
+    this._side = data.side
+    this._type = data.type
+    this._createdat = data.createdat
+    this._lastmodified = data.lastmodified
+    this._tags = data.tags
+    this._releases = data.releases
+    this._screenshots = data.screenshots
   }
 
   /**
@@ -349,10 +349,10 @@ export class VSAPIMod {
   }
 
   /**
-   * Convert this {@link VSAPIMod} into a {@link VSAPIModType} json
-   * @returns The {@link VSAPIModType} json
+   * Convert this {@link VSAPIMod} into a {@link TVSAPIMod} json.
+   * @returns The {@link TVSAPIMod} json.
    */
-  public toJSON(): VSAPIModType {
+  public toJSON(): TVSAPIMod {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -382,11 +382,11 @@ export class VSAPIMod {
   }
 
   /**
-   * Converts a {@link VSAPIModType} json to a {@link VSAPIMod}
-   * @param json The {@link VSAPIModType} to convert
-   * @returns The {@link VSAPIMod}
+   * Converts a {@link TVSAPIMod} json to a {@link VSAPIMod}.
+   * @param json The {@link TVSAPIMod} to convert.
+   * @returns The {@link VSAPIMod}.
    */
-  public static fromJSON(json: VSAPIModType): VSAPIMod {
+  public static fromJSON(json: TVSAPIMod): VSAPIMod {
     return new VSAPIMod({
       modid: json.modid,
       assetid: json.assetid,

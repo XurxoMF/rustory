@@ -1,5 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSAccountType}
+ * Vintage Story user account.
+ *
+ * Must have at least the same properties as {@link TVSAccount}.
  */
 export class VSAccount {
   /**
@@ -47,7 +49,7 @@ export class VSAccount {
    */
   private _hostGameServer: boolean
 
-  public constructor(data: VSAccountType) {
+  public constructor(data: TVSAccount) {
     this._id = $state(data.id)
     this._email = $state(data.email)
     this._playerName = $state(data.playerName)
@@ -123,10 +125,10 @@ export class VSAccount {
   }
 
   /**
-   * Convert this {@link VSAccount} into a {@link VSAccountType} json
-   * @returns The {@link VSAccountType} json
+   * Convert this {@link VSAccount} into a {@link TVSAccount} json.
+   * @returns The {@link TVSAccount} json.
    */
-  public toJSON(): VSAccountType {
+  public toJSON(): TVSAccount {
     return {
       id: this._id,
       email: this._email,
@@ -141,11 +143,11 @@ export class VSAccount {
   }
 
   /**
-   * Converts a {@link VSAccountType} json to a {@link VSAccount}
-   * @param json The {@link VSAccountType} to convert
-   * @returns The {@link VSAccount}
+   * Converts a {@link TVSAccount} json to a {@link VSAccount}.
+   * @param json The {@link TVSAccount} to convert.
+   * @returns The {@link VSAccount}.
    */
-  public static fromJSON(json: VSAccountType): VSAccount {
+  public static fromJSON(json: TVSAccount): VSAccount {
     return new VSAccount({
       id: json.id,
       email: json.email,

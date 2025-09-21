@@ -1,5 +1,7 @@
 /**
- * Must have at least the same properties as {@link VSAPIModGameVersionType}
+ * Mod Game Version queried from the ModDB.
+ *
+ * Must have at least the same properties as {@link TVSAPIModGameVersion}.
  */
 export class VSAPIModGameVersion {
   /**
@@ -18,9 +20,9 @@ export class VSAPIModGameVersion {
   private _color: string
 
   public constructor(data: { tagid: string; name: string; color: string }) {
-    this._tagid = $state(data.tagid)
-    this._name = $state(data.name)
-    this._color = $state(data.color)
+    this._tagid = data.tagid
+    this._name = data.name
+    this._color = data.color
   }
 
   /**
@@ -45,10 +47,10 @@ export class VSAPIModGameVersion {
   }
 
   /**
-   * Convert this {@link VSAPIModGameVersion} into a {@link VSAPIModGameVersionType} json
-   * @returns The {@link VSAPIModGameVersionType} json
+   * Convert this {@link VSAPIModGameVersion} into a {@link TVSAPIModGameVersion} json.
+   * @returns The {@link TVSAPIModGameVersion} json.
    */
-  public toJSON(): VSAPIModGameVersionType {
+  public toJSON(): TVSAPIModGameVersion {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -57,11 +59,11 @@ export class VSAPIModGameVersion {
   }
 
   /**
-   * Converts a {@link VSAPIModGameVersionType} json to a {@link VSAPIModGameVersion}
-   * @param json The {@link VSAPIModGameVersionType} to convert
-   * @returns The {@link VSAPIModGameVersion}
+   * Converts a {@link TVSAPIModGameVersion} json to a {@link VSAPIModGameVersion}.
+   * @param json The {@link TVSAPIModGameVersion} to convert.
+   * @returns The {@link VSAPIModGameVersion}.
    */
-  public static fromJSON(json: VSAPIModGameVersionType): VSAPIModGameVersion {
+  public static fromJSON(json: TVSAPIModGameVersion): VSAPIModGameVersion {
     return new VSAPIModGameVersion({
       tagid: json.tagid,
       name: json.name,

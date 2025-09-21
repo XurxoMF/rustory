@@ -4,7 +4,9 @@ import { Data } from '../Data.svelte'
 import { TaskBase } from '../tasks/TaskBase.svelte'
 
 /**
- * Must have at least the same properties as {@link VSVersionType}
+ * Vintage Storty Version.
+ *
+ * Must have at least the same properties as {@link TVSVersion}.
  */
 export class VSVersion {
   /**
@@ -57,10 +59,10 @@ export class VSVersion {
   }
 
   /**
-   * Convert this {@link VSVersion} into a {@link VSVersionType} json.
-   * @returns The {@link VSVersionType} json.
+   * Convert this {@link VSVersion} into a {@link TVSVersion} json.
+   * @returns The {@link TVSVersion} json.
    */
-  public toJSON(): VSVersionType {
+  public toJSON(): TVSVersion {
     return {
       version: this._version,
       path: this._path
@@ -68,12 +70,12 @@ export class VSVersion {
   }
 
   /**
-   * Converts a {@link VSVersionType} json to a {@link VSVersion}.
-   * @param json The {@link VSVersionType} to convert.
+   * Converts a {@link TVSVersion} json to a {@link VSVersion}.
+   * @param json The {@link TVSVersion} to convert.
    * @param state The state of the versino.
    * @returns The {@link VSVersion}.
    */
-  public static fromJSON(json: VSVersionType, state?: VSVersion.State): VSVersion {
+  public static fromJSON(json: TVSVersion, state?: VSVersion.State): VSVersion {
     return new VSVersion({
       version: json.version,
       path: json.path,
@@ -139,7 +141,7 @@ export class VSVersion {
 
   /**
    * Get all the VS Versions from the DB.
-   * @returns All the VS Versions from the DB.
+   * @returns All the {@link VSVersion} from the DB.
    * @throws {RustoryVSVersionError} When there is an error getting the VS Versions.
    */
   public static async getAllFromDB(): Promise<VSVersion[]> {
@@ -156,6 +158,9 @@ export class VSVersion {
 }
 
 export namespace VSVersion {
+  /**
+   * State of the version.
+   */
   export enum State {
     NOT_INSTALLED = 'not_installed',
     INSTALLED = 'installed',
