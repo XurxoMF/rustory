@@ -1,6 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
-  "loader__tasks__desc__app_init": "Loading Rustory data",
+  "loader__tasks__desc__app_init": "Loading Rustory config",
+  "loader__tasks__desc__data_loading": "Loading Rustory data",
   "loader__tasks__desc__timeout": "Rendering the UI",
   "common__home": "Home",
   "common__config": "Config",
