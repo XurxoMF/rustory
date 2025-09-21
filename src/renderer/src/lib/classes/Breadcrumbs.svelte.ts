@@ -2,13 +2,12 @@ export class Breadcrumbs {
   /**
    * Singleton instance of the Breadcrumbs.
    */
-  private static _instance: Breadcrumbs | null = null
+  private static _instance: Breadcrumbs = new Breadcrumbs()
 
   /**
    * Get the instance of the Breadcrumbs.
    */
   public static get instance(): Breadcrumbs {
-    if (Breadcrumbs._instance === null) Breadcrumbs._instance = new Breadcrumbs()
     return Breadcrumbs._instance
   }
 

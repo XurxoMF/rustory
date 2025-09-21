@@ -20,6 +20,10 @@ export namespace RustoryVSVersionError {
     /**
      * Generic, not specified.
      */
-    VSVERSION_ERROR = 'VSVERSION_ERROR'
+    VSVERSION_ERROR = 'VSVERSION_ERROR',
+    /**
+     * Unsupported OS.
+     */
+    UNSUPORTED_OS = 'UNSUPORTED_OS'
   }
 }

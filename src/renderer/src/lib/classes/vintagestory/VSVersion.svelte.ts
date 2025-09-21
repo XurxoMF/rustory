@@ -1,4 +1,7 @@
 import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
+import { TaskInstallVersion } from '../tasks/TaskInstallVersion.svelte'
+import { Data } from '../Data.svelte'
+import { TaskBase } from '../tasks/TaskBase.svelte'
 
 /**
  * Must have at least the same properties as {@link VSVersionType}
@@ -19,10 +22,10 @@ export class VSVersion {
    */
   private _state: VSVersion.State
 
-  public constructor(data: { version: string; path: string }) {
+  public constructor(data: { version: string; path: string; state?: VSVersion.State | undefined }) {
     this._version = data.version
     this._path = data.path
-    this._state = $state(VSVersion.State.NOT_INSTALLED)
+    this._state = $state(data.state ?? VSVersion.State.NOT_INSTALLED)
   }
 
   /**
@@ -54,8 +57,8 @@ export class VSVersion {
   }
 
   /**
-   * Convert this {@link VSVersion} into a {@link VSVersionType} json
-   * @returns The {@link VSVersionType} json
+   * Convert this {@link VSVersion} into a {@link VSVersionType} json.
+   * @returns The {@link VSVersionType} json.
    */
   public toJSON(): VSVersionType {
     return {
@@ -65,14 +68,16 @@ export class VSVersion {
   }
 
   /**
-   * Converts a {@link VSVersionType} json to a {@link VSVersion}
-   * @param json The {@link VSVersionType} to convert
-   * @returns The {@link VSVersion}
+   * Converts a {@link VSVersionType} json to a {@link VSVersion}.
+   * @param json The {@link VSVersionType} to convert.
+   * @param state The state of the versino.
+   * @returns The {@link VSVersion}.
    */
-  public static fromJSON(json: VSVersionType): VSVersion {
+  public static fromJSON(json: VSVersionType, state?: VSVersion.State): VSVersion {
     return new VSVersion({
       version: json.version,
-      path: json.path
+      path: json.path,
+      state: state ?? VSVersion.State.NOT_INSTALLED
     })
   }
 
@@ -85,7 +90,7 @@ export class VSVersion {
       await window.api.db.vsVersion.deleteVSVersion(this.toJSON())
     } catch (err) {
       window.api.logger.error('There was an error deleting the vs version to the DB!')
-      window.api.logger.error(`There was an error deleting the vs version to the DB:\n${JSON.stringify(err)}`)
+      window.api.logger.debug(`There was an error deleting the vs version to the DB:\n${JSON.stringify(err)}`)
       throw new RustoryVSVersionError(`There was an error deleting the vs version to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
     }
   }
@@ -96,18 +101,46 @@ export class VSVersion {
    */
   public async save(): Promise<void> {
     try {
+      window.api.logger.info(`Saving version ${this._version}...`)
+
       await window.api.db.vsVersion.saveVSVersion(this.toJSON())
+
+      window.api.logger.info(`Successfully saved version ${this._version}!`)
     } catch (err) {
-      window.api.logger.error('There was an error saving the vs version to the DB!')
-      window.api.logger.error(`There was an error saving the vs version to the DB:\n${JSON.stringify(err)}`)
-      throw new RustoryVSVersionError(`There was an error saving the vs version to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
+      window.api.logger.error(`There was an error saving the vs version ${this._version} to the DB!`)
+      window.api.logger.debug(`There was an error saving the vs version ${this._version} to the DB:\n${JSON.stringify(err)}`)
+      throw new RustoryVSVersionError(`There was an error saving the vs version ${this._version} to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
     }
   }
 
   /**
-   * Get all the vs versions from the DB.
-   * @returns All the vs versions from the DB.
-   * @throws {RustoryVSVersionError} When there is an error getting the vs versions.
+   * Install this version.
+   * @param url The url to download the version from.
+   */
+  public async install(url: string): Promise<void> {
+    window.api.logger.info(`Installing version ${this._version}...`)
+
+    this._state = VSVersion.State.INSTALLING
+
+    const task = new TaskInstallVersion({ version: this._version, url, outputPath: this._path })
+
+    Data.instance.tasks.push(task)
+
+    const status = await task.execute()
+
+    if (status === TaskBase.Status.COMPLETED) {
+      window.api.logger.info(`Successfully installed version ${this._version}!`)
+      this._state = VSVersion.State.INSTALLED
+      this.save()
+    } else {
+      this._state = VSVersion.State.NOT_INSTALLED
+    }
+  }
+
+  /**
+   * Get all the VS Versions from the DB.
+   * @returns All the VS Versions from the DB.
+   * @throws {RustoryVSVersionError} When there is an error getting the VS Versions.
    */
   public static async getAllFromDB(): Promise<VSVersion[]> {
     try {
@@ -115,9 +148,9 @@ export class VSVersion {
 
       return versions.map((v) => VSVersion.fromJSON(v))
     } catch (err) {
-      window.api.logger.error('There was an error getting the vs versions!')
-      window.api.logger.error(`There was an error getting the vs versions:\n${JSON.stringify(err)}`)
-      throw new RustoryVSVersionError(`There was an error getting the vs versions:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
+      window.api.logger.error('There was an error getting the VS Versions!')
+      window.api.logger.debug(`There was an error getting the VS Versions:\n${JSON.stringify(err)}`)
+      throw new RustoryVSVersionError(`There was an error getting the VS Versions:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
     }
   }
 }

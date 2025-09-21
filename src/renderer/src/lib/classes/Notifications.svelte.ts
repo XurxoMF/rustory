@@ -4,13 +4,12 @@ export class Notifications {
   /**
    * Singleton instance of the Notifications.
    */
-  private static _instance: Notifications | null = null
+  private static _instance: Notifications = new Notifications()
 
   /**
    * Get the instance of the Notifications.
    */
   public static get instance(): Notifications {
-    if (Notifications._instance === null) Notifications._instance = new Notifications()
     return Notifications._instance
   }
 

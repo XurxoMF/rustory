@@ -2,13 +2,12 @@ export class PreventClose {
   /**
    * Singleton instance of the PreventClose.
    */
-  private static _instance: PreventClose | null = null
+  private static _instance: PreventClose = new PreventClose()
 
   /**
    * Get the instance of the PreventClose.
    */
   public static get instance(): PreventClose {
-    if (PreventClose._instance === null) PreventClose._instance = new PreventClose()
     return PreventClose._instance
   }
 

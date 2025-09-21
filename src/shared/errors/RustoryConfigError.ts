@@ -20,6 +20,10 @@ export namespace RustoryConfigError {
     /**
      * Generic, not specified.
      */
-    CONFIG_ERROR = 'CONFIG_ERROR'
+    CONFIG_ERROR = 'CONFIG_ERROR',
+    /**
+     * Instance not initialized.
+     */
+    NOT_INITIALIZED = 'NOT_INITIALIZED'
   }
 }

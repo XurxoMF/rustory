@@ -21,6 +21,7 @@
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config.svelte'
+  import { Data } from './lib/classes/Data.svelte'
 
   // Routes of the page
   const routes: RouteConfig[] = [{ component: HomePage }, { path: '/config', component: ConfigPage }]
@@ -35,13 +36,17 @@
     loader.showTasks = false
 
     // Load the app data and wait a bit so the theme and localization get's correctly changed.
-    await Config.instance.init()
-    await Info.instance.init()
+    await Config.init()
+    await Info.init()
 
-    // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app data loading).
+    // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app config loading).
     loader.showTasks = true
     await sleep(500)
     loader.completeTask('app-init')
+
+    // Load data like Versions, Instances...
+    await Data.init()
+    loader.completeTask('data-loading')
 
     // Here will be added the future tasks like Instance and Server loading, app updating, check mod updates...
 

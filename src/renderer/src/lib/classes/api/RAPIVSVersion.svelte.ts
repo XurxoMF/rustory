@@ -1,3 +1,8 @@
+import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
+import { Config } from '../Config.svelte'
+import { Info } from '../Info.svelte'
+import { VSVersion } from '../vintagestory/VSVersion.svelte'
+import { Data } from '../Data.svelte'
 /**
  * Must have at least the same properties as {@link RAPIVSVersionType}
  */
@@ -183,5 +188,38 @@ export class RAPIVSVersion {
       mac: json.mac,
       macSha: json.macSha
     })
+  }
+
+  /**
+   * Add the version and install it.
+   * @throws A {@link RustoryVSVersionError} error.
+   */
+  public async addAndInstall(): Promise<void> {
+    window.api.logger.info(`Adding version ${this._version}...`)
+
+    const installPath = await window.api.fs.join(Config.instance.versionsPath, this._version)
+
+    const vsVersion = new VSVersion({ version: this._version, path: installPath, state: VSVersion.State.NOT_INSTALLED })
+
+    Data.instance.vsVersions.push(vsVersion)
+
+    let url: string
+
+    switch (Info.instance.os.platform) {
+      case 'linux':
+        url = this._linux
+        break
+      case 'darwin':
+        url = this._mac
+        break
+      case 'Windows':
+        url = this._windows
+        break
+      default:
+        window.api.logger.error(`Unsupported OS! ${Info.instance.os.platform}`)
+        throw new RustoryVSVersionError(`Unsupported OS: ${Info.instance.os.platform}`, RustoryVSVersionError.Codes.UNSUPORTED_OS)
+    }
+
+    await vsVersion.install(url)
   }
 }

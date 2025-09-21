@@ -4,13 +4,12 @@ export class Loader {
   /**
    * Singleton instance of the Loader.
    */
-  private static _instance: Loader | null = null
+  private static _instance: Loader = new Loader()
 
   /**
    * Get the instance of the Loader.
    */
   public static get instance(): Loader {
-    if (Loader._instance === null) Loader._instance = new Loader()
     return Loader._instance
   }
 
@@ -20,6 +19,7 @@ export class Loader {
    */
   public static TASKS = [
     { id: 'app-init', description: m.loader__tasks__desc__app_init() },
+    { id: 'data-loading', description: m.loader__tasks__desc__data_loading() },
     { id: 'timeout', description: m.loader__tasks__desc__timeout() }
   ] as const
 

@@ -2,13 +2,12 @@ export class Reloader {
   /**
    * Singleton instance of the Window.
    */
-  private static _instance: Reloader | null = null
+  private static _instance: Reloader = new Reloader()
 
   /**
    * Get the instance of the Window.
    */
   public static get instance(): Reloader {
-    if (Reloader._instance === null) Reloader._instance = new Reloader()
     return Reloader._instance
   }
 

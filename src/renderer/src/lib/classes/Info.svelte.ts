@@ -1,3 +1,6 @@
+import { RustoryInfoError } from '@shared/errors/RustoryInfoError'
+import type { Systeminformation } from 'systeminformation'
+
 export class Info {
   /**
    * Singleton instance of the Info.
@@ -6,61 +9,152 @@ export class Info {
 
   /**
    * Get the instance of the Info.
+   * @throws A {@link RustoryInfoError} if the Info is not initialized.
    */
   public static get instance(): Info {
-    if (Info._instance === null) Info._instance = new Info()
+    if (Info._instance === null) throw new RustoryInfoError('Info not initialized!', RustoryInfoError.Codes.NOT_INITIALIZED)
     return Info._instance
   }
 
   /**
    * Name of the APP.
    */
-  private _name: string = $state('')
+  private _name: string
 
   /**
    * Current Rustory version.
    */
-  private _version: string = $state('')
+  private _version: string
+
+  /**
+   * OS info.
+   */
+  private _os: Systeminformation.OsData
+
+  /**
+   * CPU info.
+   */
+  private _cpu: Systeminformation.CpuData
+
+  /**
+   * RAM info.
+   */
+  private _ram: Systeminformation.MemData
+
+  /**
+   * GPUs info.
+   */
+  private _gpus: Systeminformation.GraphicsData
+
+  /**
+   * Volumes info.
+   */
+  private _volumes: Systeminformation.FsSizeData[]
+
+  /**
+   * NET SDKs info.
+   */
+  private _netSdks: string[]
+
+  /**
+   * NET Runtimes info.
+   */
+  private _netRuntimes: string[]
 
   /**
    * Path for the APP data.
    */
-  private _dataPath: string = $state('')
+  private _dataPath: string
 
   /**
    * Path for the APP cache.
    */
-  private _cachePath: string = $state('')
+  private _cachePath: string
 
   /**
    * Path for the APP temporals.
    */
-  private _tempPath: string = $state('')
+  private _tempPath: string
 
   /**
    * Path for the APP logs.
    */
-  private _logsPath: string = $state('')
+  private _logsPath: string
 
-  private constructor() {}
+  private constructor(data: {
+    name: string
+    version: string
+    os: Systeminformation.OsData
+    cpu: Systeminformation.CpuData
+    ram: Systeminformation.MemData
+    gpus: Systeminformation.GraphicsData
+    volumes: Systeminformation.FsSizeData[]
+    netSdks: string[]
+    netRuntimes: string[]
+    dataPath: string
+    cachePath: string
+    tempPath: string
+    logsPath: string
+  }) {
+    this._name = $state(data.name)
+    this._version = $state(data.version)
+    this._os = $state(data.os)
+    this._cpu = $state(data.cpu)
+    this._ram = $state(data.ram)
+    this._gpus = $state(data.gpus)
+    this._volumes = $state(data.volumes)
+    this._netSdks = $state(data.netSdks)
+    this._netRuntimes = $state(data.netRuntimes)
+    this._dataPath = $state(data.dataPath)
+    this._cachePath = $state(data.cachePath)
+    this._tempPath = $state(data.tempPath)
+    this._logsPath = $state(data.logsPath)
+  }
 
   /**
    * Loads all the info about Rustory on this instance.
    */
-  public async init(): Promise<void> {
+  public static async init(): Promise<void> {
     try {
-      this._name = await window.api.rustory.getName()
-      this._version = await window.api.rustory.getVersion()
+      // Load basic info.
+      const name = await window.api.rustory.getName()
+      const version = await window.api.rustory.getVersion()
 
-      this._dataPath = await window.api.fs.getPath('userData')
-      this._cachePath = await window.api.fs.join(this.dataPath, 'Cache')
-      this._logsPath = await window.api.fs.getPath('logs')
+      // Load system info.
+      const os = await window.api.system.getOSInfo()
+      const cpu = await window.api.system.getCPUInfo()
+      const ram = await window.api.system.getRAMInfo()
+      const gpus = await window.api.system.getGPUsInfo()
+      const volumes = await window.api.system.getVolumesInfo()
+      const netSdks = await window.api.system.getNETSDKsInfo()
+      const netRuntimes = await window.api.system.getNETRuntimesInfo()
 
+      // Load paths
+      const dataPath = await window.api.fs.getPath('userData')
+      const cachePath = await window.api.fs.join(dataPath, 'Cache')
+      const logsPath = await window.api.fs.getPath('logs')
       const temp = await window.api.fs.getPath('temp')
-      this._tempPath = await window.api.fs.join(temp, this._name)
+      const tempPath = await window.api.fs.join(temp, name)
+
+      // Set the info
+      Info._instance = new Info({
+        name,
+        version,
+        os,
+        cpu,
+        ram,
+        gpus,
+        volumes,
+        netSdks,
+        netRuntimes,
+        dataPath,
+        cachePath,
+        tempPath,
+        logsPath
+      })
     } catch (err) {
       window.api.logger.error('There was an error initializating the info! The app will be closed!')
-      window.api.logger.error(`There was an error initializating the info:\n${JSON.stringify(err)}`)
+      window.api.logger.debug(`There was an error initializating the info:\n${JSON.stringify(err)}`)
       window.api.rustory.exit(1)
     }
   }
@@ -77,6 +171,55 @@ export class Info {
    */
   public get version(): string {
     return this._version
+  }
+
+  /**
+   * OS info.
+   */
+  public get os(): Systeminformation.OsData {
+    return this._os
+  }
+
+  /**
+   * CPU info.
+   */
+  public get cpu(): Systeminformation.CpuData {
+    return this._cpu
+  }
+
+  /**
+   * RAM info.
+   */
+  public get ram(): Systeminformation.MemData {
+    return this._ram
+  }
+
+  /**
+   * GPUs info.
+   */
+  public get gpus(): Systeminformation.GraphicsData {
+    return this._gpus
+  }
+
+  /**
+   * Volumes info.
+   */
+  public get volumes(): Systeminformation.FsSizeData[] {
+    return this._volumes
+  }
+
+  /**
+   * NET SDKs info.
+   */
+  public get netSdks(): string[] {
+    return this._netSdks
+  }
+
+  /**
+   * NET Runtimes info.
+   */
+  public get netRuntimes(): string[] {
+    return this._netRuntimes
   }
 
   /**
