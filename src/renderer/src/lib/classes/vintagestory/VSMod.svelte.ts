@@ -7,6 +7,11 @@ import { VSAPIMod } from '../api/VSAPIMod.svelte'
  */
 export class VSMod {
   /**
+   * The id of the VS Instance this mod is from.
+   */
+  private _vsInstanceId: string
+
+  /**
    * The name of the mod.
    */
   private _name: string
@@ -62,6 +67,7 @@ export class VSMod {
   private _mod: VSAPIMod
 
   public constructor(data: {
+    vsInstanceId: string
     name: string
     modid: string
     version: string
@@ -74,17 +80,25 @@ export class VSMod {
     image: string | undefined
     mod: VSAPIMod
   }) {
-    this._name = $state(data.name)
-    this._modid = $state(data.modid)
-    this._version = $state(data.version)
-    this._path = $state(data.path)
-    this._description = $state(data.description)
-    this._side = $state(data.side)
-    this._authors = $state(data.authors)
-    this._contributors = $state(data.contributors)
-    this._type = $state(data.type)
-    this._image = $state(data.image)
-    this._mod = $state(data.mod)
+    this._vsInstanceId = data.vsInstanceId
+    this._name = data.name
+    this._modid = data.modid
+    this._version = data.version
+    this._path = data.path
+    this._description = data.description
+    this._side = data.side
+    this._authors = data.authors
+    this._contributors = data.contributors
+    this._type = data.type
+    this._image = data.image
+    this._mod = data.mod
+  }
+
+  /**
+   * The id of the VS Instance this mod is from.
+   */
+  public get vsInstanceId(): string {
+    return this._vsInstanceId
   }
 
   /**
@@ -170,6 +184,7 @@ export class VSMod {
    */
   public toJSON(): TVSMod {
     return {
+      vsInstanceId: this._vsInstanceId,
       name: this._name,
       modid: this._modid,
       version: this._version,
@@ -191,6 +206,7 @@ export class VSMod {
    */
   public static fromJSON(json: TVSMod): VSMod {
     return new VSMod({
+      vsInstanceId: json.vsInstanceId,
       name: json.name,
       modid: json.modid,
       version: json.version,

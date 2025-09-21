@@ -50,15 +50,15 @@ export class VSAccount {
   private _hostGameServer: boolean
 
   public constructor(data: TVSAccount) {
-    this._id = $state(data.id)
-    this._email = $state(data.email)
-    this._playerName = $state(data.playerName)
-    this._playerUid = $state(data.playerUid)
-    this._playerEntitlements = $state(data.playerEntitlements)
-    this._sessionKey = $state(data.sessionKey)
-    this._sessionSignature = $state(data.sessionSignature)
-    this._mptoken = $state(data.mptoken)
-    this._hostGameServer = $state(data.hostGameServer)
+    this._id = data.id
+    this._email = data.email
+    this._playerName = data.playerName
+    this._playerUid = data.playerUid
+    this._playerEntitlements = data.playerEntitlements
+    this._sessionKey = data.sessionKey
+    this._sessionSignature = data.sessionSignature
+    this._mptoken = data.mptoken
+    this._hostGameServer = data.hostGameServer
   }
 
   /**

@@ -99,19 +99,19 @@ export class Info {
     tempPath: string
     logsPath: string
   }) {
-    this._name = $state(data.name)
-    this._version = $state(data.version)
-    this._os = $state(data.os)
-    this._cpu = $state(data.cpu)
-    this._ram = $state(data.ram)
-    this._gpus = $state(data.gpus)
-    this._volumes = $state(data.volumes)
-    this._netSdks = $state(data.netSdks)
-    this._netRuntimes = $state(data.netRuntimes)
-    this._dataPath = $state(data.dataPath)
-    this._cachePath = $state(data.cachePath)
-    this._tempPath = $state(data.tempPath)
-    this._logsPath = $state(data.logsPath)
+    this._name = data.name
+    this._version = data.version
+    this._os = data.os
+    this._cpu = data.cpu
+    this._ram = data.ram
+    this._gpus = data.gpus
+    this._volumes = data.volumes
+    this._netSdks = data.netSdks
+    this._netRuntimes = data.netRuntimes
+    this._dataPath = data.dataPath
+    this._cachePath = data.cachePath
+    this._tempPath = data.tempPath
+    this._logsPath = data.logsPath
   }
 
   /**

@@ -48,6 +48,11 @@ export const IPC_CHANNELS = {
       saveVSVersion: 'db-vs-version-save-version',
       deleteVSVersion: 'db-vs-version-delete-version',
       getVSVersions: 'db-vs-version-get-versions'
+    },
+    vsInstance: {
+      saveVSInstance: 'db-vs-instance-save-instance',
+      deleteVSInstance: 'db-vs-instance-delete-instance',
+      getVSInstances: 'db-vs-instance-get-instances'
     }
   },
   zip: {

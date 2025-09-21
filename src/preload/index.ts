@@ -55,6 +55,11 @@ const api: BridgeAPI = {
       getVSVersions: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.getVSVersions, ...params),
       saveVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.saveVSVersion, ...params),
       deleteVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.deleteVSVersion, ...params)
+    },
+    vsInstance: {
+      getVSInstances: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.getVSInstances, ...params),
+      saveVSInstance: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.saveVSInstance, ...params),
+      deleteVSInstance: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.deleteVSInstance, ...params)
     }
   },
   zip: {

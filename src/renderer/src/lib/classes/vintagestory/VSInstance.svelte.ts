@@ -1,5 +1,4 @@
-import { VSInstanceBackup } from './VSInstanceBackup.svelte'
-import { VSMod } from './VSMod.svelte'
+import { RustoryVSInstanceError } from '@shared/errors/RustoryVSInstanceError'
 
 /**
  * Vintage StoryInstance.
@@ -10,7 +9,7 @@ export class VSInstance {
   /**
    * The id of the instance.
    */
-  private _id: number
+  private _id: string
 
   /**
    * The name of the instance.
@@ -48,16 +47,6 @@ export class VSInstance {
   private _compressionLevel: number
 
   /**
-   * The backups of the instance.
-   */
-  private _backups: VSInstanceBackup[]
-
-  /**
-   * The mods of the instance.
-   */
-  private _mods: VSMod[]
-
-  /**
    * The last time played of the instance.
    */
   private _lastTimePlayed: number
@@ -78,7 +67,7 @@ export class VSInstance {
   private _envVars: string
 
   public constructor(data: {
-    id: number
+    id: string
     name: string
     path: string
     version: string
@@ -86,23 +75,19 @@ export class VSInstance {
     backupsLimit: number
     backupsAuto: boolean
     compressionLevel: number
-    backups: VSInstanceBackup[]
-    mods: VSMod[]
     lastTimePlayed: number
     totalTimePlayed: number
     mesaGlThread: boolean
     envVars: string
   }) {
-    this._id = $state(data.id)
+    this._id = data.id
     this._name = $state(data.name)
-    this._path = $state(data.path)
+    this._path = data.path
     this._version = $state(data.version)
     this._startParams = $state(data.startParams)
     this._backupsLimit = $state(data.backupsLimit)
     this._backupsAuto = $state(data.backupsAuto)
     this._compressionLevel = $state(data.compressionLevel)
-    this._backups = $state(data.backups)
-    this._mods = $state(data.mods)
     this._lastTimePlayed = $state(data.lastTimePlayed)
     this._totalTimePlayed = $state(data.totalTimePlayed)
     this._mesaGlThread = $state(data.mesaGlThread)
@@ -112,7 +97,7 @@ export class VSInstance {
   /**
    * The id of the instance.
    */
-  public get id(): number {
+  public get id(): string {
     return this._id
   }
 
@@ -166,20 +151,6 @@ export class VSInstance {
   }
 
   /**
-   * The backups of the instance.
-   */
-  public get backups(): VSInstanceBackup[] {
-    return this._backups
-  }
-
-  /**
-   * The mods of the instance.
-   */
-  public get mods(): VSMod[] {
-    return this._mods
-  }
-
-  /**
    * The last time played of the instance.
    */
   public get lastTimePlayed(): number {
@@ -221,8 +192,6 @@ export class VSInstance {
       backupsLimit: this._backupsLimit,
       backupsAuto: this._backupsAuto,
       compressionLevel: this._compressionLevel,
-      backups: this._backups,
-      mods: this._mods,
       lastTimePlayed: this._lastTimePlayed,
       totalTimePlayed: this._totalTimePlayed,
       mesaGlThread: this._mesaGlThread,
@@ -245,12 +214,31 @@ export class VSInstance {
       backupsLimit: json.backupsLimit,
       backupsAuto: json.backupsAuto,
       compressionLevel: json.compressionLevel,
-      backups: json.backups.map((backup) => VSInstanceBackup.fromJSON(backup)),
-      mods: json.mods.map((mod) => VSMod.fromJSON(mod)),
       lastTimePlayed: json.lastTimePlayed,
       totalTimePlayed: json.totalTimePlayed,
       mesaGlThread: json.mesaGlThread,
       envVars: json.envVars
     })
+  }
+
+  /**
+   * Get all the VS Instances from the DB.
+   * @returns All the {@link VSInstance} from the DB.
+   * @throws A {@link RustoryVSInstanceError} error.
+   */
+  public static async getAllFromDB(): Promise<VSInstance[]> {
+    try {
+      window.api.logger.info('Getting all the VS Instances from the DB...')
+
+      const instances = await window.api.db.vsInstance.getVSInstances()
+
+      window.api.logger.info('Successfully got all the VS Instances from the DB!')
+
+      return instances.map((i) => VSInstance.fromJSON(i))
+    } catch (err) {
+      window.api.logger.error('There was an error getting the VS Instances!')
+      window.api.logger.debug(`There was an error getting the VS Instances:\n${JSON.stringify(err)}`)
+      throw new RustoryVSInstanceError(`There was an error getting the VS Instances:\n${JSON.stringify(err)}`, RustoryVSInstanceError.Codes.VSINSTANCE_ERROR)
+    }
   }
 }

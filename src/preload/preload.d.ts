@@ -235,6 +235,30 @@ declare global {
          */
         getVSVersions: () => Promise<TVSVersion[]>
       }
+      /**
+       * Interact with the vsInstance table.
+       */
+      vsInstance: {
+        /**
+         * Add or update an instance to the DB.
+         * @param instance The instance to save.
+         * @returns If it was saved or not.
+         * @throws A RustoryDBError error.
+         */
+        saveVSInstance: (instance: TVSInstance) => Promise<void>
+        /**
+         * Delete an instance from the DB.
+         * @param instance The instance to delete.
+         * @throws A RustoryDBError error.
+         */
+        deleteVSInstance: (instance: TVSInstance) => Promise<void>
+        /**
+         * Get all the instances from the DB.
+         * @returns The instances found.
+         * @throws A RustoryDBError error.
+         */
+        getVSInstances: () => Promise<TVSInstance[]>
+      }
     }
     /**
      * Compress, extract, read... zip files.

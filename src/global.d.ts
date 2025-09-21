@@ -24,7 +24,7 @@ declare global {
   }
 
   type TVSInstance = {
-    id: number
+    id: string
     name: string
     path: string
     version: string
@@ -32,8 +32,6 @@ declare global {
     backupsLimit: number
     backupsAuto: boolean
     compressionLevel: number
-    backups: TVSInstanceBackup[]
-    mods: TVSMod[]
     lastTimePlayed: number
     totalTimePlayed: number
     mesaGlThread: boolean
@@ -41,7 +39,8 @@ declare global {
   }
 
   type TVSInstanceBackup = {
-    id: number
+    id: string
+    vsInstanceId: string
     date: number
     path: string
   }
@@ -104,6 +103,7 @@ declare global {
   }
 
   type TVSMod = {
+    vsInstanceId: string
     name: string
     modid: string
     version: string

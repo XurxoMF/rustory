@@ -1,7 +1,8 @@
 import { RustoryDataError } from '@shared/errors/RustoryDataError'
 import type { TaskBase } from './tasks/TaskBase.svelte'
-import type { VSInstance } from './vintagestory/VSInstance.svelte'
+import { VSInstance } from './vintagestory/VSInstance.svelte'
 import { VSVersion } from './vintagestory/VSVersion.svelte'
+import { Config } from './Config.svelte'
 
 /**
  * Data of the app.
@@ -50,16 +51,28 @@ export class Data {
       // Load tasks. AKA do nothing.
       const tasks: TaskBase[] = []
 
-      // Load all the Versions.
+      // Load all the VS Versions.
       const vsVersionsJSON = await VSVersion.getAllFromDB()
       const vsVersions: VSVersion[] = []
       for (const vsVersion of vsVersionsJSON) {
         vsVersions.push(VSVersion.fromJSON(vsVersion, VSVersion.State.INSTALLED))
       }
 
-      // TODO: Load all the Instances.
+      // Load all the VS Instances
+      const vsInstancesJSON = await VSInstance.getAllFromDB()
       const vsInstances: VSInstance[] = []
-      // TODO: Add the Instances to the array. Also add Versions as NOT_INSTALLED if an instance needs that Version but it's missing.
+      for (const vsInstance of vsInstancesJSON) {
+        vsInstances.push(VSInstance.fromJSON(vsInstance))
+
+        // Check if the version needed by the instance was already loaded. If not, add it as NOT_INSTALLED.
+        const version = vsVersions.find((v) => v.version === vsInstance.version)
+        if (version === undefined) {
+          const path = await window.api.fs.join(Config.instance.versionsPath, vsInstance.version)
+          vsVersions.push(new VSVersion({ version: vsInstance.version, path, state: VSVersion.State.NOT_INSTALLED }))
+        }
+      }
+
+      // TODO: Load all the Mods and Instance Backups.
 
       Data._instance = new Data({
         tasks,
@@ -72,7 +85,7 @@ export class Data {
       window.api.rustory.exit(1)
     }
   }
-  s
+
   /**
    * List of tasks.
    */
