@@ -84,22 +84,27 @@ export class VSVersion {
   }
 
   /**
-   * Delete this version from the DB.
-   * @throws {RustoryVSVersionError} When there is an error deleting the version from the DB.
+   * Delete this version from the file system and the DB.
+   * @throws A {@link RustoryVSVersionError} error.
    */
   public async delete(): Promise<void> {
     try {
+      window.api.logger.info(`Deleting version ${this._version}...`)
+
+      await window.api.fs.deletePaths([this._path])
       await window.api.db.vsVersion.deleteVSVersion(this.toJSON())
+
+      window.api.logger.info(`Successfully deleted version ${this._version}!`)
     } catch (err) {
-      window.api.logger.error('There was an error deleting the vs version to the DB!')
-      window.api.logger.debug(`There was an error deleting the vs version to the DB:\n${JSON.stringify(err)}`)
-      throw new RustoryVSVersionError(`There was an error deleting the vs version to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
+      window.api.logger.error('There was an error deleting the VS Version!')
+      window.api.logger.debug(`There was an error deleting the VS Version:\n${JSON.stringify(err)}`)
+      throw new RustoryVSVersionError(`There was an error deleting the VS Version:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
     }
   }
 
   /**
    * Save this version to the DB.
-   * @throws {RustoryVSVersionError} When there is an error saving the version to the DB.
+   * @throws A {@link RustoryVSVersionError} error.
    */
   public async save(): Promise<void> {
     try {
@@ -109,9 +114,9 @@ export class VSVersion {
 
       window.api.logger.info(`Successfully saved version ${this._version}!`)
     } catch (err) {
-      window.api.logger.error(`There was an error saving the vs version ${this._version} to the DB!`)
-      window.api.logger.debug(`There was an error saving the vs version ${this._version} to the DB:\n${JSON.stringify(err)}`)
-      throw new RustoryVSVersionError(`There was an error saving the vs version ${this._version} to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
+      window.api.logger.error(`There was an error saving the VS Version ${this._version} to the DB!`)
+      window.api.logger.debug(`There was an error saving the VS Version ${this._version} to the DB:\n${JSON.stringify(err)}`)
+      throw new RustoryVSVersionError(`There was an error saving the VS Version ${this._version} to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
     }
   }
 
@@ -142,11 +147,15 @@ export class VSVersion {
   /**
    * Get all the VS Versions from the DB.
    * @returns All the {@link VSVersion} from the DB.
-   * @throws {RustoryVSVersionError} When there is an error getting the VS Versions.
+   * @throws A {@link RustoryVSVersionError} error.
    */
   public static async getAllFromDB(): Promise<VSVersion[]> {
     try {
+      window.api.logger.info('Getting all the VS Versions from the DB...')
+
       const versions = await window.api.db.vsVersion.getVSVersions()
+
+      window.api.logger.info('Successfully got all the VS Versions from the DB!')
 
       return versions.map((v) => VSVersion.fromJSON(v))
     } catch (err) {

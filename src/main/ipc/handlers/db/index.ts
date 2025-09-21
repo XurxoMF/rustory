@@ -7,6 +7,6 @@ export async function registerDBHandlers() {
   logger.info('Registering config db handlers...')
   await registerConfigHandlers()
 
-  logger.info('Registering vs version db handlers...')
+  logger.info('Registering VS Version db handlers...')
   await registerVSVersionHandlers()
 }

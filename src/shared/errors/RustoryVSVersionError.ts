@@ -1,5 +1,5 @@
 /**
- * Error thrown when a vs version action fails.
+ * Error thrown when a VS Version action fails.
  */
 export class RustoryVSVersionError extends Error {
   public readonly code: RustoryVSVersionError.Codes
