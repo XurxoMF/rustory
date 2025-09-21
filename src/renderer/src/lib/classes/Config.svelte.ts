@@ -67,25 +67,25 @@ export class Config {
   /**
    * Path where Instances will be saved.
    */
-  private _instancesPath: string
+  private _vsInstancesPath: string
 
   /**
    * Path where Versions will be saved.
    */
-  private _versionsPath: string
+  private _vsVersionsPath: string
 
   /**
    * Path where Backups will be saved.
    */
-  private _backupsPath: string
+  private _vsInstanceBackupsPath: string
 
-  private constructor(data: { theme: string; locale: Locale; scale: string; instancesPath: string; versionsPath: string; backupsPath: string }) {
+  private constructor(data: { theme: string; locale: Locale; scale: string; vsInstancesPath: string; vsVersionsPath: string; vsInstanceBackupsPath: string }) {
     this._theme = $state(data.theme)
     this._locale = $state(data.locale)
     this._scale = $state(data.scale)
-    this._instancesPath = $state(data.instancesPath)
-    this._versionsPath = $state(data.versionsPath)
-    this._backupsPath = $state(data.backupsPath)
+    this._vsInstancesPath = $state(data.vsInstancesPath)
+    this._vsVersionsPath = $state(data.vsVersionsPath)
+    this._vsInstanceBackupsPath = $state(data.vsInstanceBackupsPath)
   }
 
   /**
@@ -115,28 +115,28 @@ export class Config {
       // Get the user data path for the default paths.
       const defaultUserDataPath = await window.api.fs.getPath('userData')
 
-      // Get and apply the instancesPath
-      let instancesPath = await window.api.db.config.getItem('instances-path')
-      if (!instancesPath) {
-        instancesPath = await window.api.fs.join(defaultUserDataPath, 'Instances')
-        Config.saveInstancesPath(instancesPath)
+      // Get and apply the vsInstancesPath
+      let vsInstancesPath = await window.api.db.config.getItem('vs-instances-path')
+      if (!vsInstancesPath) {
+        vsInstancesPath = await window.api.fs.join(defaultUserDataPath, 'VSInstances')
+        Config.saveVSInstancesPath(vsInstancesPath)
       }
 
-      // Get and apply the versionsPath
-      let versionsPath = await window.api.db.config.getItem('versions-path')
-      if (!versionsPath) {
-        versionsPath = await window.api.fs.join(defaultUserDataPath, 'Versions')
-        Config.saveVersionsPath(versionsPath)
+      // Get and apply the vsVersionsPath
+      let vsVersionsPath = await window.api.db.config.getItem('vs-versions-path')
+      if (!vsVersionsPath) {
+        vsVersionsPath = await window.api.fs.join(defaultUserDataPath, 'VSVersions')
+        Config.saveVSVersionsPath(vsVersionsPath)
       }
 
-      // Get and apply the backupsPath
-      let backupsPath = await window.api.db.config.getItem('backups-path')
-      if (!backupsPath) {
-        backupsPath = await window.api.fs.join(defaultUserDataPath, 'Backups')
-        Config.saveBackupsPath(backupsPath)
+      // Get and apply the vsInstanceBackupsPath
+      let vsInstanceBackupsPath = await window.api.db.config.getItem('vs-instance-backups-path')
+      if (!vsInstanceBackupsPath) {
+        vsInstanceBackupsPath = await window.api.fs.join(defaultUserDataPath, 'VSInstanceBackups')
+        Config.saveVSInstanceBackupsPath(vsInstanceBackupsPath)
       }
 
-      Config._instance = new Config({ theme, locale, scale, instancesPath, versionsPath, backupsPath })
+      Config._instance = new Config({ theme, locale, scale, vsInstancesPath, vsVersionsPath, vsInstanceBackupsPath })
     } catch (err) {
       window.api.logger.error('There was an error initializating the config! The app will be closed!')
       window.api.logger.debug(`There was an error initializating the config:\n${JSON.stringify(err)}`)
@@ -176,7 +176,7 @@ export class Config {
   /**
    * Set a new theme.
    * @param theme - The key of the theme to apply.
-   * @throws A {@link RustoryConfigError} if there was an error setting the new theme.
+   * @throws A {@link RustoryConfigError} error.
    */
   public async setTheme(theme: string): Promise<void> {
     try {
@@ -193,7 +193,7 @@ export class Config {
   /**
    * Save a theme.
    * @param theme - The key of the theme to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new theme.
+   * @throws A {@link RustoryConfigError} error.
    */
   private static async saveTheme(theme: string): Promise<void> {
     try {
@@ -223,7 +223,7 @@ export class Config {
   /**
    * Set a new UI scale.
    * @param scale - The key of the scale to apply.
-   * @throws A {@link RustoryConfigError} if there was an error setting the new scale.
+   * @throws A {@link RustoryConfigError} error.
    */
   public async setScale(scale: string): Promise<void> {
     try {
@@ -240,7 +240,7 @@ export class Config {
   /**
    * Save a scale.
    * @param scale - The key of the scale to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new scale.
+   * @throws A {@link RustoryConfigError} error.
    */
   private static async saveScale(scale: string): Promise<void> {
     try {
@@ -261,21 +261,36 @@ export class Config {
   }
 
   /**
-   * Path where Instances will be saved.
+   * Path where VS Instances will be saved.
    */
-  public get instancesPath(): string {
-    return this._instancesPath
+  public get vsInstancesPath(): string {
+    return this._vsInstancesPath
   }
 
   /**
-   * Set a new path for the Instances.
+   * Set a new path for the VS Instances.
    * @param scale - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Instances path.
+   * @throws A {@link RustoryConfigError} error.
    */
-  public async setInstancesPath(path: string): Promise<void> {
+  public async setVSInstancesPath(path: string): Promise<void> {
     try {
-      await Config.saveInstancesPath(path)
-      this._instancesPath = path
+      await Config.saveVSInstancesPath(path)
+      this._vsInstancesPath = path
+    } catch (err) {
+      window.api.logger.error('There was an error saving the new VS Instances path!')
+      window.api.logger.debug(`There was an error saving the new VS Instances path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new VS Instances path!', RustoryConfigError.Codes.CONFIG_ERROR)
+    }
+  }
+
+  /**
+   * Save a path for the VS Instances.
+   * @param path - The path to save.
+   * @throws A {@link RustoryConfigError} error.
+   */
+  private static async saveVSInstancesPath(path: string): Promise<void> {
+    try {
+      await window.api.db.config.setItem('vs-instances-path', path)
     } catch (err) {
       window.api.logger.error('There was an error saving the new Instances path!')
       window.api.logger.debug(`There was an error saving the new Instances path:\n${JSON.stringify(err)}`)
@@ -284,93 +299,78 @@ export class Config {
   }
 
   /**
-   * Save a path for the Instances.
-   * @param path - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Instances path.
+   * Path where VS Versions will be saved.
    */
-  private static async saveInstancesPath(path: string): Promise<void> {
-    try {
-      await window.api.db.config.setItem('instances-path', path)
-    } catch (err) {
-      window.api.logger.error('There was an error saving the new Instances path!')
-      window.api.logger.debug(`There was an error saving the new Instances path:\n${JSON.stringify(err)}`)
-      throw new RustoryConfigError('There was an error saving the new Instances path!', RustoryConfigError.Codes.CONFIG_ERROR)
-    }
+  public get vsVersionsPath(): string {
+    return this._vsVersionsPath
   }
 
   /**
-   * Path where Versions will be saved.
-   */
-  public get versionsPath(): string {
-    return this._versionsPath
-  }
-
-  /**
-   * Set a new path for the Versions.
+   * Set a new path for the VS Versions.
    * @param scale - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Versions path.
+   * @throws A {@link RustoryConfigError} error.
    */
-  public async setVersionsPath(path: string): Promise<void> {
+  public async setVSVersionsPath(path: string): Promise<void> {
     try {
-      await Config.saveVersionsPath(path)
-      this._versionsPath = path
+      await Config.saveVSVersionsPath(path)
+      this._vsVersionsPath = path
     } catch (err) {
-      window.api.logger.error('There was an error saving the new Versions path!')
-      window.api.logger.debug(`There was an error saving the new Versions path:\n${JSON.stringify(err)}`)
-      throw new RustoryConfigError('There was an error saving the new Versions path!', RustoryConfigError.Codes.CONFIG_ERROR)
+      window.api.logger.error('There was an error saving the new VS Versions path!')
+      window.api.logger.debug(`There was an error saving the new VS Versions path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new VS Versions path!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 
   /**
-   * Save a path for the Versions.
+   * Save a path for the VS Versions.
    * @param path - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Versions path.
+   * @throws A {@link RustoryConfigError} error.
    */
-  private static async saveVersionsPath(path: string): Promise<void> {
+  private static async saveVSVersionsPath(path: string): Promise<void> {
     try {
-      await window.api.db.config.setItem('versions-path', path)
+      await window.api.db.config.setItem('vs-versions-path', path)
     } catch (err) {
-      window.api.logger.error('There was an error saving the new Versions path!')
-      window.api.logger.debug(`There was an error saving the new Versions path:\n${JSON.stringify(err)}`)
-      throw new RustoryConfigError('There was an error saving the new Versions path!', RustoryConfigError.Codes.CONFIG_ERROR)
+      window.api.logger.error('There was an error saving the new VS Versions path!')
+      window.api.logger.debug(`There was an error saving the new VS Versions path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new VS Versions path!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 
   /**
-   * Path where Backups will be saved.
+   * Path where VS Instance Backups will be saved.
    */
-  public get backupsPath(): string {
-    return this._backupsPath
+  public get vsInstanceBackupsPath(): string {
+    return this._vsInstanceBackupsPath
   }
 
   /**
-   * Set a new path for the Backups.
+   * Set a new path for the VS Instance Backups.
    * @param scale - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Backups path.
+   * @throws A {@link RustoryConfigError} error.
    */
-  public async setBackupsPath(path: string): Promise<void> {
+  public async setVSInstanceBackupsPath(path: string): Promise<void> {
     try {
-      await Config.saveBackupsPath(path)
-      this._backupsPath = path
+      await Config.saveVSInstanceBackupsPath(path)
+      this._vsInstanceBackupsPath = path
     } catch (err) {
-      window.api.logger.error('There was an error saving the new Backups path!')
-      window.api.logger.debug(`There was an error saving the new Backups path:\n${JSON.stringify(err)}`)
-      throw new RustoryConfigError('There was an error saving the new Backups path!', RustoryConfigError.Codes.CONFIG_ERROR)
+      window.api.logger.error('There was an error saving the new VS Instance Backups path!')
+      window.api.logger.debug(`There was an error saving the new VS Instance Backups path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new VS Instance Backups path!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 
   /**
-   * Save a path for the Backups.
+   * Save a path for the VS Instance Backups.
    * @param path - The path to save.
-   * @throws A {@link RustoryConfigError} if there was an error saving the new Backups path.
+   * @throws A {@link RustoryConfigError} error.
    */
-  private static async saveBackupsPath(path: string): Promise<void> {
+  private static async saveVSInstanceBackupsPath(path: string): Promise<void> {
     try {
-      await window.api.db.config.setItem('backups-path', path)
+      await window.api.db.config.setItem('vs-instance-backups-path', path)
     } catch (err) {
-      window.api.logger.error('There was an error saving the new Backups path!')
-      window.api.logger.debug(`There was an error saving the new Backups path:\n${JSON.stringify(err)}`)
-      throw new RustoryConfigError('There was an error saving the new Backups path!', RustoryConfigError.Codes.CONFIG_ERROR)
+      window.api.logger.error('There was an error saving the new VS Instance Backups path!')
+      window.api.logger.debug(`There was an error saving the new VS Instance Backups path:\n${JSON.stringify(err)}`)
+      throw new RustoryConfigError('There was an error saving the new VS Instance Backups path!', RustoryConfigError.Codes.CONFIG_ERROR)
     }
   }
 }

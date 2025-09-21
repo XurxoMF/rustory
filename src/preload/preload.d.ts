@@ -216,21 +216,21 @@ declare global {
        */
       vsVersion: {
         /**
-         * Add or update a version to the DB.
-         * @param version Thew version to save.
+         * Add or update a VS Version to the DB.
+         * @param version The VS Version to save.
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
         saveVSVersion: (version: TVSVersion) => Promise<void>
         /**
-         * Delete a version from the DB.
-         * @param version The version to delete.
+         * Delete a VS Version from the DB.
+         * @param version The VS Version to delete.
          * @throws A RustoryDBError error.
          */
         deleteVSVersion: (version: TVSVersion) => Promise<void>
         /**
-         * Get all the versions from the DB.
-         * @returns The versions found.
+         * Get all the VS Versions from the DB.
+         * @returns The VS Versions found.
          * @throws A RustoryDBError error.
          */
         getVSVersions: () => Promise<TVSVersion[]>
@@ -240,21 +240,21 @@ declare global {
        */
       vsInstance: {
         /**
-         * Add or update an instance to the DB.
-         * @param instance The instance to save.
+         * Add or update an VS Instance to the DB.
+         * @param instance The VS Instance to save.
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
         saveVSInstance: (instance: TVSInstance) => Promise<void>
         /**
-         * Delete an instance from the DB.
-         * @param instance The instance to delete.
+         * Delete an VS Instance from the DB.
+         * @param instance The VS Instance to delete.
          * @throws A RustoryDBError error.
          */
         deleteVSInstance: (instance: TVSInstance) => Promise<void>
         /**
-         * Get all the instances from the DB.
-         * @returns The instances found.
+         * Get all the VS Instances from the DB.
+         * @returns The VS Instances found.
          * @throws A RustoryDBError error.
          */
         getVSInstances: () => Promise<TVSInstance[]>

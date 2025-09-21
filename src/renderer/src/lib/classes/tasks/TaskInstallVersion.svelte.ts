@@ -31,12 +31,12 @@ export class TaskInstallVersion implements TaskBase {
   private _version: string
 
   /**
-   * URL to download the version from.
+   * URL to download the VS Version from.
    */
   private _url: string
 
   /**
-   * Path to extract the version to.
+   * Path to extract the VS Version to.
    */
   private _outputPath: string
 
@@ -79,14 +79,14 @@ export class TaskInstallVersion implements TaskBase {
   }
 
   /**
-   * URL to download the version from.
+   * URL to download the VS Version from.
    */
   public get url(): string {
     return this._url
   }
 
   /**
-   * Path to extract the version to.
+   * Path to extract the VS Version to.
    */
   public get outputPath(): string {
     return this._outputPath
@@ -101,7 +101,7 @@ export class TaskInstallVersion implements TaskBase {
     const cleanExtractProgressEvent = window.api.zip.extractor.on.progress((_event, _id, progress) => (this._extractProgress = progress))
 
     try {
-      window.api.logger.info(`[${this._id}] Running Install Version task for version ${this._version}...`)
+      window.api.logger.info(`[${this._id}] Running Install Version task for VS Version ${this._version}...`)
 
       this._status = TaskBase.Status.RUNNING
 
@@ -122,10 +122,10 @@ export class TaskInstallVersion implements TaskBase {
       this._downloadProgress = 100
       this._extractProgress = 100
 
-      window.api.logger.info(`[${this._id}] Install Version task for version ${this._version} completed successfully!`)
+      window.api.logger.info(`[${this._id}] Install Version task for VS Version ${this._version} completed successfully!`)
     } catch (err) {
-      window.api.logger.error(`[${this._id}] There was an error installing the version ${this._version}!`)
-      window.api.logger.debug(`[${this._id}] There was an error installing the version ${this._version}:\n${JSON.stringify(err)}`)
+      window.api.logger.error(`[${this._id}] There was an error installing the VS Version ${this._version}!`)
+      window.api.logger.debug(`[${this._id}] There was an error installing the VS Version ${this._version}:\n${JSON.stringify(err)}`)
       this._status = TaskBase.Status.FAILED
     } finally {
       cleanDownloadProgressEvent()

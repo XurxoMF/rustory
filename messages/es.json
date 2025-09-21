@@ -28,10 +28,10 @@
   "settings__theme_description": "Color principal de la APP",
   "settings__uiscale": "Escala de la UI",
   "settings__uiscale_description": "Escala de la UI de la APP",
-  "settings__instances_folder": "Carpeta de instancias",
-  "settings__instances_folder_description": "Carpeta de instancias por defecto",
-  "settings__versions_folder": "Carpeta de versiones",
-  "settings__versions_folder_description": "Carpeta de versiones por defecto",
-  "settings__backups_folder": "Carpeta de copias de seguridad",
-  "settings__backups_folder_description": "Carpeta de copias de srguridad por defecto"
+  "settings__vs_instances_folder": "Carpeta de Instancias de VS",
+  "settings__vs_instances_folder_description": "Carpeta de Instancias de VS por defecto",
+  "settings__vs_versions_folder": "Carpeta de Versiones de VS",
+  "settings__vs_versions_folder_description": "Carpeta de Versiones de VS por defecto",
+  "settings__vs_instance_backups_folder": "Carpeta de Copias de Seguridad de Instancias de VS",
+  "settings__vs_instance_backups_folder_description": "Carpeta de Copias de Seguridad de Instancias de VS por defecto"
 }

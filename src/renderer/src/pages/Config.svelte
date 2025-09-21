@@ -54,61 +54,61 @@
       <GridContainer columns={3}>
         <GridItem>
           <FieldsWrapper>
-            <FieldsTitle>{m.settings__instances_folder()}</FieldsTitle>
+            <FieldsTitle>{m.settings__vs_instances_folder()}</FieldsTitle>
             <FieldsWrapper direction="x">
               <ButtonNeutral
                 title={m.common__select_folder()}
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__instances_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog(m.settings__vs_instances_folder(), 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
-                  Config.instance.setInstancesPath(folder[0])
+                  Config.instance.setVSInstancesPath(folder[0])
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
               </ButtonNeutral>
-              <TextInput name={m.settings__instances_folder()} placeholder={m.settings__instances_folder()} value={Config.instance.instancesPath} readonly />
+              <TextInput name={m.settings__vs_instances_folder()} placeholder={m.settings__vs_instances_folder()} value={Config.instance.vsInstancesPath} readonly />
             </FieldsWrapper>
-            <FieldsDescription>{m.settings__instances_folder_description()}</FieldsDescription>
+            <FieldsDescription>{m.settings__vs_instances_folder_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
 
         <GridItem>
           <FieldsWrapper>
-            <FieldsTitle>{m.settings__versions_folder()}</FieldsTitle>
+            <FieldsTitle>{m.settings__vs_versions_folder()}</FieldsTitle>
             <FieldsWrapper direction="x">
               <ButtonNeutral
                 title={m.common__select_folder()}
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__versions_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog(m.settings__vs_versions_folder(), 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
-                  Config.instance.setVersionsPath(folder[0])
+                  Config.instance.setVSVersionsPath(folder[0])
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
               </ButtonNeutral>
-              <TextInput name={m.settings__versions_folder()} placeholder={m.settings__versions_folder()} value={Config.instance.versionsPath} readonly />
+              <TextInput name={m.settings__vs_versions_folder()} placeholder={m.settings__vs_versions_folder()} value={Config.instance.vsVersionsPath} readonly />
             </FieldsWrapper>
-            <FieldsDescription>{m.settings__versions_folder_description()}</FieldsDescription>
+            <FieldsDescription>{m.settings__vs_versions_folder_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
 
         <GridItem>
           <FieldsWrapper>
-            <FieldsTitle>{m.settings__backups_folder()}</FieldsTitle>
+            <FieldsTitle>{m.settings__vs_instance_backups_folder()}</FieldsTitle>
             <FieldsWrapper direction="x">
               <ButtonNeutral
                 title={m.common__select_folder()}
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__backups_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
-                  Config.instance.setBackupsPath(folder[0])
+                  Config.instance.setVSInstanceBackupsPath(folder[0])
                 }}
               >
                 <Icon icon="ph:magnifying-glass" />
               </ButtonNeutral>
-              <TextInput name={m.settings__backups_folder()} placeholder={m.settings__backups_folder()} value={Config.instance.backupsPath} readonly />
+              <TextInput name={m.settings__vs_instance_backups_folder()} placeholder={m.settings__vs_instance_backups_folder()} value={Config.instance.vsInstanceBackupsPath} readonly />
             </FieldsWrapper>
-            <FieldsDescription>{m.settings__backups_folder_description()}</FieldsDescription>
+            <FieldsDescription>{m.settings__vs_instance_backups_folder_description()}</FieldsDescription>
           </FieldsWrapper>
         </GridItem>
       </GridContainer>

@@ -64,10 +64,10 @@ export class Data {
       for (const vsInstance of vsInstancesJSON) {
         vsInstances.push(VSInstance.fromJSON(vsInstance))
 
-        // Check if the version needed by the instance was already loaded. If not, add it as NOT_INSTALLED.
+        // Check if the VS Version needed by the instance was already loaded. If not, add it as NOT_INSTALLED.
         const version = vsVersions.find((v) => v.version === vsInstance.version)
         if (version === undefined) {
-          const path = await window.api.fs.join(Config.instance.versionsPath, vsInstance.version)
+          const path = await window.api.fs.join(Config.instance.vsVersionsPath, vsInstance.version)
           vsVersions.push(new VSVersion({ version: vsInstance.version, path, state: VSVersion.State.NOT_INSTALLED }))
         }
       }
