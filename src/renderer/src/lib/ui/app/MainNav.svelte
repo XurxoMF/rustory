@@ -21,6 +21,7 @@
 >
   <div class="w-full flex flex-col items-start justify-center gap-1">
     {@render MainNavButton('ph:house', m.common__home(), '/')}
+    {@render MainNavButton('ph:git-fork', m.vintagestory__versions(), '/versions')}
     {@render MainNavButton('ph:gear', m.common__config(), '/config')}
   </div>
 </nav>

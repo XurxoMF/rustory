@@ -25,9 +25,7 @@
       "indexes": {
         "config_key_unique": {
           "name": "config_key_unique",
-          "columns": [
-            "key"
-          ],
+          "columns": ["key"],
           "isUnique": true
         }
       },
@@ -106,9 +104,7 @@
       "indexes": {
         "vs_account_id_unique": {
           "name": "vs_account_id_unique",
-          "columns": [
-            "id"
-          ],
+          "columns": ["id"],
           "isUnique": true
         }
       },
@@ -208,9 +204,7 @@
       "indexes": {
         "vs_instance_id_unique": {
           "name": "vs_instance_id_unique",
-          "columns": [
-            "id"
-          ],
+          "columns": ["id"],
           "isUnique": true
         }
       },
@@ -254,9 +248,7 @@
       "indexes": {
         "vs_instance_backup_id_unique": {
           "name": "vs_instance_backup_id_unique",
-          "columns": [
-            "id"
-          ],
+          "columns": ["id"],
           "isUnique": true
         }
       },
@@ -286,9 +278,7 @@
       "indexes": {
         "vs_version_version_unique": {
           "name": "vs_version_version_unique",
-          "columns": [
-            "version"
-          ],
+          "columns": ["version"],
           "isUnique": true
         }
       },

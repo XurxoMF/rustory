@@ -43,7 +43,7 @@ export class VSAPIModListed {
   /**
    * The summary of the mod.
    */
-  private _summary: string | undefined
+  private _summary?: string | undefined
 
   /**
    * The modidstrs of the mod.
@@ -58,7 +58,7 @@ export class VSAPIModListed {
   /**
    * The urlalias of the mod.
    */
-  private _urlalias: string | undefined
+  private _urlalias?: string | undefined
 
   /**
    * The side of the mod.
@@ -93,10 +93,10 @@ export class VSAPIModListed {
     trendingpoints: number
     comments: number
     name: string
-    summary: string | undefined
+    summary?: string | undefined
     modidstrs: string[]
     author: string
-    urlalias: string | undefined
+    urlalias?: string | undefined
     side: string
     type: string
     logo: string

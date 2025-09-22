@@ -12,8 +12,8 @@
   }
 
   type SelectProps = {
-    value: string | undefined
-    onValueChange: (value: string | undefined) => void | undefined
+    value?: string | undefined
+    onValueChange: (value?: string | undefined) => void | undefined
     placeholder: string
     items: SelectItemType[]
   }

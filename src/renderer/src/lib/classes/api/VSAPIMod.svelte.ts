@@ -36,42 +36,42 @@ export class VSAPIMod {
   /**
    * The url alias of the mod.
    */
-  private _urlalias: string | undefined
+  private _urlalias?: string | undefined
 
   /**
    * The logo filename of the mod.
    */
-  private _logofilename: string | undefined
+  private _logofilename?: string | undefined
 
   /**
    * The logo file of the mod.
    */
-  private _logofile: string | undefined
+  private _logofile?: string | undefined
 
   /**
    * The homepage url of the mod.
    */
-  private _homepageurl: string | undefined
+  private _homepageurl?: string | undefined
 
   /**
    * The source code url of the mod.
    */
-  private _sourcecodeurl: string | undefined
+  private _sourcecodeurl?: string | undefined
 
   /**
    * The trailer video url of the mod.
    */
-  private _trailervideourl: string | undefined
+  private _trailervideourl?: string | undefined
 
   /**
    * The issue tracker url of the mod.
    */
-  private _issuetrackerurl: string | undefined
+  private _issuetrackerurl?: string | undefined
 
   /**
    * The wiki url of the mod.
    */
-  private _wikiurl: string | undefined
+  private _wikiurl?: string | undefined
 
   /**
    * The downloads of the mod.
@@ -134,14 +134,14 @@ export class VSAPIMod {
     name: string
     text: string
     author: string
-    urlalias: string | undefined
-    logofilename: string | undefined
-    logofile: string | undefined
-    homepageurl: string | undefined
-    sourcecodeurl: string | undefined
-    trailervideourl: string | undefined
-    issuetrackerurl: string | undefined
-    wikiurl: string | undefined
+    urlalias?: string | undefined
+    logofilename?: string | undefined
+    logofile?: string | undefined
+    homepageurl?: string | undefined
+    sourcecodeurl?: string | undefined
+    trailervideourl?: string | undefined
+    issuetrackerurl?: string | undefined
+    wikiurl?: string | undefined
     downloads: number
     follows: number
     trendingpoints: number

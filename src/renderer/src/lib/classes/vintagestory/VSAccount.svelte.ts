@@ -42,14 +42,24 @@ export class VSAccount {
   /**
    * The mptoken of the account.
    */
-  private _mptoken: string | undefined
+  private _mptoken?: string | undefined
 
   /**
    * Whether the account is hosting a game server.
    */
   private _hostGameServer: boolean
 
-  public constructor(data: TVSAccount) {
+  public constructor(data: {
+    id: number
+    email: string
+    playerName: string
+    playerUid: string
+    playerEntitlements: string
+    sessionKey: string
+    sessionSignature: string
+    mptoken?: string | undefined
+    hostGameServer: boolean
+  }) {
     this._id = data.id
     this._email = data.email
     this._playerName = data.playerName

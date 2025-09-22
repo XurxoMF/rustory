@@ -34,12 +34,12 @@ export class VSMod {
   /**
    * The description of the VS Mod.
    */
-  private _description: string | undefined
+  private _description?: string | undefined
 
   /**
    * The side of the VS Mod.
    */
-  private _side: string | undefined
+  private _side?: string | undefined
 
   /**
    * The authors of the VS Mod.
@@ -54,12 +54,12 @@ export class VSMod {
   /**
    * The type of the VS Mod.
    */
-  private _type: string | undefined
+  private _type?: string | undefined
 
   /**
    * The image of the VS Mod.
    */
-  private _image: string | undefined
+  private _image?: string | undefined
 
   /**
    * The VS Mod info from the ModDB.
@@ -77,12 +77,12 @@ export class VSMod {
     modid: string
     version: string
     path: string
-    description: string | undefined
-    side: string | undefined
+    description?: string | undefined
+    side?: string | undefined
     authors: string[]
     contributors: string[]
-    type: string | undefined
-    image: string | undefined
+    type?: string | undefined
+    image?: string | undefined
     mod: VSAPIMod
     state?: VSMod.State | undefined
   }) {

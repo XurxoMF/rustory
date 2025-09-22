@@ -19,7 +19,7 @@ declare global {
     playerEntitlements: string
     sessionKey: string
     sessionSignature: string
-    mptoken: string | undefined
+    mptoken?: string | undefined
     hostGameServer: boolean
   }
 
@@ -53,10 +53,10 @@ declare global {
     trendingpoints: number
     comments: number
     name: string
-    summary: string | undefined
+    summary?: string | undefined
     modidstrs: string[]
     author: string
-    urlalias: string | undefined
+    urlalias?: string | undefined
     side: string
     type: string
     logo: string
@@ -70,14 +70,14 @@ declare global {
     name: string
     text: string
     author: string
-    urlalias: string | undefined
-    logofilename: string | undefined
-    logofile: string | undefined
-    homepageurl: string | undefined
-    sourcecodeurl: string | undefined
-    trailervideourl: string | undefined
-    issuetrackerurl: string | undefined
-    wikiurl: string | undefined
+    urlalias?: string | undefined
+    logofilename?: string | undefined
+    logofile?: string | undefined
+    homepageurl?: string | undefined
+    sourcecodeurl?: string | undefined
+    trailervideourl?: string | undefined
+    issuetrackerurl?: string | undefined
+    wikiurl?: string | undefined
     downloads: number
     follows: number
     trendingpoints: number
@@ -108,12 +108,12 @@ declare global {
     modid: string
     version: string
     path: string
-    description: string | undefined
-    side: string | undefined
+    description?: string | undefined
+    side?: string | undefined
     authors: string[]
     contributors: string[]
-    type: string | undefined
-    image: string | undefined
+    type?: string | undefined
+    image?: string | undefined
     mod: TVSAPIMod
   }
 

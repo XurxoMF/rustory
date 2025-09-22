@@ -12,7 +12,7 @@ const {
   inputPaths: string[]
   outputPath: string
   outputFileName: string
-  compressionLevel: number | undefined
+  compressionLevel?: number | undefined
 }
 
 const output = fse.createWriteStream(join(outputPath, outputFileName))

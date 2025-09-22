@@ -1,7 +1,7 @@
 <script lang="ts">
   import { type HTMLInputAttributes } from 'svelte/elements'
 
-  type TextInputProps = Omit<HTMLInputAttributes, 'type' | 'class'>
+  type TextInputProps = Omit<HTMLInputAttributes, 'type'>
 
   let { ...restProps }: TextInputProps = $props()
 </script>

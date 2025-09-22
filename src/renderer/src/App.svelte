@@ -6,6 +6,8 @@
 
   import './styles.css'
 
+  import { Data } from '@renderer/lib/classes/Data.svelte'
+
   import RustoryIcon from '@renderer/assets/icon.png'
 
   import { Loader } from '@renderer/lib/classes/Loader.svelte'
@@ -21,10 +23,10 @@
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config.svelte'
-  import { Data } from './lib/classes/Data.svelte'
+  import VersionsPage from '@renderer/pages/Versions.svelte'
 
   // Routes of the page
-  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/config', component: ConfigPage }]
+  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/versions', component: VersionsPage }, { path: '/config', component: ConfigPage }]
 
   // Loader data manager.
   const loader = Loader.instance

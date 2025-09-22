@@ -302,7 +302,7 @@ declare global {
          * @param compressionLevel Compress level of the file.
          * @throws A RustoryZipError error.
          */
-        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel: number | undefined) => Promise<void>
+        compress: (id: string, inputPaths: string[], outputPath: string, outputFileName: string, compressionLevel?: number | undefined) => Promise<void>
         /**
          * Subscribe to compression events.
          */

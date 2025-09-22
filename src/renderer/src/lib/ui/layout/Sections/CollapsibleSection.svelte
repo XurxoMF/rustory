@@ -16,7 +16,7 @@
   bind:open
   bind:ref
   class={[
-    'w-full rounded-md overflow-hidden border transition-[border,background-color] duration-200',
+    'w-full h-full rounded-md overflow-hidden border transition-[border,background-color] duration-200',
     't-dark:bg-zinc-850 t-dark:border-zinc-750',
     't-light:bg-zinc-150 t-light:border-zinc-250',
     't-rust:bg-rust-850 t-rust:border-rust-750',
@@ -24,7 +24,7 @@
   ]}
 >
   <Collapsible.Trigger class="w-full flex items-center justify-between p-2 cursor-pointer">
-    {title}
+    <h1>{title}</h1>
     <Icon icon="ph:caret-down-bold" class={['transition-transform duration-200', open && 'rotate-180']} />
   </Collapsible.Trigger>
 

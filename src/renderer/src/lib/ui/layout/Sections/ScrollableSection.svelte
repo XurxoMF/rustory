@@ -5,7 +5,7 @@
 
   type ScrollableSectionPropsType = {
     orientation: 'vertical' | 'horizontal' | 'both'
-    isContainer: boolean | undefined
+    isContainer?: boolean | undefined
     children: Snippet<[]>
   }
 
@@ -15,7 +15,7 @@
 <ScrollableContainer
   {orientation}
   class={[
-    'w-fit h-fit overflow-hidden rounded-md  border transition-[border,background-color] duration-200',
+    'w-full h-full overflow-hidden rounded-md border transition-[border,background-color] duration-200',
     't-dark:bg-zinc-850 t-dark:border-zinc-750',
     't-light:bg-zinc-150 t-light:border-zinc-250',
     't-rust:bg-rust-850 t-rust:border-rust-750',
