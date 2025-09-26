@@ -363,7 +363,7 @@ declare global {
        * Shows a notification to the user.
        * @param title Title of the notification.
        * @param body Body of the notification.
-       * @param onClick Callback to execute when the notification is clicked.
+       * @param onclick Callback to execute when the notification is clicked.
        * @returns The id of the notification.
        * @throws A RustoryNotificationError error.
        */

@@ -39,7 +39,7 @@ export class Notifications {
    */
   public notify(title: string, body: string) {
     return {
-      onClick: async (callback: Notifications.Callback) => {
+      onclick: async (callback: Notifications.Callback) => {
         const id = await window.api.notifications.notify(title, body)
         this.clickCallbacks.set(id, callback)
       }

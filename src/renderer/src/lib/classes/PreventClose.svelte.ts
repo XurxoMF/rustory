@@ -1,5 +1,7 @@
 /**
  * Store to prevent the app from closing.
+ *
+ * NOT USED RIGHT NOW
  */
 export class PreventClose {
   /**

@@ -7,7 +7,6 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-Button
 <Button mode="icon" onclick={() => Reloader.instance.executeTasks()} title={m.common__reload()}>
   <Icon icon="ph:arrow-clockwise-bold" />
 </Button>
@@ -17,4 +16,3 @@ Button
 <Button mode="icon" onclick={() => history.forward()} title={m.common__next()}>
   <Icon icon="ph:caret-right-bold" />
 </Button>
-ButtonButtonButtonButtonButton

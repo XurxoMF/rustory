@@ -20,6 +20,7 @@
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
+  import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config.svelte'
@@ -103,10 +104,10 @@
   <div
     class={[
       'w-screen h-screen overflow-hidden bg-cover',
-      't-dark:bg-image-dark',
-      't-light:bg-image-light',
-      't-rust:bg-image-rust',
-      't-midnight:bg-image-midnight',
+      't-dark:bg-image-dark t-dark:bg-zinc-900',
+      't-light:bg-image-light t-light:bg-zinc-100',
+      't-rust:bg-image-rust t-rust:bg-rust-900',
+      't-midnight:bg-image-midnight t-midnight:bg-gray-900',
       'rounded-md border transition-[border] duration-200 t-dark:border-zinc-750 t-light:border-zinc-250 t-rust:border-rust-750 t-midnight:border-gray-750'
     ]}
   >
@@ -121,7 +122,9 @@
     >
       <WindowBar />
 
-      <div class="w-full h-full flex overflow-hidden">
+      <div class="w-full h-full relative flex overflow-hidden">
+        <Toasts />
+
         <MainNav />
 
         <main class="w-full h-full overflow-hidden">
