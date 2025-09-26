@@ -23,7 +23,7 @@
     'w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border border-red-700 bg-red-800 transition-[opacity,border] duration-200',
     mode === 'text' && 'px-2 py-1',
     mode === 'icon' && 'p-1',
-    mode === 'wrapper' && 'p-0',
+    mode === 'wrapper' && 'p-0 text-start',
     ...ROUNDED_CLASSES[rounded]
   ]}
   {...restProps}

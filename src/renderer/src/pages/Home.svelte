@@ -17,10 +17,8 @@
       onclick={async () => {
         const toast1 = new Toast({
           title: 'Test toasts',
-          description: 'This is a test toast',
           type: Toast.Type.INFO,
-          hideAfter: 10000,
-          onclick: async () => {}
+          hideAfter: 60000
         })
         Toasts.instance.addToast(toast1)
 
@@ -28,9 +26,11 @@
 
         const toast2 = new Toast({
           title: 'Test toasts',
-          description: 'This is a test toast',
           type: Toast.Type.WARNING,
-          hideAfter: 10000
+          hideAfter: 60000,
+          onclick: async () => {
+            window.api.logger.info('Toast clicked!')
+          }
         })
         Toasts.instance.addToast(toast2)
 
@@ -40,7 +40,7 @@
           title: 'Test toasts',
           description: 'This is a test toast',
           type: Toast.Type.ERROR,
-          hideAfter: 10000
+          hideAfter: 60000
         })
         Toasts.instance.addToast(toast3)
 
@@ -48,9 +48,11 @@
 
         const toast4 = new Toast({
           title: 'Test toasts',
-          description: 'This is a test toast jkfbsd askdb ak aksdb akb dakbksbd kabdaksb dakbd ask',
           type: Toast.Type.SUCCESS,
-          hideAfter: 10000
+          hideAfter: 60000,
+          onclick: async () => {
+            window.api.logger.info('Toast clicked!')
+          }
         })
         Toasts.instance.addToast(toast4)
       }}>Show Toast</ButtonNeutral

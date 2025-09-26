@@ -27,7 +27,7 @@
     't-midnight:bg-gray-800 t-midnight:border-gray-750',
     mode === 'text' && 'px-2 py-1',
     mode === 'icon' && 'p-1',
-    mode === 'wrapper' && 'p-0',
+    mode === 'wrapper' && 'p-0 text-start',
     ...ROUNDED_CLASSES[rounded]
   ]}
   {...restProps}

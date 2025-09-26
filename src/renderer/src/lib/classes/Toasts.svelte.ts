@@ -33,7 +33,7 @@ export class Toasts {
    * @param toast The toast to remove.
    */
   public removeToast(toast: Toast): void {
-    toast.clearTimeout() // Limpamos o timeout cando eliminamos o toast
+    toast.clearTimeout()
     this._toasts = this._toasts.filter((t) => t.id !== toast.id)
   }
 
@@ -79,7 +79,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  private _description: string
+  private _description?: string | undefined
 
   /**
    * The time that has to pass for the toast to hide.
@@ -96,7 +96,7 @@ export class Toast {
    */
   private _timeout?: NodeJS.Timeout | undefined
 
-  public constructor(data: { type: Toast.Type; title: string; description: string; hideAfter?: number | undefined; onclick?: (() => void | Promise<void>) | undefined }) {
+  public constructor(data: { type: Toast.Type; title: string; description?: string | undefined; hideAfter?: number | undefined; onclick?: (() => void | Promise<void>) | undefined }) {
     this._id = crypto.randomUUID()
     this._type = data.type
     this._title = data.title
@@ -110,7 +110,7 @@ export class Toast {
    * @param callback Function to call when timeout expires
    */
   public startTimeout(callback: () => void): void {
-    this.clearTimeout() // Limpamos calquera timeout anterior
+    this.clearTimeout()
     this._timeout = setTimeout(callback, this._hideAfter)
   }
 
@@ -156,7 +156,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  public get description(): string {
+  public get description(): string | undefined {
     return this._description
   }
 
