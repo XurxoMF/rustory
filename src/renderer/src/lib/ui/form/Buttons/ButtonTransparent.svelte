@@ -1,7 +1,6 @@
 <script lang="ts">
-  import { Button } from 'bits-ui'
-
   import { type Snippet } from 'svelte'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
 
   const ROUNDED_CLASSES = {
     regular: ['rounded-md'],
@@ -9,16 +8,16 @@
   } as const
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
 
-  type ButtonTransparentPropsType = Button.RootProps & {
+  type ButtonTransparentProps = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet<[]>
     rounded?: RoundedTypes | undefined
     mode?: 'text' | 'icon' | 'wrapper' | undefined
   }
 
-  let { children, rounded = 'regular', mode = 'text', ...restProps }: ButtonTransparentPropsType = $props()
+  let { children, rounded = 'regular', mode = 'text', ...restProps }: ButtonTransparentProps = $props()
 </script>
 
-<Button.Root
+<button
   class={[
     'w-fit flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 border transition-[opacity,border] duration-200',
     't-dark:border-zinc-750',
@@ -33,4 +32,4 @@
   {...restProps}
 >
   {@render children()}
-</Button.Root>
+</button>

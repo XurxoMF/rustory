@@ -1,20 +1,19 @@
 <script lang="ts">
   import { Tooltip } from 'bits-ui'
-
   import { type Snippet } from 'svelte'
 
-  type TooltipProps = {
-    children: Snippet
+  type TooltipProps = Tooltip.RootProps & {
     trigger: Snippet
+    triggerProps?: Tooltip.TriggerProps
     mode?: 'text' | 'icon' | 'wrapper' | undefined
   }
 
-  let { children, trigger, mode = 'text' }: TooltipProps = $props()
+  let { open = $bindable(false), children, trigger, triggerProps = {}, mode = 'text', ...restProps }: TooltipProps = $props()
 </script>
 
 <Tooltip.Provider>
-  <Tooltip.Root>
-    <Tooltip.Trigger class="w-full text-start">
+  <Tooltip.Root bind:open {...restProps}>
+    <Tooltip.Trigger {...triggerProps}>
       {@render trigger()}
     </Tooltip.Trigger>
 

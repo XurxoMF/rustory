@@ -3,9 +3,9 @@
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select, { type SelectItemType } from '@renderer/lib/ui/form/Select.svelte'
+  import Select, { type SelectItem } from '@renderer/lib/ui/form/Select.svelte'
 
-  let scales: SelectItemType[] = Config.SCALES.map((SCALE) => ({
+  let scales: SelectItem[] = Config.SCALES.map((SCALE) => ({
     value: SCALE.scale,
     label: SCALE.name
   }))
@@ -13,6 +13,7 @@
 
 <Select
   placeholder={m.placeholders__select_one()}
+  type="single"
   items={scales}
   value={Config.instance.scale}
   onValueChange={(e) => {

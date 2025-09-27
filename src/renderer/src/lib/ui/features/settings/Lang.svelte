@@ -3,9 +3,9 @@
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select, { type SelectItemType } from '@renderer/lib/ui/form/Select.svelte'
+  import Select, { type SelectItem } from '@renderer/lib/ui/form/Select.svelte'
 
-  let langs: SelectItemType[] = Config.LANGUAGES.map((LANG) => ({
+  let langs: SelectItem[] = Config.LANGUAGES.map((LANG) => ({
     value: LANG.lang,
     label: LANG.name,
     comment: LANG.credits.join(', ')
@@ -14,6 +14,7 @@
 
 <Select
   placeholder={m.placeholders__select_one()}
+  type="single"
   items={langs}
   value={Config.instance.locale}
   onValueChange={(e) => {

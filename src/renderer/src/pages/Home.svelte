@@ -1,16 +1,17 @@
 <script lang="ts">
+  import { sleep } from '@shared/utils/common'
+
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
-  import ButtonNeutral from '@renderer/lib/ui/form/Buttons/ButtonNeutral.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
-  import { sleep } from '@shared/utils/common'
+  import ButtonNeutral from '@renderer/lib/ui/form/Buttons/ButtonNeutral.svelte'
 
   Breadcrumbs.instance.segments = []
 </script>
 
 <PageWrapper scrollable={false}>
-  <div class="flex flex-col gap-2 flex-wrap">
+  <div>
     <p>Hola mundo!</p>
 
     <ButtonNeutral

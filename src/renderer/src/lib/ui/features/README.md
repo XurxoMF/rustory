@@ -1,6 +1,6 @@
 # FOLDER DISTRIBUTION
 
-This folder contains all the **STYLED** **components** used to modify the APP settings/configs.
+This folder contains all the **STYLED** **components** to be used on the different pages of the launcher sepparated by feature.
 
 ## CHARACTERISTIC
 

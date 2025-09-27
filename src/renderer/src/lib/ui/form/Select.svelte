@@ -1,39 +1,23 @@
 <script lang="ts">
-  import { Select } from 'bits-ui'
+  import { Select, type WithoutChildren } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  export type SelectItemType = {
-    value: string
-    label: string
-    comment?: string | undefined
-    disabled?: boolean | undefined
+  export type SelectItem = { value: string; label: string; comment?: string | undefined; disabled?: boolean | undefined }
+
+  type SelectProps = WithoutChildren<Select.RootProps> & {
+    placeholder?: string | undefined
+    items: SelectItem[]
+    contentProps?: WithoutChildren<Select.ContentProps> | undefined
   }
 
-  type SelectProps = {
-    value?: string | undefined
-    onValueChange: (value?: string | undefined) => void | undefined
-    placeholder: string
-    items: SelectItemType[]
-  }
-
-  let { value = $bindable(), onValueChange, items, placeholder }: SelectProps = $props()
-
-  let isOpen = $state(false)
+  let { value = $bindable(), items, contentProps, placeholder, ...restProps }: SelectProps = $props()
 
   const selectedLabel = $derived(items.find((item) => item.value === value)?.label)
 </script>
 
-<Select.Root
-  type="single"
-  bind:open={isOpen}
-  bind:value
-  onValueChange={(e) => {
-    value = e
-    onValueChange?.(e)
-  }}
->
+<Select.Root bind:value={value as never} {...restProps}>
   <Select.Trigger
     class={[
       'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md cursor-pointer border transition-[border,background-color] duration-200',
@@ -44,8 +28,9 @@
     ]}
   >
     {selectedLabel ? selectedLabel : placeholder}
-    <Icon icon="ph:caret-down-bold" class={['transition-transform duration-200', isOpen && 'rotate-180']} />
+    <Icon icon="ph:caret-up-down" />
   </Select.Trigger>
+
   <Select.Portal to="#portal">
     <Select.Content
       class={[
@@ -56,9 +41,10 @@
         't-midnight:bg-gray-800 t-midnight:border-gray-750'
       ]}
       forceMount
+      {...contentProps}
     >
-      {#snippet child({ props, wrapperProps })}
-        {#if isOpen}
+      {#snippet child({ props, wrapperProps, open })}
+        {#if open}
           <div {...wrapperProps}>
             <div {...props} transition:slide={{ duration: 200 }}>
               <Select.Viewport>
@@ -80,6 +66,7 @@
                         {label}
                         <span class="text-xs opacity-50">{comment}</span>
                       </div>
+
                       {#if selected}
                         <Icon icon="ph:check-bold" />
                       {/if}

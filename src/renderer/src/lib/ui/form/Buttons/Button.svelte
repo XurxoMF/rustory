@@ -1,17 +1,16 @@
 <script lang="ts">
-  import { Button } from 'bits-ui'
-
   import { type Snippet } from 'svelte'
+  import type { HTMLButtonAttributes } from 'svelte/elements'
 
-  type ButtonPropsType = Button.RootProps & {
+  type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet<[]>
     mode?: 'text' | 'icon' | 'wrapper' | 'container' | undefined
   }
 
-  let { children, mode = 'text', ...restProps }: ButtonPropsType = $props()
+  let { children, mode = 'text', ...restProps }: ButtonProps = $props()
 </script>
 
-<Button.Root
+<button
   class={[
     'flex items-center justify-center enabled:cursor-pointer disabled:opacity-50 transition-[opacity] duration-200 ',
     mode === 'container' ? 'w-full p-0 text-start' : 'w-fit',
@@ -22,4 +21,4 @@
   {...restProps}
 >
   {@render children()}
-</Button.Root>
+</button>

@@ -1,18 +1,18 @@
 <script lang="ts">
   import { type Snippet } from 'svelte'
 
-  type GridItemType = {
+  type GridItem = {
     children: Snippet<[]>
     spanX?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
     spanY?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
   }
 
-  let { children, spanX = 1, spanY = 1 }: GridItemType = $props()
+  let { children, spanX = 1, spanY = 1 }: GridItem = $props()
 </script>
 
 <div
   class={[
-    'w-full h-full',
+    'w-full',
     spanX === 2 && 'col-span-2',
     spanX === 3 && 'col-span-3',
     spanX === 4 && 'col-span-4',

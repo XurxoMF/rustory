@@ -2,26 +2,27 @@
   import { type Snippet } from 'svelte'
   import { fade } from 'svelte/transition'
 
-  import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
+  import { ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
 
-  type PageWrapperPropsType = {
+  type PageWrapperProps = {
     children: Snippet<[]>
-    isContainer?: boolean | undefined
     scrollable?: boolean | undefined
   }
 
-  let { children, isContainer = false, scrollable = true }: PageWrapperPropsType = $props()
+  let { children, scrollable = true }: PageWrapperProps = $props()
 
   const ANIMATION_DURATION: number = 100
 </script>
 
 <div class="w-full h-full" in:fade={{ duration: ANIMATION_DURATION, delay: ANIMATION_DURATION * 1.5 }} out:fade={{ duration: ANIMATION_DURATION }}>
   {#if scrollable}
-    <ScrollableContainer orientation="vertical" class={['w-full h-full overflow-hidden', isContainer && '@container']} viewportClasses="w-full h-full">
-      {@render children()}
+    <ScrollableContainer orientation="vertical">
+      <div class="w-full p-3">
+        {@render children()}
+      </div>
     </ScrollableContainer>
   {:else}
-    <div class="w-full h-full">
+    <div class="w-full h-full p-3">
       {@render children()}
     </div>
   {/if}
