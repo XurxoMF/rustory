@@ -6,6 +6,7 @@
   import StaticContainer from '@renderer/lib/ui/layout/Containers/StaticContainer.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/form/Buttons/Button.svelte'
+  import { StyledContainer } from '@renderer/lib/ui/layout/Containers'
 
   const ICONS: Record<Toast.Type, string> = {
     info: 'ph:info',
@@ -37,32 +38,34 @@
 </div>
 
 {#snippet content(toast: Toast)}
-  <StaticContainer>
-    <div class="w-full flex gap-2 items-center">
+  <StyledContainer>
+    <StaticContainer>
       <div class="w-full flex gap-2 items-center">
-        <div>
-          <Icon icon={ICONS[toast.type]} class={['text-2xl', COLOR[toast.type]]} />
+        <div class="w-full flex gap-2 items-center">
+          <div>
+            <Icon icon={ICONS[toast.type]} class={['text-2xl', COLOR[toast.type]]} />
+          </div>
+
+          <div>
+            <h1 class="text-sm">{toast.title}</h1>
+            {#if toast.description}
+              <p class="text-xs opacity-50">{toast.description}</p>
+            {/if}
+          </div>
         </div>
 
-        <div>
-          <h1 class="text-sm">{toast.title}</h1>
-          {#if toast.description}
-            <p class="text-xs opacity-50">{toast.description}</p>
-          {/if}
+        <div class="shrink-0 opacity-0 group-hover:opacity-50 transition-[opacity] duration-200">
+          <Button
+            mode="icon"
+            onclick={(e) => {
+              e.stopPropagation()
+              Toasts.instance.removeToast(toast)
+            }}
+          >
+            <Icon icon="ph:x-bold" class="cursor-pointer" />
+          </Button>
         </div>
       </div>
-
-      <div class="shrink-0 opacity-0 group-hover:opacity-50 transition-[opacity] duration-200">
-        <Button
-          mode="icon"
-          onclick={(e) => {
-            e.stopPropagation()
-            Toasts.instance.removeToast(toast)
-          }}
-        >
-          <Icon icon="ph:x-bold" class="cursor-pointer" />
-        </Button>
-      </div>
-    </div>
-  </StaticContainer>
+    </StaticContainer>
+  </StyledContainer>
 {/snippet}

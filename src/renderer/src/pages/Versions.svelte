@@ -7,9 +7,8 @@
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { Button } from '@renderer/lib/ui/form/Buttons'
-  import StyledWrapper from '@renderer/lib/ui/layout/StyledWrapper.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
-  import { StaticContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StaticContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/versions' }]
 </script>
@@ -17,16 +16,16 @@
 <PageWrapper scrollable={true}>
   <GridContainer columns={3}>
     <GridItem spanX="full">
-      <StyledWrapper>
+      <StyledContainer>
         <Button mode="container">
           <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
         </Button>
-      </StyledWrapper>
+      </StyledContainer>
     </GridItem>
 
     {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
       <GridItem>
-        <StyledWrapper>
+        <StyledContainer>
           <StaticContainer>
             <div class="w-full flex items-center justify-between">
               <div class="w-full flex flex-col justify-center items-start overflow-hidden">
@@ -39,7 +38,7 @@
               </div>
             </div>
           </StaticContainer>
-        </StyledWrapper>
+        </StyledContainer>
       </GridItem>
     {/each}
   </GridContainer>

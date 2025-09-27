@@ -2,12 +2,12 @@
   import type { Snippet } from 'svelte'
   import type { HTMLAttributes } from 'svelte/elements'
 
-  type StyledWrapperProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
+  type StyledContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
     children: Snippet<[]>
     isContainer?: boolean | undefined
   }
 
-  let { children, isContainer = false, ...restProps }: StyledWrapperProps = $props()
+  let { children, isContainer = false, ...restProps }: StyledContainerProps = $props()
 </script>
 
 <div

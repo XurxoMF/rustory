@@ -10,9 +10,8 @@
   import Description from '@renderer/lib/ui/form/Description.svelte'
   import Input from '@renderer/lib/ui/form/Input.svelte'
   import { ButtonNeutral } from '@renderer/lib/ui/form/Buttons'
-  import StyledWrapper from '@renderer/lib/ui/layout/StyledWrapper.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
-  import { CollapsibleContainer } from '@renderer/lib/ui/layout/Containers'
+  import { CollapsibleContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
 
   import Lang from '@renderer/lib/ui/features/settings/Lang.svelte'
   import Scale from '@renderer/lib/ui/features/settings/Scale.svelte'
@@ -24,7 +23,7 @@
 <PageWrapper scrollable={true}>
   <GridContainer columns={1}>
     <GridItem>
-      <StyledWrapper>
+      <StyledContainer>
         <CollapsibleContainer title={m.settings__interface()} open>
           <GridContainer columns={3}>
             <GridItem>
@@ -57,11 +56,11 @@
             </GridItem>
           </GridContainer>
         </CollapsibleContainer>
-      </StyledWrapper>
+      </StyledContainer>
     </GridItem>
 
     <GridItem>
-      <StyledWrapper>
+      <StyledContainer>
         <CollapsibleContainer title={m.settings__folders()} open>
           <GridContainer columns={3}>
             <GridItem>
@@ -131,7 +130,7 @@
             </GridItem>
           </GridContainer>
         </CollapsibleContainer>
-      </StyledWrapper>
+      </StyledContainer>
     </GridItem>
   </GridContainer>
 </PageWrapper>
