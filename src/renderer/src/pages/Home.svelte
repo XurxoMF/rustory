@@ -11,52 +11,50 @@
 </script>
 
 <PageWrapper scrollable={false}>
-  <div>
-    <p>Hola mundo!</p>
+  <p>Hola mundo!</p>
 
-    <ButtonNeutral
-      onclick={async () => {
-        const toast1 = new Toast({
-          title: 'Test toasts',
-          type: Toast.Type.INFO,
-          hideAfter: 60000
-        })
-        Toasts.instance.addToast(toast1)
+  <ButtonNeutral
+    onclick={async () => {
+      const toast1 = new Toast({
+        title: 'Test toasts',
+        type: Toast.Type.INFO,
+        hideAfter: 60000
+      })
+      Toasts.instance.addToast(toast1)
 
-        await sleep(500)
+      await sleep(500)
 
-        const toast2 = new Toast({
-          title: 'Test toasts',
-          type: Toast.Type.WARNING,
-          hideAfter: 60000,
-          onclick: async () => {
-            window.api.logger.info('Toast clicked!')
-          }
-        })
-        Toasts.instance.addToast(toast2)
+      const toast2 = new Toast({
+        title: 'Test toasts',
+        type: Toast.Type.WARNING,
+        hideAfter: 60000,
+        onclick: async () => {
+          window.api.logger.info('Toast clicked!')
+        }
+      })
+      Toasts.instance.addToast(toast2)
 
-        await sleep(500)
+      await sleep(500)
 
-        const toast3 = new Toast({
-          title: 'Test toasts',
-          description: 'This is a test toast',
-          type: Toast.Type.ERROR,
-          hideAfter: 60000
-        })
-        Toasts.instance.addToast(toast3)
+      const toast3 = new Toast({
+        title: 'Test toasts',
+        description: 'This is a test toast',
+        type: Toast.Type.ERROR,
+        hideAfter: 60000
+      })
+      Toasts.instance.addToast(toast3)
 
-        await sleep(500)
+      await sleep(500)
 
-        const toast4 = new Toast({
-          title: 'Test toasts',
-          type: Toast.Type.SUCCESS,
-          hideAfter: 60000,
-          onclick: async () => {
-            window.api.logger.info('Toast clicked!')
-          }
-        })
-        Toasts.instance.addToast(toast4)
-      }}>Show Toast</ButtonNeutral
-    >
-  </div>
+      const toast4 = new Toast({
+        title: 'Test toasts',
+        type: Toast.Type.SUCCESS,
+        hideAfter: 60000,
+        onclick: async () => {
+          window.api.logger.info('Toast clicked!')
+        }
+      })
+      Toasts.instance.addToast(toast4)
+    }}>Show Toast</ButtonNeutral
+  >
 </PageWrapper>
