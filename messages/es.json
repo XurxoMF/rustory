@@ -15,6 +15,8 @@
   "common__select_folder": "Selecciona una carpeta",
   "common__quit": "Salir",
   "common__open": "Abrir",
+  "common__cancel": "Cancelar",
+  "common__accept": "Aceptar",
   "themes__dark": "Oscuro",
   "themes__light": "Claro",
   "themes__rust": "Óxido",

@@ -2,7 +2,7 @@
   import { type Snippet } from 'svelte'
 
   type GridContainer = {
-    children: Snippet<[]>
+    children: Snippet
     columns?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | undefined
     gap?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | undefined
     overflow?: 'auto' | 'hidden' | undefined
@@ -23,7 +23,7 @@
       columns === 7 && '@sm:grid-cols-2 @xl:grid-cols-3 @3xl:grid-cols-4 @6xl:grid-cols-5 @9xl:grid-cols-7',
       gap === 1 && 'gap-1',
       gap === 2 && 'gap-2',
-      gap === 3 && 'gap-3',
+      gap === 3 && 'gap-2',
       gap === 4 && 'gap-4',
       gap === 5 && 'gap-5',
       gap === 6 && 'gap-6',

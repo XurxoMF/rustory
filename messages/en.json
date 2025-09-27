@@ -15,6 +15,8 @@
   "common__select_folder": "Select a folder",
   "common__quit": "Quit",
   "common__open": "Open",
+  "common__cancel": "Cancel",
+  "common__accept": "Accept",
   "themes__dark": "Dark",
   "themes__light": "Light",
   "themes__rust": "Rust",

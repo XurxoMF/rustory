@@ -3,7 +3,7 @@
   import type { HTMLButtonAttributes } from 'svelte/elements'
 
   type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
-    children: Snippet<[]>
+    children: Snippet
     mode?: 'text' | 'icon' | 'wrapper' | 'container' | undefined
   }
 

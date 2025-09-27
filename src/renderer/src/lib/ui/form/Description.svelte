@@ -6,7 +6,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type DescriptionProps = Omit<HTMLAttributes<HTMLParagraphElement>, 'class'> & {
-    children: Snippet<[]>
+    children: Snippet
   }
 
   let { children, ...restProps }: DescriptionProps = $props()

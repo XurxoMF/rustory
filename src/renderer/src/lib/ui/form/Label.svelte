@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
 
   type LabelProps = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
-    children: Snippet<[]>
+    children: Snippet
   }
 
   let { children, ...restProps }: LabelProps = $props()

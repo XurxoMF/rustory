@@ -3,7 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
 
   type StyledContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
-    children: Snippet<[]>
+    children: Snippet
     isContainer?: boolean | undefined
   }
 

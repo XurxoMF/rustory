@@ -2,7 +2,7 @@
   import { type Snippet } from 'svelte'
 
   type GridItem = {
-    children: Snippet<[]>
+    children: Snippet
     spanX?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
     spanY?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
   }

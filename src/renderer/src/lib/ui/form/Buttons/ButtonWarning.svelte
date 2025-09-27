@@ -9,7 +9,7 @@
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
 
   type ButtonWarningProps = Omit<HTMLButtonAttributes, 'class'> & {
-    children: Snippet<[]>
+    children: Snippet
     rounded?: RoundedTypes | undefined
     mode?: 'text' | 'icon' | 'wrapper' | undefined
   }

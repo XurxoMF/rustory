@@ -23,7 +23,7 @@
   }
 </script>
 
-<div class="pointer-events-none absolute top-0 right-0 z-400 p-2 flex flex-col items-end justify-start gap-2">
+<div class="pointer-events-none absolute top-0 right-0 z-[400] p-2 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
     <div class={['group w-72 pointer-events-auto']} transition:fly={{ duration: 200, opacity: 0, x: 5 }}>
       {#if toast.onclick}
