@@ -1,22 +1,18 @@
 <script lang="ts">
-  import { type SelectItem } from '@renderer/lib/ui/form/Select'
-
   import { m } from '@renderer/paraglide/messages'
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
   import Select from '@renderer/lib/ui/form/Select.svelte'
-
-  let scales: SelectItem[] = Config.SCALES.map((SCALE) => ({
-    value: SCALE.scale,
-    label: SCALE.name
-  }))
 </script>
 
 <Select
   placeholder={m.placeholders__select_one()}
   type="single"
-  items={scales}
+  items={Config.SCALES.map((SCALE) => ({
+    value: SCALE.scale,
+    label: SCALE.name
+  }))}
   value={Config.instance.scale}
   onValueChange={(e) => {
     if (e !== undefined) Config.instance.setScale(e)

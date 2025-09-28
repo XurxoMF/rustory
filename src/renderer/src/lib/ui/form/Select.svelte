@@ -2,33 +2,31 @@
   import { Select, type WithoutChildren } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
-  import type { SelectItem } from './Select'
-
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type SelectProps = WithoutChildren<Select.RootProps> & {
-    placeholder?: string | undefined
-    items: SelectItem[]
+    placeholder: string | undefined
     contentProps?: WithoutChildren<Select.ContentProps> | undefined
   }
 
   let { value = $bindable(), items, contentProps, placeholder, ...restProps }: SelectProps = $props()
 
-  const selectedLabel = $derived(items.find((item) => item.value === value)?.label)
+  const selected = $derived(items.find((item) => item.value === value))
 </script>
 
 <Select.Root bind:value={value as never} {...restProps}>
   <Select.Trigger
     class={[
-      'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md cursor-pointer border transition-[border,background-color] duration-200',
-      't-dark:bg-zinc-800 t-dark:border-zinc-750',
-      't-light:bg-zinc-200 t-light:border-zinc-250',
-      't-rust:bg-rust-800 t-rust:border-rust-750',
-      't-midnight:bg-gray-800 t-midnight:border-gray-750'
+      'w-full flex items-center justify-between rounded-md cursor-pointer text-start focus:outline-1 border transition-[border,background-color] duration-200',
+      't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
+      't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:border-zinc-250',
+      't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:border-rust-750',
+      't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:border-gray-750'
     ]}
   >
-    {selectedLabel ? selectedLabel : placeholder}
-    <Icon icon="ph:caret-up-down" />
+    <p class="w-full px-2 py-1">{selected ? selected.label : placeholder}</p>
+
+    <Icon icon="ph:caret-up-down" class="p-2" />
   </Select.Trigger>
 
   <Select.Portal to="#portal">
@@ -48,13 +46,13 @@
           <div {...wrapperProps}>
             <div {...props} transition:slide={{ duration: 200 }}>
               <Select.Viewport>
-                {#each items as { value, label, comment, disabled } (value)}
+                {#each items as { value, label, disabled } (value)}
                   <Select.Item
                     {value}
                     {label}
                     {disabled}
                     class={[
-                      'w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
+                      'w-[var(--bits-select-anchor-width)] h-[var(--bits-select-anchor-height)] flex items-center justify-between px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
                       't-dark:not-last:border-b-zinc-750',
                       't-light:not-last:border-b-zinc-250',
                       't-rust:not-last:border-b-rust-750',
@@ -62,10 +60,7 @@
                     ]}
                   >
                     {#snippet children({ selected })}
-                      <div class="flex items-center justify-start gap-2">
-                        {label}
-                        <span class="text-xs opacity-50">{comment}</span>
-                      </div>
+                      <p class="w-full">{label}</p>
 
                       {#if selected}
                         <Icon icon="ph:check-bold" />

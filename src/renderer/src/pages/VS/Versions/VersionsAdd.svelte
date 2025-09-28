@@ -12,6 +12,7 @@
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
   import { StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
   import StaticContainer from '@renderer/lib/ui/layout/Containers/StaticContainer.svelte'
+  import Select from '@renderer/lib/ui/form/Select.svelte'
 
   Breadcrumbs.instance.segments = [
     { label: m.vintagestory__versions(), href: '/vs/versions' },
@@ -19,6 +20,11 @@
   ]
 
   let versions: RAPIVSVersion[] = $state([])
+  let version: string | undefined = $state()
+
+  $effect(() => {
+    window.api.logger.debug(`Selected version: ${version}`)
+  })
 
   onMount(async () => {
     const res = await Request.instance.get('https://vslapi.xurxomf.xyz/versions')
@@ -40,9 +46,17 @@
 
             <GridContainer>
               <GridItem>
-                {#each versions as version (version.version)}
-                  <p>{version.version}</p>
-                {/each}
+                <Select
+                  placeholder={m.placeholders__select_one()}
+                  type="single"
+                  items={versions.map((v) => {
+                    return {
+                      label: v.version,
+                      value: v.version
+                    }
+                  })}
+                  bind:value={version}
+                />
               </GridItem>
             </GridContainer>
           </StaticContainer>
