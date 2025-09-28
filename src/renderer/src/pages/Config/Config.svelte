@@ -12,6 +12,7 @@
   import { ButtonNeutral } from '@renderer/lib/ui/form/Buttons'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
   import { CollapsibleContainer, StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
+  import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
 
   import Lang from '@renderer/lib/ui/features/settings/Lang.svelte'
   import Scale from '@renderer/lib/ui/features/settings/Scale.svelte'
@@ -22,8 +23,8 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <GridContainer columns={1}>
-      <GridItem>
+    <ColumnsContainer columns={1}>
+      <ColumnItem>
         <StyledContainer>
           <CollapsibleContainer open>
             {#snippet headerContent()}
@@ -62,16 +63,16 @@
             </GridContainer>
           </CollapsibleContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <CollapsibleContainer open>
             {#snippet headerContent()}
               <p>{m.settings__folders()}</p>
             {/snippet}
 
-            <GridContainer columns={3}>
+            <GridContainer columns={2}>
               <GridItem>
                 <div class="flex gap-1 items-center">
                   <Label>{m.settings__vs_instances_folder()}</Label>
@@ -140,7 +141,7 @@
             </GridContainer>
           </CollapsibleContainer>
         </StyledContainer>
-      </GridItem>
-    </GridContainer>
+      </ColumnItem>
+    </ColumnsContainer>
   </ScrollableContainer>
 </PageWrapper>

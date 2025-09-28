@@ -12,6 +12,7 @@
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
   import { StaticContainer, CollapsibleContainer, ScrollableContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Containers/Grid'
+  import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
 
   Breadcrumbs.instance.segments = []
 
@@ -20,8 +21,8 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <GridContainer columns={2}>
-      <GridItem>
+    <ColumnsContainer columns={2}>
+      <ColumnItem>
         <StyledContainer>
           <ScrollableContainer orientation="vertical">
             {#snippet headerContent()}
@@ -50,9 +51,9 @@
             </div>
           </ScrollableContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <ScrollableContainer orientation="vertical">
             {#snippet headerContent()}
@@ -81,9 +82,9 @@
             </div>
           </ScrollableContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <CollapsibleContainer open>
             {#snippet headerContent()}
@@ -141,9 +142,9 @@
             </GridContainer>
           </CollapsibleContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
@@ -177,9 +178,9 @@
             </div>
           </StaticContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
@@ -194,9 +195,9 @@
             </Alert>
           </StaticContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
@@ -235,9 +236,9 @@
             </ButtonNeutral>
           </StaticContainer>
         </StyledContainer>
-      </GridItem>
+      </ColumnItem>
 
-      <GridItem>
+      <ColumnItem>
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
@@ -262,7 +263,7 @@
             </div>
           </StaticContainer>
         </StyledContainer>
-      </GridItem>
-    </GridContainer>
+      </ColumnItem>
+    </ColumnsContainer>
   </ScrollableContainer>
 </PageWrapper>
