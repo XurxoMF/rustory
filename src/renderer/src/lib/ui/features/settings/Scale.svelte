@@ -1,9 +1,11 @@
 <script lang="ts">
+  import { type SelectItem } from '@renderer/lib/ui/form/Select'
+
   import { m } from '@renderer/paraglide/messages'
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select, { type SelectItem } from '@renderer/lib/ui/form/Select.svelte'
+  import Select from '@renderer/lib/ui/form/Select.svelte'
 
   let scales: SelectItem[] = Config.SCALES.map((SCALE) => ({
     value: SCALE.scale,

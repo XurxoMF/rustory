@@ -2,9 +2,9 @@
   import { Select, type WithoutChildren } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import type { SelectItem } from './Select'
 
-  export type SelectItem = { value: string; label: string; comment?: string | undefined; disabled?: boolean | undefined }
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type SelectProps = WithoutChildren<Select.RootProps> & {
     placeholder?: string | undefined

@@ -1,19 +1,22 @@
 <script lang="ts">
   import { Collapsible, type WithoutChild } from 'bits-ui'
   import { slide } from 'svelte/transition'
+  import type { Snippet } from 'svelte'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type CollapsibleContainerProps = Omit<WithoutChild<Collapsible.RootProps>, 'class'> & {
-    title: string
+    headerContent: Snippet
   }
 
-  let { open = $bindable(false), ref = $bindable(null), title, children, ...restProps }: CollapsibleContainerProps = $props()
+  let { open = $bindable(false), ref = $bindable(null), headerContent, children, ...restProps }: CollapsibleContainerProps = $props()
 </script>
 
 <Collapsible.Root bind:open bind:ref class="w-full h-full flex flex-col" {...restProps}>
   <Collapsible.Trigger class="w-full flex items-center justify-between p-2 cursor-pointer">
-    <h1>{title}</h1>
+    <div class="w-full flex items-center justify-between p-2">
+      {@render headerContent?.()}
+    </div>
     <Icon icon="ph:caret-up-down" />
   </Collapsible.Trigger>
 

@@ -8,9 +8,9 @@
     "src/global.d.ts"
   ],
   "compilerOptions": {
-    "moduleResolution": "bundler",
     "outDir": "out",
     "composite": true,
+    "ignoreDeprecations": "6.0",
     "types": [
       "electron-vite/node"
     ],

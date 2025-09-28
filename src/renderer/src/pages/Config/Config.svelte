@@ -25,7 +25,11 @@
     <GridContainer columns={1}>
       <GridItem>
         <StyledContainer>
-          <CollapsibleContainer title={m.settings__interface()} open>
+          <CollapsibleContainer open>
+            {#snippet headerContent()}
+              <p>{m.settings__interface()}</p>
+            {/snippet}
+
             <GridContainer columns={3}>
               <GridItem>
                 <div class="flex gap-1 items-center">
@@ -62,7 +66,11 @@
 
       <GridItem>
         <StyledContainer>
-          <CollapsibleContainer title={m.settings__folders()} open>
+          <CollapsibleContainer open>
+            {#snippet headerContent()}
+              <p>{m.settings__folders()}</p>
+            {/snippet}
+
             <GridContainer columns={3}>
               <GridItem>
                 <div class="flex gap-1 items-center">

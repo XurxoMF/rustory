@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '@mateothegreat/svelte5-router'
+
   import { m } from '@renderer/paraglide/messages'
 
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
@@ -18,7 +20,7 @@
     <GridContainer columns={3}>
       <GridItem spanX="full">
         <StyledContainer>
-          <Button mode="container">
+          <Button mode="container" onclick={() => goto('/vs/versions/add')}>
             <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
           </Button>
         </StyledContainer>

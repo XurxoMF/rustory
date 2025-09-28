@@ -34,12 +34,6 @@ export default defineConfig({
     }
   },
   renderer: {
-    resolve: {
-      alias: {
-        '@renderer': resolve(__dirname, 'src/renderer/src'),
-        '@shared': resolve(__dirname, 'src/shared')
-      }
-    },
     plugins: [
       svelte(),
       paraglideVitePlugin({
@@ -47,6 +41,12 @@ export default defineConfig({
         outdir: './src/renderer/src/paraglide',
         strategy: ['localStorage', 'preferredLanguage', 'baseLocale']
       })
-    ]
+    ],
+    resolve: {
+      alias: {
+        '@renderer': resolve(__dirname, 'src/renderer/src'),
+        '@shared': resolve(__dirname, 'src/shared')
+      }
+    }
   }
 })
