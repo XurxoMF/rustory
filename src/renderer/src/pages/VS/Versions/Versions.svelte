@@ -10,7 +10,7 @@
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
   import { StaticContainer, StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
 
-  Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/versions' }]
+  Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 </script>
 
 <PageWrapper>

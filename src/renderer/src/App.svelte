@@ -23,11 +23,11 @@
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
-  import ConfigPage from '@renderer/pages/Config.svelte'
-  import VersionsPage from '@renderer/pages/Versions.svelte'
+  import { Config as ConfigPage } from '@renderer/pages/Config'
+  import { Versions as VSVersionsPage } from '@renderer/pages/VS/Versions'
 
   // Routes of the page
-  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/versions', component: VersionsPage }, { path: '/config', component: ConfigPage }]
+  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/vs/versions', component: VSVersionsPage }, { path: '/config', component: ConfigPage }]
 
   // Loader data manager.
   const loader = Loader.instance
