@@ -11,7 +11,7 @@
 
 <button
   class={[
-    'w-full flex flex-col p-2 transition-[opacity] duration-200',
+    'w-full flex flex-col text-start rounded-md transition-[opacity] duration-200',
     'focus:outline-2',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',

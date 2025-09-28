@@ -12,19 +12,25 @@
     warning: 'ph:warning',
     error: 'ph:prohibit',
     success: 'ph:check-circle'
-  }
+  } as const
 
-  const COLOR: Record<Toast.Type, string> = {
-    info: 'text-blue-500',
-    warning: 'text-yellow-600',
-    error: 'text-red-600',
-    success: 'text-green-700'
-  }
+  const COLOR_CLASSES: Record<Toast.Type, string[]> = {
+    info: ['text-blue-500'],
+    warning: ['text-yellow-600'],
+    error: ['text-red-800'],
+    success: ['text-green-700']
+  } as const
 </script>
 
 <div class="pointer-events-none absolute top-0 right-0 z-[400] p-2 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
-    <div class={['group w-72 pointer-events-auto']} transition:fly={{ duration: 200, opacity: 0, x: 5 }}>
+    <div
+      class={['group w-72 pointer-events-auto']}
+      onmouseenter={() => Toasts.instance.clearToast(toast)}
+      onmouseleave={() => Toasts.instance.restartToast(toast)}
+      role="alert"
+      transition:fly={{ duration: 200, opacity: 0, x: 5 }}
+    >
       {#if toast.onclick}
         <ButtonContainer onclick={toast.onclick}>
           {@render content(toast)}
@@ -42,7 +48,7 @@
       <div class="w-full flex gap-2 items-center">
         <div class="w-full flex gap-2 items-center">
           <div>
-            <Icon icon={ICONS[toast.type]} class={['text-2xl', COLOR[toast.type]]} />
+            <Icon icon={ICONS[toast.type]} class={['text-2xl', ...COLOR_CLASSES[toast.type]]} />
           </div>
 
           <div>

@@ -53,6 +53,14 @@ export class Toasts {
   public restartToast(toast: Toast): void {
     toast.restartTimeout(() => this.removeToast(toast))
   }
+
+  /**
+   * Remove the timeout for a specific toast.
+   * @param toast The toast to clear timeout for.
+   */
+  public clearToast(toast: Toast): void {
+    toast.clearTimeout()
+  }
 }
 
 /**
