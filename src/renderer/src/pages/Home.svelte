@@ -21,7 +21,7 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <ColumnsContainer columns={2}>
+    <ColumnsContainer columns={2} breakpoint>
       <ColumnItem>
         <StyledContainer>
           <CollapsibleContainer open>

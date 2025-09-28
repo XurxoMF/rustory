@@ -23,7 +23,7 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <ColumnsContainer columns={1}>
+    <ColumnsContainer columns={1} breakpoint>
       <ColumnItem>
         <StyledContainer>
           <CollapsibleContainer open>

@@ -30,12 +30,13 @@
     children: Snippet
     columns?: ColumnTypes | undefined
     gap?: GapTypes | undefined
+    breakpoint?: boolean | undefined
   }
 
-  let { children, columns = 1, gap = 2 }: GridContainer = $props()
+  let { children, columns = 1, gap = 2, breakpoint = false }: GridContainer = $props()
 </script>
 
-<div class="w-full @container">
+<div class={['w-full', breakpoint && '@container']}>
   <div class={['w-full grid', ...COLUMN_CLASSES[columns], ...GAP_CLASSES[gap]]}>
     {@render children()}
   </div>

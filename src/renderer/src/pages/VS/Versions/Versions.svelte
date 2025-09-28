@@ -17,11 +17,11 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <GridContainer columns={3}>
+    <GridContainer columns={3} breakpoint>
       <GridItem spanX="full">
         <StyledContainer>
           <ButtonContainer onclick={() => goto('/vs/versions/add')}>
-            <div class="w-full flex justify-center items-center"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
+            <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
           </ButtonContainer>
         </StyledContainer>
       </GridItem>

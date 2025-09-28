@@ -35,7 +35,7 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <GridContainer columns={1}>
+    <GridContainer columns={1} breakpoint>
       <GridItem>
         <StyledContainer>
           <StaticContainer>
