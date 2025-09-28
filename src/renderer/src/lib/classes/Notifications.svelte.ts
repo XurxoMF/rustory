@@ -1,5 +1,3 @@
-import { SvelteMap } from 'svelte/reactivity'
-
 /**
  * Notifications store and manager.
  */
@@ -17,39 +15,90 @@ export class Notifications {
   }
 
   /**
-   * List of id <-> callback to execute when a notification is clicked-
+   * The list of notifications.
    */
-  private clickCallbacks = new SvelteMap<string, Notifications.Callback>()
+  private _notifications: Notification[] = $state([])
 
   public constructor() {
     window.api.notifications.on.click((_event, id) => {
-      const cb = this.clickCallbacks.get(id)
-      if (cb) {
-        cb()
-        this.clickCallbacks.delete(id)
-      }
+      const notification = this._notifications.find((n) => n.id === id)
+      if (notification) notification.onclick?.()
     })
   }
 
   /**
-   * Send a notification to the user.
-   * @param title Title of the notification
-   * @param body Body of the notification
-   * @returns A list of events
+   * Add a new notification to the list and shows it.
+   * @param notification The notification to add and show.
    */
-  public notify(title: string, body: string) {
-    return {
-      onclick: async (callback: Notifications.Callback) => {
-        const id = await window.api.notifications.notify(title, body)
-        this.clickCallbacks.set(id, callback)
-      }
-    }
+  public addNotification(notification: Notification): void {
+    this._notifications.push(notification)
+    notification.show()
   }
 }
 
-export namespace Notifications {
+/**
+ * A system notification.
+ */
+export class Notification {
   /**
-   * Callback to execute when a notification is clicked.
+   * The id of the notification.
    */
-  export type Callback = () => void
+  private _id: string
+
+  /**
+   * The title of the notification.
+   */
+  private _title: string
+
+  /**
+   * The description of the notification.
+   */
+  private _description: string
+
+  /**
+   * The onclick callback of the notification.
+   */
+  private _onclick?: (() => void | Promise<void>) | undefined
+
+  public constructor(data: { title: string; description: string; onclick?: (() => void | Promise<void>) | undefined }) {
+    this._id = crypto.randomUUID()
+    this._title = data.title
+    this._description = data.description
+    this._onclick = data.onclick
+  }
+
+  /**
+   * The id of the notification.
+   */
+  public get id(): string {
+    return this._id
+  }
+
+  /**
+   * The title of the notification.
+   */
+  public get title(): string {
+    return this._title
+  }
+
+  /**
+   * The description of the notification.
+   */
+  public get description(): string {
+    return this._description
+  }
+
+  /**
+   * The onclick callback of the notification.
+   */
+  public get onclick(): (() => void | Promise<void>) | undefined {
+    return this._onclick
+  }
+
+  /**
+   * Show the notification.
+   */
+  public show(): void {
+    window.api.notifications.notify(this._id, this._title, this._description)
+  }
 }

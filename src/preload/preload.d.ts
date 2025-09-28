@@ -367,7 +367,7 @@ declare global {
        * @returns The id of the notification.
        * @throws A RustoryNotificationError error.
        */
-      notify: (title: string, body: string) => Promise<string>
+      notify: (id: string, title: string, body: string) => Promise<string>
       /**
        * Subscribe to notification events.
        */

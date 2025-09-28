@@ -13,10 +13,8 @@ import { RustoryNotificationError } from '@shared/errors/RustoryNotificationErro
  * @returns The id of the notification.
  * @throws A {@link RustoryNotificationError} error.
  */
-export function notify(title: string, body: string, onclick: (id: string) => void | undefined): string {
+export function notify(id: string, title: string, body: string, onclick: (id: string) => void | undefined): void {
   try {
-    const id = crypto.randomUUID()
-
     const notification = new Notification({ title, body, icon })
 
     notification.on('click', () => {
@@ -24,8 +22,6 @@ export function notify(title: string, body: string, onclick: (id: string) => voi
     })
 
     notification.show()
-
-    return id
   } catch (err) {
     logger.error('Error sending a notification!')
     logger.debug(`Error sending a notification:\n${JSON.stringify(err)}`)

@@ -38,8 +38,8 @@ export class Toasts {
   }
 
   /**
-   * Add a new toast to the list.
-   * @param toast The toast to add.
+   * Add a new toast to the list and shows it.
+   * @param toast The toast to add and show.
    */
   public addToast(toast: Toast): void {
     this._toasts.push(toast)

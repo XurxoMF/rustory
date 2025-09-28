@@ -13,6 +13,7 @@
   import { StaticContainer, CollapsibleContainer, ScrollableContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Containers/Grid'
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
+  import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -32,49 +33,49 @@
             <GridContainer columns={1}>
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="text" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="text" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="text" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="text" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="text" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="text" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
 
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="number" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="number" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="number" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="number" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="number" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="number" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
 
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="email" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="email" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="email" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="email" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="email" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="email" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
 
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="password" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="password" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="password" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="password" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="password" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="password" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
 
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="tel" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="tel" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="tel" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="tel" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="tel" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="tel" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
 
               <GridItem>
                 <GridContainer columns={3}>
-                  <GridItem><Input type="url" placeholder="Hola" readonly /></GridItem>
-                  <GridItem><Input type="url" placeholder="Hola" disabled /></GridItem>
-                  <GridItem><Input type="url" placeholder="Hola" /></GridItem>
+                  <GridItem><Input type="url" placeholder="Example..." readonly /></GridItem>
+                  <GridItem><Input type="url" placeholder="Example..." disabled /></GridItem>
+                  <GridItem><Input type="url" placeholder="Example..." /></GridItem>
                 </GridContainer>
               </GridItem>
             </GridContainer>
@@ -93,7 +94,7 @@
               <GridItem>
                 <Select
                   type="single"
-                  placeholder="Hola"
+                  placeholder="Example..."
                   disabled
                   items={[
                     { label: 'Item 1', value: 'item1' },
@@ -105,7 +106,7 @@
               <GridItem>
                 <Select
                   type="single"
-                  placeholder="Hola"
+                  placeholder="Example..."
                   items={[
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
@@ -128,7 +129,7 @@
               <GridItem>
                 <ComboBox
                   type="single"
-                  inputProps={{ placeholder: 'Hola' }}
+                  inputProps={{ placeholder: 'Example...' }}
                   disabled
                   items={[
                     { label: 'Item 1', value: 'item1' },
@@ -140,7 +141,7 @@
               <GridItem>
                 <ComboBox
                   type="single"
-                  inputProps={{ placeholder: 'Hola' }}
+                  inputProps={{ placeholder: 'Example...' }}
                   items={[
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
@@ -162,26 +163,26 @@
             <GridContainer columns={3}>
               <GridItem>
                 <div class="flex gap-1 items-center">
-                  <Label required>Hola</Label>
-                  <Description>Hola</Description>
+                  <Label required>Example...</Label>
+                  <Description>Example...</Description>
                 </div>
-                <Input type="url" placeholder="Hola" readonly />
+                <Input type="url" placeholder="Example..." readonly />
               </GridItem>
 
               <GridItem>
                 <div class="flex gap-1 items-center">
-                  <Label disabled>Hola</Label>
-                  <Description>Hola</Description>
+                  <Label disabled>Example...</Label>
+                  <Description>Example...</Description>
                 </div>
-                <Input type="url" placeholder="Hola" disabled />
+                <Input type="url" placeholder="Example..." disabled />
               </GridItem>
 
               <GridItem>
                 <div class="flex gap-1 items-center">
-                  <Label required>Hola</Label>
-                  <Description>Hola</Description>
+                  <Label required>Example...</Label>
+                  <Description>Example...</Description>
                 </div>
-                <Input type="url" placeholder="Hola" />
+                <Input type="url" placeholder="Example..." />
               </GridItem>
             </GridContainer>
           </StaticContainer>
@@ -198,7 +199,7 @@
             <ButtonNeutral padding="text" onclick={() => (open = true)}>Open</ButtonNeutral>
             <Alert bind:open title="Title">
               {#snippet description()}
-                <p>Hola mundo!</p>
+                <p>Example... mundo!</p>
               {/snippet}
             </Alert>
           </StaticContainer>
@@ -240,7 +241,34 @@
                 Toasts.instance.addToast(toastSuccess)
               }}
             >
-              Open
+              Show
+            </ButtonNeutral>
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>System Notification in a Static Section</p>
+            {/snippet}
+
+            <ButtonNeutral
+              padding="text"
+              onclick={async () => {
+                const notification = new Notification({
+                  title: 'Example notification',
+                  description: 'This is a system notification! How cool is this?!?!',
+                  onclick: () => {
+                    const toastInfo = new Toast({ title: 'Notification clicked!', type: Toast.Type.INFO, description: 'You clicked the system notification!' })
+                    Toasts.instance.addToast(toastInfo)
+                  }
+                })
+                Notifications.instance.addNotification(notification)
+              }}
+            >
+              Show
             </ButtonNeutral>
           </StaticContainer>
         </StyledContainer>
@@ -254,20 +282,20 @@
             {/snippet}
 
             <div class="flex items-center flex-wrap gap-2">
-              <Button padding="text" disabled>Hola</Button>
+              <Button padding="text" disabled>Example...</Button>
               <Button padding="text" onclick={() => (open = true)}>Open</Button>
 
-              <ButtonNeutral padding="text" disabled>Hola</ButtonNeutral>
-              <ButtonNeutral padding="text">Hola</ButtonNeutral>
+              <ButtonNeutral padding="text" disabled>Example...</ButtonNeutral>
+              <ButtonNeutral padding="text">Example...</ButtonNeutral>
 
-              <ButtonSuccess padding="text" disabled>Hola</ButtonSuccess>
-              <ButtonSuccess padding="text">Hola</ButtonSuccess>
+              <ButtonSuccess padding="text" disabled>Example...</ButtonSuccess>
+              <ButtonSuccess padding="text">Example...</ButtonSuccess>
 
-              <ButtonDanger padding="text" disabled>Hola</ButtonDanger>
-              <ButtonDanger padding="text">Hola</ButtonDanger>
+              <ButtonDanger padding="text" disabled>Example...</ButtonDanger>
+              <ButtonDanger padding="text">Example...</ButtonDanger>
 
-              <ButtonWarning padding="text" disabled>Hola</ButtonWarning>
-              <ButtonWarning padding="text">Hola</ButtonWarning>
+              <ButtonWarning padding="text" disabled>Example...</ButtonWarning>
+              <ButtonWarning padding="text">Example...</ButtonWarning>
             </div>
           </StaticContainer>
         </StyledContainer>
