@@ -4,7 +4,7 @@ import { TaskBase } from './TaskBase.svelte'
 /**
  * Task to install a VS Version.
  */
-export class TaskInstallVersion implements TaskBase {
+export class TaskInstallVSVersion implements TaskBase {
   /**
    * ID of the task.
    */
