@@ -54,7 +54,11 @@ export async function createMainWindow(): Promise<void> {
   })
 
   // Before closing the window, save the current state
-  mainWindow.on('close', async () => await saveCurrentWindowState())
+  mainWindow.on('close', async (e) => {
+    e.preventDefault()
+    await saveCurrentWindowState()
+    mainWindow.destroy()
+  })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
