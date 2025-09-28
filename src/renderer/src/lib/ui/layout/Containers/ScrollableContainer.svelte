@@ -16,7 +16,7 @@
   </div>
 {/if}
 
-<ScrollArea.Root bind:ref type="always" class="w-full flex flex-col" {...restProps}>
+<ScrollArea.Root bind:ref type="always" class="w-full h-full flex flex-col" {...restProps}>
   <ScrollArea.Viewport
     class={[
       'w-full flex flex-col p-2',

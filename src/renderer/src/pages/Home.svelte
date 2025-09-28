@@ -24,31 +24,95 @@
     <ColumnsContainer columns={2}>
       <ColumnItem>
         <StyledContainer>
+          <CollapsibleContainer open>
+            {#snippet headerContent()}
+              <p>Inputs in a Collapsible Section</p>
+            {/snippet}
+
+            <GridContainer columns={1}>
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="text" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="text" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="text" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="number" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="number" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="number" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="email" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="email" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="email" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="password" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="password" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="password" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="tel" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="tel" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="tel" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+
+              <GridItem>
+                <GridContainer columns={3}>
+                  <GridItem><Input type="url" placeholder="Hola" readonly /></GridItem>
+                  <GridItem><Input type="url" placeholder="Hola" disabled /></GridItem>
+                  <GridItem><Input type="url" placeholder="Hola" /></GridItem>
+                </GridContainer>
+              </GridItem>
+            </GridContainer>
+          </CollapsibleContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
           <ScrollableContainer orientation="vertical">
             {#snippet headerContent()}
               <p>Select in a Scrollable Section</p>
             {/snippet}
 
-            <div class="flex items-center gap-2">
-              <Select
-                type="single"
-                placeholder="Hola"
-                disabled
-                items={[
-                  { label: 'Item 1', value: 'item1' },
-                  { label: 'Item 2', value: 'item2' }
-                ]}
-              />
+            <GridContainer columns={2}>
+              <GridItem>
+                <Select
+                  type="single"
+                  placeholder="Hola"
+                  disabled
+                  items={[
+                    { label: 'Item 1', value: 'item1' },
+                    { label: 'Item 2', value: 'item2' }
+                  ]}
+                />
+              </GridItem>
 
-              <Select
-                type="single"
-                placeholder="Hola"
-                items={[
-                  { label: 'Item 1', value: 'item1' },
-                  { label: 'Item 2', value: 'item2' }
-                ]}
-              />
-            </div>
+              <GridItem>
+                <Select
+                  type="single"
+                  placeholder="Hola"
+                  items={[
+                    { label: 'Item 1', value: 'item1' },
+                    { label: 'Item 2', value: 'item2' }
+                  ]}
+                />
+              </GridItem>
+            </GridContainer>
           </ScrollableContainer>
         </StyledContainer>
       </ColumnItem>
@@ -60,87 +124,31 @@
               <p>ComboBox in a ScrollableSection</p>
             {/snippet}
 
-            <div class="flex items-center gap-2">
-              <ComboBox
-                type="single"
-                inputProps={{ placeholder: 'Hola' }}
-                disabled
-                items={[
-                  { label: 'Item 1', value: 'item1' },
-                  { label: 'Item 2', value: 'item2' }
-                ]}
-              />
-
-              <ComboBox
-                type="single"
-                inputProps={{ placeholder: 'Hola' }}
-                items={[
-                  { label: 'Item 1', value: 'item1' },
-                  { label: 'Item 2', value: 'item2' }
-                ]}
-              />
-            </div>
-          </ScrollableContainer>
-        </StyledContainer>
-      </ColumnItem>
-
-      <ColumnItem>
-        <StyledContainer>
-          <CollapsibleContainer open>
-            {#snippet headerContent()}
-              <p>Inputs in a Collapsible Section</p>
-            {/snippet}
-
-            <GridContainer columns={1}>
+            <GridContainer columns={2}>
               <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="text" placeholder="Hola" readonly />
-                  <Input type="text" placeholder="Hola" disabled />
-                  <Input type="text" placeholder="Hola" />
-                </div>
+                <ComboBox
+                  type="single"
+                  inputProps={{ placeholder: 'Hola' }}
+                  disabled
+                  items={[
+                    { label: 'Item 1', value: 'item1' },
+                    { label: 'Item 2', value: 'item2' }
+                  ]}
+                />
               </GridItem>
 
               <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="number" placeholder="Hola" readonly />
-                  <Input type="number" placeholder="Hola" disabled />
-                  <Input type="number" placeholder="Hola" />
-                </div>
-              </GridItem>
-
-              <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="email" placeholder="Hola" readonly />
-                  <Input type="email" placeholder="Hola" disabled />
-                  <Input type="email" placeholder="Hola" />
-                </div>
-              </GridItem>
-
-              <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="password" placeholder="Hola" readonly />
-                  <Input type="password" placeholder="Hola" disabled />
-                  <Input type="password" placeholder="Hola" />
-                </div>
-              </GridItem>
-
-              <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="tel" placeholder="Hola" readonly />
-                  <Input type="tel" placeholder="Hola" disabled />
-                  <Input type="tel" placeholder="Hola" />
-                </div>
-              </GridItem>
-
-              <GridItem>
-                <div class="flex items-center gap-2">
-                  <Input type="url" placeholder="Hola" readonly />
-                  <Input type="url" placeholder="Hola" disabled />
-                  <Input type="url" placeholder="Hola" />
-                </div>
+                <ComboBox
+                  type="single"
+                  inputProps={{ placeholder: 'Hola' }}
+                  items={[
+                    { label: 'Item 1', value: 'item1' },
+                    { label: 'Item 2', value: 'item2' }
+                  ]}
+                />
               </GridItem>
             </GridContainer>
-          </CollapsibleContainer>
+          </ScrollableContainer>
         </StyledContainer>
       </ColumnItem>
 
@@ -151,31 +159,31 @@
               <p>Labels & Descriptions in a Static Section</p>
             {/snippet}
 
-            <div class="flex items-center gap-2">
-              <div class="w-full flex flex-col">
+            <GridContainer columns={3}>
+              <GridItem>
                 <div class="flex gap-1 items-center">
                   <Label required>Hola</Label>
                   <Description>Hola</Description>
                 </div>
                 <Input type="url" placeholder="Hola" readonly />
-              </div>
+              </GridItem>
 
-              <div class="w-full flex flex-col">
+              <GridItem>
                 <div class="flex gap-1 items-center">
                   <Label disabled>Hola</Label>
                   <Description>Hola</Description>
                 </div>
                 <Input type="url" placeholder="Hola" disabled />
-              </div>
+              </GridItem>
 
-              <div class="w-full flex flex-col">
+              <GridItem>
                 <div class="flex gap-1 items-center">
                   <Label required>Hola</Label>
                   <Description>Hola</Description>
                 </div>
                 <Input type="url" placeholder="Hola" />
-              </div>
-            </div>
+              </GridItem>
+            </GridContainer>
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>
