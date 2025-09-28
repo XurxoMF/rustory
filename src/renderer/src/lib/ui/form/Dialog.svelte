@@ -35,7 +35,7 @@
                 {#snippet headerContent()}
                   <Dialog.Title><h1>{title}</h1></Dialog.Title>
 
-                  <Button mode="wrapper" onclick={() => (open = false)}>
+                  <Button padding="none" onclick={() => (open = false)}>
                     <Icon icon="ph:x-bold" class="opacity-50" />
                   </Button>
                 {/snippet}

@@ -10,7 +10,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { Button } from '@renderer/lib/ui/form/Buttons'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
-  import { StaticContainer, StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StaticContainer, StyledContainer, ScrollableContainer, ButtonContainer } from '@renderer/lib/ui/layout/Containers'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 </script>
@@ -20,9 +20,9 @@
     <GridContainer columns={3}>
       <GridItem spanX="full">
         <StyledContainer>
-          <Button mode="container" onclick={() => goto('/vs/versions/add')}>
-            <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
-          </Button>
+          <ButtonContainer onclick={() => goto('/vs/versions/add')}>
+            <div class="w-full flex justify-center items-center"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
+          </ButtonContainer>
         </StyledContainer>
       </GridItem>
 
@@ -36,8 +36,8 @@
                   <p class="w-full text-sm opacity-50 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
                 </div>
                 <div class="w-fit flex justify-center opacity-50">
-                  <Button mode="icon"><Icon icon="ph:folder-open" /></Button>
-                  <Button mode="icon"><Icon icon="ph:trash" /></Button>
+                  <Button padding="icon"><Icon icon="ph:folder-open" /></Button>
+                  <Button padding="icon"><Icon icon="ph:trash" /></Button>
                 </div>
               </div>
             </StaticContainer>

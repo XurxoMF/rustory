@@ -1,7 +1,8 @@
 <script lang="ts">
   import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui'
-  import Icon from '../base/Icon.svelte'
   import { slide } from 'svelte/transition'
+
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type Props = Combobox.RootProps & {
     inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class'>

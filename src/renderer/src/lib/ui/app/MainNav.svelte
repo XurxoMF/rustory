@@ -1,8 +1,9 @@
 <script lang="ts">
+  import { route } from '@mateothegreat/svelte5-router'
+
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { route } from '@mateothegreat/svelte5-router'
 
   let open = $state(false)
 </script>
@@ -33,11 +34,14 @@
       active: { absolute: true, class: ['t-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800'] }
     }}
     class={[
-      'relative w-full p-2 flex items-center gap-2 whitespace-nowrap cursor-pointer rounded-md transition-[background-color] duration-200',
-      't-dark:hover:bg-zinc-800',
-      't-light:hover:bg-zinc-200',
-      't-rust:hover:bg-rust-800',
-      't-midnight:hover:bg-gray-800'
+      'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[background-color] duration-200',
+      'focus:outline-2',
+      'cursor-pointer disabled:cursor-not-allowed',
+      'disabled:opacity-50',
+      't-dark:hover:bg-zinc-800 t-dark:focus:outline-zinc-750',
+      't-light:hover:bg-zinc-200 t-light:focus:border-zinc-250',
+      't-rust:hover:bg-rust-800 t-rust:focus:border-rust-750',
+      't-midnight:hover:bg-gray-800 t-midnight:focus:border-gray-750'
     ]}
   >
     <Icon {icon} class="shrink-0 text-2xl" />

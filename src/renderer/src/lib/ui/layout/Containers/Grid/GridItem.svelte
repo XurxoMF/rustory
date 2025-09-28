@@ -1,33 +1,41 @@
 <script lang="ts">
   import { type Snippet } from 'svelte'
 
+  const SPANX_CLASSES = {
+    1: 'col-span-1',
+    2: 'col-span-2',
+    3: 'col-span-3',
+    4: 'col-span-4',
+    5: 'col-span-5',
+    6: 'col-span-6',
+    7: 'col-span-7',
+    full: 'col-span-full'
+  } as const
+
+  type SpanXTypes = keyof typeof SPANX_CLASSES
+
+  const SPANY_CLASSES = {
+    1: 'row-span-1',
+    2: 'row-span-2',
+    3: 'row-span-3',
+    4: 'row-span-4',
+    5: 'row-span-5',
+    6: 'row-span-6',
+    7: 'row-span-7',
+    full: 'row-span-full'
+  } as const
+
+  type SpanYTypes = keyof typeof SPANY_CLASSES
+
   type GridItem = {
     children: Snippet
-    spanX?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
-    spanY?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 'full' | undefined
+    spanX?: SpanXTypes | undefined
+    spanY?: SpanYTypes | undefined
   }
 
   let { children, spanX = 1, spanY = 1 }: GridItem = $props()
 </script>
 
-<div
-  class={[
-    'w-full',
-    spanX === 2 && 'col-span-2',
-    spanX === 3 && 'col-span-3',
-    spanX === 4 && 'col-span-4',
-    spanX === 5 && 'col-span-5',
-    spanX === 6 && 'col-span-6',
-    spanX === 7 && 'col-span-7',
-    spanX === 'full' && 'col-span-full',
-    spanY === 2 && 'row-span-2',
-    spanY === 3 && 'row-span-3',
-    spanY === 4 && 'row-span-4',
-    spanY === 5 && 'row-span-5',
-    spanY === 6 && 'row-span-6',
-    spanY === 7 && 'row-span-7',
-    spanY === 'full' && 'row-span-full'
-  ]}
->
+<div class={['w-full', ...SPANX_CLASSES[spanX], ...SPANY_CLASSES[spanY]]}>
   {@render children()}
 </div>

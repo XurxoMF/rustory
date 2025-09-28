@@ -2,24 +2,16 @@
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
-  import { StaticContainer } from '@renderer/lib/ui/layout/Containers'
   import ComboBox from '@renderer/lib/ui/form/ComboBox.svelte'
   import Select from '@renderer/lib/ui/form/Select.svelte'
   import Input from '@renderer/lib/ui/form/Input.svelte'
-  import Button from '@renderer/lib/ui/form/Buttons/Button.svelte'
-  import ButtonNeutral from '@renderer/lib/ui/form/Buttons/ButtonNeutral.svelte'
-  import ButtonSuccess from '@renderer/lib/ui/form/Buttons/ButtonSuccess.svelte'
-  import ButtonDanger from '@renderer/lib/ui/form/Buttons/ButtonDanger.svelte'
-  import ButtonWarning from '@renderer/lib/ui/form/Buttons/ButtonWarning.svelte'
+  import { Button, ButtonNeutral, ButtonSuccess, ButtonDanger, ButtonWarning } from '@renderer/lib/ui/form/Buttons'
   import Alert from '@renderer/lib/ui/form/Alert.svelte'
   import Label from '@renderer/lib/ui/form/Label.svelte'
   import Description from '@renderer/lib/ui/form/Description.svelte'
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
-  import CollapsibleContainer from '@renderer/lib/ui/layout/Containers/CollapsibleContainer.svelte'
-  import GridContainer from '@renderer/lib/ui/layout/Containers/Grid/GridContainer.svelte'
-  import GridItem from '@renderer/lib/ui/layout/Containers/Grid/GridItem.svelte'
-  import ScrollableContainer from '@renderer/lib/ui/layout/Containers/ScrollableContainer.svelte'
-  import StyledContainer from '@renderer/lib/ui/layout/Containers/StyledContainer.svelte'
+  import { StaticContainer, CollapsibleContainer, ScrollableContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
+  import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Containers/Grid'
 
   Breadcrumbs.instance.segments = []
 
@@ -28,7 +20,7 @@
 
 <PageWrapper>
   <ScrollableContainer orientation="vertical">
-    <GridContainer columns={1}>
+    <GridContainer columns={2}>
       <GridItem>
         <StyledContainer>
           <ScrollableContainer orientation="vertical">
@@ -194,7 +186,7 @@
               <p>Alert & Dialog in a Static Section</p>
             {/snippet}
 
-            <ButtonNeutral mode="text" onclick={() => (open = true)}>Open</ButtonNeutral>
+            <ButtonNeutral padding="text" onclick={() => (open = true)}>Open</ButtonNeutral>
             <Alert bind:open title="Title">
               {#snippet description()}
                 <p>Hola mundo!</p>
@@ -212,7 +204,7 @@
             {/snippet}
 
             <ButtonNeutral
-              mode="text"
+              padding="text"
               onclick={() => {
                 const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: 'This is an info toast!' })
                 Toasts.instance.addToast(toastInfo)
@@ -252,21 +244,21 @@
               <p>Buttons in a Static Section</p>
             {/snippet}
 
-            <div class="flex items-center gap-2">
-              <Button mode="text" disabled>Hola</Button>
-              <Button mode="text" onclick={() => (open = true)}>Open</Button>
+            <div class="flex items-center flex-wrap gap-2">
+              <Button padding="text" disabled>Hola</Button>
+              <Button padding="text" onclick={() => (open = true)}>Open</Button>
 
-              <ButtonNeutral mode="text" disabled>Hola</ButtonNeutral>
-              <ButtonNeutral mode="text">Hola</ButtonNeutral>
+              <ButtonNeutral padding="text" disabled>Hola</ButtonNeutral>
+              <ButtonNeutral padding="text">Hola</ButtonNeutral>
 
-              <ButtonSuccess mode="text" disabled>Hola</ButtonSuccess>
-              <ButtonSuccess mode="text">Hola</ButtonSuccess>
+              <ButtonSuccess padding="text" disabled>Hola</ButtonSuccess>
+              <ButtonSuccess padding="text">Hola</ButtonSuccess>
 
-              <ButtonDanger mode="text" disabled>Hola</ButtonDanger>
-              <ButtonDanger mode="text">Hola</ButtonDanger>
+              <ButtonDanger padding="text" disabled>Hola</ButtonDanger>
+              <ButtonDanger padding="text">Hola</ButtonDanger>
 
-              <ButtonWarning mode="text" disabled>Hola</ButtonWarning>
-              <ButtonWarning mode="text">Hola</ButtonWarning>
+              <ButtonWarning padding="text" disabled>Hola</ButtonWarning>
+              <ButtonWarning padding="text">Hola</ButtonWarning>
             </div>
           </StaticContainer>
         </StyledContainer>

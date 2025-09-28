@@ -3,10 +3,9 @@
 
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import StaticContainer from '@renderer/lib/ui/layout/Containers/StaticContainer.svelte'
+  import { StaticContainer, ButtonContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import Button from '@renderer/lib/ui/form/Buttons/Button.svelte'
-  import { StyledContainer } from '@renderer/lib/ui/layout/Containers'
+  import { Button } from '@renderer/lib/ui/form/Buttons'
 
   const ICONS: Record<Toast.Type, string> = {
     info: 'ph:info',
@@ -27,9 +26,9 @@
   {#each Toasts.instance.toasts as toast (toast.id)}
     <div class={['group w-72 pointer-events-auto']} transition:fly={{ duration: 200, opacity: 0, x: 5 }}>
       {#if toast.onclick}
-        <Button onclick={toast.onclick} mode="container">
+        <ButtonContainer onclick={toast.onclick}>
           {@render content(toast)}
-        </Button>
+        </ButtonContainer>
       {:else}
         {@render content(toast)}
       {/if}
@@ -56,7 +55,7 @@
 
         <div class="shrink-0 opacity-0 group-hover:opacity-50 transition-[opacity] duration-200">
           <Button
-            mode="icon"
+            padding="icon"
             onclick={(e) => {
               e.stopPropagation()
               Toasts.instance.removeToast(toast)

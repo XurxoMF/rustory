@@ -7,12 +7,14 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-<Button mode="icon" onclick={() => Reloader.instance.executeTasks()} title={m.common__reload()}>
+<Button padding="icon" onclick={() => Reloader.instance.executeTasks()} title={m.common__reload()}>
   <Icon icon="ph:arrow-clockwise-bold" />
 </Button>
-<Button mode="icon" onclick={() => history.back()} title={m.common__previous()}>
+
+<Button padding="icon" onclick={() => history.back()} title={m.common__previous()}>
   <Icon icon="ph:caret-left-bold" />
 </Button>
-<Button mode="icon" onclick={() => history.forward()} title={m.common__next()}>
+
+<Button padding="icon" onclick={() => history.forward()} title={m.common__next()}>
   <Icon icon="ph:caret-right-bold" />
 </Button>

@@ -10,8 +10,7 @@
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
-  import { StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
-  import StaticContainer from '@renderer/lib/ui/layout/Containers/StaticContainer.svelte'
+  import { StyledContainer, ScrollableContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
   import Select from '@renderer/lib/ui/form/Select.svelte'
 
   Breadcrumbs.instance.segments = [
