@@ -9,6 +9,7 @@
   ],
   "compilerOptions": {
     "outDir": "out",
+    "composite": true,
     "verbatimModuleSyntax": true,
     "useDefineForClassFields": true,
     "strict": false,
