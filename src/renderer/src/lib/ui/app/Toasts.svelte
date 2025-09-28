@@ -17,8 +17,8 @@
 
   const COLOR: Record<Toast.Type, string> = {
     info: 'text-blue-500',
-    warning: 'text-yellow-500',
-    error: 'text-red-700',
+    warning: 'text-yellow-600',
+    error: 'text-red-600',
     success: 'text-green-700'
   }
 </script>

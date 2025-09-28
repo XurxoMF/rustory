@@ -6,6 +6,7 @@
     regular: ['rounded-md'],
     circle: ['rounded-full']
   } as const
+
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
 
   type ButtonNeutralProps = Omit<HTMLButtonAttributes, 'class'> & {
@@ -19,14 +20,17 @@
 
 <button
   class={[
-    'w-fit flex items-center justify-center focus:outline-1 enabled:cursor-pointer disabled:opacity-50 border transition-[opacity,border,background-color] duration-200',
+    'w-fit flex items-center justify-center border transition-[opacity,border,background-color] duration-200',
+    'focus:outline-1',
+    'cursor-pointer disabled:cursor-not-allowed',
+    'disabled:opacity-50',
+    mode === 'text' && 'px-2 py-1',
+    mode === 'icon' && 'p-1',
+    mode === 'wrapper' && 'p-0 text-start',
     't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
     't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:border-zinc-250',
     't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:border-rust-750',
     't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:border-gray-750',
-    mode === 'text' && 'px-2 py-1',
-    mode === 'icon' && 'p-1',
-    mode === 'wrapper' && 'p-0 text-start',
     ...ROUNDED_CLASSES[rounded]
   ]}
   {...restProps}

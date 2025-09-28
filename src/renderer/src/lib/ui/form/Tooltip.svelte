@@ -11,7 +11,7 @@
   let { open = $bindable(false), children, trigger, triggerProps = {}, mode = 'text', ...restProps }: TooltipProps = $props()
 </script>
 
-<Tooltip.Provider>
+<Tooltip.Provider delayDuration={200}>
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger {...triggerProps}>
       {@render trigger()}

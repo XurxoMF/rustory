@@ -33,7 +33,10 @@
   <div class="relative w-full flex items-center justify-between rounded-md">
     <Combobox.Input
       class={[
-        'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md focus:outline-1 read-only:cursor-default border transition-[border,background-color] duration-200',
+        'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
+        'read-only:outline-none not-read-only:focus:outline-1',
+        'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
+        'disabled:opacity-50',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
         't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:border-zinc-250',
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:border-rust-750',
@@ -42,7 +45,14 @@
       {...mergedInputProps}
     />
 
-    <Combobox.Trigger class="absolute right-0 p-2 enabled:cursor-pointer disabled:opacity-50 transition-[opacity] duration-200">
+    <Combobox.Trigger
+      class={[
+        'absolute right-0 p-2 transition-[opacity] duration-200',
+        'read-only:outline-none not-read-only:focus:outline-1',
+        'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
+        'disabled:opacity-50'
+      ]}
+    >
       <Icon icon="ph:caret-up-down" />
     </Combobox.Trigger>
   </div>

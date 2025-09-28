@@ -12,7 +12,7 @@
   let { children, ...restProps }: DescriptionProps = $props()
 </script>
 
-<Tooltip>
+<Tooltip triggerProps={{ class: 'hover:cursor-help' }}>
   {#snippet trigger()}
     <Icon icon="ph:info" class="text-sm opacity-50" />
   {/snippet}

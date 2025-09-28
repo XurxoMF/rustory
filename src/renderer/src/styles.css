@@ -53,6 +53,41 @@
   --background-image-image-midnight: url('./assets/background-midnight.png');
 }
 
+@layer base {
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Custom scale options */
+  html[data-uiscale='50'] {
+    font-size: 8px;
+  }
+  html[data-uiscale='75'] {
+    font-size: 12px;
+  }
+  html[data-uiscale='100'] {
+    font-size: 16px;
+  }
+  html[data-uiscale='125'] {
+    font-size: 20px;
+  }
+  html[data-uiscale='150'] {
+    font-size: 24px;
+  }
+
+  /* Custom scrollbar styles */
+  *::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom styles */
+  body {
+    @apply font-ubuntu subpixel-antialiased;
+  }
+}
+
 @layer utilities {
   .app-drag {
     /* It's not an error. This class is used by electron to make the window draggable. */
@@ -88,31 +123,4 @@
   &:where([data-theme='midnight'] *) {
     @slot;
   }
-}
-
-/* Custom scale options */
-html[data-uiscale='50'] {
-  font-size: 8px;
-}
-html[data-uiscale='75'] {
-  font-size: 12px;
-}
-html[data-uiscale='100'] {
-  font-size: 16px;
-}
-html[data-uiscale='125'] {
-  font-size: 20px;
-}
-html[data-uiscale='150'] {
-  font-size: 24px;
-}
-
-/* Custom scrollbar styles */
-*::-webkit-scrollbar {
-  display: none;
-}
-
-/* Custom styles */
-body {
-  @apply font-ubuntu subpixel-antialiased;
 }

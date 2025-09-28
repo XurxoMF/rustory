@@ -10,7 +10,7 @@
   let { children, headerContent, ...restProps }: StaticContainerProps = $props()
 </script>
 
-<div class="w-full h-full flex flex-col">
+<div class="w-full flex flex-col">
   {#if headerContent}
     <div class="w-full flex items-center justify-between p-2">
       {@render headerContent?.()}

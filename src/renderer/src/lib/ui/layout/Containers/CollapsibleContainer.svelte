@@ -12,11 +12,9 @@
   let { open = $bindable(false), ref = $bindable(null), headerContent, children, ...restProps }: CollapsibleContainerProps = $props()
 </script>
 
-<Collapsible.Root bind:open bind:ref class="w-full h-full flex flex-col" {...restProps}>
-  <Collapsible.Trigger class="w-full flex items-center justify-between p-2 cursor-pointer">
-    <div class="w-full flex items-center justify-between p-2">
-      {@render headerContent?.()}
-    </div>
+<Collapsible.Root bind:open bind:ref class="w-full flex flex-col" {...restProps}>
+  <Collapsible.Trigger class={['w-full flex items-center justify-between p-2 transition-[opacity] duration-200', 'outline-none', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-50']}>
+    {@render headerContent?.()}
     <Icon icon="ph:caret-up-down" />
   </Collapsible.Trigger>
 
