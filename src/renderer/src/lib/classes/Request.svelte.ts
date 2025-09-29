@@ -19,7 +19,7 @@ export class Request {
   /**
    * Map to save cache. This is an url <-> data map.
    */
-  private _cache: Map<string, string> = new Map()
+  private _cache: Map<string, Request.RequestData> = new Map()
 
   private constructor() {}
 
@@ -33,17 +33,25 @@ export class Request {
   public async get(url: string, cache: boolean | undefined = true): Promise<string> {
     if (cache) {
       const cachedData = this._cache.get(url)
-      if (cachedData) return cachedData
+      // If the data is less than 30 minutes old, return it
+      if (cachedData && Date.now() - cachedData.timestamp < 1000 * 60 * 30) return cachedData.data
     }
 
     try {
       const data = await window.api.net.request(url)
-      if (cache) this._cache.set(url, data)
+      if (cache) this._cache.set(url, { timestamp: Date.now(), data })
       return data
     } catch (err) {
       window.api.logger.error(`There was an error making the request to ${url}!`)
       window.api.logger.debug(`There was an error making the request to ${url}:\n${JSON.stringify(err)}`)
       throw new RustoryNetError(`There was an error making the request to ${url}!`, RustoryNetError.Codes.NET_ERROR)
     }
+  }
+}
+
+export namespace Request {
+  export type RequestData = {
+    timestamp: number
+    data: string
   }
 }
