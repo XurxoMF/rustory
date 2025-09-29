@@ -1,5 +1,5 @@
-import { Info } from '../Info.svelte'
-import { TaskBase } from './TaskBase.svelte'
+import { Info } from '@renderer/lib/classes/Info.svelte'
+import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
 
 /**
  * Task to install a VS Version.

@@ -1,8 +1,7 @@
 import { RustoryDataError } from '@shared/errors/RustoryDataError'
-import type { TaskBase } from './tasks/TaskBase.svelte'
-import { VSInstance } from './vintagestory/VSInstance.svelte'
-import { VSVersion } from './vintagestory/VSVersion.svelte'
-import { Config } from './Config.svelte'
+import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
+import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
+import { Config } from '@renderer/lib/classes/Config.svelte'
 
 /**
  * Data of the app.
@@ -23,11 +22,6 @@ export class Data {
   }
 
   /**
-   * List of tasks.
-   */
-  private _tasks: TaskBase[]
-
-  /**
    * Vintage Story Instances.
    */
   private _vsInstances: VSInstance[]
@@ -37,8 +31,7 @@ export class Data {
    */
   private _vsVersions: VSVersion[]
 
-  private constructor(data: { tasks: TaskBase[]; vsInstances: VSInstance[]; vsVersions: VSVersion[] }) {
-    this._tasks = $state(data.tasks)
+  private constructor(data: { vsInstances: VSInstance[]; vsVersions: VSVersion[] }) {
     this._vsInstances = $state(data.vsInstances)
     this._vsVersions = $state(data.vsVersions)
   }
@@ -48,9 +41,6 @@ export class Data {
    */
   public static async init(): Promise<void> {
     try {
-      // Load tasks. AKA do nothing.
-      const tasks: TaskBase[] = []
-
       // Load all the VS Versions.
       const vsVersionsJSON = await VSVersion.getAllFromDB()
       const vsVersions: VSVersion[] = []
@@ -75,7 +65,6 @@ export class Data {
       // TODO: Load all the Mods and Instance Backups.
 
       Data._instance = new Data({
-        tasks,
         vsVersions,
         vsInstances
       })
@@ -84,13 +73,6 @@ export class Data {
       window.api.logger.debug(`There was an error initializating the data:\n${JSON.stringify(err)}`)
       window.api.rustory.exit(1)
     }
-  }
-
-  /**
-   * List of tasks.
-   */
-  public get tasks(): TaskBase[] {
-    return this._tasks
   }
 
   /**

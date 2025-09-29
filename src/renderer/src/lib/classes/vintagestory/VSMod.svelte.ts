@@ -1,4 +1,4 @@
-import { VSAPIMod } from '../api/VSAPIMod.svelte'
+import { VSAPIMod } from '@renderer/lib/classes/api/VSAPIMod.svelte'
 
 /**
  * Installed VS Mod info.

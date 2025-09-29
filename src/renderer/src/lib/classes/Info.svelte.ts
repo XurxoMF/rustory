@@ -1,5 +1,6 @@
-import { RustoryInfoError } from '@shared/errors/RustoryInfoError'
 import type { Systeminformation } from 'systeminformation'
+
+import { RustoryInfoError } from '@shared/errors/RustoryInfoError'
 
 /**
  * Info of the app.

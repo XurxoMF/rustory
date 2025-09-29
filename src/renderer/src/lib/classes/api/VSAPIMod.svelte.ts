@@ -1,5 +1,5 @@
-import { VSAPIModRelease } from './VSAPIModRelease.svelte'
-import { VSAPIModScreenshot } from './VSAPIModScreenshot.svelte'
+import { VSAPIModRelease } from '@renderer/lib/classes/api/VSAPIModRelease.svelte'
+import { VSAPIModScreenshot } from '@renderer/lib/classes/api/VSAPIModScreenshot.svelte'
 
 /**
  * Mod info queried from the ModDB.
