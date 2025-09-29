@@ -1,5 +1,6 @@
 import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
-import { TaskInstallVersion } from '../tasks/TaskInstallVersion.svelte'
+
+import { TaskInstallVSVersion } from '@renderer/lib/classes/tasks/TaskInstallVSVersion.svelte'
 import { Data } from '../Data.svelte'
 import { TaskBase } from '../tasks/TaskBase.svelte'
 
@@ -129,7 +130,7 @@ export class VSVersion {
 
     this._state = VSVersion.State.INSTALLING
 
-    const task = new TaskInstallVersion({ version: this._version, url, outputPath: this._path })
+    const task = new TaskInstallVSVersion({ version: this._version, url, outputPath: this._path })
 
     Data.instance.tasks.push(task)
 
