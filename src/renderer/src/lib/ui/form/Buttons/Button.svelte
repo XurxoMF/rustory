@@ -33,9 +33,9 @@
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
     't-dark:focus:outline-zinc-750',
-    't-light:focus:border-zinc-250',
-    't-rust:focus:border-rust-750',
-    't-midnight:focus:border-gray-750',
+    't-light:focus:outline-zinc-250',
+    't-rust:focus:outline-rust-750',
+    't-midnight:focus:outline-gray-750',
     ...ROUNDED_CLASSES[rounded],
     ...PADDING_CLASSES[padding]
   ]}

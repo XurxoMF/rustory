@@ -11,7 +11,7 @@
   let { children, required = false, disabled = false, ...restProps }: LabelProps = $props()
 </script>
 
-<h1 class={['flex items-center gap-1 flex-wrap ml-1', disabled && 'opacity-50']} {...restProps}>
+<h1 class={['flex items-center gap-1 flex-wrap', disabled && 'opacity-50']} {...restProps}>
   {@render children()}
 
   {#if required}

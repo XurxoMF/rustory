@@ -39,9 +39,9 @@
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
       't-dark:hover:bg-zinc-800 t-dark:focus:outline-zinc-750',
-      't-light:hover:bg-zinc-200 t-light:focus:border-zinc-250',
-      't-rust:hover:bg-rust-800 t-rust:focus:border-rust-750',
-      't-midnight:hover:bg-gray-800 t-midnight:focus:border-gray-750'
+      't-light:hover:bg-zinc-200 t-light:focus:outline-zinc-250',
+      't-rust:hover:bg-rust-800 t-rust:focus:outline-rust-750',
+      't-midnight:hover:bg-gray-800 t-midnight:focus:outline-gray-750'
     ]}
   >
     <Icon {icon} class="shrink-0 text-2xl" />

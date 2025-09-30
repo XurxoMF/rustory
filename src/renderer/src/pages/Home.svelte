@@ -14,6 +14,7 @@
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Containers/Grid'
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
+  import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -297,6 +298,40 @@
               <ButtonWarning padding="text" disabled>Example...</ButtonWarning>
               <ButtonWarning padding="text">Example...</ButtonWarning>
             </div>
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>Checkbox in a Static Section</p>
+            {/snippet}
+
+            <GridContainer>
+              <GridItem>
+                <div class="flex items-center gap-2 flex-wrap-reverse">
+                  <Checkbox disabled />
+
+                  <div class="flex gap-1 items-center">
+                    <Label disabled>Example...</Label>
+                    <Description>Example...</Description>
+                  </div>
+                </div>
+              </GridItem>
+
+              <GridItem>
+                <div class="flex items-center gap-2 flex-wrap-reverse">
+                  <Checkbox />
+
+                  <div class="flex gap-1 items-center">
+                    <Label>Example...</Label>
+                    <Description>Example...</Description>
+                  </div>
+                </div>
+              </GridItem>
+            </GridContainer>
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>
