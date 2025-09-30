@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { fade, slide } from 'svelte/transition'
-  import { quadOut } from 'svelte/easing'
+  import { fade } from 'svelte/transition'
   import { onMount } from 'svelte'
   import { Router, type RouteConfig } from '@mateothegreat/svelte5-router'
 
@@ -42,15 +41,10 @@
   onMount(async () => {
     // Ensure the tasks list is empty. Some times it may be completed if the APP reloaded incorrectly.
     loader.resetCompletedTasks()
-    loader.showTasks = false
 
-    // Load the app data and wait a bit so the theme and localization get's correctly changed.
+    // Load the app config and info.
     await Config.init()
     await Info.init()
-
-    // Show the tasks list and loader bar, wait for them to be shown and then complete the first task(app config loading).
-    loader.showTasks = true
-    await sleep(500)
     loader.completeTask('app-init')
 
     // Load data like Versions, Instances...
@@ -80,28 +74,24 @@
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
 
-    {#if loader.showTasks}
-      <div in:slide={{ duration: 500, easing: quadOut }} class="w-full">
-        <div class="flex flex-col items-center justify-center gap-8">
-          <div class="w-1/3">
-            <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
-          </div>
+    <div class="w-full flex flex-col items-center justify-center gap-8">
+      <div class="w-1/3">
+        <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
+      </div>
 
-          <div class="w-full max-h-40">
-            <div class="flex flex-col items-center justify-center overflow-y-scroll">
-              {#each Loader.TASKS as TASK (TASK.id)}
-                {@const isCompleted = loader.completedTasks.includes(TASK.id)}
+      <div class="w-full max-h-40">
+        <div class="flex flex-col items-center justify-center overflow-y-scroll">
+          {#each Loader.TASKS as TASK (TASK.id)}
+            {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
-                <div class="w-fit flex items-center gap-1">
-                  <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'fluent:checkmark-circle-48-regular' : 'svg-spinners:6-dots-scale'} />
-                  <p>{TASK.description}</p>
-                </div>
-              {/each}
+            <div class="w-fit flex items-center gap-1">
+              <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'fluent:checkmark-circle-48-regular' : 'svg-spinners:6-dots-scale'} />
+              <p>{TASK.description}</p>
             </div>
-          </div>
+          {/each}
         </div>
       </div>
-    {/if}
+    </div>
   </div>
 {/if}
 

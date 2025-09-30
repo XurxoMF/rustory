@@ -44,11 +44,6 @@ export class Loader {
   private _isVisible: boolean = $state(true)
 
   /**
-   * If we should show tasks or not.
-   */
-  private _showTasks: boolean = $state(false)
-
-  /**
    * Start loading the UI after all the data was loaded.
    */
   private _loadUI: boolean = $state(false)
@@ -69,20 +64,6 @@ export class Loader {
    */
   public get isVisible(): boolean {
     return this._isVisible
-  }
-
-  /**
-   * If we should show tasks or not.
-   */
-  public get showTasks(): boolean {
-    return this._showTasks
-  }
-
-  /**
-   * If we should show tasks or not.
-   */
-  public set showTasks(value: boolean) {
-    this._showTasks = value
   }
 
   /**

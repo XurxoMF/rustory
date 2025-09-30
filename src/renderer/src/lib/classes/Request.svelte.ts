@@ -33,8 +33,12 @@ export class Request {
   public async get(url: string, cache: boolean | undefined = true): Promise<string> {
     if (cache) {
       const cachedData = this._cache.get(url)
-      // If the data is less than 30 minutes old, return it
-      if (cachedData && Date.now() - cachedData.timestamp < 1000 * 60 * 30) return cachedData.data
+      if (cachedData) {
+        // If the data is less than 30 minutes old, return it
+        if (Date.now() - cachedData.timestamp < 1000 * 60 * 30) return cachedData.data
+        // If it's more than 30 minutes old, remove it from the cache
+        this._cache.delete(url)
+      }
     }
 
     try {

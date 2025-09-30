@@ -88,7 +88,10 @@ export async function getVolumesInfo(): Promise<si.Systeminformation.FsSizeData[
  */
 export async function getNETSDKsInfo(): Promise<string[]> {
   try {
-    return execSync('dotnet --list-sdks', { encoding: 'utf-8' }).trim().split('\n')
+    return execSync('dotnet --list-sdks', { encoding: 'utf-8' })
+      .trim()
+      .split('\n')
+      .filter((sdk) => sdk.length > 0)
   } catch (err) {
     logger.warn('Error fetching .NET SDKs!')
     logger.debug(`Error fetching .NET SDKs:\n${JSON.stringify(err)}`)
@@ -106,7 +109,8 @@ export async function getNETRuntimesInfo(): Promise<string[]> {
     return execSync('dotnet --list-runtimes', { encoding: 'utf-8' })
       .trim()
       .split('\n')
-      .map((rt) => rt.replace('Microsoft.NETCore.App ', ''))
+      .filter((runtime) => runtime.length > 0)
+      .map((runtime) => runtime.replace('Microsoft.NETCore.App ', ''))
   } catch (err) {
     logger.warn('Error fetching .NET Runtimes!')
     logger.debug(`Error fetching .NET Runtimes:\n${JSON.stringify(err)}`)
