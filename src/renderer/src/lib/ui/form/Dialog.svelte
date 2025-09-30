@@ -18,7 +18,10 @@
 
 <Dialog.Root bind:open {...restProps}>
   <Dialog.Portal to="#portal">
-    <Dialog.Overlay class={['absolute top-0 z-[100] w-screen h-screen', 't-dark:bg-zinc-900/80', 't-light:bg-zinc-100/80', 't-rust:bg-rust-900/80', 't-midnight:bg-gray-900/80']} forceMount>
+    <Dialog.Overlay
+      class={['absolute top-0 z-[100] w-screen h-screen backdrop-blur-sm', 't-dark:bg-zinc-900/80', 't-light:bg-zinc-100/80', 't-rust:bg-rust-900/80', 't-midnight:bg-gray-900/80']}
+      forceMount
+    >
       {#snippet child({ props })}
         {#if open}
           <div {...props} transition:fade={{ duration: 100 }}></div>
