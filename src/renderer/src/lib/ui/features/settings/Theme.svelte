@@ -6,7 +6,7 @@
   <button
     class={[
       'w-8 h-8 rounded-full border transition-[opacity,border] duration-200',
-      'focus:outline-2',
+      'focus:outline-1',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
       't-dark:border-zinc-750 t-dark:focus:outline-zinc-750',

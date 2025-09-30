@@ -15,10 +15,13 @@
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
   import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
+  import Command from '@renderer/lib/ui/display/Command.svelte'
 
   Breadcrumbs.instance.segments = []
 
-  let open = $state(false)
+  let alertOpen = $state(false)
+
+  let commandOpen = $state(false)
 </script>
 
 <PageWrapper>
@@ -197,8 +200,8 @@
               <p>Alert & Dialog in a Static Section</p>
             {/snippet}
 
-            <ButtonNeutral padding="text" onclick={() => (open = true)}>Open</ButtonNeutral>
-            <Alert bind:open title="Title">
+            <ButtonNeutral padding="text" onclick={() => (alertOpen = true)}>Open</ButtonNeutral>
+            <Alert bind:open={alertOpen} title="Title">
               {#snippet description()}
                 <p>Example... mundo!</p>
               {/snippet}
@@ -279,12 +282,25 @@
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
+              <p>Command in a Static Section</p>
+            {/snippet}
+
+            <ButtonNeutral padding="text" onclick={() => (commandOpen = true)}>Open</ButtonNeutral>
+            <Command bind:open={commandOpen} />
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
               <p>Buttons in a Static Section</p>
             {/snippet}
 
             <div class="flex items-center flex-wrap gap-2">
               <Button padding="text" disabled>Example...</Button>
-              <Button padding="text" onclick={() => (open = true)}>Open</Button>
+              <Button padding="text" onclick={() => (alertOpen = true)}>Open</Button>
 
               <ButtonNeutral padding="text" disabled>Example...</ButtonNeutral>
               <ButtonNeutral padding="text">Example...</ButtonNeutral>

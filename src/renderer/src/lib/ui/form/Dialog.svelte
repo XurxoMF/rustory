@@ -9,7 +9,7 @@
 
   type Props = Dialog.RootProps & {
     title: string
-    description: Snippet
+    description?: Snippet | undefined
     contentProps?: Omit<WithoutChild<Dialog.ContentProps>, 'class'>
   }
 
@@ -29,27 +29,31 @@
       {/snippet}
     </Dialog.Overlay>
 
-    <Dialog.Content class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] max-w-1/2" {...contentProps} forceMount>
+    <Dialog.Content class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[100] w-fit h-fit" {...contentProps} forceMount>
       {#snippet child({ props })}
         {#if open}
           <div {...props} transition:fade={{ duration: 100 }}>
-            <StyledContainer>
-              <ScrollableContainer orientation="vertical">
-                {#snippet headerContent()}
-                  <Dialog.Title><h1>{title}</h1></Dialog.Title>
+            <div class="w-[50vw] max-h-[50vh] flex">
+              <StyledContainer>
+                <ScrollableContainer orientation="vertical">
+                  {#snippet headerContent()}
+                    <Dialog.Title><h1>{title}</h1></Dialog.Title>
 
-                  <Button padding="none" onclick={() => (open = false)}>
-                    <Icon icon="ph:x-bold" class="opacity-50" />
-                  </Button>
-                {/snippet}
+                    <Button padding="none" onclick={() => (open = false)}>
+                      <Icon icon="ph:x-bold" class="opacity-50" />
+                    </Button>
+                  {/snippet}
 
-                <Dialog.Description class="opacity-50 mb-2">
-                  {@render description()}
-                </Dialog.Description>
+                  {#if description}
+                    <Dialog.Description class="opacity-50 mb-2">
+                      {@render description()}
+                    </Dialog.Description>
+                  {/if}
 
-                {@render children?.()}
-              </ScrollableContainer>
-            </StyledContainer>
+                  {@render children?.()}
+                </ScrollableContainer>
+              </StyledContainer>
+            </div>
           </div>
         {/if}
       {/snippet}

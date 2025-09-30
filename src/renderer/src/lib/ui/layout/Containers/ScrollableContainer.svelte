@@ -16,10 +16,10 @@
   </div>
 {/if}
 
-<ScrollArea.Root bind:ref type="always" class="w-full h-full flex flex-col" {...restProps}>
+<ScrollArea.Root bind:ref type="always" class="w-full h-full flex flex-col min-h-0" {...restProps}>
   <ScrollArea.Viewport
     class={[
-      'w-full flex flex-col p-2',
+      'w-full h-full flex flex-col p-2',
       headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-250', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750']
     ]}
   >

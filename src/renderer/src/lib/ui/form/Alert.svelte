@@ -6,14 +6,14 @@
   import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
   import { ButtonNeutral, ButtonSuccess } from '@renderer/lib/ui/form/Buttons'
 
-  type Props = {
+  type AlertProps = {
     title: string
     description: Snippet
     open?: boolean | undefined
     onaccept?: (() => void | Promise<void>) | undefined
   }
 
-  let { open = $bindable(false), title, description: desc, onaccept }: Props = $props()
+  let { open = $bindable(false), title, description: desc, onaccept }: AlertProps = $props()
 </script>
 
 <Dialog bind:open {title}>

@@ -34,7 +34,7 @@
       active: { absolute: true, class: ['t-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800'] }
     }}
     class={[
-      'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[background-color] duration-200',
+      'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[opacity] duration-200',
       'focus:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
