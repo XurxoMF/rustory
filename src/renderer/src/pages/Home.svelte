@@ -15,7 +15,8 @@
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
   import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
-  import Command from '@renderer/lib/ui/display/Command.svelte'
+  import Command from '@renderer/lib/ui/app/Command.svelte'
+  import Dropdown from '@renderer/lib/ui/form/Dropdown.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -287,6 +288,52 @@
 
             <ButtonNeutral padding="text" onclick={() => (commandOpen = true)}>Open</ButtonNeutral>
             <Command bind:open={commandOpen} />
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>Dropdown in a Static Section</p>
+            {/snippet}
+
+            <Dropdown
+              items={[
+                {
+                  label: 'One',
+                  value: 'one',
+                  onselect: () => {
+                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the Dropdown!' })
+                    Toasts.instance.addToast(toastInfo)
+                  },
+                  icon: 'ph:code-bold'
+                },
+                {
+                  label: 'Two',
+                  value: 'two',
+                  onselect: () => {
+                    const toastInfo = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the Dropdown!' })
+                    Toasts.instance.addToast(toastInfo)
+                  },
+                  icon: 'ph:code-bold'
+                },
+                {
+                  label: 'Three',
+                  value: 'three',
+                  onselect: () => {
+                    const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: "How the hell you clicked three? It's disabled!" })
+                    Toasts.instance.addToast(toastInfo)
+                  },
+                  icon: 'ph:code-bold'
+                }
+              ]}
+            >
+              {#snippet trigger()}
+                Open
+              {/snippet}
+            </Dropdown>
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>

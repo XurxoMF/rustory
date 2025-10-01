@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { parse } from 'jsonc-parser'
+  import json5 from 'json5'
   import { onMount } from 'svelte'
 
   import { m } from '@renderer/paraglide/messages'
@@ -27,7 +27,7 @@
 
   onMount(async () => {
     const res = await Request.instance.get('https://vslapi.xurxomf.xyz/versions')
-    const json: TRAPIVSVersion[] = await parse(res)
+    const json: TRAPIVSVersion[] = await json5.parse(res)
 
     versions = json.map((v) => RAPIVSVersion.fromJSON(v))
   })
