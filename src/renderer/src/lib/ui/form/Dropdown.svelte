@@ -1,23 +1,21 @@
 <script lang="ts">
   import { DropdownMenu, type WithoutChild } from 'bits-ui'
-  import type { Snippet } from 'svelte'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { StyledContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
 
   type Props = Omit<DropdownMenu.RootProps, 'class'> & {
-    trigger: Snippet
     items: { label: string; value: string; onselect: () => void | Promise<void>; icon: string; disabled?: boolean | undefined }[]
     contentProps?: Omit<WithoutChild<DropdownMenu.ContentProps>, 'class'>
   }
 
-  let { open = $bindable(false), trigger, items, contentProps, ...restProps }: Props = $props()
+  let { open = $bindable(false), items, contentProps, ...restProps }: Props = $props()
 </script>
 
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'w-fit flex items-center justify-center rounded-md px-2 py-1 transition-[opacity] duration-200',
+      'w-fit flex items-center justify-center rounded-md p-1 transition-[opacity] duration-200',
       'focus:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
@@ -27,7 +25,7 @@
       't-midnight:focus:outline-gray-750'
     ]}
   >
-    {@render trigger()}
+    <Icon icon="ph:dots-three-bold" class="text-xl" />
   </DropdownMenu.Trigger>
 
   <DropdownMenu.Portal to="#portal">

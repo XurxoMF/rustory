@@ -329,11 +329,7 @@
                   icon: 'ph:code-bold'
                 }
               ]}
-            >
-              {#snippet trigger()}
-                Open
-              {/snippet}
-            </Dropdown>
+            />
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>
