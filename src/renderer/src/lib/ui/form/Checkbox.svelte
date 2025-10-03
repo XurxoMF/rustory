@@ -10,7 +10,7 @@
 
 <Checkbox.Root
   class={[
-    'w-fit flex items-center justify-center rounded-md p-0.5 border transition-[opacity,border,background-color] duration-200',
+    'w-5 h-5 flex items-center justify-center rounded-md p-0.5 border transition-[opacity,border,background-color] duration-200',
     'focus:outline-1',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
