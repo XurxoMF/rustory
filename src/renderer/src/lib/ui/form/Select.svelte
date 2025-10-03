@@ -17,7 +17,7 @@
 <Select.Root bind:value={value as never} {...restProps}>
   <Select.Trigger
     class={[
-      'h-7 w-full flex items-center justify-between rounded-md text-start border transition-[border,background-color] duration-200',
+      'h-9 w-full flex items-center justify-between rounded-md text-start border transition-[border,background-color] duration-200',
       'read-only:outline-none not-read-only:focus:outline-1',
       'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
       'disabled:opacity-50',

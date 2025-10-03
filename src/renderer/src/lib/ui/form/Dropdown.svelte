@@ -15,7 +15,7 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'h-7 w-fit flex items-center justify-center rounded-md p-1 transition-[opacity] duration-200',
+      'h-9 w-9 flex items-center justify-center rounded-md p-1 transition-[opacity] duration-200',
       'focus:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',

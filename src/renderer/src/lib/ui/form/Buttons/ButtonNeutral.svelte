@@ -10,8 +10,8 @@
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
 
   const SIZE_CLASSES = {
-    regular: ['h-7 w-fit'],
-    square: ['h-7 w-7'],
+    regular: ['h-9 w-fit'],
+    square: ['h-9 w-9'],
     none: ['h-fit w-fit']
   } as const
 
@@ -37,7 +37,7 @@
 
 <button
   class={[
-    'w-fit flex items-center justify-center border transition-[opacity,border,background-color] duration-200',
+    'flex items-center justify-center shrink-0 border transition-[opacity,border,background-color] duration-200',
     'focus:outline-1',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
