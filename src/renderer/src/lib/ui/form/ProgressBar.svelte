@@ -12,7 +12,13 @@
   aria-labelledby={labelId}
   {value}
   class={[
-    ['w-full h-2 rounded-full overflow-hidden border transition-[border] duration-200', 't-dark:border-zinc-750', 't-light:border-zinc-250', 't-rust:border-rust-750', 't-midnight:border-gray-750']
+    [
+      'w-full h-2 rounded-full overflow-hidden border transition-[border] duration-200',
+      't-dark:bg-zinc-800 t-dark:border-zinc-750',
+      't-light:bg-zinc-200 t-light:border-zinc-250',
+      't-rust:bg-rust-800t-rust:border-rust-750',
+      't-midnight:bg-gray-800 t-midnight:border-gray-750'
+    ]
   ]}
   {...restProps}
 >

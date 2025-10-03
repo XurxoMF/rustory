@@ -16,6 +16,7 @@
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
   import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
   import Dropdown from '@renderer/lib/ui/form/Dropdown.svelte'
+  import Slider from '@renderer/lib/ui/form/Slider.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -213,6 +214,19 @@
                 <p>Example... mundo!</p>
               {/snippet}
             </Alert>
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>Slider in a Static Section</p>
+            {/snippet}
+
+            <Slider type="single" min={0} max={10} value={5} />
+            <Slider type="single" disabled min={0} max={10} value={5} />
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>
