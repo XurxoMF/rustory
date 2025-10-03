@@ -11,10 +11,11 @@
   type="single"
   items={Config.SCALES.map((SCALE) => ({
     value: SCALE.scale,
-    label: SCALE.name
+    label: SCALE.name,
+    comment: SCALE.scale === '100' ? m.common__default() : undefined
   }))}
   value={Config.instance.scale}
-  onValueChange={(e) => {
+  onValueChange={(e: string) => {
     if (e !== undefined) Config.instance.setScale(e)
   }}
 />

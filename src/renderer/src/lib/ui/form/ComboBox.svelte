@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { OnChangeFn } from 'bits-ui/dist/internal/types'
   import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
@@ -6,12 +7,21 @@
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  type Props = Combobox.RootProps & {
+  type ComboBoxItem = {
+    value: string
+    label: string
+    comment?: string
+    disabled?: boolean
+  }
+
+  type Props = Omit<Combobox.RootProps, 'class' | 'items' | 'onValueChange'> & {
+    items: ComboBoxItem[]
     inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class'>
+    onValueChange: OnChangeFn<string> | OnChangeFn<string[]>
     contentProps?: Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class'>
   }
 
-  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, ...restProps }: Props = $props()
+  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, onValueChange, ...restProps }: Props = $props()
 
   let searchValue = $state('')
 
@@ -32,7 +42,7 @@
   const mergedInputProps = $derived(mergeProps(inputProps, { oninput: handleInput }))
 </script>
 
-<Combobox.Root {type} {items} bind:value={value as never} bind:open {...mergedRootProps}>
+<Combobox.Root {type} {items} bind:value={value as never} onValueChange={onValueChange as never} bind:open {...mergedRootProps}>
   <div class="relative w-full flex items-center justify-between rounded-md">
     <Combobox.Input
       class={[
@@ -78,7 +88,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:slide={{ duration: 200 }}>
               <Combobox.Viewport class="w-full">
-                {#each filteredItems as { value, label, disabled } (value)}
+                {#each filteredItems as { value, label, comment, disabled } (value)}
                   <Combobox.Item
                     {value}
                     {label}
@@ -92,7 +102,10 @@
                     ]}
                   >
                     {#snippet children({ selected })}
-                      <p class="w-full">{label}</p>
+                      <span class="w-full flex items-center justify-start gap-2">
+                        <p>{label}</p>
+                        <p class="text-sm opacity-50">{comment}</p>
+                      </span>
 
                       {#if selected}
                         <Icon icon="ph:check-bold" />

@@ -1,15 +1,25 @@
 <script lang="ts">
+  import type { OnChangeFn } from 'bits-ui/dist/internal/types'
   import { Select, type WithoutChildren } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  type SelectProps = WithoutChildren<Select.RootProps> & {
+  type SelectItem = {
+    value: string
+    label: string
+    comment?: string
+    disabled?: boolean
+  }
+
+  type SelectProps = Omit<WithoutChildren<Select.RootProps>, 'class' | 'items' | 'onValueChange'> & {
+    items: SelectItem[]
     placeholder: string | undefined
+    onValueChange: OnChangeFn<string> | OnChangeFn<string[]>
     contentProps?: WithoutChildren<Select.ContentProps> | undefined
   }
 
-  let { value = $bindable(), items, contentProps, placeholder, ...restProps }: SelectProps = $props()
+  let { value = $bindable(), items, contentProps, placeholder, onValueChange, ...restProps }: SelectProps = $props()
 
   const selected = $derived(items.find((item) => item.value === value))
 </script>
@@ -17,7 +27,7 @@
 <Select.Root bind:value={value as never} {...restProps}>
   <Select.Trigger
     class={[
-      'h-9 w-full flex items-center justify-between rounded-md text-start border transition-[opacity,border,background-color] duration-200',
+      'h-9 w-full flex items-center justify-between px-2 py-1 rounded-md text-start border transition-[opacity,border,background-color] duration-200',
       'focus-visible:outline-1',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
@@ -27,9 +37,16 @@
       't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus-visible:outline-gray-750'
     ]}
   >
-    <p class={['w-full px-2 py-1', !selected && 'opacity-50']}>{selected ? selected.label : placeholder}</p>
+    <span class="w-full flex items-center justify-start gap-2">
+      {#if selected}
+        <p>{selected.label}</p>
+        <p class="text-sm opacity-50">{selected.comment}</p>
+      {:else}
+        <p class="opacity-50">{placeholder}</p>
+      {/if}
+    </span>
 
-    <Icon icon="ph:caret-up-down" class="p-2" />
+    <Icon icon="ph:caret-up-down" />
   </Select.Trigger>
 
   <Select.Portal to="#portal">
@@ -50,7 +67,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:slide={{ duration: 200 }}>
               <Select.Viewport class="w-full">
-                {#each items as { value, label, disabled } (value)}
+                {#each items as { value, label, comment, disabled } (value)}
                   <Select.Item
                     {value}
                     {label}
@@ -64,7 +81,10 @@
                     ]}
                   >
                     {#snippet children({ selected })}
-                      <p class="w-full">{label}</p>
+                      <span class="w-full flex items-center justify-start gap-2">
+                        <p>{label}</p>
+                        <p class="text-sm opacity-50">{comment}</p>
+                      </span>
 
                       {#if selected}
                         <Icon icon="ph:check-bold" />
