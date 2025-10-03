@@ -17,13 +17,13 @@
   <DropdownMenu.Trigger
     class={[
       'h-9 w-9 flex items-center justify-center rounded-md p-1 transition-[opacity] duration-200',
-      'focus:outline-2',
+      'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
-      't-dark:focus:outline-zinc-750',
-      't-light:focus:outline-zinc-350',
-      't-rust:focus:outline-rust-750',
-      't-midnight:focus:outline-gray-750'
+      't-dark:focus-visible:outline-zinc-750',
+      't-light:focus-visible:outline-zinc-300',
+      't-rust:focus-visible:outline-rust-750',
+      't-midnight:focus-visible:outline-gray-750'
     ]}
   >
     <Icon icon="ph:dots-three-bold" class="text-xl" />
@@ -41,14 +41,14 @@
                     {#each items as { label, value, onselect, disabled, icon }}
                       <DropdownMenu.Item
                         class={[
-                          'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity] duration-200',
+                          'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-200',
                           'outline-none',
                           'cursor-pointer disabled:cursor-not-allowed',
                           'disabled:opacity-50',
-                          't-dark:focus:bg-zinc-800',
-                          't-light:focus:bg-zinc-300',
-                          't-rust:focus:bg-rust-800',
-                          't-midnight:focus:bg-gray-800'
+                          't-dark:focus-visible:bg-zinc-800',
+                          't-light:focus-visible:bg-zinc-200',
+                          't-rust:focus-visible:bg-rust-800',
+                          't-midnight:focus-visible:bg-gray-800'
                         ]}
                         onSelect={onselect}
                         {disabled}
@@ -62,7 +62,7 @@
                 </StaticContainer>
               </StyledContainer>
 
-              <DropdownMenu.Arrow class={['t-dark:text-zinc-750', 't-light:text-zinc-400', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
+              <DropdownMenu.Arrow class={['transition-[color] duration-200', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
             </div>
           </div>
         {/if}

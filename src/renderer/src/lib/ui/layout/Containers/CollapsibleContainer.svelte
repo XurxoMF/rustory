@@ -26,7 +26,7 @@
             class={[
               'w-full flex flex-col p-2 border-t transition-[border] duration-200',
               't-dark:border-t-zinc-750',
-              't-light:border-t-zinc-400',
+              't-light:border-t-zinc-300',
               't-rust:border-t-rust-750',
               't-midnight:border-t-gray-750'
             ]}

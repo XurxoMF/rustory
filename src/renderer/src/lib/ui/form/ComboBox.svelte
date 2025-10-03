@@ -34,14 +34,14 @@
   <div class="relative w-full flex items-center justify-between rounded-md">
     <Combobox.Input
       class={[
-        'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
-        'read-only:outline-none not-read-only:focus:outline-1',
+        'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[opacity,border,background-color] duration-200',
+        'read-only:outline-none not-read-only:focus-visible:outline-1',
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
         'disabled:opacity-50',
-        't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
-        't-light:bg-zinc-300 t-light:border-zinc-350 t-light:focus:outline-zinc-350',
-        't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
+        't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
+        't-light:bg-zinc-200 t-light:border-zinc-300 t-light:focus-visible:outline-zinc-300',
+        't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus-visible:outline-rust-750',
+        't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus-visible:outline-gray-750'
       ]}
       {...mergedInputProps}
     />
@@ -49,7 +49,7 @@
     <Combobox.Trigger
       class={[
         'absolute right-0 p-2 transition-[opacity] duration-200',
-        'read-only:outline-none not-read-only:focus:outline-1',
+        'read-only:outline-none not-read-only:focus-visible:outline-1',
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
         'disabled:opacity-50'
       ]}
@@ -60,12 +60,13 @@
 
   <Combobox.Portal to="#portal">
     <Combobox.Content
+      sideOffset={4}
       class={[
-        'max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-md shadow-sm shadow-black/25 border transition-[border,background-color] duration-200',
-        't-dark:bg-zinc-800 t-dark:border-zinc-750',
-        't-light:bg-zinc-300 t-light:border-zinc-350',
-        't-rust:bg-rust-800 t-rust:border-rust-750',
-        't-midnight:bg-gray-800 t-midnight:border-gray-750'
+        'w-[var(--bits-combobox-anchor-width)] max-h-60 z-50 overflow-hidden rounded-md shadow-sm shadow-black/25 p-1 gap-1 border transition-[border,background-color] duration-200',
+        't-dark:bg-zinc-850 t-dark:border-zinc-750',
+        't-light:bg-zinc-100 t-light:border-zinc-300',
+        't-rust:bg-rust-850 t-rust:border-rust-750',
+        't-midnight:bg-gray-850 t-midnight:border-gray-750'
       ]}
       forceMount
       {...contentProps}
@@ -74,22 +75,22 @@
         {#if open}
           <div {...wrapperProps}>
             <div {...props} transition:slide={{ duration: 200 }}>
-              <Combobox.Viewport>
+              <Combobox.Viewport class="w-full">
                 {#each filteredItems as { value, label, disabled } (value)}
                   <Combobox.Item
                     {value}
                     {label}
                     {disabled}
                     class={[
-                      'w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
-                      't-dark:not-last:border-b-zinc-750',
-                      't-light:not-last:border-b-zinc-400',
-                      't-rust:not-last:border-b-rust-750',
-                      't-midnight:not-last:border-b-gray-750'
+                      'w-full h-[var(--bits-combobox-anchor-height)] flex items-center justify-between px-2 py-1 cursor-pointer not-last:border-b transition-[border,background-color] duration-200',
+                      't-dark:not-last:border-b-zinc-750 t-dark:data-highlighted:bg-zinc-800',
+                      't-light:not-last:border-b-zinc-300 t-light:data-highlighted:bg-zinc-200',
+                      't-rust:not-last:border-b-rust-750 t-rust:data-highlighted:bg-rust-800',
+                      't-midnight:not-last:border-b-gray-750 t-midnight:data-highlighted:bg-gray-800'
                     ]}
                   >
                     {#snippet children({ selected })}
-                      <p class="w-full">{label}</p>
+                      <p class="w-full h-[var(--bits-combobox-anchor-height)] flex items-center justify-between px-2 py-1">{label}</p>
 
                       {#if selected}
                         <Icon icon="ph:check-bold" />
@@ -97,15 +98,7 @@
                     {/snippet}
                   </Combobox.Item>
                 {:else}
-                  <p
-                    class={[
-                      'w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
-                      't-dark:not-last:border-b-zinc-750',
-                      't-light:not-last:border-b-zinc-400',
-                      't-rust:not-last:border-b-rust-750',
-                      't-midnight:not-last:border-b-gray-750'
-                    ]}
-                  >
+                  <p class={['w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer duration-200']}>
                     No results found
                   </p>
                 {/each}

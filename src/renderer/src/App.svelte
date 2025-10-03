@@ -69,11 +69,11 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-[1000] w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,background-color,border] duration-200',
-      't-dark:text-zinc-150 t-dark:bg-zinc-900 t-dark:border-zinc-750',
-      't-light:text-zinc-700 t-light:bg-zinc-150 t-light:border-zinc-350',
-      't-rust:text-rust-100 t-rust:bg-rust-900 t-rust:border-rust-750',
-      't-midnight:text-gray-100 t-midnight:bg-gray-900 t-midnight:border-gray-750'
+      'fixed z-[1000] w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,border, background-color] duration-200',
+      't-dark:text-zinc-100 t-dark:bg-zinc-850 t-dark:border-zinc-750',
+      't-light:text-zinc-650 t-light:bg-zinc-100 t-light:border-zinc-350',
+      't-rust:text-rust-100 t-rust:bg-rust-850 t-rust:border-rust-750',
+      't-midnight:text-gray-100 t-midnight:bg-gray-850 t-midnight:border-gray-750'
     ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
@@ -104,21 +104,20 @@
 {#if loader.loadUI}
   <div
     class={[
-      'w-screen h-screen overflow-hidden bg-cover',
-      't-dark:bg-image-dark t-dark:bg-zinc-900',
-      't-light:bg-image-light t-light:bg-zinc-150',
-      't-rust:bg-image-rust t-rust:bg-rust-900',
-      't-midnight:bg-image-midnight t-midnight:bg-gray-900',
-      'rounded-md border transition-[border] duration-200 t-dark:border-zinc-750 t-light:border-zinc-350 t-rust:border-rust-750 t-midnight:border-gray-750'
+      'w-screen h-screen overflow-hidden bg-cover rounded-md border transition-[border,background-color] duration-200',
+      't-dark:bg-image-dark t-dark:bg-zinc-850 t-dark:border-zinc-750',
+      't-light:bg-image-light t-light:bg-zinc-100 t-light:border-zinc-350',
+      't-rust:bg-image-rust t-rust:bg-rust-850 t-rust:border-rust-750',
+      't-midnight:bg-image-midnight t-midnight:bg-gray-850 t-midnight:border-gray-750'
     ]}
   >
     <div
       class={[
         'w-full h-full flex flex-col select-none backdrop-blur-xs transition-[color,background-color] duration-200',
-        't-dark:text-zinc-150 t-dark:bg-zinc-900/80',
-        't-light:text-zinc-700 t-light:bg-zinc-150/80',
-        't-rust:text-rust-100 t-rust:bg-rust-900/80',
-        't-midnight:text-gray-100 t-midnight:bg-gray-900/80'
+        't-dark:text-zinc-100 t-dark:bg-zinc-850/80',
+        't-light:text-zinc-650 t-light:bg-zinc-100/80',
+        't-rust:text-rust-100 t-rust:bg-rust-850/80',
+        't-midnight:text-gray-100 t-midnight:bg-gray-850/80'
       ]}
     >
       <WindowBar />

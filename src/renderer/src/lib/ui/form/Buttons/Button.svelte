@@ -38,13 +38,13 @@
 <button
   class={[
     'flex items-center justify-center shrink-0 transition-[opacity] duration-200',
-    'focus:outline-2',
+    'focus-visible:outline-2',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
-    't-dark:focus:outline-zinc-750',
-    't-light:focus:outline-zinc-350',
-    't-rust:focus:outline-rust-750',
-    't-midnight:focus:outline-gray-750',
+    't-dark:focus-visible:outline-zinc-750',
+    't-light:focus-visible:outline-zinc-300',
+    't-rust:focus-visible:outline-rust-750',
+    't-midnight:focus-visible:outline-gray-750',
     ...ROUNDED_CLASSES[rounded],
     ...SIZE_CLASSES[size],
     ...PADDING_CLASSES[padding]
