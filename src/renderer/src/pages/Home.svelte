@@ -15,14 +15,11 @@
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Containers/Columns'
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
   import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
-  import Command from '@renderer/lib/ui/app/Command.svelte'
   import Dropdown from '@renderer/lib/ui/form/Dropdown.svelte'
 
   Breadcrumbs.instance.segments = []
 
   let alertOpen = $state(false)
-
-  let commandOpen = $state(false)
 </script>
 
 <PageWrapper>
@@ -273,19 +270,6 @@
             >
               Show
             </ButtonNeutral>
-          </StaticContainer>
-        </StyledContainer>
-      </ColumnItem>
-
-      <ColumnItem>
-        <StyledContainer>
-          <StaticContainer>
-            {#snippet headerContent()}
-              <p>Command in a Static Section</p>
-            {/snippet}
-
-            <ButtonNeutral onclick={() => (commandOpen = true)}>Open</ButtonNeutral>
-            <Command bind:open={commandOpen} />
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>

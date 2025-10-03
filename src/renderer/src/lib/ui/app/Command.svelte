@@ -1,8 +1,25 @@
+<script lang="ts" module>
+  let open = $state(false)
+
+  export function closeCommand(): void {
+    open = false
+  }
+
+  export function openCommand(): void {
+    open = true
+  }
+
+  export function toggleCommand(): void {
+    open = !open
+  }
+</script>
+
 <script lang="ts">
   import { Command } from 'bits-ui'
+  import { m } from '@renderer/paraglide/messages'
 
   import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
-  import Icon from '../base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-50']
 
@@ -17,12 +34,6 @@
   ]
 
   const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-250', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
-
-  type AlertProps = {
-    open?: boolean | undefined
-  }
-
-  let { open = $bindable(false) }: AlertProps = $props()
 </script>
 
 <Dialog bind:open title="Command">
@@ -38,7 +49,7 @@
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
       ]}
-      placeholder="Search..."
+      placeholder={`${m.common__search()}...`}
     />
 
     <Command.List class="w-full">

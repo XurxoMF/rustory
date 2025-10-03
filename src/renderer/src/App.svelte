@@ -12,6 +12,7 @@
   import { Loader } from '@renderer/lib/classes/Loader.svelte'
   import { Info } from '@renderer/lib/classes/Info.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
+  import { Hotkeys } from "@renderer/lib/classes/Hotkeys.svelte";
 
   import { sleep } from '@shared/utils/common'
 
@@ -46,6 +47,10 @@
     await Config.init()
     await Info.init()
     loader.completeTask('app-init')
+
+    // Load the hotkeys.
+    await Hotkeys.init()
+    loader.completeTask('hotkeys-loading')
 
     // Load data like Versions, Instances...
     await Data.init()

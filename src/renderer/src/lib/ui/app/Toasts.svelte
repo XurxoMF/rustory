@@ -52,7 +52,7 @@
           </div>
 
           <div>
-            <h1 class="text-sm">{toast.title}</h1>
+            <p class="text-sm">{toast.title}</p>
             {#if toast.description}
               <p class="text-xs opacity-50">{toast.description}</p>
             {/if}

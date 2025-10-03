@@ -46,8 +46,8 @@
   >
     <Icon {icon} class="shrink-0 text-2xl" />
 
-    <p class={['text-start transition-opacity duration-200', open ? 'opacity-100' : 'opacity-0']}>
+    <span class={['text-start transition-opacity duration-200', open ? 'opacity-100' : 'opacity-0']}>
       {text}
-    </p>
+    </span>
   </a>
 {/snippet}
