@@ -41,7 +41,7 @@
           't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
           't-light:bg-zinc-300 t-light:border-zinc-350 t-light:focus:outline-zinc-350',
           't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
-          't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
+          't-midnight:bg-gray-300 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
         ]}
       />
     {/each}

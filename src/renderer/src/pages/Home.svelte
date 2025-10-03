@@ -17,6 +17,7 @@
   import Checkbox from '@renderer/lib/ui/form/Checkbox.svelte'
   import Dropdown from '@renderer/lib/ui/form/Dropdown.svelte'
   import Slider from '@renderer/lib/ui/form/Slider.svelte'
+  import Switch from '@renderer/lib/ui/form/Switch.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -227,6 +228,21 @@
 
             <Slider type="single" min={0} max={10} value={5} />
             <Slider type="single" disabled min={0} max={10} value={5} />
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>Switch in a Static Section</p>
+            {/snippet}
+
+            <div class="flex items-center flex-wrap gap-2">
+              <Switch />
+              <Switch disabled />
+            </div>
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>

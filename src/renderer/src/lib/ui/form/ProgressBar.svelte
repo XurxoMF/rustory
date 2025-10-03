@@ -1,15 +1,12 @@
 <script lang="ts">
-  import { Progress, useId } from 'bits-ui'
+  import { Progress } from 'bits-ui'
 
   export type ProgressBarProps = Omit<Progress.RootProps, 'class'>
 
   let { value = 0, ...restProps }: ProgressBarProps = $props()
-
-  const labelId = useId()
 </script>
 
 <Progress.Root
-  aria-labelledby={labelId}
   {value}
   class={[
     [
