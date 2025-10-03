@@ -9,6 +9,7 @@
 <ComboBox
   type="single"
   value={Config.instance.locale}
+  allowDeselect={false}
   inputProps={{ placeholder: Config.instance.locale ? Config.LANGUAGES.find((l) => l.lang === Config.instance.locale).name : m.placeholders__select_one() }}
   items={Config.LANGUAGES.map((LANG) => ({
     value: LANG.lang,
