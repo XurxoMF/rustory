@@ -41,7 +41,7 @@
     'focus:outline-1',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
-    'border-green-500 bg-green-700 focus:outline-green-500',
+    'border-green-500 bg-green-700 text-zinc-200 focus:outline-green-500',
     ...ROUNDED_CLASSES[rounded],
     ...SIZE_CLASSES[size],
     ...PADDING_CLASSES[padding]
