@@ -9,6 +9,14 @@
 
   type RoundedTypes = keyof typeof ROUNDED_CLASSES
 
+  const SIZE_CLASSES = {
+    regular: ['h-7 w-fit'],
+    square: ['h-7 w-7'],
+    none: ['h-fit w-fit']
+  } as const
+
+  type SizeTypes = keyof typeof SIZE_CLASSES
+
   const PADDING_CLASSES = {
     text: ['px-2 py-1'],
     icon: ['p-1'],
@@ -20,10 +28,11 @@
   type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
     children: Snippet
     rounded?: RoundedTypes | undefined
+    size?: SizeTypes | undefined
     padding?: PaddingTypes | undefined
   }
 
-  let { children, rounded = 'regular', padding = 'text', ...restProps }: ButtonProps = $props()
+  let { children, rounded = 'regular', size = 'regular', padding = 'text', ...restProps }: ButtonProps = $props()
 </script>
 
 <button
@@ -37,6 +46,7 @@
     't-rust:focus:outline-rust-750',
     't-midnight:focus:outline-gray-750',
     ...ROUNDED_CLASSES[rounded],
+    ...SIZE_CLASSES[size],
     ...PADDING_CLASSES[padding]
   ]}
   {...restProps}

@@ -201,7 +201,7 @@
               <p>Alert & Dialog in a Static Section</p>
             {/snippet}
 
-            <ButtonNeutral padding="text" onclick={() => (alertOpen = true)}>Open</ButtonNeutral>
+            <ButtonNeutral onclick={() => (alertOpen = true)}>Open</ButtonNeutral>
             <Alert bind:open={alertOpen} title="Title">
               {#snippet description()}
                 <p>Example... mundo!</p>
@@ -219,7 +219,6 @@
             {/snippet}
 
             <ButtonNeutral
-              padding="text"
               onclick={() => {
                 const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: 'This is an info toast!' })
                 Toasts.instance.addToast(toastInfo)
@@ -260,7 +259,6 @@
             {/snippet}
 
             <ButtonNeutral
-              padding="text"
               onclick={async () => {
                 const notification = new Notification({
                   title: 'Example notification',
@@ -286,7 +284,7 @@
               <p>Command in a Static Section</p>
             {/snippet}
 
-            <ButtonNeutral padding="text" onclick={() => (commandOpen = true)}>Open</ButtonNeutral>
+            <ButtonNeutral onclick={() => (commandOpen = true)}>Open</ButtonNeutral>
             <Command bind:open={commandOpen} />
           </StaticContainer>
         </StyledContainer>
@@ -342,20 +340,20 @@
             {/snippet}
 
             <div class="flex items-center flex-wrap gap-2">
-              <Button padding="text" disabled>Example...</Button>
-              <Button padding="text" onclick={() => (alertOpen = true)}>Open</Button>
+              <Button disabled>Example...</Button>
+              <Button onclick={() => (alertOpen = true)}>Open</Button>
 
-              <ButtonNeutral padding="text" disabled>Example...</ButtonNeutral>
-              <ButtonNeutral padding="text">Example...</ButtonNeutral>
+              <ButtonNeutral disabled>Example...</ButtonNeutral>
+              <ButtonNeutral>Example...</ButtonNeutral>
 
-              <ButtonSuccess padding="text" disabled>Example...</ButtonSuccess>
-              <ButtonSuccess padding="text">Example...</ButtonSuccess>
+              <ButtonSuccess disabled>Example...</ButtonSuccess>
+              <ButtonSuccess>Example...</ButtonSuccess>
 
-              <ButtonDanger padding="text" disabled>Example...</ButtonDanger>
-              <ButtonDanger padding="text">Example...</ButtonDanger>
+              <ButtonDanger disabled>Example...</ButtonDanger>
+              <ButtonDanger>Example...</ButtonDanger>
 
-              <ButtonWarning padding="text" disabled>Example...</ButtonWarning>
-              <ButtonWarning padding="text">Example...</ButtonWarning>
+              <ButtonWarning disabled>Example...</ButtonWarning>
+              <ButtonWarning>Example...</ButtonWarning>
             </div>
           </StaticContainer>
         </StyledContainer>

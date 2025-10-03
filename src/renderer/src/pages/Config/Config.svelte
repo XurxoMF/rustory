@@ -81,6 +81,8 @@
 
                 <div class="w-full flex items-stretch justify-center gap-1">
                   <ButtonNeutral
+                    size="square"
+                    padding="icon"
                     title={m.common__select_folder()}
                     onclick={async () => {
                       const folder = await window.api.fs.showDialog(m.settings__vs_instances_folder(), 'openDirectory', false, [])
@@ -103,6 +105,8 @@
 
                 <div class="w-full flex items-stretch justify-center gap-1">
                   <ButtonNeutral
+                    size="square"
+                    padding="icon"
                     title={m.common__select_folder()}
                     onclick={async () => {
                       const folder = await window.api.fs.showDialog(m.settings__vs_versions_folder(), 'openDirectory', false, [])
@@ -125,6 +129,8 @@
 
                 <div class="w-full flex items-stretch justify-center gap-1">
                   <ButtonNeutral
+                    size="square"
+                    padding="icon"
                     title={m.common__select_folder()}
                     onclick={async () => {
                       const folder = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])

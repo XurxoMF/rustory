@@ -8,7 +8,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-<Button padding="icon" onclick={() => goto('/')}>
+<Button padding="icon" size="none" onclick={() => goto('/')}>
   <Icon icon="ph:house" />
 </Button>
 
@@ -18,7 +18,7 @@
   </span>
 
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs">
-    <Button padding="icon" onclick={() => goto(segment.href)}>
+    <Button padding="icon" size="none" onclick={() => goto(segment.href)}>
       {segment.label}
     </Button>
   </span>

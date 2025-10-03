@@ -5,18 +5,18 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-<Button padding="icon" onclick={() => window.api.window.minimize()} title={m.common__minimize()}>
+<Button padding="icon" size="none" onclick={() => window.api.window.minimize()} title={m.common__minimize()}>
   <Icon icon="ph:minus-bold" />
 </Button>
 
-<Button padding="icon" onclick={() => window.api.window.maximize()} title={m.common__maximize()}>
+<Button padding="icon" size="none" onclick={() => window.api.window.maximize()} title={m.common__maximize()}>
   <Icon icon="ph:arrows-out-simple-bold" />
 </Button>
 
-<Button padding="icon" onclick={() => window.api.window.hide()} title={m.common__hide()}>
+<Button padding="icon" size="none" onclick={() => window.api.window.hide()} title={m.common__hide()}>
   <Icon icon="ph:eye-slash-bold" />
 </Button>
 
-<Button padding="icon" onclick={() => window.api.window.close()} title={m.common__close()}>
+<Button padding="icon" size="none" onclick={() => window.api.window.close()} title={m.common__close()}>
   <Icon icon="ph:x-bold" />
 </Button>

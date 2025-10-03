@@ -36,8 +36,8 @@
                   <p class="w-full text-sm opacity-50 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
                 </div>
                 <div class="w-fit flex justify-center opacity-50">
-                  <Button padding="icon"><Icon icon="ph:folder-open" /></Button>
-                  <Button padding="icon"><Icon icon="ph:trash" /></Button>
+                  <Button padding="icon" size="square"><Icon icon="ph:folder-open" /></Button>
+                  <Button padding="icon" size="square"><Icon icon="ph:trash" /></Button>
                 </div>
               </div>
             </StaticContainer>

@@ -62,6 +62,7 @@
         <div class="shrink-0 opacity-0 group-hover:opacity-50 transition-[opacity] duration-200">
           <Button
             padding="icon"
+            size="none"
             onclick={(e) => {
               e.stopPropagation()
               Toasts.instance.removeToast(toast)
