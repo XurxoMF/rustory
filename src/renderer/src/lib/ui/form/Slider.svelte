@@ -13,7 +13,7 @@
       class={[
         'relative w-full h-1.5 rounded-full border transition-[border,background-color] duration-200',
         't-dark:bg-zinc-800 t-dark:border-zinc-750',
-        't-light:bg-zinc-200 t-light:border-zinc-250',
+        't-light:bg-zinc-300 t-light:border-zinc-350',
         't-rust:bg-rust-800 t-rust:border-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750'
       ]}
@@ -23,7 +23,7 @@
           'absolute h-full rounded-full transition-[background-color] duration-200',
           'cursor-pointer data-disabled:cursor-not-allowed',
           't-dark:bg-zinc-750',
-          't-light:bg-zinc-250',
+          't-light:bg-zinc-400',
           't-rust:bg-rust-750',
           't-midnight:bg-gray-750'
         ]}
@@ -39,7 +39,7 @@
           'cursor-pointer data-disabled:cursor-not-allowed',
           'disabled:opacity-50',
           't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
-          't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:outline-zinc-250',
+          't-light:bg-zinc-300 t-light:border-zinc-350 t-light:focus:outline-zinc-350',
           't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
           't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
         ]}
@@ -52,7 +52,7 @@
         class={[
           'h-1.5 w-[1px] z-[1] border-y transition-[border,background-color] duration-200',
           't-dark:bg-zinc-900 t-dark:border-zinc-750',
-          't-light:bg-zinc-300 t-light:border-zinc-250',
+          't-light:bg-zinc-450 t-light:border-zinc-350',
           't-rust:bg-rust-700 t-rust:border-rust-750',
           't-midnight:bg-gray-700 t-midnight:border-gray-750'
         ]}

@@ -21,7 +21,7 @@
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-50',
       't-dark:focus:outline-zinc-750',
-      't-light:focus:outline-zinc-250',
+      't-light:focus:outline-zinc-350',
       't-rust:focus:outline-rust-750',
       't-midnight:focus:outline-gray-750'
     ]}
@@ -46,7 +46,7 @@
                           'cursor-pointer disabled:cursor-not-allowed',
                           'disabled:opacity-50',
                           't-dark:focus:bg-zinc-800',
-                          't-light:focus:bg-zinc-200',
+                          't-light:focus:bg-zinc-300',
                           't-rust:focus:bg-rust-800',
                           't-midnight:focus:bg-gray-800'
                         ]}
@@ -62,7 +62,7 @@
                 </StaticContainer>
               </StyledContainer>
 
-              <DropdownMenu.Arrow class={['t-dark:text-zinc-750', 't-light:text-zinc-250', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
+              <DropdownMenu.Arrow class={['t-dark:text-zinc-750', 't-light:text-zinc-400', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
             </div>
           </div>
         {/if}

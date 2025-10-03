@@ -28,12 +28,12 @@
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-50',
     't-dark:data-selected:bg-zinc-800',
-    't-light:data-selected:bg-zinc-200',
+    't-light:data-selected:bg-zinc-300',
     't-rust:data-selected:bg-rust-800',
     't-midnight:data-selected:bg-gray-800'
   ]
 
-  const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-250', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
+  const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-400', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
 </script>
 
 <Dialog bind:open title={m.common__search()}>
@@ -45,7 +45,7 @@
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
         'disabled:opacity-50',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
-        't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:outline-zinc-250',
+        't-light:bg-zinc-300 t-light:border-zinc-350 t-light:focus:outline-zinc-350',
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
       ]}

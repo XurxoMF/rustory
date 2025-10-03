@@ -25,7 +25,7 @@ export class Config {
    */
   public static THEMES = [
     { key: 'dark', name: m.themes__dark(), color: 'bg-zinc-900' },
-    { key: 'light', name: m.themes__light(), color: 'bg-zinc-100' },
+    { key: 'light', name: m.themes__light(), color: 'bg-zinc-150' },
     { key: 'rust', name: m.themes__rust(), color: 'bg-rust-900' },
     { key: 'midnight', name: m.themes__midnight(), color: 'bg-gray-900' }
   ] as const

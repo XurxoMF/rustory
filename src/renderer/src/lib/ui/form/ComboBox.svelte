@@ -39,7 +39,7 @@
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
         'disabled:opacity-50',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus:outline-zinc-750',
-        't-light:bg-zinc-200 t-light:border-zinc-250 t-light:focus:outline-zinc-250',
+        't-light:bg-zinc-300 t-light:border-zinc-350 t-light:focus:outline-zinc-350',
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus:outline-gray-750'
       ]}
@@ -63,7 +63,7 @@
       class={[
         'max-h-60 m-1 z-50 overflow-hidden flex items-center justify-between rounded-md shadow-sm shadow-black/25 border transition-[border,background-color] duration-200',
         't-dark:bg-zinc-800 t-dark:border-zinc-750',
-        't-light:bg-zinc-200 t-light:border-zinc-250',
+        't-light:bg-zinc-300 t-light:border-zinc-350',
         't-rust:bg-rust-800 t-rust:border-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750'
       ]}
@@ -83,7 +83,7 @@
                     class={[
                       'w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
                       't-dark:not-last:border-b-zinc-750',
-                      't-light:not-last:border-b-zinc-250',
+                      't-light:not-last:border-b-zinc-400',
                       't-rust:not-last:border-b-rust-750',
                       't-midnight:not-last:border-b-gray-750'
                     ]}
@@ -101,7 +101,7 @@
                     class={[
                       'w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer not-last:border-b transition-[babcground-color] duration-200',
                       't-dark:not-last:border-b-zinc-750',
-                      't-light:not-last:border-b-zinc-250',
+                      't-light:not-last:border-b-zinc-400',
                       't-rust:not-last:border-b-rust-750',
                       't-midnight:not-last:border-b-gray-750'
                     ]}

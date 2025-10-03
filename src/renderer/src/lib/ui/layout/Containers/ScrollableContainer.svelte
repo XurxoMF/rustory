@@ -20,7 +20,7 @@
   <ScrollArea.Viewport
     class={[
       'w-full h-full flex flex-col p-2',
-      headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-250', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750']
+      headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-400', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750']
     ]}
   >
     {@render children?.()}
@@ -28,13 +28,13 @@
 
   {#if orientation === 'vertical' || orientation === 'both'}
     <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-[width] duration-200">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-200', 't-dark:bg-zinc-750', 't-light:bg-zinc-250', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-200', 't-dark:bg-zinc-750', 't-light:bg-zinc-400', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
     </ScrollArea.Scrollbar>
   {/if}
 
   {#if orientation === 'horizontal' || orientation === 'both'}
     <ScrollArea.Scrollbar orientation="vertical" class="h-2 flex p-px transition-[height] duration-200">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-200', 't-dark:bg-zinc-750', 't-light:bg-zinc-250', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-200', 't-dark:bg-zinc-750', 't-light:bg-zinc-400', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
     </ScrollArea.Scrollbar>
   {/if}
 
