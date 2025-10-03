@@ -164,27 +164,36 @@
 
             <GridContainer columns={3}>
               <GridItem>
-                <div class="flex gap-1 items-center">
-                  <Label required>Example...</Label>
-                  <Description>Example...</Description>
+                <div class="flex flex-col items-start justify-center gap-1">
+                  <div class="flex gap-1 items-center">
+                    <Label required>Example...</Label>
+                    <Description>Example...</Description>
+                  </div>
+
+                  <Input type="url" placeholder="Example..." readonly />
                 </div>
-                <Input type="url" placeholder="Example..." readonly />
               </GridItem>
 
               <GridItem>
-                <div class="flex gap-1 items-center">
-                  <Label disabled>Example...</Label>
-                  <Description>Example...</Description>
+                <div class="flex flex-col items-start justify-center gap-1">
+                  <div class="flex gap-1 items-center">
+                    <Label disabled>Example...</Label>
+                    <Description>Example...</Description>
+                  </div>
+
+                  <Input type="url" placeholder="Example..." disabled />
                 </div>
-                <Input type="url" placeholder="Example..." disabled />
               </GridItem>
 
               <GridItem>
-                <div class="flex gap-1 items-center">
-                  <Label required>Example...</Label>
-                  <Description>Example...</Description>
+                <div class="flex flex-col items-start justify-center gap-1">
+                  <div class="flex gap-1 items-center">
+                    <Label required>Example...</Label>
+                    <Description>Example...</Description>
+                  </div>
+
+                  <Input type="url" placeholder="Example..." />
                 </div>
-                <Input type="url" placeholder="Example..." />
               </GridItem>
             </GridContainer>
           </StaticContainer>
@@ -352,7 +361,7 @@
 
             <GridContainer>
               <GridItem>
-                <div class="flex items-center gap-2 flex-wrap-reverse">
+                <div class="flex items-center gap-1 flex-wrap-reverse">
                   <Checkbox disabled />
 
                   <div class="flex gap-1 items-center">
@@ -363,7 +372,7 @@
               </GridItem>
 
               <GridItem>
-                <div class="flex items-center gap-2 flex-wrap-reverse">
+                <div class="flex items-center gap-1 flex-wrap-reverse">
                   <Checkbox />
 
                   <div class="flex gap-1 items-center">

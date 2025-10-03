@@ -1,5 +1,6 @@
 <script lang="ts">
   import { DropdownMenu, type WithoutChild } from 'bits-ui'
+  import { fade } from 'svelte/transition'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { StyledContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
@@ -29,35 +30,43 @@
   </DropdownMenu.Trigger>
 
   <DropdownMenu.Portal to="#portal">
-    <DropdownMenu.Content class="min-w-48" sideOffset={4} {...contentProps}>
-      <StyledContainer>
-        <StaticContainer>
-          <DropdownMenu.Group>
-            {#each items as { label, value, onselect, disabled, icon }}
-              <DropdownMenu.Item
-                class={[
-                  'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity] duration-200',
-                  'outline-none',
-                  'cursor-pointer disabled:cursor-not-allowed',
-                  'disabled:opacity-50',
-                  't-dark:focus:bg-zinc-800',
-                  't-light:focus:bg-zinc-200',
-                  't-rust:focus:bg-rust-800',
-                  't-midnight:focus:bg-gray-800'
-                ]}
-                onSelect={onselect}
-                {disabled}
-                textValue={value}
-              >
-                <Icon {icon} />
-                <span>{label}</span>
-              </DropdownMenu.Item>
-            {/each}
-          </DropdownMenu.Group>
-        </StaticContainer>
-      </StyledContainer>
+    <DropdownMenu.Content class="min-w-48" sideOffset={4} {...contentProps} forceMount>
+      {#snippet child({ open, props, wrapperProps })}
+        {#if open}
+          <div {...wrapperProps}>
+            <div {...props} transition:fade={{ duration: 100 }}>
+              <StyledContainer>
+                <StaticContainer>
+                  <DropdownMenu.Group>
+                    {#each items as { label, value, onselect, disabled, icon }}
+                      <DropdownMenu.Item
+                        class={[
+                          'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity] duration-200',
+                          'outline-none',
+                          'cursor-pointer disabled:cursor-not-allowed',
+                          'disabled:opacity-50',
+                          't-dark:focus:bg-zinc-800',
+                          't-light:focus:bg-zinc-200',
+                          't-rust:focus:bg-rust-800',
+                          't-midnight:focus:bg-gray-800'
+                        ]}
+                        onSelect={onselect}
+                        {disabled}
+                        textValue={value}
+                      >
+                        <Icon {icon} />
+                        <span>{label}</span>
+                      </DropdownMenu.Item>
+                    {/each}
+                  </DropdownMenu.Group>
+                </StaticContainer>
+              </StyledContainer>
 
-      <DropdownMenu.Arrow class={['t-dark:text-zinc-750', 't-light:text-zinc-250', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
+              <DropdownMenu.Arrow class={['t-dark:text-zinc-750', 't-light:text-zinc-250', 't-rust:text-rust-750', 't-midnight:text-gray-750']} />
+            </div>
+          </div>
+        {/if}
+      {/snippet}
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 </DropdownMenu.Root>

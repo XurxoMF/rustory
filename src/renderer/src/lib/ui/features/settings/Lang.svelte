@@ -3,17 +3,17 @@
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select from '@renderer/lib/ui/form/Select.svelte'
+  import ComboBox from '@renderer/lib/ui/form/ComboBox.svelte'
 </script>
 
-<Select
-  placeholder={m.placeholders__select_one()}
+<ComboBox
   type="single"
+  value={Config.instance.locale}
+  inputProps={{ placeholder: Config.instance.locale ? Config.LANGUAGES.find((l) => l.lang === Config.instance.locale).name : m.placeholders__select_one() }}
   items={Config.LANGUAGES.map((LANG) => ({
     value: LANG.lang,
     label: LANG.name
   }))}
-  value={Config.instance.locale}
   onValueChange={(e) => {
     if (e !== undefined) Config.instance.setLocale(e)
   }}

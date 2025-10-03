@@ -20,6 +20,7 @@
   "common__accept": "Accept",
   "common__basics": "Basics",
   "common__search": "Search",
+  "common__command": "Command",
   "themes__dark": "Dark",
   "themes__light": "Light",
   "themes__rust": "Rust",

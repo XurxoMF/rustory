@@ -36,7 +36,7 @@
   const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-250', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
 </script>
 
-<Dialog bind:open title="Command">
+<Dialog bind:open title={m.common__search()}>
   <Command.Root>
     <Command.Input
       class={[
