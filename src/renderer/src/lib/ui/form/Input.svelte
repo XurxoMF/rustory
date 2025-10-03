@@ -12,7 +12,7 @@
 
 <input
   class={[
-    'w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
+    'h-7 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
     'read-only:outline-none not-read-only:focus:outline-1',
     'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
     'disabled:opacity-50',
