@@ -56,11 +56,11 @@
                     {label}
                     {disabled}
                     class={[
-                      'w-full h-[var(--bits-select-anchor-height)] flex items-center justify-between px-2 py-1 cursor-pointer not-last:border-b transition-[border,background-color] duration-200',
-                      't-dark:not-last:border-b-zinc-750 t-dark:data-highlighted:bg-zinc-800',
-                      't-light:not-last:border-b-zinc-300 t-light:data-highlighted:bg-zinc-200',
-                      't-rust:not-last:border-b-rust-750 t-rust:data-highlighted:bg-rust-800',
-                      't-midnight:not-last:border-b-gray-750 t-midnight:data-highlighted:bg-gray-800'
+                      'w-full flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[background-color] duration-200',
+                      't-dark:data-highlighted:bg-zinc-800',
+                      't-light:data-highlighted:bg-zinc-200',
+                      't-rust:data-highlighted:bg-rust-800',
+                      't-midnight:data-highlighted:bg-gray-800'
                     ]}
                   >
                     {#snippet children({ selected })}

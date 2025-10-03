@@ -21,6 +21,7 @@
   "common__basics": "Basics",
   "common__search": "Search",
   "common__command": "Command",
+  "common__no_results_found": "No results found",
   "themes__dark": "Dark",
   "themes__light": "Light",
   "themes__rust": "Rust",

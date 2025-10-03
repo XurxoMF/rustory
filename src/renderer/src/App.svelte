@@ -5,22 +5,22 @@
 
   import './styles.css'
 
-  import { Data } from '@renderer/lib/classes/Data.svelte'
-
   import RustoryIcon from '@renderer/assets/icon.png'
 
+  import { sleep } from '@shared/utils/common'
+
+  import { Data } from '@renderer/lib/classes/Data.svelte'
   import { Loader } from '@renderer/lib/classes/Loader.svelte'
   import { Info } from '@renderer/lib/classes/Info.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
   import { Hotkeys } from '@renderer/lib/classes/Hotkeys.svelte'
-
-  import { sleep } from '@shared/utils/common'
 
   import WindowBar from '@renderer/lib/ui/app/WindowBar.svelte'
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
+  import Command from './lib/ui/app/Command.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
@@ -123,8 +123,6 @@
       <WindowBar />
 
       <div class="w-full h-full relative flex overflow-hidden">
-        <Toasts />
-
         <MainNav />
 
         <main class="w-full h-full overflow-hidden">
@@ -132,6 +130,8 @@
         </main>
       </div>
 
+      <Toasts />
+      <Command />
       <div id="portal"></div>
     </div>
   </div>

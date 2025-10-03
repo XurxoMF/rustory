@@ -2,6 +2,8 @@
   import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui'
   import { slide } from 'svelte/transition'
 
+  import { m } from '@renderer/paraglide/messages'
+
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   type Props = Combobox.RootProps & {
@@ -82,15 +84,15 @@
                     {label}
                     {disabled}
                     class={[
-                      'w-full h-[var(--bits-combobox-anchor-height)] flex items-center justify-between px-2 py-1 cursor-pointer not-last:border-b transition-[border,background-color] duration-200',
-                      't-dark:not-last:border-b-zinc-750 t-dark:data-highlighted:bg-zinc-800',
-                      't-light:not-last:border-b-zinc-300 t-light:data-highlighted:bg-zinc-200',
-                      't-rust:not-last:border-b-rust-750 t-rust:data-highlighted:bg-rust-800',
-                      't-midnight:not-last:border-b-gray-750 t-midnight:data-highlighted:bg-gray-800'
+                      'w-full h-fit flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[background-color] duration-200',
+                      't-dark:data-highlighted:bg-zinc-800',
+                      't-light:data-highlighted:bg-zinc-200',
+                      't-rust:data-highlighted:bg-rust-800',
+                      't-midnight:data-highlighted:bg-gray-800'
                     ]}
                   >
                     {#snippet children({ selected })}
-                      <p class="w-full h-[var(--bits-combobox-anchor-height)] flex items-center justify-between px-2 py-1">{label}</p>
+                      <p class="w-full">{label}</p>
 
                       {#if selected}
                         <Icon icon="ph:check-bold" />
@@ -98,8 +100,8 @@
                     {/snippet}
                   </Combobox.Item>
                 {:else}
-                  <p class={['w-[var(--bits-combobox-anchor-width)] h-[var(--bits-combobox-anchor-height)] flex items-center justify-between gap-2 px-2 py-1 cursor-pointer duration-200']}>
-                    No results found
+                  <p class={['w-full flex items-center justify-center px-2 py-2 text-sm opacity-50 cursor-pointer duration-200']}>
+                    {`${m.common__no_results_found()}...`}
                   </p>
                 {/each}
               </Combobox.Viewport>

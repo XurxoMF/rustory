@@ -55,7 +55,7 @@
 
     <Command.List>
       <Command.Viewport>
-        <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-50">No results found...</Command.Empty>
+        <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-50">{`${m.common__no_results_found()}...`}</Command.Empty>
 
         <Command.Group>
           <Command.GroupHeading class={HEADING_CLASS}>Uno a tres</Command.GroupHeading>
