@@ -42,8 +42,8 @@
     <Command.Input
       class={[
         'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
-        'read-only:outline-none not-read-only:focus-visible:outline-1',
-        'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
+        'focus-visible:outline-1',
+        'cursor-pointer disabled:cursor-not-allowed',
         'disabled:opacity-40',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
         't-light:bg-zinc-200 t-light:border-zinc-300 t-light:focus-visible:outline-zinc-300',

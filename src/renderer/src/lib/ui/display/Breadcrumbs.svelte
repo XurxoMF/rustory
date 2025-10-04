@@ -9,12 +9,12 @@
 </script>
 
 <Button padding="icon" size="none" onclick={() => goto('/')}>
-  <Icon icon="ph:house" />
+  <Icon icon="ph:house-bold" />
 </Button>
 
 {#each Breadcrumbs.instance.segments as segment (segment.href + segment.label)}
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }}>
-    <Icon icon="material-symbols:chevron-right-rounded" />
+    <Icon icon="ph:caret-right-bold" />
   </span>
 
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs">

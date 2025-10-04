@@ -8,10 +8,10 @@
   import { Button } from '@renderer/lib/ui/form/Buttons'
 
   const ICONS: Record<Toast.Type, string> = {
-    info: 'ph:info',
-    warning: 'ph:warning',
-    error: 'ph:prohibit',
-    success: 'ph:check-circle'
+    info: 'ph:info-bold',
+    warning: 'ph:warning-bold',
+    error: 'ph:prohibit-bold',
+    success: 'ph:check-circle-bold'
   } as const
 
   const COLOR_CLASSES: Record<Toast.Type, string[]> = {

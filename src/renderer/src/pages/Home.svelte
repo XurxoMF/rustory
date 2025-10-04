@@ -20,6 +20,7 @@
   import Switch from '@renderer/lib/ui/form/Switch.svelte'
   import ContextMenu from '@renderer/lib/ui/form/ContextMenu.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Pagination from '@renderer/lib/ui/form/Pagination.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -422,6 +423,18 @@
                 Native Notification
               </ButtonNeutral>
             </div>
+          </StaticContainer>
+        </StyledContainer>
+      </ColumnItem>
+
+      <ColumnItem>
+        <StyledContainer>
+          <StaticContainer>
+            {#snippet headerContent()}
+              <p>Pagination</p>
+            {/snippet}
+
+            <Pagination page={1} count={100} perPage={10} />
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>

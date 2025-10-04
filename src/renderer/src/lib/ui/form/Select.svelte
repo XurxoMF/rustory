@@ -28,7 +28,7 @@
 <Select.Root bind:value={value as never} onValueChange={onValueChange as never} {...restProps}>
   <Select.Trigger
     class={[
-      'h-9 w-full flex items-center justify-between px-2 py-1 rounded-md text-start border transition-[opacity,border,background-color] duration-200',
+      'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[opacity,border,background-color] duration-200',
       'focus-visible:outline-1',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

@@ -31,7 +31,7 @@
   <a
     href={link}
     use:route={{
-      active: { absolute: true, class: ['t-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800'] }
+      active: { absolute: true, class: ['t-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750'] }
     }}
     class={[
       'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[opacity,background-color] duration-200',

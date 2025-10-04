@@ -48,8 +48,8 @@
     <Combobox.Input
       class={[
         'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[opacity,border,background-color] duration-200',
-        'read-only:outline-none not-read-only:focus-visible:outline-1',
-        'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
+        'focus-visible:outline-1',
+        'cursor-pointer disabled:cursor-not-allowed',
         'disabled:opacity-40',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
         't-light:bg-zinc-200 t-light:border-zinc-300 t-light:focus-visible:outline-zinc-300',
@@ -59,16 +59,8 @@
       {...mergedInputProps}
     />
 
-    <Combobox.Trigger
-      class={[
-        'absolute right-0 p-2 transition-[opacity] duration-200',
-        'read-only:outline-none not-read-only:focus-visible:outline-1',
-        'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
-        'disabled:opacity-40'
-      ]}
-      tabindex={-1}
-    >
-      <Icon icon="ph:caret-up-down" />
+    <Combobox.Trigger class={['absolute right-0 p-2 transition-[opacity] duration-200', 'focus-visible:outline-1', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} tabindex={-1}>
+      <Icon icon="ph:caret-up-down-bold" />
     </Combobox.Trigger>
   </div>
 
