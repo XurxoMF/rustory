@@ -8,13 +8,13 @@
 </script>
 
 <Button padding="icon" size="none" onclick={() => Reloader.instance.executeTasks()} title={m.common__reload()}>
-  <Icon icon="ph:arrow-clockwise-bold" />
+  <Icon icon="ph:arrow-clockwise" />
 </Button>
 
 <Button padding="icon" size="none" onclick={() => history.back()} title={m.common__previous()}>
-  <Icon icon="ph:caret-left-bold" />
+  <Icon icon="ph:caret-left" />
 </Button>
 
 <Button padding="icon" size="none" onclick={() => history.forward()} title={m.common__next()}>
-  <Icon icon="ph:caret-right-bold" />
+  <Icon icon="ph:caret-right" />
 </Button>

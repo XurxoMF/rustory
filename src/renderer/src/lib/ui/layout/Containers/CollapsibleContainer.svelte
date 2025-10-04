@@ -15,7 +15,7 @@
 <Collapsible.Root bind:open bind:ref class="w-full flex flex-col" {...restProps}>
   <Collapsible.Trigger class={['w-full flex items-center justify-between p-2 transition-[opacity] duration-200', 'outline-none', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']}>
     {@render headerContent?.()}
-    <Icon icon="ph:caret-up-down-bold" />
+    <Icon icon="ph:caret-up-down" />
   </Collapsible.Trigger>
 
   <Collapsible.Content forceMount>

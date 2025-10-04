@@ -273,7 +273,7 @@
                     const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the Dropdown!' })
                     Toasts.instance.addToast(toastInfo)
                   },
-                  icon: 'ph:code-bold'
+                  icon: 'ph:code'
                 },
                 {
                   label: 'Two',
@@ -282,7 +282,7 @@
                     const toastInfo = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the Dropdown!' })
                     Toasts.instance.addToast(toastInfo)
                   },
-                  icon: 'ph:code-bold',
+                  icon: 'ph:code',
                   disabled: true
                 },
                 {
@@ -292,13 +292,13 @@
                     const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: "How the hell you clicked three? It's disabled!" })
                     Toasts.instance.addToast(toastInfo)
                   },
-                  icon: 'ph:code-bold'
+                  icon: 'ph:code'
                 }
               ]}
               padding="icon"
               size="square"
             >
-              <Icon icon="ph:dots-three-bold" class="text-xl" />
+              <Icon icon="ph:dots-three" class="text-xl" />
             </Dropdown>
           </StaticContainer>
         </StyledContainer>
@@ -322,7 +322,7 @@
                         const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
                         Toasts.instance.addToast(toastInfo)
                       },
-                      icon: 'ph:code-bold'
+                      icon: 'ph:code'
                     },
                     {
                       label: 'Two',
@@ -331,7 +331,7 @@
                         const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
                         Toasts.instance.addToast(toast)
                       },
-                      icon: 'ph:code-bold',
+                      icon: 'ph:code',
                       disabled: true
                     }
                   ]
@@ -346,7 +346,7 @@
                         const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: 'You clicked three on the ContextMenu!' })
                         Toasts.instance.addToast(toastInfo)
                       },
-                      icon: 'ph:code-bold'
+                      icon: 'ph:code'
                     },
                     {
                       label: 'Four',
@@ -355,7 +355,7 @@
                         const toast = new Toast({ title: 'Four cliecked!', type: Toast.Type.INFO, description: 'You clicked four on the ContextMenu!' })
                         Toasts.instance.addToast(toast)
                       },
-                      icon: 'ph:code-bold'
+                      icon: 'ph:code'
                     }
                   ]
                 }

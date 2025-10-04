@@ -24,11 +24,11 @@
 >
   {#snippet children({ checked, indeterminate })}
     {#if indeterminate}
-      <Icon icon="ph:dots-three-bold" />
+      <Icon icon="ph:dots-three" />
     {:else if checked}
-      <Icon icon="ph:check-bold" />
+      <Icon icon="ph:check" />
     {:else}
-      <Icon icon="ph:x-bold" />
+      <Icon icon="ph:x" />
     {/if}
   {/snippet}
 </Checkbox.Root>

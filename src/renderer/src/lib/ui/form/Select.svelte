@@ -47,7 +47,7 @@
       {/if}
     </span>
 
-    <Icon icon="ph:caret-up-down-bold" />
+    <Icon icon="ph:caret-up-down" />
   </Select.Trigger>
 
   <Select.Portal to="#portal">
@@ -81,7 +81,7 @@
                           </span>
 
                           {#if selected}
-                            <Icon icon="ph:check-bold" />
+                            <Icon icon="ph:check" />
                           {/if}
                         {/snippet}
                       </Select.Item>

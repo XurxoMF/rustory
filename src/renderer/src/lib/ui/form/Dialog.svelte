@@ -46,7 +46,7 @@
                     <Dialog.Title><h1>{title}</h1></Dialog.Title>
 
                     <Button padding="icon" size="none" tabindex={-1} onclick={() => (open = false)}>
-                      <Icon icon="ph:x-bold" class="opacity-40" />
+                      <Icon icon="ph:x" class="opacity-40" />
                     </Button>
                   {/snippet}
 

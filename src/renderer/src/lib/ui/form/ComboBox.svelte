@@ -60,7 +60,7 @@
     />
 
     <Combobox.Trigger class={['absolute right-0 p-2 transition-[opacity] duration-200', 'focus-visible:outline-1', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} tabindex={-1}>
-      <Icon icon="ph:caret-up-down-bold" />
+      <Icon icon="ph:caret-up-down" />
     </Combobox.Trigger>
   </div>
 
@@ -95,7 +95,7 @@
                           </span>
 
                           {#if selected}
-                            <Icon icon="ph:check-bold" />
+                            <Icon icon="ph:check" />
                           {/if}
                         {/snippet}
                       </Combobox.Item>

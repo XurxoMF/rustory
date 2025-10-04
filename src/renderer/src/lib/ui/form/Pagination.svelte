@@ -28,7 +28,7 @@
             't-midnight:not-disabled:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
           ]}
         >
-          <Icon icon="ph:caret-left-bold" />
+          <Icon icon="ph:caret-left" />
         </Pagination.PrevButton>
 
         {#each pages as page (page.key)}
@@ -65,7 +65,7 @@
             't-midnight:not-disabled:hover:bg-gray-800t-midnight:focus-visible:outline-gray-750'
           ]}
         >
-          <Icon icon="ph:caret-right-bold" />
+          <Icon icon="ph:caret-right" />
         </Pagination.NextButton>
       </div>
 

@@ -97,7 +97,7 @@
                         Config.instance.setVSInstancesPath(folder[0])
                       }}
                     >
-                      <Icon icon="ph:magnifying-glass-bold" />
+                      <Icon icon="ph:magnifying-glass" />
                     </ButtonNeutral>
 
                     <Input type="text" name={m.settings__vs_instances_folder()} placeholder={m.settings__vs_instances_folder()} value={Config.instance.vsInstancesPath} readonly />
@@ -123,7 +123,7 @@
                         Config.instance.setVSVersionsPath(folder[0])
                       }}
                     >
-                      <Icon icon="ph:magnifying-glass-bold" />
+                      <Icon icon="ph:magnifying-glass" />
                     </ButtonNeutral>
 
                     <Input type="text" name={m.settings__vs_versions_folder()} placeholder={m.settings__vs_versions_folder()} value={Config.instance.vsVersionsPath} readonly />
@@ -149,7 +149,7 @@
                         Config.instance.setVSInstanceBackupsPath(folder[0])
                       }}
                     >
-                      <Icon icon="ph:magnifying-glass-bold" />
+                      <Icon icon="ph:magnifying-glass" />
                     </ButtonNeutral>
 
                     <Input type="text" name={m.settings__vs_instance_backups_folder()} placeholder={m.settings__vs_instance_backups_folder()} value={Config.instance.vsInstanceBackupsPath} readonly />
