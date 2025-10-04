@@ -23,6 +23,7 @@
   "common__command": "Command",
   "common__default": "Default",
   "common__no_results_found": "No results found",
+  "common__pages": "Pages",
   "themes__dark": "Dark",
   "themes__light": "Light",
   "themes__rust": "Rust",

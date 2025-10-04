@@ -20,10 +20,15 @@
   onmouseenter={() => (open = true)}
   onmouseleave={() => (open = false)}
 >
-  <div class="w-full flex flex-col items-start justify-center gap-1">
-    {@render MainNavButton('ph:house', m.common__home(), '/')}
-    {@render MainNavButton('ph:git-fork', m.vintagestory__versions(), '/vs/versions')}
-    {@render MainNavButton('ph:gear', m.common__config(), '/config')}
+  <div class="w-full h-full flex flex-col items-start justify-between gap-2">
+    <div class="w-full flex flex-col items-start justify-between gap-2">
+      {@render MainNavButton('ph:house-bold', m.common__home(), '/')}
+      {@render MainNavButton('ph:git-fork-bold', m.vintagestory__versions(), '/vs/versions')}
+    </div>
+
+    <div class="w-full flex flex-col items-start justify-between gap-2">
+      {@render MainNavButton('ph:gear-bold', m.common__config(), '/config')}
+    </div>
   </div>
 </nav>
 

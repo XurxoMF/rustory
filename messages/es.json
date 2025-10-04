@@ -23,6 +23,7 @@
   "common__command": "Comando",
   "common__default": "Por defecto",
   "common__no_results_found": "No se encontraron resultados",
+  "common__pages": "Páginas",
   "themes__dark": "Oscuro",
   "themes__light": "Claro",
   "themes__rust": "Óxido",

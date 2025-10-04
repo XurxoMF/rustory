@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { goto } from '@mateothegreat/svelte5-router'
+
   import { m } from '@renderer/paraglide/messages'
 
   import Breadcrumbs from '@renderer/lib/ui/display/Breadcrumbs.svelte'
@@ -7,6 +9,7 @@
   import RustoryIcon from '@renderer/lib/ui/RustoryIcon.svelte'
   import { openCommand } from '@renderer/lib/ui/app/Command.svelte'
   import Keys from '@renderer/lib/ui/form/Keys.svelte'
+  import Button from '../form/Buttons/Button.svelte'
 </script>
 
 <div
@@ -19,8 +22,12 @@
   ]}
 >
   <div class="shrink-0 flex-1 flex items-center justify-start gap-6">
-    <div class="w-fit flex items-center gap-2">
-      <RustoryIcon class="text-xl" />
+    <div class="w-fit flex items-center justify-center gap-2">
+      <div class="app-no-drag">
+        <Button padding="none" size="none" rounded="regular" onclick={() => goto('/')}>
+          <RustoryIcon class="text-xl" />
+        </Button>
+      </div>
 
       <div class="app-no-drag w-fit flex items-center justify-center flex-nowrap opacity-40">
         <HistoryControlls />
@@ -53,7 +60,7 @@
   </div>
 
   <div class="shrink-0 flex-1 flex items-center justify-end gap-6">
-    <div class="w-fit flex items-center gap-2">
+    <div class="w-fit flex items-center justify-center gap-2">
       <div class="app-no-drag w-fit flex items-center justify-center gap-1 flex-nowrap opacity-40">
         <WindowControls />
       </div>

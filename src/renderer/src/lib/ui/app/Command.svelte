@@ -21,6 +21,7 @@
 
   import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import { goto } from '@mateothegreat/svelte5-router'
 
   const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
 
@@ -34,7 +35,40 @@
     't-midnight:data-selected:bg-gray-800'
   ]
 
-  const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
+  // const SEPPARATOR_CLASS = ['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
+  // <Command.Separator class={SEPPARATOR_CLASS} />
+
+  type CommandItem = {
+    value: string
+    keywords: string[]
+    label: string
+    icon: string
+    onclick: () => void | Promise<void>
+  }
+
+  const PAGES: CommandItem[] = [
+    {
+      value: 'home-page',
+      keywords: [m.common__home(), m.common__pages()],
+      label: m.common__home(),
+      icon: 'ph:house-bold',
+      onclick: () => goto('/')
+    },
+    {
+      value: 'vs-versions-page',
+      keywords: [m.vintagestory__versions(), m.common__pages()],
+      label: m.vintagestory__versions(),
+      icon: 'ph:git-fork-bold',
+      onclick: () => goto('/vs/versions')
+    },
+    {
+      value: 'config-page',
+      keywords: [m.common__config(), m.common__pages()],
+      label: m.common__config(),
+      icon: 'ph:gear-bold',
+      onclick: () => goto('/config')
+    }
+  ]
 </script>
 
 <Dialog bind:open title={m.common__search()}>
@@ -58,46 +92,23 @@
         <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
 
         <Command.Group>
-          <Command.GroupHeading class={HEADING_CLASS}>Uno a tres</Command.GroupHeading>
+          <Command.GroupHeading class={HEADING_CLASS}>{m.common__pages()}</Command.GroupHeading>
 
           <Command.GroupItems>
-            <Command.Item value="uno" keywords={['uno']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Uno</span>
-            </Command.Item>
-
-            <Command.Item value="dos" keywords={['dos']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Dos</span>
-            </Command.Item>
-
-            <Command.Item value="tres" keywords={['tres']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Tres</span>
-            </Command.Item>
-          </Command.GroupItems>
-        </Command.Group>
-
-        <Command.Separator class={SEPPARATOR_CLASS} />
-
-        <Command.Group>
-          <Command.GroupHeading class={HEADING_CLASS}>Cuatro a seis</Command.GroupHeading>
-
-          <Command.GroupItems>
-            <Command.Item value="cuatro" keywords={['cuatro']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Cuatro</span>
-            </Command.Item>
-
-            <Command.Item value="cinco" keywords={['cinco']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Cinco</span>
-            </Command.Item>
-
-            <Command.Item value="seis" keywords={['seis']} class={ITEM_CLASS}>
-              <Icon icon="ph:code-bold" />
-              <span>Seis</span>
-            </Command.Item>
+            {#each PAGES as { value, keywords, label, icon, onclick } (value)}
+              <Command.Item
+                {value}
+                {keywords}
+                onSelect={() => {
+                  onclick()
+                  closeCommand()
+                }}
+                class={ITEM_CLASS}
+              >
+                <Icon {icon} />
+                {label}
+              </Command.Item>
+            {/each}
           </Command.GroupItems>
         </Command.Group>
       </Command.Viewport>

@@ -47,7 +47,7 @@
       {/if}
     </span>
 
-    <Icon icon="ph:caret-up-down" />
+    <Icon icon="ph:caret-up-down-bold" />
   </Select.Trigger>
 
   <Select.Portal to="#portal">
