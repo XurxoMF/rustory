@@ -183,6 +183,7 @@
             {/snippet}
 
             <ButtonNeutral onclick={() => (alertOpen = true)}>Open</ButtonNeutral>
+
             <Alert bind:open={alertOpen} title="Title">
               {#snippet description()}
                 <p>Example... mundo!</p>

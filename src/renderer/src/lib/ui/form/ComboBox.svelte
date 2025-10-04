@@ -66,6 +66,7 @@
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
         'disabled:opacity-40'
       ]}
+      tabindex={-1}
     >
       <Icon icon="ph:caret-up-down" />
     </Combobox.Trigger>
