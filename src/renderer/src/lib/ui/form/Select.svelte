@@ -65,7 +65,9 @@
                         {label}
                         {disabled}
                         class={[
-                          'w-full flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[background-color] duration-200',
+                          'w-full flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[opacity,background-color] duration-200',
+                          'cursor-pointer data-disabled:cursor-not-allowed',
+                          'data-disabled:opacity-40',
                           't-dark:data-highlighted:bg-zinc-800',
                           't-light:data-highlighted:bg-zinc-200',
                           't-rust:data-highlighted:bg-rust-800',

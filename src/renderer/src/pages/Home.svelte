@@ -129,7 +129,7 @@
                   placeholder="Example..."
                   items={[
                     { label: 'Item 1', value: 'item1' },
-                    { label: 'Item 2', value: 'item2' }
+                    { label: 'Item 2', value: 'item2', disabled: true }
                   ]}
                   onValueChange={(value: string) => console.log(value)}
                 />
@@ -166,7 +166,7 @@
                   inputProps={{ placeholder: 'Example...' }}
                   items={[
                     { label: 'Item 1', value: 'item1' },
-                    { label: 'Item 2', value: 'item2' }
+                    { label: 'Item 2', value: 'item2', disabled: true }
                   ]}
                   onValueChange={(value: string) => console.log(value)}
                 />
