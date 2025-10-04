@@ -104,6 +104,7 @@
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
                   ]}
+                  onValueChange={(value: string) => console.log(value)}
                 />
               </GridItem>
 
@@ -115,6 +116,7 @@
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
                   ]}
+                  onValueChange={(value: string) => console.log(value)}
                 />
               </GridItem>
             </GridContainer>
@@ -139,6 +141,7 @@
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
                   ]}
+                  onValueChange={(value: string) => console.log(value)}
                 />
               </GridItem>
 
@@ -150,6 +153,7 @@
                     { label: 'Item 1', value: 'item1' },
                     { label: 'Item 2', value: 'item2' }
                   ]}
+                  onValueChange={(value: string) => console.log(value)}
                 />
               </GridItem>
             </GridContainer>
@@ -226,7 +230,8 @@
               <p>Slider in a Static Section</p>
             {/snippet}
 
-            <Slider type="single" min={0} max={10} value={5} />
+            <Slider type="single" min={0} max={10} value={5} withThumbs withTicks />
+            <Slider type="multiple" min={0} max={10} value={[4, 6]} withThumbs withTicks />
             <Slider type="single" disabled min={0} max={10} value={5} />
           </StaticContainer>
         </StyledContainer>

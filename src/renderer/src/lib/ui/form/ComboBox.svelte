@@ -14,14 +14,14 @@
     disabled?: boolean
   }
 
-  type Props = Omit<Combobox.RootProps, 'class' | 'items' | 'onValueChange'> & {
+  type ComboBoxProps = Omit<Combobox.RootProps, 'class' | 'items' | 'onValueChange'> & {
     items: ComboBoxItem[]
     inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class'>
     onValueChange: OnChangeFn<string> | OnChangeFn<string[]>
     contentProps?: Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class'>
   }
 
-  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, onValueChange, ...restProps }: Props = $props()
+  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, onValueChange, ...restProps }: ComboBoxProps = $props()
 
   let searchValue = $state('')
 

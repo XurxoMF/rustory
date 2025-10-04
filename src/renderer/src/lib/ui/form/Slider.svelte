@@ -2,12 +2,20 @@
   import type { ComponentProps } from 'svelte'
   import { Slider, type WithoutChildren } from 'bits-ui'
 
-  type SliderProps = Omit<WithoutChildren<ComponentProps<typeof Slider.Root>>, 'class'>
+  type SliderProps = Omit<WithoutChildren<ComponentProps<typeof Slider.Root>>, 'class'> & {
+    withTicks?: boolean | undefined
+    withThumbs?: boolean | undefined
+  }
 
-  let { value = $bindable(), ref = $bindable(null), ...restProps }: SliderProps = $props()
+  let { value = $bindable(), ref = $bindable(null), withTicks = false, withThumbs = false, ...restProps }: SliderProps = $props()
 </script>
 
-<Slider.Root class={['relative w-full h-5 flex items-center justify-center', 'cursor-pointer data-disabled:cursor-not-allowed', 'data-disabled:opacity-50']} bind:value bind:ref {...restProps as any}>
+<Slider.Root
+  class={['relative w-full h-5 flex items-center justify-center', 'cursor-pointer data-disabled:cursor-not-allowed', 'data-disabled:opacity-50', withThumbs && 'mt-5']}
+  bind:value
+  bind:ref
+  {...restProps as any}
+>
   {#snippet children({ thumbItems, tickItems })}
     <span
       class={[
@@ -46,17 +54,25 @@
       />
     {/each}
 
-    {#each tickItems as { index } (index)}
-      <Slider.Tick
-        {index}
-        class={[
-          'h-1.5 w-[1px] z-[1] border-y transition-[border,background-color] duration-200',
-          't-dark:bg-zinc-900 t-dark:border-zinc-750',
-          't-light:bg-zinc-400 t-light:border-zinc-300',
-          't-rust:bg-rust-900 t-rust:border-rust-750',
-          't-midnight:bg-gray-900 t-midnight:border-gray-750'
-        ]}
-      />
+    {#each tickItems as { value, index } (index)}
+      {#if withTicks}
+        <Slider.Tick
+          {index}
+          class={[
+            'h-1.5 w-[1px] z-[1] border-y transition-[border,background-color] duration-200',
+            't-dark:bg-zinc-900 t-dark:border-zinc-750',
+            't-light:bg-zinc-400 t-light:border-zinc-300',
+            't-rust:bg-rust-900 t-rust:border-rust-750',
+            't-midnight:bg-gray-900 t-midnight:border-gray-750'
+          ]}
+        />
+      {/if}
+
+      {#if withThumbs}
+        <Slider.TickLabel class="opacity-50 data-bounded:opacity-100 text-xs transition-[opacity] duration-200" {index}>
+          {value}
+        </Slider.TickLabel>
+      {/if}
     {/each}
   {/snippet}
 </Slider.Root>
