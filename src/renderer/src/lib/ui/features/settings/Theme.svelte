@@ -8,7 +8,7 @@
       'w-9 h-9 rounded-full border transition-[opacity,border,background-color] duration-200',
       'focus-visible:outline-1',
       'cursor-pointer disabled:cursor-not-allowed',
-      'disabled:opacity-50',
+      'disabled:opacity-40',
       't-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
       't-light:border-zinc-350 t-light:focus-visible:outline-zinc-350',
       't-rust:border-rust-750 t-rust:focus-visible:outline-rust-750',

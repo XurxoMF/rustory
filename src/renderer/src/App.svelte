@@ -104,7 +104,7 @@
 {#if loader.loadUI}
   <div
     class={[
-      'w-screen h-screen overflow-hidden bg-cover rounded-md border transition-[border,background-color] duration-200',
+      'relative w-screen h-screen overflow-hidden bg-cover rounded-md border transition-[border,background-color] duration-200',
       't-dark:bg-image-dark t-dark:bg-zinc-850 t-dark:border-zinc-750',
       't-light:bg-image-light t-light:bg-zinc-100 t-light:border-zinc-350',
       't-rust:bg-image-rust t-rust:bg-rust-850 t-rust:border-rust-750',
@@ -132,7 +132,17 @@
 
       <Toasts />
       <Command />
-      <div id="portal"></div>
     </div>
   </div>
+
+  <div
+    id="portal"
+    class={[
+      'transition-[color,background-color] duration-200',
+      't-dark:text-zinc-100 t-dark:bg-zinc-850/80',
+      't-light:text-zinc-650 t-light:bg-zinc-100/80',
+      't-rust:text-rust-100 t-rust:bg-rust-850/80',
+      't-midnight:text-gray-100 t-midnight:bg-gray-850/80'
+    ]}
+  ></div>
 {/if}

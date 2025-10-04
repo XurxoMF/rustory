@@ -14,7 +14,7 @@
 
 <Tooltip triggerProps={{ class: 'hover:cursor-help' }}>
   {#snippet trigger()}
-    <Icon icon="ph:info" class="text-sm opacity-50" />
+    <Icon icon="ph:info" class="text-sm opacity-40" />
   {/snippet}
 
   <p class="text-sm flex items-center gap-1 flex-wrap" {...restProps}>{@render children()}</p>

@@ -37,7 +37,7 @@
       'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[opacity,background-color] duration-200',
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
-      'disabled:opacity-50',
+      'disabled:opacity-40',
       't-dark:hover:bg-zinc-800 t-dark:focus-visible:outline-zinc-750',
       't-light:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
       't-rust:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',

@@ -21,7 +21,7 @@
       <GridItem spanX="full">
         <StyledContainer>
           <ButtonContainer onclick={() => goto('/vs/versions/add')}>
-            <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-50" /></div>
+            <div class="w-full flex justify-center items-center p-2"><Icon icon="ph:plus" class="text-2xl opacity-40" /></div>
           </ButtonContainer>
         </StyledContainer>
       </GridItem>
@@ -33,9 +33,9 @@
               <div class="w-full flex items-center justify-between">
                 <div class="w-full flex flex-col justify-center items-start overflow-hidden">
                   <h1>{vsVersion.version}</h1>
-                  <p class="w-full text-sm opacity-50 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
+                  <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
                 </div>
-                <div class="w-fit flex justify-center opacity-50">
+                <div class="w-fit flex justify-center opacity-40">
                   <Button padding="icon" size="square"><Icon icon="ph:folder-open" /></Button>
                   <Button padding="icon" size="square"><Icon icon="ph:trash" /></Button>
                 </div>

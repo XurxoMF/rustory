@@ -40,7 +40,7 @@
     'flex items-center justify-center shrink-0 border transition-[opacity,border,background-color] duration-200',
     'focus-visible:outline-1',
     'cursor-pointer disabled:cursor-not-allowed',
-    'disabled:opacity-50',
+    'disabled:opacity-40',
     'border-green-500 bg-green-700 text-zinc-100 focus-visible:outline-green-500',
     ...ROUNDED_CLASSES[rounded],
     ...SIZE_CLASSES[size],

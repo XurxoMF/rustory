@@ -20,7 +20,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 z-[100] w-screen h-screen backdrop-blur-sm transition-[background-color] duration-200',
+        'absolute top-0 z-50 w-screen h-screen backdrop-blur-sm transition-[background-color] duration-200',
         't-dark:bg-zinc-850/20',
         't-light:bg-zinc-100/20',
         't-rust:bg-rust-850/20',
@@ -30,7 +30,7 @@
     >
       {#snippet child({ props })}
         {#if open}
-          <div {...props} transition:fade={{ duration: 100 }}></div>
+          <div {...props} transition:fade={{ duration: 50 }}></div>
         {/if}
       {/snippet}
     </Dialog.Overlay>
@@ -46,12 +46,12 @@
                     <Dialog.Title><h1>{title}</h1></Dialog.Title>
 
                     <Button padding="icon" size="none" tabindex={-1} onclick={() => (open = false)}>
-                      <Icon icon="ph:x-bold" class="opacity-50" />
+                      <Icon icon="ph:x-bold" class="opacity-40" />
                     </Button>
                   {/snippet}
 
                   {#if description}
-                    <Dialog.Description class="opacity-50 mb-2">
+                    <Dialog.Description class="opacity-40 mb-2">
                       {@render description()}
                     </Dialog.Description>
                   {/if}

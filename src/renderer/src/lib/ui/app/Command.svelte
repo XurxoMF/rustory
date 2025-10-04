@@ -22,12 +22,12 @@
   import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-50']
+  const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
 
   const ITEM_CLASS = [
     'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-200',
     'cursor-pointer disabled:cursor-not-allowed',
-    'disabled:opacity-50',
+    'disabled:opacity-40',
     't-dark:data-selected:bg-zinc-800',
     't-light:data-selected:bg-zinc-200',
     't-rust:data-selected:bg-rust-800',
@@ -44,7 +44,7 @@
         'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md border transition-[border,background-color] duration-200',
         'read-only:outline-none not-read-only:focus-visible:outline-1',
         'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
-        'disabled:opacity-50',
+        'disabled:opacity-40',
         't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
         't-light:bg-zinc-200 t-light:border-zinc-300 t-light:focus-visible:outline-zinc-300',
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus-visible:outline-rust-750',
@@ -55,7 +55,7 @@
 
     <Command.List>
       <Command.Viewport>
-        <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-50">{`${m.common__no_results_found()}...`}</Command.Empty>
+        <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
 
         <Command.Group>
           <Command.GroupHeading class={HEADING_CLASS}>Uno a tres</Command.GroupHeading>

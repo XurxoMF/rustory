@@ -5,32 +5,61 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { StyledContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
 
-  type Props = Omit<DropdownMenu.RootProps, 'class'> & {
+  const ROUNDED_CLASSES = {
+    regular: ['rounded-md'],
+    circle: ['rounded-full']
+  } as const
+
+  type RoundedTypes = keyof typeof ROUNDED_CLASSES
+
+  const SIZE_CLASSES = {
+    regular: ['h-9 w-fit'],
+    square: ['h-9 w-9'],
+    none: ['h-fit w-fit']
+  } as const
+
+  type SizeTypes = keyof typeof SIZE_CLASSES
+
+  const PADDING_CLASSES = {
+    text: ['px-2 py-1'],
+    icon: ['p-1'],
+    none: ['p-0']
+  } as const
+
+  type PaddingTypes = keyof typeof PADDING_CLASSES
+
+  type DropdownProps = Omit<DropdownMenu.RootProps, 'class'> & {
     items: { label: string; value: string; onselect: () => void | Promise<void>; icon: string; disabled?: boolean | undefined }[]
+    rounded?: RoundedTypes | undefined
+    size?: SizeTypes | undefined
+    padding?: PaddingTypes | undefined
     contentProps?: Omit<WithoutChild<DropdownMenu.ContentProps>, 'class'>
   }
 
-  let { open = $bindable(false), items, contentProps, ...restProps }: Props = $props()
+  let { open = $bindable(false), items, children, rounded = 'regular', size = 'regular', padding = 'text', contentProps, ...restProps }: DropdownProps = $props()
 </script>
 
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'h-9 w-9 flex items-center justify-center rounded-md p-1 transition-[opacity] duration-200',
+      'flex items-center justify-center rounded-md transition-[opacity] duration-200',
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
-      'disabled:opacity-50',
+      'disabled:opacity-40',
       't-dark:focus-visible:outline-zinc-750',
       't-light:focus-visible:outline-zinc-300',
       't-rust:focus-visible:outline-rust-750',
-      't-midnight:focus-visible:outline-gray-750'
+      't-midnight:focus-visible:outline-gray-750',
+      ...ROUNDED_CLASSES[rounded],
+      ...SIZE_CLASSES[size],
+      ...PADDING_CLASSES[padding]
     ]}
   >
-    <Icon icon="ph:dots-three-bold" class="text-xl" />
+    {@render children()}
   </DropdownMenu.Trigger>
 
   <DropdownMenu.Portal to="#portal">
-    <DropdownMenu.Content class="min-w-48" sideOffset={4} {...contentProps} forceMount>
+    <DropdownMenu.Content class="min-w-48 outline-none z-50" sideOffset={4} {...contentProps} forceMount>
       {#snippet child({ open, props, wrapperProps })}
         {#if open}
           <div {...wrapperProps}>
@@ -43,12 +72,12 @@
                         class={[
                           'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-200',
                           'outline-none',
-                          'cursor-pointer disabled:cursor-not-allowed',
-                          'disabled:opacity-50',
-                          't-dark:focus-visible:bg-zinc-800',
-                          't-light:focus-visible:bg-zinc-200',
-                          't-rust:focus-visible:bg-rust-800',
-                          't-midnight:focus-visible:bg-gray-800'
+                          'cursor-pointer data-disabled:cursor-not-allowed',
+                          'data-disabled:opacity-40',
+                          't-dark:data-highlighted:bg-zinc-800',
+                          't-light:data-highlighted:bg-zinc-200',
+                          't-rust:data-highlighted:bg-rust-800',
+                          't-midnight:data-highlighted:bg-gray-800'
                         ]}
                         onSelect={onselect}
                         {disabled}

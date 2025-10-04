@@ -54,12 +54,12 @@
           <div>
             <p class="text-sm">{toast.title}</p>
             {#if toast.description}
-              <p class="text-xs opacity-50">{toast.description}</p>
+              <p class="text-xs opacity-40">{toast.description}</p>
             {/if}
           </div>
         </div>
 
-        <div class="shrink-0 opacity-0 group-hover:opacity-50 transition-[opacity] duration-200">
+        <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-[opacity] duration-200">
           <Button
             padding="icon"
             size="none"
