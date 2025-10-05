@@ -7,12 +7,13 @@
 
   type DescriptionProps = Omit<HTMLAttributes<HTMLParagraphElement>, 'class'> & {
     children: Snippet
+    disabled?: boolean | undefined
   }
 
-  let { children, ...restProps }: DescriptionProps = $props()
+  let { children, disabled, ...restProps }: DescriptionProps = $props()
 </script>
 
-<Tooltip triggerProps={{ class: 'hover:cursor-help' }}>
+<Tooltip triggerProps={{ disabled }}>
   {#snippet trigger()}
     <Icon icon="ph:info" class="text-sm opacity-40" />
   {/snippet}

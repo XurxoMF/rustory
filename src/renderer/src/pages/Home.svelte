@@ -53,7 +53,7 @@
                 <div class="flex flex-col items-start justify-center gap-1">
                   <div class="flex gap-1 items-center">
                     <Label disabled>Disabled Input</Label>
-                    <Description>This input is disabled so you can't do anything.</Description>
+                    <Description disabled>This input is disabled so you can't do anything.</Description>
                   </div>
 
                   <Input type="url" placeholder="Disabled Input" disabled />
@@ -208,7 +208,7 @@
 
                   <div class="flex gap-1 items-center">
                     <Label disabled>Example...</Label>
-                    <Description>Example...</Description>
+                    <Description disabled>Example...</Description>
                   </div>
                 </div>
               </GridItem>

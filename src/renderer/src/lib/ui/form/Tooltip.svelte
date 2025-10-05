@@ -2,9 +2,9 @@
   import { Tooltip } from 'bits-ui'
   import { type Snippet } from 'svelte'
 
-  type TooltipProps = Tooltip.RootProps & {
+  type TooltipProps = Omit<Tooltip.RootProps, 'class'> & {
     trigger: Snippet
-    triggerProps?: Tooltip.TriggerProps
+    triggerProps?: Omit<Tooltip.TriggerProps, 'class'>
     mode?: 'text' | 'icon' | 'wrapper' | undefined
   }
 
@@ -15,7 +15,10 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
+        'flex items-center justify-center shrink-0 rounded-md transition-[opacity] duration-200',
         'focus-visible:outline-2',
+        'cursor-help disabled:cursor-not-allowed',
+        'disabled:opacity-40',
         't-dark:focus-visible:outline-zinc-750',
         't-light:focus-visible:outline-zinc-300',
         't-rust:focus-visible:outline-rust-750',
