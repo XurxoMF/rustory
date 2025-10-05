@@ -4,42 +4,54 @@
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import { Button } from '@renderer/lib/ui/form/Buttons'
 
   let open = $state(false)
+  let fixed = $state(false)
 </script>
 
 <nav
   class={[
-    'relative shrink-0 h-full flex flex-col p-2 items-center justify-between gap-2 overflow-hidden border-r transition-[width,border,background-color] duration-200',
+    'relative shrink-0 h-full flex flex-col p-2 items-center gap-2 overflow-hidden border-r transition-[width,border,background-color] duration-200',
     't-dark:bg-zinc-850 t-dark:border-r-zinc-750',
     't-light:bg-zinc-100 t-light:border-r-zinc-300',
     't-rust:bg-rust-850 t-rust:border-r-rust-750',
     't-midnight:bg-gray-850 t-midnight:border-r-gray-750',
-    open ? 'w-60' : 'w-14'
+    open ? 'w-52' : 'w-11'
   ]}
-  onmouseenter={() => (open = true)}
-  onmouseleave={() => (open = false)}
+  onmouseenter={() => {
+    if (!fixed) open = true
+  }}
+  onmouseleave={() => {
+    if (!fixed) open = false
+  }}
 >
+  <div class={['absolute top-2.5 right-2.5 z-[1] transition-opacity duration-200', !open ? 'opacity-0' : 'opacity-100']}>
+    <Button padding="icon" size="none" rounded="regular" tabindex={!open && -1} onclick={() => (fixed = !fixed)}>
+      <Icon icon={fixed ? 'ph:push-pin-slash' : 'ph:push-pin'} />
+    </Button>
+  </div>
+
   <div class="w-full h-full flex flex-col items-start justify-between gap-2">
     <div class="w-full flex flex-col items-start justify-between gap-2">
-      {@render MainNavButton('ph:house', m.common__home(), '/')}
-      {@render MainNavButton('ph:git-fork', m.vintagestory__versions(), '/vs/versions')}
+      {@render NavLink('ph:house', m.common__home(), '/')}
+      {@render NavLink('ph:git-fork', m.vintagestory__versions(), '/vs/versions')}
     </div>
 
     <div class="w-full flex flex-col items-start justify-between gap-2">
-      {@render MainNavButton('ph:gear', m.common__config(), '/config')}
+      {@render NavLink('ph:gear', m.common__config(), '/config')}
     </div>
   </div>
 </nav>
 
-{#snippet MainNavButton(icon: string, text: string, link: string = '/')}
+{#snippet NavLink(icon: string, text: string, link: string = '/')}
   <a
     href={link}
     use:route={{
       active: { absolute: true, class: ['t-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750'] }
     }}
     class={[
-      'relative w-full p-2 flex items-center gap-2 whitespace-nowrap rounded-md transition-[opacity,background-color] duration-200',
+      'relative h-7 w-full flex items-center justify-start gap-1 whitespace-nowrap p-1 border-0 rounded-md transition-[opacity,background-color] duration-200',
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
@@ -49,9 +61,9 @@
       't-midnight:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
     ]}
   >
-    <Icon {icon} class="shrink-0 text-2xl" />
+    <Icon {icon} class="shrink-0 p-0.5" />
 
-    <span class={['text-start transition-opacity duration-200', open ? 'opacity-100' : 'opacity-0']}>
+    <span class={['text-start text-sm transition-opacity duration-200', !open ? 'opacity-0' : 'opacity-100']}>
       {text}
     </span>
   </a>
