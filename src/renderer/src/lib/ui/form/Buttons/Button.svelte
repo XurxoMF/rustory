@@ -37,7 +37,7 @@
 
 <button
   class={[
-    'flex items-center justify-center shrink-0 transition-[opacity] duration-200',
+    'flex items-center justify-center shrink-0 transition-[opacity,background-color] duration-200',
     'focus-visible:outline-2',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',

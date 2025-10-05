@@ -55,13 +55,6 @@
       onclick: () => goto('/')
     },
     {
-      value: 'vs-versions-page',
-      keywords: [m.vintagestory__versions(), m.common__pages()],
-      label: m.vintagestory__versions(),
-      icon: 'ph:git-fork',
-      onclick: () => goto('/vs/versions')
-    },
-    {
       value: 'config-page',
       keywords: [m.common__config(), m.common__pages()],
       label: m.common__config(),

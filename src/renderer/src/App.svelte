@@ -25,15 +25,9 @@
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
   import VSVersionsPage from '@renderer/pages/VS/Versions/Versions.svelte'
-  import VSVersionsAddPage from '@renderer/pages/VS/Versions/VersionsAdd.svelte'
 
   // Routes of the app
-  const routes: RouteConfig[] = [
-    { component: HomePage },
-    { path: '/vs/versions', component: VSVersionsPage },
-    { path: '/vs/versions/add', component: VSVersionsAddPage },
-    { path: '/config', component: ConfigPage }
-  ]
+  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/vs/versions', component: VSVersionsPage }, { path: '/config', component: ConfigPage }]
 
   // Loader data manager.
   const loader = Loader.instance

@@ -4,7 +4,7 @@
   import { fade } from 'svelte/transition'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { StyledContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
 
   type SelectItem = {
     value: string
@@ -16,16 +16,16 @@
   type SelectProps = Omit<WithoutChildren<Select.RootProps>, 'class' | 'items' | 'onValueChange'> & {
     items: SelectItem[]
     placeholder: string | undefined
-    onValueChange: OnChangeFn<string> | OnChangeFn<string[]>
+    onValueChange?: OnChangeFn<string> | OnChangeFn<string[]> | undefined
     contentProps?: WithoutChildren<Select.ContentProps> | undefined
   }
 
-  let { value = $bindable(), items, contentProps, placeholder, onValueChange, ...restProps }: SelectProps = $props()
+  let { value = $bindable(), items, contentProps, placeholder, onValueChange, allowDeselect = false, ...restProps }: SelectProps = $props()
 
   const selected = $derived(items.find((item) => item.value === value))
 </script>
 
-<Select.Root bind:value={value as never} onValueChange={onValueChange as never} {...restProps}>
+<Select.Root bind:value={value as never} onValueChange={onValueChange as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
       'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[opacity,border,background-color] duration-200',
@@ -57,7 +57,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <StaticContainer>
+                <ScrollableContainer orientation="vertical">
                   <Select.Viewport>
                     {#each items as { value, label, comment, disabled } (value)}
                       <Select.Item
@@ -87,7 +87,7 @@
                       </Select.Item>
                     {/each}
                   </Select.Viewport>
-                </StaticContainer>
+                </ScrollableContainer>
               </StyledContainer>
             </div>
           </div>

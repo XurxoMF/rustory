@@ -3,7 +3,8 @@
 
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import { StaticContainer, ButtonContainer, StyledContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StaticContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StyledButtonContainer } from '@renderer/lib/ui/layout/Containers/Button'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { Button } from '@renderer/lib/ui/form/Buttons'
 
@@ -32,9 +33,9 @@
       transition:fly={{ duration: 200, opacity: 0, x: 5 }}
     >
       {#if toast.onclick}
-        <ButtonContainer onclick={toast.onclick}>
+        <StyledButtonContainer onclick={toast.onclick}>
           {@render content(toast)}
-        </ButtonContainer>
+        </StyledButtonContainer>
       {:else}
         {@render content(toast)}
       {/if}
@@ -43,35 +44,33 @@
 </div>
 
 {#snippet content(toast: Toast)}
-  <StyledContainer>
-    <StaticContainer>
+  <StaticContainer>
+    <div class="w-full flex gap-2 items-center">
       <div class="w-full flex gap-2 items-center">
-        <div class="w-full flex gap-2 items-center">
-          <div>
-            <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color] duration-200', ...COLOR_CLASSES[toast.type]]} />
-          </div>
-
-          <div>
-            <p class="text-sm">{toast.title}</p>
-            {#if toast.description}
-              <p class="text-xs opacity-40">{toast.description}</p>
-            {/if}
-          </div>
+        <div>
+          <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color] duration-200', ...COLOR_CLASSES[toast.type]]} />
         </div>
 
-        <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-[opacity] duration-200">
-          <Button
-            padding="icon"
-            size="none"
-            onclick={(e) => {
-              e.stopPropagation()
-              Toasts.instance.removeToast(toast)
-            }}
-          >
-            <Icon icon="ph:x" class="cursor-pointer" />
-          </Button>
+        <div>
+          <p class="text-sm">{toast.title}</p>
+          {#if toast.description}
+            <p class="text-xs opacity-40">{toast.description}</p>
+          {/if}
         </div>
       </div>
-    </StaticContainer>
-  </StyledContainer>
+
+      <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-[opacity] duration-200">
+        <Button
+          padding="icon"
+          size="none"
+          onclick={(e) => {
+            e.stopPropagation()
+            Toasts.instance.removeToast(toast)
+          }}
+        >
+          <Icon icon="ph:x" class="cursor-pointer" />
+        </Button>
+      </div>
+    </div>
+  </StaticContainer>
 {/snippet}

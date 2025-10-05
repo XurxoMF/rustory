@@ -7,7 +7,7 @@
     type: InputTypes
   }
 
-  let { readonly, ...restProps }: InputProps = $props()
+  let { value = $bindable(), readonly, ...restProps }: InputProps = $props()
 </script>
 
 <input
@@ -22,6 +22,7 @@
     't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus-visible:outline-gray-750'
   ]}
   tabindex={readonly ? -1 : undefined}
+  bind:value
   {readonly}
   {...restProps}
 />

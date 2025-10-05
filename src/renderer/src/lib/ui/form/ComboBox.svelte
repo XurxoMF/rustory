@@ -6,7 +6,7 @@
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { StyledContainer, StaticContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
 
   type ComboBoxItem = {
     value: string
@@ -18,11 +18,11 @@
   type ComboBoxProps = Omit<Combobox.RootProps, 'class' | 'items' | 'onValueChange'> & {
     items: ComboBoxItem[]
     inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class'>
-    onValueChange: OnChangeFn<string> | OnChangeFn<string[]>
+    onValueChange?: OnChangeFn<string> | OnChangeFn<string[]> | undefined
     contentProps?: Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class'>
   }
 
-  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, onValueChange, ...restProps }: ComboBoxProps = $props()
+  let { items, value = $bindable(), open = $bindable(false), inputProps, contentProps, type, onValueChange, allowDeselect = false, ...restProps }: ComboBoxProps = $props()
 
   let searchValue = $state('')
 
@@ -43,7 +43,7 @@
   const mergedInputProps = $derived(mergeProps(inputProps, { oninput: handleInput }))
 </script>
 
-<Combobox.Root {type} {items} bind:value={value as never} onValueChange={onValueChange as never} bind:open {...mergedRootProps}>
+<Combobox.Root {type} {items} bind:value={value as never} onValueChange={onValueChange as never} bind:open {allowDeselect} {...mergedRootProps}>
   <div class="relative w-full flex items-center justify-between rounded-md">
     <Combobox.Input
       class={[
@@ -56,6 +56,7 @@
         't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus-visible:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus-visible:outline-gray-750'
       ]}
+      clearOnDeselect
       {...mergedInputProps}
     />
 
@@ -71,7 +72,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <StaticContainer>
+                <ScrollableContainer orientation="vertical">
                   <Combobox.Viewport>
                     {#each filteredItems as { value, label, comment, disabled } (value)}
                       <Combobox.Item
@@ -105,7 +106,7 @@
                       </p>
                     {/each}
                   </Combobox.Viewport>
-                </StaticContainer>
+                </ScrollableContainer>
               </StyledContainer>
             </div>
           </div>

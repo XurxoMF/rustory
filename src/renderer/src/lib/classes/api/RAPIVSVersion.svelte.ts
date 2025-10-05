@@ -232,5 +232,5 @@ export namespace RAPIVSVersion {
    *
    * Must have at least the same properties as {@link TRAPIVSVersionType}.
    */
-  export type Type = 'release' | 'rc' | 'pre'
+  export type Type = TRAPIVSVersionType
 }
