@@ -36,6 +36,7 @@
   type="single"
   bind:value
   items={versions.map((v) => {
+    // TODO: Disable versions that are already installed
     return {
       label: v.version,
       value: v.version,

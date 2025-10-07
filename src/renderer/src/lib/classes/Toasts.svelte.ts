@@ -87,7 +87,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  private _description?: string[]
+  private _description: string[]
 
   /**
    * The time that has to pass for the toast to hide.

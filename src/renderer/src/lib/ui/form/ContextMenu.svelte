@@ -39,7 +39,7 @@
       't-midnight:focus-visible:outline-gray-750'
     ]}
   >
-    {@render children()}
+    {@render children?.()}
   </ContextMenu.Trigger>
 
   <ContextMenu.Portal to="#portal">

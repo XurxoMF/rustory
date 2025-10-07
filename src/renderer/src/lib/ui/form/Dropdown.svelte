@@ -55,7 +55,7 @@
       ...PADDING_CLASSES[padding]
     ]}
   >
-    {@render children()}
+    {@render children?.()}
   </DropdownMenu.Trigger>
 
   <DropdownMenu.Portal to="#portal">

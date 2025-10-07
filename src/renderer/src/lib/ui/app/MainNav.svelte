@@ -27,7 +27,7 @@
   }}
 >
   <div class={['absolute top-2.5 right-2.5 z-[1] transition-opacity duration-200', !open ? 'opacity-0' : 'opacity-100']}>
-    <Button padding="icon" size="none" rounded="regular" tabindex={!open && -1} onclick={() => (fixed = !fixed)}>
+    <Button padding="icon" size="none" rounded="regular" tabindex={!open ? -1 : undefined} onclick={() => (fixed = !fixed)}>
       <Icon icon={fixed ? 'ph:push-pin-slash' : 'ph:push-pin'} />
     </Button>
   </div>
