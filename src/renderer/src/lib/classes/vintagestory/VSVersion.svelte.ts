@@ -24,10 +24,16 @@ export class VSVersion {
    */
   private _state: VSVersion.State
 
+  /**
+   * The task running on this VS Version.
+   */
+  private _task: TaskBase | null
+
   public constructor(data: { version: string; path: string; state?: VSVersion.State | undefined }) {
     this._version = data.version
     this._path = data.path
     this._state = $state(data.state ?? VSVersion.State.NOT_INSTALLED)
+    this._task = null
   }
 
   /**
@@ -49,6 +55,13 @@ export class VSVersion {
    */
   public get state(): VSVersion.State {
     return this._state
+  }
+
+  /**
+   * The task running on this VS Version.
+   */
+  public get task(): TaskBase | null {
+    return this._task
   }
 
   /**
@@ -131,6 +144,8 @@ export class VSVersion {
 
     const task = new TaskInstallVSVersion({ version: this._version, url, outputPath: this._path })
 
+    this._task = task
+
     Tasks.instance.tasks.push(task)
 
     const status = await task.execute()
@@ -139,6 +154,7 @@ export class VSVersion {
       window.api.logger.info(`Successfully installed VS Version ${this._version}!`)
       this._state = VSVersion.State.INSTALLED
       this.save()
+      this._task = null
     } else {
       this._state = VSVersion.State.NOT_INSTALLED
     }

@@ -87,7 +87,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  private _description?: string | undefined
+  private _description?: string[]
 
   /**
    * The time that has to pass for the toast to hide.
@@ -104,11 +104,11 @@ export class Toast {
    */
   private _timeout?: NodeJS.Timeout | undefined
 
-  public constructor(data: { type: Toast.Type; title: string; description?: string | undefined; hideAfter?: number | undefined; onclick?: (() => void | Promise<void>) | undefined }) {
+  public constructor(data: { type: Toast.Type; title: string; description?: string[] | undefined; hideAfter?: number | undefined; onclick?: (() => void | Promise<void>) | undefined }) {
     this._id = crypto.randomUUID()
     this._type = data.type
     this._title = data.title
-    this._description = data.description
+    this._description = data.description ?? []
     this._hideAfter = data.hideAfter ?? 5000
     this._onclick = data.onclick
   }
@@ -164,7 +164,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  public get description(): string | undefined {
+  public get description(): string[] {
     return this._description
   }
 

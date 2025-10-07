@@ -15,6 +15,7 @@
     "strict": false,
     "allowJs": true,
     "ignoreDeprecations": "6.0",
+    "strictNullChecks": true,
     "lib": [
       "ESNext",
       "DOM",

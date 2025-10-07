@@ -7,6 +7,7 @@
   import { StyledButtonContainer } from '@renderer/lib/ui/layout/Containers/Button'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { Button } from '@renderer/lib/ui/form/Buttons'
+  import StyledContainer from '../layout/Containers/StyledContainer.svelte'
 
   const ICONS: Record<Toast.Type, string> = {
     info: 'ph:info',
@@ -37,7 +38,9 @@
           {@render content(toast)}
         </StyledButtonContainer>
       {:else}
-        {@render content(toast)}
+        <StyledContainer>
+          {@render content(toast)}
+        </StyledContainer>
       {/if}
     </div>
   {/each}
@@ -53,9 +56,10 @@
 
         <div>
           <p class="text-sm">{toast.title}</p>
-          {#if toast.description}
-            <p class="text-xs opacity-40">{toast.description}</p>
-          {/if}
+
+          {#each toast.description as description}
+            <p class="text-xs opacity-40">{description}</p>
+          {/each}
         </div>
       </div>
 

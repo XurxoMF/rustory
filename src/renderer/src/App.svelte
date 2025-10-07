@@ -14,6 +14,7 @@
   import { Info } from '@renderer/lib/classes/Info.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
   import { Hotkeys } from '@renderer/lib/classes/Hotkeys.svelte'
+  import { Tasks } from '@renderer/lib/classes/Tasks.svelte'
 
   import WindowBar from '@renderer/lib/ui/app/WindowBar.svelte'
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
@@ -40,6 +41,7 @@
     // Load the app config and info.
     await Config.init()
     await Info.init()
+    await Tasks.init()
     loader.completeTask('app-init')
 
     // Load the hotkeys.

@@ -270,7 +270,7 @@
                   label: 'One',
                   value: 'one',
                   onselect: () => {
-                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the Dropdown!' })
+                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the Dropdown!'] })
                     Toasts.instance.addToast(toastInfo)
                   },
                   icon: 'ph:code'
@@ -279,7 +279,7 @@
                   label: 'Two',
                   value: 'two',
                   onselect: () => {
-                    const toastInfo = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the Dropdown!' })
+                    const toastInfo = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the Dropdown!'] })
                     Toasts.instance.addToast(toastInfo)
                   },
                   icon: 'ph:code',
@@ -289,7 +289,7 @@
                   label: 'Three',
                   value: 'three',
                   onselect: () => {
-                    const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: "How the hell you clicked three? It's disabled!" })
+                    const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: ["How the hell you clicked three? It's disabled!"] })
                     Toasts.instance.addToast(toastInfo)
                   },
                   icon: 'ph:code'
@@ -319,7 +319,7 @@
                       label: 'One',
                       value: 'one',
                       onselect: () => {
-                        const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
+                        const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the ContextMenu!'] })
                         Toasts.instance.addToast(toastInfo)
                       },
                       icon: 'ph:code'
@@ -328,7 +328,7 @@
                       label: 'Two',
                       value: 'two',
                       onselect: () => {
-                        const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
+                        const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the ContextMenu!'] })
                         Toasts.instance.addToast(toast)
                       },
                       icon: 'ph:code',
@@ -343,7 +343,7 @@
                       label: 'Three',
                       value: 'three',
                       onselect: () => {
-                        const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: 'You clicked three on the ContextMenu!' })
+                        const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: ['You clicked three on the ContextMenu!'] })
                         Toasts.instance.addToast(toastInfo)
                       },
                       icon: 'ph:code'
@@ -352,7 +352,7 @@
                       label: 'Four',
                       value: 'four',
                       onselect: () => {
-                        const toast = new Toast({ title: 'Four cliecked!', type: Toast.Type.INFO, description: 'You clicked four on the ContextMenu!' })
+                        const toast = new Toast({ title: 'Four cliecked!', type: Toast.Type.INFO, description: ['You clicked four on the ContextMenu!'] })
                         Toasts.instance.addToast(toast)
                       },
                       icon: 'ph:code'
@@ -379,28 +379,28 @@
             <div class="flex items-center flex-wrap gap-2">
               <ButtonNeutral
                 onclick={() => {
-                  const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: 'This is an info toast!' })
+                  const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: ['This is an info toast!'] })
                   Toasts.instance.addToast(toastInfo)
 
                   const toastWarning = new Toast({
                     title: 'Warning toast',
                     type: Toast.Type.WARNING,
-                    description: 'This is an warning toast with a long ass description how will this fit on a toast is crazy!'
+                    description: ['This is an warning toast with a long ass description how will this fit on a toast is crazy!']
                   })
                   Toasts.instance.addToast(toastWarning)
 
                   const toastError = new Toast({
                     title: 'Danger toast',
                     type: Toast.Type.ERROR,
-                    description: 'This is an error toast! Click it to show another toast!',
+                    description: ['This is an error toast! Click it to show another toast!'],
                     onclick: () => {
-                      const anotherToast = new Toast({ title: 'Another toast', type: Toast.Type.INFO, description: 'This is another toast that will last 10 seconds!', hideAfter: 10000 })
+                      const anotherToast = new Toast({ title: 'Another toast', type: Toast.Type.INFO, description: ['This is another toast that will last 10 seconds!'], hideAfter: 10000 })
                       Toasts.instance.addToast(anotherToast)
                     }
                   })
                   Toasts.instance.addToast(toastError)
 
-                  const toastSuccess = new Toast({ title: 'Success toast', type: Toast.Type.SUCCESS, description: 'This is an success toast! Keep your cursor over it to make it last forver!' })
+                  const toastSuccess = new Toast({ title: 'Success toast', type: Toast.Type.SUCCESS, description: ['This is an success toast! Keep your cursor over it to make it last forver!'] })
                   Toasts.instance.addToast(toastSuccess)
                 }}
               >
@@ -413,7 +413,7 @@
                     title: 'Example notification',
                     description: 'This is a system notification! How cool is this?!?!',
                     onclick: () => {
-                      const toastInfo = new Toast({ title: 'Notification clicked!', type: Toast.Type.INFO, description: 'You clicked the system notification!' })
+                      const toastInfo = new Toast({ title: 'Notification clicked!', type: Toast.Type.INFO, description: ['You clicked the system notification!'] })
                       Toasts.instance.addToast(toastInfo)
                     }
                   })

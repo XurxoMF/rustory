@@ -97,8 +97,18 @@ export class TaskInstallVSVersion implements TaskBase {
    * @returns The final status of the task.
    */
   public async execute(): Promise<TaskBase.Status> {
-    const cleanDownloadProgressEvent = window.api.net.downloader.on.progress((_event, _id, progress) => (this._downloadProgress = progress))
-    const cleanExtractProgressEvent = window.api.zip.extractor.on.progress((_event, _id, progress) => (this._extractProgress = progress))
+    window.api.logger.debug(`Adding event listeners for TaskInstallVSVersion for VS Version ${this._version}...`)
+
+    const cleanDownloadProgressEvent = window.api.net.downloader.on.progress((_event, id, progress) => {
+      if (id === this._id) {
+        this._downloadProgress = progress
+      }
+    })
+    const cleanExtractProgressEvent = window.api.zip.extractor.on.progress((_event, id, progress) => {
+      if (id === this._id) {
+        this._extractProgress = progress
+      }
+    })
 
     try {
       window.api.logger.info(`[${this._id}] Running Install Version task for VS Version ${this._version}...`)
