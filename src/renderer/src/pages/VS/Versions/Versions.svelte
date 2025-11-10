@@ -8,7 +8,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import { Button, ButtonSuccess } from '@renderer/lib/ui/form/Buttons'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Containers/Grid'
-  import { StaticContainer, StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
+  import { StaticContainer, StyledContainer, ScrollableContainer, CollapsibleContainer } from '@renderer/lib/ui/layout/Containers'
   import Label from '@renderer/lib/ui/form/Label.svelte'
   import Description from '@renderer/lib/ui/form/Description.svelte'
   import Input from '@renderer/lib/ui/form/Input.svelte'
@@ -46,7 +46,7 @@
     <GridContainer columns={3} breakpoint>
       <GridItem spanX="full">
         <StyledContainer>
-          <StaticContainer>
+          <CollapsibleContainer>
             {#snippet headerContent()}
               <p>{m.vintagestory__versions_add()}</p>
             {/snippet}
@@ -96,7 +96,7 @@
                 </div>
               </GridItem>
             </GridContainer>
-          </StaticContainer>
+          </CollapsibleContainer>
         </StyledContainer>
       </GridItem>
 
