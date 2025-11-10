@@ -9,17 +9,17 @@
 </script>
 
 <Button padding="icon" size="none" onclick={() => goto('/')}>
-  <Icon icon="ph:house" />
+  <Icon icon="ph:house" class="opacity-40" />
 </Button>
 
 {#each Breadcrumbs.instance.segments as segment (segment.href + segment.label)}
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }}>
-    <Icon icon="ph:caret-right" />
+    <Icon icon="ph:caret-right" class="opacity-40" />
   </span>
 
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs">
     <Button padding="icon" size="none" onclick={() => goto(segment.href)}>
-      {segment.label}
+      <span class="opacity-40">{segment.label}</span>
     </Button>
   </span>
 {/each}

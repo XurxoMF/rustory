@@ -110,9 +110,9 @@
                   <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
                   <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis">{vsVersion.task?.progress}</p>
                 </div>
-                <div class="w-fit flex justify-center opacity-40">
-                  <Button padding="icon" size="square"><Icon icon="ph:folder-open" /></Button>
-                  <Button padding="icon" size="square"><Icon icon="ph:trash" /></Button>
+                <div class="w-fit flex justify-center">
+                  <Button padding="icon" size="square"><Icon icon="ph:folder-open" class="opacity-40" /></Button>
+                  <Button padding="icon" size="square"><Icon icon="ph:trash" class="opacity-40" /></Button>
                 </div>
               </div>
             </StaticContainer>

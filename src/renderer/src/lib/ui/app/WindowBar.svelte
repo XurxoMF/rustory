@@ -29,7 +29,7 @@
         </Button>
       </div>
 
-      <div class="app-no-drag w-fit flex items-center justify-center flex-nowrap opacity-40">
+      <div class="app-no-drag w-fit flex items-center justify-center flex-nowrap">
         <HistoryControlls />
 
         <Breadcrumbs />
@@ -61,7 +61,7 @@
 
   <div class="shrink-0 flex-1 flex items-center justify-end gap-6">
     <div class="w-fit flex items-center justify-center gap-2">
-      <div class="app-no-drag w-fit flex items-center justify-center gap-1 flex-nowrap opacity-40">
+      <div class="app-no-drag w-fit flex items-center justify-center gap-1 flex-nowrap">
         <WindowControls />
       </div>
     </div>
