@@ -27,7 +27,18 @@
 </script>
 
 <Collapsible.Root bind:open bind:ref class="w-full flex flex-col" {...restProps}>
-  <Collapsible.Trigger class={['w-full flex items-center justify-between p-2 transition-[opacity] duration-200', 'outline-none', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']}>
+  <Collapsible.Trigger
+    class={[
+      'w-full flex items-center justify-between p-2 rounded-t-md data-[state=closed]:rounded-b-md transition-[opacity,border-radius] duration-200',
+      'focus-visible:outline-2',
+      'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
+      'data-disabled:opacity-40',
+      't-dark:focus-visible:outline-zinc-750',
+      't-light:focus-visible:outline-zinc-300',
+      't-rust:focus-visible:outline-rust-750',
+      't-midnight:focus-visible:outline-gray-750'
+    ]}
+  >
     {@render headerContent?.()}
     <Icon icon="ph:caret-up-down" />
   </Collapsible.Trigger>
