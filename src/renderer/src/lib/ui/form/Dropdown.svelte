@@ -65,7 +65,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <StaticContainer>
+                <StaticContainer padding={2}>
                   <DropdownMenu.Group>
                     {#each items as { label, value, onselect, disabled, icon }}
                       <DropdownMenu.Item

@@ -33,7 +33,7 @@
     breakpoint?: boolean | undefined
   }
 
-  let { children, columns = 1, gap = 2, breakpoint = false }: GridContainer = $props()
+  let { children, columns = 1, gap = 3, breakpoint = false }: GridContainer = $props()
 </script>
 
 <div class={['w-full', breakpoint && '@container']}>

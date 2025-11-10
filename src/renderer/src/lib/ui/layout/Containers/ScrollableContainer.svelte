@@ -2,12 +2,26 @@
   import type { Snippet } from 'svelte'
   import { ScrollArea, type WithoutChild } from 'bits-ui'
 
+  const PADDING_CLASSES = {
+    1: ['p-1'],
+    2: ['p-2'],
+    3: ['p-3'],
+    4: ['p-4'],
+    5: ['p-5'],
+    6: ['p-6'],
+    7: ['p-7'],
+    8: ['p-8']
+  } as const
+
+  type PaddingTypes = keyof typeof PADDING_CLASSES
+
   type ScrollableProps = Omit<WithoutChild<ScrollArea.RootProps>, 'class'> & {
     orientation: 'vertical' | 'horizontal' | 'both'
     headerContent?: Snippet | undefined
+    padding?: PaddingTypes | undefined
   }
 
-  let { ref = $bindable(null), orientation = 'vertical', headerContent, children, ...restProps }: ScrollableProps = $props()
+  let { ref = $bindable(null), orientation = 'vertical', headerContent, padding = 3, children, ...restProps }: ScrollableProps = $props()
 </script>
 
 {#if headerContent}
@@ -19,8 +33,9 @@
 <ScrollArea.Root bind:ref type="always" class="w-full h-full flex flex-col min-h-0" {...restProps}>
   <ScrollArea.Viewport
     class={[
-      'w-full h-full flex flex-col p-2',
-      headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-300', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750']
+      'w-full h-full flex flex-col',
+      headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-300', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750'],
+      PADDING_CLASSES[padding]
     ]}
   >
     {@render children?.()}

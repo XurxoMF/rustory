@@ -49,7 +49,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <StaticContainer>
+                <StaticContainer padding={2}>
                   <ContextMenu.Group>
                     {#each groups as { items, label }, i (label)}
                       {#if label}

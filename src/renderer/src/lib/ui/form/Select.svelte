@@ -57,7 +57,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <ScrollableContainer orientation="vertical">
+                <ScrollableContainer orientation="vertical" padding={2}>
                   <Select.Viewport>
                     {#each items as { value, label, comment, disabled } (value)}
                       <Select.Item

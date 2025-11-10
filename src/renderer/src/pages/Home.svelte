@@ -129,7 +129,17 @@
                   placeholder="Example..."
                   items={[
                     { label: 'Item 1', value: 'item1' },
-                    { label: 'Item 2', value: 'item2', disabled: true }
+                    { label: 'Item 2', value: 'item2', disabled: true },
+                    { label: 'Item 3', value: 'item3' },
+                    { label: 'Item 4', value: 'item4', disabled: true },
+                    { label: 'Item 5', value: 'item5' },
+                    { label: 'Item 6', value: 'item6', disabled: true },
+                    { label: 'Item 7', value: 'item7' },
+                    { label: 'Item 8', value: 'item8', disabled: true },
+                    { label: 'Item 9', value: 'item9' },
+                    { label: 'Item 10', value: 'item10', disabled: true },
+                    { label: 'Item 11', value: 'item11' },
+                    { label: 'Item 12', value: 'item12', disabled: true }
                   ]}
                   onValueChange={(value: string) => console.log(value)}
                 />

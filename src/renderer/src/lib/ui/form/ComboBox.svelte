@@ -72,7 +72,7 @@
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
               <StyledContainer>
-                <ScrollableContainer orientation="vertical">
+                <ScrollableContainer orientation="vertical" padding={2}>
                   <Combobox.Viewport>
                     {#each filteredItems as { value, label, comment, disabled } (value)}
                       <Combobox.Item
