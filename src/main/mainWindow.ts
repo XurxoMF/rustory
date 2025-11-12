@@ -16,13 +16,25 @@ export let mainWindow: BrowserWindow
 export async function createMainWindow(): Promise<void> {
   logger.info('Getting old state...')
 
-  let oldState: TMainWindowState | null = await readJSON(MAIN_WINDOW_STATE_PATH)
+  let oldState: TMainWindowState = {
+    width: 1600,
+    height: 900,
+    x: 0,
+    y: 0,
+    maximized: false
+  }
 
-  let width = oldState?.width ?? 1600
-  let height = oldState?.height ?? 900
-  let x = oldState?.x
-  let y = oldState?.y
-  let maximized = oldState?.maximized ?? true
+  try {
+    oldState = await readJSON(MAIN_WINDOW_STATE_PATH)
+  } catch (error) {
+    logger.error('Old state could not be read!')
+  }
+
+  let width = oldState.width
+  let height = oldState.height
+  let x = oldState.x
+  let y = oldState.y
+  let maximized = oldState.maximized
 
   // Create the browser window.
   mainWindow = new BrowserWindow({
