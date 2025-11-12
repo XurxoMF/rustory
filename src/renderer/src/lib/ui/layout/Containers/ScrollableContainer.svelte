@@ -3,6 +3,7 @@
   import { ScrollArea, type WithoutChild } from 'bits-ui'
 
   const PADDING_CLASSES = {
+    0: ['p-0'],
     1: ['p-1'],
     2: ['p-2'],
     3: ['p-3'],

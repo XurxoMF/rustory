@@ -21,10 +21,14 @@
   import ContextMenu from '@renderer/lib/ui/form/ContextMenu.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Pagination from '@renderer/lib/ui/form/Pagination.svelte'
+  import Sheet from '@renderer/lib/ui/form/Sheet.svelte'
+  import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
 
   Breadcrumbs.instance.segments = []
 
   let alertOpen = $state(false)
+  let dialogOpen = $state(false)
+  let sheetOpen = $state(false)
 
   let radioCheckedCM = $state('radio-one')
   let checkboxOneCheckedCM = $state(false)
@@ -198,16 +202,87 @@
         <StyledContainer>
           <StaticContainer>
             {#snippet headerContent()}
-              <p>Alerts and Dialogs</p>
+              <p>Alerts, Dialogs & Sheets</p>
             {/snippet}
 
-            <ButtonNeutral onclick={() => (alertOpen = true)}>Open</ButtonNeutral>
+            <div class="flex items-center flex-wrap gap-2">
+              <ButtonNeutral onclick={() => (alertOpen = true)}>Open Alert</ButtonNeutral>
 
-            <Alert bind:open={alertOpen} title="Title">
-              {#snippet description()}
-                <p>Example... mundo!</p>
-              {/snippet}
-            </Alert>
+              <Alert bind:open={alertOpen} title="Title">
+                {#snippet description()}
+                  <p>This is a really cool alert! We can as you to accept or cancel things here!</p>
+                {/snippet}
+              </Alert>
+
+              <ButtonNeutral onclick={() => (dialogOpen = true)}>Open Dialog</ButtonNeutral>
+
+              <Dialog bind:open={dialogOpen} title="Title">
+                {#snippet description()}
+                  <p>This is a really cool dialog! We can as you to edit whatever we add and it'll not make you change page or anything...</p>
+                {/snippet}
+
+                <div class="w-full h-full flex flex-col items-center justify-between gap-2">
+                  <GridContainer columns={2} breakpoint>
+                    <GridItem>
+                      <div class="flex flex-col items-start justify-center gap-1">
+                        <div class="flex gap-1 items-center">
+                          <Label for="required-input" required>Required Input</Label>
+                          <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                        </div>
+
+                        <Input id="required-input" type="url" placeholder="Reqired Input" />
+                      </div>
+                    </GridItem>
+
+                    <GridItem>
+                      <div class="flex flex-col items-start justify-center gap-1">
+                        <div class="flex gap-1 items-center">
+                          <Label for="required-input" required>Required Input</Label>
+                          <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                        </div>
+
+                        <Input id="required-input" type="url" placeholder="Reqired Input" />
+                      </div>
+                    </GridItem>
+                  </GridContainer>
+
+                  <div class="flex items-center justify-center gap-2 mt-2">
+                    <ButtonNeutral onclick={() => (dialogOpen = false)}>Cancel</ButtonNeutral>
+
+                    <ButtonSuccess onclick={() => (dialogOpen = false)}>Save</ButtonSuccess>
+                  </div>
+                </div>
+              </Dialog>
+
+              <ButtonNeutral onclick={() => (sheetOpen = true)}>Open Sheet</ButtonNeutral>
+
+              <Sheet bind:open={sheetOpen} title="Title">
+                {#snippet description()}
+                  <p>On this sheet you can edit whatever we add and it'll not make you change page or anything...</p>
+                {/snippet}
+
+                <div class="h-full w-full flex flex-col items-center justify-between gap-2">
+                  <GridContainer columns={1}>
+                    <GridItem>
+                      <div class="flex flex-col items-start justify-center gap-1">
+                        <div class="flex gap-1 items-center">
+                          <Label for="required-input" required>Required Input</Label>
+                          <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                        </div>
+
+                        <Input id="required-input" type="url" placeholder="Reqired Input" />
+                      </div>
+                    </GridItem>
+                  </GridContainer>
+
+                  <div class="flex items-center justify-center gap-2 mt-2">
+                    <ButtonNeutral onclick={() => (sheetOpen = false)}>Cancel</ButtonNeutral>
+
+                    <ButtonSuccess onclick={() => (sheetOpen = false)}>Save</ButtonSuccess>
+                  </div>
+                </div>
+              </Sheet>
+            </div>
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>

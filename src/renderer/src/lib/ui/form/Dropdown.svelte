@@ -255,7 +255,7 @@
     >
       <Icon {icon} class="w-4 h-4 flex items-center justify-center opacity-40" />
       <span>{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <Icon icon="ph:caret-right" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 
     <DropdownMenu.SubContent sideOffset={12} class="min-w-48 outline-none z-50" forceMount>
@@ -295,7 +295,7 @@
     >
       <Icon {icon} class="w-4 h-4 flex items-center justify-center opacity-40" />
       <span>{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <Icon icon="ph:caret-right" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 
     <DropdownMenu.SubContent sideOffset={12} class="min-w-48 outline-none z-50" forceMount>

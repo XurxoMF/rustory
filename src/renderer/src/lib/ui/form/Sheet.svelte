@@ -1,6 +1,6 @@
 <script lang="ts">
   import { Dialog, type WithoutChild } from 'bits-ui'
-  import { fade } from 'svelte/transition'
+  import { fade, fly } from 'svelte/transition'
   import type { Snippet } from 'svelte'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
@@ -20,7 +20,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 z-50 w-screen h-screen backdrop-blur-sm transition-[background-color] duration-200',
+        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-200',
         't-dark:bg-zinc-850/20',
         't-light:bg-zinc-100/20',
         't-rust:bg-rust-850/20',
@@ -30,16 +30,16 @@
     >
       {#snippet child({ props })}
         {#if open}
-          <div {...props} transition:fade={{ duration: 50 }}></div>
+          <div {...props} transition:fade={{ duration: 100 }}></div>
         {/if}
       {/snippet}
     </Dialog.Overlay>
 
-    <Dialog.Content class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-100 w-fit h-fit" {...contentProps} forceMount>
+    <Dialog.Content class="absolute top-0 right-0 z-100 w-fit h-fit" {...contentProps} forceMount>
       {#snippet child({ props })}
         {#if open}
-          <div {...props} transition:fade={{ duration: 100 }}>
-            <div class="max-w-[52vw] max-h-[50vh]">
+          <div {...props} transition:fly={{ duration: 200, x: 200 }}>
+            <div class="w-[50vw] max-w-100 h-screen p-2 flex">
               <StyledContainer>
                 <ScrollableContainer orientation="vertical">
                   {#snippet headerContent()}

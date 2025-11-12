@@ -6,6 +6,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   const PADDING_CLASSES = {
+    0: ['p-0'],
     1: ['p-1'],
     2: ['p-2'],
     3: ['p-3'],
@@ -31,7 +32,7 @@
     class={[
       'w-full flex items-center justify-between p-2 rounded-t-md data-[state=closed]:rounded-b-md transition-[opacity,border-radius] duration-200',
       'focus-visible:outline-2',
-      'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
+      'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       't-dark:focus-visible:outline-zinc-750',
       't-light:focus-visible:outline-zinc-300',

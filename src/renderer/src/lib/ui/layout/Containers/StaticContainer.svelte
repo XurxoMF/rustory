@@ -3,6 +3,7 @@
   import type { HTMLAttributes } from 'svelte/elements'
 
   const PADDING_CLASSES = {
+    0: ['p-0'],
     1: ['p-1'],
     2: ['p-2'],
     3: ['p-3'],
@@ -24,7 +25,7 @@
   let { children, headerContent, padding = 3, ...restProps }: StaticContainerProps = $props()
 </script>
 
-<div class="w-full flex flex-col">
+<div class="w-full h-full flex flex-col">
   {#if headerContent}
     <div class="w-full flex items-center justify-between p-2">
       {@render headerContent?.()}
@@ -33,7 +34,7 @@
 
   <div
     class={[
-      'w-full flex flex-col',
+      'w-full h-full flex flex-col',
       headerContent && ['border-t transition-[border] duration-200', 't-dark:border-t-zinc-750', 't-light:border-t-zinc-300', 't-rust:border-t-rust-750', 't-midnight:border-t-gray-750'],
       PADDING_CLASSES[padding]
     ]}
