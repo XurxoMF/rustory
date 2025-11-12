@@ -1,5 +1,4 @@
 <script lang="ts">
-  import type { OnChangeFn } from 'bits-ui/dist/internal/types'
   import { Combobox, type WithoutChildrenOrChild, mergeProps } from 'bits-ui'
   import { fade } from 'svelte/transition'
 
@@ -15,10 +14,9 @@
     disabled?: boolean
   }
 
-  type ComboBoxProps = Omit<Combobox.RootProps, 'class' | 'items' | 'onValueChange'> & {
+  type ComboBoxProps = Omit<Combobox.RootProps, 'class' | 'items'> & {
     items: ComboBoxItem[]
     inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class'>
-    onValueChange?: OnChangeFn<string> | OnChangeFn<string[]> | undefined
     contentProps?: Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class'>
   }
 
@@ -47,26 +45,26 @@
   <div class="relative w-full flex items-center justify-between rounded-md">
     <Combobox.Input
       class={[
-        'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md border transition-[opacity,border,background-color] duration-200',
-        'focus-visible:outline-1',
+        'h-9 w-full flex items-center justify-between gap-2 px-2 py-1 rounded-md shadow/20 transition-[opacity,border,background-color] duration-200',
+        'focus-visible:outline-2',
         'cursor-pointer disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:border-zinc-750 t-dark:focus-visible:outline-zinc-750',
-        't-light:bg-zinc-200 t-light:border-zinc-300 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:border-rust-750 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:border-gray-750 t-midnight:focus-visible:outline-gray-750'
+        't-dark:bg-zinc-800 t-dark:focus-visible:outline-zinc-750',
+        't-light:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
+        't-rust:bg-rust-800 t-rust:focus-visible:outline-rust-750',
+        't-midnight:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
       ]}
       clearOnDeselect
       {...mergedInputProps}
     />
 
-    <Combobox.Trigger class={['absolute right-0 p-2 transition-[opacity] duration-200', 'focus-visible:outline-1', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} tabindex={-1}>
+    <Combobox.Trigger class={['absolute right-0 p-2 transition-opacity duration-200', 'focus-visible:outline-1', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} tabindex={-1}>
       <Icon icon="ph:caret-up-down" />
     </Combobox.Trigger>
   </div>
 
   <Combobox.Portal to="#portal">
-    <Combobox.Content sideOffset={4} class={['w-[var(--bits-combobox-anchor-width)] max-h-60 z-50']} forceMount {...contentProps}>
+    <Combobox.Content sideOffset={4} class={['w-(--bits-combobox-anchor-width) z-50']} forceMount {...contentProps}>
       {#snippet child({ props, wrapperProps, open })}
         {#if open}
           <div {...wrapperProps}>

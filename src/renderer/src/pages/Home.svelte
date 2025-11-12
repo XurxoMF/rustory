@@ -25,6 +25,10 @@
   Breadcrumbs.instance.segments = []
 
   let alertOpen = $state(false)
+
+  let radioCheckedCM = $state('radio-one')
+  let checkboxOneCheckedCM = $state(false)
+  let checkboxTwoCheckedCM = $state(true)
 </script>
 
 <PageWrapper>
@@ -41,33 +45,33 @@
               <GridItem>
                 <div class="flex flex-col items-start justify-center gap-1">
                   <div class="flex gap-1 items-center">
-                    <Label>Readonly Input</Label>
+                    <Label for="readonly-input">Readonly Input</Label>
                     <Description>You can only read but not edit this Input.</Description>
                   </div>
 
-                  <Input type="url" placeholder="Readonly Input" value="You can't edit me!" readonly />
+                  <Input id="readonly-input" type="url" placeholder="Readonly Input" value="You can't edit me!" readonly />
                 </div>
               </GridItem>
 
               <GridItem>
                 <div class="flex flex-col items-start justify-center gap-1">
                   <div class="flex gap-1 items-center">
-                    <Label disabled>Disabled Input</Label>
+                    <Label for="disabled-input" disabled>Disabled Input</Label>
                     <Description disabled>This input is disabled so you can't do anything.</Description>
                   </div>
 
-                  <Input type="url" placeholder="Disabled Input" disabled />
+                  <Input id="disabled-input" type="url" placeholder="Disabled Input" disabled />
                 </div>
               </GridItem>
 
               <GridItem>
                 <div class="flex flex-col items-start justify-center gap-1">
                   <div class="flex gap-1 items-center">
-                    <Label required>Required Input</Label>
+                    <Label for="required-input" required>Required Input</Label>
                     <Description>This Input is rerquired and it has an * to prove it xD</Description>
                   </div>
 
-                  <Input type="url" placeholder="Reqired Input" />
+                  <Input id="required-input" type="url" placeholder="Reqired Input" />
                 </div>
               </GridItem>
             </GridContainer>
@@ -213,7 +217,7 @@
 
             <GridContainer>
               <GridItem>
-                <div class="flex items-center gap-1 flex-wrap-reverse">
+                <div class="flex items-center gap-2 flex-wrap-reverse">
                   <Checkbox disabled />
 
                   <div class="flex gap-1 items-center">
@@ -224,7 +228,7 @@
               </GridItem>
 
               <GridItem>
-                <div class="flex items-center gap-1 flex-wrap-reverse">
+                <div class="flex items-center gap-2 flex-wrap-reverse">
                   <Checkbox />
 
                   <div class="flex gap-1 items-center">
@@ -324,8 +328,11 @@
             <ContextMenu
               groups={[
                 {
+                  type: 'group',
+                  label: 'Item Group',
                   items: [
                     {
+                      type: 'item',
                       label: 'One',
                       value: 'one',
                       onselect: () => {
@@ -335,6 +342,7 @@
                       icon: 'ph:code'
                     },
                     {
+                      type: 'item',
                       label: 'Two',
                       value: 'two',
                       onselect: () => {
@@ -347,32 +355,120 @@
                   ]
                 },
                 {
-                  label: 'Group 1',
+                  type: 'radiogroup',
+                  label: 'Radio Group',
+                  value: radioCheckedCM,
                   items: [
                     {
-                      label: 'Three',
-                      value: 'three',
-                      onselect: () => {
-                        const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: ['You clicked three on the ContextMenu!'] })
-                        Toasts.instance.addToast(toastInfo)
-                      },
-                      icon: 'ph:code'
+                      type: 'radioitem',
+                      label: 'Radio One',
+                      value: 'radio-one'
                     },
                     {
-                      label: 'Four',
-                      value: 'four',
-                      onselect: () => {
-                        const toast = new Toast({ title: 'Four cliecked!', type: Toast.Type.INFO, description: ['You clicked four on the ContextMenu!'] })
-                        Toasts.instance.addToast(toast)
-                      },
-                      icon: 'ph:code'
+                      type: 'radioitem',
+                      label: 'Radio Two',
+                      value: 'radio-two',
+                      disabled: true
+                    }
+                  ],
+                  onchange: (value: string) => {
+                    const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value}!`] })
+                    Toasts.instance.addToast(toast)
+
+                    radioCheckedCM = value
+                  }
+                },
+                {
+                  type: 'group',
+                  label: 'Submenu Group',
+                  items: [
+                    {
+                      type: 'submenu',
+                      icon: 'ph:code',
+                      label: 'Submenu One',
+                      items: [
+                        {
+                          type: 'group',
+                          items: [
+                            {
+                              type: 'item',
+                              label: 'Inside First Menu',
+                              value: 'inside-first-menu',
+                              onselect: () => {
+                                const toastInfo = new Toast({
+                                  title: 'Inside first Menu cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: ['You clicked inside-first-menu on the ContextMenu!']
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                              },
+                              icon: 'ph:code'
+                            },
+                            {
+                              type: 'submenu',
+                              icon: 'ph:code',
+                              label: 'Submenu Two',
+                              items: [
+                                {
+                                  type: 'group',
+                                  items: [
+                                    {
+                                      type: 'item',
+                                      label: 'Inside Second Menu',
+                                      value: 'inside-second-menu',
+                                      onselect: () => {
+                                        const toastInfo = new Toast({
+                                          title: 'Inside Second Menu cliecked!',
+                                          type: Toast.Type.INFO,
+                                          description: ['You clicked inside-second-menu on the ContextMenu!']
+                                        })
+                                        Toasts.instance.addToast(toastInfo)
+                                      },
+                                      icon: 'ph:code'
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: 'group',
+                  label: 'Checkbox Group',
+                  items: [
+                    {
+                      type: 'checkboxitem',
+                      label: 'Checkbox One',
+                      value: 'checkbox-one',
+                      checked: checkboxOneCheckedCM,
+                      onchange: (changed) => {
+                        const toastInfo = new Toast({ title: 'Checkbox One cliecked!', type: Toast.Type.INFO, description: ['You clicked checkbox-one on the ContextMenu!'] })
+                        Toasts.instance.addToast(toastInfo)
+                        checkboxOneCheckedCM = changed
+                      }
+                    },
+                    {
+                      type: 'checkboxitem',
+                      label: 'Checkbox Two',
+                      value: 'checkbox-two',
+                      checked: checkboxTwoCheckedCM,
+                      disabled: true,
+                      onchange: (changed) => {
+                        const toastInfo = new Toast({ title: 'Checkbox Two cliecked!', type: Toast.Type.INFO, description: ['You clicked checkbox-two on the ContextMenu!'] })
+                        Toasts.instance.addToast(toastInfo)
+                        checkboxTwoCheckedCM = changed
+                      }
                     }
                   ]
                 }
               ]}
             >
               <StyledContainer>
-                <div class="flex items-center justify-center p-6">Right click here!</div>
+                <div class="w-full h-full flex items-center justify-center p-6">Right click here!</div>
               </StyledContainer>
             </ContextMenu>
           </StaticContainer>

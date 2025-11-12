@@ -15,7 +15,7 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'flex items-center justify-center shrink-0 rounded-md transition-[opacity] duration-200',
+        'flex items-center justify-center shrink-0 rounded-md transition-opacity duration-200',
         'focus-visible:outline-2',
         'cursor-help disabled:cursor-not-allowed',
         'disabled:opacity-40',
@@ -33,7 +33,7 @@
       <Tooltip.Content
         sideOffset={4}
         class={[
-          'rounded-md overflow-hidden z-50 border transition-[border,background-color] duration-200',
+          'rounded-md overflow-hidden z-50 shadow/20 transition-[border,background-color] duration-200',
           't-dark:bg-zinc-850 t-dark:border-zinc-750',
           't-light:bg-zinc-100 t-light:border-zinc-300',
           't-rust:bg-rust-850 t-rust:border-rust-750',

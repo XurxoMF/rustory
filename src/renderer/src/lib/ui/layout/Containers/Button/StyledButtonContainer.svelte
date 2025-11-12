@@ -12,7 +12,7 @@
 
 <button
   class={[
-    'w-full flex flex-col text-start rounded-md overflow-hidden border transition-[opacity,border,background-color] duration-200',
+    'w-full flex flex-col text-start rounded-md overflow-hidden border shadow/20 transition-[opacity,border,background-color] duration-200',
     'focus-visible:outline-1',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',

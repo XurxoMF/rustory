@@ -18,7 +18,7 @@
       <div class="flex items-center justify-center gap-1">
         <Pagination.PrevButton
           class={[
-            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-[opacity] duration-200',
+            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity duration-200',
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
@@ -38,7 +38,7 @@
             <Pagination.Page
               {page}
               class={[
-                'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-[opacity] duration-200',
+                'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity duration-200',
                 'focus-visible:outline-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
@@ -55,7 +55,7 @@
 
         <Pagination.NextButton
           class={[
-            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-[opacity] duration-200',
+            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity duration-200',
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',

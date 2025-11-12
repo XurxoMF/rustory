@@ -37,11 +37,11 @@
 
 <button
   class={[
-    'flex items-center justify-center shrink-0 border transition-[opacity,border,background-color] duration-200',
-    'focus-visible:outline-1',
+    'flex items-center justify-center shrink-0 shadow/20 transition-[opacity,background-color] duration-200',
+    'focus-visible:outline-2',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
-    'border-red-600 bg-red-800 text-zinc-100 focus-visible:outline-red-600',
+    'bg-red-800 text-zinc-100 focus-visible:outline-red-600',
     ...ROUNDED_CLASSES[rounded],
     ...SIZE_CLASSES[size],
     ...PADDING_CLASSES[padding]

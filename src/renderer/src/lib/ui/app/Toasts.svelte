@@ -24,7 +24,7 @@
   } as const
 </script>
 
-<div class="app-no-drag pointer-events-none absolute top-0 right-0 z-[400] p-2 flex flex-col items-end justify-start gap-2">
+<div class="app-no-drag pointer-events-none absolute top-0 right-0 z-400 p-2 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
     <div
       class={['group w-72 pointer-events-auto']}
@@ -63,7 +63,7 @@
         </div>
       </div>
 
-      <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-[opacity] duration-200">
+      <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity duration-200">
         <Button
           padding="icon"
           size="none"

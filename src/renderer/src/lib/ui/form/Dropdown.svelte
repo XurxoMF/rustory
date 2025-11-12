@@ -42,7 +42,7 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'flex items-center justify-center rounded-md transition-[opacity] duration-200',
+      'flex items-center justify-center rounded-md transition-opacity duration-200',
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
@@ -83,7 +83,7 @@
                         {disabled}
                         textValue={value}
                       >
-                        <Icon {icon} />
+                        <Icon {icon} class="w-5 h-5 flex items-center justify-center opacity-40" />
                         <span>{label}</span>
                       </DropdownMenu.Item>
                     {/each}

@@ -65,7 +65,7 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-[1000] w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,border, background-color] duration-200',
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,border, background-color] duration-200',
       't-dark:text-zinc-100 t-dark:bg-zinc-850 t-dark:border-zinc-750',
       't-light:text-zinc-650 t-light:bg-zinc-100 t-light:border-zinc-350',
       't-rust:text-rust-100 t-rust:bg-rust-850 t-rust:border-rust-750',
@@ -134,7 +134,7 @@
   <div
     id="portal"
     class={[
-      'transition-[color,background-color] duration-200',
+      'select-none transition-[color,background-color] duration-200',
       't-dark:text-zinc-100 t-dark:bg-zinc-850/80',
       't-light:text-zinc-650 t-light:bg-zinc-100/80',
       't-rust:text-rust-100 t-rust:bg-rust-850/80',

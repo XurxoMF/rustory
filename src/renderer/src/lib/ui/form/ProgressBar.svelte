@@ -9,13 +9,7 @@
 <Progress.Root
   {value}
   class={[
-    [
-      'w-full h-2 rounded-full overflow-hidden border transition-[border,background-color] duration-200',
-      't-dark:bg-zinc-800 t-dark:border-zinc-750',
-      't-light:bg-zinc-200 t-light:border-zinc-300',
-      't-rust:bg-rust-800t-rust:border-rust-750',
-      't-midnight:bg-gray-800 t-midnight:border-gray-750'
-    ]
+    ['w-full h-2 rounded-full overflow-hidden shadow/20 transition-[background-color] duration-200', 't-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800']
   ]}
   {...restProps}
 >

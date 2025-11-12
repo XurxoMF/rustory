@@ -12,7 +12,7 @@
 
 <nav
   class={[
-    'relative shrink-0 h-full flex flex-col p-2 items-center gap-2 overflow-hidden border-r transition-[width,border,background-color] duration-200',
+    'relative shrink-0 h-full flex flex-col p-2 items-center gap-2 overflow-hidden border-r shadow/20 transition-[width,border,background-color] duration-200',
     't-dark:bg-zinc-850 t-dark:border-r-zinc-750',
     't-light:bg-zinc-100 t-light:border-r-zinc-300',
     't-rust:bg-rust-850 t-rust:border-r-rust-750',
@@ -26,7 +26,7 @@
     if (!fixed) open = false
   }}
 >
-  <div class={['absolute top-2.5 right-2.5 z-[1] transition-opacity duration-200', !open ? 'opacity-0' : 'opacity-100']}>
+  <div class={['absolute top-2.5 right-2.5 z-1 transition-opacity duration-200', !open ? 'opacity-0' : 'opacity-100']}>
     <Button padding="icon" size="none" rounded="regular" tabindex={!open ? -1 : undefined} onclick={() => (fixed = !fixed)}>
       <Icon icon={fixed ? 'ph:push-pin-slash' : 'ph:push-pin'} />
     </Button>
