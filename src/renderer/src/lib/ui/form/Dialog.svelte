@@ -39,7 +39,7 @@
       {#snippet child({ props })}
         {#if open}
           <div {...props} transition:fade={{ duration: 100 }}>
-            <div class="max-w-[52vw] max-h-[50vh]">
+            <div class="max-w-[50vw] max-h-[50vh]">
               <StyledContainer>
                 <ScrollableContainer orientation="vertical">
                   {#snippet headerContent()}

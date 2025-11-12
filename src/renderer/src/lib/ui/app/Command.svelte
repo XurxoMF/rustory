@@ -55,6 +55,13 @@
       onclick: () => goto('/')
     },
     {
+      value: 'vs-versions-page',
+      keywords: [m.vintagestory__versions(), m.common__pages()],
+      label: m.vintagestory__versions(),
+      icon: 'ph:git-fork',
+      onclick: () => goto('/vs/versions')
+    },
+    {
       value: 'config-page',
       keywords: [m.common__config(), m.common__pages()],
       label: m.common__config(),
@@ -80,7 +87,7 @@
       placeholder={`${m.common__search()}...`}
     />
 
-    <Command.List>
+    <Command.List class="w-[40vw]">
       <Command.Viewport>
         <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
 

@@ -4,7 +4,7 @@
   import { fade } from 'svelte/transition'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { StyledContainer, ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
+  import { ScrollableContainer } from '@renderer/lib/ui/layout/Containers'
 
   type SelectItem = {
     value: string
@@ -51,44 +51,53 @@
   </Select.Trigger>
 
   <Select.Portal to="#portal">
-    <Select.Content sideOffset={4} class={['w-(--bits-select-anchor-width) z-50']} forceMount {...contentProps}>
+    <Select.Content
+      sideOffset={4}
+      class={[
+        'w-(--bits-select-anchor-width) h-fit max-h-60 z-50 flex flex-col rounded-md border shadow/20 transition-[border,background-color] duration-200',
+        't-dark:bg-zinc-850 t-dark:border-zinc-750',
+        't-light:bg-zinc-100 t-light:border-zinc-300',
+        't-rust:bg-rust-850 t-rust:border-rust-750',
+        't-midnight:bg-gray-850 t-midnight:border-gray-750'
+      ]}
+      forceMount
+      {...contentProps}
+    >
       {#snippet child({ props, wrapperProps, open })}
         {#if open}
           <div {...wrapperProps}>
             <div {...props} transition:fade={{ duration: 100 }}>
-              <StyledContainer>
-                <ScrollableContainer orientation="vertical" padding={2}>
-                  <Select.Viewport>
-                    {#each items as { value, label, comment, disabled } (value)}
-                      <Select.Item
-                        {value}
-                        {label}
-                        {disabled}
-                        class={[
-                          'w-full flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[opacity,background-color] duration-200',
-                          'cursor-pointer data-disabled:cursor-not-allowed',
-                          'data-disabled:opacity-40',
-                          't-dark:data-highlighted:bg-zinc-800',
-                          't-light:data-highlighted:bg-zinc-200',
-                          't-rust:data-highlighted:bg-rust-800',
-                          't-midnight:data-highlighted:bg-gray-800'
-                        ]}
-                      >
-                        {#snippet children({ selected })}
-                          <span class="w-full flex items-center justify-start gap-2">
-                            <p>{label}</p>
-                            <p class="text-sm opacity-40">{comment}</p>
-                          </span>
+              <ScrollableContainer orientation="vertical" padding={2}>
+                <Select.Viewport>
+                  {#each items as { value, label, comment, disabled } (value)}
+                    <Select.Item
+                      {value}
+                      {label}
+                      {disabled}
+                      class={[
+                        'w-full flex items-center justify-between px-2 py-1 rounded-md cursor-pointer transition-[opacity,background-color] duration-200',
+                        'cursor-pointer data-disabled:cursor-not-allowed',
+                        'data-disabled:opacity-40',
+                        't-dark:data-highlighted:bg-zinc-800',
+                        't-light:data-highlighted:bg-zinc-200',
+                        't-rust:data-highlighted:bg-rust-800',
+                        't-midnight:data-highlighted:bg-gray-800'
+                      ]}
+                    >
+                      {#snippet children({ selected })}
+                        <span class="w-full flex items-center justify-start gap-2">
+                          <p>{label}</p>
+                          <p class="text-sm opacity-40">{comment}</p>
+                        </span>
 
-                          {#if selected}
-                            <Icon icon="ph:check" />
-                          {/if}
-                        {/snippet}
-                      </Select.Item>
-                    {/each}
-                  </Select.Viewport>
-                </ScrollableContainer>
-              </StyledContainer>
+                        {#if selected}
+                          <Icon icon="ph:check" />
+                        {/if}
+                      {/snippet}
+                    </Select.Item>
+                  {/each}
+                </Select.Viewport>
+              </ScrollableContainer>
             </div>
           </div>
         {/if}
