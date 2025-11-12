@@ -2,6 +2,7 @@
   import { Pagination } from 'bits-ui'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import { m } from '@renderer/paraglide/messages'
 
   type PaginationProps = {
     page: number
@@ -70,7 +71,8 @@
       </div>
 
       <p class={['text-sm opacity-40']}>
-        Showing {range.start} - {range.end}
+        {m.common__showing()}
+        {range.start} - {range.end}
       </p>
     </div>
   {/snippet}

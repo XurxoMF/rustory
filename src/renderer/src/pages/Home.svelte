@@ -672,7 +672,7 @@
               <p>Pagination</p>
             {/snippet}
 
-            <Pagination page={1} count={100} perPage={10} />
+            <Pagination page={1} count={95} perPage={10} />
           </StaticContainer>
         </StyledContainer>
       </ColumnItem>
