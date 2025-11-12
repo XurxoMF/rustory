@@ -405,8 +405,9 @@
                               icon: 'ph:code'
                             },
                             {
-                              type: 'submenu',
+                              type: 'itemsubmenu',
                               icon: 'ph:code',
+                              value: 'submenu-two',
                               label: 'Submenu Two',
                               items: [
                                 {
@@ -428,7 +429,15 @@
                                     }
                                   ]
                                 }
-                              ]
+                              ],
+                              onselect: () => {
+                                const toastInfo = new Toast({
+                                  title: 'Submenu Two cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: ['You clicked submenu-two on the ContextMenu!']
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                              }
                             }
                           ]
                         }

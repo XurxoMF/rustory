@@ -59,7 +59,7 @@
     items: ContextMenuGroupTypes[]
     icon: string
     disabled?: boolean | undefined
-    onselect?: () => void | Promise<void> | undefined
+    onselect: () => void | Promise<void>
   }
 
   type ContextMenuItemTypes = ContextMenuItem | ContextMenuCheckboxItem | ContextMenuSubmenu | ContextMenuItemSubmenu
@@ -236,7 +236,7 @@
 
 {#snippet CMItemSubmenu({ label, icon, value, items, disabled, onselect }: ContextMenuItemSubmenu)}
   <ContextMenu.Sub>
-    <ContextMenu.Item
+    <ContextMenu.SubTrigger
       class={[
         'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-200',
         'outline-none',
@@ -253,10 +253,10 @@
     >
       <Icon {icon} class="w-4 h-4 flex items-center justify-center opacity-40" />
       <span>{label}</span>
-      <Icon icon="ph:caret-right-bold" class="w-4 h-4 pl-4 ml-auto flex items-center justify-center opacity-40" />
-    </ContextMenu.Item>
+      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+    </ContextMenu.SubTrigger>
 
-    <ContextMenu.SubContent class="min-w-48 outline-none z-50" forceMount>
+    <ContextMenu.SubContent sideOffset={12} class="min-w-48 outline-none z-50" forceMount>
       {#snippet child({ open, props, wrapperProps })}
         {#if open}
           <div {...wrapperProps}>
