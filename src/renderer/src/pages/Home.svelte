@@ -29,6 +29,10 @@
   let radioCheckedCM = $state('radio-one')
   let checkboxOneCheckedCM = $state(false)
   let checkboxTwoCheckedCM = $state(true)
+
+  let radioCheckedD = $state('radio-one')
+  let checkboxOneCheckedD = $state(false)
+  let checkboxTwoCheckedD = $state(true)
 </script>
 
 <PageWrapper>
@@ -279,34 +283,153 @@
             {/snippet}
 
             <Dropdown
-              items={[
+              groups={[
                 {
-                  label: 'One',
-                  value: 'one',
-                  onselect: () => {
-                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the Dropdown!'] })
-                    Toasts.instance.addToast(toastInfo)
-                  },
-                  icon: 'ph:code'
+                  type: 'group',
+                  label: 'Item Group',
+                  items: [
+                    {
+                      type: 'item',
+                      label: 'One',
+                      value: 'one',
+                      onselect: () => {
+                        const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the DropdownMenu!'] })
+                        Toasts.instance.addToast(toastInfo)
+                      },
+                      icon: 'ph:code'
+                    },
+                    {
+                      type: 'item',
+                      label: 'Two',
+                      value: 'two',
+                      onselect: () => {
+                        const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the DropdownMenu!'] })
+                        Toasts.instance.addToast(toast)
+                      },
+                      icon: 'ph:code',
+                      disabled: true
+                    }
+                  ]
                 },
                 {
-                  label: 'Two',
-                  value: 'two',
-                  onselect: () => {
-                    const toastInfo = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the Dropdown!'] })
-                    Toasts.instance.addToast(toastInfo)
-                  },
-                  icon: 'ph:code',
-                  disabled: true
+                  type: 'radiogroup',
+                  label: 'Radio Group',
+                  value: radioCheckedD,
+                  items: [
+                    {
+                      type: 'radioitem',
+                      label: 'Radio One',
+                      value: 'radio-one'
+                    },
+                    {
+                      type: 'radioitem',
+                      label: 'Radio Two',
+                      value: 'radio-two',
+                      disabled: true
+                    }
+                  ],
+                  onchange: (value: string) => {
+                    const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value} on the DropdownMenu!`] })
+                    Toasts.instance.addToast(toast)
+
+                    radioCheckedD = value
+                  }
                 },
                 {
-                  label: 'Three',
-                  value: 'three',
-                  onselect: () => {
-                    const toastInfo = new Toast({ title: 'Three cliecked!', type: Toast.Type.INFO, description: ["How the hell you clicked three? It's disabled!"] })
-                    Toasts.instance.addToast(toastInfo)
-                  },
-                  icon: 'ph:code'
+                  type: 'group',
+                  label: 'Submenu Group',
+                  items: [
+                    {
+                      type: 'submenu',
+                      icon: 'ph:code',
+                      label: 'Submenu One',
+                      items: [
+                        {
+                          type: 'group',
+                          items: [
+                            {
+                              type: 'item',
+                              label: 'Inside First Menu',
+                              value: 'inside-first-menu',
+                              onselect: () => {
+                                const toastInfo = new Toast({
+                                  title: 'Inside first Menu cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: ['You clicked inside-first-menu on the DropdownMenu!']
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                              },
+                              icon: 'ph:code'
+                            },
+                            {
+                              type: 'itemsubmenu',
+                              icon: 'ph:code',
+                              value: 'submenu-two',
+                              label: 'Submenu Two',
+                              items: [
+                                {
+                                  type: 'group',
+                                  items: [
+                                    {
+                                      type: 'item',
+                                      label: 'Inside Second Menu',
+                                      value: 'inside-second-menu',
+                                      onselect: () => {
+                                        const toastInfo = new Toast({
+                                          title: 'Inside Second Menu cliecked!',
+                                          type: Toast.Type.INFO,
+                                          description: ['You clicked inside-second-menu on the DropdownMenu!']
+                                        })
+                                        Toasts.instance.addToast(toastInfo)
+                                      },
+                                      icon: 'ph:code'
+                                    }
+                                  ]
+                                }
+                              ],
+                              onselect: () => {
+                                const toastInfo = new Toast({
+                                  title: 'Submenu Two cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: ['You clicked submenu-two on the DropdownMenu!']
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                              }
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  type: 'group',
+                  label: 'Checkbox Group',
+                  items: [
+                    {
+                      type: 'checkboxitem',
+                      label: 'Checkbox One',
+                      value: 'checkbox-one',
+                      checked: checkboxOneCheckedD,
+                      onchange: (changed) => {
+                        const toastInfo = new Toast({ title: 'Checkbox One cliecked!', type: Toast.Type.INFO, description: ['You clicked checkbox-one on the ContextMenu!'] })
+                        Toasts.instance.addToast(toastInfo)
+                        checkboxOneCheckedD = changed
+                      }
+                    },
+                    {
+                      type: 'checkboxitem',
+                      label: 'Checkbox Two',
+                      value: 'checkbox-two',
+                      checked: checkboxTwoCheckedD,
+                      disabled: true,
+                      onchange: (changed) => {
+                        const toastInfo = new Toast({ title: 'Checkbox Two cliecked!', type: Toast.Type.INFO, description: ['You clicked checkbox-two on the ContextMenu!'] })
+                        Toasts.instance.addToast(toastInfo)
+                        checkboxTwoCheckedD = changed
+                      }
+                    }
+                  ]
                 }
               ]}
               padding="icon"
@@ -372,7 +495,7 @@
                     }
                   ],
                   onchange: (value: string) => {
-                    const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value}!`] })
+                    const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value} on the ContextMenu!`] })
                     Toasts.instance.addToast(toast)
 
                     radioCheckedCM = value
