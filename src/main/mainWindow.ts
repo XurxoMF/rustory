@@ -49,7 +49,6 @@ export async function createMainWindow(): Promise<void> {
     minWidth: 1024,
     minHeight: 600,
     titleBarStyle: 'hidden',
-    transparent: true,
     frame: false,
     icon: icon,
     ...(process.platform === 'linux' ? { icon } : {}),

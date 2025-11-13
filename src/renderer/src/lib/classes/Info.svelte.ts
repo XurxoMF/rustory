@@ -26,7 +26,7 @@ export class Info {
   private _name: string
 
   /**
-   * Current Rustory version.
+   * Current version of the APP.
    */
   private _version: string
 
