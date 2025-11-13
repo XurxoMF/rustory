@@ -15,13 +15,13 @@
 </script>
 
 <script lang="ts">
-  import { Command } from 'bits-ui'
+  import { Dialog, Command } from 'bits-ui'
+  import { goto } from '@mateothegreat/svelte5-router'
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Dialog from '@renderer/lib/ui/form/Dialog.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { goto } from '@mateothegreat/svelte5-router'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
 
   const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
 
@@ -71,47 +71,80 @@
   ]
 </script>
 
-<Dialog bind:open title={m.common__search()}>
-  <Command.Root>
-    <Command.Input
+<Dialog.Root bind:open>
+  <Dialog.Portal to="#portal">
+    <Dialog.Overlay
       class={[
-        'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/20 transition-[background-color] duration-200',
-        'focus-visible:outline-2',
-        'cursor-pointer disabled:cursor-not-allowed',
-        'disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:focus-visible:outline-zinc-750',
-        't-light:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
+        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-200',
+        't-dark:bg-zinc-850/20',
+        't-light:bg-zinc-100/20',
+        't-rust:bg-rust-850/20',
+        't-midnight:bg-gray-850/20'
       ]}
-      placeholder={`${m.common__search()}...`}
     />
 
-    <Command.List class="w-[40vw]">
-      <Command.Viewport>
-        <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
+    <Dialog.Content
+      class={[
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100',
+        'rounded-md border shadow/20 transition-[border,background-color] duration-200',
+        't-dark:bg-zinc-850 t-dark:border-zinc-750',
+        't-light:bg-zinc-100 t-light:border-zinc-300',
+        't-rust:bg-rust-850 t-rust:border-rust-750',
+        't-midnight:bg-gray-850 t-midnight:border-gray-750'
+      ]}
+    >
+      <div class="w-full flex items-center justify-between gap-2">
+        <Dialog.Title>{m.common__search()}</Dialog.Title>
 
-        <Command.Group>
-          <Command.GroupHeading class={HEADING_CLASS}>{m.common__pages()}</Command.GroupHeading>
+        <Button tabindex={-1} onclick={() => (open = false)}>
+          <Icon icon="ph:x" class="opacity-40" />
+        </Button>
+      </div>
 
-          <Command.GroupItems>
-            {#each PAGES as { value, keywords, label, icon, onclick } (value)}
-              <Command.Item
-                {value}
-                {keywords}
-                onSelect={() => {
-                  onclick()
-                  closeCommand()
-                }}
-                class={ITEM_CLASS}
-              >
-                <Icon {icon} />
-                {label}
-              </Command.Item>
-            {/each}
-          </Command.GroupItems>
-        </Command.Group>
-      </Command.Viewport>
-    </Command.List>
-  </Command.Root>
-</Dialog>
+      <Dialog.Description class="opacity-40 mb-2">Description...</Dialog.Description>
+
+      <Command.Root>
+        <Command.Input
+          class={[
+            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/20 transition-[background-color] duration-200',
+            'focus-visible:outline-2',
+            'cursor-pointer disabled:cursor-not-allowed',
+            'disabled:opacity-40',
+            't-dark:bg-zinc-800 t-dark:focus-visible:outline-zinc-750',
+            't-light:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
+            't-rust:bg-rust-800 t-rust:focus-visible:outline-rust-750',
+            't-midnight:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
+          ]}
+          placeholder={`${m.common__search()}...`}
+        />
+
+        <Command.List class="w-[40vw]">
+          <Command.Viewport>
+            <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
+
+            <Command.Group>
+              <Command.GroupHeading class={HEADING_CLASS}>{m.common__pages()}</Command.GroupHeading>
+
+              <Command.GroupItems>
+                {#each PAGES as { value, keywords, label, icon, onclick } (value)}
+                  <Command.Item
+                    {value}
+                    {keywords}
+                    onSelect={() => {
+                      onclick()
+                      closeCommand()
+                    }}
+                    class={ITEM_CLASS}
+                  >
+                    <Icon {icon} />
+                    {label}
+                  </Command.Item>
+                {/each}
+              </Command.GroupItems>
+            </Command.Group>
+          </Command.Viewport>
+        </Command.List>
+      </Command.Root>
+    </Dialog.Content>
+  </Dialog.Portal>
+</Dialog.Root>

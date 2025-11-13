@@ -4,13 +4,15 @@
 
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
-  import { Button } from '@renderer/lib/ui/form/Buttons'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 </script>
 
-<Button padding="icon" size="none" onclick={() => goto('/')}>
+<Button onclick={() => goto('/')}>
   <Icon icon="ph:house" class="opacity-40" />
 </Button>
+
+<!-- TODO: Change animations to use tw-animate-css -->
 
 {#each Breadcrumbs.instance.segments as segment (segment.href + segment.label)}
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }}>
@@ -18,7 +20,7 @@
   </span>
 
   <span transition:fly={{ duration: 200, opacity: 0, x: -5 }} class="text-xs">
-    <Button padding="icon" size="none" onclick={() => goto(segment.href)}>
+    <Button onclick={() => goto(segment.href)}>
       <span class="opacity-40">{segment.label}</span>
     </Button>
   </span>

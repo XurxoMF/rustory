@@ -19,7 +19,7 @@
   import WindowBar from '@renderer/lib/ui/app/WindowBar.svelte'
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import ProgressBar from '@renderer/lib/ui/form/ProgressBar.svelte'
+  import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
   import Command from './lib/ui/app/Command.svelte'
 
@@ -66,10 +66,10 @@
   <div
     class={[
       'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,border, background-color] duration-200',
-      't-dark:text-zinc-100 t-dark:bg-zinc-850 t-dark:border-zinc-750',
+      't-dark:text-zinc-200 t-dark:bg-zinc-850 t-dark:border-zinc-750',
       't-light:text-zinc-650 t-light:bg-zinc-100 t-light:border-zinc-350',
-      't-rust:text-rust-100 t-rust:bg-rust-850 t-rust:border-rust-750',
-      't-midnight:text-gray-100 t-midnight:bg-gray-850 t-midnight:border-gray-750'
+      't-rust:text-rust-200 t-rust:bg-rust-850 t-rust:border-rust-750',
+      't-midnight:text-gray-200 t-midnight:bg-gray-850 t-midnight:border-gray-750'
     ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
@@ -110,10 +110,10 @@
     <div
       class={[
         'w-full h-full flex flex-col select-none backdrop-blur-xs transition-[color,background-color] duration-200',
-        't-dark:text-zinc-100 t-dark:bg-zinc-850/80',
-        't-light:text-zinc-650 t-light:bg-zinc-100/80',
-        't-rust:text-rust-100 t-rust:bg-rust-850/80',
-        't-midnight:text-gray-100 t-midnight:bg-gray-850/80'
+        't-dark:text-zinc-200 t-dark:bg-zinc-900/95',
+        't-light:text-zinc-650 t-light:bg-zinc-50/95',
+        't-rust:text-rust-200 t-rust:bg-rust-900/95',
+        't-midnight:text-gray-200 t-midnight:bg-gray-900/95'
       ]}
     >
       <WindowBar />

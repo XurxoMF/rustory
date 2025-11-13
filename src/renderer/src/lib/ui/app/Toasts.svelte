@@ -1,13 +1,9 @@
 <script lang="ts">
-  import { fly } from 'svelte/transition'
-
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import { StaticContainer } from '@renderer/lib/ui/layout/Containers'
-  import { StyledButtonContainer } from '@renderer/lib/ui/layout/Containers/Button'
+  import { StaticSection } from '@renderer/lib/ui/layout/Sections'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import { Button } from '@renderer/lib/ui/form/Buttons'
-  import StyledContainer from '../layout/Containers/StyledContainer.svelte'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
 
   const ICONS: Record<Toast.Type, string> = {
     info: 'ph:info',
@@ -26,28 +22,21 @@
 
 <div class="app-no-drag pointer-events-none absolute top-0 right-0 z-400 p-2 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
-    <div
-      class={['group w-72 pointer-events-auto']}
-      onmouseenter={() => Toasts.instance.clearToast(toast)}
-      onmouseleave={() => Toasts.instance.restartToast(toast)}
-      role="alert"
-      transition:fly={{ duration: 200, opacity: 0, x: 5 }}
-    >
+    <div class={['group w-72 pointer-events-auto']} onmouseenter={() => Toasts.instance.clearToast(toast)} onmouseleave={() => Toasts.instance.restartToast(toast)} role="alert">
       {#if toast.onclick}
-        <StyledButtonContainer onclick={toast.onclick}>
+        <!-- TODO: Probably change the Button for a new ButtonContainer component? -->
+        <Button onclick={toast.onclick}>
           {@render content(toast)}
-        </StyledButtonContainer>
+        </Button>
       {:else}
-        <StyledContainer>
-          {@render content(toast)}
-        </StyledContainer>
+        {@render content(toast)}
       {/if}
     </div>
   {/each}
 </div>
 
 {#snippet content(toast: Toast)}
-  <StaticContainer>
+  <StaticSection>
     <div class="w-full flex gap-2 items-center">
       <div class="w-full flex gap-2 items-center">
         <div>
@@ -65,8 +54,6 @@
 
       <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity duration-200">
         <Button
-          padding="icon"
-          size="none"
           onclick={(e) => {
             e.stopPropagation()
             Toasts.instance.removeToast(toast)
@@ -76,5 +63,5 @@
         </Button>
       </div>
     </div>
-  </StaticContainer>
+  </StaticSection>
 {/snippet}

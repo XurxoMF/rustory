@@ -122,4 +122,5 @@ Here's a table with the z-index layers used on the project:
 | 100-499  | Floating UI | Popups, Notifications...    |
 | 500-1000 | Cover UI    | Loaders...                  |
 
-> _For dropdowns I'm using z-50 everywhere. For popups I'm using z-[250]_
+> For dropdowns I'm using z-50 everywhere. For popups I'm using z-250.
+> Tooltips are using z-1000 so if you place one inside a Dropdown it shows correctly.

@@ -8,7 +8,7 @@
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import ComboBox from '@renderer/lib/ui/form/ComboBox.svelte'
+  import ComboBox from '@renderer/lib/ui/components/ComboBox.svelte'
 
   type VersionsToInstallProps = {
     version?: RAPIVSVersion | undefined

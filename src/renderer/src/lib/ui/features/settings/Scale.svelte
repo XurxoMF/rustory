@@ -3,7 +3,7 @@
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select from '@renderer/lib/ui/form/Select.svelte'
+  import Select from '@renderer/lib/ui/components/Select.svelte'
 </script>
 
 <Select

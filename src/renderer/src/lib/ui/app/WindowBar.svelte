@@ -8,8 +8,8 @@
   import WindowControls from '@renderer/lib/ui/display/WindowControls.svelte'
   import RustoryIcon from '@renderer/lib/ui/RustoryIcon.svelte'
   import { openCommand } from '@renderer/lib/ui/app/Command.svelte'
-  import Keys from '@renderer/lib/ui/form/Keys.svelte'
-  import Button from '../form/Buttons/Button.svelte'
+  import Key from '@renderer/lib/ui/components/Key.svelte'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
 </script>
 
 <div
@@ -24,7 +24,7 @@
   <div class="shrink-0 flex-1 flex items-center justify-start gap-6">
     <div class="w-fit flex items-center justify-center gap-2">
       <div class="app-no-drag">
-        <Button padding="none" size="none" rounded="regular" onclick={() => goto('/')}>
+        <Button onclick={() => goto('/')}>
           <RustoryIcon class="text-xl" />
         </Button>
       </div>
@@ -53,8 +53,9 @@
     >
       {m.placeholders__search_or_use_a_command()}
 
-      <span class="absolute top-1/2 right-2 -translate-y-1/2">
-        <Keys keys={['ctrl', 'k']} />
+      <span class="absolute top-1/2 right-2 -translate-y-1/2 flex items-center gap-1">
+        <Key key="ctrl" />
+        <Key key="k" />
       </span>
     </button>
   </div>
