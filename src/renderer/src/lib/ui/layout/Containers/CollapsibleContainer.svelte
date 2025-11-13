@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Collapsible, type WithoutChild } from 'bits-ui'
-  import { slide } from 'svelte/transition'
   import type { Snippet } from 'svelte'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
@@ -44,24 +43,17 @@
     <Icon icon="ph:caret-up-down" />
   </Collapsible.Trigger>
 
-  <Collapsible.Content forceMount>
-    {#snippet child({ props, open })}
-      {#if open}
-        <div transition:slide={{ duration: 200 }} {...props}>
-          <div
-            class={[
-              'w-full flex flex-col border-t transition-[border] duration-200',
-              't-dark:border-t-zinc-750',
-              't-light:border-t-zinc-300',
-              't-rust:border-t-rust-750',
-              't-midnight:border-t-gray-750',
-              PADDING_CLASSES[padding]
-            ]}
-          >
-            {@render children?.()}
-          </div>
-        </div>
-      {/if}
-    {/snippet}
+  <Collapsible.Content
+    class={[
+      'w-full flex flex-col overflow-hidden border-t transition-[border] duration-200',
+      't-dark:border-t-zinc-750',
+      't-light:border-t-zinc-300',
+      't-rust:border-t-rust-750',
+      't-midnight:border-t-gray-750',
+      'data-[state=open]:animate-collapsible-down data-[state=closed]:animate-collapsible-up',
+      PADDING_CLASSES[padding]
+    ]}
+  >
+    {@render children?.()}
   </Collapsible.Content>
 </Collapsible.Root>
