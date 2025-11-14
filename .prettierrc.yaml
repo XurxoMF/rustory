@@ -1,6 +1,6 @@
 singleQuote: true
 semi: false
-printWidth: 200
+printWidth: 160
 trailingComma: none
 plugins:
   - prettier-plugin-svelte

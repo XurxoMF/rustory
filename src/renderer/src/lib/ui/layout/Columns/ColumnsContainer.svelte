@@ -16,14 +16,15 @@
   type ColumnsContainerProps = {
     children: Snippet
     columns?: ColumnTypes | undefined
-    breakpoint?: boolean | undefined
+    isBreakpoint?: boolean | undefined
+    isLayout?: boolean | undefined
   }
 
-  let { children, columns = 1, breakpoint = false }: ColumnsContainerProps = $props()
+  let { children, columns = 1, isBreakpoint = false, isLayout = false }: ColumnsContainerProps = $props()
 </script>
 
-<div class={['w-full', breakpoint && '@container']}>
-  <div class={['w-full gap-x-2 space-y-2', ...COLUMN_CLASSES[columns]]}>
+<div class={['w-full', isBreakpoint && '@container']}>
+  <div class={['w-full', isLayout ? 'gap-x-8 space-y-8' : 'gap-x-4 space-y-4', ...COLUMN_CLASSES[columns]]}>
     {@render children()}
   </div>
 </div>

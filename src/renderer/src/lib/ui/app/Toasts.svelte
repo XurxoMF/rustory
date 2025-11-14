@@ -1,7 +1,6 @@
 <script lang="ts">
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import { StaticSection } from '@renderer/lib/ui/layout/Sections'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
 
@@ -36,32 +35,30 @@
 </div>
 
 {#snippet content(toast: Toast)}
-  <StaticSection>
+  <div class="w-full flex gap-2 items-center">
     <div class="w-full flex gap-2 items-center">
-      <div class="w-full flex gap-2 items-center">
-        <div>
-          <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color] duration-200', ...COLOR_CLASSES[toast.type]]} />
-        </div>
-
-        <div>
-          <p class="text-sm">{toast.title}</p>
-
-          {#each toast.description as description}
-            <p class="text-xs opacity-40">{description}</p>
-          {/each}
-        </div>
+      <div>
+        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color] duration-100', ...COLOR_CLASSES[toast.type]]} />
       </div>
 
-      <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity duration-200">
-        <Button
-          onclick={(e) => {
-            e.stopPropagation()
-            Toasts.instance.removeToast(toast)
-          }}
-        >
-          <Icon icon="ph:x" class="cursor-pointer" />
-        </Button>
+      <div>
+        <p class="text-sm">{toast.title}</p>
+
+        {#each toast.description as description}
+          <p class="text-xs opacity-40">{description}</p>
+        {/each}
       </div>
     </div>
-  </StaticSection>
+
+    <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity duration-100">
+      <Button
+        onclick={(e) => {
+          e.stopPropagation()
+          Toasts.instance.removeToast(toast)
+        }}
+      >
+        <Icon icon="ph:x" class="cursor-pointer" />
+      </Button>
+    </div>
+  </div>
 {/snippet}

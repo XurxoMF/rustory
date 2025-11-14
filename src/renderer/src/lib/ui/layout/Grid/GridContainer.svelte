@@ -16,14 +16,15 @@
   type GridContainer = {
     children: Snippet
     columns?: ColumnTypes | undefined
-    breakpoint?: boolean | undefined
+    isBreakpoint?: boolean | undefined
+    isLayout?: boolean | undefined
   }
 
-  let { children, columns = 1, breakpoint = false }: GridContainer = $props()
+  let { children, columns = 1, isBreakpoint = false, isLayout = false }: GridContainer = $props()
 </script>
 
-<div class={['w-full', breakpoint && '@container']}>
-  <div class={['w-full grid gap-2', ...COLUMN_CLASSES[columns]]}>
+<div class={['w-full', isBreakpoint && '@container']}>
+  <div class={['w-full grid', isLayout ? 'gap-8' : 'gap-4', ...COLUMN_CLASSES[columns]]}>
     {@render children()}
   </div>
 </div>

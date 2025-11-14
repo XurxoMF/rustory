@@ -26,7 +26,7 @@
   const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
 
   const ITEM_CLASS = [
-    'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-200',
+    'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-100',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     't-dark:data-selected:bg-zinc-800',
@@ -75,7 +75,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-200',
+        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-100',
         't-dark:bg-zinc-850/20',
         't-light:bg-zinc-100/20',
         't-rust:bg-rust-850/20',
@@ -86,11 +86,11 @@
     <Dialog.Content
       class={[
         'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100',
-        'rounded-md border shadow/20 transition-[border,background-color] duration-200',
-        't-dark:bg-zinc-850 t-dark:border-zinc-750',
+        'rounded-md border shadow/20 transition-[border,background-color] duration-100',
+        't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-750',
-        't-midnight:bg-gray-850 t-midnight:border-gray-750'
+        't-rust:bg-rust-850 t-rust:border-rust-800',
+        't-midnight:bg-gray-850 t-midnight:border-gray-800'
       ]}
     >
       <div class="w-full flex items-center justify-between gap-2">
@@ -106,11 +106,11 @@
       <Command.Root>
         <Command.Input
           class={[
-            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/20 transition-[background-color] duration-200',
+            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/20 transition-[background-color] duration-100',
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            't-dark:bg-zinc-800 t-dark:focus-visible:outline-zinc-750',
+            't-dark:bg-zinc-800 t-dark:focus-visible:outline-zinc-800',
             't-light:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
             't-rust:bg-rust-800 t-rust:focus-visible:outline-rust-750',
             't-midnight:bg-gray-800 t-midnight:focus-visible:outline-gray-750'

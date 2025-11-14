@@ -73,11 +73,8 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-[color,border,background-color] duration-200',
-      't-dark:text-zinc-200 t-dark:bg-zinc-850 t-dark:border-zinc-750',
-      't-light:text-zinc-650 t-light:bg-zinc-100 t-light:border-zinc-350',
-      't-rust:text-rust-200 t-rust:bg-rust-850 t-rust:border-rust-750',
-      't-midnight:text-gray-200 t-midnight:bg-gray-850 t-midnight:border-gray-750'
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-[color,border,background-color] duration-100',
+      't-dark:text-zinc-200 t-dark:bg-zinc-950 t-dark:border-zinc-800'
     ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
@@ -108,26 +105,15 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-cover transition-[border,background-color] duration-200',
-      't-dark:bg-image-dark t-dark:bg-zinc-850 t-dark:border-zinc-750',
-      't-light:bg-image-light t-light:bg-zinc-100 t-light:border-zinc-350',
-      't-rust:bg-image-rust t-rust:bg-rust-850 t-rust:border-rust-750',
-      't-midnight:bg-image-midnight t-midnight:bg-gray-850 t-midnight:border-gray-750',
+      'relative w-screen h-screen overflow-hidden bg-cover transition-all duration-100',
+      't-dark:bg-image-dark t-dark:bg-zinc-950 t-dark:border-zinc-800',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
-    <div
-      class={[
-        'w-full h-full flex flex-col select-none backdrop-blur-xs transition-[color,background-color] duration-200',
-        't-dark:text-zinc-200 t-dark:bg-zinc-850/95',
-        't-light:text-zinc-650 t-light:bg-zinc-100/95',
-        't-rust:text-rust-200 t-rust:bg-rust-850/95',
-        't-midnight:text-gray-200 t-midnight:bg-gray-850/95'
-      ]}
-    >
+    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs transition-all duration-100', 't-dark:text-zinc-200 t-dark:bg-zinc-950/95']}>
       <WindowBar />
 
-      <div class="w-full h-full relative flex overflow-hidden">
+      <div class="w-full h-full relative flex flex-row overflow-hidden">
         <MainNav />
 
         <main class="w-full h-full overflow-hidden">
@@ -140,14 +126,5 @@
     </div>
   </div>
 
-  <div
-    id="portal"
-    class={[
-      'select-none transition-[color,background-color] duration-200',
-      't-dark:text-zinc-100 t-dark:bg-zinc-850/80',
-      't-light:text-zinc-650 t-light:bg-zinc-100/80',
-      't-rust:text-rust-100 t-rust:bg-rust-850/80',
-      't-midnight:text-gray-100 t-midnight:bg-gray-850/80'
-    ]}
-  ></div>
+  <div id="portal" class={['select-none transition-all duration-100', 't-dark:text-zinc-200']}></div>
 {/if}

@@ -8,7 +8,6 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
-  import { StaticSection, CollapsibleSection } from '@renderer/lib/ui/layout/Sections'
   import Label from '@renderer/lib/ui/components/Label.svelte'
   import Description from '@renderer/lib/ui/components/Description.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
@@ -40,73 +39,68 @@
   }
 </script>
 
-<PageWrapper>
-  <GridContainer columns={3} breakpoint>
+<PageWrapper title={m.vintagestory__versions()} description={m.descriptions__vs_versions_page()}>
+  <GridContainer columns={3} isBreakpoint>
     <GridItem spanX="full">
-      <CollapsibleSection title={m.vintagestory__versions_add()}>
-        <GridContainer columns={2}>
-          <GridItem>
-            <div class="flex flex-col items-start justify-center gap-1">
-              <div class="flex gap-1 items-center">
-                <Label>{m.vintagestory__version()}</Label>
-                <Description>{m.descriptions__vs_version_to_install()}</Description>
-              </div>
-
-              <VersionsToInstall bind:version />
+      <GridContainer columns={2}>
+        <GridItem>
+          <div class="flex flex-col items-start justify-center gap-1">
+            <div class="flex gap-1 items-center">
+              <Label>{m.vintagestory__version()}</Label>
+              <Description>{m.descriptions__vs_version_to_install()}</Description>
             </div>
-          </GridItem>
 
-          <GridItem>
-            <div class="flex flex-col items-start justify-center gap-1">
-              <div class="flex gap-1 items-center">
-                <Label>{m.labels__vs_version_path()}</Label>
-                <Description>{m.descriptions__vs_version_path()}</Description>
-              </div>
+            <VersionsToInstall bind:version />
+          </div>
+        </GridItem>
 
-              <div class="w-full flex items-stretch justify-center gap-1">
-                <Button
-                  mode="neutral"
-                  size="form-form"
-                  title={m.common__select_folder()}
-                  onclick={async () => {
-                    const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
-                    path = selected[0]
-                  }}
-                >
-                  <Icon icon="ph:magnifying-glass" />
-                </Button>
-
-                <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly />
-              </div>
+        <GridItem>
+          <div class="flex flex-col items-start justify-center gap-1">
+            <div class="flex gap-1 items-center">
+              <Label>{m.labels__vs_version_path()}</Label>
+              <Description>{m.descriptions__vs_version_path()}</Description>
             </div>
-          </GridItem>
 
-          <GridItem spanX="full">
-            <div class="h-full flex flex-col items-end gap-1">
-              <Button mode="success" onclick={manageInstallVersion}>
-                {m.common__install()}
+            <div class="w-full flex items-stretch justify-center gap-1">
+              <Button
+                mode="neutral"
+                title={m.common__select_folder()}
+                onclick={async () => {
+                  const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
+                  path = selected[0]
+                }}
+              >
+                <Icon icon="ph:magnifying-glass" />
               </Button>
+
+              <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly />
             </div>
-          </GridItem>
-        </GridContainer>
-      </CollapsibleSection>
+          </div>
+        </GridItem>
+
+        <GridItem spanX="full">
+          <div class="h-full flex flex-col items-end gap-1">
+            <Button mode="success" onclick={manageInstallVersion}>
+              {m.common__install()}
+            </Button>
+          </div>
+        </GridItem>
+      </GridContainer>
     </GridItem>
 
     {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
       <GridItem>
-        <StaticSection>
-          <div class="w-full flex items-center justify-between">
-            <div class="w-full flex flex-col justify-center items-start overflow-hidden">
-              <h1>{vsVersion.version}</h1>
-              <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
-              <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis">{vsVersion.task?.progress}</p>
-            </div>
-            <div class="w-fit flex justify-center">
-              <Button size="form-form"><Icon icon="ph:folder-open" class="opacity-40" /></Button>
-              <Button size="form-form"><Icon icon="ph:trash" class="opacity-40" /></Button>
-            </div>
+        <div class="w-full flex items-center justify-between">
+          <div class="w-full flex flex-col justify-center items-start overflow-hidden">
+            <h1>{vsVersion.version}</h1>
+            <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
+            <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis">{vsVersion.task?.progress}</p>
           </div>
-        </StaticSection>
+          <div class="w-fit flex justify-center">
+            <Button><Icon icon="ph:folder-open" class="opacity-40" /></Button>
+            <Button><Icon icon="ph:trash" class="opacity-40" /></Button>
+          </div>
+        </div>
       </GridItem>
     {/each}
   </GridContainer>

@@ -63,19 +63,19 @@
 
   /* Custom scale options */
   html[data-uiscale='50'] {
-    font-size: 8px;
+    font-size: 6px;
   }
   html[data-uiscale='75'] {
-    font-size: 12px;
+    font-size: 10px;
   }
   html[data-uiscale='100'] {
-    font-size: 16px;
+    font-size: 14px;
   }
   html[data-uiscale='125'] {
-    font-size: 20px;
+    font-size: 18px;
   }
   html[data-uiscale='150'] {
-    font-size: 24px;
+    font-size: 22px;
   }
 
   /* Custom scrollbar styles */

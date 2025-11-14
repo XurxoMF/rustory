@@ -1,24 +1,30 @@
 <script lang="ts">
-  import { fade } from 'svelte/transition'
   import { ScrollArea, type WithoutChild } from 'bits-ui'
 
-  type ScrollableProps = Omit<WithoutChild<ScrollArea.RootProps>, 'class'>
+  import H1 from '@renderer/lib/ui/components/H1.svelte'
+  import P from '@renderer/lib/ui/components/P.svelte'
 
-  let { ref = $bindable(null), children, ...restProps }: ScrollableProps = $props()
+  type ScrollableProps = Omit<WithoutChild<ScrollArea.RootProps>, 'class' | 'title'> & {
+    title: string
+    description: string
+  }
 
-  const ANIMATION_DURATION: number = 100
+  let { ref = $bindable(null), title, description, children, ...restProps }: ScrollableProps = $props()
 </script>
 
-<!-- TODO: Change animations to use tw-animate-css -->
-
-<div class="w-full h-full" in:fade={{ duration: ANIMATION_DURATION, delay: ANIMATION_DURATION * 1.5 }} out:fade={{ duration: ANIMATION_DURATION }}>
+<div class="w-full h-full">
   <ScrollArea.Root bind:ref type="always" class="w-full h-full" {...restProps}>
-    <ScrollArea.Viewport class="w-full h-full p-2">
+    <ScrollArea.Viewport class="w-full h-full px-8 py-6">
+      <div class="flex flex-col gap-4 mb-8">
+        <H1>{title}</H1>
+        <P mode="secondary">{description}</P>
+      </div>
+
       {@render children?.()}
     </ScrollArea.Viewport>
 
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-[width] duration-200">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-200', 't-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-[width] duration-100">
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-[background] duration-100', 't-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} />
     </ScrollArea.Scrollbar>
   </ScrollArea.Root>
 </div>
