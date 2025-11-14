@@ -11,6 +11,7 @@
 
   import { Data } from '@renderer/lib/classes/Data.svelte'
   import { Loader } from '@renderer/lib/classes/Loader.svelte'
+  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
   import { Info } from '@renderer/lib/classes/Info.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
   import { Hotkeys } from '@renderer/lib/classes/Hotkeys.svelte'
@@ -21,7 +22,7 @@
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
-  import Command from './lib/ui/app/Command.svelte'
+  import Command from '@renderer/lib/ui/app/Command.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
@@ -38,11 +39,18 @@
     // Ensure the tasks list is empty. Some times it may be completed if the APP reloaded incorrectly.
     loader.resetCompletedTasks()
 
-    // Load the app config and info.
-    await Config.init()
+    // Load the info, config, window state and tasks.
     await Info.init()
-    await Tasks.init()
+    await Config.init()
+    await MainWindow.init()
+
+    // Show the window and wait a few ms for it to load.
+    window.api.window.show()
+    await sleep(500)
     loader.completeTask('app-init')
+
+    // Load the tasks.
+    await Tasks.init()
 
     // Load the hotkeys.
     await Hotkeys.init()
@@ -65,7 +73,7 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 rounded-md border transition-[color,border, background-color] duration-200',
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-[color,border,background-color] duration-200',
       't-dark:text-zinc-200 t-dark:bg-zinc-850 t-dark:border-zinc-750',
       't-light:text-zinc-650 t-light:bg-zinc-100 t-light:border-zinc-350',
       't-rust:text-rust-200 t-rust:bg-rust-850 t-rust:border-rust-750',
@@ -100,20 +108,21 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-cover rounded-md border transition-[border,background-color] duration-200',
+      'relative w-screen h-screen overflow-hidden bg-cover transition-[border,background-color] duration-200',
       't-dark:bg-image-dark t-dark:bg-zinc-850 t-dark:border-zinc-750',
       't-light:bg-image-light t-light:bg-zinc-100 t-light:border-zinc-350',
       't-rust:bg-image-rust t-rust:bg-rust-850 t-rust:border-rust-750',
-      't-midnight:bg-image-midnight t-midnight:bg-gray-850 t-midnight:border-gray-750'
+      't-midnight:bg-image-midnight t-midnight:bg-gray-850 t-midnight:border-gray-750',
+      MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
     <div
       class={[
         'w-full h-full flex flex-col select-none backdrop-blur-xs transition-[color,background-color] duration-200',
-        't-dark:text-zinc-200 t-dark:bg-zinc-900/95',
-        't-light:text-zinc-650 t-light:bg-zinc-50/95',
-        't-rust:text-rust-200 t-rust:bg-rust-900/95',
-        't-midnight:text-gray-200 t-midnight:bg-gray-900/95'
+        't-dark:text-zinc-200 t-dark:bg-zinc-850/95',
+        't-light:text-zinc-650 t-light:bg-zinc-100/95',
+        't-rust:text-rust-200 t-rust:bg-rust-850/95',
+        't-midnight:text-gray-200 t-midnight:bg-gray-850/95'
       ]}
     >
       <WindowBar />

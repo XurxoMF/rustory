@@ -33,9 +33,13 @@ const api: BridgeAPI = {
   },
   window: {
     minimize: () => ipcRenderer.send(IPC_CHANNELS.window.minimize),
+    minimized: () => ipcRenderer.invoke(IPC_CHANNELS.window.minimized),
     maximize: () => ipcRenderer.send(IPC_CHANNELS.window.maximize),
+    maximized: () => ipcRenderer.invoke(IPC_CHANNELS.window.maximized),
+    fullscreened: () => ipcRenderer.invoke(IPC_CHANNELS.window.fullscreened),
     hide: () => ipcRenderer.send(IPC_CHANNELS.window.hide),
     close: () => ipcRenderer.send(IPC_CHANNELS.window.close),
+    show: () => ipcRenderer.send(IPC_CHANNELS.window.show),
     on: {
       maximize: (...params) => {
         ipcRenderer.on(IPC_CHANNELS.window.on.maximize, ...params)

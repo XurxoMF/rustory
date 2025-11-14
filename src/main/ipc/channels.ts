@@ -26,9 +26,13 @@ export const IPC_CHANNELS = {
   },
   window: {
     minimize: 'window-minimize',
+    minimized: 'window-minimized',
     maximize: 'window-maximize',
+    maximized: 'window-maximized',
+    fullscreened: 'window-fullscreened',
     hide: 'window-hide',
     close: 'window-close',
+    show: 'window-show',
     on: {
       maximize: 'window-on-maximize',
       minimize: 'window-on-minimize',

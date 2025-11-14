@@ -31,19 +31,13 @@ export async function createMainWindow(): Promise<void> {
     logger.error('Old state could not be read!')
   }
 
-  let width = oldState.width
-  let height = oldState.height
-  let x = oldState.x
-  let y = oldState.y
-  let maximized = oldState.maximized
-
   // Create the browser window.
   mainWindow = new BrowserWindow({
     center: true,
-    width,
-    height,
-    x,
-    y,
+    width: oldState.width,
+    height: oldState.height,
+    x: oldState.x,
+    y: oldState.y,
     title: `Rustory ${app.getVersion()}`,
     autoHideMenuBar: true,
     fullscreenable: false,
@@ -51,8 +45,9 @@ export async function createMainWindow(): Promise<void> {
     minHeight: 600,
     titleBarStyle: 'hidden',
     frame: false,
-    icon: icon,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    show: false,
+    ...(process.platform === 'linux' ? { transparent: true } : {}),
+    icon,
     webPreferences: {
       sandbox: false,
       preload: join(__dirname, '../preload/index.js')
@@ -62,7 +57,7 @@ export async function createMainWindow(): Promise<void> {
   logger.info('Main window ready!')
 
   mainWindow.on('ready-to-show', async () => {
-    if (maximized) mainWindow.maximize()
+    if (oldState.maximized) mainWindow.maximize()
   })
 
   // Events to report window state

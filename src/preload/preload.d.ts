@@ -140,9 +140,21 @@ declare global {
        */
       minimize: () => void
       /**
+       * If the window is minimized.
+       */
+      minimized: () => Promise<boolean>
+      /**
        * Maximize or window the window.
        */
       maximize: () => void
+      /**
+       * If the window is maximized.
+       */
+      maximized: () => Promise<boolean>
+      /**
+       * If the window is fullscreened.
+       */
+      fullscreened: () => Promise<boolean>
       /**
        * Hide the window to the tray.
        */
@@ -151,6 +163,10 @@ declare global {
        * Close the window and, if it's the only window open, close the app.
        */
       close: () => void
+      /**
+       * Show the window if it was not shown yet.
+       */
+      show: () => void
       /**
        * Subscribe to window events.
        */
