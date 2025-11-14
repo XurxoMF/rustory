@@ -7,6 +7,7 @@ import { readJSON, writeJSON } from '@main/utils/fs'
 
 // Assets
 import icon from '../../resources/icon.png?asset'
+import { IPC_CHANNELS } from './ipc/channels'
 
 // Constants
 const MAIN_WINDOW_STATE_PATH = join(app.getPath('userData'), 'window_state.json')
@@ -62,6 +63,31 @@ export async function createMainWindow(): Promise<void> {
 
   mainWindow.on('ready-to-show', async () => {
     if (maximized) mainWindow.maximize()
+  })
+
+  // Events to report window state
+  mainWindow.on('enter-full-screen', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.fullscreen, true)
+  })
+
+  mainWindow.on('leave-full-screen', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.fullscreen, false)
+  })
+
+  mainWindow.on('maximize', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.maximize, true)
+  })
+
+  mainWindow.on('unmaximize', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.maximize, false)
+  })
+
+  mainWindow.on('minimize', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.minimize, true)
+  })
+
+  mainWindow.on('restore', () => {
+    mainWindow.webContents.send(IPC_CHANNELS.window.on.minimize, false)
   })
 
   // Before closing the window, save the current state

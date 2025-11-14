@@ -151,6 +151,29 @@ declare global {
        * Close the window and, if it's the only window open, close the app.
        */
       close: () => void
+      /**
+       * Subscribe to window events.
+       */
+      on: {
+        /**
+         * Executes a callback every time the window is maximized or windowed.
+         * @param callback The callback that will be executed.
+         * @param callback.maximized If the window is now maximized or windowed.
+         */
+        maximize: (callback: (event: Electron.IpcRendererEvent, maximized: boolean) => void) => () => void
+        /**
+         * Executes a callback every time the window is minimized or windowed.
+         * @param callback The callback that will be executed.
+         * @param callback.minimized If the window is now minimized or windowed.
+         */
+        minimize: (callback: (event: Electron.IpcRendererEvent, minimized: boolean) => void) => () => void
+        /**
+         * Executes a callback every time the window is fullscreened or windowed.
+         * @param callback The callback that will be executed.
+         * @param callback.fullscreened If the window is now fullscreened or windowed.
+         */
+        fullscreen: (callback: (event: Electron.IpcRendererEvent, fullscreened: boolean) => void) => () => void
+      }
     }
     /**
      * Interact with the app and get info from it.
