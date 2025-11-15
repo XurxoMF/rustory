@@ -3,7 +3,11 @@
 
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
-  import Select from '@renderer/lib/ui/components/Select.svelte'
+  import Select, { type SelectProps } from '@renderer/lib/ui/components/Select.svelte'
+
+  type ScaleProps = Omit<SelectProps, 'placeholder' | 'type' | 'value' | 'allowDeselect' | 'items' | 'onValueChange'>
+
+  let { ...restProps }: ScaleProps = $props()
 </script>
 
 <Select
@@ -18,4 +22,5 @@
   onValueChange={(e: string) => {
     if (e !== undefined) Config.instance.setScale(e)
   }}
+  {...restProps}
 />

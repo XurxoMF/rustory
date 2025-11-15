@@ -1,66 +1,92 @@
-<script lang="ts">
-  import { ContextMenu, type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import Label from '@renderer/lib/ui/components/Label.svelte'
+  export type ContextMenuGroupProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupProps>, 'class'>
 
-  type ContextMenuGroup = {
+  export type ContextMenuGroupHeadingProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
+
+  export type ContextMenuGroup = {
     type: 'group'
     label?: string | undefined
     items: ContextMenuItemTypes[]
-    groupProps?: Omit<WithoutChildrenOrChild<ContextMenu.GroupProps>, 'class'> | undefined
-    headingProps?: Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'> | undefined
+    groupProps?: ContextMenuGroupProps | undefined
+    headingProps?: ContextMenuGroupHeadingProps | undefined
   }
 
-  type ContextMenuItem = {
+  export type ContextMenuItemProps = Omit<WithoutChildrenOrChild<ContextMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
+
+  export type ContextMenuItem = {
     type: 'item'
     label: string
     value: string
     icon: string
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
-    itemProps?: Omit<WithoutChildrenOrChild<ContextMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'> | undefined
+    itemProps?: ContextMenuItemProps | undefined
   }
 
-  type ContextMenuCheckboxItem = {
+  export type ContextMenuCheckboxItemProps = Omit<
+    WithoutChildrenOrChild<ContextMenu.CheckboxItemProps>,
+    'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'
+  >
+
+  export type ContextMenuCheckboxItem = {
     type: 'checkboxitem'
     label: string
     value: string
     disabled?: boolean | undefined
     checked?: boolean | undefined
     onchange: (checked: boolean) => void
-    checkboxItemProps?: Omit<WithoutChildrenOrChild<ContextMenu.CheckboxItemProps>, 'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'> | undefined
+    checkboxItemProps?: ContextMenuCheckboxItemProps | undefined
   }
 
-  type ContextMenuRadioGroup = {
+  export type ContextMenuRadioGroupProps = Omit<WithoutChildrenOrChild<ContextMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
+
+  export type ContextMenuRadioGroupHeadingProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
+
+  export type ContextMenuRadioGroup = {
     type: 'radiogroup'
     label?: string
     items: ContextMenuRadioItem[]
     value?: string | undefined
     onchange: (value: string) => void
-    radioGroupProps?: Omit<WithoutChildrenOrChild<ContextMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'> | undefined
-    headingProps?: Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'> | undefined
+    radioGroupProps?: ContextMenuRadioGroupProps | undefined
+    headingProps?: ContextMenuRadioGroupHeadingProps | undefined
   }
 
-  type ContextMenuRadioItem = {
+  export type ContextMenuRadioItemProps = Omit<WithoutChildrenOrChild<ContextMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
+
+  export type ContextMenuRadioItem = {
     type: 'radioitem'
     label: string
     value: string
     disabled?: boolean | undefined
-    radioItemProps?: Omit<WithoutChildrenOrChild<ContextMenu.RadioItemProps>, 'class' | 'value' | 'disabled'> | undefined
+    radioItemProps?: ContextMenuRadioItemProps | undefined
   }
 
-  type ContextMenuSubmenu = {
+  export type ContextMenuSubProps = WithoutChildren<ContextMenu.SubProps>
+
+  export type ContextMenuSubTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class'>
+
+  export type ContextMenuSubContentProps = Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
+
+  export type ContextMenuSubmenu = {
     type: 'submenu'
     label: string
     items: ContextMenuGroupTypes[]
     icon: string
-    submenuProps?: WithoutChildren<ContextMenu.SubProps> | undefined
-    submenuTriggerProps?: Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class'> | undefined
-    submenuContentProps?: Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'> | undefined
+    submenuProps?: ContextMenuSubProps | undefined
+    submenuTriggerProps?: ContextMenuSubTriggerProps | undefined
+    submenuContentProps?: ContextMenuSubContentProps | undefined
   }
 
-  type ContextMenuItemSubmenu = {
+  export type ContextMenuItemSubmenuProps = WithoutChildren<ContextMenu.SubProps>
+
+  export type ContextMenuItemSubmenuTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'>
+
+  export type ContextMenuItemSubmenuContentProps = Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
+
+  export type ContextMenuItemSubmenu = {
     type: 'itemsubmenu'
     label: string
     value: string
@@ -68,21 +94,34 @@
     icon: string
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
-    itemSubmenuProps?: WithoutChildren<ContextMenu.SubProps> | undefined
-    itemSubmenuTriggerProps?: Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'> | undefined
-    itemSubmenuContentProps?: Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'> | undefined
+    itemSubmenuProps?: ContextMenuItemSubmenuProps | undefined
+    itemSubmenuTriggerProps?: ContextMenuItemSubmenuTriggerProps | undefined
+    itemSubmenuContentProps?: ContextMenuItemSubmenuContentProps | undefined
   }
 
-  type ContextMenuItemTypes = ContextMenuItem | ContextMenuCheckboxItem | ContextMenuSubmenu | ContextMenuItemSubmenu
+  export type ContextMenuItemTypes = ContextMenuItem | ContextMenuCheckboxItem | ContextMenuSubmenu | ContextMenuItemSubmenu
 
-  type ContextMenuGroupTypes = ContextMenuGroup | ContextMenuRadioGroup
+  export type ContextMenuGroupTypes = ContextMenuGroup | ContextMenuRadioGroup
 
-  type ContextMenuProps = ContextMenu.RootProps & {
+  export type ContextMenuTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'>
+
+  export type ContextMenuContentProps = Omit<WithoutChildrenOrChild<ContextMenu.ContentProps>, 'class'>
+
+  export type ContextMenuSeparatorProps = Omit<WithoutChildrenOrChild<ContextMenu.SeparatorProps>, 'class'>
+
+  export type ContextMenuProps = ContextMenu.RootProps & {
     groups: ContextMenuGroupTypes[]
-    triggerProps?: Omit<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<ContextMenu.ContentProps>, 'class'> | undefined
-    separatorProps?: Omit<WithoutChildrenOrChild<ContextMenu.SeparatorProps>, 'class'> | undefined
+    triggerProps?: ContextMenuTriggerProps | undefined
+    contentProps?: ContextMenuContentProps | undefined
+    separatorProps?: ContextMenuSeparatorProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { ContextMenu } from 'bits-ui'
+
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Label from '@renderer/lib/ui/components/Label.svelte'
 
   let { open = $bindable(false), children, groups, triggerProps, contentProps, separatorProps, ...restProps }: ContextMenuProps = $props()
 </script>
@@ -97,7 +136,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -129,7 +168,7 @@
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      't-dark:data-highlighted:bg-zinc-800',
+      'data-highlighted:bg-zinc-800',
       't-light:data-highlighted:bg-zinc-200',
       't-rust:data-highlighted:bg-rust-800',
       't-midnight:data-highlighted:bg-gray-800'
@@ -153,7 +192,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:data-[state=checked]:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
         't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
         't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
@@ -194,7 +233,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:data-[state=checked]:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
         't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
         't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
@@ -219,7 +258,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:data-highlighted:bg-zinc-800',
+        'data-highlighted:bg-zinc-800',
         't-light:data-highlighted:bg-zinc-200',
         't-rust:data-highlighted:bg-rust-800',
         't-midnight:data-highlighted:bg-gray-800'
@@ -236,7 +275,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -269,7 +308,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:data-highlighted:bg-zinc-800',
+        'data-highlighted:bg-zinc-800',
         't-light:data-highlighted:bg-zinc-200',
         't-rust:data-highlighted:bg-rust-800',
         't-midnight:data-highlighted:bg-gray-800'
@@ -286,7 +325,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -322,7 +361,7 @@
 
     {#if i < groups.length - 1}
       <ContextMenu.Separator
-        class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
+        class={['w-full h-px my-2', 'bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
         {...separatorProps}
       />
     {/if}

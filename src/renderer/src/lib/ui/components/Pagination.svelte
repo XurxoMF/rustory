@@ -1,18 +1,30 @@
-<script lang="ts">
-  import { Pagination, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
   import type { HTMLAttributes } from 'svelte/elements'
+
+  export type PaginationPRevButtonProps = Omit<WithoutChildrenOrChild<Pagination.PrevButtonProps>, 'class'>
+
+  export type PaginationEllipsisProps = Omit<WithoutChildrenOrChild<HTMLAttributes<HTMLDivElement>>, 'class'>
+
+  export type PaginationPageProps = Omit<WithoutChildrenOrChild<Pagination.PageProps>, 'class'>
+
+  export type PaginationNextButtonProps = Omit<WithoutChildrenOrChild<Pagination.NextButtonProps>, 'class'>
+
+  export type PaginationProps = Omit<WithoutChildrenOrChild<Pagination.RootProps>, 'class'> & {
+    resume?: boolean | undefined
+    prevButtonProps?: PaginationPRevButtonProps | undefined
+    ellipsisProps?: PaginationEllipsisProps | undefined
+    pageProps?: PaginationPageProps | undefined
+    nextButtonProps?: PaginationNextButtonProps | undefined
+  }
+</script>
+
+<script lang="ts">
+  import { Pagination } from 'bits-ui'
 
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-
-  type PaginationProps = Omit<WithoutChildrenOrChild<Pagination.RootProps>, 'class'> & {
-    resume?: boolean | undefined
-    prevButtonProps?: Omit<WithoutChildrenOrChild<Pagination.PrevButtonProps>, 'class'> | undefined
-    ellipsisProps?: Omit<WithoutChildrenOrChild<HTMLAttributes<HTMLDivElement>>, 'class'> | undefined
-    pageProps?: Omit<WithoutChildrenOrChild<Pagination.PageProps>, 'class'> | undefined
-    nextButtonProps?: Omit<WithoutChildrenOrChild<Pagination.NextButtonProps>, 'class'> | undefined
-  }
 
   let {
     page = $bindable(),
@@ -36,7 +48,7 @@
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            't-dark:not-disabled:hover:bg-zinc-800 t-dark:focus-visible:outline-zinc-800',
+            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
             't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
             't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
             't-midnight:not-disabled:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
@@ -57,7 +69,7 @@
                 'focus-visible:outline-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
-                't-dark:not-disabled:hover:bg-zinc-800 t-dark:data-selected:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
+                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-750 focus-visible:outline-zinc-800',
                 't-light:not-disabled:hover:bg-zinc-200 t-light:data-selected:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
                 't-rust:not-disabled:hover:bg-rust-800 t-rust:data-selected:bg-rust-750 t-rust:focus-visible:outline-rust-750',
                 't-midnight:not-disabled:hover:bg-gray-800 t-midnight:data-selected:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
@@ -75,7 +87,7 @@
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            't-dark:not-disabled:hover:bg-zinc-800 t-dark:focus-visible:outline-zinc-800',
+            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
             't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
             't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
             't-midnight:not-disabled:hover:bg-gray-800t-midnight:focus-visible:outline-gray-750'

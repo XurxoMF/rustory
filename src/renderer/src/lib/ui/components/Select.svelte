@@ -1,21 +1,17 @@
 <script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
+
   export type SelectItem = {
     value: string
     label: string
     comment?: string
     disabled?: boolean
   }
-</script>
 
-<script lang="ts">
-  import { Select, type WithoutChildrenOrChild } from 'bits-ui'
-
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
-
-  const MODE_CLASSES = {
+  export const SELECT_MODE_CLASSES = {
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-data-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -35,17 +31,33 @@
     ]
   } as const
 
-  type ModeTypes = keyof typeof MODE_CLASSES
+  export type SelectModeTypes = keyof typeof SELECT_MODE_CLASSES
 
-  type SelectProps = Omit<WithoutChildrenOrChild<Select.RootProps>, 'class' | 'items'> & {
+  export type SelectTriggerProps = Omit<WithoutChildrenOrChild<Select.TriggerProps>, 'class'>
+
+  export type SelectContentProps = Omit<WithoutChildrenOrChild<Select.ContentProps>, 'class' | 'sideOffset'>
+
+  export type SelectViewportProps = Omit<WithoutChildrenOrChild<Select.ViewportProps>, 'class'>
+
+  export type SelectItemProps = Omit<WithoutChildrenOrChild<Select.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+
+  export type SelectProps = Omit<WithoutChildrenOrChild<Select.RootProps>, 'class' | 'items'> & {
     items: SelectItem[]
     placeholder: string | undefined
-    mode?: ModeTypes | undefined
-    triggerProps?: Omit<WithoutChildrenOrChild<Select.TriggerProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<Select.ContentProps>, 'class' | 'sideOffset'> | undefined
-    viewportProps?: Omit<WithoutChildrenOrChild<Select.ViewportProps>, 'class'> | undefined
-    itemProps?: Omit<WithoutChildrenOrChild<Select.ItemProps>, 'class' | 'value' | 'label' | 'disabled'> | undefined
+    mode?: SelectModeTypes | undefined
+    triggerProps?: SelectTriggerProps | undefined
+    contentProps?: SelectContentProps | undefined
+    viewportProps?: SelectViewportProps | undefined
+    itemProps?: SelectItemProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { Select } from 'bits-ui'
+
+  import { m } from '@renderer/paraglide/messages'
+
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   let {
     value = $bindable(),
@@ -69,7 +81,7 @@
       'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      ...MODE_CLASSES[mode]
+      ...SELECT_MODE_CLASSES[mode]
     ]}
     {...triggerProps}
   >
@@ -93,7 +105,7 @@
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
-        't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800'
       ]}
       {...contentProps}
     >
@@ -107,7 +119,7 @@
               'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-all',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
-              't-dark:not-data-disabled:hover:bg-zinc-800 t-dark:data-highlighted:bg-zinc-800'
+              'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
             ]}
           >
             {#snippet children({ selected })}
@@ -121,6 +133,10 @@
               {/if}
             {/snippet}
           </Select.Item>
+        {:else}
+          <p class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
+            {`${m.common__no_results_found()}...`}
+          </p>
         {/each}
       </Select.Viewport>
     </Select.Content>

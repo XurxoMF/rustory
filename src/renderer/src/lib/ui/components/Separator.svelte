@@ -1,7 +1,11 @@
-<script lang="ts">
-  import { Separator, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
 
-  type SeparatorProps = Omit<WithoutChildrenOrChild<Separator.RootProps>, 'class'>
+  export type SeparatorProps = Omit<WithoutChildrenOrChild<Separator.RootProps>, 'class'>
+</script>
+
+<script lang="ts">
+  import { Separator } from 'bits-ui'
 
   let { ...restProps }: SeparatorProps = $props()
 </script>
@@ -11,7 +15,7 @@
     'shrink-0 transition-all',
     'data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full',
     'data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px',
-    't-dark:bg-zinc-800'
+    'bg-zinc-800'
   ]}
   {...restProps}
 />

@@ -1,19 +1,31 @@
+<script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
+
+  export type SheetOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
+
+  export type SheetContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+
+  export type SheetTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+
+  export type SheetDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+
+  export type SheetProps = Dialog.RootProps & {
+    title: string
+    description: string
+    overlayProps?: SheetOverlayProps | undefined
+    contentProps?: SheetContentProps | undefined
+    titleProps?: SheetTitleProps | undefined
+    descriptionProps?: SheetDescriptionProps | undefined
+  }
+</script>
+
 <script lang="ts">
-  import { Dialog, type WithoutChildrenOrChild } from 'bits-ui'
+  import { Dialog } from 'bits-ui'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
 
-  type Props = Dialog.RootProps & {
-    title: string
-    description: string
-    overlayProps?: Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'> | undefined
-    titleProps?: Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'> | undefined
-    descriptionProps?: Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'> | undefined
-  }
-
-  let { open = $bindable(false), title, description, children, overlayProps, contentProps, titleProps, descriptionProps, ...restProps }: Props = $props()
+  let { open = $bindable(false), title, description, children, overlayProps, contentProps, titleProps, descriptionProps, ...restProps }: SheetProps = $props()
 </script>
 
 <Dialog.Root bind:open {...restProps}>
@@ -21,7 +33,7 @@
     <Dialog.Overlay
       class={[
         'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all',
-        't-dark:bg-zinc-850/20',
+        'bg-zinc-850/20',
         't-light:bg-zinc-100/20',
         't-rust:bg-rust-850/20',
         't-midnight:bg-gray-850/20'
@@ -33,7 +45,7 @@
       class={[
         'absolute top-1/2 -translate-y-1/2 right-0 w-[50vw] max-w-100 h-screen p-2 z-100',
         'rounded-md border shadow-xl transition-all',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'

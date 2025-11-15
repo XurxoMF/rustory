@@ -10,26 +10,26 @@
   const MODE_CLASSES: Record<Toast.Type, string[]> = {
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800',
       'text-blue-500 inset-ring-blue-800 ring-blue-800'
     ],
     success: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800',
       'text-green-500 inset-ring-green-800 ring-green-800'
     ],
     warning: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800',
       'text-yellow-500 inset-ring-yellow-800 ring-yellow-800'
     ],
     danger: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800',
       'text-red-500 inset-ring-red-800 ring-red-800'
     ]
   } as const

@@ -357,7 +357,7 @@
 
           <Alert bind:open={alertOpen} title="Title" description="This is a really cool alert! We can as you to accept or cancel things here!" />
 
-          <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>DANGER
+          <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>
 
           <Dialog
             bind:open={dialogOpen}
@@ -988,7 +988,7 @@
             }
           ]}
         >
-          <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration', 't-dark:border-zinc-800']}>
+          <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration', 'border-zinc-800']}>
             Right click here!
           </div>
         </ContextMenu>

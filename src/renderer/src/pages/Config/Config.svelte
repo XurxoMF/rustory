@@ -16,6 +16,7 @@
   import Lang from '@renderer/lib/ui/features/settings/Lang.svelte'
   import Scale from '@renderer/lib/ui/features/settings/Scale.svelte'
   import Theme from '@renderer/lib/ui/features/settings/Theme.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   Breadcrumbs.instance.segments = [{ label: m.common__config(), href: '/config' }]
 </script>
@@ -25,38 +26,38 @@
     <ColumnItem>
       <GridContainer columns={3}>
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.settings__language()}</Label>
+          <FlexContainer direction="col">
+            <FlexContainer>
+              <Label for="lang">{m.settings__language()}</Label>
               <Info>{m.settings__language_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <Lang />
-          </div>
+            <Lang inputProps={{ id: 'lang' }} />
+          </FlexContainer>
         </GridItem>
 
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.settings__uiscale()}</Label>
+          <FlexContainer direction="col">
+            <FlexContainer>
+              <Label for="scale">{m.settings__uiscale()}</Label>
               <Info>{m.settings__uiscale_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <Scale />
-          </div>
+            <Scale triggerProps={{ id: 'scale' }} />
+          </FlexContainer>
         </GridItem>
 
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
+          <FlexContainer direction="col">
+            <FlexContainer>
               <Label>{m.settings__theme()}</Label>
               <Info>{m.settings__theme_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <div class="w-full flex items-center gap-1">
+            <FlexContainer>
               <Theme />
-            </div>
-          </div>
+            </FlexContainer>
+          </FlexContainer>
         </GridItem>
       </GridContainer>
     </ColumnItem>

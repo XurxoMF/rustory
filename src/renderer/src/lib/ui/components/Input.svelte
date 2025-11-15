@@ -1,13 +1,13 @@
-<script lang="ts">
-  import type { WithoutChildren } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildren } from 'bits-ui'
   import { type HTMLInputAttributes } from 'svelte/elements'
 
-  type InputTypes = 'text' | 'number' | 'email' | 'password' | 'tel' | 'url'
+  export type InputTypes = 'text' | 'number' | 'email' | 'password' | 'tel' | 'url'
 
-  const MODE_CLASSES = {
+  export const INPUT_MODE_CLASSES = {
     neutral: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
@@ -27,22 +27,24 @@
     ]
   } as const
 
-  type ModeTypes = keyof typeof MODE_CLASSES
+  export type InputModeTypes = keyof typeof INPUT_MODE_CLASSES
 
-  const WIDTH_CLASSES = {
+  export const WIDTH_CLASSES = {
     fit: ['w-fit'],
     full: ['w-full'],
     'flex-1': ['flex-1']
   } as const
 
-  type WidthClasses = keyof typeof WIDTH_CLASSES
+  export type InputWidthClasses = keyof typeof WIDTH_CLASSES
 
-  type InputProps = Omit<WithoutChildren<HTMLInputAttributes>, 'class' | 'type'> & {
+  export type InputProps = Omit<WithoutChildren<HTMLInputAttributes>, 'class' | 'type'> & {
     type: InputTypes
-    mode?: ModeTypes | undefined
-    width?: WidthClasses | undefined
+    mode?: InputModeTypes | undefined
+    width?: InputWidthClasses | undefined
   }
+</script>
 
+<script lang="ts">
   let { value = $bindable(), mode = 'neutral', width = 'full', readonly, tabindex, ...restProps }: InputProps = $props()
 </script>
 
@@ -54,7 +56,7 @@
     'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
     'disabled:opacity-40',
-    ...MODE_CLASSES[mode],
+    ...INPUT_MODE_CLASSES[mode],
     ...WIDTH_CLASSES[width]
   ]}
   {...restProps}

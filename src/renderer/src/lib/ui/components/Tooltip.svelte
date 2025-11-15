@@ -1,12 +1,20 @@
-<script lang="ts">
-  import { Tooltip, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
   import type { Snippet } from 'svelte'
 
-  type TooltipProps = Omit<Tooltip.RootProps, 'class'> & {
+  export type TooltipTriggerProps = Omit<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
+
+  export type TooltipContentProps = Omit<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
+
+  export type TooltipProps = Omit<Tooltip.RootProps, 'class'> & {
     trigger: Snippet
-    triggerProps?: Omit<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'> | undefined
+    triggerProps?: TooltipTriggerProps | undefined
+    contentProps?: TooltipContentProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { Tooltip } from 'bits-ui'
 
   let { open = $bindable(false), children, trigger, triggerProps, contentProps, ...restProps }: TooltipProps = $props()
 </script>
@@ -19,7 +27,7 @@
         'cursor-help disabled:cursor-not-allowed',
         'disabled:opacity-40',
         'focus-visible:inset-ring-1 focus-visible:ring-2',
-        't-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+        'inset-ring-zinc-800 ring-zinc-800'
       ]}
       {...triggerProps}
     >
@@ -34,13 +42,13 @@
           'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
           'inset-ring-2',
-          't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
+          'bg-zinc-900/95 inset-ring-zinc-800'
         ]}
         {...contentProps}
       >
         {@render children?.()}
 
-        <Tooltip.Arrow class={['transition-all', 't-dark:text-zinc-800']} />
+        <Tooltip.Arrow class={['transition-all', 'text-zinc-800']} />
       </Tooltip.Content>
     </Tooltip.Portal>
   </Tooltip.Root>

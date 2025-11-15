@@ -1,11 +1,13 @@
-<script lang="ts">
+<script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements'
 
-  type H1Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
+  export type H1Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: 'primary' | 'secondary' | undefined
     align?: 'start' | 'center' | 'end' | undefined
   }
+</script>
 
+<script lang="ts">
   let { mode = 'primary', align = 'start', children, ...restProps }: H1Props = $props()
 </script>
 

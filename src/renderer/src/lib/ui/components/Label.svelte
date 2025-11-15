@@ -1,9 +1,13 @@
-<script lang="ts">
-  import { Label, type WithoutChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChild } from 'bits-ui'
 
-  type LabelProps = Omit<WithoutChild<Label.RootProps>, 'class'> & {
+  export type LabelProps = Omit<WithoutChild<Label.RootProps>, 'class'> & {
     disabled?: boolean | undefined
   }
+</script>
+
+<script lang="ts">
+  import { Label } from 'bits-ui'
 
   let { children, disabled = false, ...restProps }: LabelProps = $props()
 </script>

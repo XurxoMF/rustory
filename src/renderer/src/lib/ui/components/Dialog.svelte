@@ -1,17 +1,29 @@
+<script lang="ts" module>
+  import { type WithoutChildrenOrChild } from 'bits-ui'
+
+  export type DialogOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
+
+  export type DialogContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+
+  export type DialogTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+
+  export type DialogDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+
+  export type DialogProps = Dialog.RootProps & {
+    title: string
+    description: string
+    overlayProps?: DialogOverlayProps | undefined
+    contentProps?: DialogContentProps | undefined
+    titleProps?: DialogTitleProps | undefined
+    descriptionProps?: DialogDescriptionProps | undefined
+  }
+</script>
+
 <script lang="ts">
-  import { Dialog, type WithoutChildrenOrChild } from 'bits-ui'
+  import { Dialog } from 'bits-ui'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-
-  type DialogProps = Dialog.RootProps & {
-    title: string
-    description: string
-    overlayProps?: Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
-    contentProps?: Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
-    titleProps?: Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
-    descriptionProps?: Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
-  }
 
   let { open = $bindable(false), title, description, children, overlayProps, contentProps, titleProps, descriptionProps, ...restProps }: DialogProps = $props()
 </script>
@@ -21,7 +33,7 @@
     <Dialog.Overlay
       class={[
         'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all',
-        't-dark:bg-zinc-850/20',
+        'bg-zinc-850/20',
         't-light:bg-zinc-100/20',
         't-rust:bg-rust-850/20',
         't-midnight:bg-gray-850/20'
@@ -33,7 +45,7 @@
       class={[
         'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100',
         'rounded-md border shadow-xl transition-all',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'

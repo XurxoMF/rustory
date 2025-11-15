@@ -7,12 +7,7 @@
   import Button from '../components/Button.svelte'
 </script>
 
-<nav
-  class={[
-    'shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all',
-    't-dark:text-zinc-200/50 t-dark:border-r-zinc-800'
-  ]}
->
+<nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all', 'text-zinc-200/50 border-r-zinc-800']}>
   <div class="w-full flex flex-col items-start justify-between gap-1">
     {@render NavLink('ph:house-bold', m.common__home(), '/')}
     {@render NavLink('ph:git-fork-bold', m.vintagestory__versions(), '/vs/versions')}
@@ -31,14 +26,14 @@
   <a
     href={link}
     use:route={{
-      active: { absolute: true, class: ['t-dark:bg-zinc-800'] }
+      active: { absolute: true, class: ['bg-zinc-800'] }
     }}
     class={[
       'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm transition-all',
       'outline-transparent focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
-      't-dark:hover:bg-zinc-800 t-dark:outline-zinc-700'
+      'hover:bg-zinc-800 outline-zinc-700'
     ]}
   >
     <Icon {icon} class="text-2xl" />

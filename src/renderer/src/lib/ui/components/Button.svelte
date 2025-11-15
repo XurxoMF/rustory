@@ -1,11 +1,11 @@
-<script lang="ts">
+<script lang="ts" module>
   import type { HTMLButtonAttributes } from 'svelte/elements'
 
-  const MODE_CLASSES = {
-    transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 't-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'],
+  export const BUTTON_MODE_CLASSES = {
+    transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 'not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'],
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -25,30 +25,32 @@
     ]
   } as const
 
-  type ModeTypes = keyof typeof MODE_CLASSES
+  export type ButtonModeTypes = keyof typeof BUTTON_MODE_CLASSES
 
-  const WIDTH_CLASSES = {
+  export const BUTTON_WIDTH_CLASSES = {
     fit: ['w-fit'],
     full: ['w-full'],
     'flex-1': ['flex-1']
   } as const
 
-  type WidthClasses = keyof typeof WIDTH_CLASSES
+  export type ButtonWidthClasses = keyof typeof BUTTON_WIDTH_CLASSES
 
-  const ALIGN_CLASSES = {
+  export const BUTTON_ALIGN_CLASSES = {
     start: ['justify-start'],
     center: ['justify-center'],
     end: ['justify-end']
   } as const
 
-  type AlignClasses = keyof typeof ALIGN_CLASSES
+  export type ButtonAlignClasses = keyof typeof BUTTON_ALIGN_CLASSES
 
-  type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
-    mode?: ModeTypes | undefined
-    width?: WidthClasses | undefined
-    align?: AlignClasses | undefined
+  export type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
+    mode?: ButtonModeTypes | undefined
+    width?: ButtonWidthClasses | undefined
+    align?: ButtonAlignClasses | undefined
   }
+</script>
 
+<script lang="ts">
   let { mode = 'neutral', width = 'fit', align = 'center', children, ...restProps }: ButtonProps = $props()
 </script>
 
@@ -57,9 +59,9 @@
     'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
-    ...MODE_CLASSES[mode],
-    ...WIDTH_CLASSES[width],
-    ...ALIGN_CLASSES[align]
+    ...BUTTON_MODE_CLASSES[mode],
+    ...BUTTON_WIDTH_CLASSES[width],
+    ...BUTTON_ALIGN_CLASSES[align]
   ]}
   {...restProps}
 >

@@ -1,20 +1,29 @@
 <script lang="ts">
   import json5 from 'json5'
   import { onMount } from 'svelte'
+  import { mergeProps } from 'bits-ui'
 
   import { m } from '@renderer/paraglide/messages'
 
   import { Request } from '@renderer/lib/classes/Request.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
+  import { Data } from '@renderer/lib/classes/Data.svelte'
 
-  import ComboBox from '@renderer/lib/ui/components/ComboBox.svelte'
+  import ComboBox, { type ComboBoxInputProps, type ComboBoxProps } from '@renderer/lib/ui/components/ComboBox.svelte'
 
-  type VersionsToInstallProps = {
+  type VersionsToInstallProps = Omit<ComboBoxProps, 'items' | 'type' | 'value'> & {
     version?: RAPIVSVersion | undefined
+    inputProps?: Omit<ComboBoxInputProps, 'placeholder'> | undefined
   }
 
-  let { version = $bindable() }: VersionsToInstallProps = $props()
+  let { version = $bindable(), inputProps, ...restProps }: VersionsToInstallProps = $props()
+
+  let mergedInputProps = $derived(
+    mergeProps(inputProps, {
+      placeholder: m.vintagestory__version()
+    })
+  )
 
   let versions: RAPIVSVersion[] = $state([])
   let value: string | undefined = $state()
@@ -32,16 +41,16 @@
 </script>
 
 <ComboBox
-  required
   type="single"
   bind:value
   items={versions.map((v) => {
-    // TODO: Disable versions that are already installed
     return {
       label: v.version,
       value: v.version,
-      comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`
+      comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`,
+      disabled: Data.instance.vsVersions.some((i) => i.version === v.version)
     }
   })}
-  inputProps={{ placeholder: m.vintagestory__version() }}
+  inputProps={mergedInputProps}
+  {...restProps}
 />

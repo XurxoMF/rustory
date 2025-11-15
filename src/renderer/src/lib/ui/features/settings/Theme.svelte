@@ -5,14 +5,9 @@
 {#each Config.THEMES as THEME (THEME.key)}
   <button
     class={[
-      'w-9 h-9 rounded-full border transition-all',
-      'focus-visible:outline-1',
-      'cursor-pointer disabled:cursor-not-allowed',
-      'disabled:opacity-40',
-      't-dark:border-zinc-800 t-dark:focus-visible:outline-zinc-800',
-      't-light:border-zinc-300 t-light:focus-visible:outline-zinc-350',
-      't-rust:border-rust-800 t-rust:focus-visible:outline-rust-750',
-      't-midnight:border-gray-800 t-midnight:focus-visible:outline-gray-750',
+      'w-24 h-9 rounded-sm outline-none transition-all',
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'inset-ring-zinc-800 ring-zinc-800',
       THEME.color
     ]}
     onclick={() => Config.instance.setTheme(THEME.key)}

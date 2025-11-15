@@ -1,19 +1,31 @@
-<script lang="ts">
-  import { Dialog, type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  import Button from '@renderer/lib/ui/components/Button.svelte'
-  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
+  export type AlertOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
-  type AlertProps = WithoutChildren<Dialog.RootProps> & {
+  export type AlertContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+
+  export type AlertTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+
+  export type AlertDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+
+  export type AlertProps = WithoutChildren<Dialog.RootProps> & {
     title: string
     description: string
     onaccept?: (() => void | Promise<void>) | undefined
     oncancel?: (() => void | Promise<void>) | undefined
-    overlayProps?: Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'> | undefined
-    titleProps?: Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'> | undefined
-    descriptionProps?: Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'> | undefined
+    overlayProps?: AlertOverlayProps | undefined
+    contentProps?: AlertContentProps | undefined
+    titleProps?: AlertTitleProps | undefined
+    descriptionProps?: AlertDescriptionProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { Dialog } from 'bits-ui'
+
+  import Button from '@renderer/lib/ui/components/Button.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   let {
     open = $bindable(true),
@@ -46,7 +58,7 @@
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
-        't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800'
       ]}
       {...contentProps}
     >

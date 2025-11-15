@@ -1,25 +1,19 @@
 <script lang="ts" module>
+  import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+
   export type ComboBoxItem = {
     value: string
     label: string
     comment?: string
     disabled?: boolean
   }
-</script>
 
-<script lang="ts">
-  import { Combobox, type WithoutChildren, type WithoutChildrenOrChild, mergeProps } from 'bits-ui'
+  export type ComboBoxModes = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
-  import { m } from '@renderer/paraglide/messages'
-
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
-
-  type Modes = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
-
-  const INPUT_MODE_CLASSES: Record<Modes, string[]> = {
+  export const COMBOBOX_INPUT_MODE_CLASSES: Record<ComboBoxModes, string[]> = {
     neutral: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-      't-dark:bg-zinc-800/50 t-dark:not-data-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
@@ -39,8 +33,8 @@
     ]
   } as const
 
-  const TRIGGER_MODE_CLASSES: Record<Modes, string[]> = {
-    neutral: ['focus-visible:inset-ring-1 focus-visible:ring-2', 't-dark:not-data-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'],
+  export const COMBOBOX_TRIGGER_MODE_CLASSES: Record<ComboBoxModes, string[]> = {
+    neutral: ['focus-visible:inset-ring-1 focus-visible:ring-2', 'not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'],
     info: [
       'focus-visible:inset-ring-1 focus-visible:ring-2',
       'text-blue-500 not-data-disabled:hover:text-blue-200 not-data-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800'
@@ -59,15 +53,33 @@
     ]
   } as const
 
-  type ComboBoxProps = Omit<WithoutChildren<Combobox.RootProps>, 'class' | 'items'> & {
+  export type ComboBoxInputProps = Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class' | 'clearOnDeselect'>
+
+  export type ComboBoxTriggerProps = Omit<WithoutChildrenOrChild<Combobox.TriggerProps>, 'class'>
+
+  export type ComboBoxContentProps = Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class' | 'sideOffset'>
+
+  export type ComboBoxViewportProps = Omit<WithoutChildrenOrChild<Combobox.ViewportProps>, 'class'>
+
+  export type ComboBoxItemProps = Omit<WithoutChildrenOrChild<Combobox.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+
+  export type ComboBoxProps = Omit<WithoutChildren<Combobox.RootProps>, 'class' | 'items'> & {
     items: ComboBoxItem[]
-    mode?: Modes | undefined
-    inputProps?: Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class' | 'clearOnDeselect'> | undefined
-    triggerProps?: Omit<WithoutChildrenOrChild<Combobox.TriggerProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class' | 'sideOffset'> | undefined
-    viewportProps?: Omit<WithoutChildrenOrChild<Combobox.ViewportProps>, 'class'> | undefined
-    itemProps?: Omit<WithoutChildrenOrChild<Combobox.ItemProps>, 'class' | 'value' | 'label' | 'disabled'> | undefined
+    mode?: ComboBoxModes | undefined
+    inputProps?: ComboBoxInputProps | undefined
+    triggerProps?: ComboBoxTriggerProps | undefined
+    contentProps?: ComboBoxContentProps | undefined
+    viewportProps?: ComboBoxViewportProps | undefined
+    itemProps?: ComboBoxItemProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { Combobox, mergeProps } from 'bits-ui'
+
+  import { m } from '@renderer/paraglide/messages'
+
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
   let {
     items,
@@ -112,7 +124,7 @@
         'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
         'data-disabled:opacity-40',
-        ...INPUT_MODE_CLASSES[mode]
+        ...COMBOBOX_INPUT_MODE_CLASSES[mode]
       ]}
       {...mergedInputProps}
     />
@@ -122,7 +134,7 @@
         'absolute right-0 shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        ...TRIGGER_MODE_CLASSES[mode]
+        ...COMBOBOX_TRIGGER_MODE_CLASSES[mode]
       ]}
       {...triggerProps}
     >
@@ -138,7 +150,7 @@
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
-        't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800'
       ]}
       {...contentProps}
     >
@@ -152,7 +164,7 @@
               'w-full flex items-center justify-between px-2 py-1 rounded-sm transition-all',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
-              't-dark:not-data-disabled:hover:bg-zinc-800 t-dark:data-highlighted:bg-zinc-800'
+              'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
             ]}
             {...itemProps}
           >

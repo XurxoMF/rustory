@@ -1,66 +1,92 @@
-<script lang="ts">
-  import { DropdownMenu, type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+<script lang="ts" module>
+  import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import Label from '@renderer/lib/ui/components/Label.svelte'
+  export type DropdownMenuGroupProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupProps>, 'class'>
 
-  type DropdownMenuGroup = {
+  export type DropdownMenuGroupHeadingProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
+
+  export type DropdownMenuGroup = {
     type: 'group'
     label?: string | undefined
     items: DropdownMenuItemTypes[]
-    groupProps?: Omit<WithoutChildrenOrChild<DropdownMenu.GroupProps>, 'class'> | undefined
-    headingProps?: Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'> | undefined
+    groupProps?: DropdownMenuGroupProps | undefined
+    headingProps?: DropdownMenuGroupHeadingProps | undefined
   }
 
-  type DropdownMenuItem = {
+  export type DropdownMenuItemProps = Omit<WithoutChildrenOrChild<DropdownMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
+
+  export type DropdownMenuItem = {
     type: 'item'
     label: string
     value: string
     icon: string
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
-    itemProps?: Omit<WithoutChildrenOrChild<DropdownMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'> | undefined
+    itemProps?: DropdownMenuItemProps | undefined
   }
 
-  type DropdownMenuCheckboxItem = {
+  export type DropdownMenuCheckboxItemProps = Omit<
+    WithoutChildrenOrChild<DropdownMenu.CheckboxItemProps>,
+    'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'
+  >
+
+  export type DropdownMenuCheckboxItem = {
     type: 'checkboxitem'
     label: string
     value: string
     disabled?: boolean | undefined
     checked?: boolean | undefined
     onchange: (checked: boolean) => void
-    checkboxItemProps?: Omit<WithoutChildrenOrChild<DropdownMenu.CheckboxItemProps>, 'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'> | undefined
+    checkboxItemProps?: DropdownMenuCheckboxItemProps | undefined
   }
 
-  type DropdownMenuRadioGroup = {
+  export type DropdownMenuRadioGroupProps = Omit<WithoutChildrenOrChild<DropdownMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
+
+  export type DropdownMenuRadioGroupHeadingProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
+
+  export type DropdownMenuRadioGroup = {
     type: 'radiogroup'
     label?: string
     items: DropdownMenuRadioItem[]
     value?: string | undefined
     onchange: (value: string) => void
-    radioGroupProps?: Omit<WithoutChildrenOrChild<DropdownMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'> | undefined
-    headingProps?: Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'> | undefined
+    radioGroupProps?: DropdownMenuRadioGroupProps | undefined
+    headingProps?: DropdownMenuRadioGroupHeadingProps | undefined
   }
 
-  type DropdownMenuRadioItem = {
+  export type DropdownMenuRadioItemProps = Omit<WithoutChildrenOrChild<DropdownMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
+
+  export type DropdownMenuRadioItem = {
     type: 'radioitem'
     label: string
     value: string
     disabled?: boolean | undefined
-    radioItemProps?: Omit<WithoutChildrenOrChild<DropdownMenu.RadioItemProps>, 'class' | 'value' | 'disabled'> | undefined
+    radioItemProps?: DropdownMenuRadioItemProps | undefined
   }
 
-  type DropdownMenuSubmenu = {
+  export type DropdownMenuSubProps = WithoutChildren<DropdownMenu.SubProps>
+
+  export type DropdownMenuSubTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class'>
+
+  export type DropdownMenuSubContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
+
+  export type DropdownMenuSubmenu = {
     type: 'submenu'
     label: string
     items: DropdownMenuGroupTypes[]
     icon: string
-    submenuProps?: WithoutChildren<DropdownMenu.SubProps> | undefined
-    submenuTriggerProps?: Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class'> | undefined
-    submenuContentProps?: Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'> | undefined
+    submenuProps?: DropdownMenuSubProps | undefined
+    submenuTriggerProps?: DropdownMenuSubTriggerProps | undefined
+    submenuContentProps?: DropdownMenuSubContentProps | undefined
   }
 
-  type DropdownMenuItemSubmenu = {
+  export type DropdownMenuItemSubmenuProps = WithoutChildren<DropdownMenu.SubProps>
+
+  export type DropdownMenuItemSubmenuTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'>
+
+  export type DropdownMenuItemSubmenuContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
+
+  export type DropdownMenuItemSubmenu = {
     type: 'itemsubmenu'
     label: string
     value: string
@@ -68,22 +94,37 @@
     icon: string
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
-    itemSubmenuProps?: WithoutChildren<DropdownMenu.SubProps> | undefined
-    itemSubmenuTriggerProps?: Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'> | undefined
-    itemSubmenuContentProps?: Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'> | undefined
+    itemSubmenuProps?: DropdownMenuItemSubmenuProps | undefined
+    itemSubmenuTriggerProps?: DropdownMenuItemSubmenuTriggerProps | undefined
+    itemSubmenuContentProps?: DropdownMenuItemSubmenuContentProps | undefined
   }
 
-  type DropdownMenuItemTypes = DropdownMenuItem | DropdownMenuCheckboxItem | DropdownMenuSubmenu | DropdownMenuItemSubmenu
+  export type DropdownMenuItemTypes = DropdownMenuItem | DropdownMenuCheckboxItem | DropdownMenuSubmenu | DropdownMenuItemSubmenu
 
-  type DropdownMenuGroupTypes = DropdownMenuGroup | DropdownMenuRadioGroup
+  export type DropdownMenuGroupTypes = DropdownMenuGroup | DropdownMenuRadioGroup
 
-  type DropdownMenuProps = Omit<DropdownMenu.RootProps, 'class'> & {
+  export type DropdownMenuTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.TriggerProps>, 'class'>
+
+  export type DropdownMenuContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.ContentProps>, 'class' | 'sideOffset'>
+
+  export type DropdownMenuArrowProps = Omit<WithoutChildrenOrChild<DropdownMenu.ArrowProps>, 'class'>
+
+  export type DropdownMenuSeparatorProps = Omit<WithoutChildrenOrChild<DropdownMenu.SeparatorProps>, 'class'>
+
+  export type DropdownMenuProps = Omit<DropdownMenu.RootProps, 'class'> & {
     groups: DropdownMenuGroupTypes[]
-    triggerProps?: Omit<WithoutChildrenOrChild<DropdownMenu.TriggerProps>, 'class'> | undefined
-    contentProps?: Omit<WithoutChildrenOrChild<DropdownMenu.ContentProps>, 'class' | 'sideOffset'> | undefined
-    arrowProps?: Omit<WithoutChildrenOrChild<DropdownMenu.ArrowProps>, 'class'> | undefined
-    separatorProps?: Omit<WithoutChildrenOrChild<DropdownMenu.SeparatorProps>, 'class'> | undefined
+    triggerProps?: DropdownMenuTriggerProps | undefined
+    contentProps?: DropdownMenuContentProps | undefined
+    arrowProps?: DropdownMenuArrowProps | undefined
+    separatorProps?: DropdownMenuSeparatorProps | undefined
   }
+</script>
+
+<script lang="ts">
+  import { DropdownMenu } from 'bits-ui'
+
+  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Label from '@renderer/lib/ui/components/Label.svelte'
 
   let { open = $bindable(false), groups, children, triggerProps, contentProps, arrowProps, separatorProps, ...restProps }: DropdownMenuProps = $props()
 </script>
@@ -95,7 +136,7 @@
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
-      't-dark:not-disabled:hover:bg-zinc-800 t-dark:focus-visible:outline-zinc-800',
+      'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
       't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
       't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
       't-midnight:not-disabled:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
@@ -111,7 +152,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -121,7 +162,7 @@
       {@render DRenderGroups(groups)}
 
       <DropdownMenu.Arrow
-        class={['transition-all', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
+        class={['transition-all', 'text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
         {...arrowProps}
       />
     </DropdownMenu.Content>
@@ -148,7 +189,7 @@
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      't-dark:data-highlighted:bg-zinc-800',
+      'data-highlighted:bg-zinc-800',
       't-light:data-highlighted:bg-zinc-200',
       't-rust:data-highlighted:bg-rust-800',
       't-midnight:data-highlighted:bg-gray-800'
@@ -172,7 +213,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:data-[state=checked]:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
         't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
         't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
@@ -213,7 +254,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        't-dark:bg-zinc-800 t-dark:data-[state=checked]:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
         't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
         't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
         't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
@@ -238,7 +279,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:data-highlighted:bg-zinc-800',
+        'data-highlighted:bg-zinc-800',
         't-light:data-highlighted:bg-zinc-200',
         't-rust:data-highlighted:bg-rust-800',
         't-midnight:data-highlighted:bg-gray-800'
@@ -255,7 +296,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -288,7 +329,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        't-dark:data-highlighted:bg-zinc-800',
+        'data-highlighted:bg-zinc-800',
         't-light:data-highlighted:bg-zinc-200',
         't-rust:data-highlighted:bg-rust-800',
         't-midnight:data-highlighted:bg-gray-800'
@@ -305,7 +346,7 @@
       class={[
         'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
         'outline-none',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
+        'bg-zinc-850 border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',
         't-midnight:bg-gray-850 t-midnight:border-gray-800'
@@ -341,7 +382,7 @@
 
     {#if i < groups.length - 1}
       <DropdownMenu.Separator
-        class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
+        class={['w-full h-px my-2', 'bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
         {...separatorProps}
       />
     {/if}
