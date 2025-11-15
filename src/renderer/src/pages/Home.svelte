@@ -491,6 +491,8 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
+              withTickLabels
+              withTicks
             />
             <P mode="secondary">{SLIDER_MAX}</P>
           </FlexContainer>
@@ -512,6 +514,8 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
+              withTickLabels
+              withTicks
             />
             <P mode="secondary">{SLIDER_MAX}</P>
           </FlexContainer>
@@ -533,6 +537,8 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
+              withTickLabels
+              withTicks
             />
             <P mode="secondary">{SLIDER_MAX}</P>
           </FlexContainer>
@@ -554,6 +560,8 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
+              withTickLabels
+              withTicks
             />
             <P mode="secondary">{SLIDER_MAX}</P>
           </FlexContainer>

@@ -28,19 +28,19 @@
   } as const
 
   const TICK_MODE_CLASSES: Record<Modes, string[]> = {
-    neutral: [''],
-    info: [''],
-    success: [''],
-    warning: [''],
-    danger: ['']
+    neutral: ['t-dark:bg-zinc-200/50'],
+    info: ['bg-blue-500'],
+    success: ['bg-green-500'],
+    warning: ['bg-yellow-500'],
+    danger: ['bg-red-500']
   } as const
 
   const TICK_LABEL_MODE_CLASSES: Record<Modes, string[]> = {
-    neutral: [''],
-    info: [''],
-    success: [''],
-    warning: [''],
-    danger: ['']
+    neutral: ['t-dark:text-zinc-200/50 data-bounded:text-zinc-200'],
+    info: ['text-blue-200/50 data-bounded:text-blue-200'],
+    success: ['text-green-200/50 data-bounded:text-green-200'],
+    warning: ['text-yellow-200/50 data-bounded:text-yesllow-200'],
+    danger: ['text-red-200/50 data-bounded:text-red-200']
   } as const
 
   type SliderProps = Omit<WithoutChildrenOrChild<Slider.RootProps>, 'class'> & {
@@ -67,8 +67,6 @@
   }: SliderProps = $props()
 </script>
 
-<!-- TODO: Check and change the mt-5 with a trackPadding or similar if it works -->
-
 <Slider.Root
   bind:value
   bind:ref
@@ -82,27 +80,20 @@
 >
   {#snippet children({ thumbItems, tickItems })}
     <span class={['relative w-full h-2 rounded-full transition-all', ...SPAN_MODE_CLASSES[mode]]}>
-      <Slider.Range
-        class={['absolute h-full rounded-full transition-all', 'cursor-pointer data-disabled:cursor-not-allowed', ...RANGE_MODE_CLASSES[mode]]}
-        {...rangeProps}
-      />
+      <Slider.Range class={['absolute h-full rounded-full transition-all', ...RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
     </span>
 
     {#each thumbItems as { index } (index)}
-      <Slider.Thumb
-        {index}
-        class={['w-5 h-5 rounded-full outline-none transition-all', 'cursor-pointer data-disabled:cursor-not-allowed', ...THUMB_MODE_CLASSES[mode]]}
-        {...thumbProps}
-      />
+      <Slider.Thumb {index} class={['w-5 h-5 z-1 rounded-full outline-none transition-all', ...THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
     {/each}
 
     {#each tickItems as { value, index } (index)}
       {#if withTicks}
-        <Slider.Tick {index} class={['h-2 w-px z-1 transition-all', ...TICK_MODE_CLASSES[mode]]} {...tickProps} />
+        <Slider.Tick {index} class={['h-2 w-px transition-all', ...TICK_MODE_CLASSES[mode]]} {...tickProps} />
       {/if}
 
       {#if withTickLabels}
-        <Slider.TickLabel {index} class={['opacity-40 data-bounded:opacity-100 text-xs transition-all', ...TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
+        <Slider.TickLabel {index} class={['text-xs transition-all', ...TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
           {value}
         </Slider.TickLabel>
       {/if}
