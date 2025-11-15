@@ -5,7 +5,7 @@
 {#each Config.THEMES as THEME (THEME.key)}
   <button
     class={[
-      'w-9 h-9 rounded-full border transition-[opacity,border,background-color]',
+      'w-9 h-9 rounded-full border transition-all',
       'focus-visible:outline-1',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

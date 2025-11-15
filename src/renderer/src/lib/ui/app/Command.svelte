@@ -70,7 +70,7 @@
 
 <Dialog.Root bind:open>
   <Dialog.Portal to="#portal">
-    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color]', 't-dark:bg-zinc-850/20']} />
+    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all', 't-dark:bg-zinc-850/20']} />
 
     <Dialog.Content
       class={[

@@ -73,7 +73,7 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-[color,border,background-color]',
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all',
       't-dark:text-zinc-200 t-dark:bg-zinc-900 t-dark:border-zinc-800'
     ]}
     out:fade={{ duration: 200, delay: 200 }}

@@ -10,7 +10,7 @@
   {value}
   class={[
     [
-      'w-full h-2 rounded-full overflow-hidden shadow/30 transition-[background-color]',
+      'w-full h-2 rounded-full overflow-hidden shadow/30 transition-all',
       't-dark:bg-zinc-800',
       't-light:bg-zinc-200',
       't-rust:bg-rust-800',
@@ -20,13 +20,7 @@
   {...restProps}
 >
   <div
-    class={[
-      'w-full h-full flex-1 rounded-full transition-[background-color,transform]',
-      't-dark:bg-zinc-750',
-      't-light:bg-zinc-300',
-      't-rust:bg-rust-750',
-      't-midnight:bg-gray-750'
-    ]}
+    class={['w-full h-full flex-1 rounded-full transition-all', 't-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
     style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}
   ></div>
 </Progress.Root>

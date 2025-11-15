@@ -109,7 +109,7 @@
     <DropdownMenu.Content
       sideOffset={4}
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-all',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
@@ -121,7 +121,7 @@
       {@render DRenderGroups(groups)}
 
       <DropdownMenu.Arrow
-        class={['transition-[color]', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
+        class={['transition-all', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
         {...arrowProps}
       />
     </DropdownMenu.Content>
@@ -144,7 +144,7 @@
     {disabled}
     textValue={value}
     class={[
-      'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
+      'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
@@ -168,7 +168,7 @@
       {checked}
       onCheckedChange={onchange}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow/30 transition-[opacity,background-color]',
+        'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow/30 transition-all',
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -209,7 +209,7 @@
       {value}
       {disabled}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-full p-0.5 shadow/30 transition-[opacity,background-color]',
+        'w-5 h-5 flex items-center justify-center rounded-full p-0.5 shadow/30 transition-all',
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
@@ -234,7 +234,7 @@
   <DropdownMenu.Sub {...submenuProps}>
     <DropdownMenu.SubTrigger
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
+        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -253,7 +253,7 @@
     <DropdownMenu.SubContent
       sideOffset={12}
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-all',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
@@ -284,7 +284,7 @@
       {disabled}
       textValue={value}
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
+        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -303,7 +303,7 @@
     <DropdownMenu.SubContent
       sideOffset={12}
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-all',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',

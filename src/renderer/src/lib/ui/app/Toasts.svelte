@@ -43,7 +43,7 @@
   <div class="w-full flex gap-2 items-center">
     <div class="w-full flex gap-2 items-center">
       <div>
-        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color]', ...COLOR_CLASSES[toast.type]]} />
+        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-all', ...COLOR_CLASSES[toast.type]]} />
       </div>
 
       <div>
