@@ -10,7 +10,7 @@
   {value}
   class={[
     [
-      'w-full h-2 rounded-full overflow-hidden shadow/30 transition-all',
+      'w-full h-2 rounded-full overflow-hidden shadow-xl transition-all',
       't-dark:bg-zinc-800',
       't-light:bg-zinc-200',
       't-rust:bg-rust-800',

@@ -8,7 +8,7 @@
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import Alert from '@renderer/lib/ui/components/Alert.svelte'
   import Label from '@renderer/lib/ui/components/Label.svelte'
-  import Description from '@renderer/lib/ui/components/Description.svelte'
+  import Info from '@renderer/lib/ui/components/Info.svelte'
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Columns'
@@ -76,7 +76,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="disabled-input" disabled>Disabled Input & Button</Label>
-            <Description disabled>You can't interact with this components!</Description>
+            <Info disabled>You can't interact with this components!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -88,7 +88,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="readonly-input">Readonly Input & Transparent Button</Label>
-            <Description>You can't edit this input but you can click the button!</Description>
+            <Info>You can't edit this input but you can click the button!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -100,7 +100,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="required-input">Neutral Input & Button</Label>
-            <Description>Input & Button with neutral style!</Description>
+            <Info>Input & Button with neutral style!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -112,7 +112,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="info-input">Info Input & Button</Label>
-            <Description>Input & Button with info style!</Description>
+            <Info>Input & Button with info style!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -124,7 +124,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="success-input">Success Input & Button</Label>
-            <Description>Input & Button with success style!</Description>
+            <Info>Input & Button with success style!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -136,7 +136,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="warning-input">Warning Input & Button</Label>
-            <Description>Input & Button with warning style!</Description>
+            <Info>Input & Button with warning style!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -148,7 +148,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="error-input">Error Input & Button</Label>
-            <Description>Input & Button with error style!</Description>
+            <Info>Input & Button with error style!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -167,7 +167,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="disabled-select" disabled>Disabled Select</Label>
-            <Description disabled>You can't interact with this component!</Description>
+            <Info disabled>You can't interact with this component!</Info>
           </FlexContainer>
 
           <Select
@@ -184,7 +184,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="neutral-select">Neutral Select</Label>
-            <Description>Select with neutral style!</Description>
+            <Info>Select with neutral style!</Info>
           </FlexContainer>
 
           <Select
@@ -200,7 +200,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="info-select">Info Select</Label>
-            <Description>Select with info style!</Description>
+            <Info>Select with info style!</Info>
           </FlexContainer>
 
           <Select triggerProps={{ id: 'info-select' }} type="single" placeholder="Info Select" mode="info" items={SELECT_ITEMS} bind:value={selectValue} />
@@ -209,7 +209,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="success-select">Success Select</Label>
-            <Description>Select with success style!</Description>
+            <Info>Select with success style!</Info>
           </FlexContainer>
 
           <Select
@@ -225,7 +225,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="warning-select">Warning Select</Label>
-            <Description>Select with warning style!</Description>
+            <Info>Select with warning style!</Info>
           </FlexContainer>
 
           <Select
@@ -241,7 +241,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="error-select">Error Select</Label>
-            <Description>Select with error style!</Description>
+            <Info>Select with error style!</Info>
           </FlexContainer>
 
           <Select triggerProps={{ id: 'error-select' }} type="single" placeholder="Error Select" mode="danger" items={SELECT_ITEMS} bind:value={selectValue} />
@@ -257,7 +257,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="disabled-combobox" disabled>Disabled Combobox</Label>
-            <Description disabled>Combobox with transparent style!</Description>
+            <Info disabled>Combobox with transparent style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -273,7 +273,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="neutral-combobox">Neutral Combobox</Label>
-            <Description>Combobox with neutral style!</Description>
+            <Info>Combobox with neutral style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -288,7 +288,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="info-combobox">Info Combobox</Label>
-            <Description>Combobox with info style!</Description>
+            <Info>Combobox with info style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -303,7 +303,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="success-combobox">Success Combobox</Label>
-            <Description>Combobox with success style!</Description>
+            <Info>Combobox with success style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -318,7 +318,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="warning-combobox">Warning Combobox</Label>
-            <Description>Combobox with warning style!</Description>
+            <Info>Combobox with warning style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -333,7 +333,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="error-combobox">Error Combobox</Label>
-            <Description>Combobox with error style!</Description>
+            <Info>Combobox with error style!</Info>
           </FlexContainer>
 
           <ComboBox
@@ -370,7 +370,7 @@
                   <div class="flex flex-col items-start justify-center gap-2">
                     <div class="flex gap-2 items-center">
                       <Label for="required-input">Required Input</Label>
-                      <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                      <Info>This Input is rerquired and it has an * to prove it xD</Info>
                     </div>
 
                     <Input id="required-input" type="url" placeholder="Reqired Input" />
@@ -381,7 +381,7 @@
                   <div class="flex flex-col items-start justify-center gap-2">
                     <div class="flex gap-2 items-center">
                       <Label for="required-input">Required Input</Label>
-                      <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                      <Info>This Input is rerquired and it has an * to prove it xD</Info>
                     </div>
 
                     <Input id="required-input" type="url" placeholder="Reqired Input" />
@@ -406,7 +406,7 @@
                   <div class="flex flex-col items-start justify-center gap-2">
                     <div class="flex gap-2 items-center">
                       <Label for="required-input">Required Input</Label>
-                      <Description>This Input is rerquired and it has an * to prove it xD</Description>
+                      <Info>This Input is rerquired and it has an * to prove it xD</Info>
                     </div>
 
                     <Input id="required-input" type="url" placeholder="Reqired Input" />
@@ -433,7 +433,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="disabled-slider" disabled>Disabled Slider</Label>
-            <Description disabled>You can't interact with this component!</Description>
+            <Info disabled>You can't interact with this component!</Info>
           </FlexContainer>
 
           <FlexContainer>
@@ -455,7 +455,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="neutral-slider">Neutral Slider</Label>
-            <Description>Slider with neutral style!</Description>
+            <Info>Slider with neutral style!</Info>
           </FlexContainer>
 
           <FlexContainer alignY="end">
@@ -478,7 +478,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="info-slider">Info Slider</Label>
-            <Description>Slider with info style!</Description>
+            <Info>Slider with info style!</Info>
           </FlexContainer>
 
           <FlexContainer alignY="end">
@@ -501,7 +501,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="success-slider">Success Slider</Label>
-            <Description>Slider with success style!</Description>
+            <Info>Slider with success style!</Info>
           </FlexContainer>
 
           <FlexContainer alignY="end">
@@ -524,7 +524,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="warning-slider">Warning Slider</Label>
-            <Description>Slider with warning style!</Description>
+            <Info>Slider with warning style!</Info>
           </FlexContainer>
 
           <FlexContainer alignY="end">
@@ -547,7 +547,7 @@
         <FlexContainer direction="col">
           <FlexContainer>
             <Label for="error-slider">Error Slider</Label>
-            <Description>Slider with error style!</Description>
+            <Info>Slider with error style!</Info>
           </FlexContainer>
 
           <FlexContainer alignY="end">
@@ -577,37 +577,37 @@
         <FlexContainer>
           <Checkbox bind:checked={checkboxValue} disabled />
           <Label disabled>Disabled Checkbox</Label>
-          <Description disabled>You can't interact with this component!</Description>
+          <Info disabled>You can't interact with this component!</Info>
         </FlexContainer>
 
         <FlexContainer>
           <Checkbox mode="neutral" bind:checked={checkboxValue} />
           <Label>Neutral Checkbox</Label>
-          <Description>Checkbox with neutral style!</Description>
+          <Info>Checkbox with neutral style!</Info>
         </FlexContainer>
 
         <FlexContainer>
           <Checkbox mode="info" bind:checked={checkboxValue} />
           <Label>Info Checkbox</Label>
-          <Description>Checkbox with info style!</Description>
+          <Info>Checkbox with info style!</Info>
         </FlexContainer>
 
         <FlexContainer>
           <Checkbox mode="success" bind:checked={checkboxValue} />
           <Label>Success Checkbox</Label>
-          <Description>Checkbox with success style!</Description>
+          <Info>Checkbox with success style!</Info>
         </FlexContainer>
 
         <FlexContainer>
           <Checkbox mode="warning" bind:checked={checkboxValue} />
           <Label>Warning Checkbox</Label>
-          <Description>Checkbox with warning style!</Description>
+          <Info>Checkbox with warning style!</Info>
         </FlexContainer>
 
         <FlexContainer>
           <Checkbox mode="danger" bind:checked={checkboxValue} />
           <Label>Error Checkbox</Label>
-          <Description>Checkbox with error style!</Description>
+          <Info>Checkbox with error style!</Info>
         </FlexContainer>
       </FlexContainer>
     </ColumnItem>
@@ -619,37 +619,37 @@
 
         <FlexContainer>
           <Label disabled>Disabled Switch</Label>
-          <Description disabled>You can't interact with this component!</Description>
+          <Info disabled>You can't interact with this component!</Info>
           <Switch bind:checked={switchValue} disabled />
         </FlexContainer>
 
         <FlexContainer>
           <Label>Neutral Switch</Label>
-          <Description>Switch with neutral style!</Description>
+          <Info>Switch with neutral style!</Info>
           <Switch mode="neutral" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
           <Label>Info Switch</Label>
-          <Description>Switch with info style!</Description>
+          <Info>Switch with info style!</Info>
           <Switch mode="info" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
           <Label>Success Switch</Label>
-          <Description>Switch with success style!</Description>
+          <Info>Switch with success style!</Info>
           <Switch mode="success" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
           <Label>Warning Switch</Label>
-          <Description>Switch with warning style!</Description>
+          <Info>Switch with warning style!</Info>
           <Switch mode="warning" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
           <Label>Error Switch</Label>
-          <Description>Switch with error style!</Description>
+          <Info>Switch with error style!</Info>
           <Switch mode="danger" bind:checked={switchValue} />
         </FlexContainer>
       </FlexContainer>

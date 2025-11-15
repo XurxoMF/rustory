@@ -32,7 +32,7 @@
     <Dialog.Content
       class={[
         'absolute top-1/2 -translate-y-1/2 right-0 w-[50vw] max-w-100 h-screen p-2 z-100',
-        'rounded-md border shadow/30 transition-all',
+        'rounded-md border shadow-xl transition-all',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
         't-rust:bg-rust-850 t-rust:border-rust-800',

@@ -7,7 +7,7 @@
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Label from '@renderer/lib/ui/components/Label.svelte'
-  import Description from '@renderer/lib/ui/components/Description.svelte'
+  import Info from '@renderer/lib/ui/components/Info.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
@@ -28,7 +28,7 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__language()}</Label>
-              <Description>{m.settings__language_description()}</Description>
+              <Info>{m.settings__language_description()}</Info>
             </div>
 
             <Lang />
@@ -39,7 +39,7 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__uiscale()}</Label>
-              <Description>{m.settings__uiscale_description()}</Description>
+              <Info>{m.settings__uiscale_description()}</Info>
             </div>
 
             <Scale />
@@ -50,7 +50,7 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__theme()}</Label>
-              <Description>{m.settings__theme_description()}</Description>
+              <Info>{m.settings__theme_description()}</Info>
             </div>
 
             <div class="w-full flex items-center gap-1">
@@ -67,13 +67,12 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__vs_instances_folder()}</Label>
-              <Description>{m.settings__vs_instances_folder_description()}</Description>
+              <Info>{m.settings__vs_instances_folder_description()}</Info>
             </div>
 
             <div class="w-full flex items-stretch justify-center gap-1">
               <Button
                 mode="neutral"
-                size="form-form"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_instances_folder(), 'openDirectory', false, [])
@@ -99,13 +98,12 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__vs_versions_folder()}</Label>
-              <Description>{m.settings__vs_versions_folder_description()}</Description>
+              <Info>{m.settings__vs_versions_folder_description()}</Info>
             </div>
 
             <div class="w-full flex items-stretch justify-center gap-1">
               <Button
                 mode="neutral"
-                size="form-form"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_versions_folder(), 'openDirectory', false, [])
@@ -131,13 +129,12 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.settings__vs_instance_backups_folder()}</Label>
-              <Description>{m.settings__vs_instance_backups_folder_description()}</Description>
+              <Info>{m.settings__vs_instance_backups_folder_description()}</Info>
             </div>
 
             <div class="w-full flex items-stretch justify-center gap-1">
               <Button
                 mode="neutral"
-                size="form-form"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])

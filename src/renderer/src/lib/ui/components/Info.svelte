@@ -11,15 +11,15 @@
   let { open = $bindable(false), children, triggerProps, contentProps, ...restProps }: DescriptionProps = $props()
 </script>
 
-<Tooltip.Provider disableHoverableContent delayDuration={500}>
+<Tooltip.Provider disableHoverableContent delayDuration={150}>
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'shrink-0 flex items-center justify-center p-0.5 rounded-md transition-opacity',
-        'focus-visible:outline-2',
-        'cursor-help data-disabled:cursor-not-allowed',
+        'shrink-0 flex items-center justify-center rounded-full outline-none leading-tight transition-all',
+        'cursor-help disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        't-dark:focus-visible:outline-zinc-800'
+        'focus-visible:inset-ring-1 focus-visible:ring-2',
+        't-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
       ]}
       {...triggerProps}
     >
@@ -29,12 +29,18 @@
     <Tooltip.Portal to="#portal">
       <Tooltip.Content
         sideOffset={4}
-        class={['px-2 py-1 rounded-md overflow-hidden z-1000 shadow/30 transition-all', 't-dark:bg-zinc-850 t-dark:border-zinc-800']}
+        class={[
+          'p-2 z-1000 rounded-sm backdrop-blur-xs shadow-xl leading-tight transition-all',
+          'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',
+          'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+          'inset-ring-2',
+          't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
+        ]}
         {...contentProps}
       >
         {@render children?.()}
 
-        <Tooltip.Arrow class={['transition-all', 't-dark:text-zinc-750']} />
+        <Tooltip.Arrow class={['transition-all', 't-dark:text-zinc-800']} />
       </Tooltip.Content>
     </Tooltip.Portal>
   </Tooltip.Root>

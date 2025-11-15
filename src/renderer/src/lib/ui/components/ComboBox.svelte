@@ -134,7 +134,7 @@
     <Combobox.Content
       sideOffset={4}
       class={[
-        'max-h-(--bits-combobox-content-available-height) w-(--bits-combobox-anchor-width) min-w-(--bits-combobox-anchor-width) z-50 flex flex-col backdrop-blur-xs rounded-sm shadow/30 outline-none transition-all',
+        'max-h-(--bits-combobox-content-available-height) w-(--bits-combobox-anchor-width) min-w-(--bits-combobox-anchor-width) z-50 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',

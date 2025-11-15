@@ -9,7 +9,7 @@
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
   import Label from '@renderer/lib/ui/components/Label.svelte'
-  import Description from '@renderer/lib/ui/components/Description.svelte'
+  import Info from '@renderer/lib/ui/components/Info.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { VersionsToInstall } from '@renderer/lib/ui/features/VS/Versions'
@@ -47,7 +47,7 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.vintagestory__version()}</Label>
-              <Description>{m.descriptions__vs_version_to_install()}</Description>
+              <Info>{m.descriptions__vs_version_to_install()}</Info>
             </div>
 
             <VersionsToInstall bind:version />
@@ -58,7 +58,7 @@
           <div class="flex flex-col items-start justify-center gap-1">
             <div class="flex gap-1 items-center">
               <Label>{m.labels__vs_version_path()}</Label>
-              <Description>{m.descriptions__vs_version_path()}</Description>
+              <Info>{m.descriptions__vs_version_path()}</Info>
             </div>
 
             <div class="w-full flex items-stretch justify-center gap-1">

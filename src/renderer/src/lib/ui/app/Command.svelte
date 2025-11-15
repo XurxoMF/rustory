@@ -74,7 +74,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100 rounded-md border shadow/30 transition-all',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100 rounded-md border shadow-xl transition-all',
         't-dark:bg-zinc-850 t-dark:border-zinc-800'
       ]}
     >
@@ -91,7 +91,7 @@
       <Command.Root>
         <Command.Input
           class={[
-            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/30 transition-all',
+            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow-xl transition-all',
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
