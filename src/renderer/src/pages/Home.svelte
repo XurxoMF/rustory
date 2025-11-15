@@ -357,7 +357,7 @@
 
           <Alert bind:open={alertOpen} title="Title" description="This is a really cool alert! We can as you to accept or cancel things here!" />
 
-          <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>
+          <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>DANGER
 
           <Dialog
             bind:open={dialogOpen}
@@ -439,7 +439,7 @@
           <FlexContainer>
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'disabled-slider' }}
+              id="disabled-slider"
               type="multiple"
               mode="neutral"
               min={SLIDER_MIN}
@@ -461,7 +461,7 @@
           <FlexContainer alignY="end">
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'neutral-slider' }}
+              id="neutral-slider"
               type="multiple"
               mode="neutral"
               min={SLIDER_MIN}
@@ -484,7 +484,7 @@
           <FlexContainer alignY="end">
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'info-slider' }}
+              id="info-slider"
               type="multiple"
               mode="info"
               min={SLIDER_MIN}
@@ -507,7 +507,7 @@
           <FlexContainer alignY="end">
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'success-slider' }}
+              id="success-slider"
               type="multiple"
               mode="success"
               min={SLIDER_MIN}
@@ -530,7 +530,7 @@
           <FlexContainer alignY="end">
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'warning-slider' }}
+              id="warning-slider"
               type="multiple"
               mode="warning"
               min={SLIDER_MIN}
@@ -553,7 +553,7 @@
           <FlexContainer alignY="end">
             <P mode="secondary">{SLIDER_MIN}</P>
             <Slider
-              thumbProps={{ id: 'error-slider' }}
+              id="error-slider"
               type="multiple"
               mode="danger"
               min={SLIDER_MIN}
@@ -575,38 +575,38 @@
         <H3>Checkboxes</H3>
 
         <FlexContainer>
-          <Checkbox bind:checked={checkboxValue} disabled />
-          <Label disabled>Disabled Checkbox</Label>
+          <Checkbox id="disabled-checkbox" bind:checked={checkboxValue} disabled />
+          <Label for="disabled-checkbox" disabled>Disabled Checkbox</Label>
           <Info disabled>You can't interact with this component!</Info>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="neutral" bind:checked={checkboxValue} />
-          <Label>Neutral Checkbox</Label>
+          <Checkbox id="neutral-checkbox" mode="neutral" bind:checked={checkboxValue} />
+          <Label for="neutral-checkbox">Neutral Checkbox</Label>
           <Info>Checkbox with neutral style!</Info>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="info" bind:checked={checkboxValue} />
-          <Label>Info Checkbox</Label>
+          <Checkbox id="info-checkbox" mode="info" bind:checked={checkboxValue} />
+          <Label for="info-checkbox">Info Checkbox</Label>
           <Info>Checkbox with info style!</Info>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="success" bind:checked={checkboxValue} />
-          <Label>Success Checkbox</Label>
+          <Checkbox id="success-checkbox" mode="success" bind:checked={checkboxValue} />
+          <Label for="success-checkbox">Success Checkbox</Label>
           <Info>Checkbox with success style!</Info>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="warning" bind:checked={checkboxValue} />
-          <Label>Warning Checkbox</Label>
+          <Checkbox id="warning-checkbox" mode="warning" bind:checked={checkboxValue} />
+          <Label for="warning-checkbox">Warning Checkbox</Label>
           <Info>Checkbox with warning style!</Info>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="danger" bind:checked={checkboxValue} />
-          <Label>Error Checkbox</Label>
+          <Checkbox id="error-checkbox" mode="danger" bind:checked={checkboxValue} />
+          <Label for="error-checkbox">Error Checkbox</Label>
           <Info>Checkbox with error style!</Info>
         </FlexContainer>
       </FlexContainer>
@@ -618,39 +618,39 @@
         <H3>Switches</H3>
 
         <FlexContainer>
-          <Label disabled>Disabled Switch</Label>
+          <Label for="disabled-switch" disabled>Disabled Switch</Label>
           <Info disabled>You can't interact with this component!</Info>
-          <Switch bind:checked={switchValue} disabled />
+          <Switch id="disabled-switch" bind:checked={switchValue} disabled />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Neutral Switch</Label>
+          <Label for="neutral-switch">Neutral Switch</Label>
           <Info>Switch with neutral style!</Info>
-          <Switch mode="neutral" bind:checked={switchValue} />
+          <Switch id="neutral-switch" mode="neutral" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Info Switch</Label>
+          <Label for="info-switch">Info Switch</Label>
           <Info>Switch with info style!</Info>
-          <Switch mode="info" bind:checked={switchValue} />
+          <Switch id="info-switch" mode="info" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Success Switch</Label>
+          <Label for="success-switch">Success Switch</Label>
           <Info>Switch with success style!</Info>
-          <Switch mode="success" bind:checked={switchValue} />
+          <Switch id="success-switch" mode="success" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Warning Switch</Label>
+          <Label for="warning-switch">Warning Switch</Label>
           <Info>Switch with warning style!</Info>
-          <Switch mode="warning" bind:checked={switchValue} />
+          <Switch id="warning-switch" mode="warning" bind:checked={switchValue} />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Error Switch</Label>
+          <Label for="error-switch">Error Switch</Label>
           <Info>Switch with error style!</Info>
-          <Switch mode="danger" bind:checked={switchValue} />
+          <Switch id="error-switch" mode="danger" bind:checked={switchValue} />
         </FlexContainer>
       </FlexContainer>
     </ColumnItem>
@@ -671,7 +671,7 @@
                   label: 'One',
                   value: 'one',
                   onselect: () => {
-                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the DropdownMenu!'] })
+                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the DropdownMenu!' })
                     Toasts.instance.addToast(toastInfo)
                   },
                   icon: 'ph:code'
@@ -681,7 +681,7 @@
                   label: 'Two',
                   value: 'two',
                   onselect: () => {
-                    const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the DropdownMenu!'] })
+                    const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the DropdownMenu!' })
                     Toasts.instance.addToast(toast)
                   },
                   icon: 'ph:code',
@@ -707,7 +707,7 @@
                 }
               ],
               onchange: (value: string) => {
-                const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value} on the DropdownMenu!`] })
+                const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: `You clicked ${value} on the DropdownMenu!` })
                 Toasts.instance.addToast(toast)
 
                 radioCheckedD = value
@@ -733,7 +733,7 @@
                             const toastInfo = new Toast({
                               title: 'Inside first Menu cliecked!',
                               type: Toast.Type.INFO,
-                              description: ['You clicked inside-first-menu on the DropdownMenu!']
+                              description: 'You clicked inside-first-menu on the DropdownMenu!'
                             })
                             Toasts.instance.addToast(toastInfo)
                           },
@@ -756,7 +756,7 @@
                                     const toastInfo = new Toast({
                                       title: 'Inside Second Menu cliecked!',
                                       type: Toast.Type.INFO,
-                                      description: ['You clicked inside-second-menu on the DropdownMenu!']
+                                      description: 'You clicked inside-second-menu on the DropdownMenu!'
                                     })
                                     Toasts.instance.addToast(toastInfo)
                                   },
@@ -769,7 +769,7 @@
                             const toastInfo = new Toast({
                               title: 'Submenu Two cliecked!',
                               type: Toast.Type.INFO,
-                              description: ['You clicked submenu-two on the DropdownMenu!']
+                              description: 'You clicked submenu-two on the DropdownMenu!'
                             })
                             Toasts.instance.addToast(toastInfo)
                           }
@@ -793,7 +793,7 @@
                     const toastInfo = new Toast({
                       title: 'Checkbox One cliecked!',
                       type: Toast.Type.INFO,
-                      description: ['You clicked checkbox-one on the ContextMenu!']
+                      description: 'You clicked checkbox-one on the DropdownMenu!'
                     })
                     Toasts.instance.addToast(toastInfo)
                     checkboxOneCheckedD = changed
@@ -809,7 +809,7 @@
                     const toastInfo = new Toast({
                       title: 'Checkbox Two cliecked!',
                       type: Toast.Type.INFO,
-                      description: ['You clicked checkbox-two on the ContextMenu!']
+                      description: 'You clicked checkbox-two on the DropdownMenu!'
                     })
                     Toasts.instance.addToast(toastInfo)
                     checkboxTwoCheckedD = changed
@@ -840,7 +840,7 @@
                   label: 'One',
                   value: 'one',
                   onselect: () => {
-                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: ['You clicked one on the ContextMenu!'] })
+                    const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
                     Toasts.instance.addToast(toastInfo)
                   },
                   icon: 'ph:code'
@@ -850,7 +850,7 @@
                   label: 'Two',
                   value: 'two',
                   onselect: () => {
-                    const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: ['You clicked two on the ContextMenu!'] })
+                    const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
                     Toasts.instance.addToast(toast)
                   },
                   icon: 'ph:code',
@@ -876,7 +876,7 @@
                 }
               ],
               onchange: (value: string) => {
-                const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: [`You clicked ${value} on the ContextMenu!`] })
+                const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: `You clicked ${value} on the ContextMenu!` })
                 Toasts.instance.addToast(toast)
 
                 radioCheckedCM = value
@@ -902,7 +902,7 @@
                             const toastInfo = new Toast({
                               title: 'Inside first Menu cliecked!',
                               type: Toast.Type.INFO,
-                              description: ['You clicked inside-first-menu on the ContextMenu!']
+                              description: 'You clicked inside-first-menu on the ContextMenu!'
                             })
                             Toasts.instance.addToast(toastInfo)
                           },
@@ -925,7 +925,7 @@
                                     const toastInfo = new Toast({
                                       title: 'Inside Second Menu cliecked!',
                                       type: Toast.Type.INFO,
-                                      description: ['You clicked inside-second-menu on the ContextMenu!']
+                                      description: 'You clicked inside-second-menu on the ContextMenu!'
                                     })
                                     Toasts.instance.addToast(toastInfo)
                                   },
@@ -938,7 +938,7 @@
                             const toastInfo = new Toast({
                               title: 'Submenu Two cliecked!',
                               type: Toast.Type.INFO,
-                              description: ['You clicked submenu-two on the ContextMenu!']
+                              description: 'You clicked submenu-two on the ContextMenu!'
                             })
                             Toasts.instance.addToast(toastInfo)
                           }
@@ -962,7 +962,7 @@
                     const toastInfo = new Toast({
                       title: 'Checkbox One cliecked!',
                       type: Toast.Type.INFO,
-                      description: ['You clicked checkbox-one on the ContextMenu!']
+                      description: 'You clicked checkbox-one on the ContextMenu!'
                     })
                     Toasts.instance.addToast(toastInfo)
                     checkboxOneCheckedCM = changed
@@ -978,7 +978,7 @@
                     const toastInfo = new Toast({
                       title: 'Checkbox Two cliecked!',
                       type: Toast.Type.INFO,
-                      description: ['You clicked checkbox-two on the ContextMenu!']
+                      description: 'You clicked checkbox-two on the ContextMenu!'
                     })
                     Toasts.instance.addToast(toastInfo)
                     checkboxTwoCheckedCM = changed
@@ -1005,25 +1005,28 @@
             mode="neutral"
             width="flex-1"
             onclick={() => {
-              const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: ['This is an info toast!'] })
+              const toastNeutral = new Toast({ title: 'Neutral toast', type: Toast.Type.NEUTRAL, description: 'This is a neutral toast!' })
+              Toasts.instance.addToast(toastNeutral)
+
+              const toastInfo = new Toast({ title: 'Info toast', type: Toast.Type.INFO, description: 'This is an info toast!' })
               Toasts.instance.addToast(toastInfo)
 
               const toastWarning = new Toast({
                 title: 'Warning toast',
                 type: Toast.Type.WARNING,
-                description: ['This is an warning toast with a long ass description how will this fit on a toast is crazy!']
+                description: 'This is an warning toast with a long ass description how will this fit on a toast is crazy!'
               })
               Toasts.instance.addToast(toastWarning)
 
               const toastError = new Toast({
                 title: 'Danger toast',
-                type: Toast.Type.ERROR,
-                description: ['This is an error toast! Click it to show another toast!'],
+                type: Toast.Type.DANGER,
+                description: 'This is an error toast! Click it to show another toast!',
                 onclick: () => {
                   const anotherToast = new Toast({
                     title: 'Another toast',
                     type: Toast.Type.INFO,
-                    description: ['This is another toast that will last 10 seconds!'],
+                    description: 'This is another toast that will last 10 seconds!',
                     hideAfter: 10000
                   })
                   Toasts.instance.addToast(anotherToast)
@@ -1034,7 +1037,7 @@
               const toastSuccess = new Toast({
                 title: 'Success toast',
                 type: Toast.Type.SUCCESS,
-                description: ['This is an success toast! Keep your cursor over it to make it last forver!']
+                description: 'This is an success toast! Keep your cursor over it to make it last forver!'
               })
               Toasts.instance.addToast(toastSuccess)
             }}
@@ -1050,7 +1053,7 @@
                 title: 'Example notification',
                 description: 'This is a system notification! How cool is this?!?!',
                 onclick: () => {
-                  const toastInfo = new Toast({ title: 'Notification clicked!', type: Toast.Type.INFO, description: ['You clicked the system notification!'] })
+                  const toastInfo = new Toast({ title: 'Notification clicked!', type: Toast.Type.INFO, description: 'You clicked the system notification!' })
                   Toasts.instance.addToast(toastInfo)
                 }
               })

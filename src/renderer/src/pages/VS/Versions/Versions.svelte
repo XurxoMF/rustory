@@ -14,6 +14,7 @@
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { VersionsToInstall } from '@renderer/lib/ui/features/VS/Versions'
   import { Toasts, Toast } from '@renderer/lib/classes/Toasts.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 
@@ -21,15 +22,15 @@
   let path: string | undefined = $state()
 
   function manageInstallVersion(): void {
-    let missingFields: string[] = []
+    let missingFields: number = 0
 
-    if (!version) missingFields.push(m.vintagestory__version())
+    if (!version) missingFields++
 
-    if (missingFields.length > 0) {
+    if (missingFields > 0) {
       const toast = new Toast({
         title: m.toasts__title__missing_fields(),
-        type: Toast.Type.ERROR,
-        description: [m.toasts__description__missing_fields(), ...missingFields.map((mf) => `- ${mf}`)]
+        type: Toast.Type.DANGER,
+        description: m.toasts__description__missing_fields()
       })
       Toasts.instance.addToast(toast)
       return
@@ -44,14 +45,14 @@
     <GridItem spanX="full">
       <GridContainer columns={2}>
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.vintagestory__version()}</Label>
+          <FlexContainer direction="col">
+            <FlexContainer>
+              <Label for="versions-to-install">{m.vintagestory__version()}</Label>
               <Info>{m.descriptions__vs_version_to_install()}</Info>
-            </div>
+            </FlexContainer>
 
             <VersionsToInstall bind:version />
-          </div>
+          </FlexContainer>
         </GridItem>
 
         <GridItem>

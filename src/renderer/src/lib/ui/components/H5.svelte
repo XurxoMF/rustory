@@ -3,11 +3,21 @@
 
   type H5Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: 'primary' | 'secondary' | undefined
+    align?: 'start' | 'center' | 'end' | undefined
   }
 
-  let { mode = 'primary', children, ...restProps }: H5Props = $props()
+  let { mode = 'primary', align = 'start', children, ...restProps }: H5Props = $props()
 </script>
 
-<h5 class={['text-lg font-bold', mode === 'secondary' && 'text-zinc-200/50']} {...restProps}>
+<h5
+  class={[
+    'text-lg font-bold leading-tight',
+    mode === 'secondary' && 'text-zinc-200/50',
+    align === 'start' && 'text-left',
+    align === 'center' && 'text-center',
+    align === 'end' && 'text-right'
+  ]}
+  {...restProps}
+>
   {@render children?.()}
 </h5>

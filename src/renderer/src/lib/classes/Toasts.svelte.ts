@@ -87,7 +87,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  private _description: string[]
+  private _description: string | undefined
 
   /**
    * The time that has to pass for the toast to hide.
@@ -107,15 +107,15 @@ export class Toast {
   public constructor(data: {
     type: Toast.Type
     title: string
-    description?: string[] | undefined
+    description?: string | undefined
     hideAfter?: number | undefined
     onclick?: (() => void | Promise<void>) | undefined
   }) {
     this._id = crypto.randomUUID()
     this._type = data.type
     this._title = data.title
-    this._description = data.description ?? []
-    this._hideAfter = data.hideAfter ?? 5000
+    this._description = data.description
+    this._hideAfter = data.hideAfter ?? 8000
     this._onclick = data.onclick
   }
 
@@ -170,7 +170,7 @@ export class Toast {
   /**
    * The description of the toast.
    */
-  public get description(): string[] {
+  public get description(): string | undefined {
     return this._description
   }
 
@@ -195,8 +195,9 @@ export namespace Toast {
    */
   export enum Type {
     SUCCESS = 'success',
-    ERROR = 'error',
+    DANGER = 'danger',
     WARNING = 'warning',
-    INFO = 'info'
+    INFO = 'info',
+    NEUTRAL = 'neutral'
   }
 }

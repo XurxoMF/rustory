@@ -3,67 +3,66 @@
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
+  import FlexContainer from '../layout/Flex/FlexContainer.svelte'
+  import H5 from '../components/H5.svelte'
+  import P from '../components/P.svelte'
 
-  const ICONS: Record<Toast.Type, string> = {
-    info: 'ph:info',
-    warning: 'ph:warning',
-    error: 'ph:prohibit',
-    success: 'ph:check-circle'
-  } as const
-
-  const COLOR_CLASSES: Record<Toast.Type, string[]> = {
-    info: ['text-blue-500'],
-    warning: ['text-yellow-600'],
-    error: ['text-red-800'],
-    success: ['text-green-700']
+  const MODE_CLASSES: Record<Toast.Type, string[]> = {
+    neutral: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+    ],
+    info: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'text-blue-500 inset-ring-blue-800 ring-blue-800'
+    ],
+    success: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'text-green-500 inset-ring-green-800 ring-green-800'
+    ],
+    warning: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'text-yellow-500 inset-ring-yellow-800 ring-yellow-800'
+    ],
+    danger: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800',
+      'text-red-500 inset-ring-red-800 ring-red-800'
+    ]
   } as const
 </script>
 
-<div class="app-no-drag pointer-events-none absolute top-0 right-0 z-400 p-2 flex flex-col items-end justify-start gap-2">
+<div class="app-no-drag pointer-events-none absolute w-full top-0 right-0 z-400 p-4 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
-    <div
-      class={['group w-72 pointer-events-auto']}
+    <button
+      class={[
+        'shrink-0 w-1/5 p-4 leading-tight rounded-md pointer-events-auto outline-none backdrop-blur-xs transition-all',
+        toast.onclick && 'cursor-pointer',
+        ...MODE_CLASSES[toast.type]
+      ]}
       onmouseenter={() => Toasts.instance.clearToast(toast)}
       onmouseleave={() => Toasts.instance.restartToast(toast)}
-      role="alert"
+      onclick={toast.onclick}
     >
-      {#if toast.onclick}
-        <!-- TODO: Probably change the Button for a new ButtonContainer component? -->
-        <Button onclick={toast.onclick}>
-          {@render content(toast)}
+      <FlexContainer>
+        <FlexContainer direction="col">
+          <H5>{toast.title}</H5>
+          <P mode="secondary" align="start">{toast.description}</P>
+        </FlexContainer>
+
+        <Button
+          mode={toast.type}
+          onclick={(e) => {
+            e.stopPropagation()
+            Toasts.instance.removeToast(toast)
+          }}
+        >
+          <Icon icon="ph:x-bold" />
         </Button>
-      {:else}
-        {@render content(toast)}
-      {/if}
-    </div>
+      </FlexContainer>
+    </button>
   {/each}
 </div>
-
-{#snippet content(toast: Toast)}
-  <div class="w-full flex gap-2 items-center">
-    <div class="w-full flex gap-2 items-center">
-      <div>
-        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-all', ...COLOR_CLASSES[toast.type]]} />
-      </div>
-
-      <div>
-        <p class="text-sm">{toast.title}</p>
-
-        {#each toast.description as description}
-          <p class="text-xs opacity-40">{description}</p>
-        {/each}
-      </div>
-    </div>
-
-    <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity">
-      <Button
-        onclick={(e) => {
-          e.stopPropagation()
-          Toasts.instance.removeToast(toast)
-        }}
-      >
-        <Icon icon="ph:x" class="cursor-pointer" />
-      </Button>
-    </div>
-  </div>
-{/snippet}
