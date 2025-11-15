@@ -32,7 +32,7 @@
     'data-selected:bg-zinc-800'
   ]
 
-  // const SEPPARATOR_CLASS = ['w-full h-px my-2', 'bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']
+  // const SEPPARATOR_CLASS = ['w-full h-px my-2', 'bg-zinc-750']
   // <Command.Separator class={SEPPARATOR_CLASS} />
 
   type CommandItem = {

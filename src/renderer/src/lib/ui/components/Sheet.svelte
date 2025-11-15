@@ -30,25 +30,13 @@
 
 <Dialog.Root bind:open {...restProps}>
   <Dialog.Portal to="#portal">
-    <Dialog.Overlay
-      class={[
-        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all',
-        'bg-zinc-850/20',
-        't-light:bg-zinc-100/20',
-        't-rust:bg-rust-850/20',
-        't-midnight:bg-gray-850/20'
-      ]}
-      {...overlayProps}
-    />
+    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all', 'bg-zinc-850/20']} {...overlayProps} />
 
     <Dialog.Content
       class={[
         'absolute top-1/2 -translate-y-1/2 right-0 w-[50vw] max-w-100 h-screen p-2 z-100',
         'rounded-md border shadow-xl transition-all',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
+        'bg-zinc-850 border-zinc-800'
       ]}
       {...contentProps}
     >

@@ -48,10 +48,7 @@
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
-            't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
-            't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
-            't-midnight:not-disabled:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
+            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800'
           ]}
           {...prevButtonProps}
         >
@@ -69,10 +66,7 @@
                 'focus-visible:outline-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
-                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-750 focus-visible:outline-zinc-800',
-                't-light:not-disabled:hover:bg-zinc-200 t-light:data-selected:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-                't-rust:not-disabled:hover:bg-rust-800 t-rust:data-selected:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-                't-midnight:not-disabled:hover:bg-gray-800 t-midnight:data-selected:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-750 focus-visible:outline-zinc-800'
               ]}
               {...pageProps}
             >
@@ -87,10 +81,7 @@
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
-            't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
-            't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
-            't-midnight:not-disabled:hover:bg-gray-800t-midnight:focus-visible:outline-gray-750'
+            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800'
           ]}
           {...nextButtonProps}
         >

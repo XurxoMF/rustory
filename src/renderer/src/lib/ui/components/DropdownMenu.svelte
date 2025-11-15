@@ -136,10 +136,7 @@
       'focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
-      'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800',
-      't-light:not-disabled:hover:bg-zinc-200 t-light:focus-visible:outline-zinc-300',
-      't-rust:not-disabled:hover:bg-rust-800 t-rust:focus-visible:outline-rust-750',
-      't-midnight:not-disabled:hover:bg-gray-800 t-midnight:focus-visible:outline-gray-750'
+      'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800'
     ]}
     {...triggerProps}
   >
@@ -149,22 +146,12 @@
   <DropdownMenu.Portal to="#portal">
     <DropdownMenu.Content
       sideOffset={4}
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...contentProps}
     >
       {@render DRenderGroups(groups)}
 
-      <DropdownMenu.Arrow
-        class={['transition-all', 'text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
-        {...arrowProps}
-      />
+      <DropdownMenu.Arrow class={['transition-all', 'text-zinc-750']} {...arrowProps} />
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 </DropdownMenu.Root>
@@ -189,10 +176,7 @@
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'data-highlighted:bg-zinc-800',
-      't-light:data-highlighted:bg-zinc-200',
-      't-rust:data-highlighted:bg-rust-800',
-      't-midnight:data-highlighted:bg-gray-800'
+      'data-highlighted:bg-zinc-800'
     ]}
     {...itemProps}
   >
@@ -213,10 +197,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
-        't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
       ]}
       {...checkboxItemProps}
     >
@@ -254,10 +235,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
-        't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
       ]}
       {...radioItemProps}
     >
@@ -279,10 +257,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800',
-        't-light:data-highlighted:bg-zinc-200',
-        't-rust:data-highlighted:bg-rust-800',
-        't-midnight:data-highlighted:bg-gray-800'
+        'data-highlighted:bg-zinc-800'
       ]}
       {...submenuTriggerProps}
     >
@@ -293,14 +268,7 @@
 
     <DropdownMenu.SubContent
       sideOffset={12}
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...submenuContentProps}
     >
       {@render DRenderGroups(items)}
@@ -329,10 +297,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800',
-        't-light:data-highlighted:bg-zinc-200',
-        't-rust:data-highlighted:bg-rust-800',
-        't-midnight:data-highlighted:bg-gray-800'
+        'data-highlighted:bg-zinc-800'
       ]}
       {...itemSubmenuTriggerProps}
     >
@@ -343,14 +308,7 @@
 
     <DropdownMenu.SubContent
       sideOffset={12}
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...itemSubmenuContentProps}
     >
       {@render DRenderGroups(items)}
@@ -381,10 +339,7 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <DropdownMenu.Separator
-        class={['w-full h-px my-2', 'bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
-        {...separatorProps}
-      />
+      <DropdownMenu.Separator class={['w-full h-px my-2', 'bg-zinc-750']} {...separatorProps} />
     {/if}
   {/each}
 {/snippet}

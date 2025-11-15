@@ -133,14 +133,7 @@
 
   <ContextMenu.Portal to="#portal">
     <ContextMenu.Content
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...contentProps}
     >
       {@render CMRenderGroups(groups)}
@@ -168,10 +161,7 @@
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'data-highlighted:bg-zinc-800',
-      't-light:data-highlighted:bg-zinc-200',
-      't-rust:data-highlighted:bg-rust-800',
-      't-midnight:data-highlighted:bg-gray-800'
+      'data-highlighted:bg-zinc-800'
     ]}
     {...itemProps}
   >
@@ -192,10 +182,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
-        't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
       ]}
       {...checkboxItemProps}
     >
@@ -233,10 +220,7 @@
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800',
-        't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-        't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-        't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
       ]}
       {...radioItemProps}
     >
@@ -258,10 +242,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800',
-        't-light:data-highlighted:bg-zinc-200',
-        't-rust:data-highlighted:bg-rust-800',
-        't-midnight:data-highlighted:bg-gray-800'
+        'data-highlighted:bg-zinc-800'
       ]}
       {...submenuTriggerProps}
     >
@@ -272,14 +253,7 @@
 
     <ContextMenu.SubContent
       sideOffset={12}
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...submenuContentProps}
     >
       {@render CMRenderGroups(items)}
@@ -308,10 +282,7 @@
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800',
-        't-light:data-highlighted:bg-zinc-200',
-        't-rust:data-highlighted:bg-rust-800',
-        't-midnight:data-highlighted:bg-gray-800'
+        'data-highlighted:bg-zinc-800'
       ]}
       {...itemSubmenuTriggerProps}
     >
@@ -322,14 +293,7 @@
 
     <ContextMenu.SubContent
       sideOffset={12}
-      class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all',
-        'outline-none',
-        'bg-zinc-850 border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
-      ]}
+      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
       {...itemSubmenuContentProps}
     >
       {@render CMRenderGroups(items)}
@@ -360,10 +324,7 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <ContextMenu.Separator
-        class={['w-full h-px my-2', 'bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
-        {...separatorProps}
-      />
+      <ContextMenu.Separator class={['w-full h-px my-2', 'bg-zinc-750']} {...separatorProps} />
     {/if}
   {/each}
 {/snippet}

@@ -19,39 +19,8 @@
   --color-zinc-750: #333338;
   --color-zinc-850: #202023;
 
-  --color-gray-150: #eceef1;
-  --color-gray-250: #dbdee3;
-  --color-gray-350: #b7bcc5;
-  --color-gray-450: #848b98;
-  --color-gray-550: #5b6472;
-  --color-gray-650: #414b5a;
-  --color-gray-750: #2b3544;
-  --color-gray-850: #18212f;
-
-  --color-rust-50: #fcf8f6;
-  --color-rust-100: #f8f1ee;
-  --color-rust-150: #f4eae4;
-  --color-rust-200: #efddd4;
-  --color-rust-250: #e7d3c7;
-  --color-rust-300: #e5c8bb;
-  --color-rust-350: #ddb8a1;
-  --color-rust-400: #d19e87;
-  --color-rust-450: #c7896d;
-  --color-rust-500: #bd7554;
-  --color-rust-550: #b66f50;
-  --color-rust-600: #aa694c;
-  --color-rust-650: #8d573f;
-  --color-rust-700: #714632;
-  --color-rust-750: #633d2c;
-  --color-rust-800: #553526;
-  --color-rust-850: #472c20;
-  --color-rust-900: #392319;
-  --color-rust-950: #2b1a13;
-
   --background-image-image-dark: url('./assets/background-dark.png');
   --background-image-image-light: url('./assets/background-light.png');
-  --background-image-image-rust: url('./assets/background-rust.png');
-  --background-image-image-midnight: url('./assets/background-midnight.png');
 }
 
 @layer base {
@@ -110,18 +79,6 @@
 
 @custom-variant t-light {
   &:where([data-theme='light'] *) {
-    @slot;
-  }
-}
-
-@custom-variant t-rust {
-  &:where([data-theme='rust'] *) {
-    @slot;
-  }
-}
-
-@custom-variant t-midnight {
-  &:where([data-theme='midnight'] *) {
     @slot;
   }
 }
