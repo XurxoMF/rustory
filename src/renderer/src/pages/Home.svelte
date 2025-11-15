@@ -442,7 +442,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
             disabled
@@ -462,7 +462,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
           />
@@ -481,7 +481,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
           />
@@ -500,7 +500,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
           />
@@ -519,7 +519,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
           />
@@ -538,7 +538,7 @@
             min={SLIDER_MIN}
             max={SLIDER_MAX}
             step={SLIDER_INTERVAL}
-            value={sliderValue}
+            bind:value={sliderValue}
             withTickLabels
             withTicks
           />
