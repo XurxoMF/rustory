@@ -24,6 +24,7 @@
   import Dialog from '@renderer/lib/ui/components/Dialog.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
   import H3 from '@renderer/lib/ui/components/H3.svelte'
+  import P from '@renderer/lib/ui/components/P.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -45,8 +46,8 @@
 
   const SLIDER_MIN = 0
   const SLIDER_MAX = 50
-  const SLIDER_INTERVAL = 2
-  let sliderValue = $state([14, 36])
+  const SLIDER_INTERVAL = 5
+  let sliderValue = $state([15, 35])
 
   let checkboxValue = $state(false)
 
@@ -435,18 +436,20 @@
             <Description disabled>You can't interact with this component!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'disabled-slider' }}
-            type="multiple"
-            mode="neutral"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-            disabled
-          />
+          <FlexContainer>
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'disabled-slider' }}
+              type="multiple"
+              mode="neutral"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+              disabled
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer direction="col">
@@ -455,17 +458,21 @@
             <Description>Slider with neutral style!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'neutral-slider' }}
-            type="multiple"
-            mode="neutral"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-          />
+          <FlexContainer alignY="end">
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'neutral-slider' }}
+              type="multiple"
+              mode="neutral"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+              withTickLabels
+              withTicks
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer direction="col">
@@ -474,17 +481,19 @@
             <Description>Slider with info style!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'info-slider' }}
-            type="multiple"
-            mode="info"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-          />
+          <FlexContainer alignY="end">
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'info-slider' }}
+              type="multiple"
+              mode="info"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer direction="col">
@@ -493,17 +502,19 @@
             <Description>Slider with success style!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'success-slider' }}
-            type="multiple"
-            mode="success"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-          />
+          <FlexContainer alignY="end">
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'success-slider' }}
+              type="multiple"
+              mode="success"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer direction="col">
@@ -512,17 +523,19 @@
             <Description>Slider with warning style!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'warning-slider' }}
-            type="multiple"
-            mode="warning"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-          />
+          <FlexContainer alignY="end">
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'warning-slider' }}
+              type="multiple"
+              mode="warning"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
 
         <FlexContainer direction="col">
@@ -531,17 +544,19 @@
             <Description>Slider with error style!</Description>
           </FlexContainer>
 
-          <Slider
-            thumbProps={{ id: 'error-slider' }}
-            type="multiple"
-            mode="danger"
-            min={SLIDER_MIN}
-            max={SLIDER_MAX}
-            step={SLIDER_INTERVAL}
-            bind:value={sliderValue}
-            withTickLabels
-            withTicks
-          />
+          <FlexContainer alignY="end">
+            <P mode="secondary">{SLIDER_MIN}</P>
+            <Slider
+              thumbProps={{ id: 'error-slider' }}
+              type="multiple"
+              mode="danger"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+            />
+            <P mode="secondary">{SLIDER_MAX}</P>
+          </FlexContainer>
         </FlexContainer>
       </FlexContainer>
     </ColumnItem>
