@@ -14,7 +14,7 @@
 <h5
   class={[
     'text-lg font-bold leading-tight',
-    mode === 'secondary' && 'text-zinc-200/50',
+    mode === 'secondary' && 'text-current/50',
     align === 'start' && 'text-left',
     align === 'center' && 'text-center',
     align === 'end' && 'text-right'

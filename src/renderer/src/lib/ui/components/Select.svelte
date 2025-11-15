@@ -88,7 +88,7 @@
     <span class="w-full flex items-end gap-2">
       {#if selected}
         <p class="leading-tight">{selected.label}</p>
-        <p class="text-zinc-200/50 text-sm leading-tight">{selected.comment}</p>
+        <p class="text-current/50 text-sm leading-tight">{selected.comment}</p>
       {:else}
         <p class="opacity-40 leading-tight">{placeholder}</p>
       {/if}
@@ -125,7 +125,7 @@
             {#snippet children({ selected })}
               <span class="w-full flex items-center gap-2">
                 <p class="leading-tight">{label}</p>
-                <p class="text-zinc-200/50 text-sm leading-tight">{comment}</p>
+                <p class="text-current/50 text-sm leading-tight">{comment}</p>
               </span>
 
               {#if selected}

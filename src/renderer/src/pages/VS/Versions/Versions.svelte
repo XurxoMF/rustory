@@ -3,6 +3,7 @@
 
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { Data } from '@renderer/lib/classes/Data.svelte'
+  import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
@@ -15,6 +16,9 @@
   import { VersionsToInstall } from '@renderer/lib/ui/features/VS/Versions'
   import { Toasts, Toast } from '@renderer/lib/classes/Toasts.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
+  import H4 from '@renderer/lib/ui/components/H4.svelte'
+  import P from '@renderer/lib/ui/components/P.svelte'
+  import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 
@@ -41,12 +45,12 @@
 </script>
 
 <PageWrapper title={m.vintagestory__versions()} description={m.descriptions__vs_versions_page()}>
-  <GridContainer columns={3} isBreakpoint>
+  <GridContainer columns={1} gap="xl" isBreakpoint>
     <GridItem spanX="full">
-      <GridContainer columns={2}>
+      <GridContainer columns={2} gap="sm">
         <GridItem>
-          <FlexContainer direction="col">
-            <FlexContainer>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
               <Label for="versions-to-install">{m.vintagestory__version()}</Label>
               <Info>{m.descriptions__vs_version_to_install()}</Info>
             </FlexContainer>
@@ -56,15 +60,16 @@
         </GridItem>
 
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.labels__vs_version_path()}</Label>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
+              <Label for="version-path">{m.labels__vs_version_path()}</Label>
               <Info>{m.descriptions__vs_version_path()}</Info>
-            </div>
+            </FlexContainer>
 
-            <div class="w-full flex items-stretch justify-center gap-1">
+            <FlexContainer gap="xs">
               <Button
                 mode="neutral"
+                id="version-path"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
@@ -75,34 +80,44 @@
               </Button>
 
               <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly />
-            </div>
-          </div>
+            </FlexContainer>
+          </FlexContainer>
         </GridItem>
 
         <GridItem spanX="full">
-          <div class="h-full flex flex-col items-end gap-1">
+          <FlexContainer alignX="end">
             <Button mode="success" onclick={manageInstallVersion}>
               {m.common__install()}
             </Button>
-          </div>
+          </FlexContainer>
         </GridItem>
       </GridContainer>
     </GridItem>
 
-    {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
-      <GridItem>
-        <div class="w-full flex items-center justify-between">
-          <div class="w-full flex flex-col justify-center items-start overflow-hidden">
-            <h1>{vsVersion.version}</h1>
-            <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis" title={vsVersion.path}>{vsVersion.path}</p>
-            <p class="w-full text-sm opacity-40 overflow-hidden whitespace-nowrap text-ellipsis">{vsVersion.task?.progress}</p>
-          </div>
-          <div class="w-fit flex justify-center">
-            <Button><Icon icon="ph:folder-open" class="opacity-40" /></Button>
-            <Button><Icon icon="ph:trash" class="opacity-40" /></Button>
-          </div>
-        </div>
-      </GridItem>
-    {/each}
+    <GridItem>
+      <GridContainer columns={3}>
+        {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
+          <GridItem>
+            <FlexContainer direction="col" gap="xs" mode="neutral" padding="base">
+              <FlexContainer gap="base" alignX="between">
+                <FlexContainer direction="col" gap="xs">
+                  <H4>{vsVersion.version}</H4>
+                  <P mode="secondary" title={vsVersion.path}>{vsVersion.path}</P>
+                </FlexContainer>
+
+                <FlexContainer gap="xs" alignX="end">
+                  <Button mode="transparent"><Icon icon="ph:folder-open-bold" class="text-current/50" /></Button>
+                  <Button mode="transparent"><Icon icon="ph:trash-bold" class="text-current/50" /></Button>
+                </FlexContainer>
+              </FlexContainer>
+
+              {#if vsVersion.task && vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL}
+                <ProgressBar value={vsVersion.task.progress} />
+              {/if}
+            </FlexContainer>
+          </GridItem>
+        {/each}
+      </GridContainer>
+    </GridItem>
   </GridContainer>
 </PageWrapper>

@@ -48,7 +48,7 @@
       onclick={toast.onclick}
     >
       <FlexContainer>
-        <FlexContainer direction="col">
+        <FlexContainer direction="col" gap="xs">
           <H5>{toast.title}</H5>
           <P mode="secondary" align="start">{toast.description}</P>
         </FlexContainer>

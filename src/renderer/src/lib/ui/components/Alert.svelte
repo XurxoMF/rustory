@@ -64,11 +64,11 @@
     >
       <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-      <Dialog.Description class="text-zinc-200/50 mb-4" {...descriptionProps}>
+      <Dialog.Description class="text-current/50 mb-4" {...descriptionProps}>
         {description}
       </Dialog.Description>
 
-      <FlexContainer>
+      <FlexContainer gap="sm">
         <Button
           mode="neutral"
           width="flex-1"

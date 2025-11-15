@@ -11,7 +11,6 @@
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
-  import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Columns'
 
   import Lang from '@renderer/lib/ui/features/settings/Lang.svelte'
   import Scale from '@renderer/lib/ui/features/settings/Scale.svelte'
@@ -22,12 +21,12 @@
 </script>
 
 <PageWrapper title={m.common__config()} description={m.descriptions__config_page()}>
-  <ColumnsContainer columns={1} isBreakpoint>
-    <ColumnItem>
-      <GridContainer columns={3}>
+  <GridContainer columns={1} gap="xl" isBreakpoint>
+    <GridItem>
+      <GridContainer columns={3} gap="sm">
         <GridItem>
-          <FlexContainer direction="col">
-            <FlexContainer>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
               <Label for="lang">{m.settings__language()}</Label>
               <Info>{m.settings__language_description()}</Info>
             </FlexContainer>
@@ -37,8 +36,8 @@
         </GridItem>
 
         <GridItem>
-          <FlexContainer direction="col">
-            <FlexContainer>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
               <Label for="scale">{m.settings__uiscale()}</Label>
               <Info>{m.settings__uiscale_description()}</Info>
             </FlexContainer>
@@ -48,32 +47,33 @@
         </GridItem>
 
         <GridItem>
-          <FlexContainer direction="col">
-            <FlexContainer>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
               <Label>{m.settings__theme()}</Label>
               <Info>{m.settings__theme_description()}</Info>
             </FlexContainer>
 
-            <FlexContainer>
+            <FlexContainer gap="xs">
               <Theme />
             </FlexContainer>
           </FlexContainer>
         </GridItem>
       </GridContainer>
-    </ColumnItem>
+    </GridItem>
 
-    <ColumnItem>
-      <GridContainer columns={3}>
+    <GridItem>
+      <GridContainer columns={3} gap="sm">
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.settings__vs_instances_folder()}</Label>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
+              <Label for="instanes-folder">{m.settings__vs_instances_folder()}</Label>
               <Info>{m.settings__vs_instances_folder_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <div class="w-full flex items-stretch justify-center gap-1">
+            <FlexContainer gap="xs">
               <Button
                 mode="neutral"
+                id="instanes-folder"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_instances_folder(), 'openDirectory', false, [])
@@ -91,20 +91,21 @@
                 value={Config.instance.vsInstancesPath}
                 readonly
               />
-            </div>
-          </div>
+            </FlexContainer>
+          </FlexContainer>
         </GridItem>
 
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.settings__vs_versions_folder()}</Label>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
+              <Label for="versions-folder">{m.settings__vs_versions_folder()}</Label>
               <Info>{m.settings__vs_versions_folder_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <div class="w-full flex items-stretch justify-center gap-1">
+            <FlexContainer gap="xs">
               <Button
                 mode="neutral"
+                id="versions-folder"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_versions_folder(), 'openDirectory', false, [])
@@ -122,20 +123,21 @@
                 value={Config.instance.vsVersionsPath}
                 readonly
               />
-            </div>
-          </div>
+            </FlexContainer>
+          </FlexContainer>
         </GridItem>
 
         <GridItem>
-          <div class="flex flex-col items-start justify-center gap-1">
-            <div class="flex gap-1 items-center">
-              <Label>{m.settings__vs_instance_backups_folder()}</Label>
+          <FlexContainer direction="col" gap="xs">
+            <FlexContainer gap="xs">
+              <Label for="backups-folder">{m.settings__vs_instance_backups_folder()}</Label>
               <Info>{m.settings__vs_instance_backups_folder_description()}</Info>
-            </div>
+            </FlexContainer>
 
-            <div class="w-full flex items-stretch justify-center gap-1">
+            <FlexContainer gap="xs">
               <Button
                 mode="neutral"
+                id="backups-folder"
                 title={m.common__select_folder()}
                 onclick={async () => {
                   const folder = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
@@ -153,10 +155,10 @@
                 value={Config.instance.vsInstanceBackupsPath}
                 readonly
               />
-            </div>
-          </div>
+            </FlexContainer>
+          </FlexContainer>
         </GridItem>
       </GridContainer>
-    </ColumnItem>
-  </ColumnsContainer>
+    </GridItem>
+  </GridContainer>
 </PageWrapper>
