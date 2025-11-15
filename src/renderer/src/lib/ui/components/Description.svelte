@@ -15,7 +15,7 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'shrink-0 flex items-center justify-center p-0.5 rounded-md transition-opacity duration-100',
+        'shrink-0 flex items-center justify-center p-0.5 rounded-md transition-opacity',
         'focus-visible:outline-2',
         'cursor-help data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
@@ -29,15 +29,12 @@
     <Tooltip.Portal to="#portal">
       <Tooltip.Content
         sideOffset={4}
-        class={[
-          'px-2 py-1 rounded-md overflow-hidden z-1000 shadow/20 transition-[border,background-color] duration-100',
-          't-dark:bg-zinc-850 t-dark:border-zinc-800'
-        ]}
+        class={['px-2 py-1 rounded-md overflow-hidden z-1000 shadow/30 transition-[border,background-color]', 't-dark:bg-zinc-850 t-dark:border-zinc-800']}
         {...contentProps}
       >
         {@render children?.()}
 
-        <Tooltip.Arrow class={['transition-[color] duration-100', 't-dark:text-zinc-750']} />
+        <Tooltip.Arrow class={['transition-[color]', 't-dark:text-zinc-750']} />
       </Tooltip.Content>
     </Tooltip.Portal>
   </Tooltip.Root>

@@ -5,10 +5,9 @@
   type InputTypes = 'text' | 'number' | 'email' | 'password' | 'tel' | 'url'
 
   const MODE_CLASSES = {
-    transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 't-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'],
     neutral: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-      't-dark:bg-zinc-800/30 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
@@ -52,7 +51,7 @@
   {readonly}
   tabindex={readonly ? -1 : tabindex}
   class={[
-    'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all duration-100',
+    'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
     'disabled:opacity-40',
     ...MODE_CLASSES[mode],

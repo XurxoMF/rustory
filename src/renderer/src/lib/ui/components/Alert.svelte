@@ -32,13 +32,19 @@
 <Dialog.Root bind:open {...restProps}>
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
-      class={['absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-100', 't-dark:bg-zinc-900/20']}
+      class={[
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
+      ]}
       {...overlayProps}
     />
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 h-fit flex flex-col gap-4 p-8 rounded-md shadow/20 outline-none transition-all duration-100',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/4 h-fit max-h-screen flex flex-col gap-4 p-8 rounded-md shadow/30 outline-none transition-all',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
         't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
       ]}

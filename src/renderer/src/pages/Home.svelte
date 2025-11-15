@@ -2,8 +2,8 @@
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
   import PageWrapper from '@renderer/lib/ui/layout/PageWrapper.svelte'
-  import ComboBox from '@renderer/lib/ui/components/ComboBox.svelte'
-  import Select from '@renderer/lib/ui/components/Select.svelte'
+  import ComboBox, { type ComboBoxItem } from '@renderer/lib/ui/components/ComboBox.svelte'
+  import Select, { type SelectItem } from '@renderer/lib/ui/components/Select.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import Alert from '@renderer/lib/ui/components/Alert.svelte'
@@ -29,11 +29,28 @@
 
   let inputValue = $state('')
 
-  const SELECT_ITEMS = [
+  const SELECT_ITEMS: SelectItem[] = [
     { label: 'Disabled Value', value: 'disabled-value', disabled: true },
-    { label: 'Enabled Value', value: 'enabled-value' }
+    { label: 'Enabled Value', value: 'enabled-value' },
+    { label: 'Commented Value', value: 'comment-value', comment: 'This is a comment' }
   ]
   let selectValue = $state(undefined)
+
+  const COMBOBOX_ITEMS: ComboBoxItem[] = [
+    { label: 'Disabled Value', value: 'disabled-value', disabled: true },
+    { label: 'Enabled Value', value: 'enabled-value' },
+    { label: 'Commented Value', value: 'comment-value', comment: 'This is a comment' }
+  ]
+  let comboboxValue = $state(undefined)
+
+  const SLIDER_MIN = 0
+  const SLIDER_MAX = 50
+  const SLIDER_INTERVAL = 2
+  let sliderValue = $state([14, 36])
+
+  let checkboxValue = $state(false)
+
+  let switchValue = $state(false)
 
   let alertOpen = $state(false)
   let dialogOpen = $state(false)
@@ -69,24 +86,12 @@
 
         <FlexContainer direction="col">
           <FlexContainer>
-            <Label for="readonly-input">Readonly Input & Button</Label>
+            <Label for="readonly-input">Readonly Input & Transparent Button</Label>
             <Description>You can't edit this input but you can click the button!</Description>
           </FlexContainer>
 
           <FlexContainer>
             <Input id="readonly-input" type="text" placeholder="Readonly Input" bind:value={inputValue} readonly />
-            <Button mode="neutral">Neutral Button</Button>
-          </FlexContainer>
-        </FlexContainer>
-
-        <FlexContainer direction="col">
-          <FlexContainer>
-            <Label for="transparent-input">Transparent Input & Button</Label>
-            <Description>Input & Button with transparent style!</Description>
-          </FlexContainer>
-
-          <FlexContainer>
-            <Input id="transparent-input" mode="transparent" type="text" placeholder="Transparent Input" bind:value={inputValue} />
             <Button mode="transparent">Transparent Button</Button>
           </FlexContainer>
         </FlexContainer>
@@ -177,22 +182,6 @@
 
         <FlexContainer direction="col">
           <FlexContainer>
-            <Label for="transparent-select">Transparent Select</Label>
-            <Description>Select with transparent style!</Description>
-          </FlexContainer>
-
-          <Select
-            triggerProps={{ id: 'transparent-select' }}
-            type="single"
-            placeholder="Transparent Select"
-            mode="transparent"
-            items={SELECT_ITEMS}
-            bind:value={selectValue}
-          />
-        </FlexContainer>
-
-        <FlexContainer direction="col">
-          <FlexContainer>
             <Label for="neutral-select">Neutral Select</Label>
             <Description>Select with neutral style!</Description>
           </FlexContainer>
@@ -273,12 +262,10 @@
           <ComboBox
             type="single"
             inputProps={{ placeholder: 'Disabled Combobox', id: 'disabled-combobox' }}
+            mode="neutral"
             disabled
-            items={[
-              { label: 'Disabled Value', value: 'disabled-value', disabled: true },
-              { label: 'Enabled Value', value: 'enabled-value' }
-            ]}
-            onValueChange={(value: string) => console.log(value)}
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
           />
         </FlexContainer>
 
@@ -291,11 +278,69 @@
           <ComboBox
             type="single"
             inputProps={{ placeholder: 'Neutral Combobox', id: 'neutral-combobox' }}
-            items={[
-              { label: 'Disabled Value', value: 'disabled-value', disabled: true },
-              { label: 'Enabled Value', value: 'enabled-value' }
-            ]}
-            onValueChange={(value: string) => console.log(value)}
+            mode="neutral"
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="info-combobox">Info Combobox</Label>
+            <Description>Combobox with info style!</Description>
+          </FlexContainer>
+
+          <ComboBox
+            type="single"
+            inputProps={{ placeholder: 'Info Combobox', id: 'info-combobox' }}
+            mode="info"
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="success-combobox">Success Combobox</Label>
+            <Description>Combobox with success style!</Description>
+          </FlexContainer>
+
+          <ComboBox
+            type="single"
+            inputProps={{ placeholder: 'Success Combobox', id: 'success-combobox' }}
+            mode="success"
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="warning-combobox">Warning Combobox</Label>
+            <Description>Combobox with warning style!</Description>
+          </FlexContainer>
+
+          <ComboBox
+            type="single"
+            inputProps={{ placeholder: 'Warning Combobox', id: 'warning-combobox' }}
+            mode="warning"
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="error-combobox">Error Combobox</Label>
+            <Description>Combobox with error style!</Description>
+          </FlexContainer>
+
+          <ComboBox
+            type="single"
+            inputProps={{ placeholder: 'Error Combobox', id: 'error-combobox' }}
+            mode="danger"
+            items={COMBOBOX_ITEMS}
+            bind:value={comboboxValue}
           />
         </FlexContainer>
       </FlexContainer>
@@ -384,9 +429,120 @@
       <FlexContainer direction="col">
         <H3>Sliders</H3>
 
-        <Slider type="single" min={0} max={10} value={5} withTickLabels withTicks />
-        <Slider type="multiple" min={0} max={10} value={[4, 6]} withTickLabels withTicks />
-        <Slider type="single" disabled min={0} max={10} value={5} />
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="disabled-slider" disabled>Disabled Slider</Label>
+            <Description disabled>You can't interact with this component!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'disabled-slider' }}
+            type="multiple"
+            mode="neutral"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+            disabled
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="neutral-slider">Neutral Slider</Label>
+            <Description>Slider with neutral style!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'neutral-slider' }}
+            type="multiple"
+            mode="neutral"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="info-slider">Info Slider</Label>
+            <Description>Slider with info style!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'info-slider' }}
+            type="multiple"
+            mode="info"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="success-slider">Success Slider</Label>
+            <Description>Slider with success style!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'success-slider' }}
+            type="multiple"
+            mode="success"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="warning-slider">Warning Slider</Label>
+            <Description>Slider with warning style!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'warning-slider' }}
+            type="multiple"
+            mode="warning"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+          />
+        </FlexContainer>
+
+        <FlexContainer direction="col">
+          <FlexContainer>
+            <Label for="error-slider">Error Slider</Label>
+            <Description>Slider with error style!</Description>
+          </FlexContainer>
+
+          <Slider
+            thumbProps={{ id: 'error-slider' }}
+            type="multiple"
+            mode="danger"
+            min={SLIDER_MIN}
+            max={SLIDER_MAX}
+            step={SLIDER_INTERVAL}
+            value={sliderValue}
+            withTickLabels
+            withTicks
+          />
+        </FlexContainer>
       </FlexContainer>
     </ColumnItem>
 
@@ -396,43 +552,37 @@
         <H3>Checkboxes</H3>
 
         <FlexContainer>
-          <Checkbox disabled />
+          <Checkbox bind:checked={checkboxValue} disabled />
           <Label disabled>Disabled Checkbox</Label>
           <Description disabled>You can't interact with this component!</Description>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="transparent" />
-          <Label>Transparent Checkbox</Label>
-          <Description>Checkbox with transparent style!</Description>
-        </FlexContainer>
-
-        <FlexContainer>
-          <Checkbox mode="neutral" />
+          <Checkbox mode="neutral" bind:checked={checkboxValue} />
           <Label>Neutral Checkbox</Label>
           <Description>Checkbox with neutral style!</Description>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="info" />
+          <Checkbox mode="info" bind:checked={checkboxValue} />
           <Label>Info Checkbox</Label>
           <Description>Checkbox with info style!</Description>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="success" />
+          <Checkbox mode="success" bind:checked={checkboxValue} />
           <Label>Success Checkbox</Label>
           <Description>Checkbox with success style!</Description>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="warning" />
+          <Checkbox mode="warning" bind:checked={checkboxValue} />
           <Label>Warning Checkbox</Label>
           <Description>Checkbox with warning style!</Description>
         </FlexContainer>
 
         <FlexContainer>
-          <Checkbox mode="danger" />
+          <Checkbox mode="danger" bind:checked={checkboxValue} />
           <Label>Error Checkbox</Label>
           <Description>Checkbox with error style!</Description>
         </FlexContainer>
@@ -445,15 +595,39 @@
         <H3>Switches</H3>
 
         <FlexContainer>
-          <Label disabled>Example...</Label>
-          <Description disabled>Example...</Description>
-          <Switch disabled />
+          <Label disabled>Disabled Switch</Label>
+          <Description disabled>You can't interact with this component!</Description>
+          <Switch bind:checked={switchValue} disabled />
         </FlexContainer>
 
         <FlexContainer>
-          <Label>Example...</Label>
-          <Description>Example...</Description>
-          <Switch />
+          <Label>Neutral Switch</Label>
+          <Description>Switch with neutral style!</Description>
+          <Switch mode="neutral" bind:checked={switchValue} />
+        </FlexContainer>
+
+        <FlexContainer>
+          <Label>Info Switch</Label>
+          <Description>Switch with info style!</Description>
+          <Switch mode="info" bind:checked={switchValue} />
+        </FlexContainer>
+
+        <FlexContainer>
+          <Label>Success Switch</Label>
+          <Description>Switch with success style!</Description>
+          <Switch mode="success" bind:checked={switchValue} />
+        </FlexContainer>
+
+        <FlexContainer>
+          <Label>Warning Switch</Label>
+          <Description>Switch with warning style!</Description>
+          <Switch mode="warning" bind:checked={switchValue} />
+        </FlexContainer>
+
+        <FlexContainer>
+          <Label>Error Switch</Label>
+          <Description>Switch with error style!</Description>
+          <Switch mode="danger" bind:checked={switchValue} />
         </FlexContainer>
       </FlexContainer>
     </ColumnItem>

@@ -5,7 +5,7 @@
     transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 't-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'],
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      't-dark:bg-zinc-800/30 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+      't-dark:bg-zinc-800/50 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -54,7 +54,7 @@
 
 <button
   class={[
-    'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all duration-100',
+    'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     ...MODE_CLASSES[mode],

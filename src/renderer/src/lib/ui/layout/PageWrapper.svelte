@@ -23,15 +23,9 @@
       {@render children?.()}
     </ScrollArea.Viewport>
 
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-[width] duration-100">
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-[width]">
       <ScrollArea.Thumb
-        class={[
-          'flex-1 rounded-full transition-[background] duration-100',
-          't-dark:bg-zinc-750',
-          't-light:bg-zinc-300',
-          't-rust:bg-rust-750',
-          't-midnight:bg-gray-750'
-        ]}
+        class={['flex-1 rounded-full transition-[background]', 't-dark:bg-zinc-750', 't-light:bg-zinc-300', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
       />
     </ScrollArea.Scrollbar>
   </ScrollArea.Root>

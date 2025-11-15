@@ -43,7 +43,7 @@
   <div class="w-full flex gap-2 items-center">
     <div class="w-full flex gap-2 items-center">
       <div>
-        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color] duration-100', ...COLOR_CLASSES[toast.type]]} />
+        <Icon icon={ICONS[toast.type]} class={['text-2xl transition-[color]', ...COLOR_CLASSES[toast.type]]} />
       </div>
 
       <div>
@@ -55,7 +55,7 @@
       </div>
     </div>
 
-    <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity duration-100">
+    <div class="shrink-0 opacity-0 group-hover:opacity-40 transition-opacity">
       <Button
         onclick={(e) => {
           e.stopPropagation()

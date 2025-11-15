@@ -88,17 +88,14 @@
 </script>
 
 <ContextMenu.Root bind:open {...restProps}>
-  <ContextMenu.Trigger
-    class={['w-full rounded-md transition-opacity duration-100', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']}
-    {...triggerProps}
-  >
+  <ContextMenu.Trigger class={['w-full rounded-md transition-opacity', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} {...triggerProps}>
     {@render children?.()}
   </ContextMenu.Trigger>
 
   <ContextMenu.Portal to="#portal">
     <ContextMenu.Content
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/20 transition-[border,background-color] duration-100',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
@@ -128,7 +125,7 @@
     {disabled}
     textValue={value}
     class={[
-      'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-100',
+      'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
       'outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
@@ -145,14 +142,14 @@
 {/snippet}
 
 {#snippet CMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: ContextMenuCheckboxItem)}
-  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity duration-100">
+  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity">
     <ContextMenu.CheckboxItem
       {value}
       {disabled}
       {checked}
       onCheckedChange={onchange}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow/20 transition-[opacity,background-color] duration-100',
+        'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow/30 transition-[opacity,background-color]',
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -188,12 +185,12 @@
 {/snippet}
 
 {#snippet CMRadioItem({ label, value, disabled, radioItemProps }: ContextMenuRadioItem)}
-  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity duration-100">
+  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity">
     <ContextMenu.RadioItem
       {value}
       {disabled}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-full p-0.5 shadow/20 transition-[opacity,background-color] duration-100',
+        'w-5 h-5 flex items-center justify-center rounded-full p-0.5 shadow/30 transition-[opacity,background-color]',
         'focus-visible:outline-1',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'disabled:opacity-40',
@@ -218,7 +215,7 @@
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-100',
+        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -237,7 +234,7 @@
     <ContextMenu.SubContent
       sideOffset={12}
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/20 transition-[border,background-color] duration-100',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',
@@ -268,7 +265,7 @@
       {disabled}
       textValue={value}
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color] duration-100',
+        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-[opacity,background-color]',
         'outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -287,7 +284,7 @@
     <ContextMenu.SubContent
       sideOffset={12}
       class={[
-        'min-w-48 z-50 p-1 rounded-md border shadow/20 transition-[border,background-color] duration-100',
+        'min-w-48 z-50 p-1 rounded-md border shadow/30 transition-[border,background-color]',
         'outline-none',
         't-dark:bg-zinc-850 t-dark:border-zinc-800',
         't-light:bg-zinc-100 t-light:border-zinc-300',

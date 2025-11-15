@@ -9,7 +9,7 @@
 
 <nav
   class={[
-    'shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all duration-100',
+    'shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all',
     't-dark:text-zinc-200/50 t-dark:border-r-zinc-800'
   ]}
 >
@@ -34,11 +34,11 @@
       active: { absolute: true, class: ['t-dark:bg-zinc-800'] }
     }}
     class={[
-      'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm transition-all duration-100',
+      'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm transition-all',
       'outline-transparent focus-visible:outline-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
-      't-dark:hover:bg-zinc-850 t-dark:outline-zinc-700'
+      't-dark:hover:bg-zinc-800 t-dark:outline-zinc-700'
     ]}
   >
     <Icon {icon} class="text-2xl" />

@@ -26,7 +26,7 @@
   const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
 
   const ITEM_CLASS = [
-    'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all duration-100',
+    'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     't-dark:data-selected:bg-zinc-800'
@@ -70,11 +70,11 @@
 
 <Dialog.Root bind:open>
   <Dialog.Portal to="#portal">
-    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-100', 't-dark:bg-zinc-850/20']} />
+    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color]', 't-dark:bg-zinc-850/20']} />
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100 rounded-md border shadow/20 transition-all duration-100',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100 rounded-md border shadow/30 transition-all',
         't-dark:bg-zinc-850 t-dark:border-zinc-800'
       ]}
     >
@@ -91,7 +91,7 @@
       <Command.Root>
         <Command.Input
           class={[
-            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/20 transition-all duration-100',
+            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow/30 transition-all',
             'focus-visible:outline-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
