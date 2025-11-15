@@ -29,7 +29,10 @@
     <Tooltip.Portal to="#portal">
       <Tooltip.Content
         sideOffset={4}
-        class={['px-2 py-1 rounded-md overflow-hidden z-1000 shadow/20 transition-[border,background-color] duration-100', 't-dark:bg-zinc-850 t-dark:border-zinc-800']}
+        class={[
+          'px-2 py-1 rounded-md overflow-hidden z-1000 shadow/20 transition-[border,background-color] duration-100',
+          't-dark:bg-zinc-850 t-dark:border-zinc-800'
+        ]}
         {...contentProps}
       >
         {@render children?.()}

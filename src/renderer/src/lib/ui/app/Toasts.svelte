@@ -21,7 +21,12 @@
 
 <div class="app-no-drag pointer-events-none absolute top-0 right-0 z-400 p-2 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
-    <div class={['group w-72 pointer-events-auto']} onmouseenter={() => Toasts.instance.clearToast(toast)} onmouseleave={() => Toasts.instance.restartToast(toast)} role="alert">
+    <div
+      class={['group w-72 pointer-events-auto']}
+      onmouseenter={() => Toasts.instance.clearToast(toast)}
+      onmouseleave={() => Toasts.instance.restartToast(toast)}
+      role="alert"
+    >
       {#if toast.onclick}
         <!-- TODO: Probably change the Button for a new ButtonContainer component? -->
         <Button onclick={toast.onclick}>

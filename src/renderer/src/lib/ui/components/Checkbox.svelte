@@ -3,30 +3,50 @@
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
 
-  type CheckboxProps = Omit<WithoutChildrenOrChild<Checkbox.RootProps>, 'class'>
+  const MODE_CLASSES = {
+    transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 't-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'],
+    neutral: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      't-dark:bg-zinc-800/30 t-dark:not-disabled:hover:bg-zinc-800 t-dark:inset-ring-zinc-800 t-dark:ring-zinc-800'
+    ],
+    info: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-blue-500 not-disabled:hover:text-blue-200 bg-blue-800/30 not-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800'
+    ],
+    success: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800'
+    ],
+    warning: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-yellow-400 not-disabled:hover:text-yellow-200 bg-yellow-800/30 not-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800'
+    ],
+    danger: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-red-600 not-disabled:hover:text-red-200 bg-red-800/30 not-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800'
+    ]
+  } as const
 
-  let { checked = $bindable(false), ...restProps }: CheckboxProps = $props()
+  type ModeTypes = keyof typeof MODE_CLASSES
+
+  type CheckboxProps = Omit<WithoutChildrenOrChild<Checkbox.RootProps>, 'class'> & {
+    mode?: ModeTypes | undefined
+  }
+
+  let { checked = $bindable(false), mode = 'neutral', ...restProps }: CheckboxProps = $props()
 </script>
 
 <Checkbox.Root
   bind:checked
   class={[
-    'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow/20 transition-[opacity,background-color] duration-100',
-    'focus-visible:outline-2',
+    'flex items-center justify-center rounded-sm p-1 outline-none transition-all duration-100',
     'cursor-pointer data-disabled:cursor-not-allowed',
     'data-disabled:opacity-40',
-    't-dark:bg-zinc-800 t-dark:data-[state=checked]:bg-zinc-750 t-dark:focus-visible:outline-zinc-800',
-    't-light:bg-zinc-200 t-light:data-[state=checked]:bg-zinc-300 t-light:focus-visible:outline-zinc-300',
-    't-rust:bg-rust-800 t-rust:data-[state=checked]:bg-rust-750 t-rust:focus-visible:outline-rust-750',
-    't-midnight:bg-gray-800 t-midnight:data-[state=checked]:bg-gray-750 t-midnight:focus-visible:outline-gray-750'
+    ...MODE_CLASSES[mode]
   ]}
   {...restProps}
 >
   {#snippet children({ checked, indeterminate })}
-    {#if indeterminate}
-      <Icon icon="ph:dots-three" />
-    {:else if checked}
-      <Icon icon="ph:check" />
-    {/if}
+    <Icon icon={indeterminate ? 'ph:question-mark-bold' : checked ? 'ph:check-bold' : 'ph:x-bold'} />
   {/snippet}
 </Checkbox.Root>

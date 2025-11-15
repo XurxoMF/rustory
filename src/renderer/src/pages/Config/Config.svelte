@@ -84,7 +84,13 @@
                 <Icon icon="ph:magnifying-glass" />
               </Button>
 
-              <Input type="text" name={m.settings__vs_instances_folder()} placeholder={m.settings__vs_instances_folder()} value={Config.instance.vsInstancesPath} readonly />
+              <Input
+                type="text"
+                name={m.settings__vs_instances_folder()}
+                placeholder={m.settings__vs_instances_folder()}
+                value={Config.instance.vsInstancesPath}
+                readonly
+              />
             </div>
           </div>
         </GridItem>
@@ -110,7 +116,13 @@
                 <Icon icon="ph:magnifying-glass" />
               </Button>
 
-              <Input type="text" name={m.settings__vs_versions_folder()} placeholder={m.settings__vs_versions_folder()} value={Config.instance.vsVersionsPath} readonly />
+              <Input
+                type="text"
+                name={m.settings__vs_versions_folder()}
+                placeholder={m.settings__vs_versions_folder()}
+                value={Config.instance.vsVersionsPath}
+                readonly
+              />
             </div>
           </div>
         </GridItem>
@@ -136,7 +148,13 @@
                 <Icon icon="ph:magnifying-glass" />
               </Button>
 
-              <Input type="text" name={m.settings__vs_instance_backups_folder()} placeholder={m.settings__vs_instance_backups_folder()} value={Config.instance.vsInstanceBackupsPath} readonly />
+              <Input
+                type="text"
+                name={m.settings__vs_instance_backups_folder()}
+                placeholder={m.settings__vs_instance_backups_folder()}
+                value={Config.instance.vsInstanceBackupsPath}
+                readonly
+              />
             </div>
           </div>
         </GridItem>

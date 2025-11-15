@@ -17,7 +17,13 @@ import { RustoryNetError } from '@shared/errors/RustoryNetError'
  * @returns If it was downloaded successfully or not.
  * @throws A {@link RustoryNetError} error.
  */
-export async function download(onProgress: (id: string, progress: number) => void, id: string, url: string, outputPath: string, fileName: string): Promise<void> {
+export async function download(
+  onProgress: (id: string, progress: number) => void,
+  id: string,
+  url: string,
+  outputPath: string,
+  fileName: string
+): Promise<void> {
   return new Promise<void>((resolve, reject) => {
     const outFile = join(outputPath, fileName)
 

@@ -129,7 +129,10 @@ export class VSVersion {
     } catch (err) {
       window.api.logger.error(`There was an error saving the VS Version ${this._version} to the DB!`)
       window.api.logger.debug(`There was an error saving the VS Version ${this._version} to the DB:\n${JSON.stringify(err)}`)
-      throw new RustoryVSVersionError(`There was an error saving the VS Version ${this._version} to the DB:\n${JSON.stringify(err)}`, RustoryVSVersionError.Codes.VSVERSION_ERROR)
+      throw new RustoryVSVersionError(
+        `There was an error saving the VS Version ${this._version} to the DB:\n${JSON.stringify(err)}`,
+        RustoryVSVersionError.Codes.VSVERSION_ERROR
+      )
     }
   }
 

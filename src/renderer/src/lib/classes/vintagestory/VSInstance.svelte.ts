@@ -271,7 +271,10 @@ export class VSInstance {
     } catch (err) {
       window.api.logger.error(`There was an error saving the VS Instance ${this._version} to the DB!`)
       window.api.logger.debug(`There was an error saving the VS Instance ${this._version} to the DB:\n${JSON.stringify(err)}`)
-      throw new RustoryVSInstanceError(`There was an error saving the VS Instance ${this._version} to the DB:\n${JSON.stringify(err)}`, RustoryVSInstanceError.Codes.VSINSTANCE_ERROR)
+      throw new RustoryVSInstanceError(
+        `There was an error saving the VS Instance ${this._version} to the DB:\n${JSON.stringify(err)}`,
+        RustoryVSInstanceError.Codes.VSINSTANCE_ERROR
+      )
     }
   }
 

@@ -91,7 +91,9 @@ async function logOSInfo() {
   const osInfo: string = os ? `OS: ${os.distro} ${os.platform} · ${os.release} · ${os.arch}` : 'OS: Unknown'
 
   const cpu = await getCPUInfo()
-  const cpuInfo: string = cpu ? `CPU: ${cpu.processors} x ${cpu.manufacturer} ${cpu.brand} ${cpu.physicalCores}C/${cpu.cores}T ${cpu.speed}GHz* ${cpu.speedMax}GHz` : 'CPU: Unknown'
+  const cpuInfo: string = cpu
+    ? `CPU: ${cpu.processors} x ${cpu.manufacturer} ${cpu.brand} ${cpu.physicalCores}C/${cpu.cores}T ${cpu.speed}GHz* ${cpu.speedMax}GHz`
+    : 'CPU: Unknown'
 
   const ram = await getRAMInfo()
   let ramInfo: string = ram ? `RAM: ${bytesToX(ram.total, 'MB').toLocaleString('es-ES')}MB total` : 'RAM: Unknown'
@@ -100,7 +102,9 @@ async function logOSInfo() {
   const gpusInfo: string[] = gpus ? gpus.controllers.map((c, i) => `GPU ${i}: ${c.vendor} ${c.model} ${c.vram}MB*`) : ['GPU: Unknown']
 
   const volumes = await getVolumesInfo()
-  const volumesInfo: string[] = volumes ? volumes.map((v, i) => `VOL ${i}: ${v.fs} ${v.type} ${v.mount} ${bytesToX(v.used, 'GB')}GB/${bytesToX(v.size, 'GB')}GB`) : ['VOL: Unknown']
+  const volumesInfo: string[] = volumes
+    ? volumes.map((v, i) => `VOL ${i}: ${v.fs} ${v.type} ${v.mount} ${bytesToX(v.used, 'GB')}GB/${bytesToX(v.size, 'GB')}GB`)
+    : ['VOL: Unknown']
 
   const dotnetSDKs = await getNETSDKsInfo()
   const dotnetSDKsInfo: string[] = dotnetSDKs ? dotnetSDKs.map((sdk) => `.NET SDK ${sdk}`) : ['.NET SDK: Unknown']

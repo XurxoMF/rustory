@@ -14,7 +14,16 @@
     nextButtonProps?: Omit<WithoutChildrenOrChild<Pagination.NextButtonProps>, 'class'> | undefined
   }
 
-  let { page = $bindable(), siblingCount = 1, resume = true, prevButtonProps, ellipsisProps, pageProps, nextButtonProps, ...restProps }: PaginationProps = $props()
+  let {
+    page = $bindable(),
+    siblingCount = 1,
+    resume = true,
+    prevButtonProps,
+    ellipsisProps,
+    pageProps,
+    nextButtonProps,
+    ...restProps
+  }: PaginationProps = $props()
 </script>
 
 <Pagination.Root bind:page {siblingCount} {...restProps}>

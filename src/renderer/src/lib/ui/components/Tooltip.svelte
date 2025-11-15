@@ -14,7 +14,13 @@
 <Tooltip.Provider delayDuration={500}>
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
-      class={['rounded-md transition-opacity duration-100', 'focus-visible:outline-2', 'cursor-help data-disabled:cursor-not-allowed', 'disabled:opacity-40', 't-dark:focus-visible:outline-zinc-800']}
+      class={[
+        'rounded-md transition-opacity duration-100',
+        'focus-visible:outline-2',
+        'cursor-help data-disabled:cursor-not-allowed',
+        'disabled:opacity-40',
+        't-dark:focus-visible:outline-zinc-800'
+      ]}
       {...triggerProps}
     >
       {@render trigger()}
@@ -23,7 +29,10 @@
     <Tooltip.Portal to="#portal">
       <Tooltip.Content
         sideOffset={4}
-        class={['p-2 rounded-md overflow-hidden z-1000 shadow/20 transition-[border,background-color] duration-100', 't-dark:bg-zinc-850 t-dark:border-zinc-800']}
+        class={[
+          'p-2 rounded-md overflow-hidden z-1000 shadow/20 transition-[border,background-color] duration-100',
+          't-dark:bg-zinc-850 t-dark:border-zinc-800'
+        ]}
         {...contentProps}
       >
         {@render children?.()}

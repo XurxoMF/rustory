@@ -88,7 +88,10 @@
 </script>
 
 <ContextMenu.Root bind:open {...restProps}>
-  <ContextMenu.Trigger class={['rounded-md transition-opacity duration-100', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} {...triggerProps}>
+  <ContextMenu.Trigger
+    class={['w-full rounded-md transition-opacity duration-100', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']}
+    {...triggerProps}
+  >
     {@render children?.()}
   </ContextMenu.Trigger>
 
@@ -248,7 +251,17 @@
   </ContextMenu.Sub>
 {/snippet}
 
-{#snippet CMItemSubmenu({ label, icon, value, items, disabled, onselect, itemSubmenuProps, itemSubmenuTriggerProps, itemSubmenuContentProps }: ContextMenuItemSubmenu)}
+{#snippet CMItemSubmenu({
+  label,
+  icon,
+  value,
+  items,
+  disabled,
+  onselect,
+  itemSubmenuProps,
+  itemSubmenuTriggerProps,
+  itemSubmenuContentProps
+}: ContextMenuItemSubmenu)}
   <ContextMenu.Sub {...itemSubmenuProps}>
     <ContextMenu.SubTrigger
       onSelect={onselect}
@@ -311,7 +324,10 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <ContextMenu.Separator class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} {...separatorProps} />
+      <ContextMenu.Separator
+        class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
+        {...separatorProps}
+      />
     {/if}
   {/each}
 {/snippet}

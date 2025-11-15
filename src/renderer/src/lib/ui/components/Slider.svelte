@@ -10,7 +10,17 @@
     tickLabelProps?: Omit<WithoutChildrenOrChild<Slider.TickLabelProps>, 'class' | 'index'> | undefined
   }
 
-  let { value = $bindable(), ref = $bindable(null), withTicks = false, withTickLabels = false, rangeProps, thumbProps, tickProps, tickLabelProps, ...restProps }: SliderProps = $props()
+  let {
+    value = $bindable(),
+    ref = $bindable(null),
+    withTicks = false,
+    withTickLabels = false,
+    rangeProps,
+    thumbProps,
+    tickProps,
+    tickLabelProps,
+    ...restProps
+  }: SliderProps = $props()
 </script>
 
 <!-- TODO: Check and change the mt-5 with a trackPadding or similar if it works -->
@@ -18,12 +28,23 @@
 <Slider.Root
   bind:value
   bind:ref
-  class={['relative w-full h-5 flex items-center justify-center', 'cursor-pointer data-disabled:cursor-not-allowed', 'data-disabled:opacity-40', withTickLabels && 'mt-5']}
+  class={[
+    'relative w-full h-5 flex items-center justify-center',
+    'cursor-pointer data-disabled:cursor-not-allowed',
+    'data-disabled:opacity-40',
+    withTickLabels && 'mt-5'
+  ]}
   {...restProps as any}
 >
   {#snippet children({ thumbItems, tickItems })}
     <span
-      class={['relative w-full h-1.5 rounded-full shadow/20 transition-[background-color] duration-100', 't-dark:bg-zinc-800', 't-light:bg-zinc-200', 't-rust:bg-rust-800', 't-midnight:bg-gray-800']}
+      class={[
+        'relative w-full h-1.5 rounded-full shadow/20 transition-[background-color] duration-100',
+        't-dark:bg-zinc-800',
+        't-light:bg-zinc-200',
+        't-rust:bg-rust-800',
+        't-midnight:bg-gray-800'
+      ]}
     >
       <Slider.Range
         class={[

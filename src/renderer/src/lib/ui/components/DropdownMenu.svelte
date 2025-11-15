@@ -120,7 +120,10 @@
     >
       {@render DRenderGroups(groups)}
 
-      <DropdownMenu.Arrow class={['transition-[color] duration-100', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']} {...arrowProps} />
+      <DropdownMenu.Arrow
+        class={['transition-[color] duration-100', 't-dark:text-zinc-750', 't-light:text-zinc-300', 't-rust:text-rust-750', 't-midnight:text-gray-750']}
+        {...arrowProps}
+      />
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 </DropdownMenu.Root>
@@ -264,7 +267,17 @@
   </DropdownMenu.Sub>
 {/snippet}
 
-{#snippet DItemSubmenu({ label, icon, value, items, disabled, onselect, itemSubmenuProps, itemSubmenuTriggerProps, itemSubmenuContentProps }: DropdownMenuItemSubmenu)}
+{#snippet DItemSubmenu({
+  label,
+  icon,
+  value,
+  items,
+  disabled,
+  onselect,
+  itemSubmenuProps,
+  itemSubmenuTriggerProps,
+  itemSubmenuContentProps
+}: DropdownMenuItemSubmenu)}
   <DropdownMenu.Sub {...itemSubmenuProps}>
     <DropdownMenu.SubTrigger
       onSelect={onselect}
@@ -327,7 +340,10 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <DropdownMenu.Separator class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']} {...separatorProps} />
+      <DropdownMenu.Separator
+        class={['w-full h-px my-2', 't-dark:bg-zinc-750', 't-light:bg-zinc-350', 't-rust:bg-rust-750', 't-midnight:bg-gray-750']}
+        {...separatorProps}
+      />
     {/if}
   {/each}
 {/snippet}

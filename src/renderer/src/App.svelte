@@ -74,7 +74,7 @@
   <div
     class={[
       'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-[color,border,background-color] duration-100',
-      't-dark:text-zinc-200 t-dark:bg-zinc-950 t-dark:border-zinc-800'
+      't-dark:text-zinc-200 t-dark:bg-zinc-900 t-dark:border-zinc-800'
     ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
@@ -106,11 +106,11 @@
   <div
     class={[
       'relative w-screen h-screen overflow-hidden bg-cover transition-all duration-100',
-      't-dark:bg-image-dark t-dark:bg-zinc-950 t-dark:border-zinc-800',
+      't-dark:bg-image-dark t-dark:bg-zinc-900 t-dark:border-zinc-800',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
-    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs transition-all duration-100', 't-dark:text-zinc-200 t-dark:bg-zinc-950/95']}>
+    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs transition-all duration-100', 't-dark:text-zinc-200 t-dark:bg-zinc-900/95']}>
       <WindowBar />
 
       <div class="w-full h-full relative flex flex-row overflow-hidden">

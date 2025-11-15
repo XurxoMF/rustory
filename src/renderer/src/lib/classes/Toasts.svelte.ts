@@ -104,7 +104,13 @@ export class Toast {
    */
   private _timeout?: NodeJS.Timeout | undefined
 
-  public constructor(data: { type: Toast.Type; title: string; description?: string[] | undefined; hideAfter?: number | undefined; onclick?: (() => void | Promise<void>) | undefined }) {
+  public constructor(data: {
+    type: Toast.Type
+    title: string
+    description?: string[] | undefined
+    hideAfter?: number | undefined
+    onclick?: (() => void | Promise<void>) | undefined
+  }) {
     this._id = crypto.randomUUID()
     this._type = data.type
     this._title = data.title

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { Dialog, type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   type AlertProps = WithoutChildren<Dialog.RootProps> & {
     title: string
@@ -15,53 +15,45 @@
     descriptionProps?: Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'> | undefined
   }
 
-  let { open = $bindable(false), title, description, onaccept, oncancel, overlayProps, contentProps, titleProps, descriptionProps, ...restProps }: AlertProps = $props()
+  let {
+    open = $bindable(true),
+    title,
+    description,
+    onaccept,
+    oncancel,
+    overlayProps,
+    contentProps,
+    titleProps,
+    descriptionProps,
+    ...restProps
+  }: AlertProps = $props()
 </script>
 
 <Dialog.Root bind:open {...restProps}>
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
-      class={[
-        'absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-[background-color] duration-100',
-        't-dark:bg-zinc-850/20',
-        't-light:bg-zinc-100/20',
-        't-rust:bg-rust-850/20',
-        't-midnight:bg-gray-850/20'
-      ]}
+      class={['absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-100', 't-dark:bg-zinc-900/20']}
       {...overlayProps}
     />
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100',
-        'rounded-md border shadow/20 transition-[border,background-color] duration-100',
-        't-dark:bg-zinc-850 t-dark:border-zinc-800',
-        't-light:bg-zinc-100 t-light:border-zinc-300',
-        't-rust:bg-rust-850 t-rust:border-rust-800',
-        't-midnight:bg-gray-850 t-midnight:border-gray-800'
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 h-fit flex flex-col gap-4 p-8 rounded-md shadow/20 outline-none transition-all duration-100',
+        'inset-ring-2',
+        't-dark:bg-zinc-900/95 t-dark:inset-ring-zinc-800'
       ]}
       {...contentProps}
     >
-      <div class="w-full flex items-center justify-between gap-2">
-        <Dialog.Title {...titleProps}>{title}</Dialog.Title>
+      <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button
-          tabindex={-1}
-          onclick={() => {
-            open = false
-            oncancel?.()
-          }}
-        >
-          <Icon icon="ph:x" class="opacity-40" />
-        </Button>
-      </div>
-
-      <Dialog.Description class="opacity-40 mb-2" {...descriptionProps}>
+      <Dialog.Description class="text-zinc-200/50 mb-4" {...descriptionProps}>
         {description}
       </Dialog.Description>
 
-      <div>
+      <FlexContainer>
         <Button
+          mode="neutral"
+          width="flex-1"
           onclick={() => {
             open = false
             oncancel?.()
@@ -71,6 +63,8 @@
         </Button>
 
         <Button
+          mode="success"
+          width="flex-1"
           onclick={() => {
             open = false
             onaccept?.()
@@ -78,7 +72,7 @@
         >
           Accept
         </Button>
-      </div>
+      </FlexContainer>
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>

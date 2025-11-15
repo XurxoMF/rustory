@@ -91,7 +91,13 @@ export class VSInstanceBackup {
    * @returns The {@link VSInstanceBackup}.
    */
   public static fromJSON(json: TVSInstanceBackup, state?: VSInstanceBackup.State): VSInstanceBackup {
-    return new VSInstanceBackup({ id: json.id, vsInstanceId: json.vsInstanceId, date: json.date, path: json.path, state: state ?? VSInstanceBackup.State.READY })
+    return new VSInstanceBackup({
+      id: json.id,
+      vsInstanceId: json.vsInstanceId,
+      date: json.date,
+      path: json.path,
+      state: state ?? VSInstanceBackup.State.READY
+    })
   }
 }
 
