@@ -43,8 +43,8 @@
       <div class="w-full flex items-center justify-between gap-2">
         <Dialog.Title {...titleProps}>{title}</Dialog.Title>
 
-        <Button tabindex={-1} onclick={() => (open = false)}>
-          <Icon icon="ph:x" class="opacity-40" />
+        <Button tabindex={-1} mode="transparent" onclick={() => (open = false)}>
+          <Icon icon="ph:x-bold" class="opacity-40" />
         </Button>
       </div>
 

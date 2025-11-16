@@ -35,6 +35,28 @@
 
   export type ButtonWidthClasses = keyof typeof BUTTON_WIDTH_CLASSES
 
+  export const BUTTON_PADDING_CLASSES = {
+    none: ['p-0'],
+    xs: ['p-1'],
+    sm: ['p-2'],
+    base: ['p-4'],
+    lg: ['p-6'],
+    xl: ['p-8']
+  } as const
+
+  export type ButtonPaddingTypes = keyof typeof BUTTON_PADDING_CLASSES
+
+  export const BUTTON_ROUNDED_CLASSES = {
+    none: ['rounded-none'],
+    xs: ['rounded-xs'],
+    sm: ['rounded-sm'],
+    base: ['rounded-md'],
+    lg: ['rounded-lg'],
+    xl: ['rounded-xl']
+  } as const
+
+  export type ButtonRoundedClasses = keyof typeof BUTTON_ROUNDED_CLASSES
+
   export const BUTTON_ALIGN_CLASSES = {
     start: ['justify-start'],
     center: ['justify-center'],
@@ -46,12 +68,14 @@
   export type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
     mode?: ButtonModeTypes | undefined
     width?: ButtonWidthClasses | undefined
+    padding?: ButtonPaddingTypes | undefined
+    rounded?: ButtonRoundedClasses | undefined
     align?: ButtonAlignClasses | undefined
   }
 </script>
 
 <script lang="ts">
-  let { mode = 'neutral', width = 'fit', align = 'center', children, ...restProps }: ButtonProps = $props()
+  let { mode = 'neutral', width = 'fit', padding = 'base', rounded = 'base', align = 'center', children, ...restProps }: ButtonProps = $props()
 </script>
 
 <button
@@ -61,6 +85,8 @@
     'disabled:opacity-40',
     ...BUTTON_MODE_CLASSES[mode],
     ...BUTTON_WIDTH_CLASSES[width],
+    ...BUTTON_PADDING_CLASSES[padding],
+    ...BUTTON_ROUNDED_CLASSES[rounded],
     ...BUTTON_ALIGN_CLASSES[align]
   ]}
   {...restProps}
