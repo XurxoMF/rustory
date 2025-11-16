@@ -28,10 +28,19 @@
 
   export const FLEX_CONTAINER_HEIGHT_CLASSES = {
     fit: ['h-fit'],
-    full: ['h-full']
+    full: ['h-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type FlexContainerHeightClasses = keyof typeof FLEX_CONTAINER_HEIGHT_CLASSES
+
+  export const FLEX_CONTAINER_WIDTH_CLASSES = {
+    fit: ['w-fit'],
+    full: ['w-full'],
+    'flex-1': ['flex-1']
+  } as const
+
+  export type FlexContainerWidthClasses = keyof typeof FLEX_CONTAINER_WIDTH_CLASSES
 
   export const FLEX_CONTAINER_GAP_CLASSES = {
     none: ['gap-0'],
@@ -91,6 +100,7 @@
     padding?: FlexContainerPaddingTypes | undefined
     rounded?: FlexContainerRoundedClasses | undefined
     height?: FlexContainerHeightClasses | undefined
+    width?: FlexContainerWidthClasses | undefined
     mode?: FlexContainerModeTypes | undefined
     overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined
@@ -106,6 +116,7 @@
     padding = 'none',
     rounded = 'base',
     height = 'fit',
+    width = 'full',
     mode = 'transparent',
     overflowHidden = false,
     isBreakpoint = false,
@@ -116,16 +127,18 @@
 
 <div
   class={[
-    'w-full flex',
+    'flex',
     overflowHidden && 'overflow-hidden',
     isBreakpoint && '@container',
     ...FLEX_CONTAINER_DIRECTION_CLASSES[direction],
+    ...FLEX_CONTAINER_HEIGHT_CLASSES[height],
+    ...FLEX_CONTAINER_WIDTH_CLASSES[width],
     ...FLEX_CONTAINER_ALIGN_CLASSES[direction === 'row' ? alignY : alignX],
     ...FLEX_CONTAINER_JUSTIFY_CLASSES[direction === 'row' ? alignX : alignY],
     ...FLEX_CONTAINER_GAP_CLASSES[gap],
     ...FLEX_CONTAINER_PADDING_CLASSES[padding],
     ...FLEX_CONTAINER_ROUNDED_CLASSES[rounded],
-    ...FLEX_CONTAINER_HEIGHT_CLASSES[height],
+
     ...FLEX_CONTAINER_MODE_CLASSES[mode]
   ]}
   {...restProps}

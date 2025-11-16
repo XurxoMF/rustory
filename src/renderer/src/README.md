@@ -118,9 +118,16 @@ Here's a table with the z-index layers used on the project:
 
 | z-index  | layer       | elements                    |
 | :------: | :---------- | :-------------------------- |
-|   0-99   | Basic UI    | Dropdowns, Context Menus... |
-| 100-499  | Floating UI | Popups, Notifications...    |
-| 500-1000 | Cover UI    | Loaders...                  |
+|  0-199   | Basic UI    | Dialogs, Alerts, Command... |
+| 200-499  | Components  | Selects, Context Menus...   |
+| 500-900  | Floating UI | Toasts, Tooltips...         |
+| 900-1000 | Cover UI    | Loaders...                  |
 
-> For dropdowns I'm using z-50 everywhere. For popups I'm using z-250.
-> Tooltips are using z-1000 so if you place one inside a Dropdown it shows correctly.
+> [!NOTE]
+> When I'm writing this we have:  
+> Z-1000 -> Loader  
+> Z-600 -> Tooltip and Info  
+> Z-500 -> Toasts  
+> Z-300 -> Combobox and Select  
+> Z-200 -> ContextMenu, DropdownMenu
+> Z-100 -> Dialog, Alert, Sheet and Command

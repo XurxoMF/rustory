@@ -7,7 +7,7 @@
   import Button from '../components/Button.svelte'
 </script>
 
-<nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all', 'border-r-zinc-800']}>
+<nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-colors', 'border-r-zinc-800']}>
   <div class="w-full flex flex-col items-start justify-between gap-1">
     {@render NavLink('ph:house-bold', m.common__home(), '/')}
     {@render NavLink('ph:git-fork-bold', m.vintagestory__versions(), '/vs/versions')}
@@ -29,7 +29,7 @@
       active: { absolute: true, class: ['text-current/100', 'bg-zinc-800'] }
     }}
     class={[
-      'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
+      'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
       'focus-visible:inset-ring-1 focus-visible:ring-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

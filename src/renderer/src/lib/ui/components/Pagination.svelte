@@ -44,11 +44,11 @@
       <div class="flex items-center justify-center gap-1">
         <Pagination.PrevButton
           class={[
-            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity',
-            'focus-visible:outline-2',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+            'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800'
+            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
           ]}
           {...prevButtonProps}
         >
@@ -62,11 +62,11 @@
             <Pagination.Page
               {page}
               class={[
-                'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity',
-                'focus-visible:outline-2',
+                'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+                'focus-visible:inset-ring-1 focus-visible:ring-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
-                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-750 focus-visible:outline-zinc-800'
+                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
               ]}
               {...pageProps}
             >
@@ -77,11 +77,11 @@
 
         <Pagination.NextButton
           class={[
-            'h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md transition-opacity',
-            'focus-visible:outline-2',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+            'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 focus-visible:outline-zinc-800'
+            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
           ]}
           {...nextButtonProps}
         >
@@ -90,7 +90,7 @@
       </div>
 
       {#if resume}
-        <p class={['text-sm opacity-40']}>
+        <p class={['text-current/50']}>
           {m.common__showing()}
           {range.start} - {range.end}
         </p>

@@ -12,7 +12,7 @@
 
 <Progress.Root
   {value}
-  class={[['w-full h-2 rounded-full overflow-hidden shadow-xl transition-all', 'inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800']]}
+  class={[['w-full h-2 rounded-full overflow-hidden shadow-xl transition-colors', 'inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800']]}
   {...restProps}
 >
   <div

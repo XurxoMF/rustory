@@ -72,7 +72,7 @@
 <!-- Show the loader while there are some taks running on the intializing process. -->
 {#if loader.isVisible}
   <div
-    class={['fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all', 'text-zinc-200 bg-zinc-900 border-zinc-800']}
+    class={['fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors', 'text-zinc-200 bg-zinc-900 border-zinc-800']}
     out:fade={{ duration: 200, delay: 200 }}
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
@@ -102,12 +102,12 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-cover transition-all',
+      'relative w-screen h-screen overflow-hidden bg-cover transition-colors',
       'bg-image-dark bg-zinc-900 border-zinc-800',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
-    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs transition-all', 'text-zinc-200 bg-zinc-900/95']}>
+    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-colors', 'text-zinc-200 bg-zinc-900/95']}>
       <WindowBar />
 
       <div class="w-full h-full relative flex flex-row overflow-hidden">
@@ -123,5 +123,5 @@
     </div>
   </div>
 
-  <div id="portal" class={['select-none transition-all', 'text-zinc-200']}></div>
+  <div id="portal" class={['absolute top-0 left-0 w-screen h-screen pointer-events-none select-none overflow-hidden transition-colors', 'text-zinc-200']}></div>
 {/if}

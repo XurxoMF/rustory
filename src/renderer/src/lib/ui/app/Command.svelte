@@ -12,6 +12,19 @@
   export function toggleCommand(): void {
     open = !open
   }
+
+  export type CommandItem = {
+    value: string
+    keywords: string[]
+    label: string
+    icon: string
+    onclick: () => void | Promise<void>
+  }
+
+  export type CommandGroup = {
+    label: string
+    items: CommandItem[]
+  }
 </script>
 
 <script lang="ts">
@@ -22,111 +35,131 @@
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
+  import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
 
-  const HEADING_CLASS = ['w-full px-2 py-1 text-sm opacity-40']
-
-  const ITEM_CLASS = [
-    'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
-    'cursor-pointer disabled:cursor-not-allowed',
-    'disabled:opacity-40',
-    'data-selected:bg-zinc-800'
-  ]
-
-  // const SEPPARATOR_CLASS = ['w-full h-px my-2', 'bg-zinc-750']
-  // <Command.Separator class={SEPPARATOR_CLASS} />
-
-  type CommandItem = {
-    value: string
-    keywords: string[]
-    label: string
-    icon: string
-    onclick: () => void | Promise<void>
-  }
-
-  const PAGES: CommandItem[] = [
+  const GROUPS: CommandGroup[] = [
     {
-      value: 'home-page',
-      keywords: [m.common__home(), m.common__pages()],
-      label: m.common__home(),
-      icon: 'ph:house',
-      onclick: () => goto('/')
-    },
-    {
-      value: 'vs-versions-page',
-      keywords: [m.vintagestory__versions(), m.common__pages()],
-      label: m.vintagestory__versions(),
-      icon: 'ph:git-fork',
-      onclick: () => goto('/vs/versions')
-    },
-    {
-      value: 'config-page',
-      keywords: [m.common__config(), m.common__pages()],
-      label: m.common__config(),
-      icon: 'ph:gear',
-      onclick: () => goto('/config')
+      label: m.common__pages(),
+      items: [
+        {
+          value: 'home-page',
+          keywords: [m.common__home(), m.common__pages()],
+          label: m.common__home(),
+          icon: 'ph:house',
+          onclick: () => goto('/')
+        },
+        {
+          value: 'vs-versions-page',
+          keywords: [m.vintagestory__versions(), m.common__pages()],
+          label: m.vintagestory__versions(),
+          icon: 'ph:git-fork',
+          onclick: () => goto('/vs/versions')
+        },
+        {
+          value: 'config-page',
+          keywords: [m.common__config(), m.common__pages()],
+          label: m.common__config(),
+          icon: 'ph:gear',
+          onclick: () => goto('/config')
+        }
+      ]
     }
   ]
 </script>
 
 <Dialog.Root bind:open>
   <Dialog.Portal to="#portal">
-    <Dialog.Overlay class={['absolute top-0 z-50 w-screen h-screen backdrop-blur-xs transition-all', 'bg-zinc-850/20']} />
+    <Dialog.Overlay
+      class={[
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-colors',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
+      ]}
+    />
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 w-[50vw] max-w-100 h-screen p-2 z-100 rounded-md border shadow-xl transition-all',
-        'bg-zinc-850 border-zinc-800'
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full flex flex-col gap-4 p-8 rounded-md shadow-xl outline-none transition-colors @container',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+        'inset-ring-2',
+        'bg-zinc-900/95 inset-ring-zinc-800'
       ]}
     >
-      <div class="w-full flex items-center justify-between gap-2">
-        <Dialog.Title>{m.common__search()}</Dialog.Title>
+      <FlexContainer gap="base" alignX="between">
+        <Dialog.Title class="text-2xl font-bold">{m.common__search()}</Dialog.Title>
 
-        <Button tabindex={-1} onclick={() => (open = false)}>
-          <Icon icon="ph:x" class="opacity-40" />
+        <Button mode="transparent" tabindex={-1}>
+          <Icon icon="ph:x-bold" class="text-current/50" />
         </Button>
-      </div>
+      </FlexContainer>
 
-      <Dialog.Description class="opacity-40 mb-2">Description...</Dialog.Description>
+      <Dialog.Description class="text-current/50 mb-4">Look for pages, VS Instances and more...</Dialog.Description>
 
       <Command.Root>
         <Command.Input
           class={[
-            'h-9 w-full flex items-center justify-between gap-2 mb-2 px-2 py-1 rounded-md shadow-xl transition-all',
-            'focus-visible:outline-2',
-            'cursor-pointer disabled:cursor-not-allowed',
+            'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+            'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
             'disabled:opacity-40',
-            'bg-zinc-800 focus-visible:outline-zinc-800'
+            'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
+            'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
           ]}
           placeholder={`${m.common__search()}...`}
         />
 
-        <Command.List class="w-[40vw]">
-          <Command.Viewport>
-            <Command.Empty class="w-full flex items-center justify-center px-6 py-6 text-sm opacity-40">{`${m.common__no_results_found()}...`}</Command.Empty>
+        <Command.List class="w-full @container">
+          <Command.Viewport class="w-full flex flex-col gap-2">
+            <Command.Empty class={['w-full flex items-center justify-center mt-8 text-current/50 cursor-pointer']}>
+              {`${m.common__no_results_found()}...`}
+            </Command.Empty>
 
-            <Command.Group>
-              <Command.GroupHeading class={HEADING_CLASS}>{m.common__pages()}</Command.GroupHeading>
-
-              <Command.GroupItems>
-                {#each PAGES as { value, keywords, label, icon, onclick } (value)}
-                  <Command.Item
-                    {value}
-                    {keywords}
-                    onSelect={() => {
-                      onclick()
-                      closeCommand()
-                    }}
-                    class={ITEM_CLASS}
-                  >
-                    <Icon {icon} />
-                    {label}
-                  </Command.Item>
-                {/each}
-              </Command.GroupItems>
-            </Command.Group>
+            {@render CRenderGroups(GROUPS)}
           </Command.Viewport>
         </Command.List>
       </Command.Root>
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>
+
+{#snippet CGroup({ label, items }: CommandGroup)}
+  <Command.Group>
+    <Command.GroupHeading class={['text-current/50 mx-2 my-4']}>{label}</Command.GroupHeading>
+
+    <Command.GroupItems>
+      {#each items as item (item.value)}
+        {@render CItem(item)}
+      {/each}
+    </Command.GroupItems>
+  </Command.Group>
+{/snippet}
+
+{#snippet CItem({ icon, label, keywords, value, onclick }: CommandItem)}
+  <Command.Item
+    {value}
+    {keywords}
+    onSelect={() => {
+      onclick()
+      closeCommand()
+    }}
+    class={[
+      'w-full flex items-center justify-start gap-2 p-2 rounded-sm leading-tight outline-none transition-colors',
+      'cursor-pointer data-disabled:cursor-not-allowed',
+      'data-disabled:opacity-40',
+      'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800'
+    ]}
+  >
+    <Icon {icon} class="shrink-0 w-6 h-6 flex items-center justify-center text-lg" />
+    {label}
+  </Command.Item>
+{/snippet}
+
+{#snippet CRenderGroups(groups: CommandGroup[])}
+  {#each groups as group, i}
+    {@render CGroup(group)}
+
+    {#if i < groups.length - 1}
+      <Command.Separator class={['w-full h-px', 'bg-zinc-800']} />
+    {/if}
+  {/each}
+{/snippet}

@@ -42,7 +42,7 @@
 <Checkbox.Root
   bind:checked
   class={[
-    'shrink-0 min-w-6 min-h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all',
+    'shrink-0 min-w-6 min-h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-colors',
     'cursor-pointer data-disabled:cursor-not-allowed',
     'data-disabled:opacity-40',
     ...CHECKBOX_MODE_CLASSES[mode]

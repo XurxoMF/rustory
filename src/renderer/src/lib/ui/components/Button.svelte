@@ -75,12 +75,12 @@
 </script>
 
 <script lang="ts">
-  let { mode = 'neutral', width = 'fit', padding = 'base', rounded = 'base', align = 'center', children, ...restProps }: ButtonProps = $props()
+  let { mode = 'neutral', width = 'fit', padding = 'sm', rounded = 'sm', align = 'center', children, ...restProps }: ButtonProps = $props()
 </script>
 
 <button
   class={[
-    'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
+    'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     ...BUTTON_MODE_CLASSES[mode],

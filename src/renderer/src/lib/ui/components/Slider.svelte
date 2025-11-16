@@ -91,7 +91,7 @@
   {...restProps as any}
 >
   {#snippet children({ thumbItems, tickItems })}
-    <span class={['relative w-full h-2 rounded-full transition-all', ...SLIDER_SPAN_MODE_CLASSES[mode]]}>
+    <span class={['relative w-full h-2 rounded-full transition-colors', ...SLIDER_SPAN_MODE_CLASSES[mode]]}>
       <Slider.Range class={['absolute h-full rounded-full transition-all', ...SLIDER_RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
     </span>
 
@@ -101,11 +101,11 @@
 
     {#each tickItems as { value, index } (index)}
       {#if withTicks}
-        <Slider.Tick {index} class={['h-2 w-px transition-all', ...SLIDER_TICK_MODE_CLASSES[mode]]} {...tickProps} />
+        <Slider.Tick {index} class={['h-2 w-px transition-colors', ...SLIDER_TICK_MODE_CLASSES[mode]]} {...tickProps} />
       {/if}
 
       {#if withTickLabels}
-        <Slider.TickLabel {index} class={['text-xs transition-all', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
+        <Slider.TickLabel {index} class={['text-xs transition-colors', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
           {value}
         </Slider.TickLabel>
       {/if}

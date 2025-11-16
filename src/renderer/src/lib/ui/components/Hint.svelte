@@ -34,7 +34,7 @@
     <H4>{title}</H4>
   </FlexContainer>
 
-  <FlexContainer gap="sm" direction="col">
+  <FlexContainer gap="sm" direction="col" isBreakpoint>
     <P>{description}</P>
     {@render children?.()}
   </FlexContainer>

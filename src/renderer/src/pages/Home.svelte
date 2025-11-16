@@ -363,39 +363,460 @@
           <Dialog
             bind:open={dialogOpen}
             title="Title"
-            description="This is a really cool dialog! We can as you to edit whatever we add and it'll not make you change page or anything.."
+            description="This is a really cool dialog! We can as you to edit whatever we add and it'll not make you change page or anything..."
+            width="lg"
           >
-            <div class="w-full h-full flex flex-col items-center justify-between gap-2">
-              <GridContainer columns={2} isBreakpoint>
-                <GridItem>
-                  <div class="flex flex-col items-start justify-center gap-2">
-                    <div class="flex gap-2 items-center">
-                      <Label for="required-input">Required Input</Label>
-                      <Info>This Input is rerquired and it has an * to prove it xD</Info>
+            <FlexContainer direction="col" gap="base">
+              <ColumnsContainer columns={2} gap="sm" isBreakpoint>
+                <ColumnItem>
+                  <FlexContainer direction="col" gap="sm">
+                    <FlexContainer gap="sm">
+                      <Label for="dialog-input">Neutral Input & Button</Label>
+                      <Info>Input & Button with neutral style!</Info>
+                    </FlexContainer>
+
+                    <FlexContainer gap="sm">
+                      <Input id="dialog-input" type="text" placeholder="Neutral Input" bind:value={inputValue} />
+                      <Button mode="neutral">Neutral Button</Button>
+                    </FlexContainer>
+                  </FlexContainer>
+                </ColumnItem>
+
+                <ColumnItem>
+                  <FlexContainer direction="col" gap="sm">
+                    <FlexContainer gap="sm">
+                      <Label for="dialog-select">Neutral Select</Label>
+                      <Info>Select with neutral style!</Info>
+                    </FlexContainer>
+
+                    <Select
+                      triggerProps={{ id: 'dialog-select' }}
+                      type="single"
+                      placeholder="Neutral Select"
+                      mode="neutral"
+                      items={SELECT_ITEMS}
+                      bind:value={selectValue}
+                    />
+                  </FlexContainer>
+                </ColumnItem>
+
+                <ColumnItem>
+                  <FlexContainer direction="col" gap="sm">
+                    <FlexContainer gap="sm">
+                      <Label for="dialog-combobox">Neutral Combobox</Label>
+                      <Info>Combobox with neutral style!</Info>
+                    </FlexContainer>
+
+                    <ComboBox
+                      type="single"
+                      inputProps={{ placeholder: 'Neutral Combobox', id: 'dialog-combobox' }}
+                      mode="neutral"
+                      items={COMBOBOX_ITEMS}
+                      bind:value={comboboxValue}
+                    />
+                  </FlexContainer>
+                </ColumnItem>
+
+                <ColumnItem>
+                  <FlexContainer direction="col" gap="sm">
+                    <FlexContainer gap="sm">
+                      <Label for="dialog-slider">Neutral Slider</Label>
+                      <Info>Slider with neutral style!</Info>
+                    </FlexContainer>
+
+                    <FlexContainer alignY="end">
+                      <P mode="secondary">{SLIDER_MIN}</P>
+                      <Slider
+                        id="dialog-slider"
+                        type="multiple"
+                        mode="neutral"
+                        min={SLIDER_MIN}
+                        max={SLIDER_MAX}
+                        step={SLIDER_INTERVAL}
+                        bind:value={sliderValue}
+                        withTickLabels
+                        withTicks
+                      />
+                      <P mode="secondary">{SLIDER_MAX}</P>
+                    </FlexContainer>
+                  </FlexContainer>
+                </ColumnItem>
+
+                <ColumnItem>
+                  <ContextMenu
+                    groups={[
+                      {
+                        type: 'group',
+                        items: [
+                          {
+                            type: 'item',
+                            label: 'One',
+                            value: 'one',
+                            onselect: () => {
+                              const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
+                              Toasts.instance.addToast(toastInfo)
+                            },
+                            icon: 'ph:code-bold'
+                          },
+                          {
+                            type: 'item',
+                            label: 'Two',
+                            value: 'two',
+                            onselect: () => {
+                              const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
+                              Toasts.instance.addToast(toast)
+                            },
+                            icon: 'ph:code-bold',
+                            disabled: true
+                          }
+                        ]
+                      },
+                      {
+                        type: 'radiogroup',
+                        label: 'Radio Group',
+                        value: radioCheckedCM,
+                        items: [
+                          {
+                            type: 'radioitem',
+                            label: 'Radio One',
+                            value: 'radio-one'
+                          },
+                          {
+                            type: 'radioitem',
+                            label: 'Radio Two',
+                            value: 'radio-two',
+                            disabled: true
+                          },
+                          {
+                            type: 'radioitem',
+                            label: 'Radio Three',
+                            value: 'radio-three'
+                          }
+                        ],
+                        onchange: (value: string) => {
+                          const toast = new Toast({ title: 'Radio Changed!', type: Toast.Type.INFO, description: `You clicked ${value} on the ContextMenu!` })
+                          Toasts.instance.addToast(toast)
+
+                          radioCheckedCM = value
+                        }
+                      },
+                      {
+                        type: 'group',
+                        label: 'Submenu Group',
+                        items: [
+                          {
+                            type: 'submenu',
+                            icon: 'ph:code-bold',
+                            label: 'Submenu One',
+                            items: [
+                              {
+                                type: 'group',
+                                items: [
+                                  {
+                                    type: 'item',
+                                    label: 'Inside First Menu',
+                                    value: 'inside-first-menu',
+                                    onselect: () => {
+                                      const toastInfo = new Toast({
+                                        title: 'Inside first Menu cliecked!',
+                                        type: Toast.Type.INFO,
+                                        description: 'You clicked inside-first-menu on the ContextMenu!'
+                                      })
+                                      Toasts.instance.addToast(toastInfo)
+                                    },
+                                    icon: 'ph:code-bold'
+                                  },
+                                  {
+                                    type: 'itemsubmenu',
+                                    icon: 'ph:code-bold',
+                                    value: 'submenu-two',
+                                    label: 'Submenu Two',
+                                    items: [
+                                      {
+                                        type: 'group',
+                                        items: [
+                                          {
+                                            type: 'item',
+                                            label: 'Inside Second Menu',
+                                            value: 'inside-second-menu',
+                                            onselect: () => {
+                                              const toastInfo = new Toast({
+                                                title: 'Inside Second Menu cliecked!',
+                                                type: Toast.Type.INFO,
+                                                description: 'You clicked inside-second-menu on the ContextMenu!'
+                                              })
+                                              Toasts.instance.addToast(toastInfo)
+                                            },
+                                            icon: 'ph:code-bold'
+                                          }
+                                        ]
+                                      }
+                                    ],
+                                    onselect: () => {
+                                      const toastInfo = new Toast({
+                                        title: 'Submenu Two cliecked!',
+                                        type: Toast.Type.INFO,
+                                        description: 'You clicked submenu-two on the ContextMenu!'
+                                      })
+                                      Toasts.instance.addToast(toastInfo)
+                                    }
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        type: 'group',
+                        label: 'Checkbox Group',
+                        items: [
+                          {
+                            type: 'checkboxitem',
+                            label: 'Checkbox One',
+                            value: 'checkbox-one',
+                            checked: checkboxOneCheckedCM,
+                            onchange: (changed) => {
+                              const toastInfo = new Toast({
+                                title: 'Checkbox One cliecked!',
+                                type: Toast.Type.INFO,
+                                description: 'You clicked checkbox-one on the ContextMenu!'
+                              })
+                              Toasts.instance.addToast(toastInfo)
+                              checkboxOneCheckedCM = changed
+                            }
+                          },
+                          {
+                            type: 'checkboxitem',
+                            label: 'Checkbox Two',
+                            value: 'checkbox-two',
+                            checked: checkboxTwoCheckedCM,
+                            disabled: true,
+                            onchange: (changed) => {
+                              const toastInfo = new Toast({
+                                title: 'Checkbox Two cliecked!',
+                                type: Toast.Type.INFO,
+                                description: 'You clicked checkbox-two on the ContextMenu!'
+                              })
+                              Toasts.instance.addToast(toastInfo)
+                              checkboxTwoCheckedCM = changed
+                            }
+                          }
+                        ]
+                      }
+                    ]}
+                  >
+                    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-colors duration', 'border-zinc-800']}>
+                      Right click here!
                     </div>
+                  </ContextMenu>
+                </ColumnItem>
 
-                    <Input id="required-input" type="url" placeholder="Reqired Input" />
-                  </div>
-                </GridItem>
+                <ColumnItem>
+                  <FlexContainer gap="sm">
+                    <FlexContainer gap="sm">
+                      <Label for="dialog-switch">Neutral Switch</Label>
+                      <Info>Switch with neutral style!</Info>
+                      <Switch id="dialog-switch" mode="neutral" bind:checked={switchValue} />
+                    </FlexContainer>
 
-                <GridItem>
-                  <div class="flex flex-col items-start justify-center gap-2">
-                    <div class="flex gap-2 items-center">
-                      <Label for="required-input">Required Input</Label>
-                      <Info>This Input is rerquired and it has an * to prove it xD</Info>
-                    </div>
+                    <FlexContainer gap="sm">
+                      <Checkbox id="dialog-checkbox" mode="neutral" bind:checked={checkboxValue} />
+                      <Label for="dialog-checkbox">Neutral Checkbox</Label>
+                      <Info>Checkbox with neutral style!</Info>
+                    </FlexContainer>
 
-                    <Input id="required-input" type="url" placeholder="Reqired Input" />
-                  </div>
-                </GridItem>
-              </GridContainer>
+                    <Dropdown
+                      groups={[
+                        {
+                          type: 'group',
+                          items: [
+                            {
+                              type: 'item',
+                              label: 'One',
+                              value: 'one',
+                              onselect: () => {
+                                const toastInfo = new Toast({
+                                  title: 'One cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: 'You clicked one on the DropdownMenu!'
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                              },
+                              icon: 'ph:code-bold'
+                            },
+                            {
+                              type: 'item',
+                              label: 'Two',
+                              value: 'two',
+                              onselect: () => {
+                                const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the DropdownMenu!' })
+                                Toasts.instance.addToast(toast)
+                              },
+                              icon: 'ph:code-bold',
+                              disabled: true
+                            }
+                          ]
+                        },
+                        {
+                          type: 'radiogroup',
+                          label: 'Radio Group',
+                          value: radioCheckedD,
+                          items: [
+                            {
+                              type: 'radioitem',
+                              label: 'Radio One',
+                              value: 'radio-one'
+                            },
+                            {
+                              type: 'radioitem',
+                              label: 'Radio Two',
+                              value: 'radio-two',
+                              disabled: true
+                            },
+                            {
+                              type: 'radioitem',
+                              label: 'Radio Tree',
+                              value: 'radio-three'
+                            }
+                          ],
+                          onchange: (value: string) => {
+                            const toast = new Toast({
+                              title: 'Radio Changed!',
+                              type: Toast.Type.INFO,
+                              description: `You clicked ${value} on the DropdownMenu!`
+                            })
+                            Toasts.instance.addToast(toast)
 
-              <div class="flex items-center justify-center gap-2 mt-2">
-                <Button mode="neutral" onclick={() => (dialogOpen = false)}>Cancel</Button>
+                            radioCheckedD = value
+                          }
+                        },
+                        {
+                          type: 'group',
+                          label: 'Submenu Group',
+                          items: [
+                            {
+                              type: 'submenu',
+                              icon: 'ph:code-bold',
+                              label: 'Submenu One',
+                              items: [
+                                {
+                                  type: 'group',
+                                  items: [
+                                    {
+                                      type: 'item',
+                                      label: 'Inside First Menu',
+                                      value: 'inside-first-menu',
+                                      onselect: () => {
+                                        const toastInfo = new Toast({
+                                          title: 'Inside first Menu cliecked!',
+                                          type: Toast.Type.INFO,
+                                          description: 'You clicked inside-first-menu on the DropdownMenu!'
+                                        })
+                                        Toasts.instance.addToast(toastInfo)
+                                      },
+                                      icon: 'ph:code-bold'
+                                    },
+                                    {
+                                      type: 'itemsubmenu',
+                                      icon: 'ph:code-bold',
+                                      value: 'submenu-two',
+                                      label: 'Submenu Two',
+                                      items: [
+                                        {
+                                          type: 'group',
+                                          items: [
+                                            {
+                                              type: 'item',
+                                              label: 'Inside Second Menu',
+                                              value: 'inside-second-menu',
+                                              onselect: () => {
+                                                const toastInfo = new Toast({
+                                                  title: 'Inside Second Menu cliecked!',
+                                                  type: Toast.Type.INFO,
+                                                  description: 'You clicked inside-second-menu on the DropdownMenu!'
+                                                })
+                                                Toasts.instance.addToast(toastInfo)
+                                              },
+                                              icon: 'ph:code-bold'
+                                            }
+                                          ]
+                                        }
+                                      ],
+                                      onselect: () => {
+                                        const toastInfo = new Toast({
+                                          title: 'Submenu Two cliecked!',
+                                          type: Toast.Type.INFO,
+                                          description: 'You clicked submenu-two on the DropdownMenu!'
+                                        })
+                                        Toasts.instance.addToast(toastInfo)
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          type: 'group',
+                          label: 'Checkbox Group',
+                          items: [
+                            {
+                              type: 'checkboxitem',
+                              label: 'Checkbox One',
+                              value: 'checkbox-one',
+                              checked: checkboxOneCheckedD,
+                              onchange: (changed) => {
+                                const toastInfo = new Toast({
+                                  title: 'Checkbox One cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: 'You clicked checkbox-one on the DropdownMenu!'
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                                checkboxOneCheckedD = changed
+                              }
+                            },
+                            {
+                              type: 'checkboxitem',
+                              label: 'Checkbox Two',
+                              value: 'checkbox-two',
+                              checked: checkboxTwoCheckedD,
+                              disabled: true,
+                              onchange: (changed) => {
+                                const toastInfo = new Toast({
+                                  title: 'Checkbox Two cliecked!',
+                                  type: Toast.Type.INFO,
+                                  description: 'You clicked checkbox-two on the DropdownMenu!'
+                                })
+                                Toasts.instance.addToast(toastInfo)
+                                checkboxTwoCheckedD = changed
+                              }
+                            }
+                          ]
+                        }
+                      ]}
+                    >
+                      <Icon icon="ph:dots-three" class="text-xl" />
+                    </Dropdown>
+                  </FlexContainer>
+                </ColumnItem>
 
-                <Button mode="success" onclick={() => (dialogOpen = false)}>Save</Button>
-              </div>
-            </div>
+                <ColumnItem>
+                  <Pagination page={1} count={95} perPage={10} />
+                </ColumnItem>
+
+                <ColumnItem>
+                  <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
+                </ColumnItem>
+              </ColumnsContainer>
+
+              <FlexContainer gap="sm">
+                <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = false)}>Cancel</Button>
+
+                <Button mode="success" width="flex-1" onclick={() => (dialogOpen = false)}>Save</Button>
+              </FlexContainer>
+            </FlexContainer>
           </Dialog>
 
           <Button mode="neutral" width="flex-1" onclick={() => (sheetOpen = true)}>Open Sheet</Button>
@@ -997,7 +1418,7 @@
             }
           ]}
         >
-          <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration', 'border-zinc-800']}>
+          <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-colors duration', 'border-zinc-800']}>
             Right click here!
           </div>
         </ContextMenu>

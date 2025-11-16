@@ -14,7 +14,7 @@
 
 <div class="w-full h-full">
   <ScrollArea.Root bind:ref type="always" class="w-full h-full" {...restProps}>
-    <ScrollArea.Viewport class="w-full h-full p-8">
+    <ScrollArea.Viewport class="w-full h-full p-8 @container">
       <div class="flex flex-col gap-4 mb-8">
         <H1>{title}</H1>
         <P mode="secondary">{description}</P>
@@ -23,8 +23,8 @@
       {@render children?.()}
     </ScrollArea.Viewport>
 
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-all">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-all']} />
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-colors">
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-colors']} />
     </ScrollArea.Scrollbar>
   </ScrollArea.Root>
 </div>

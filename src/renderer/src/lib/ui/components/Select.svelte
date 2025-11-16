@@ -78,7 +78,7 @@
 <Select.Root bind:value={value as never} onValueChange={onValueChange as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
-      'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
+      'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-colors',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       ...SELECT_MODE_CLASSES[mode]
@@ -101,7 +101,7 @@
     <Select.Content
       sideOffset={4}
       class={[
-        'max-h-[calc(var(--bits-combobox-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-50 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
+        'max-h-[calc(var(--bits-select-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-colors @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
@@ -116,7 +116,7 @@
             {label}
             {disabled}
             class={[
-              'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-all',
+              'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-colors',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
               'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -134,7 +134,7 @@
             {/snippet}
           </Select.Item>
         {:else}
-          <span class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
+          <span class={['w-full flex items-center justify-center px-2 py-4 text-sm text-current/50 cursor-pointer']}>
             {`${m.common__no_results_found()}...`}
           </span>
         {/each}

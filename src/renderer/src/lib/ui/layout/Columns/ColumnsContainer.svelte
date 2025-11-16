@@ -20,6 +20,13 @@
 
   export type ColumnsContainerHeightClasses = keyof typeof COLUMNS_CONTAINER_HEIGHT_CLASSES
 
+  export const COLUMNS_CONTAINER_WIDTH_CLASSES = {
+    fit: ['w-fit'],
+    full: ['w-full']
+  } as const
+
+  export type ColumnsContainerWidthClasses = keyof typeof COLUMNS_CONTAINER_WIDTH_CLASSES
+
   export const COLUMNS_CONTAINER_COLUMNS_CLASSES = {
     none: ['gap-x-0 space-y-0'],
     xs: ['gap-x-1 space-y-1'],
@@ -67,10 +74,12 @@
   export type ColumnsContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
     columns?: ColumnsContainerColumnTypes | undefined
     height?: ColumnsContainerHeightClasses | undefined
+    width?: ColumnsContainerWidthClasses | undefined
     gap?: ColumnsContainerGapTypes | undefined
     padding?: ColumnsContainerPaddingTypes | undefined
     rounded?: ColumnsContainerRoundedClasses | undefined
     mode?: ColumnsContainerModeTypes | undefined
+    overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined
   }
 </script>
@@ -80,10 +89,12 @@
     children,
     columns = 1,
     height = 'fit',
+    width = 'full',
     gap = 'base',
     padding = 'none',
     rounded = 'base',
     mode = 'transparent',
+    overflowHidden = false,
     isBreakpoint = false,
     ...restProps
   }: ColumnsContainerProps = $props()
@@ -91,23 +102,17 @@
 
 <div
   class={[
-    'w-full',
+    overflowHidden && 'overflow-hidden',
     isBreakpoint && '@container',
+    ...COLUMNS_CONTAINER_COLUMN_CLASSES[columns],
     ...COLUMNS_CONTAINER_HEIGHT_CLASSES[height],
-    ...COLUMNS_CONTAINER_MODE_CLASSES[mode],
-    ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded]
+    ...COLUMNS_CONTAINER_WIDTH_CLASSES[width],
+    ...COLUMNS_CONTAINER_COLUMNS_CLASSES[gap],
+    ...COLUMNS_CONTAINER_PADDING_CLASSES[padding],
+    ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded],
+    ...COLUMNS_CONTAINER_MODE_CLASSES[mode]
   ]}
+  {...restProps}
 >
-  <div
-    class={[
-      'w-full',
-      ...COLUMNS_CONTAINER_COLUMN_CLASSES[columns],
-      ...COLUMNS_CONTAINER_HEIGHT_CLASSES[height],
-      ...COLUMNS_CONTAINER_COLUMNS_CLASSES[gap],
-      ...COLUMNS_CONTAINER_PADDING_CLASSES[padding]
-    ]}
-    {...restProps}
-  >
-    {@render children?.()}
-  </div>
+  {@render children?.()}
 </div>

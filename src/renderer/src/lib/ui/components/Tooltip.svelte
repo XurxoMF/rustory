@@ -23,7 +23,7 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'shrink-0 flex items-center justify-center rounded-full outline-none leading-tight transition-all',
+        'shrink-0 flex items-center justify-center rounded-full outline-none leading-tight transition-colors',
         'cursor-help disabled:cursor-not-allowed',
         'disabled:opacity-40',
         'focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -36,9 +36,9 @@
 
     <Tooltip.Portal to="#portal">
       <Tooltip.Content
-        sideOffset={4}
+        sideOffset={8}
         class={[
-          'p-2 z-1000 rounded-sm backdrop-blur-xs shadow-xl leading-tight transition-all',
+          'p-2 z-600 rounded-sm backdrop-blur-xs shadow-xl leading-tight transition-colors',
           'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
           'inset-ring-2',
@@ -48,7 +48,7 @@
       >
         {@render children?.()}
 
-        <Tooltip.Arrow class={['transition-all', 'text-zinc-800']} />
+        <Tooltip.Arrow class={['transition-colors', 'text-zinc-800']} />
       </Tooltip.Content>
     </Tooltip.Portal>
   </Tooltip.Root>
