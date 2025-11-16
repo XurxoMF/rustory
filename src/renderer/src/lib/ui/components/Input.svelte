@@ -56,6 +56,7 @@
     'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
     'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
     'disabled:opacity-40',
+    'placeholder:text-current/20',
     ...INPUT_MODE_CLASSES[mode],
     ...WIDTH_CLASSES[width]
   ]}

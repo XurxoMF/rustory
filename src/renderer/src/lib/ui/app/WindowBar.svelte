@@ -55,7 +55,7 @@
       <span class="relative w-full h-full">
         {m.placeholders__search_or_use_a_command()}
 
-        <span class="absolute top-1/2 right-2 -translate-y-1/2 flex items-center gap-2">
+        <span class="absolute top-1/2 -translate-y-1/2 right-0 flex items-center gap-1">
           <Key key="ctrl" />
           <Key key="k" />
         </span>

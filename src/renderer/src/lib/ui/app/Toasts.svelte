@@ -47,14 +47,14 @@
 
 {#snippet content(toast: Toast)}
   <FlexContainer padding="base" gap="sm">
-    <FlexContainer direction="col" gap="sm">
+    <FlexContainer direction="col" gap="xs">
       <FlexContainer gap="sm">
         <Icon icon={TOAST_ICON_CLASSES[toast.type]} class="text-2xl" />
         <H5>{toast.title}</H5>
       </FlexContainer>
 
       <FlexContainer gap="sm" direction="col">
-        <P>{toast.description}</P>
+        <P fat>{toast.description}</P>
       </FlexContainer>
     </FlexContainer>
 

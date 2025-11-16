@@ -25,6 +25,8 @@
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import P from './P.svelte'
+  import FlexContainer from '../layout/Flex/FlexContainer.svelte'
 
   let {
     page = $bindable(),
@@ -40,11 +42,11 @@
 
 <Pagination.Root bind:page {siblingCount} {...restProps}>
   {#snippet children({ pages, range })}
-    <div class="w-full flex flex-col items-center justify-center gap-1">
-      <div class="flex items-center justify-center gap-1">
+    <FlexContainer direction="col" gap="sm" alignX="center">
+      <FlexContainer gap="sm">
         <Pagination.PrevButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
@@ -52,7 +54,7 @@
           ]}
           {...prevButtonProps}
         >
-          <Icon icon="ph:caret-left" />
+          <Icon icon="ph:caret-left-bold" />
         </Pagination.PrevButton>
 
         {#each pages as page (page.key)}
@@ -62,7 +64,7 @@
             <Pagination.Page
               {page}
               class={[
-                'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+                'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
                 'focus-visible:inset-ring-1 focus-visible:ring-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
@@ -77,7 +79,7 @@
 
         <Pagination.NextButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
@@ -85,16 +87,13 @@
           ]}
           {...nextButtonProps}
         >
-          <Icon icon="ph:caret-right" />
+          <Icon icon="ph:caret-right-bold" />
         </Pagination.NextButton>
-      </div>
+      </FlexContainer>
 
       {#if resume}
-        <p class={['text-current/50']}>
-          {m.common__showing()}
-          {range.start} - {range.end}
-        </p>
+        <P mode="secondary">{m.common__showing()} {range.start} - {range.end}</P>
       {/if}
-    </div>
+    </FlexContainer>
   {/snippet}
 </Pagination.Root>

@@ -42,7 +42,7 @@
     open = $bindable(false),
     title,
     description,
-    width = 'base',
+    width = 'sm',
     children,
     overlayProps,
     contentProps,
@@ -65,7 +65,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-0 right-0 z-100 h-full flex flex-col gap-8 p-8 shadow-xl outline-none @container',
+        'absolute top-0 right-0 z-100 h-full shadow-xl outline-none @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-right-10',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
         width !== 'full' && 'border-l-2',
@@ -74,19 +74,23 @@
       ]}
       {...contentProps}
     >
-      <FlexContainer gap="base" alignX="between">
-        <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
+      <FlexContainer direction="col" height="full" padding="xl" gap="xl">
+        <FlexContainer direction="col" gap="xs">
+          <FlexContainer gap="base" alignX="between">
+            <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button mode="transparent" onclick={() => (open = false)}>
-          <Icon icon="ph:x-bold" class="text-current/50" />
-        </Button>
+            <Button mode="transparent" onclick={() => (open = false)}>
+              <Icon icon="ph:x-bold" class="text-current/50" />
+            </Button>
+          </FlexContainer>
+
+          <Dialog.Description class="text-current/50" {...descriptionProps}>
+            {description}
+          </Dialog.Description>
+        </FlexContainer>
+
+        {@render children?.()}
       </FlexContainer>
-
-      <Dialog.Description class="text-current/50 mb-4" {...descriptionProps}>
-        {description}
-      </Dialog.Description>
-
-      {@render children?.()}
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>

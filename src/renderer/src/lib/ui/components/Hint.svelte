@@ -28,14 +28,16 @@
   let { title, description, children, mode = 'info' }: HintProps = $props()
 </script>
 
-<FlexContainer {mode} direction="col" padding="base" gap="sm">
-  <FlexContainer gap="sm">
-    <Icon icon={HINT_ICON_CLASSES[mode]} class="text-2xl" />
-    <H4>{title}</H4>
-  </FlexContainer>
+<FlexContainer {mode} direction="col" padding="base" gap="base">
+  <FlexContainer direction="col" gap="xs">
+    <FlexContainer gap="sm">
+      <Icon icon={HINT_ICON_CLASSES[mode]} class="text-2xl" />
+      <H4>{title}</H4>
+    </FlexContainer>
 
-  <FlexContainer gap="sm" direction="col" isBreakpoint>
-    <P>{description}</P>
-    {@render children?.()}
+    <FlexContainer gap="sm" direction="col" isBreakpoint>
+      <P fat>{description}</P>
+    </FlexContainer>
   </FlexContainer>
+  {@render children?.()}
 </FlexContainer>

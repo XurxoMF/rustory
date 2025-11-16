@@ -124,6 +124,7 @@
         'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
         'data-disabled:opacity-40',
+        'placeholder:text-current/20',
         ...COMBOBOX_INPUT_MODE_CLASSES[mode]
       ]}
       {...mergedInputProps}
@@ -131,14 +132,14 @@
 
     <Combobox.Trigger
       class={[
-        'absolute right-0 shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+        'absolute right-0 shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         ...COMBOBOX_TRIGGER_MODE_CLASSES[mode]
       ]}
       {...triggerProps}
     >
-      <Icon icon="ph:caret-up-down" />
+      <Icon icon="ph:caret-up-down-bold" />
     </Combobox.Trigger>
   </div>
 
@@ -161,7 +162,7 @@
             {label}
             {disabled}
             class={[
-              'w-full flex items-center justify-between px-2 py-1 rounded-sm transition-colors',
+              'w-full flex items-center justify-between p-2 rounded-sm transition-colors',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
               'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -170,12 +171,12 @@
           >
             {#snippet children({ selected })}
               <span class="w-full flex items-end gap-2">
-                <span>{label}</span>
-                <span class="text-current/50 text-sm">{comment}</span>
+                <span class="leading-tight">{label}</span>
+                <span class="text-current/50 leading-tight font-medium text-sm">{comment}</span>
               </span>
 
               {#if selected}
-                <Icon icon="ph:check" />
+                <Icon icon="ph:check-bold" />
               {/if}
             {/snippet}
           </Combobox.Item>

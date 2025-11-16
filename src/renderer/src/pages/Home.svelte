@@ -9,7 +9,6 @@
   import Label from '@renderer/lib/ui/components/Label.svelte'
   import Info from '@renderer/lib/ui/components/Info.svelte'
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
-  import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { ColumnsContainer, ColumnItem } from '@renderer/lib/ui/layout/Columns'
   import { Notification, Notifications } from '@renderer/lib/classes/Notifications.svelte'
   import Checkbox from '@renderer/lib/ui/components/Checkbox.svelte'
@@ -719,7 +718,19 @@
           </FlexContainer>
 
           <FlexContainer direction="col" gap="sm">
-            <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
+            <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint.">
+              <FlexContainer direction="col" gap="sm">
+                <FlexContainer gap="sm">
+                  <Label for="hint-input">Input inside a hint?</Label>
+                  <Info>Yes! We can add things to the hints!</Info>
+                </FlexContainer>
+
+                <FlexContainer gap="sm">
+                  <Input id="hint-input" type="text" placeholder="Hint Input" bind:value={inputValue} />
+                  <Button mode="neutral">Hint Button</Button>
+                </FlexContainer>
+              </FlexContainer>
+            </Hint>
             <Hint mode="info" title="Info Hint" description="This is a hint with some interesting info! It may be useful..." />
             <Hint mode="success" title="Success Hint" description="This is a success hint! Probably you did something right!" />
             <Hint mode="warning" title="Warning Hint" description="This is a hint with a warning! Pay atention! It's important." />
@@ -735,12 +746,12 @@
 
 <Dialog
   bind:open={dialogOpen}
-  title="Title"
+  title="Dialog with a lot of things"
   description="This is a really cool dialog! We can as you to edit whatever we add and it'll not make you change page or anything..."
   width="lg"
 >
-  <FlexContainer direction="col" gap="base">
-    <ColumnsContainer columns={2} gap="sm">
+  <FlexContainer direction="col" gap="xl">
+    <ColumnsContainer columns={2} gap="base">
       <ColumnItem>
         <FlexContainer direction="col" gap="sm">
           <FlexContainer gap="sm">
@@ -797,11 +808,7 @@
             <Info>Slider with neutral style!</Info>
           </FlexContainer>
 
-          <FlexContainer alignY="end">
-            <P mode="secondary">{SLIDER_MIN}</P>
-            <Slider id="dialog-slider" type="multiple" mode="neutral" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
-            <P mode="secondary">{SLIDER_MAX}</P>
-          </FlexContainer>
+          <Slider id="dialog-slider" type="multiple" mode="neutral" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
         </FlexContainer>
       </ColumnItem>
 
@@ -810,7 +817,7 @@
       </ColumnItem>
 
       <ColumnItem>
-        <FlexContainer gap="sm">
+        <FlexContainer gap="xl">
           <FlexContainer gap="sm">
             <Label for="dialog-switch">Neutral Switch</Label>
             <Info>Switch with neutral style!</Info>
@@ -832,39 +839,102 @@
       </ColumnItem>
 
       <ColumnItem>
+        <Pagination page={1} count={95} perPage={10} />
+
         <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
       </ColumnItem>
     </ColumnsContainer>
 
     <FlexContainer gap="sm">
       <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = false)}>Cancel</Button>
-
       <Button mode="success" width="flex-1" onclick={() => (dialogOpen = false)}>Save</Button>
     </FlexContainer>
   </FlexContainer>
 </Dialog>
 
 <Sheet bind:open={sheetOpen} title="Title" description="On this sheet you can edit whatever we add and it'll not make you change page or anything...">
-  <div class="h-full w-full flex flex-col items-center justify-between gap-2">
-    <GridContainer columns={1}>
-      <GridItem>
-        <div class="flex flex-col items-start justify-center gap-2">
-          <div class="flex gap-2 items-center">
-            <Label for="required-input">Required Input</Label>
-            <Info>This Input is rerquired and it has an * to prove it xD</Info>
-          </div>
+  <FlexContainer direction="col" gap="xl" height="full" alignY="between">
+    <FlexContainer direction="col" gap="base">
+      <FlexContainer direction="col" gap="sm">
+        <FlexContainer gap="sm">
+          <Label for="sheet-input">Neutral Input & Button</Label>
+          <Info>Input & Button with neutral style!</Info>
+        </FlexContainer>
 
-          <Input id="required-input" type="url" placeholder="Reqired Input" />
-        </div>
-      </GridItem>
-    </GridContainer>
+        <FlexContainer gap="sm">
+          <Input id="sheet-input" type="text" placeholder="Neutral Input" bind:value={inputValue} />
+          <Button mode="neutral">Neutral Button</Button>
+        </FlexContainer>
+      </FlexContainer>
 
-    <div class="flex items-center justify-center gap-2 mt-2">
-      <Button mode="neutral" onclick={() => (sheetOpen = false)}>Cancel</Button>
+      <FlexContainer direction="col" gap="sm">
+        <FlexContainer gap="sm">
+          <Label for="dialog-select">Neutral Select</Label>
+          <Info>Select with neutral style!</Info>
+        </FlexContainer>
 
-      <Button mode="neutral" onclick={() => (sheetOpen = false)}>Save</Button>
-    </div>
-  </div>
+        <Select
+          triggerProps={{ id: 'dialog-select' }}
+          type="single"
+          placeholder="Neutral Select"
+          mode="neutral"
+          items={SELECT_ITEMS}
+          bind:value={selectValue}
+        />
+      </FlexContainer>
+
+      <FlexContainer direction="col" gap="sm">
+        <FlexContainer gap="sm">
+          <Label for="dialog-combobox">Neutral Combobox</Label>
+          <Info>Combobox with neutral style!</Info>
+        </FlexContainer>
+
+        <ComboBox
+          type="single"
+          inputProps={{ placeholder: 'Neutral Combobox', id: 'dialog-combobox' }}
+          mode="neutral"
+          items={COMBOBOX_ITEMS}
+          bind:value={comboboxValue}
+        />
+      </FlexContainer>
+
+      <FlexContainer direction="col" gap="sm">
+        <FlexContainer gap="sm">
+          <Label for="dialog-slider">Neutral Slider</Label>
+          <Info>Slider with neutral style!</Info>
+        </FlexContainer>
+
+        <Slider id="dialog-slider" type="multiple" mode="neutral" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
+      </FlexContainer>
+
+      <FlexContainer gap="xl">
+        <FlexContainer gap="sm">
+          <Label for="dialog-switch">Neutral Switch</Label>
+          <Info>Switch with neutral style!</Info>
+          <Switch id="dialog-switch" mode="neutral" bind:checked={switchValue} />
+        </FlexContainer>
+
+        <FlexContainer gap="sm">
+          <Checkbox id="dialog-checkbox" mode="neutral" bind:checked={checkboxValue} />
+          <Label for="dialog-checkbox">Neutral Checkbox</Label>
+          <Info>Checkbox with neutral style!</Info>
+        </FlexContainer>
+      </FlexContainer>
+
+      <FlexContainer alignX="center">
+        <Pagination page={1} count={95} perPage={10} />
+      </FlexContainer>
+
+      <FlexContainer>
+        <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
+      </FlexContainer>
+    </FlexContainer>
+
+    <FlexContainer gap="sm">
+      <Button mode="neutral" width="flex-1" onclick={() => (sheetOpen = false)}>Cancel</Button>
+      <Button mode="success" width="flex-1" onclick={() => (sheetOpen = false)}>Save</Button>
+    </FlexContainer>
+  </FlexContainer>
 </Sheet>
 
 {#snippet dropdownMenu()}

@@ -26,10 +26,10 @@
   <a
     href={link}
     use:route={{
-      active: { absolute: true, class: ['text-current/100', 'bg-zinc-800'] }
+      active: { absolute: true, class: ['text-current', 'bg-zinc-800'] }
     }}
     class={[
-      'w-full h-9 flex items-center justify-start gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+      'w-full h-9 flex items-center justify-start gap-2 p-2 font-medium leading-tight rounded-sm outline-none transition-colors',
       'focus-visible:inset-ring-1 focus-visible:ring-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

@@ -37,7 +37,7 @@
   import Icon from './Icon.svelte'
 
   let {
-    open = $bindable(false),
+    open = $bindable(true),
     title,
     description,
     width = 'base',
@@ -63,7 +63,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 max-w-full h-fit max-h-full flex flex-col gap-8 p-8 rounded-md shadow-xl outline-none transition-colors @container',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-colors @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
@@ -72,19 +72,23 @@
       ]}
       {...contentProps}
     >
-      <FlexContainer gap="base" alignX="between">
-        <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
+      <FlexContainer direction="col" height="full" padding="xl" gap="xl">
+        <FlexContainer direction="col" gap="xs">
+          <FlexContainer gap="base" alignX="between">
+            <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button mode="transparent" onclick={() => (open = false)}>
-          <Icon icon="ph:x-bold" class="text-current/50" />
-        </Button>
+            <Button mode="transparent" onclick={() => (open = false)}>
+              <Icon icon="ph:x-bold" class="text-current/50" />
+            </Button>
+          </FlexContainer>
+
+          <Dialog.Description class="text-current/50" {...descriptionProps}>
+            {description}
+          </Dialog.Description>
+        </FlexContainer>
+
+        {@render children?.()}
       </FlexContainer>
-
-      <Dialog.Description class="text-current/50 mb-4" {...descriptionProps}>
-        {description}
-      </Dialog.Description>
-
-      {@render children?.()}
     </Dialog.Content>
   </Dialog.Portal>
 </Dialog.Root>

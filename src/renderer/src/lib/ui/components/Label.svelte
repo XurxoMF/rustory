@@ -16,7 +16,7 @@
 <Label.Root
   data-disabled={disabled}
   class={[
-    'flex items-center gap-1 font-medium text-current/50 leading-none',
+    'flex items-center gap-1 font-medium text-current/50 leading-tight',
     'data-[disabled=true]:opacity-40',
     'cursor-pointer data-[disabled=true]:cursor-not-allowed'
   ]}

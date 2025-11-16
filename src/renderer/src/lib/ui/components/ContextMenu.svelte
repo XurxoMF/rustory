@@ -170,7 +170,7 @@
 {#snippet CMGroup({ label, items, groupProps, headingProps }: ContextMenuGroup)}
   <ContextMenu.Group class={['flex flex-col p-2']} {...groupProps}>
     {#if label}
-      <ContextMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
+      <ContextMenu.GroupHeading class={['text-current/50 text-sm font-medium ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
     {/if}
 
     {@render CMRenderItems(items)}
@@ -183,7 +183,7 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -198,7 +198,7 @@
 {/snippet}
 
 {#snippet CMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: ContextMenuCheckboxItem)}
-  <div class="relative w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
     <ContextMenu.CheckboxItem
       {value}
       {disabled}
@@ -225,7 +225,7 @@
 {#snippet CMRadioGroup({ label, value, items, onchange, radioGroupProps, headingProps }: ContextMenuRadioGroup)}
   <ContextMenu.RadioGroup {value} onValueChange={onchange} class={['flex flex-col p-2']} {...radioGroupProps}>
     {#if label}
-      <ContextMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
+      <ContextMenu.GroupHeading class={['text-current/50 font-medium text-sm ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
     {/if}
 
     {#each items as item}
@@ -235,7 +235,7 @@
 {/snippet}
 
 {#snippet CMRadioItem({ label, value, disabled, radioItemProps }: ContextMenuRadioItem)}
-  <div class="relative w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
     <ContextMenu.RadioItem
       {value}
       {disabled}
@@ -249,7 +249,7 @@
       {...radioItemProps}
     />
 
-    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
+    <span class={['leading-tight font-medium', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -257,7 +257,7 @@
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -304,7 +304,7 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'

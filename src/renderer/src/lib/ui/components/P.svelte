@@ -27,15 +27,16 @@
 
   export type PProps = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: PModeTypes | undefined
+    fat?: boolean | undefined
     align?: PAlignTypes | undefined
     overflow?: POverflowTypes | undefined
   }
 </script>
 
 <script lang="ts">
-  let { mode = 'primary', align = 'start', overflow = 'base', children, ...restProps }: PProps = $props()
+  let { mode = 'primary', fat = false, align = 'start', overflow = 'base', children, ...restProps }: PProps = $props()
 </script>
 
-<p class={['leading-tight', ...P_OVERFLOW_CLASSES[overflow], ...P_MODE_CLASSES[mode], ...P_ALIGN_CLASSES[align]]} {...restProps}>
+<p class={['leading-tight', fat && 'font-medium', ...P_OVERFLOW_CLASSES[overflow], ...P_MODE_CLASSES[mode], ...P_ALIGN_CLASSES[align]]} {...restProps}>
   {@render children?.()}
 </p>

@@ -221,7 +221,7 @@
 {#snippet DMGroup({ label, items, groupProps, headingProps }: DropdownMenuGroup)}
   <DropdownMenu.Group class={['flex flex-col p-2']} {...groupProps}>
     {#if label}
-      <DropdownMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</DropdownMenu.GroupHeading>
+      <DropdownMenu.GroupHeading class={['text-current/50 font-medium text-sm ml-9 my-2']} {...headingProps}>{label}</DropdownMenu.GroupHeading>
     {/if}
 
     {@render DRenderItems(items)}
@@ -234,7 +234,7 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -249,7 +249,7 @@
 {/snippet}
 
 {#snippet DMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: DropdownMenuCheckboxItem)}
-  <div class="relative shrink-0 w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
+  <div class="relative shrink-0 w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
     <DropdownMenu.CheckboxItem
       {value}
       {disabled}
@@ -276,7 +276,7 @@
 {#snippet DMRadioGroup({ label, value, items, onchange, radioGroupProps, headingProps }: DropdownMenuRadioGroup)}
   <DropdownMenu.RadioGroup {value} onValueChange={onchange} class={['flex flex-col p-2']} {...radioGroupProps}>
     {#if label}
-      <DropdownMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</DropdownMenu.GroupHeading>
+      <DropdownMenu.GroupHeading class={['text-current/50 font-medium text-sm ml-9 my-2']} {...headingProps}>{label}</DropdownMenu.GroupHeading>
     {/if}
 
     {#each items as item}
@@ -286,7 +286,7 @@
 {/snippet}
 
 {#snippet DMRadioItem({ label, value, disabled, radioItemProps }: DropdownMenuRadioItem)}
-  <div class="relative shrink-0 w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
+  <div class="relative shrink-0 w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
     <DropdownMenu.RadioItem
       {value}
       {disabled}
@@ -308,7 +308,7 @@
   <DropdownMenu.Sub {...submenuProps}>
     <DropdownMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
@@ -355,7 +355,7 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'

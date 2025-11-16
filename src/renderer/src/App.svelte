@@ -87,9 +87,9 @@
           {#each Loader.TASKS as TASK (TASK.id)}
             {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
-            <div class="w-fit flex items-center gap-1">
+            <div class="w-fit flex items-center gap-1 text-current/50 leading-tight font-medium">
               <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle' : 'svg-spinners:6-dots-scale'} />
-              <p>{TASK.description}</p>
+              {TASK.description}
             </div>
           {/each}
         </div>
@@ -125,7 +125,7 @@
     <div
       id="portal"
       class={[
-        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
+        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none overflow-hidden @container @container/portal',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md',
         'text-zinc-200'
       ]}
