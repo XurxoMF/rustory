@@ -25,6 +25,7 @@
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
   import H3 from '@renderer/lib/ui/components/H3.svelte'
   import P from '@renderer/lib/ui/components/P.svelte'
+  import Hint from '@renderer/lib/ui/components/Hint.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -1072,6 +1073,21 @@
         <H3>Pagination</H3>
 
         <Pagination page={1} count={95} perPage={10} />
+      </FlexContainer>
+    </ColumnItem>
+
+    <!-- Hints -->
+    <ColumnItem>
+      <FlexContainer direction="col" gap="sm">
+        <H3>Hints</H3>
+
+        <FlexContainer direction="col" gap="sm">
+          <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
+          <Hint mode="info" title="Info Hint" description="This is a hint with some interesting info! It may be useful..." />
+          <Hint mode="success" title="Success Hint" description="This is a success hint! Probably you did something right!" />
+          <Hint mode="warning" title="Warning Hint" description="This is a hint with a warning! Pay atention! It's important." />
+          <Hint mode="danger" title="Danger Hint" description="This is a danderous hint! PAY EVEN MORE ATENTION! This is super important." />
+        </FlexContainer>
       </FlexContainer>
     </ColumnItem>
   </ColumnsContainer>

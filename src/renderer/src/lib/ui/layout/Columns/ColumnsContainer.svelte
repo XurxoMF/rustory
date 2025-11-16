@@ -80,7 +80,7 @@
   }: ColumnsContainerProps = $props()
 </script>
 
-<div class={['w-full overflow-hidden', isBreakpoint && '@container', ...COLUMNS_CONTAINER_MODE_CLASSES[mode], ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded]]}>
+<div class={['w-full', isBreakpoint && '@container', ...COLUMNS_CONTAINER_MODE_CLASSES[mode], ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded]]}>
   <div
     class={['w-full', ...COLUMNS_CONTAINER_COLUMN_CLASSES[columns], ...COLUMNS_CONTAINER_GAP_CLASSES[gap], ...COLUMNS_CONTAINER_PADDING_CLASSES[padding]]}
     {...restProps}

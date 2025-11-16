@@ -72,7 +72,7 @@
   let { children, columns = 1, gap = 'base', padding = 'none', rounded = 'base', mode = 'transparent', isBreakpoint = false }: GridContainerProps = $props()
 </script>
 
-<div class={['w-full overflow-hidden', isBreakpoint && '@container', ...GRID_CONTAINER_MODE_CLASSES[mode], ...GRID_CONTAINER_ROUNDED_CLASSES[rounded]]}>
+<div class={['w-full', isBreakpoint && '@container', ...GRID_CONTAINER_MODE_CLASSES[mode], ...GRID_CONTAINER_ROUNDED_CLASSES[rounded]]}>
   <div class={['w-full grid', ...GLID_CONTAINER_COLUMN_CLASSES[columns], ...GRID_CONTAINER_GAP_CLASSES[gap], ...GRID_CONTAINER_PADDING_CLASSES[padding]]}>
     {@render children()}
   </div>

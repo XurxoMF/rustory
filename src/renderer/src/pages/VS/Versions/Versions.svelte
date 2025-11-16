@@ -19,6 +19,7 @@
   import H4 from '@renderer/lib/ui/components/H4.svelte'
   import P from '@renderer/lib/ui/components/P.svelte'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
+  import Tooltip from '@renderer/lib/ui/components/Tooltip.svelte'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 
@@ -98,21 +99,31 @@
       <GridContainer columns={3}>
         {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
           <GridItem>
-            <FlexContainer direction="col" gap="xs" mode="neutral" padding="base">
-              <FlexContainer gap="base" alignX="between">
-                <FlexContainer direction="col" gap="xs">
-                  <H4>{vsVersion.version}</H4>
-                  <P mode="secondary" title={vsVersion.path}>{vsVersion.path}</P>
-                </FlexContainer>
+            <FlexContainer overflowHidden direction="col" gap="sm" mode="neutral" padding="base">
+              <FlexContainer gap="base" alignX="start">
+                <H4 overflow="nowrap">{vsVersion.version}</H4>
 
-                <FlexContainer gap="xs" alignX="end">
-                  <Button mode="transparent"><Icon icon="ph:folder-open-bold" class="text-current/50" /></Button>
-                  <Button mode="transparent"><Icon icon="ph:trash-bold" class="text-current/50" /></Button>
+                <FlexContainer gap="sm">
+                  <Button mode="neutral"><Icon icon="ph:folder-open-bold" class="text-current/50" /></Button>
+                  <Button mode="danger"><Icon icon="ph:trash-bold" class="text-current/50" /></Button>
                 </FlexContainer>
               </FlexContainer>
 
-              {#if vsVersion.task && vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL}
-                <ProgressBar value={vsVersion.task.progress} />
+              <FlexContainer gap="sm">
+                <Tooltip>
+                  {#snippet trigger()}
+                    <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
+                  {/snippet}
+
+                  {vsVersion.path}
+                </Tooltip>
+              </FlexContainer>
+
+              {#if vsVersion.task}
+                <FlexContainer direction="col" gap="xs">
+                  <P mode="secondary">{vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL && 'Installing...'}</P>
+                  <ProgressBar value={vsVersion.task.progress} />
+                </FlexContainer>
               {/if}
             </FlexContainer>
           </GridItem>

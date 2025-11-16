@@ -10,6 +10,13 @@
   let { value = 0, ...restProps }: ProgressBarProps = $props()
 </script>
 
-<Progress.Root {value} class={[['w-full h-2 rounded-full overflow-hidden shadow-xl transition-all', 'bg-zinc-800']]} {...restProps}>
-  <div class={['w-full h-full flex-1 rounded-full transition-all']} style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}></div>
+<Progress.Root
+  {value}
+  class={[['w-full h-2 rounded-full overflow-hidden shadow-xl transition-all', 'inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800']]}
+  {...restProps}
+>
+  <div
+    class={['w-full h-full flex-1 rounded-full transition-all', 'bg-green-800']}
+    style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}
+  ></div>
 </Progress.Root>

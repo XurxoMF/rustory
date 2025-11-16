@@ -33,7 +33,7 @@ export class VSVersion {
     this._version = data.version
     this._path = data.path
     this._state = $state(data.state ?? VSVersion.State.NOT_INSTALLED)
-    this._task = null
+    this._task = $state(null)
   }
 
   /**

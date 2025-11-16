@@ -92,6 +92,7 @@
     rounded?: FlexContainerRoundedClasses | undefined
     height?: FlexContainerHeightClasses | undefined
     mode?: FlexContainerModeTypes | undefined
+    overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined
   }
 </script>
@@ -106,6 +107,7 @@
     rounded = 'base',
     height = 'fit',
     mode = 'transparent',
+    overflowHidden = false,
     isBreakpoint = false,
     children,
     ...restProps
@@ -114,7 +116,8 @@
 
 <div
   class={[
-    'w-full flex overflow-hidden',
+    'w-full flex',
+    overflowHidden && 'overflow-hidden',
     isBreakpoint && '@container',
     ...FLEX_CONTAINER_DIRECTION_CLASSES[direction],
     ...FLEX_CONTAINER_ALIGN_CLASSES[direction === 'row' ? alignY : alignX],
