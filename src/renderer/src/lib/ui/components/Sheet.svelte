@@ -72,7 +72,8 @@
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
         width !== 'full' && 'border-l-2',
         'bg-zinc-900/95 border-zinc-800',
-        ...SHEET_WIDTH_CLASSES[width]
+        ...SHEET_WIDTH_CLASSES[width],
+        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-r-md'
       ]}
       {...contentProps}
     >
