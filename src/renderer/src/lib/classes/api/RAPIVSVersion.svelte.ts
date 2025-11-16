@@ -203,7 +203,7 @@ export class RAPIVSVersion {
 
     const vsVersion = new VSVersion({ version: this._version, path: installPath, state: VSVersion.State.NOT_INSTALLED })
 
-    Data.instance.vsVersions.push(vsVersion)
+    Data.instance.vsVersions.add(vsVersion)
 
     let url: string
 

@@ -101,7 +101,7 @@
     <Select.Content
       sideOffset={4}
       class={[
-        'max-h-(--bits-select-content-available-height) w-(--bits-select-anchor-width) min-w-(--bits-select-anchor-width) z-50 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
+        'max-h-[calc(var(--bits-combobox-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-50 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',

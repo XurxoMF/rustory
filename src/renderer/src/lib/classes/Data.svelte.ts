@@ -1,3 +1,5 @@
+import { SvelteSet } from 'svelte/reactivity'
+
 import { RustoryDataError } from '@shared/errors/RustoryDataError'
 import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
 import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
@@ -24,16 +26,16 @@ export class Data {
   /**
    * Vintage Story Instances.
    */
-  private _vsInstances: VSInstance[]
+  private _vsInstances: SvelteSet<VSInstance>
 
   /**
    * Vintage Story Versions.
    */
-  private _vsVersions: VSVersion[]
+  private _vsVersions: SvelteSet<VSVersion>
 
   private constructor(data: { vsInstances: VSInstance[]; vsVersions: VSVersion[] }) {
-    this._vsInstances = $state(data.vsInstances)
-    this._vsVersions = $state(data.vsVersions)
+    this._vsInstances = new SvelteSet(data.vsInstances)
+    this._vsVersions = new SvelteSet(data.vsVersions)
   }
 
   /**
@@ -78,14 +80,14 @@ export class Data {
   /**
    * Vintage Story Instances.
    */
-  public get vsInstances(): VSInstance[] {
+  public get vsInstances(): SvelteSet<VSInstance> {
     return this._vsInstances
   }
 
   /**
    * Vintage Story Versions.
    */
-  public get vsVersions(): VSVersion[] {
+  public get vsVersions(): SvelteSet<VSVersion> {
     return this._vsVersions
   }
 }

@@ -20,6 +20,7 @@
   import P from '@renderer/lib/ui/components/P.svelte'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Tooltip from '@renderer/lib/ui/components/Tooltip.svelte'
+  import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 
@@ -104,13 +105,35 @@
                 <H4 overflow="nowrap">{vsVersion.version}</H4>
 
                 <FlexContainer gap="sm">
-                  <Button mode="neutral"><Icon icon="ph:folder-open-bold" class="text-current/50" /></Button>
-                  <Button mode="danger"><Icon icon="ph:trash-bold" class="text-current/50" /></Button>
+                  <Tooltip disableHoverableContent>
+                    {#snippet trigger()}
+                      <Button mode="neutral" onclick={() => window.api.shell.openPath(vsVersion.path)}><Icon icon="ph:folder-open-bold" /></Button>
+                    {/snippet}
+
+                    Open folder on file explorer
+                  </Tooltip>
+
+                  <Tooltip disableHoverableContent>
+                    {#snippet trigger()}
+                      <Button
+                        mode="danger"
+                        disabled={vsVersion.state === VSVersion.State.DELETING || vsVersion.state === VSVersion.State.INSTALLING}
+                        onclick={async () => {
+                          await vsVersion.delete()
+                          Data.instance.vsVersions.delete(vsVersion)
+                        }}
+                      >
+                        <Icon icon="ph:trash-bold" />
+                      </Button>
+                    {/snippet}
+
+                    Uninstall VS Version
+                  </Tooltip>
                 </FlexContainer>
               </FlexContainer>
 
               <FlexContainer gap="sm">
-                <Tooltip>
+                <Tooltip disableHoverableContent>
                   {#snippet trigger()}
                     <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
                   {/snippet}
@@ -121,7 +144,10 @@
 
               {#if vsVersion.task}
                 <FlexContainer direction="col" gap="xs">
-                  <P mode="secondary">{vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL && 'Installing...'}</P>
+                  <FlexContainer gap="xs" alignX="between">
+                    <P mode="secondary">{vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL && 'Installing...'}</P>
+                    <P mode="secondary">{vsVersion.task.progress}%</P>
+                  </FlexContainer>
                   <ProgressBar value={vsVersion.task.progress} />
                 </FlexContainer>
               {/if}

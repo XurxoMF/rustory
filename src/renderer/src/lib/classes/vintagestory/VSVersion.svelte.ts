@@ -104,6 +104,8 @@ export class VSVersion {
     try {
       window.api.logger.info(`Deleting VS Version ${this._version}...`)
 
+      this._state = VSVersion.State.DELETING
+
       await window.api.fs.deletePaths([this._path])
       await window.api.db.vsVersion.deleteVSVersion(this.toJSON())
 
