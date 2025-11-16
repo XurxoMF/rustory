@@ -87,12 +87,12 @@
       </div>
 
       <div class="w-full max-h-40">
-        <div class="flex flex-col items-center justify-center overflow-y-scroll">
+        <div class="flex flex-col items-center justify-center gap-1 overflow-y-scroll">
           {#each Loader.TASKS as TASK (TASK.id)}
             {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
             <div class="w-fit flex items-center gap-1 text-current/50 leading-tight font-medium">
-              <Icon class={['text-lg', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle' : 'svg-spinners:6-dots-scale'} />
+              <Icon class={['text-xl', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle' : 'svg-spinners:6-dots-scale'} />
               {TASK.description}
             </div>
           {/each}

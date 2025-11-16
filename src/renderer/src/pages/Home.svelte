@@ -1099,7 +1099,7 @@
       }
     ]}
   >
-    <Icon icon="ph:dots-three" class="text-xl" />
+    <Icon icon="ph:dots-three-bold" class="text-xl" />
   </Dropdown>
 {/snippet}
 

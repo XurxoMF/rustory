@@ -45,21 +45,21 @@
           value: 'home-page',
           keywords: [m.common__home(), m.common__pages()],
           label: m.common__home(),
-          icon: 'ph:house',
+          icon: 'ph:house-bold',
           onclick: () => goto('/')
         },
         {
           value: 'vs-versions-page',
           keywords: [m.vintagestory__versions(), m.common__pages()],
           label: m.vintagestory__versions(),
-          icon: 'ph:git-fork',
+          icon: 'ph:git-fork-bold',
           onclick: () => goto('/vs/versions')
         },
         {
           value: 'config-page',
           keywords: [m.common__config(), m.common__pages()],
           label: m.common__config(),
-          icon: 'ph:gear',
+          icon: 'ph:gear-bold',
           onclick: () => goto('/config')
         }
       ]

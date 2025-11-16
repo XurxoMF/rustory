@@ -31,7 +31,7 @@
       ]}
       {...triggerProps}
     >
-      <Icon icon="ph:info" class="opacity-40" />
+      <Icon icon="ph:info-bold" class="opacity-40" />
     </Tooltip.Trigger>
 
     <Tooltip.Portal to="#portal">
