@@ -24,8 +24,8 @@
     <Tooltip.Trigger
       class={[
         'shrink-0 flex items-center justify-center rounded-full outline-none leading-tight transition-colors',
-        'cursor-help disabled:cursor-not-allowed',
-        'disabled:opacity-40',
+        'cursor-help data-disabled:cursor-not-allowed',
+        'data-disabled:opacity-40',
         'focus-visible:inset-ring-1 focus-visible:ring-2',
         'inset-ring-zinc-800 ring-zinc-800'
       ]}

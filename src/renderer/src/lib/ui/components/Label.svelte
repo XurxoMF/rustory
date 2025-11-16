@@ -3,19 +3,28 @@
 
   export type LabelProps = Omit<WithoutChild<Label.RootProps>, 'class'> & {
     disabled?: boolean | undefined
+    required?: boolean | undefined
   }
 </script>
 
 <script lang="ts">
   import { Label } from 'bits-ui'
 
-  let { children, disabled = false, ...restProps }: LabelProps = $props()
+  let { children, disabled = false, required = false, ...restProps }: LabelProps = $props()
 </script>
 
 <Label.Root
   data-disabled={disabled}
-  class={['flex items-center gap-1 flex-wrap pointer', 'data-[disabled=true]:opacity-40', 'cursor-pointer data-[disabled=true]:cursor-not-allowed']}
+  class={[
+    'flex items-center gap-1 font-medium text-current/50 leading-none',
+    'data-[disabled=true]:opacity-40',
+    'cursor-pointer data-[disabled=true]:cursor-not-allowed'
+  ]}
   {...restProps}
 >
   {@render children?.()}
+
+  {#if required}
+    <span class="text-red-500">*</span>
+  {/if}
 </Label.Root>

@@ -102,6 +102,7 @@
     height?: FlexContainerHeightClasses | undefined
     width?: FlexContainerWidthClasses | undefined
     mode?: FlexContainerModeTypes | undefined
+    wrap?: boolean | undefined
     overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined
   }
@@ -118,6 +119,7 @@
     height = 'fit',
     width = 'full',
     mode = 'transparent',
+    wrap = false,
     overflowHidden = false,
     isBreakpoint = false,
     children,
@@ -128,6 +130,7 @@
 <div
   class={[
     'flex',
+    wrap && 'flex-wrap',
     overflowHidden && 'overflow-hidden',
     isBreakpoint && '@container',
     ...FLEX_CONTAINER_DIRECTION_CLASSES[direction],

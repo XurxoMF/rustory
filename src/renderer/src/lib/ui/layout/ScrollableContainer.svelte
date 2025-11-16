@@ -3,15 +3,16 @@
 
   export type ScrollableContainerProps = Omit<WithoutChild<ScrollArea.RootProps>, 'class'> & {
     orientation?: 'vertical' | 'horizontal' | 'both' | undefined
+    isBreakpoint?: boolean | undefined
   }
 </script>
 
 <script lang="ts">
-  let { ref = $bindable(null), orientation = 'vertical', children, ...restProps }: ScrollableContainerProps = $props()
+  let { ref = $bindable(null), orientation = 'vertical', isBreakpoint = false, children, ...restProps }: ScrollableContainerProps = $props()
 </script>
 
 <ScrollArea.Root bind:ref type="always" class="w-full h-full" {...restProps}>
-  <ScrollArea.Viewport class="w-full h-full">
+  <ScrollArea.Viewport class={['w-full h-full', isBreakpoint && '@container']}>
     {@render children?.()}
   </ScrollArea.Viewport>
 

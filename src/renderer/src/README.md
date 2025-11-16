@@ -131,3 +131,14 @@ Here's a table with the z-index layers used on the project:
 > Z-300 -> Combobox and Select  
 > Z-200 -> ContextMenu, DropdownMenu
 > Z-100 -> Dialog, Alert, Sheet and Command
+
+## Paddings and Gaps
+
+Most of the layout components we have designed count with 2 properties: gap and padding. This ones come in 6 variants:
+
+- xl -> gap-8 & p-8
+- lg -> gap-6 & p-6
+- base -> gap-4 & p-4
+- sm -> gap-2 & p-2
+- xs -> gap-1 & p-1
+- none -> gap-0 & p-0

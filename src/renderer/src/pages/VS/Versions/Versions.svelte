@@ -23,6 +23,7 @@
   import Sheet from '@renderer/lib/ui/components/Sheet.svelte'
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import H1 from '@renderer/lib/ui/components/H1.svelte'
+  import Form from '@renderer/lib/ui/components/Form.svelte'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
 
@@ -50,10 +51,10 @@
   }
 </script>
 
-<ScrollableContainer>
+<ScrollableContainer isBreakpoint>
   <FlexContainer direction="col" padding="xl" gap="xl">
-    <FlexContainer direction="col">
-      <FlexContainer>
+    <FlexContainer direction="col" gap="base">
+      <FlexContainer gap="base">
         <H1>{m.vintagestory__versions()}</H1>
 
         <Tooltip disableHoverableContent>
@@ -70,54 +71,56 @@
       <P mode="secondary">{m.descriptions__vs_versions_page()}</P>
     </FlexContainer>
 
-    <GridContainer columns={3} gap="base">
+    <GridContainer columns={3} gap="lg">
       {#each Data.instance.vsVersions as vsVersion (vsVersion.version)}
         <GridItem>
-          <FlexContainer overflowHidden direction="col" gap="sm" mode="neutral" padding="base">
-            <FlexContainer gap="base" alignX="start">
-              <H4 overflow="nowrap">{vsVersion.version}</H4>
+          <FlexContainer overflowHidden direction="col" gap="base" padding="base" mode="neutral">
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="base" alignX="start">
+                <H4 overflow="nowrap">{vsVersion.version}</H4>
+
+                <FlexContainer gap="sm">
+                  <Tooltip disableHoverableContent>
+                    {#snippet trigger()}
+                      <Button mode="neutral" onclick={() => window.api.shell.openPath(vsVersion.path)}><Icon icon="ph:folder-open-bold" /></Button>
+                    {/snippet}
+
+                    Open folder on file explorer
+                  </Tooltip>
+
+                  <Tooltip disableHoverableContent>
+                    {#snippet trigger()}
+                      <Button
+                        mode="danger"
+                        disabled={vsVersion.state === VSVersion.State.DELETING || vsVersion.state === VSVersion.State.INSTALLING}
+                        onclick={async () => {
+                          await vsVersion.delete()
+                          Data.instance.vsVersions.delete(vsVersion)
+                        }}
+                      >
+                        <Icon icon="ph:trash-bold" />
+                      </Button>
+                    {/snippet}
+
+                    Uninstall VS Version
+                  </Tooltip>
+                </FlexContainer>
+              </FlexContainer>
 
               <FlexContainer gap="sm">
                 <Tooltip disableHoverableContent>
                   {#snippet trigger()}
-                    <Button mode="neutral" onclick={() => window.api.shell.openPath(vsVersion.path)}><Icon icon="ph:folder-open-bold" /></Button>
+                    <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
                   {/snippet}
 
-                  Open folder on file explorer
-                </Tooltip>
-
-                <Tooltip disableHoverableContent>
-                  {#snippet trigger()}
-                    <Button
-                      mode="danger"
-                      disabled={vsVersion.state === VSVersion.State.DELETING || vsVersion.state === VSVersion.State.INSTALLING}
-                      onclick={async () => {
-                        await vsVersion.delete()
-                        Data.instance.vsVersions.delete(vsVersion)
-                      }}
-                    >
-                      <Icon icon="ph:trash-bold" />
-                    </Button>
-                  {/snippet}
-
-                  Uninstall VS Version
+                  {vsVersion.path}
                 </Tooltip>
               </FlexContainer>
             </FlexContainer>
 
-            <FlexContainer gap="sm">
-              <Tooltip disableHoverableContent>
-                {#snippet trigger()}
-                  <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
-                {/snippet}
-
-                {vsVersion.path}
-              </Tooltip>
-            </FlexContainer>
-
             {#if vsVersion.task}
-              <FlexContainer direction="col" gap="xs">
-                <FlexContainer gap="xs" alignX="between">
+              <FlexContainer direction="col" gap="sm">
+                <FlexContainer gap="sm" alignX="between">
                   <P mode="secondary">{vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL && 'Installing...'}</P>
                   <P mode="secondary">{vsVersion.task.progress}%</P>
                 </FlexContainer>
@@ -131,50 +134,52 @@
   </FlexContainer>
 </ScrollableContainer>
 
-<Sheet bind:open={addVersionDialogOpen} width="base" title="Install a VS Version" description="Select the VS Version you want to install and click install.">
-  <FlexContainer direction="col" height="full" gap="base" alignY="between">
-    <FlexContainer direction="col" gap="sm">
-      <FlexContainer direction="col" gap="xs">
-        <FlexContainer gap="xs">
-          <Label for="versions-to-install">{m.vintagestory__version()}</Label>
-          <Info>{m.descriptions__vs_version_to_install()}</Info>
+<Sheet bind:open={addVersionDialogOpen} width="xs" title="Install VS Version" description="Select the VS Version you want to install and click install.">
+  <Form onsubmit={manageInstallVersion}>
+    <FlexContainer direction="col" height="full" gap="xl" alignY="between">
+      <FlexContainer direction="col" gap="base">
+        <FlexContainer direction="col" gap="sm">
+          <FlexContainer gap="sm">
+            <Label for="versions-to-install">{m.vintagestory__version()}</Label>
+            <Info>{m.descriptions__vs_version_to_install()}</Info>
+          </FlexContainer>
+
+          <VersionsToInstall bind:version required />
         </FlexContainer>
 
-        <VersionsToInstall bind:version />
+        <FlexContainer direction="col" gap="sm">
+          <FlexContainer gap="sm">
+            <Label for="version-path">{m.labels__vs_version_path()}</Label>
+            <Info>{m.descriptions__vs_version_path()}</Info>
+          </FlexContainer>
+
+          <FlexContainer gap="xs">
+            <Button
+              mode="neutral"
+              id="version-path"
+              title={m.common__select_folder()}
+              onclick={async () => {
+                const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
+                path = selected[0]
+              }}
+            >
+              <Icon icon="ph:magnifying-glass-bold" />
+            </Button>
+
+            <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly required />
+          </FlexContainer>
+        </FlexContainer>
       </FlexContainer>
 
-      <FlexContainer direction="col" gap="xs">
-        <FlexContainer gap="xs">
-          <Label for="version-path">{m.labels__vs_version_path()}</Label>
-          <Info>{m.descriptions__vs_version_path()}</Info>
-        </FlexContainer>
+      <FlexContainer gap="sm">
+        <Button mode="neutral" width="flex-1" onclick={() => (addVersionDialogOpen = false)}>
+          {m.common__cancel()}
+        </Button>
 
-        <FlexContainer gap="xs">
-          <Button
-            mode="neutral"
-            id="version-path"
-            title={m.common__select_folder()}
-            onclick={async () => {
-              const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
-              path = selected[0]
-            }}
-          >
-            <Icon icon="ph:magnifying-glass-bold" />
-          </Button>
-
-          <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly />
-        </FlexContainer>
+        <Button mode="success" width="flex-1" type="submit">
+          {m.common__install()}
+        </Button>
       </FlexContainer>
     </FlexContainer>
-
-    <FlexContainer gap="sm">
-      <Button mode="neutral" width="flex-1" onclick={() => (addVersionDialogOpen = false)}>
-        {m.common__install()}
-      </Button>
-
-      <Button mode="success" width="flex-1" onclick={manageInstallVersion}>
-        {m.common__install()}
-      </Button>
-    </FlexContainer>
-  </FlexContainer>
+  </Form>
 </Sheet>

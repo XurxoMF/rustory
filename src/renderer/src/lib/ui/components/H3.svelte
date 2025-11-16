@@ -36,6 +36,6 @@
   let { mode = 'primary', align = 'start', overflow = 'base', children, ...restProps }: H3Props = $props()
 </script>
 
-<h3 class={['text-2xl font-bold', ...H3_OVERFLOW_CLASSES[overflow], ...H3_MODE_CLASSES[mode], ...H3_ALIGN_CLASSES[align]]} {...restProps}>
+<h3 class={['text-2xl font-bold leading-tight', ...H3_OVERFLOW_CLASSES[overflow], ...H3_MODE_CLASSES[mode], ...H3_ALIGN_CLASSES[align]]} {...restProps}>
   {@render children?.()}
 </h3>
