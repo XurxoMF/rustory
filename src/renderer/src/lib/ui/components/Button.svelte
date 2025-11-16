@@ -27,6 +27,14 @@
 
   export type ButtonModeTypes = keyof typeof BUTTON_MODE_CLASSES
 
+  export const BUTTON_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full'],
+    'flex-1': ['flex-1']
+  } as const
+
+  export type ButtonHeightClasses = keyof typeof BUTTON_HEIGHT_CLASSES
+
   export const BUTTON_WIDTH_CLASSES = {
     fit: ['w-fit'],
     full: ['w-full'],
@@ -67,6 +75,7 @@
 
   export type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
     mode?: ButtonModeTypes | undefined
+    height?: ButtonHeightClasses | undefined
     width?: ButtonWidthClasses | undefined
     padding?: ButtonPaddingTypes | undefined
     rounded?: ButtonRoundedClasses | undefined
@@ -75,7 +84,7 @@
 </script>
 
 <script lang="ts">
-  let { mode = 'neutral', width = 'fit', padding = 'sm', rounded = 'sm', align = 'center', children, ...restProps }: ButtonProps = $props()
+  let { mode = 'neutral', height = 'fit', width = 'fit', padding = 'sm', rounded = 'sm', align = 'center', children, ...restProps }: ButtonProps = $props()
 </script>
 
 <button
@@ -84,6 +93,7 @@
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     ...BUTTON_MODE_CLASSES[mode],
+    ...BUTTON_HEIGHT_CLASSES[height],
     ...BUTTON_WIDTH_CLASSES[width],
     ...BUTTON_PADDING_CLASSES[padding],
     ...BUTTON_ROUNDED_CLASSES[rounded],

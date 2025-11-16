@@ -57,7 +57,7 @@
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let {
     value = $bindable(),

@@ -33,7 +33,7 @@
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
 

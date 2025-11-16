@@ -34,7 +34,7 @@
   import { Dialog } from 'bits-ui'
   import FlexContainer from '../layout/Flex/FlexContainer.svelte'
   import Button from './Button.svelte'
-  import Icon from '../base/Icon.svelte'
+  import Icon from './Icon.svelte'
 
   let {
     open = $bindable(false),
@@ -75,7 +75,7 @@
       <FlexContainer gap="base" alignX="between">
         <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button mode="transparent">
+        <Button mode="transparent" onclick={() => (open = false)}>
           <Icon icon="ph:x-bold" class="text-current/50" />
         </Button>
       </FlexContainer>

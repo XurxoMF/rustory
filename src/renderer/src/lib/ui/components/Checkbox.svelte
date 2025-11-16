@@ -34,7 +34,7 @@
 <script lang="ts">
   import { Checkbox } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let { checked = $bindable(false), mode = 'neutral', ...restProps }: CheckboxProps = $props()
 </script>

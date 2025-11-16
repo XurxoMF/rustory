@@ -168,7 +168,7 @@
 <script lang="ts">
   import { DropdownMenu } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let {
     open = $bindable(false),

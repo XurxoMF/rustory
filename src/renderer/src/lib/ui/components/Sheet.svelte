@@ -33,7 +33,7 @@
 <script lang="ts">
   import { Dialog } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
 
@@ -67,7 +67,7 @@
         'absolute top-0 right-0 z-100 h-full flex flex-col gap-4 p-8 shadow-xl outline-none @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-right-10',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
-        'border-l-2',
+        width !== 'full' && 'border-l-2',
         'bg-zinc-900/95 border-zinc-800',
         ...SHEET_WIDTH_CLASSES[width]
       ]}
@@ -76,7 +76,7 @@
       <FlexContainer gap="base" alignX="between">
         <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button mode="transparent">
+        <Button mode="transparent" onclick={() => (open = false)}>
           <Icon icon="ph:x-bold" class="text-current/50" />
         </Button>
       </FlexContainer>

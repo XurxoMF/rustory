@@ -19,7 +19,7 @@
 
   import WindowBar from '@renderer/lib/ui/app/WindowBar.svelte'
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
   import Command from '@renderer/lib/ui/app/Command.svelte'

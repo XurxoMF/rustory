@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import H4 from '@renderer/lib/ui/components/H4.svelte'
   import P from '@renderer/lib/ui/components/P.svelte'

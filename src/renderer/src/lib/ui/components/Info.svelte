@@ -14,7 +14,7 @@
 <script lang="ts">
   import { Tooltip } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let { open = $bindable(false), children, triggerProps, contentProps, ...restProps }: DescriptionProps = $props()
 </script>

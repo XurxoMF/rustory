@@ -105,7 +105,8 @@
 
   export const CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES = {
     fit: ['h-fit'],
-    full: ['h-full']
+    full: ['h-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type ContextMenuTriggerHeightClasses = keyof typeof CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES
@@ -128,7 +129,7 @@
 <script lang="ts">
   import { ContextMenu } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let {
     open = $bindable(false),

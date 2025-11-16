@@ -19,7 +19,7 @@
 <script lang="ts">
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
   import H5 from '@renderer/lib/ui/components/H5.svelte'

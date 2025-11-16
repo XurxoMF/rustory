@@ -15,14 +15,16 @@
 
   export const COLUMNS_CONTAINER_HEIGHT_CLASSES = {
     fit: ['h-fit'],
-    full: ['h-full']
+    full: ['h-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type ColumnsContainerHeightClasses = keyof typeof COLUMNS_CONTAINER_HEIGHT_CLASSES
 
   export const COLUMNS_CONTAINER_WIDTH_CLASSES = {
     fit: ['w-fit'],
-    full: ['w-full']
+    full: ['w-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type ColumnsContainerWidthClasses = keyof typeof COLUMNS_CONTAINER_WIDTH_CLASSES

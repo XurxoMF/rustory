@@ -9,7 +9,7 @@
 
   import Key from '@renderer/lib/ui/components/Key.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import Icon from '@renderer/lib/ui/base/Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Separator from '@renderer/lib/ui/components/Separator.svelte'
 </script>
 

@@ -15,14 +15,16 @@
 
   export const GRID_CONTAINER_HEIGHT_CLASSES = {
     fit: ['h-fit'],
-    full: ['h-full']
+    full: ['h-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type GridContainerHeightClasses = keyof typeof GRID_CONTAINER_HEIGHT_CLASSES
 
   export const GRID_CONTAINER_WIDTH_CLASSES = {
     fit: ['w-fit'],
-    full: ['w-full']
+    full: ['w-full'],
+    'flex-1': ['flex-1']
   } as const
 
   export type GridContainerWidthClasses = keyof typeof GRID_CONTAINER_WIDTH_CLASSES
