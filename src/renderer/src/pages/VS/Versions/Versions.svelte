@@ -39,6 +39,7 @@
 
     if (missingFields <= 0) {
       version?.addAndInstall(path)
+      addVersionDialogOpen = false
       return
     }
 

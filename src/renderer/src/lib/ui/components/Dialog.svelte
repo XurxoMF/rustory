@@ -35,6 +35,7 @@
   import FlexContainer from '../layout/Flex/FlexContainer.svelte'
   import Button from './Button.svelte'
   import Icon from './Icon.svelte'
+  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
 
   let {
     open = $bindable(true),
@@ -56,7 +57,8 @@
       class={[
         'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-colors',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
-        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
       ]}
       {...overlayProps}
     />

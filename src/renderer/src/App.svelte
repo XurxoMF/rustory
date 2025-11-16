@@ -72,7 +72,11 @@
 <!-- Show the loader while there are some taks running on the intializing process. -->
 {#if loader.isVisible}
   <div
-    class={['fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors', 'text-zinc-200 bg-zinc-900 border-zinc-800']}
+    class={[
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors',
+      'text-zinc-200 bg-zinc-900 border-zinc-800',
+      MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
+    ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
@@ -122,12 +126,13 @@
       <Command />
     </div>
 
+    <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->
     <div
       id="portal"
       class={[
-        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none overflow-hidden @container @container/portal',
-        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md',
-        'text-zinc-200'
+        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
+        'text-zinc-200',
+        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
       ]}
     ></div>
   </div>

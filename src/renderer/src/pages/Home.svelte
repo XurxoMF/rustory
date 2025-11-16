@@ -839,8 +839,6 @@
       </ColumnItem>
 
       <ColumnItem>
-        <Pagination page={1} count={95} perPage={10} />
-
         <Hint mode="neutral" title="Neutral Hint" description="This is a neutral hint! Not important, not informative... just a hint." />
       </ColumnItem>
     </ColumnsContainer>
