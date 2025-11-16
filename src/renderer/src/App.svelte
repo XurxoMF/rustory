@@ -102,7 +102,7 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-cover transition-colors',
+      'relative w-screen h-screen overflow-hidden bg-cover transition-colors @container @container/app',
       'bg-image-dark bg-zinc-900 border-zinc-800',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
@@ -121,7 +121,14 @@
       <Toasts />
       <Command />
     </div>
-  </div>
 
-  <div id="portal" class={['absolute top-0 left-0 w-screen h-screen pointer-events-none select-none overflow-hidden transition-colors', 'text-zinc-200']}></div>
+    <div
+      id="portal"
+      class={[
+        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
+        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md',
+        'text-zinc-200'
+      ]}
+    ></div>
+  </div>
 {/if}

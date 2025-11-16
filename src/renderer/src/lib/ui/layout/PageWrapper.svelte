@@ -14,7 +14,7 @@
 
 <div class="w-full h-full">
   <ScrollArea.Root bind:ref type="always" class="w-full h-full" {...restProps}>
-    <ScrollArea.Viewport class="w-full h-full p-8 @container">
+    <ScrollArea.Viewport class="w-full h-full p-8 @container @container/page">
       <div class="flex flex-col gap-4 mb-8">
         <H1>{title}</H1>
         <P mode="secondary">{description}</P>

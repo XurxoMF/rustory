@@ -68,7 +68,7 @@
 </script>
 
 <PageWrapper title="Components Demo" description="This is a demo of all the components! Mostly used during development.">
-  <ColumnsContainer columns={3} gap="xl" isBreakpoint>
+  <ColumnsContainer columns={3} gap="xl">
     <!-- Inputs & Buttons -->
     <ColumnItem>
       <FlexContainer direction="col" gap="sm">
@@ -367,7 +367,7 @@
             width="lg"
           >
             <FlexContainer direction="col" gap="base">
-              <ColumnsContainer columns={2} gap="sm" isBreakpoint>
+              <ColumnsContainer columns={2} gap="sm">
                 <ColumnItem>
                   <FlexContainer direction="col" gap="sm">
                     <FlexContainer gap="sm">

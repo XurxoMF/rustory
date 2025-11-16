@@ -47,7 +47,7 @@
 </script>
 
 <PageWrapper title={m.vintagestory__versions()} description={m.descriptions__vs_versions_page()}>
-  <GridContainer columns={1} gap="xl" isBreakpoint>
+  <GridContainer columns={1} gap="xl">
     <GridItem spanX="full">
       <GridContainer columns={2} gap="sm">
         <GridItem>

@@ -55,7 +55,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs overflow-hidden transition-colors',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-colors',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
       ]}
@@ -64,7 +64,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-0 right-0 z-100 h-full flex flex-col gap-4 p-8 shadow-xl outline-none overflow-hidden @container',
+        'absolute top-0 right-0 z-100 h-full flex flex-col gap-4 p-8 shadow-xl outline-none @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-right-10',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
         'border-l-2',

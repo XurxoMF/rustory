@@ -75,7 +75,7 @@
       <FlexContainer gap="base" alignX="between">
         <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-        <Button mode="transparent" tabindex={-1}>
+        <Button mode="transparent">
           <Icon icon="ph:x-bold" class="text-current/50" />
         </Button>
       </FlexContainer>

@@ -21,7 +21,7 @@
 </script>
 
 <PageWrapper title={m.common__config()} description={m.descriptions__config_page()}>
-  <GridContainer columns={1} gap="xl" isBreakpoint>
+  <GridContainer columns={1} gap="xl">
     <GridItem>
       <GridContainer columns={3} gap="sm">
         <GridItem>
