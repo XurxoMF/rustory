@@ -87,10 +87,10 @@
   >
     <span class="w-full flex items-end gap-2">
       {#if selected}
-        <p class="leading-tight">{selected.label}</p>
-        <p class="text-current/50 text-sm leading-tight">{selected.comment}</p>
+        <span class="leading-tight">{selected.label}</span>
+        <span class="text-current/50 text-sm leading-tight">{selected.comment}</span>
       {:else}
-        <p class="opacity-40 leading-tight">{placeholder}</p>
+        <span class="opacity-40 leading-tight">{placeholder}</span>
       {/if}
     </span>
 
@@ -124,8 +124,8 @@
           >
             {#snippet children({ selected })}
               <span class="w-full flex items-center gap-2">
-                <p class="leading-tight">{label}</p>
-                <p class="text-current/50 text-sm leading-tight">{comment}</p>
+                <span class="leading-tight">{label}</span>
+                <span class="text-current/50 text-sm leading-tight">{comment}</span>
               </span>
 
               {#if selected}
@@ -134,9 +134,9 @@
             {/snippet}
           </Select.Item>
         {:else}
-          <p class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
+          <span class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
             {`${m.common__no_results_found()}...`}
-          </p>
+          </span>
         {/each}
       </Select.Viewport>
     </Select.Content>

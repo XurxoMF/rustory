@@ -665,7 +665,6 @@
           groups={[
             {
               type: 'group',
-              label: 'Item Group',
               items: [
                 {
                   type: 'item',
@@ -675,7 +674,7 @@
                     const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the DropdownMenu!' })
                     Toasts.instance.addToast(toastInfo)
                   },
-                  icon: 'ph:code'
+                  icon: 'ph:code-bold'
                 },
                 {
                   type: 'item',
@@ -685,7 +684,7 @@
                     const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the DropdownMenu!' })
                     Toasts.instance.addToast(toast)
                   },
-                  icon: 'ph:code',
+                  icon: 'ph:code-bold',
                   disabled: true
                 }
               ]
@@ -705,6 +704,11 @@
                   label: 'Radio Two',
                   value: 'radio-two',
                   disabled: true
+                },
+                {
+                  type: 'radioitem',
+                  label: 'Radio Tree',
+                  value: 'radio-three'
                 }
               ],
               onchange: (value: string) => {
@@ -720,7 +724,7 @@
               items: [
                 {
                   type: 'submenu',
-                  icon: 'ph:code',
+                  icon: 'ph:code-bold',
                   label: 'Submenu One',
                   items: [
                     {
@@ -738,11 +742,11 @@
                             })
                             Toasts.instance.addToast(toastInfo)
                           },
-                          icon: 'ph:code'
+                          icon: 'ph:code-bold'
                         },
                         {
                           type: 'itemsubmenu',
-                          icon: 'ph:code',
+                          icon: 'ph:code-bold',
                           value: 'submenu-two',
                           label: 'Submenu Two',
                           items: [
@@ -761,7 +765,7 @@
                                     })
                                     Toasts.instance.addToast(toastInfo)
                                   },
-                                  icon: 'ph:code'
+                                  icon: 'ph:code-bold'
                                 }
                               ]
                             }
@@ -834,7 +838,6 @@
           groups={[
             {
               type: 'group',
-              label: 'Item Group',
               items: [
                 {
                   type: 'item',
@@ -844,7 +847,7 @@
                     const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
                     Toasts.instance.addToast(toastInfo)
                   },
-                  icon: 'ph:code'
+                  icon: 'ph:code-bold'
                 },
                 {
                   type: 'item',
@@ -854,7 +857,7 @@
                     const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
                     Toasts.instance.addToast(toast)
                   },
-                  icon: 'ph:code',
+                  icon: 'ph:code-bold',
                   disabled: true
                 }
               ]
@@ -874,6 +877,11 @@
                   label: 'Radio Two',
                   value: 'radio-two',
                   disabled: true
+                },
+                {
+                  type: 'radioitem',
+                  label: 'Radio Three',
+                  value: 'radio-three'
                 }
               ],
               onchange: (value: string) => {
@@ -889,7 +897,7 @@
               items: [
                 {
                   type: 'submenu',
-                  icon: 'ph:code',
+                  icon: 'ph:code-bold',
                   label: 'Submenu One',
                   items: [
                     {
@@ -907,11 +915,11 @@
                             })
                             Toasts.instance.addToast(toastInfo)
                           },
-                          icon: 'ph:code'
+                          icon: 'ph:code-bold'
                         },
                         {
                           type: 'itemsubmenu',
-                          icon: 'ph:code',
+                          icon: 'ph:code-bold',
                           value: 'submenu-two',
                           label: 'Submenu Two',
                           items: [
@@ -930,7 +938,7 @@
                                     })
                                     Toasts.instance.addToast(toastInfo)
                                   },
-                                  icon: 'ph:code'
+                                  icon: 'ph:code-bold'
                                 }
                               ]
                             }

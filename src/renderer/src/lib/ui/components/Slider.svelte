@@ -39,7 +39,7 @@
     neutral: ['text-current/50 data-bounded:text-zinc-200'],
     info: ['text-blue-200/50 data-bounded:text-blue-200'],
     success: ['text-green-200/50 data-bounded:text-green-200'],
-    warning: ['text-yellow-200/50 data-bounded:text-yesllow-200'],
+    warning: ['text-yellow-200/50 data-bounded:text-yellow-200'],
     danger: ['text-red-200/50 data-bounded:text-red-200']
   } as const
 

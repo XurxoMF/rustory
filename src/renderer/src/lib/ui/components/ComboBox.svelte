@@ -170,8 +170,8 @@
           >
             {#snippet children({ selected })}
               <span class="w-full flex items-end gap-2">
-                <p>{label}</p>
-                <p class="text-current/50 text-sm">{comment}</p>
+                <span>{label}</span>
+                <span class="text-current/50 text-sm">{comment}</span>
               </span>
 
               {#if selected}
@@ -180,9 +180,9 @@
             {/snippet}
           </Combobox.Item>
         {:else}
-          <p class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
+          <span class={['w-full flex items-center justify-center px-2 py-4 text-sm opacity-40 cursor-pointer']}>
             {`${m.common__no_results_found()}...`}
-          </p>
+          </span>
         {/each}
       </Combobox.Viewport>
     </Combobox.Content>

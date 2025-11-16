@@ -13,6 +13,13 @@
 
   export type GridContainerColumnTypes = keyof typeof GLID_CONTAINER_COLUMN_CLASSES
 
+  export const GRID_CONTAINER_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full']
+  } as const
+
+  export type GridContainerHeightClasses = keyof typeof GRID_CONTAINER_HEIGHT_CLASSES
+
   export const GRID_CONTAINER_GAP_CLASSES = {
     none: ['gap-0'],
     xs: ['gap-1'],
@@ -60,6 +67,7 @@
   export type GridContainerProps = {
     children: Snippet
     columns?: GridContainerColumnTypes | undefined
+    height?: GridContainerHeightClasses | undefined
     gap?: GridContainerGapTypes | undefined
     padding?: GridContainerPaddingTypes | undefined
     rounded?: GridContainerRoundedClasses | undefined
@@ -69,11 +77,36 @@
 </script>
 
 <script lang="ts">
-  let { children, columns = 1, gap = 'base', padding = 'none', rounded = 'base', mode = 'transparent', isBreakpoint = false }: GridContainerProps = $props()
+  let {
+    children,
+    columns = 1,
+    height = 'fit',
+    gap = 'base',
+    padding = 'none',
+    rounded = 'base',
+    mode = 'transparent',
+    isBreakpoint = false
+  }: GridContainerProps = $props()
 </script>
 
-<div class={['w-full', isBreakpoint && '@container', ...GRID_CONTAINER_MODE_CLASSES[mode], ...GRID_CONTAINER_ROUNDED_CLASSES[rounded]]}>
-  <div class={['w-full grid', ...GLID_CONTAINER_COLUMN_CLASSES[columns], ...GRID_CONTAINER_GAP_CLASSES[gap], ...GRID_CONTAINER_PADDING_CLASSES[padding]]}>
+<div
+  class={[
+    'w-full',
+    isBreakpoint && '@container',
+    ...GRID_CONTAINER_HEIGHT_CLASSES[height],
+    ...GRID_CONTAINER_MODE_CLASSES[mode],
+    ...GRID_CONTAINER_ROUNDED_CLASSES[rounded]
+  ]}
+>
+  <div
+    class={[
+      'w-full grid',
+      ...GLID_CONTAINER_COLUMN_CLASSES[columns],
+      ...GRID_CONTAINER_HEIGHT_CLASSES[height],
+      ...GRID_CONTAINER_GAP_CLASSES[gap],
+      ...GRID_CONTAINER_PADDING_CLASSES[padding]
+    ]}
+  >
     {@render children()}
   </div>
 </div>

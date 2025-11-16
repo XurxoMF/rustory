@@ -27,8 +27,8 @@
   } as const
 
   export const FLEX_CONTAINER_HEIGHT_CLASSES = {
-    fit: ['w-fit'],
-    full: ['w-full']
+    fit: ['h-fit'],
+    full: ['h-full']
   } as const
 
   export type FlexContainerHeightClasses = keyof typeof FLEX_CONTAINER_HEIGHT_CLASSES

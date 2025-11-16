@@ -13,7 +13,14 @@
 
   export type ColumnsContainerColumnTypes = keyof typeof COLUMNS_CONTAINER_COLUMN_CLASSES
 
-  export const COLUMNS_CONTAINER_GAP_CLASSES = {
+  export const COLUMNS_CONTAINER_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full']
+  } as const
+
+  export type ColumnsContainerHeightClasses = keyof typeof COLUMNS_CONTAINER_HEIGHT_CLASSES
+
+  export const COLUMNS_CONTAINER_COLUMNS_CLASSES = {
     none: ['gap-x-0 space-y-0'],
     xs: ['gap-x-1 space-y-1'],
     sm: ['gap-x-2 space-y-2'],
@@ -22,7 +29,7 @@
     xl: ['gap-x-8 space-y-8']
   } as const
 
-  export type ColumnsContainerGapTypes = keyof typeof COLUMNS_CONTAINER_GAP_CLASSES
+  export type ColumnsContainerGapTypes = keyof typeof COLUMNS_CONTAINER_COLUMNS_CLASSES
 
   export const COLUMNS_CONTAINER_PADDING_CLASSES = {
     none: ['p-0'],
@@ -59,6 +66,7 @@
 
   export type ColumnsContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
     columns?: ColumnsContainerColumnTypes | undefined
+    height?: ColumnsContainerHeightClasses | undefined
     gap?: ColumnsContainerGapTypes | undefined
     padding?: ColumnsContainerPaddingTypes | undefined
     rounded?: ColumnsContainerRoundedClasses | undefined
@@ -71,18 +79,33 @@
   let {
     children,
     columns = 1,
-    isBreakpoint = false,
+    height = 'fit',
     gap = 'base',
     padding = 'none',
     rounded = 'base',
     mode = 'transparent',
+    isBreakpoint = false,
     ...restProps
   }: ColumnsContainerProps = $props()
 </script>
 
-<div class={['w-full', isBreakpoint && '@container', ...COLUMNS_CONTAINER_MODE_CLASSES[mode], ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded]]}>
+<div
+  class={[
+    'w-full',
+    isBreakpoint && '@container',
+    ...COLUMNS_CONTAINER_HEIGHT_CLASSES[height],
+    ...COLUMNS_CONTAINER_MODE_CLASSES[mode],
+    ...COLUMNS_CONTAINER_ROUNDED_CLASSES[rounded]
+  ]}
+>
   <div
-    class={['w-full', ...COLUMNS_CONTAINER_COLUMN_CLASSES[columns], ...COLUMNS_CONTAINER_GAP_CLASSES[gap], ...COLUMNS_CONTAINER_PADDING_CLASSES[padding]]}
+    class={[
+      'w-full',
+      ...COLUMNS_CONTAINER_COLUMN_CLASSES[columns],
+      ...COLUMNS_CONTAINER_HEIGHT_CLASSES[height],
+      ...COLUMNS_CONTAINER_COLUMNS_CLASSES[gap],
+      ...COLUMNS_CONTAINER_PADDING_CLASSES[padding]
+    ]}
     {...restProps}
   >
     {@render children?.()}

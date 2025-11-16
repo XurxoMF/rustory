@@ -103,6 +103,13 @@
 
   export type ContextMenuGroupTypes = ContextMenuGroup | ContextMenuRadioGroup
 
+  export const CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full']
+  } as const
+
+  export type ContextMenuTriggerHeightClasses = keyof typeof CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES
+
   export type ContextMenuTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'>
 
   export type ContextMenuContentProps = Omit<WithoutChildrenOrChild<ContextMenu.ContentProps>, 'class'>
@@ -111,6 +118,7 @@
 
   export type ContextMenuProps = ContextMenu.RootProps & {
     groups: ContextMenuGroupTypes[]
+    triggerHeight?: ContextMenuTriggerHeightClasses | undefined
     triggerProps?: ContextMenuTriggerProps | undefined
     contentProps?: ContextMenuContentProps | undefined
     separatorProps?: ContextMenuSeparatorProps | undefined
@@ -121,19 +129,36 @@
   import { ContextMenu } from 'bits-ui'
 
   import Icon from '@renderer/lib/ui/base/Icon.svelte'
-  import Label from '@renderer/lib/ui/components/Label.svelte'
 
-  let { open = $bindable(false), children, groups, triggerProps, contentProps, separatorProps, ...restProps }: ContextMenuProps = $props()
+  let {
+    open = $bindable(false),
+    children,
+    groups,
+    triggerHeight = 'fit',
+    triggerProps,
+    contentProps,
+    separatorProps,
+    ...restProps
+  }: ContextMenuProps = $props()
 </script>
 
 <ContextMenu.Root bind:open {...restProps}>
-  <ContextMenu.Trigger class={['w-full rounded-md transition-opacity', 'cursor-pointer disabled:cursor-not-allowed', 'disabled:opacity-40']} {...triggerProps}>
+  <ContextMenu.Trigger
+    class={['w-full outline-none', 'cursor-pointer disabled:cursor-not-allowed', ...CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES[triggerHeight]]}
+    {...triggerProps}
+  >
     {@render children?.()}
   </ContextMenu.Trigger>
 
   <ContextMenu.Portal to="#portal">
     <ContextMenu.Content
-      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
+      class={[
+        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-50 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+        'inset-ring-2',
+        'bg-zinc-900/95 inset-ring-zinc-800'
+      ]}
       {...contentProps}
     >
       {@render CMRenderGroups(groups)}
@@ -142,9 +167,9 @@
 </ContextMenu.Root>
 
 {#snippet CMGroup({ label, items, groupProps, headingProps }: ContextMenuGroup)}
-  <ContextMenu.Group {...groupProps}>
+  <ContextMenu.Group class={['flex flex-col p-2']} {...groupProps}>
     {#if label}
-      <ContextMenu.GroupHeading class={['w-full px-2 py-1 text-sm opacity-40']} {...headingProps}>{label}</ContextMenu.GroupHeading>
+      <ContextMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
     {/if}
 
     {@render CMRenderItems(items)}
@@ -157,51 +182,49 @@
     {disabled}
     textValue={value}
     class={[
-      'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
-      'outline-none',
+      'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'data-highlighted:bg-zinc-800'
+      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
     ]}
     {...itemProps}
   >
-    <Icon {icon} class="w-5 h-5 flex items-center justify-center opacity-40" />
-    <span>{label}</span>
+    {#if icon}
+      <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+    {/if}
+    <span class="leading-tight">{label}</span>
   </ContextMenu.Item>
 {/snippet}
 
 {#snippet CMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: ContextMenuCheckboxItem)}
-  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
     <ContextMenu.CheckboxItem
       {value}
       {disabled}
       {checked}
       onCheckedChange={onchange}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-md p-0.5 shadow-xl transition-all',
-        'focus-visible:outline-1',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
+        'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
       ]}
       {...checkboxItemProps}
     >
       {#snippet children({ checked, indeterminate })}
-        {#if indeterminate}
-          <Icon icon="ph:dots-three" />
-        {:else if checked}
-          <Icon icon="ph:check" />
-        {/if}
+        <Icon icon={indeterminate ? 'ph:question-mark-bold' : checked ? 'ph:check-bold' : 'ph:x-bold'} />
       {/snippet}
     </ContextMenu.CheckboxItem>
-    <Label {disabled}>{label}</Label>
+
+    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
 {#snippet CMRadioGroup({ label, value, items, onchange, radioGroupProps, headingProps }: ContextMenuRadioGroup)}
-  <ContextMenu.RadioGroup {value} onValueChange={onchange} {...radioGroupProps}>
+  <ContextMenu.RadioGroup {value} onValueChange={onchange} class={['flex flex-col p-2']} {...radioGroupProps}>
     {#if label}
-      <ContextMenu.GroupHeading class={['w-full px-2 py-1 text-sm opacity-40']} {...headingProps}>{label}</ContextMenu.GroupHeading>
+      <ContextMenu.GroupHeading class={['text-current/50 text-sm ml-9 my-2']} {...headingProps}>{label}</ContextMenu.GroupHeading>
     {/if}
 
     {#each items as item}
@@ -211,26 +234,21 @@
 {/snippet}
 
 {#snippet CMRadioItem({ label, value, disabled, radioItemProps }: ContextMenuRadioItem)}
-  <div class="w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 rounded-sm transition-opacity">
     <ContextMenu.RadioItem
       {value}
       {disabled}
       class={[
-        'w-5 h-5 flex items-center justify-center rounded-full p-0.5 shadow-xl transition-all',
-        'focus-visible:outline-1',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
-        'disabled:opacity-40',
-        'bg-zinc-800 data-[state=checked]:bg-zinc-750 focus-visible:outline-zinc-800'
+        'data-disabled:opacity-40',
+        'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200'
       ]}
       {...radioItemProps}
-    >
-      {#snippet children({ checked })}
-        {#if checked}
-          <Icon icon="ph:check" />
-        {/if}
-      {/snippet}
-    </ContextMenu.RadioItem>
-    <Label {disabled}>{label}</Label>
+    />
+
+    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -238,22 +256,29 @@
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
-        'outline-none',
+        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
       ]}
       {...submenuTriggerProps}
     >
-      <Icon {icon} class="w-4 h-4 flex items-center justify-center opacity-40" />
-      <span>{label}</span>
-      <Icon icon="ph:caret-right" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      {#if icon}
+        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {/if}
+      <span class="leading-tight">{label}</span>
+      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
     <ContextMenu.SubContent
       sideOffset={12}
-      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
+      class={[
+        'max-h-screen min-w-60 z-50 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+        'inset-ring-2',
+        'bg-zinc-900/95 inset-ring-zinc-800'
+      ]}
       {...submenuContentProps}
     >
       {@render CMRenderGroups(items)}
@@ -278,22 +303,29 @@
       {disabled}
       textValue={value}
       class={[
-        'w-full flex items-center justify-start gap-2 px-2 py-1 rounded-md transition-all',
-        'outline-none',
+        'relative w-full flex items-center justify-between p-2 pl-9 rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'data-highlighted:bg-zinc-800'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
       ]}
       {...itemSubmenuTriggerProps}
     >
-      <Icon {icon} class="w-4 h-4 flex items-center justify-center opacity-40" />
-      <span>{label}</span>
-      <Icon icon="ph:caret-right" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      {#if icon}
+        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {/if}
+      <span class="leading-tight">{label}</span>
+      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
     <ContextMenu.SubContent
       sideOffset={12}
-      class={['min-w-48 z-50 p-1 rounded-md border shadow-xl transition-all', 'outline-none', 'bg-zinc-850 border-zinc-800']}
+      class={[
+        'max-h-screen min-w-60 z-50 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all',
+        'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
+        'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
+        'inset-ring-2',
+        'bg-zinc-900/95 inset-ring-zinc-800'
+      ]}
       {...itemSubmenuContentProps}
     >
       {@render CMRenderGroups(items)}
@@ -324,7 +356,7 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <ContextMenu.Separator class={['w-full h-px my-2', 'bg-zinc-750']} {...separatorProps} />
+      <ContextMenu.Separator class={['w-full h-px', 'bg-zinc-800']} {...separatorProps} />
     {/if}
   {/each}
 {/snippet}
