@@ -88,7 +88,7 @@
             {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
             <div class="w-fit flex items-center gap-1 text-current/50 leading-tight font-medium">
-              <Icon class={['text-xl', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle' : 'svg-spinners:6-dots-scale'} />
+              <Icon class={['text-xl', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle-bold' : 'svg-spinners:6-dots-scale'} />
               {TASK.description}
             </div>
           {/each}
