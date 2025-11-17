@@ -90,7 +90,7 @@ export class VSInstanceBackup {
    * @param json The {@link TVSInstanceBackup} to convert.
    * @returns The {@link VSInstanceBackup}.
    */
-  public static fromJSON(json: TVSInstanceBackup, state?: VSInstanceBackup.State): VSInstanceBackup {
+  public static fromJSON(json: TVSInstanceBackup, state?: VSInstanceBackup.State | undefined): VSInstanceBackup {
     return new VSInstanceBackup({
       id: json.id,
       vsInstanceId: json.vsInstanceId,

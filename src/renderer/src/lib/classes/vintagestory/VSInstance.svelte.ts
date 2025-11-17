@@ -218,7 +218,7 @@ export class VSInstance {
    * @param json The {@link TVSInstance} to convert.
    * @returns The {@link VSInstance}.
    */
-  public static fromJSON(json: TVSInstance, state?: VSInstance.State): VSInstance {
+  public static fromJSON(json: TVSInstance, state?: VSInstance.State | undefined): VSInstance {
     return new VSInstance({
       id: json.id,
       name: json.name,

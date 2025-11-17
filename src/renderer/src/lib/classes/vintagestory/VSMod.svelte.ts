@@ -218,7 +218,7 @@ export class VSMod {
    * @param json The {@link TVSMod} to convert.
    * @returns The {@link VSMod}.
    */
-  public static fromJSON(json: TVSMod, state?: VSMod.State): VSMod {
+  public static fromJSON(json: TVSMod, state?: VSMod.State | undefined): VSMod {
     return new VSMod({
       vsInstanceId: json.vsInstanceId,
       name: json.name,

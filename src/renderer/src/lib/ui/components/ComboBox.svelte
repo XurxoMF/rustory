@@ -49,8 +49,8 @@
   export type ComboBoxItem = {
     value: string
     label: string
-    comment?: string
-    disabled?: boolean
+    comment?: string | undefined
+    disabled?: boolean | undefined
   }
 
   export type ComboBoxInputProps = WithoutKeys<WithoutChildrenOrChild<Combobox.InputProps>, 'class' | 'clearOnDeselect'>

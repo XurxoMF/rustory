@@ -49,7 +49,7 @@
 
   export type ContextMenuRadioGroup = {
     type: 'radiogroup'
-    label?: string
+    label?: string | undefined
     items: ContextMenuRadioItem[]
     value?: string | undefined
     onchange: (value: string) => void

@@ -88,7 +88,7 @@ export class VSVersion {
    * @param state The state of the versino.
    * @returns The {@link VSVersion}.
    */
-  public static fromJSON(json: TVSVersion, state?: VSVersion.State): VSVersion {
+  public static fromJSON(json: TVSVersion, state?: VSVersion.State | undefined): VSVersion {
     return new VSVersion({
       version: json.version,
       path: json.path,

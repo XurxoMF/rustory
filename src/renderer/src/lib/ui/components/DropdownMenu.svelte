@@ -49,7 +49,7 @@
 
   export type DropdownMenuRadioGroup = {
     type: 'radiogroup'
-    label?: string
+    label?: string | undefined
     items: DropdownMenuRadioItem[]
     value?: string | undefined
     onchange: (value: string) => void

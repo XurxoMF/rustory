@@ -17,7 +17,7 @@
     title: string
     description: string
     children?: Snippet | undefined
-    mode?: HintModes
+    mode?: HintModes | undefined
   }
 </script>
 

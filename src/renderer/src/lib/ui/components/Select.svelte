@@ -29,8 +29,8 @@
   export type SelectItem = {
     value: string
     label: string
-    comment?: string
-    disabled?: boolean
+    comment?: string | undefined
+    disabled?: boolean | undefined
   }
 
   export type SelectTriggerProps = WithoutKeys<WithoutChildrenOrChild<Select.TriggerProps>, 'class'>
