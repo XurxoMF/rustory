@@ -8,7 +8,7 @@
 </script>
 
 <script lang="ts">
-  import Icon from './Icon.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let { info, success, warning, error }: FormErrorsProps = $props()
 </script>

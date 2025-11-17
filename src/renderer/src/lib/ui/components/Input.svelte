@@ -37,7 +37,7 @@
 
   export type InputWidthClasses = keyof typeof WIDTH_CLASSES
 
-  export type InputProps = Omit<WithoutChildren<HTMLInputAttributes>, 'class' | 'type'> & {
+  export type InputProps = WithoutKeys<WithoutChildren<HTMLInputAttributes>, 'class' | 'type'> & {
     type: InputTypes
     mode?: InputModeTypes | undefined
     width?: InputWidthClasses | undefined

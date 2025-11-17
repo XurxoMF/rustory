@@ -5,7 +5,7 @@
 
   import Select, { type SelectProps } from '@renderer/lib/ui/components/Select.svelte'
 
-  type ScaleProps = Omit<SelectProps, 'placeholder' | 'type' | 'value' | 'allowDeselect' | 'items' | 'onValueChange'>
+  type ScaleProps = WithoutKeys<SelectProps, 'placeholder' | 'type' | 'value' | 'allowDeselect' | 'items' | 'onValueChange'>
 
   let { ...restProps }: ScaleProps = $props()
 </script>

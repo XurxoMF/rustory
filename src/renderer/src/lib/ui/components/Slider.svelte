@@ -43,15 +43,15 @@
     danger: ['text-red-200/50 data-bounded:text-red-200']
   } as const
 
-  export type SliderRangeProps = Omit<WithoutChildrenOrChild<Slider.RangeProps>, 'class'>
+  export type SliderRangeProps = WithoutKeys<WithoutChildrenOrChild<Slider.RangeProps>, 'class'>
 
-  export type SliderThumbProps = Omit<WithoutChildrenOrChild<Slider.ThumbProps>, 'class' | 'index'>
+  export type SliderThumbProps = WithoutKeys<WithoutChildrenOrChild<Slider.ThumbProps>, 'class' | 'index'>
 
-  export type SliderTickProps = Omit<WithoutChildrenOrChild<Slider.TickProps>, 'class' | 'index'>
+  export type SliderTickProps = WithoutKeys<WithoutChildrenOrChild<Slider.TickProps>, 'class' | 'index'>
 
-  export type SliderTickLabelProps = Omit<WithoutChildrenOrChild<Slider.TickLabelProps>, 'class' | 'index'>
+  export type SliderTickLabelProps = WithoutKeys<WithoutChildrenOrChild<Slider.TickLabelProps>, 'class' | 'index'>
 
-  export type SliderProps = Omit<WithoutChildrenOrChild<Slider.RootProps>, 'class'> & {
+  export type SliderProps = WithoutKeys<WithoutChildrenOrChild<Slider.RootProps>, 'class'> & {
     withTicks?: boolean | undefined
     withTickLabels?: boolean | undefined
     mode?: SliderModes | undefined

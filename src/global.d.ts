@@ -163,6 +163,8 @@ declare global {
     mac: string
     macSha: string
   }
+
+  type WithoutKeys<T, K extends keyof any> = T extends object ? Omit<T, Extract<keyof T, K>> : T
 }
 
 export {}

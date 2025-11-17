@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type ProgressBarProps = Omit<WithoutChildrenOrChild<Progress.RootProps>, 'class'>
+  export type ProgressBarProps = WithoutKeys<WithoutChildrenOrChild<Progress.RootProps>, 'class'>
 </script>
 
 <script lang="ts">

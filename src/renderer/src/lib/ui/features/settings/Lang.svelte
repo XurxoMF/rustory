@@ -7,8 +7,8 @@
 
   import ComboBox, { type ComboBoxInputProps, type ComboBoxProps } from '@renderer/lib/ui/components/ComboBox.svelte'
 
-  type LangProps = Omit<ComboBoxProps, 'type' | 'value' | 'allowDeselect' | 'items' | 'onValueChange'> & {
-    inputProps?: Omit<ComboBoxInputProps, 'placeholder'> | undefined
+  type LangProps = WithoutKeys<ComboBoxProps, 'type' | 'value' | 'placeholder' | 'allowDeselect' | 'items' | 'onValueChange'> & {
+    inputProps?: WithoutKeys<ComboBoxInputProps, 'placeholder'> | undefined
   }
 
   let { inputProps, ...restProps }: LangProps = $props()

@@ -1,13 +1,6 @@
 <script lang="ts" module>
   import { type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type SelectItem = {
-    value: string
-    label: string
-    comment?: string
-    disabled?: boolean
-  }
-
   export const SELECT_MODE_CLASSES = {
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -33,16 +26,23 @@
 
   export type SelectModeTypes = keyof typeof SELECT_MODE_CLASSES
 
-  export type SelectTriggerProps = Omit<WithoutChildrenOrChild<Select.TriggerProps>, 'class'>
+  export type SelectItem = {
+    value: string
+    label: string
+    comment?: string
+    disabled?: boolean
+  }
 
-  export type SelectContentProps = Omit<WithoutChildrenOrChild<Select.ContentProps>, 'class' | 'sideOffset'>
+  export type SelectTriggerProps = WithoutKeys<WithoutChildrenOrChild<Select.TriggerProps>, 'class'>
 
-  export type SelectViewportProps = Omit<WithoutChildrenOrChild<Select.ViewportProps>, 'class'>
+  export type SelectContentProps = WithoutKeys<WithoutChildrenOrChild<Select.ContentProps>, 'class' | 'sideOffset'>
 
-  export type SelectItemProps = Omit<WithoutChildrenOrChild<Select.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+  export type SelectViewportProps = WithoutKeys<WithoutChildrenOrChild<Select.ViewportProps>, 'class'>
 
-  export type SelectProps = Omit<WithoutChildrenOrChild<Select.RootProps>, 'class' | 'items'> & {
-    items: SelectItem[]
+  export type SelectItemProps = WithoutKeys<WithoutChildrenOrChild<Select.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+
+  export type SelectProps = WithoutKeys<WithoutChildrenOrChild<Select.RootProps>, 'class' | 'items'> & {
+    items?: SelectItem[] | undefined
     placeholder: string | undefined
     mode?: SelectModeTypes | undefined
     triggerProps?: SelectTriggerProps | undefined
@@ -61,10 +61,9 @@
 
   let {
     value = $bindable(),
-    items,
+    items = $bindable([]),
     placeholder,
     mode = 'neutral',
-    onValueChange,
     allowDeselect = false,
     triggerProps,
     contentProps,
@@ -72,10 +71,10 @@
     ...restProps
   }: SelectProps = $props()
 
-  const selected = $derived(items.find((item) => item.value === value))
+  const selected = $derived(items?.length ? items.filter((item) => value?.includes(item.value)) : undefined)
 </script>
 
-<Select.Root bind:value={value as never} onValueChange={onValueChange as never} {allowDeselect} {...restProps}>
+<Select.Root bind:value={value as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
       'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-colors',
@@ -85,8 +84,8 @@
     ]}
     {...triggerProps}
   >
-    {#if selected}
-      <span class="leading-tight">{selected.label}</span>
+    {#if selected && selected.length > 0}
+      <span class="leading-tight">{selected.map((s) => s.label).join(', ')}</span>
     {:else}
       <span class="text-current/20 leading-tight">{placeholder}</span>
     {/if}

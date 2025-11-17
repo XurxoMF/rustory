@@ -1,13 +1,6 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type ComboBoxItem = {
-    value: string
-    label: string
-    comment?: string
-    disabled?: boolean
-  }
-
   export type ComboBoxModes = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
   export const COMBOBOX_INPUT_MODE_CLASSES: Record<ComboBoxModes, string[]> = {
@@ -53,18 +46,25 @@
     ]
   } as const
 
-  export type ComboBoxInputProps = Omit<WithoutChildrenOrChild<Combobox.InputProps>, 'class' | 'clearOnDeselect'>
+  export type ComboBoxItem = {
+    value: string
+    label: string
+    comment?: string
+    disabled?: boolean
+  }
 
-  export type ComboBoxTriggerProps = Omit<WithoutChildrenOrChild<Combobox.TriggerProps>, 'class'>
+  export type ComboBoxInputProps = WithoutKeys<WithoutChildrenOrChild<Combobox.InputProps>, 'class' | 'clearOnDeselect'>
 
-  export type ComboBoxContentProps = Omit<WithoutChildrenOrChild<Combobox.ContentProps>, 'class' | 'sideOffset'>
+  export type ComboBoxTriggerProps = WithoutKeys<WithoutChildrenOrChild<Combobox.TriggerProps>, 'class'>
 
-  export type ComboBoxViewportProps = Omit<WithoutChildrenOrChild<Combobox.ViewportProps>, 'class'>
+  export type ComboBoxContentProps = WithoutKeys<WithoutChildrenOrChild<Combobox.ContentProps>, 'class' | 'sideOffset'>
 
-  export type ComboBoxItemProps = Omit<WithoutChildrenOrChild<Combobox.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+  export type ComboBoxViewportProps = WithoutKeys<WithoutChildrenOrChild<Combobox.ViewportProps>, 'class'>
 
-  export type ComboBoxProps = Omit<WithoutChildren<Combobox.RootProps>, 'class' | 'items'> & {
-    items: ComboBoxItem[]
+  export type ComboBoxItemProps = WithoutKeys<WithoutChildrenOrChild<Combobox.ItemProps>, 'class' | 'value' | 'label' | 'disabled'>
+
+  export type ComboBoxProps = WithoutKeys<WithoutChildren<Combobox.RootProps>, 'class' | 'items'> & {
+    items?: ComboBoxItem[] | undefined
     mode?: ComboBoxModes | undefined
     inputProps?: ComboBoxInputProps | undefined
     triggerProps?: ComboBoxTriggerProps | undefined
@@ -86,8 +86,6 @@
     value = $bindable(),
     open = $bindable(false),
     mode = 'neutral',
-    type,
-    onValueChange,
     allowDeselect = false,
     inputProps,
     triggerProps,
@@ -99,10 +97,7 @@
 
   let searchValue = $state('')
 
-  const filteredItems = $derived.by(() => {
-    if (searchValue === '') return items
-    return items.filter((item) => item.label.toLowerCase().includes(searchValue.toLowerCase()))
-  })
+  const filteredItems = $derived(searchValue === '' ? items : items?.filter((item) => item.label.toLowerCase().includes(searchValue.toLowerCase())))
 
   function handleInput(e: Event & { currentTarget: HTMLInputElement }) {
     searchValue = e.currentTarget.value
@@ -112,11 +107,11 @@
     if (!newOpen) searchValue = ''
   }
 
-  const mergedRootProps = $derived(mergeProps(restProps, { onOpenChange: handleOpenChange }))
+  const mergedRootProps: typeof restProps = $derived(mergeProps(restProps, { onOpenChange: handleOpenChange }))
   const mergedInputProps = $derived(mergeProps(inputProps, { oninput: handleInput }))
 </script>
 
-<Combobox.Root {type} {items} bind:value={value as never} onValueChange={onValueChange as never} bind:open {allowDeselect} {...mergedRootProps}>
+<Combobox.Root {items} bind:value={value as never} bind:open {allowDeselect} {...mergedRootProps}>
   <div class="relative w-full flex items-center">
     <Combobox.Input
       clearOnDeselect

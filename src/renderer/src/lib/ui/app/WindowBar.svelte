@@ -1,6 +1,7 @@
 <script lang="ts">
-  import { m } from '@renderer/paraglide/messages'
   import { goto } from '@mateothegreat/svelte5-router'
+
+  import { m } from '@renderer/paraglide/messages'
 
   import { Reloader } from '@renderer/lib/classes/Reloader.svelte'
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'

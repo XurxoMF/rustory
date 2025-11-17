@@ -25,7 +25,7 @@
 
   export type H6OverflowTypes = keyof typeof H6_OVERFLOW_CLASSES
 
-  export type H6Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
+  export type H6Props = WithoutKeys<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: H6ModeTypes | undefined
     align?: H6AlignTypes | undefined
     overflow?: H6OverflowTypes | undefined

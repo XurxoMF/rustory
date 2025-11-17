@@ -12,13 +12,13 @@
 
   export type SheetWidthClasses = keyof typeof SHEET_WIDTH_CLASSES
 
-  export type SheetOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
+  export type SheetOverlayProps = WithoutKeys<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
-  export type SheetContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+  export type SheetContentProps = WithoutKeys<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
 
-  export type SheetTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+  export type SheetTitleProps = WithoutKeys<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
 
-  export type SheetDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+  export type SheetDescriptionProps = WithoutKeys<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
 
   export type SheetProps = Dialog.RootProps & {
     title: string
@@ -34,10 +34,11 @@
 <script lang="ts">
   import { Dialog } from 'bits-ui'
 
+  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
+
   import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
-  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
 
   let {
     open = $bindable(false),

@@ -73,7 +73,7 @@
 
   export type ButtonAlignClasses = keyof typeof BUTTON_ALIGN_CLASSES
 
-  export type ButtonProps = Omit<HTMLButtonAttributes, 'class'> & {
+  export type ButtonProps = WithoutKeys<HTMLButtonAttributes, 'class'> & {
     mode?: ButtonModeTypes | undefined
     height?: ButtonHeightClasses | undefined
     width?: ButtonWidthClasses | undefined

@@ -86,7 +86,7 @@
 
   export type FlexContainerModeTypes = keyof typeof FLEX_CONTAINER_MODE_CLASSES
 
-  export type FlexContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
+  export type FlexContainerProps = WithoutKeys<HTMLAttributes<HTMLDivElement>, 'class'> & {
     direction?: FlexContainerDirectionClasses | undefined
     /**
      * Take in account that *between* and *arround* are only valid for *row* direction.

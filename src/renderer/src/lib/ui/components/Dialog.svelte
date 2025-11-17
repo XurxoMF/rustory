@@ -11,13 +11,13 @@
 
   export type DialogWidthClasses = keyof typeof DIALOG_WIDTH_CLASSES
 
-  export type DialogOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
+  export type DialogOverlayProps = WithoutKeys<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
-  export type DialogContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+  export type DialogContentProps = WithoutKeys<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
 
-  export type DialogTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+  export type DialogTitleProps = WithoutKeys<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
 
-  export type DialogDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+  export type DialogDescriptionProps = WithoutKeys<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
 
   export type DialogProps = Dialog.RootProps & {
     title: string
@@ -32,10 +32,12 @@
 
 <script lang="ts">
   import { Dialog } from 'bits-ui'
-  import FlexContainer from '../layout/Flex/FlexContainer.svelte'
-  import Button from './Button.svelte'
-  import Icon from './Icon.svelte'
+
   import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
+
+  import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
+  import Icon from '@renderer/lib/ui/components/Icon.svelte'
 
   let {
     open = $bindable(true),

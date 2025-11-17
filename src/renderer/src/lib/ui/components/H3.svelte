@@ -25,7 +25,7 @@
 
   export type H3OverflowTypes = keyof typeof H3_OVERFLOW_CLASSES
 
-  export type H3Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
+  export type H3Props = WithoutKeys<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: H3ModeTypes | undefined
     align?: H3AlignTypes | undefined
     overflow?: H3OverflowTypes | undefined

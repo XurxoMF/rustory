@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { ScrollArea, type WithoutChild } from 'bits-ui'
 
-  export type ScrollableContainerProps = Omit<WithoutChild<ScrollArea.RootProps>, 'class'> & {
+  export type ScrollableContainerProps = WithoutKeys<WithoutChild<ScrollArea.RootProps>, 'class'> & {
     orientation?: 'vertical' | 'horizontal' | 'both' | undefined
     isBreakpoint?: boolean | undefined
   }

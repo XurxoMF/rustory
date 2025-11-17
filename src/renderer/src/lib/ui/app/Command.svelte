@@ -35,7 +35,7 @@
 
   import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   let groups: CommandGroup[] = [
     {

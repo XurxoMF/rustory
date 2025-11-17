@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type SeparatorProps = Omit<WithoutChildrenOrChild<Separator.RootProps>, 'class'>
+  export type SeparatorProps = WithoutKeys<WithoutChildrenOrChild<Separator.RootProps>, 'class'>
 </script>
 
 <script lang="ts">

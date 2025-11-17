@@ -2,11 +2,11 @@
   import { type WithoutChildrenOrChild } from 'bits-ui'
   import type { Snippet } from 'svelte'
 
-  export type TooltipTriggerProps = Omit<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
+  export type TooltipTriggerProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
 
-  export type TooltipContentProps = Omit<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
+  export type TooltipContentProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
 
-  export type TooltipProps = Omit<Tooltip.RootProps, 'class'> & {
+  export type TooltipProps = WithoutKeys<Tooltip.RootProps, 'class'> & {
     trigger: Snippet
     triggerProps?: TooltipTriggerProps | undefined
     contentProps?: TooltipContentProps | undefined

@@ -25,7 +25,7 @@
 
   export type H4OverflowTypes = keyof typeof H4_OVERFLOW_CLASSES
 
-  export type H4Props = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
+  export type H4Props = WithoutKeys<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: H4ModeTypes | undefined
     align?: H4AlignTypes | undefined
     overflow?: H4OverflowTypes | undefined

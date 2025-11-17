@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements'
 
-  export type FormProps = Omit<HTMLAttributes<HTMLFormElement>, 'class'>
+  export type FormProps = WithoutKeys<HTMLAttributes<HTMLFormElement>, 'class'>
 </script>
 
 <script lang="ts">

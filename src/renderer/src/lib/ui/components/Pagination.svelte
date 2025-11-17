@@ -2,15 +2,15 @@
   import { type WithoutChildrenOrChild } from 'bits-ui'
   import type { HTMLAttributes } from 'svelte/elements'
 
-  export type PaginationPRevButtonProps = Omit<WithoutChildrenOrChild<Pagination.PrevButtonProps>, 'class'>
+  export type PaginationPRevButtonProps = WithoutKeys<WithoutChildrenOrChild<Pagination.PrevButtonProps>, 'class'>
 
-  export type PaginationEllipsisProps = Omit<WithoutChildrenOrChild<HTMLAttributes<HTMLDivElement>>, 'class'>
+  export type PaginationEllipsisProps = WithoutKeys<WithoutChildrenOrChild<HTMLAttributes<HTMLDivElement>>, 'class'>
 
-  export type PaginationPageProps = Omit<WithoutChildrenOrChild<Pagination.PageProps>, 'class'>
+  export type PaginationPageProps = WithoutKeys<WithoutChildrenOrChild<Pagination.PageProps>, 'class'>
 
-  export type PaginationNextButtonProps = Omit<WithoutChildrenOrChild<Pagination.NextButtonProps>, 'class'>
+  export type PaginationNextButtonProps = WithoutKeys<WithoutChildrenOrChild<Pagination.NextButtonProps>, 'class'>
 
-  export type PaginationProps = Omit<WithoutChildrenOrChild<Pagination.RootProps>, 'class'> & {
+  export type PaginationProps = WithoutKeys<WithoutChildrenOrChild<Pagination.RootProps>, 'class'> & {
     resume?: boolean | undefined
     prevButtonProps?: PaginationPRevButtonProps | undefined
     ellipsisProps?: PaginationEllipsisProps | undefined
@@ -25,8 +25,8 @@
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/components/Icon.svelte'
-  import P from './P.svelte'
-  import FlexContainer from '../layout/Flex/FlexContainer.svelte'
+  import P from '@renderer/lib/ui/components/P.svelte'
+  import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
 
   let {
     page = $bindable(),

@@ -34,9 +34,9 @@
     danger: ['bg-red-500 group-hover:bg-red-200 group-not-data-disabled:group-data-[state=checked]:bg-red-200']
   } as const
 
-  export type SwitchThumbRrops = Omit<WithoutChildrenOrChild<Switch.ThumbProps>, 'class'>
+  export type SwitchThumbRrops = WithoutKeys<WithoutChildrenOrChild<Switch.ThumbProps>, 'class'>
 
-  export type SwitchProps = Omit<WithoutChildrenOrChild<Switch.RootProps>, 'class'> & {
+  export type SwitchProps = WithoutKeys<WithoutChildrenOrChild<Switch.RootProps>, 'class'> & {
     mode?: SwitchModes | undefined
     thumbProps?: SwitchThumbRrops | undefined
   }

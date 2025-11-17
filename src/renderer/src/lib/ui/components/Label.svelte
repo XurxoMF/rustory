@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import { type WithoutChild } from 'bits-ui'
 
-  export type LabelProps = Omit<WithoutChild<Label.RootProps>, 'class'> & {
+  export type LabelProps = WithoutKeys<WithoutChild<Label.RootProps>, 'class'> & {
     disabled?: boolean | undefined
     required?: boolean | undefined
   }

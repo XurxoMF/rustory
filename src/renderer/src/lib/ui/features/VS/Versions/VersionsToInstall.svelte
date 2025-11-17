@@ -14,25 +14,28 @@
 
   import ComboBox, { type ComboBoxInputProps, type ComboBoxProps } from '@renderer/lib/ui/components/ComboBox.svelte'
 
-  type VersionsToInstallProps = Omit<ComboBoxProps, 'items' | 'type' | 'value'> & {
+  type VersionsToInstallProps = WithoutKeys<ComboBoxProps, 'items' | 'type' | 'value' | 'onValueChange'> & {
     version?: RAPIVSVersion | undefined
-    inputProps?: Omit<ComboBoxInputProps, 'placeholder'> | undefined
+    onValueChange?: ((version: RAPIVSVersion) => void) | undefined
+    inputProps?: WithoutKeys<ComboBoxInputProps, 'placeholder'> | undefined
   }
 
-  let { version = $bindable(), inputProps, ...restProps }: VersionsToInstallProps = $props()
+  let { version = $bindable(), onValueChange, inputProps, ...restProps }: VersionsToInstallProps = $props()
+
+  let versions: RAPIVSVersion[] = $state([])
+
+  let value: string | undefined = $state()
+
+  function handleValueChange(e: string) {
+    value = e
+    version = versions.find((v) => v.version === value)
+  }
 
   let mergedInputProps = $derived(
     mergeProps(inputProps, {
       placeholder: m.vintagestory__version()
     })
   )
-
-  let versions: RAPIVSVersion[] = $state([])
-  let value: string | undefined = $state()
-
-  $effect(() => {
-    version = versions.find((v) => v.version === value)
-  })
 
   onMount(async () => {
     const res = await Request.instance.get('https://vslapi.xurxomf.xyz/versions')
@@ -44,15 +47,14 @@
 
 <ComboBox
   type="single"
-  bind:value
-  items={versions.map((v) => {
-    return {
-      label: v.version,
-      value: v.version,
-      comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`,
-      disabled: someInSet(Data.instance.vsVersions, (vsv) => vsv.version === v.version)
-    }
-  })}
+  {value}
+  items={versions.map((v) => ({
+    label: v.version,
+    value: v.version,
+    comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`,
+    disabled: someInSet(Data.instance.vsVersions, (vsv) => vsv.version === v.version)
+  }))}
+  onValueChange={handleValueChange}
   inputProps={mergedInputProps}
   {...restProps}
 />

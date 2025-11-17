@@ -4,7 +4,7 @@
   import { m } from '@renderer/paraglide/messages'
 
   import Icon from '@renderer/lib/ui/components/Icon.svelte'
-  import Button from '../components/Button.svelte'
+  import Button from '@renderer/lib/ui/components/Button.svelte'
 </script>
 
 <nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-colors', 'border-r-zinc-800']}>

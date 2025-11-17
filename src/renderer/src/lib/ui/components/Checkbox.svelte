@@ -26,7 +26,7 @@
 
   export type CheckboxModeTypes = keyof typeof CHECKBOX_MODE_CLASSES
 
-  export type CheckboxProps = Omit<WithoutChildrenOrChild<Checkbox.RootProps>, 'class'> & {
+  export type CheckboxProps = WithoutKeys<WithoutChildrenOrChild<Checkbox.RootProps>, 'class'> & {
     mode?: CheckboxModeTypes | undefined
   }
 </script>

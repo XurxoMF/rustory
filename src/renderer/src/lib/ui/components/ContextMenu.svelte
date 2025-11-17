@@ -1,9 +1,9 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type ContextMenuGroupProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupProps>, 'class'>
+  export type ContextMenuGroupProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.GroupProps>, 'class'>
 
-  export type ContextMenuGroupHeadingProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
+  export type ContextMenuGroupHeadingProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
 
   export type ContextMenuGroup = {
     type: 'group'
@@ -13,7 +13,7 @@
     headingProps?: ContextMenuGroupHeadingProps | undefined
   }
 
-  export type ContextMenuItemProps = Omit<WithoutChildrenOrChild<ContextMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
+  export type ContextMenuItemProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
 
   export type ContextMenuItem = {
     type: 'item'
@@ -25,7 +25,7 @@
     itemProps?: ContextMenuItemProps | undefined
   }
 
-  export type ContextMenuCheckboxItemProps = Omit<
+  export type ContextMenuCheckboxItemProps = WithoutKeys<
     WithoutChildrenOrChild<ContextMenu.CheckboxItemProps>,
     'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'
   >
@@ -40,9 +40,9 @@
     checkboxItemProps?: ContextMenuCheckboxItemProps | undefined
   }
 
-  export type ContextMenuRadioGroupProps = Omit<WithoutChildrenOrChild<ContextMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
+  export type ContextMenuRadioGroupProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
 
-  export type ContextMenuRadioGroupHeadingProps = Omit<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
+  export type ContextMenuRadioGroupHeadingProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.GroupHeadingProps>, 'class'>
 
   export type ContextMenuRadioGroup = {
     type: 'radiogroup'
@@ -54,7 +54,7 @@
     headingProps?: ContextMenuRadioGroupHeadingProps | undefined
   }
 
-  export type ContextMenuRadioItemProps = Omit<WithoutChildrenOrChild<ContextMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
+  export type ContextMenuRadioItemProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
 
   export type ContextMenuRadioItem = {
     type: 'radioitem'
@@ -66,9 +66,9 @@
 
   export type ContextMenuSubProps = WithoutChildren<ContextMenu.SubProps>
 
-  export type ContextMenuSubTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class'>
+  export type ContextMenuSubTriggerProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class'>
 
-  export type ContextMenuSubContentProps = Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
+  export type ContextMenuSubContentProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
 
   export type ContextMenuSubmenu = {
     type: 'submenu'
@@ -82,9 +82,12 @@
 
   export type ContextMenuItemSubmenuProps = WithoutChildren<ContextMenu.SubProps>
 
-  export type ContextMenuItemSubmenuTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'>
+  export type ContextMenuItemSubmenuTriggerProps = WithoutKeys<
+    WithoutChildrenOrChild<ContextMenu.SubTriggerProps>,
+    'class' | 'textValue' | 'disabled' | 'onSelect'
+  >
 
-  export type ContextMenuItemSubmenuContentProps = Omit<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
+  export type ContextMenuItemSubmenuContentProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.SubContentProps>, 'class' | 'sideOffset'>
 
   export type ContextMenuItemSubmenu = {
     type: 'itemsubmenu'
@@ -111,11 +114,11 @@
 
   export type ContextMenuTriggerHeightClasses = keyof typeof CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES
 
-  export type ContextMenuTriggerProps = Omit<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'>
+  export type ContextMenuTriggerProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'>
 
-  export type ContextMenuContentProps = Omit<WithoutChildrenOrChild<ContextMenu.ContentProps>, 'class'>
+  export type ContextMenuContentProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.ContentProps>, 'class'>
 
-  export type ContextMenuSeparatorProps = Omit<WithoutChildrenOrChild<ContextMenu.SeparatorProps>, 'class'>
+  export type ContextMenuSeparatorProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.SeparatorProps>, 'class'>
 
   export type ContextMenuProps = ContextMenu.RootProps & {
     groups: ContextMenuGroupTypes[]

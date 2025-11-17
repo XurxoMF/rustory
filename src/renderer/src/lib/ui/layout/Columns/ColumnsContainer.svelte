@@ -73,7 +73,7 @@
 
   export type ColumnsContainerModeTypes = keyof typeof COLUMNS_CONTAINER_MODE_CLASSES
 
-  export type ColumnsContainerProps = Omit<HTMLAttributes<HTMLDivElement>, 'class'> & {
+  export type ColumnsContainerProps = WithoutKeys<HTMLAttributes<HTMLDivElement>, 'class'> & {
     columns?: ColumnsContainerColumnTypes | undefined
     height?: ColumnsContainerHeightClasses | undefined
     width?: ColumnsContainerWidthClasses | undefined

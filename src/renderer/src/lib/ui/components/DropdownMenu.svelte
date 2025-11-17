@@ -1,9 +1,9 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type DropdownMenuGroupProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupProps>, 'class'>
+  export type DropdownMenuGroupProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.GroupProps>, 'class'>
 
-  export type DropdownMenuGroupHeadingProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
+  export type DropdownMenuGroupHeadingProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
 
   export type DropdownMenuGroup = {
     type: 'group'
@@ -13,7 +13,7 @@
     headingProps?: DropdownMenuGroupHeadingProps | undefined
   }
 
-  export type DropdownMenuItemProps = Omit<WithoutChildrenOrChild<DropdownMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
+  export type DropdownMenuItemProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.ItemProps>, 'class' | 'onSelect' | 'textValue' | 'disabled'>
 
   export type DropdownMenuItem = {
     type: 'item'
@@ -25,7 +25,7 @@
     itemProps?: DropdownMenuItemProps | undefined
   }
 
-  export type DropdownMenuCheckboxItemProps = Omit<
+  export type DropdownMenuCheckboxItemProps = WithoutKeys<
     WithoutChildrenOrChild<DropdownMenu.CheckboxItemProps>,
     'class' | 'value' | 'disabled' | 'checked' | 'onCheckedChange'
   >
@@ -40,9 +40,9 @@
     checkboxItemProps?: DropdownMenuCheckboxItemProps | undefined
   }
 
-  export type DropdownMenuRadioGroupProps = Omit<WithoutChildrenOrChild<DropdownMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
+  export type DropdownMenuRadioGroupProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.RadioGroupProps>, 'class' | 'valie' | 'onValueChange'>
 
-  export type DropdownMenuRadioGroupHeadingProps = Omit<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
+  export type DropdownMenuRadioGroupHeadingProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.GroupHeadingProps>, 'class'>
 
   export type DropdownMenuRadioGroup = {
     type: 'radiogroup'
@@ -54,7 +54,7 @@
     headingProps?: DropdownMenuRadioGroupHeadingProps | undefined
   }
 
-  export type DropdownMenuRadioItemProps = Omit<WithoutChildrenOrChild<DropdownMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
+  export type DropdownMenuRadioItemProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.RadioItemProps>, 'class' | 'value' | 'disabled'>
 
   export type DropdownMenuRadioItem = {
     type: 'radioitem'
@@ -66,9 +66,9 @@
 
   export type DropdownMenuSubProps = WithoutChildren<DropdownMenu.SubProps>
 
-  export type DropdownMenuSubTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class'>
+  export type DropdownMenuSubTriggerProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class'>
 
-  export type DropdownMenuSubContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
+  export type DropdownMenuSubContentProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
 
   export type DropdownMenuSubmenu = {
     type: 'submenu'
@@ -82,9 +82,12 @@
 
   export type DropdownMenuItemSubmenuProps = WithoutChildren<DropdownMenu.SubProps>
 
-  export type DropdownMenuItemSubmenuTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>, 'class' | 'textValue' | 'disabled' | 'onSelect'>
+  export type DropdownMenuItemSubmenuTriggerProps = WithoutKeys<
+    WithoutChildrenOrChild<DropdownMenu.SubTriggerProps>,
+    'class' | 'textValue' | 'disabled' | 'onSelect'
+  >
 
-  export type DropdownMenuItemSubmenuContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
+  export type DropdownMenuItemSubmenuContentProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.SubContentProps>, 'class' | 'sideOffset'>
 
   export type DropdownMenuItemSubmenu = {
     type: 'itemsubmenu'
@@ -145,15 +148,15 @@
 
   export type DropdownMenuTriggerAlignClasses = keyof typeof DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES
 
-  export type DropdownMenuTriggerProps = Omit<WithoutChildrenOrChild<DropdownMenu.TriggerProps>, 'class'>
+  export type DropdownMenuTriggerProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.TriggerProps>, 'class'>
 
-  export type DropdownMenuContentProps = Omit<WithoutChildrenOrChild<DropdownMenu.ContentProps>, 'class' | 'sideOffset'>
+  export type DropdownMenuContentProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.ContentProps>, 'class' | 'sideOffset'>
 
-  export type DropdownMenuArrowProps = Omit<WithoutChildrenOrChild<DropdownMenu.ArrowProps>, 'class'>
+  export type DropdownMenuArrowProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.ArrowProps>, 'class'>
 
-  export type DropdownMenuSeparatorProps = Omit<WithoutChildrenOrChild<DropdownMenu.SeparatorProps>, 'class'>
+  export type DropdownMenuSeparatorProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.SeparatorProps>, 'class'>
 
-  export type DropdownMenuProps = Omit<DropdownMenu.RootProps, 'class'> & {
+  export type DropdownMenuProps = WithoutKeys<DropdownMenu.RootProps, 'class'> & {
     groups: DropdownMenuGroupTypes[]
     mode?: DropdownMenuTriggerModeTypes | undefined
     triggerWidth?: DropdownMenuTriggerWidthClasses | undefined

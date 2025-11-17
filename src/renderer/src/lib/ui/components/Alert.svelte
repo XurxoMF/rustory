@@ -1,13 +1,13 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type AlertOverlayProps = Omit<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
+  export type AlertOverlayProps = WithoutKeys<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
-  export type AlertContentProps = Omit<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
+  export type AlertContentProps = WithoutKeys<WithoutChildrenOrChild<Dialog.ContentProps>, 'class'>
 
-  export type AlertTitleProps = Omit<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
+  export type AlertTitleProps = WithoutKeys<WithoutChildrenOrChild<Dialog.TitleProps>, 'class'>
 
-  export type AlertDescriptionProps = Omit<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
+  export type AlertDescriptionProps = WithoutKeys<WithoutChildrenOrChild<Dialog.DescriptionProps>, 'class'>
 
   export type AlertProps = WithoutChildren<Dialog.RootProps> & {
     title: string
@@ -24,9 +24,10 @@
 <script lang="ts">
   import { Dialog } from 'bits-ui'
 
+  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
+
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import { MainWindow } from '@renderer/lib/classes/MainWindow.svelte'
 
   let {
     open = $bindable(true),

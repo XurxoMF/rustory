@@ -25,7 +25,7 @@
 
   export type POverflowTypes = keyof typeof P_OVERFLOW_CLASSES
 
-  export type PProps = Omit<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
+  export type PProps = WithoutKeys<HTMLAttributes<HTMLHeadingElement>, 'class'> & {
     mode?: PModeTypes | undefined
     fat?: boolean | undefined
     align?: PAlignTypes | undefined

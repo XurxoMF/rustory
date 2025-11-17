@@ -1,11 +1,11 @@
 <script lang="ts" module>
   import { type WithoutChildrenOrChild } from 'bits-ui'
 
-  export type DescriptionTriggerProps = Omit<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
+  export type DescriptionTriggerProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
 
-  export type DescriptionContentProps = Omit<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
+  export type DescriptionContentProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
 
-  export type DescriptionProps = Omit<Tooltip.RootProps, 'class'> & {
+  export type DescriptionProps = WithoutKeys<Tooltip.RootProps, 'class'> & {
     triggerProps?: DescriptionTriggerProps | undefined
     contentProps?: DescriptionContentProps | undefined
   }
