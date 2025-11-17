@@ -172,7 +172,7 @@
             {#snippet children({ selected })}
               <span class="w-full flex items-end gap-2">
                 <span class="leading-tight">{label}</span>
-                <span class="text-current/50 leading-tight font-medium text-sm">{comment}</span>
+                <span class="text-current/50 leading-tight text-sm">{comment}</span>
               </span>
 
               {#if selected}

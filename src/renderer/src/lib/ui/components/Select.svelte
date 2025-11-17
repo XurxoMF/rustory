@@ -85,15 +85,11 @@
     ]}
     {...triggerProps}
   >
-    <span class="w-full flex items-end gap-2">
-      {#if selected}
-        <span class="leading-tight">{selected.label}</span>
-        <span class="text-current/50 text-sm leading-tight font-medium">{selected.comment}</span>
-      {:else}
-        <span class="text-current/20 leading-tight">{placeholder}</span>
-      {/if}
-    </span>
-
+    {#if selected}
+      <span class="leading-tight">{selected.label}</span>
+    {:else}
+      <span class="text-current/20 leading-tight">{placeholder}</span>
+    {/if}
     <Icon icon="ph:caret-up-down-bold" />
   </Select.Trigger>
 
@@ -125,7 +121,7 @@
             {#snippet children({ selected })}
               <span class="w-full flex items-center gap-2">
                 <span class="leading-tight">{label}</span>
-                <span class="text-current/50 text-sm leading-tight font-medium">{comment}</span>
+                <span class="text-current/50 text-sm leading-tight">{comment}</span>
               </span>
 
               {#if selected}

@@ -72,11 +72,7 @@
 <!-- Show the loader while there are some taks running on the intializing process. -->
 {#if loader.isVisible}
   <div
-    class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors',
-      'text-zinc-200 bg-zinc-900 border-zinc-800',
-      MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
-    ]}
+    class={['fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors', 'text-zinc-200 bg-zinc-900 border-zinc-800']}
     out:fade={{ duration: 200, delay: 200 }}
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
