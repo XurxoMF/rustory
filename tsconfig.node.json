@@ -10,18 +10,18 @@
   "compilerOptions": {
     "outDir": "out",
     "composite": true,
-    "ignoreDeprecations": "6.0",
-    "strictNullChecks": true,
+    "verbatimModuleSyntax": true,
+    "useDefineForClassFields": true,
+    "strict": true,
     "types": [
       "electron-vite/node"
     ],
-    "baseUrl": ".",
     "paths": {
       "@main/*": [
-        "src/main/*"
+        "./src/main/*"
       ],
       "@shared/*": [
-        "src/shared/*"
+        "./src/shared/*"
       ]
     }
   }

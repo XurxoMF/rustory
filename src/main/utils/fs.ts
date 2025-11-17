@@ -4,7 +4,6 @@ import { Worker } from 'worker_threads'
 
 import { logger } from '@main/utils/logger'
 import changePermsWorker from '@main/workers/changePermsWorker?modulePath'
-import downloadPathsWorker from '@main/workers/deletePathsWorker?modulePath'
 import { getOSInfo } from '@main/utils/system'
 import { RustoryFSError } from '@shared/errors/RustoryFSError'
 

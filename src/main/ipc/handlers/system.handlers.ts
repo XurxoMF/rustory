@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron'
-import { Systeminformation } from 'systeminformation'
+import { type Systeminformation } from 'systeminformation'
 import { IPC_CHANNELS } from '@main/ipc/channels'
 import { getCPUInfo, getGPUsInfo, getNETRuntimesInfo, getNETSDKsInfo, getOSInfo, getRAMInfo, getVolumesInfo } from '@main/utils/system'
 
