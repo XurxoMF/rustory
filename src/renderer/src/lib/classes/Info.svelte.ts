@@ -137,8 +137,7 @@ export class Info {
       const dataPath = await window.api.fs.getPath('userData')
       const cachePath = await window.api.fs.join(dataPath, 'Cache')
       const logsPath = await window.api.fs.getPath('logs')
-      const temp = await window.api.fs.getPath('temp')
-      const tempPath = await window.api.fs.join(temp, name)
+      const tempPath = await window.api.fs.join(dataPath, 'Temp')
 
       // Set the info
       Info._instance = new Info({

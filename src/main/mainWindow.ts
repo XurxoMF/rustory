@@ -1,6 +1,7 @@
 import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
+import fse from 'fs-extra'
 
 import { logger } from '@main/utils/logger'
 import { readJSON, writeJSON } from '@main/utils/fs'
@@ -26,7 +27,7 @@ export async function createMainWindow(): Promise<void> {
   }
 
   try {
-    oldState = await readJSON(MAIN_WINDOW_STATE_PATH)
+    if (fse.existsSync(MAIN_WINDOW_STATE_PATH)) oldState = await readJSON(MAIN_WINDOW_STATE_PATH)
   } catch (error) {
     logger.error('Old state could not be read!')
   }
