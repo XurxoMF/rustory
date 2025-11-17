@@ -16,17 +16,15 @@
   import Slider from '@renderer/lib/ui/components/Slider.svelte'
   import Switch from '@renderer/lib/ui/components/Switch.svelte'
   import ContextMenu from '@renderer/lib/ui/components/ContextMenu.svelte'
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Pagination from '@renderer/lib/ui/components/Pagination.svelte'
   import Sheet from '@renderer/lib/ui/components/Sheet.svelte'
   import Dialog from '@renderer/lib/ui/components/Dialog.svelte'
-  import H3 from '@renderer/lib/ui/components/H3.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
+  import { P, H1, H3 } from '@renderer/lib/ui/components/Fonts'
   import Hint from '@renderer/lib/ui/components/Hint.svelte'
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import H1 from '@renderer/lib/ui/components/H1.svelte'
   import FormInfo from '@renderer/lib/ui/components/FormInfo.svelte'
+  import { PHDotsThreeBoldIcon, PHGitForkBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   Breadcrumbs.instance.segments = []
 
@@ -949,7 +947,7 @@
               const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the DropdownMenu!' })
               Toasts.instance.addToast(toastInfo)
             },
-            icon: 'ph:code-bold'
+            icon: PHGitForkBoldIcon
           },
           {
             type: 'item',
@@ -959,7 +957,7 @@
               const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the DropdownMenu!' })
               Toasts.instance.addToast(toast)
             },
-            icon: 'ph:code-bold',
+            icon: PHGitForkBoldIcon,
             disabled: true
           }
         ]
@@ -999,7 +997,7 @@
         items: [
           {
             type: 'submenu',
-            icon: 'ph:code-bold',
+            icon: PHGitForkBoldIcon,
             label: 'Submenu One',
             items: [
               {
@@ -1017,11 +1015,11 @@
                       })
                       Toasts.instance.addToast(toastInfo)
                     },
-                    icon: 'ph:code-bold'
+                    icon: PHGitForkBoldIcon
                   },
                   {
                     type: 'itemsubmenu',
-                    icon: 'ph:code-bold',
+                    icon: PHGitForkBoldIcon,
                     value: 'submenu-two',
                     label: 'Submenu Two',
                     items: [
@@ -1040,7 +1038,7 @@
                               })
                               Toasts.instance.addToast(toastInfo)
                             },
-                            icon: 'ph:code-bold'
+                            icon: PHGitForkBoldIcon
                           }
                         ]
                       }
@@ -1099,7 +1097,7 @@
       }
     ]}
   >
-    <Icon icon="ph:dots-three-bold" class="text-xl" />
+    <PHDotsThreeBoldIcon class="text-xl" />
   </Dropdown>
 {/snippet}
 
@@ -1117,7 +1115,7 @@
               const toastInfo = new Toast({ title: 'One cliecked!', type: Toast.Type.INFO, description: 'You clicked one on the ContextMenu!' })
               Toasts.instance.addToast(toastInfo)
             },
-            icon: 'ph:code-bold'
+            icon: PHGitForkBoldIcon
           },
           {
             type: 'item',
@@ -1127,7 +1125,7 @@
               const toast = new Toast({ title: 'Two cliecked!', type: Toast.Type.INFO, description: 'You clicked two on the ContextMenu!' })
               Toasts.instance.addToast(toast)
             },
-            icon: 'ph:code-bold',
+            icon: PHGitForkBoldIcon,
             disabled: true
           }
         ]
@@ -1167,7 +1165,7 @@
         items: [
           {
             type: 'submenu',
-            icon: 'ph:code-bold',
+            icon: PHGitForkBoldIcon,
             label: 'Submenu One',
             items: [
               {
@@ -1185,11 +1183,11 @@
                       })
                       Toasts.instance.addToast(toastInfo)
                     },
-                    icon: 'ph:code-bold'
+                    icon: PHGitForkBoldIcon
                   },
                   {
                     type: 'itemsubmenu',
-                    icon: 'ph:code-bold',
+                    icon: PHGitForkBoldIcon,
                     value: 'submenu-two',
                     label: 'Submenu Two',
                     items: [
@@ -1208,7 +1206,7 @@
                               })
                               Toasts.instance.addToast(toastInfo)
                             },
-                            icon: 'ph:code-bold'
+                            icon: PHGitForkBoldIcon
                           }
                         ]
                       }

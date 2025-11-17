@@ -56,8 +56,7 @@
   import { Select } from 'bits-ui'
 
   import { m } from '@renderer/paraglide/messages'
-
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHCaretUpDownBoldIcon, PHCheckBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     value = $bindable(),
@@ -89,7 +88,7 @@
     {:else}
       <span class="text-current/20 leading-tight">{placeholder}</span>
     {/if}
-    <Icon icon="ph:caret-up-down-bold" />
+    <PHCaretUpDownBoldIcon />
   </Select.Trigger>
 
   <Select.Portal to="#portal">
@@ -124,7 +123,7 @@
               </span>
 
               {#if selected}
-                <Icon icon="ph:check-bold" />
+                <PHCheckBoldIcon />
               {/if}
             {/snippet}
           </Select.Item>

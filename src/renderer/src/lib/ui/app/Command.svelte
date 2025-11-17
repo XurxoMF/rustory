@@ -1,4 +1,8 @@
 <script lang="ts" module>
+  import type { Component } from 'svelte'
+
+  import { type IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
+
   let open = $state(false)
 
   export function closeCommand(): void {
@@ -17,7 +21,7 @@
     value: string
     keywords: string[]
     label: string
-    icon: string
+    icon: Component<IconProps>
     onclick: () => void | Promise<void>
   }
 
@@ -33,9 +37,9 @@
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
+  import { PHGearBoldIcon, PHGitForkBoldIcon, PHHouseBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let groups: CommandGroup[] = [
     {
@@ -45,21 +49,21 @@
           value: 'home-page',
           keywords: [m.common__home(), m.common__pages()],
           label: m.common__home(),
-          icon: 'ph:house-bold',
+          icon: PHHouseBoldIcon,
           onclick: () => goto('/')
         },
         {
           value: 'vs-versions-page',
           keywords: [m.vintagestory__versions(), m.common__pages()],
           label: m.vintagestory__versions(),
-          icon: 'ph:git-fork-bold',
+          icon: PHGitForkBoldIcon,
           onclick: () => goto('/vs/versions')
         },
         {
           value: 'config-page',
           keywords: [m.common__config(), m.common__pages()],
           label: m.common__config(),
-          icon: 'ph:gear-bold',
+          icon: PHGearBoldIcon,
           onclick: () => goto('/config')
         }
       ]
@@ -92,7 +96,7 @@
             <Dialog.Title class="text-2xl font-bold">{m.common__search()}</Dialog.Title>
 
             <Button mode="transparent" tabindex={-1}>
-              <Icon icon="ph:x-bold" class="text-current/50" />
+              <PHXBoldIcon class="text-current/50" />
             </Button>
           </FlexContainer>
 
@@ -139,7 +143,7 @@
   </Command.Group>
 {/snippet}
 
-{#snippet CItem({ icon, label, keywords, value, onclick }: CommandItem)}
+{#snippet CItem({ icon: Icon, label, keywords, value, onclick }: CommandItem)}
   <Command.Item
     {value}
     {keywords}
@@ -154,7 +158,7 @@
       'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800'
     ]}
   >
-    <Icon {icon} class="shrink-0 flex items-center justify-center text-lg" />
+    <Icon class="shrink-0 flex items-center justify-center text-lg" />
     {label}
   </Command.Item>
 {/snippet}

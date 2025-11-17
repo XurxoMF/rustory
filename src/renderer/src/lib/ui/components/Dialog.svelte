@@ -37,7 +37,7 @@
 
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     open = $bindable(true),
@@ -82,7 +82,7 @@
             <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
             <Button mode="transparent" onclick={() => (open = false)}>
-              <Icon icon="ph:x-bold" class="text-current/50" />
+              <PHXBoldIcon class="text-current/50" />
             </Button>
           </FlexContainer>
 

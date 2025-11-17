@@ -1,5 +1,8 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+  import type { Component } from 'svelte'
+
+  import type { IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
 
   export type ContextMenuGroupProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.GroupProps>, 'class'>
 
@@ -19,7 +22,7 @@
     type: 'item'
     label: string
     value: string
-    icon: string
+    icon: Component<IconProps>
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
     itemProps?: ContextMenuItemProps | undefined
@@ -74,7 +77,7 @@
     type: 'submenu'
     label: string
     items: ContextMenuGroupTypes[]
-    icon: string
+    icon: Component<IconProps>
     submenuProps?: ContextMenuSubProps | undefined
     submenuTriggerProps?: ContextMenuSubTriggerProps | undefined
     submenuContentProps?: ContextMenuSubContentProps | undefined
@@ -94,7 +97,7 @@
     label: string
     value: string
     items: ContextMenuGroupTypes[]
-    icon: string
+    icon: Component<IconProps>
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
     itemSubmenuProps?: ContextMenuItemSubmenuProps | undefined
@@ -132,7 +135,7 @@
 <script lang="ts">
   import { ContextMenu } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHCaretRightBoldIcon, PHCheckBoldIcon, PHQuestionMarkBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     open = $bindable(false),
@@ -180,7 +183,7 @@
   </ContextMenu.Group>
 {/snippet}
 
-{#snippet CMItem({ label, value, icon, disabled, onselect, itemProps }: ContextMenuItem)}
+{#snippet CMItem({ label, value, icon: Icon, disabled, onselect, itemProps }: ContextMenuItem)}
   <ContextMenu.Item
     onSelect={onselect}
     {disabled}
@@ -193,8 +196,8 @@
     ]}
     {...itemProps}
   >
-    {#if icon}
-      <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+    {#if Icon}
+      <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
     {/if}
     <span class="leading-tight">{label}</span>
   </ContextMenu.Item>
@@ -217,7 +220,13 @@
       {...checkboxItemProps}
     >
       {#snippet children({ checked, indeterminate })}
-        <Icon icon={indeterminate ? 'ph:question-mark-bold' : checked ? 'ph:check-bold' : 'ph:x-bold'} />
+        {#if indeterminate}
+          <PHQuestionMarkBoldIcon />
+        {:else if checked}
+          <PHCheckBoldIcon />
+        {:else}
+          <PHXBoldIcon />
+        {/if}
       {/snippet}
     </ContextMenu.CheckboxItem>
 
@@ -256,7 +265,7 @@
   </div>
 {/snippet}
 
-{#snippet CMSubmenu({ label, icon, items, submenuProps, submenuTriggerProps, submenuContentProps }: ContextMenuSubmenu)}
+{#snippet CMSubmenu({ label, icon: Icon, items, submenuProps, submenuTriggerProps, submenuContentProps }: ContextMenuSubmenu)}
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
@@ -267,11 +276,11 @@
       ]}
       {...submenuTriggerProps}
     >
-      {#if icon}
-        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {#if Icon}
+        <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
       <span class="leading-tight">{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
     <ContextMenu.SubContent
@@ -292,7 +301,7 @@
 
 {#snippet CMItemSubmenu({
   label,
-  icon,
+  icon: Icon,
   value,
   items,
   disabled,
@@ -314,11 +323,11 @@
       ]}
       {...itemSubmenuTriggerProps}
     >
-      {#if icon}
-        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {#if Icon}
+        <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
       <span class="leading-tight">{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
     <ContextMenu.SubContent

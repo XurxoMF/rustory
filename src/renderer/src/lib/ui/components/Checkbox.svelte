@@ -34,7 +34,7 @@
 <script lang="ts">
   import { Checkbox } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHCheckBoldIcon, PHQuestionMarkBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let { checked = $bindable(false), mode = 'neutral', ...restProps }: CheckboxProps = $props()
 </script>
@@ -50,6 +50,12 @@
   {...restProps}
 >
   {#snippet children({ checked, indeterminate })}
-    <Icon icon={indeterminate ? 'ph:question-mark-bold' : checked ? 'ph:check-bold' : 'ph:x-bold'} />
+    {#if indeterminate}
+      <PHQuestionMarkBoldIcon />
+    {:else if checked}
+      <PHCheckBoldIcon />
+    {:else}
+      <PHXBoldIcon />
+    {/if}
   {/snippet}
 </Checkbox.Root>

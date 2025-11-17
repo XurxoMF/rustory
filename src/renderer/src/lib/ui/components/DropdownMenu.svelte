@@ -1,5 +1,8 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
+  import type { Component } from 'svelte'
+
+  import type { IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
 
   export type DropdownMenuGroupProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.GroupProps>, 'class'>
 
@@ -19,7 +22,7 @@
     type: 'item'
     label: string
     value: string
-    icon: string
+    icon: Component<IconProps>
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
     itemProps?: DropdownMenuItemProps | undefined
@@ -74,7 +77,7 @@
     type: 'submenu'
     label: string
     items: DropdownMenuGroupTypes[]
-    icon: string
+    icon: Component<IconProps>
     submenuProps?: DropdownMenuSubProps | undefined
     submenuTriggerProps?: DropdownMenuSubTriggerProps | undefined
     submenuContentProps?: DropdownMenuSubContentProps | undefined
@@ -94,7 +97,7 @@
     label: string
     value: string
     items: DropdownMenuGroupTypes[]
-    icon: string
+    icon: Component<IconProps>
     disabled?: boolean | undefined
     onselect: () => void | Promise<void>
     itemSubmenuProps?: DropdownMenuItemSubmenuProps | undefined
@@ -171,7 +174,7 @@
 <script lang="ts">
   import { DropdownMenu } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHCaretRightBoldIcon, PHCheckBoldIcon, PHQuestionMarkBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     open = $bindable(false),
@@ -231,7 +234,7 @@
   </DropdownMenu.Group>
 {/snippet}
 
-{#snippet DMItem({ label, value, icon, disabled, onselect, itemProps }: DropdownMenuItem)}
+{#snippet DMItem({ label, value, icon: Icon, disabled, onselect, itemProps }: DropdownMenuItem)}
   <DropdownMenu.Item
     onSelect={onselect}
     {disabled}
@@ -244,8 +247,8 @@
     ]}
     {...itemProps}
   >
-    {#if icon}
-      <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+    {#if Icon}
+      <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
     {/if}
     <span class="leading-tight">{label}</span>
   </DropdownMenu.Item>
@@ -268,7 +271,13 @@
       {...checkboxItemProps}
     >
       {#snippet children({ checked, indeterminate })}
-        <Icon icon={indeterminate ? 'ph:question-mark-bold' : checked ? 'ph:check-bold' : 'ph:x-bold'} />
+        {#if indeterminate}
+          <PHQuestionMarkBoldIcon />
+        {:else if checked}
+          <PHCheckBoldIcon />
+        {:else}
+          <PHXBoldIcon />
+        {/if}
       {/snippet}
     </DropdownMenu.CheckboxItem>
 
@@ -307,7 +316,7 @@
   </div>
 {/snippet}
 
-{#snippet DMSubmenu({ label, icon, items, submenuProps, submenuTriggerProps, submenuContentProps }: DropdownMenuSubmenu)}
+{#snippet DMSubmenu({ label, icon: Icon, items, submenuProps, submenuTriggerProps, submenuContentProps }: DropdownMenuSubmenu)}
   <DropdownMenu.Sub {...submenuProps}>
     <DropdownMenu.SubTrigger
       class={[
@@ -318,11 +327,11 @@
       ]}
       {...submenuTriggerProps}
     >
-      {#if icon}
-        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {#if Icon}
+        <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
       <span class="leading-tight">{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 
     <DropdownMenu.SubContent
@@ -343,7 +352,7 @@
 
 {#snippet DItemSubmenu({
   label,
-  icon,
+  icon: Icon,
   value,
   items,
   disabled,
@@ -365,11 +374,11 @@
       ]}
       {...itemSubmenuTriggerProps}
     >
-      {#if icon}
-        <Icon {icon} class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
+      {#if Icon}
+        <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
       <span class="leading-tight">{label}</span>
-      <Icon icon="ph:caret-right-bold" class="pl-4 ml-auto flex items-center justify-center opacity-40" />
+      <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 
     <DropdownMenu.SubContent

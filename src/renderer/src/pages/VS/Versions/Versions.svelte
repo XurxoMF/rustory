@@ -8,7 +8,7 @@
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Toasts, Toast } from '@renderer/lib/classes/Toasts.svelte'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHFolderOpenBoldIcon, PHMagnifyingGlassBoldIcon, PHPlusBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
   import Label from '@renderer/lib/ui/components/Label.svelte'
@@ -16,13 +16,11 @@
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import { VersionsToInstall } from '@renderer/lib/ui/features/VS/Versions'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import H4 from '@renderer/lib/ui/components/H4.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
+  import { P, H1, H4 } from '@renderer/lib/ui/components/Fonts'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Tooltip from '@renderer/lib/ui/components/Tooltip.svelte'
   import Sheet from '@renderer/lib/ui/components/Sheet.svelte'
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
-  import H1 from '@renderer/lib/ui/components/H1.svelte'
   import Form from '@renderer/lib/ui/components/Form.svelte'
 
   Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
@@ -61,7 +59,7 @@
         <Tooltip disableHoverableContent>
           {#snippet trigger()}
             <Button mode="neutral" onclick={() => (addVersionDialogOpen = true)}>
-              <Icon icon="ph:plus-bold" class="text-2xl text-current/50" />
+              <PHPlusBoldIcon class="text-2xl text-current/50" />
             </Button>
           {/snippet}
 
@@ -83,7 +81,7 @@
                 <FlexContainer gap="sm">
                   <Tooltip disableHoverableContent>
                     {#snippet trigger()}
-                      <Button mode="neutral" onclick={() => window.api.shell.openPath(vsVersion.path)}><Icon icon="ph:folder-open-bold" /></Button>
+                      <Button mode="neutral" onclick={() => window.api.shell.openPath(vsVersion.path)}><PHFolderOpenBoldIcon /></Button>
                     {/snippet}
 
                     Open folder on file explorer
@@ -99,7 +97,7 @@
                           Data.instance.vsVersions.delete(vsVersion)
                         }}
                       >
-                        <Icon icon="ph:trash-bold" />
+                        <PHTrashBoldIcon />
                       </Button>
                     {/snippet}
 
@@ -164,7 +162,7 @@
                 path = selected[0]
               }}
             >
-              <Icon icon="ph:magnifying-glass-bold" />
+              <PHMagnifyingGlassBoldIcon />
             </Button>
 
             <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly required />

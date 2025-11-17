@@ -24,9 +24,9 @@
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
+  import { P } from '@renderer/lib/ui/components/Fonts'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
+  import { PHCaretLeftBoldIcon, PHCaretRightBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     page = $bindable(),
@@ -54,7 +54,7 @@
           ]}
           {...prevButtonProps}
         >
-          <Icon icon="ph:caret-left-bold" />
+          <PHCaretLeftBoldIcon />
         </Pagination.PrevButton>
 
         {#each pages as page (page.key)}
@@ -87,7 +87,7 @@
           ]}
           {...nextButtonProps}
         >
-          <Icon icon="ph:caret-right-bold" />
+          <PHCaretRightBoldIcon />
         </Pagination.NextButton>
       </FlexContainer>
 

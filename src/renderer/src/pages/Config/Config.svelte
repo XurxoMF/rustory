@@ -4,7 +4,7 @@
   import { Config } from '@renderer/lib/classes/Config.svelte'
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHMagnifyingGlassBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Label from '@renderer/lib/ui/components/Label.svelte'
   import Info from '@renderer/lib/ui/components/Info.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
@@ -15,9 +15,7 @@
   import Theme from '@renderer/lib/ui/features/settings/Theme.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
-  import H1 from '@renderer/lib/ui/components/H1.svelte'
-  import H3 from '@renderer/lib/ui/components/H3.svelte'
+  import { P, H1, H3 } from '@renderer/lib/ui/components/Fonts'
 
   Breadcrumbs.instance.segments = [{ label: m.common__config(), href: '/config' }]
 </script>
@@ -98,7 +96,7 @@
                   Config.instance.setVSInstancesPath(folder[0])
                 }}
               >
-                <Icon icon="ph:magnifying-glass-bold" />
+                <PHMagnifyingGlassBoldIcon />
               </Button>
 
               <Input
@@ -130,7 +128,7 @@
                   Config.instance.setVSVersionsPath(folder[0])
                 }}
               >
-                <Icon icon="ph:magnifying-glass-bold" />
+                <PHMagnifyingGlassBoldIcon />
               </Button>
 
               <Input
@@ -162,7 +160,7 @@
                   Config.instance.setVSInstanceBackupsPath(folder[0])
                 }}
               >
-                <Icon icon="ph:magnifying-glass-bold" />
+                <PHMagnifyingGlassBoldIcon />
               </Button>
 
               <Input

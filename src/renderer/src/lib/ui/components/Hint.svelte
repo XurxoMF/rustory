@@ -1,14 +1,16 @@
 <script lang="ts" module>
   import type { Snippet } from 'svelte'
 
+  import { PHCheckCircleBoldIcon, PHInfoBoldIcon, PHProhibitedBoldIcon, PHWarningBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+
   export type HintModes = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
   export const HINT_ICON_CLASSES = {
-    neutral: 'ph:info-bold',
-    info: 'ph:info-bold',
-    success: 'ph:check-bold',
-    warning: 'ph:warning-bold',
-    danger: 'ph:prohibit-bold'
+    neutral: PHInfoBoldIcon,
+    info: PHInfoBoldIcon,
+    success: PHCheckCircleBoldIcon,
+    warning: PHWarningBoldIcon,
+    danger: PHProhibitedBoldIcon
   } as const
 
   export type HintProps = {
@@ -20,10 +22,8 @@
 </script>
 
 <script lang="ts">
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import H4 from '@renderer/lib/ui/components/H4.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
+  import { P, H4 } from '@renderer/lib/ui/components/Fonts'
 
   let { title, description, children, mode = 'info' }: HintProps = $props()
 </script>
@@ -31,7 +31,8 @@
 <FlexContainer {mode} direction="col" padding="base" gap="base">
   <FlexContainer direction="col" gap="xs">
     <FlexContainer gap="sm">
-      <Icon icon={HINT_ICON_CLASSES[mode]} class="text-2xl" />
+      {@const Icon = HINT_ICON_CLASSES[mode]}
+      <Icon class="text-2xl" />
       <H4>{title}</H4>
     </FlexContainer>
 

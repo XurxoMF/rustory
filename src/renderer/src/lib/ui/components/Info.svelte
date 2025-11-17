@@ -14,7 +14,7 @@
 <script lang="ts">
   import { Tooltip } from 'bits-ui'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHInfoBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let { open = $bindable(false), children, triggerProps, contentProps, ...restProps }: DescriptionProps = $props()
 </script>
@@ -31,7 +31,7 @@
       ]}
       {...triggerProps}
     >
-      <Icon icon="ph:info-bold" class="opacity-40" />
+      <PHInfoBoldIcon class="opacity-40" />
     </Tooltip.Trigger>
 
     <Tooltip.Portal to="#portal">

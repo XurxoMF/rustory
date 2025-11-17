@@ -79,7 +79,7 @@
 
   import { m } from '@renderer/paraglide/messages'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
+  import { PHCaretUpDownBoldIcon, PHCheckBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
     items,
@@ -134,7 +134,7 @@
       ]}
       {...triggerProps}
     >
-      <Icon icon="ph:caret-up-down-bold" />
+      <PHCaretUpDownBoldIcon />
     </Combobox.Trigger>
   </div>
 
@@ -171,7 +171,7 @@
               </span>
 
               {#if selected}
-                <Icon icon="ph:check-bold" />
+                <PHCheckBoldIcon />
               {/if}
             {/snippet}
           </Combobox.Item>

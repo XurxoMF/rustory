@@ -17,9 +17,10 @@
   import { Hotkeys } from '@renderer/lib/classes/Hotkeys.svelte'
   import { Tasks } from '@renderer/lib/classes/Tasks.svelte'
 
+  import { PHCheckCircleBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { SpinnersRingResizeIcon } from '@renderer/lib/ui/components/Icons/Spinners'
   import WindowBar from '@renderer/lib/ui/app/WindowBar.svelte'
   import MainNav from '@renderer/lib/ui/app/MainNav.svelte'
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
   import Command from '@renderer/lib/ui/app/Command.svelte'
@@ -88,7 +89,11 @@
             {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
             <div class="w-fit flex items-center gap-1 text-current/50 leading-tight font-medium">
-              <Icon class={['text-xl', isCompleted && 'text-green-700']} icon={isCompleted ? 'ph:check-circle-bold' : 'svg-spinners:6-dots-scale'} />
+              {#if isCompleted}
+                <PHCheckCircleBoldIcon class="text-xl text-green-700" />
+              {:else}
+                <SpinnersRingResizeIcon class="text-xl" />
+              {/if}
               {TASK.description}
             </div>
           {/each}

@@ -26,7 +26,6 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
     "@electron-toolkit/utils": "^4.0.0",
-    "@iconify/svelte": "^5.0.1",
     "@libsql/client": "^0.15.10",
     "@mateothegreat/svelte5-router": "^2.16.8",
     "archiver": "^7.0.1",

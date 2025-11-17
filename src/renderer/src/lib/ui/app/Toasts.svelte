@@ -1,4 +1,9 @@
 <script lang="ts" module>
+  import { type Component } from 'svelte'
+
+  import { type IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
+  import { PHCheckCircleBoldIcon, PHInfoBoldIcon, PHProhibitedBoldIcon, PHWarningBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+
   export const MODE_CLASSES: Record<Toast.Type, string[]> = {
     neutral: ['inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2', 'bg-zinc-800/50 inset-ring-zinc-800 ring-zinc-800'],
     info: ['inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2', 'text-blue-500 bg-blue-800/30 inset-ring-blue-800 ring-blue-800'],
@@ -7,23 +12,21 @@
     danger: ['inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2', 'text-red-500 bg-red-800/30 inset-ring-red-800 ring-red-800']
   } as const
 
-  export const TOAST_ICON_CLASSES: Record<Toast.Type, string> = {
-    neutral: 'ph:info-bold',
-    info: 'ph:info-bold',
-    success: 'ph:check-bold',
-    warning: 'ph:warning-bold',
-    danger: 'ph:prohibit-bold'
+  export const TOAST_ICON_CLASSES: Record<Toast.Type, Component<IconProps>> = {
+    neutral: PHInfoBoldIcon,
+    info: PHInfoBoldIcon,
+    success: PHCheckCircleBoldIcon,
+    warning: PHWarningBoldIcon,
+    danger: PHProhibitedBoldIcon
   } as const
 </script>
 
 <script lang="ts">
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
 
-  import Icon from '@renderer/lib/ui/components/Icon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import FlexContainer from '@renderer/lib/ui/layout/Flex/FlexContainer.svelte'
-  import H5 from '@renderer/lib/ui/components/H5.svelte'
-  import P from '@renderer/lib/ui/components/P.svelte'
+  import { P, H5 } from '@renderer/lib/ui/components/Fonts'
 </script>
 
 <div class="pointer-events-none absolute w-full top-0 right-0 z-500 p-4 flex flex-col items-end justify-start gap-2">
@@ -49,7 +52,8 @@
   <FlexContainer padding="base" gap="sm">
     <FlexContainer direction="col" gap="xs">
       <FlexContainer gap="sm">
-        <Icon icon={TOAST_ICON_CLASSES[toast.type]} class="text-2xl" />
+        {@const Icon = TOAST_ICON_CLASSES[toast.type]}
+        <Icon class="text-2xl" />
         <H5>{toast.title}</H5>
       </FlexContainer>
 
@@ -65,7 +69,7 @@
         Toasts.instance.removeToast(toast)
       }}
     >
-      <Icon icon="ph:x-bold" />
+      <PHXBoldIcon />
     </Button>
   </FlexContainer>
 {/snippet}
