@@ -64,6 +64,8 @@
   }
 
   function clearInstallVersion(): void {
+    isAddVSVersionDialogOpen = false
+
     version = undefined
     versionErrors = []
 
