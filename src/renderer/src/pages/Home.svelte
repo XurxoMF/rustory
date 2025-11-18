@@ -5,7 +5,6 @@
   import Select, { type SelectItem } from '@renderer/lib/ui/components/Select.svelte'
   import Input from '@renderer/lib/ui/components/Input.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import Alert from '@renderer/lib/ui/components/Alert.svelte'
   import Label from '@renderer/lib/ui/components/Label.svelte'
   import Info from '@renderer/lib/ui/components/Info.svelte'
   import { Toast, Toasts } from '@renderer/lib/classes/Toasts.svelte'
@@ -26,6 +25,7 @@
   import FormInfo from '@renderer/lib/ui/components/FormInfo.svelte'
   import { PHDotsThreeBoldIcon, PHGitForkBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
+  import { ask } from '@renderer/lib/ui/app/AlertManager.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -54,7 +54,6 @@
 
   let switchValue = $state(false)
 
-  let alertOpen = $state(false)
   let dialogOpen = $state(false)
   let sheetOpen = $state(false)
 
@@ -394,7 +393,22 @@
           </FlexContainer>
 
           <FlexContainer gap="sm">
-            <Button mode="neutral" width="flex-1" onclick={() => (alertOpen = true)}>Open Alert</Button>
+            <Button
+              mode="neutral"
+              width="flex-1"
+              onclick={async () => {
+                const ok = await ask('Are you sure?', 'Are you sure you want to do this?')
+
+                const toast = new Toast({
+                  title: 'You used an Alert!',
+                  type: Toast.Type.INFO,
+                  description: ok ? 'You clicked "OK"!' : 'You clicked "Cancel"!'
+                })
+                Toasts.instance.addToast(toast)
+              }}
+            >
+              Open Alert
+            </Button>
             <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>
             <Button mode="neutral" width="flex-1" onclick={() => (sheetOpen = true)}>Open Sheet</Button>
           </FlexContainer>
@@ -849,8 +863,6 @@
     </ColumnsContainer>
   </FlexContainer>
 </ScrollableContainer>
-
-<Alert bind:open={alertOpen} title="Title" description="This is a really cool alert! We can as you to accept or cancel things here!" />
 
 <Dialog
   bind:open={dialogOpen}

@@ -24,6 +24,7 @@
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import Toasts from '@renderer/lib/ui/app/Toasts.svelte'
   import Command from '@renderer/lib/ui/app/Command.svelte'
+  import AlertManager from '@renderer/lib/ui/app/AlertManager.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
@@ -140,6 +141,7 @@
 
       <Toasts />
       <Command />
+      <AlertManager />
     </div>
 
     <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->

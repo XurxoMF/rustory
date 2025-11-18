@@ -98,7 +98,7 @@
 
 <button
   class={[
-    'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none transition-all',
+    'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 font-medium rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     ...BUTTON_MODE_CLASSES[mode],
