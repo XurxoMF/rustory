@@ -23,7 +23,7 @@
   {...restProps}
 >
   <div
-    class={['w-full h-full flex-1 rounded-full transition-all', 'bg-green-800', 't-light:bg-green-300']}
+    class={['w-full h-full flex-1 rounded-full transition-all', 'bg-green-500', 't-light:bg-green-500']}
     style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}
   ></div>
 </Progress.Root>

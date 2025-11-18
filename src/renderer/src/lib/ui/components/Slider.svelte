@@ -20,31 +20,11 @@
   } as const
 
   export const SLIDER_THUMB_MODE_CLASSES: Record<SliderModes, string[]> = {
-    neutral: [
-      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-      't-light:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
-    ],
-    info: [
-      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-blue-800 inset-ring-blue-800 ring-blue-800',
-      't-light:bg-blue-300 t-light:inset-ring-blue-300 t-light:ring-blue-300'
-    ],
-    success: [
-      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-green-800 inset-ring-green-800 ring-green-800',
-      't-light:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
-    ],
-    warning: [
-      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-yellow-800 inset-ring-yellow-800 ring-yellow-800',
-      't-light:bg-yellow-300 t-light:inset-ring-yellow-300 t-light:ring-yellow-300'
-    ],
-    danger: [
-      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-red-800 inset-ring-red-800 ring-red-800',
-      't-light:bg-red-300 t-light:inset-ring-red-300 t-light:ring-red-300'
-    ]
+    neutral: ['focus-visible:ring-2', 'bg-zinc-800 ring-zinc-800', 't-light:bg-zinc-300 t-light:ring-zinc-300'],
+    info: ['focus-visible:ring-2', 'bg-blue-500 ring-blue-500', 't-light:bg-blue-500 t-light:ring-blue-500'],
+    success: ['focus-visible:ring-2', 'bg-green-500 ring-green-500', 't-light:bg-green-500 t-light:ring-green-500'],
+    warning: ['focus-visible:ring-2', 'bg-yellow-500 ring-yellow-500', 't-light:bg-yellow-500 t-light:ring-yellow-500'],
+    danger: ['focus-visible:ring-2', 'bg-red-500 ring-red-500', 't-light:bg-red-500 t-light:ring-red-500']
   } as const
 
   export const SLIDER_TICK_MODE_CLASSES: Record<SliderModes, string[]> = {
@@ -116,7 +96,7 @@
     </span>
 
     {#each thumbItems as { index } (index)}
-      <Slider.Thumb {index} class={['w-5 h-5 z-1 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
+      <Slider.Thumb {index} class={['w-5 h-5 z-10 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
     {/each}
 
     {#each tickItems as { value, index } (index)}

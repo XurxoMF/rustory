@@ -25,6 +25,7 @@
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import FormInfo from '@renderer/lib/ui/components/FormInfo.svelte'
   import { PHDotsThreeBoldIcon, PHGitForkBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
 
   Breadcrumbs.instance.segments = []
 
@@ -397,6 +398,18 @@
             <Button mode="neutral" width="flex-1" onclick={() => (dialogOpen = true)}>Open Dialog</Button>
             <Button mode="neutral" width="flex-1" onclick={() => (sheetOpen = true)}>Open Sheet</Button>
           </FlexContainer>
+        </FlexContainer>
+      </ColumnItem>
+
+      <!-- Progress Bar -->
+      <ColumnItem>
+        <FlexContainer direction="col" gap="lg">
+          <FlexContainer direction="col" gap="xs">
+            <H3>Progress Bar</H3>
+            <P mode="secondary">Progress Bar is used to show the progress of a task.</P>
+          </FlexContainer>
+
+          <ProgressBar value={50} min={0} max={100} />
         </FlexContainer>
       </ColumnItem>
 
