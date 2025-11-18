@@ -68,7 +68,7 @@
 <Switch.Root
   bind:checked
   class={[
-    'group shrink-0 w-12 h-6 aspect-2/1 flex items-center p-1 rounded-full outline-none transition-all',
+    'group shrink-0 w-12 h-6 flex items-center p-1 rounded-full outline-none transition-all',
     'cursor-pointer data-disabled:cursor-not-allowed',
     'data-disabled:opacity-40',
     ...SWITCH_ROOT_MODE_CLASSES[mode]

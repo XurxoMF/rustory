@@ -75,7 +75,7 @@
     ...restProps
   }: SelectProps = $props()
 
-  const selected = $derived(items?.length ? items.filter((item) => value?.includes(item.value)) : undefined)
+  const selected = $derived(items?.length ? items.filter((item) => value === item.value) : undefined)
 </script>
 
 <Select.Root bind:value={value as never} {allowDeselect} {...restProps}>
