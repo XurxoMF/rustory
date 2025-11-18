@@ -523,8 +523,6 @@
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
               disabled
-              withTickLabels
-              withTicks
             />
           </FlexContainer>
 
@@ -542,8 +540,8 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
-              withTickLabels
               withTicks
+              withTickLabels
             />
           </FlexContainer>
 
@@ -553,17 +551,7 @@
               <Info>Slider with info style!</Info>
             </FlexContainer>
 
-            <Slider
-              id="info-slider"
-              type="multiple"
-              mode="info"
-              min={SLIDER_MIN}
-              max={SLIDER_MAX}
-              step={SLIDER_INTERVAL}
-              bind:value={sliderValue}
-              withTickLabels
-              withTicks
-            />
+            <Slider id="info-slider" type="multiple" mode="info" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
           </FlexContainer>
 
           <FlexContainer direction="col" gap="sm">
@@ -572,17 +560,7 @@
               <Info>Slider with success style!</Info>
             </FlexContainer>
 
-            <Slider
-              id="success-slider"
-              type="multiple"
-              mode="success"
-              min={SLIDER_MIN}
-              max={SLIDER_MAX}
-              step={SLIDER_INTERVAL}
-              bind:value={sliderValue}
-              withTickLabels
-              withTicks
-            />
+            <Slider id="success-slider" type="multiple" mode="success" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
           </FlexContainer>
 
           <FlexContainer direction="col" gap="sm">
@@ -591,17 +569,7 @@
               <Info>Slider with warning style!</Info>
             </FlexContainer>
 
-            <Slider
-              id="warning-slider"
-              type="multiple"
-              mode="warning"
-              min={SLIDER_MIN}
-              max={SLIDER_MAX}
-              step={SLIDER_INTERVAL}
-              bind:value={sliderValue}
-              withTickLabels
-              withTicks
-            />
+            <Slider id="warning-slider" type="multiple" mode="warning" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
           </FlexContainer>
 
           <FlexContainer direction="col" gap="sm">
@@ -610,17 +578,7 @@
               <Info>Slider with error style!</Info>
             </FlexContainer>
 
-            <Slider
-              id="error-slider"
-              type="multiple"
-              mode="danger"
-              min={SLIDER_MIN}
-              max={SLIDER_MAX}
-              step={SLIDER_INTERVAL}
-              bind:value={sliderValue}
-              withTickLabels
-              withTicks
-            />
+            <Slider id="error-slider" type="multiple" mode="danger" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
           </FlexContainer>
         </FlexContainer>
       </ColumnItem>
@@ -1387,6 +1345,8 @@
       }
     ]}
   >
-    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration', 'border-zinc-800']}>Right click here!</div>
+    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration-200 duration', 'border-zinc-800']}>
+      Right click here!
+    </div>
   </ContextMenu>
 {/snippet}

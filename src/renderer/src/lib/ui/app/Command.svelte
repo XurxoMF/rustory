@@ -75,7 +75,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-200',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
       ]}
@@ -83,7 +83,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-all @container',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-all duration-200 @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
@@ -107,7 +107,7 @@
         <Command.Root class="w-full">
           <Command.Input
             class={[
-              'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
+              'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all duration-200',
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
               'placeholder:text-current/30',
@@ -154,7 +154,7 @@
       closeCommand()
     }}
     class={[
-      'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none transition-all',
+      'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none transition-all duration-200',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',

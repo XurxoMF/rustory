@@ -91,21 +91,25 @@
   {...restProps as any}
 >
   {#snippet children({ thumbItems, tickItems })}
-    <span class={['relative w-full h-2 rounded-full transition-all', ...SLIDER_SPAN_MODE_CLASSES[mode]]}>
-      <Slider.Range class={['absolute h-full rounded-full transition-all', ...SLIDER_RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
+    <span class={['relative w-full h-2 rounded-full transition-all duration-200', ...SLIDER_SPAN_MODE_CLASSES[mode]]}>
+      <Slider.Range class={['absolute h-full rounded-full transition-all duration-200', ...SLIDER_RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
     </span>
 
     {#each thumbItems as { index } (index)}
-      <Slider.Thumb {index} class={['w-5 h-5 z-10 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
+      <Slider.Thumb
+        {index}
+        class={['w-5 h-5 z-10 rounded-full outline-none transition-all duration-200', ...SLIDER_THUMB_MODE_CLASSES[mode]]}
+        {...thumbProps}
+      />
     {/each}
 
     {#each tickItems as { value, index } (index)}
       {#if withTicks}
-        <Slider.Tick {index} class={['h-2 w-px transition-all', ...SLIDER_TICK_MODE_CLASSES[mode]]} {...tickProps} />
+        <Slider.Tick {index} class={['h-2 w-px transition-all duration-200', ...SLIDER_TICK_MODE_CLASSES[mode]]} {...tickProps} />
       {/if}
 
       {#if withTickLabels}
-        <Slider.TickLabel {index} class={['text-xs font-medium transition-all', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
+        <Slider.TickLabel {index} class={['text-xs font-medium transition-all duration-200', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
           {value}
         </Slider.TickLabel>
       {/if}

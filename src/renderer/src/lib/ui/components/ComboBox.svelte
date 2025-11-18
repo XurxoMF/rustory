@@ -129,7 +129,7 @@
     <Combobox.Input
       clearOnDeselect
       class={[
-        'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
+        'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all duration-200',
         'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
         'data-disabled:opacity-40',
         'placeholder:text-current/30',
@@ -140,7 +140,7 @@
 
     <Combobox.Trigger
       class={[
-        'absolute right-0 shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all',
+        'absolute right-0 shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all duration-200',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         ...COMBOBOX_TRIGGER_MODE_CLASSES[mode]
@@ -155,7 +155,7 @@
     <Combobox.Content
       sideOffset={4}
       class={[
-        'max-h-[calc(var(--bits-combobox-content-available-height)-0.5rem)] w-(--bits-combobox-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'max-h-[calc(var(--bits-combobox-content-available-height)-0.5rem)] w-(--bits-combobox-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -171,7 +171,7 @@
             {label}
             {disabled}
             class={[
-              'w-full flex items-center justify-between p-2 rounded-sm transition-all',
+              'w-full flex items-center justify-between p-2 rounded-sm transition-all duration-200',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
               'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',

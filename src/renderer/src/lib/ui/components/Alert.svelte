@@ -46,7 +46,7 @@
   <AlertDialog.Portal to="#portal">
     <AlertDialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-200',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
@@ -64,7 +64,7 @@
         oncancel?.()
       }}
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/4 h-fit max-h-screen rounded-md shadow-xl outline-none transition-all @container',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/4 h-fit max-h-screen rounded-md shadow-xl outline-none transition-all duration-200 @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -89,7 +89,7 @@
               oncancel?.()
             }}
             class={[
-              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none transition-all',
+              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none transition-all duration-200',
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',
@@ -106,7 +106,7 @@
               onaccept?.()
             }}
             class={[
-              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none transition-all',
+              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none transition-all duration-200',
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',

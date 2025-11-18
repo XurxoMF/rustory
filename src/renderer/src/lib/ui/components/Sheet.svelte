@@ -64,7 +64,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-200',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'

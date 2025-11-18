@@ -199,7 +199,7 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all',
+      'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all duration-200',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
       ...DROPDOWN_MENU_TRIGGER_MODE_CLASSES[mode],
@@ -214,7 +214,7 @@
   <DropdownMenu.Portal to="#portal">
     <DropdownMenu.Content
       class={[
-        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -225,7 +225,7 @@
     >
       {@render DRenderGroups(groups)}
 
-      <DropdownMenu.Arrow class={['transition-all', 'text-zinc-800', 't-light:text-zinc-300']} {...arrowProps} />
+      <DropdownMenu.Arrow class={['transition-all duration-200', 'text-zinc-800', 't-light:text-zinc-300']} {...arrowProps} />
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 </DropdownMenu.Root>
@@ -246,7 +246,7 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
+      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -269,7 +269,7 @@
       {checked}
       onCheckedChange={onchange}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all duration-200',
         'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -311,7 +311,7 @@
       {value}
       {disabled}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all duration-200',
         'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -329,7 +329,7 @@
   <DropdownMenu.Sub {...submenuProps}>
     <DropdownMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -347,7 +347,7 @@
     <DropdownMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -378,7 +378,7 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -396,7 +396,7 @@
     <DropdownMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',

@@ -79,7 +79,7 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all',
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all duration-200',
       'text-zinc-200 bg-zinc-900 border-zinc-800',
       't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300'
     ]}
@@ -116,7 +116,7 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen bg-image overflow-hidden bg-cover bg-center transition-all',
+      'relative w-screen h-screen bg-image overflow-hidden bg-cover bg-center transition-all duration-200',
       'text-zinc-200 bg-zinc-900 border-zinc-800',
       't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
@@ -124,7 +124,7 @@
   >
     <div
       class={[
-        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all @container @container/app',
+        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all duration-200 @container @container/app',
         'bg-zinc-900/95',
         't-light:bg-zinc-100/95'
       ]}

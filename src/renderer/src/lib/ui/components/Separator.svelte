@@ -12,7 +12,7 @@
 
 <Separator.Root
   class={[
-    'shrink-0 transition-all',
+    'shrink-0 transition-all duration-200',
     'data-[orientation=horizontal]:h-px data-[orientation=horizontal]:w-full',
     'data-[orientation=vertical]:h-full data-[orientation=vertical]:w-px',
     'bg-zinc-800',
