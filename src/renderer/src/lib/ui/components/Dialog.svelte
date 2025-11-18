@@ -22,6 +22,7 @@
   export type DialogProps = Dialog.RootProps & {
     title: string
     description: string
+    onclose?: (() => void | Promise<void>) | undefined
     width?: DialogWidthClasses | undefined
     overlayProps?: DialogOverlayProps | undefined
     contentProps?: DialogContentProps | undefined
@@ -43,6 +44,11 @@
     open = $bindable(true),
     title,
     description,
+    /**
+     * Executed when the user closes the dialog WITH THE CLOSE BUTTON ONLY!
+     * Use contentProps.onEscapeKeydown and contentProps.onInteractOutside to handle closing with those actions.
+     */
+    onclose,
     width = 'base',
     children,
     overlayProps,
@@ -82,7 +88,13 @@
           <FlexContainer gap="base" alignX="between">
             <Dialog.Title class="text-2xl font-bold" {...titleProps}>{title}</Dialog.Title>
 
-            <Button mode="transparent" onclick={() => (open = false)}>
+            <Button
+              mode="transparent"
+              onclick={() => {
+                open = false
+                onclose?.()
+              }}
+            >
               <PHXBoldIcon class="text-current/50" />
             </Button>
           </FlexContainer>

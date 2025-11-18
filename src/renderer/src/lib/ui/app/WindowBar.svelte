@@ -56,11 +56,11 @@
         </Button>
 
         {#each Breadcrumbs.instance.segments as segment, i (i)}
-          <span class="animate-in slide-in-from-left-20">
+          <span class="flex items-center justify-center animate-in slide-in-from-left-20">
             <PHCaretRightBoldIcon />
           </span>
 
-          <span class="animate-in slide-in-from-left-20">
+          <span class="flex items-center justify-center animate-in slide-in-from-left-20">
             <Button mode="transparent" onclick={() => goto(segment.href)}>
               <span>{segment.label}</span>
             </Button>

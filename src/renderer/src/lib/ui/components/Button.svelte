@@ -93,10 +93,21 @@
 </script>
 
 <script lang="ts">
-  let { mode = 'neutral', height = 'fit', width = 'fit', padding = 'sm', rounded = 'sm', align = 'center', children, ...restProps }: ButtonProps = $props()
+  let {
+    type = 'button',
+    mode = 'neutral',
+    height = 'fit',
+    width = 'fit',
+    padding = 'sm',
+    rounded = 'sm',
+    align = 'center',
+    children,
+    ...restProps
+  }: ButtonProps = $props()
 </script>
 
 <button
+  {type}
   class={[
     'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 font-medium rounded-sm outline-none transition-all',
     'cursor-pointer disabled:cursor-not-allowed',

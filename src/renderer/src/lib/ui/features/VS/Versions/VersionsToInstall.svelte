@@ -29,6 +29,8 @@
   function handleValueChange(e: string) {
     value = e
     version = versions.find((v) => v.version === value)
+    if (!version) throw new Error('The selected version does not exist!')
+    onValueChange?.(version)
   }
 
   let mergedInputProps = $derived(

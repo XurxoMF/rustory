@@ -131,7 +131,7 @@
     >
       <WindowBar />
 
-      <div class="w-full h-full relative flex flex-row overflow-hidden">
+      <div class="w-full h-full flex flex-row overflow-hidden">
         <MainNav />
 
         <main class="w-full h-full overflow-hidden">
@@ -142,17 +142,15 @@
       <Toasts />
       <Command />
       <AlertManager />
-    </div>
 
-    <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->
-    <div
-      id="portal"
-      class={[
-        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
-        'text-zinc-200',
-        't-light:text-zinc-800',
-        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
-      ]}
-    ></div>
+      <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->
+      <div
+        id="portal"
+        class={[
+          'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
+          MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
+        ]}
+      ></div>
+    </div>
   </div>
 {/if}

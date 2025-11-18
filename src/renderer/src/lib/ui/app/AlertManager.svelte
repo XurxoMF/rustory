@@ -34,12 +34,6 @@
   }
 </script>
 
-<script lang="ts">
-  $effect(() => {
-    $inspect(queue)
-  })
-</script>
-
 {#if queue.length > 0}
   <Alert title={queue[0].title} description={queue[0].description} {onaccept} {oncancel} />
 {/if}
