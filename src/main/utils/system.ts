@@ -93,7 +93,7 @@ export async function getNETSDKsInfo(): Promise<string[]> {
       .split('\n')
       .filter((sdk) => sdk.length > 0)
   } catch (err) {
-    logger.error('Error fetching .NET SDKs!')
+    logger.warn('Error fetching .NET SDKs!')
     logger.debug(`Error fetching .NET SDKs:\n${JSON.stringify(err)}`)
     return []
   }
@@ -112,7 +112,7 @@ export async function getNETRuntimesInfo(): Promise<string[]> {
       .filter((runtime) => runtime.length > 0)
       .map((runtime) => runtime.replace('Microsoft.NETCore.App ', ''))
   } catch (err) {
-    logger.error('Error fetching .NET Runtimes!')
+    logger.warn('Error fetching .NET Runtimes!')
     logger.debug(`Error fetching .NET Runtimes:\n${JSON.stringify(err)}`)
     return []
   }
