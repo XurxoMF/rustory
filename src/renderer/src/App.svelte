@@ -30,7 +30,11 @@
   import VSVersionsPage from '@renderer/pages/VS/Versions/Versions.svelte'
 
   // Routes of the app
-  const routes: RouteConfig[] = [{ component: HomePage }, { path: '/vs/versions', component: VSVersionsPage }, { path: '/config', component: ConfigPage }]
+  const routes: RouteConfig[] = [
+    { path: '/', component: HomePage },
+    { path: '/vs/versions', component: VSVersionsPage },
+    { path: '/config', component: ConfigPage }
+  ]
 
   // Loader data manager.
   const loader = Loader.instance
@@ -73,7 +77,11 @@
 <!-- Show the loader while there are some taks running on the intializing process. -->
 {#if loader.isVisible}
   <div
-    class={['fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-colors', 'text-zinc-200 bg-zinc-900 border-zinc-800']}
+    class={[
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all',
+      'text-zinc-200 bg-zinc-900 border-zinc-800',
+      't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300'
+    ]}
     out:fade={{ duration: 200, delay: 200 }}
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
@@ -107,12 +115,19 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-cover transition-colors @container @container/app',
-      'bg-image-dark bg-zinc-900 border-zinc-800',
+      'relative w-screen h-screen overflow-hidden bg-image bg-cover bg-center transition-all @container @container/app',
+      'bg-zinc-900 border-zinc-800',
+      't-light:bg-zinc-100 t-light:border-zinc-300',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
-    <div class={['w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-colors', 'text-zinc-200 bg-zinc-900/95']}>
+    <div
+      class={[
+        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all',
+        'text-zinc-200 bg-zinc-900/95',
+        't-light:text-zinc-800 t-light:bg-zinc-100/95'
+      ]}
+    >
       <WindowBar />
 
       <div class="w-full h-full relative flex flex-row overflow-hidden">
@@ -133,6 +148,7 @@
       class={[
         'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
         'text-zinc-200',
+        't-light:text-zinc-800',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
       ]}
     ></div>

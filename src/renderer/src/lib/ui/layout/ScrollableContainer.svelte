@@ -17,14 +17,14 @@
   </ScrollArea.Viewport>
 
   {#if orientation === 'vertical' || orientation === 'both'}
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-colors">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-colors', 't-dark:bg-zinc-800']} />
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-all">
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-all', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}
 
   {#if orientation === 'horizontal' || orientation === 'both'}
     <ScrollArea.Scrollbar orientation="vertical" class="h-2 flex p-px transition-color">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-colors', 't-dark:bg-zinc-800']} />
+      <ScrollArea.Thumb class={['flex-1 rounded-full transition-all', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}
 

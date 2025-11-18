@@ -77,11 +77,27 @@
 
   export const FLEX_CONTAINER_MODE_CLASSES = {
     transparent: [],
-    neutral: ['inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800 ring-zinc-800'],
-    info: ['inset-ring-2', 'text-blue-500 bg-blue-800/30 inset-ring-blue-800 ring-blue-800'],
-    success: ['inset-ring-2', 'text-green-500 bg-green-800/30 inset-ring-green-800 ring-green-800'],
-    warning: ['inset-ring-2', 'text-yellow-500 bg-yellow-800/30 inset-ring-yellow-800 ring-yellow-800'],
-    danger: ['inset-ring-2', 'text-red-500 bg-red-800/30 inset-ring-red-800 ring-red-800']
+    neutral: ['inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800 ring-zinc-800', 't-light:bg-zinc-300/50 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'],
+    info: [
+      'inset-ring-2',
+      'text-blue-500 bg-blue-800/30 inset-ring-blue-800 ring-blue-800',
+      't-light:text-blue-500 t-light:bg-blue-300/30 t-light:inset-ring-blue-300 t-light:ring-blue-300'
+    ],
+    success: [
+      'inset-ring-2',
+      'text-green-500 bg-green-800/30 inset-ring-green-800 ring-green-800',
+      't-light:text-green-500 t-light:bg-green-300/30 t-light:inset-ring-green-300 t-light:ring-green-300'
+    ],
+    warning: [
+      'inset-ring-2',
+      'text-yellow-500 bg-yellow-800/30 inset-ring-yellow-800 ring-yellow-800',
+      't-light:text-yellow-500 t-light:bg-yellow-300/30 t-light:inset-ring-yellow-300 t-light:ring-yellow-300'
+    ],
+    danger: [
+      'inset-ring-2',
+      'text-red-500 bg-red-800/30 inset-ring-red-800 ring-red-800',
+      't-light:text-red-500 t-light:bg-red-300/30 t-light:inset-ring-red-300 t-light:ring-red-300'
+    ]
   } as const
 
   export type FlexContainerModeTypes = keyof typeof FLEX_CONTAINER_MODE_CLASSES

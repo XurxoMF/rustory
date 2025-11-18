@@ -19,8 +19,7 @@
   --color-zinc-750: #333338;
   --color-zinc-850: #202023;
 
-  --background-image-image-dark: url('./assets/background-dark.png');
-  --background-image-image-light: url('./assets/background-light.png');
+  --background-image-image: url('./assets/background.png');
 }
 
 @layer base {

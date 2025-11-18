@@ -75,7 +75,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-colors',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0'
       ]}
@@ -83,11 +83,12 @@
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-colors @container',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-all @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
         'inset-ring-2',
-        'bg-zinc-900/95 inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800',
+        't-ligh:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
     >
       <FlexContainer direction="col" height="full" padding="xl" gap="xl">
@@ -106,12 +107,13 @@
         <Command.Root class="w-full">
           <Command.Input
             class={[
-              'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+              'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
-              'placeholder:text-current/20',
+              'placeholder:text-current/30',
               'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
             ]}
             placeholder={`${m.common__search()}...`}
           />
@@ -152,10 +154,11 @@
       closeCommand()
     }}
     class={[
-      'w-full flex items-center justify-start gap-2 p-2 rounded-sm leading-tight font-medium outline-none transition-colors',
+      'w-full flex items-center justify-start gap-2 p-2 rounded-sm leading-tight font-medium outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800'
+      'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',
+      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300'
     ]}
   >
     <Icon class="shrink-0 flex items-center justify-center text-lg" />
@@ -168,7 +171,7 @@
     {@render CGroup(group)}
 
     {#if i < groups.length - 1}
-      <Command.Separator class={['w-full h-px', 'bg-zinc-800']} />
+      <Command.Separator class={['w-full h-px', 'bg-zinc-800', 't-light:bg-zinc-300']} />
     {/if}
   {/each}
 {/snippet}

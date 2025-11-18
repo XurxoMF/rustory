@@ -58,7 +58,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-colors',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
@@ -71,8 +71,9 @@
         'absolute top-0 right-0 z-100 h-full shadow-xl outline-none @container',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-right-10',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
-        width !== 'full' && 'border-l-2',
         'bg-zinc-900/95 border-zinc-800',
+        't-light:bg-zinc-100/95 t-light:border-zinc-300',
+        width !== 'full' && 'border-l-2',
         ...SHEET_WIDTH_CLASSES[width],
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-r-md'
       ]}

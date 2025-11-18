@@ -46,11 +46,12 @@
       <FlexContainer gap="sm">
         <Pagination.PrevButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+            't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
           ]}
           {...prevButtonProps}
         >
@@ -64,11 +65,12 @@
             <Pagination.Page
               {page}
               class={[
-                'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
+                'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
                 'focus-visible:inset-ring-1 focus-visible:ring-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
-                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+                't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
               ]}
               {...pageProps}
             >
@@ -79,11 +81,12 @@
 
         <Pagination.NextButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-colors',
+            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+            't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
           ]}
           {...nextButtonProps}
         >

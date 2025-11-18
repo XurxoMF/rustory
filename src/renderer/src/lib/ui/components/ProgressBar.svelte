@@ -12,11 +12,18 @@
 
 <Progress.Root
   {value}
-  class={[['w-full h-2 rounded-full overflow-hidden shadow-xl transition-colors', 'inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800']]}
+  class={[
+    [
+      'w-full h-2 rounded-full overflow-hidden shadow-xl transition-all',
+      'inset-ring-2',
+      'bg-zinc-800/50 inset-ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:inset-ring-zinc-300'
+    ]
+  ]}
   {...restProps}
 >
   <div
-    class={['w-full h-full flex-1 rounded-full transition-all', 'bg-green-800']}
+    class={['w-full h-full flex-1 rounded-full transition-all', 'bg-green-800', 't-light:bg-green-300']}
     style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}
   ></div>
 </Progress.Root>

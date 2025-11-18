@@ -423,6 +423,8 @@
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
               disabled
+              withTickLabels
+              withTicks
             />
           </FlexContainer>
 
@@ -440,6 +442,7 @@
               max={SLIDER_MAX}
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
+              withTickLabels
               withTicks
             />
           </FlexContainer>
@@ -459,6 +462,7 @@
               step={SLIDER_INTERVAL}
               bind:value={sliderValue}
               withTickLabels
+              withTicks
             />
           </FlexContainer>
 
@@ -487,7 +491,17 @@
               <Info>Slider with warning style!</Info>
             </FlexContainer>
 
-            <Slider id="warning-slider" type="multiple" mode="warning" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
+            <Slider
+              id="warning-slider"
+              type="multiple"
+              mode="warning"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+              withTickLabels
+              withTicks
+            />
           </FlexContainer>
 
           <FlexContainer direction="col" gap="sm">
@@ -496,7 +510,17 @@
               <Info>Slider with error style!</Info>
             </FlexContainer>
 
-            <Slider id="error-slider" type="multiple" mode="danger" min={SLIDER_MIN} max={SLIDER_MAX} step={SLIDER_INTERVAL} bind:value={sliderValue} />
+            <Slider
+              id="error-slider"
+              type="multiple"
+              mode="danger"
+              min={SLIDER_MIN}
+              max={SLIDER_MAX}
+              step={SLIDER_INTERVAL}
+              bind:value={sliderValue}
+              withTickLabels
+              withTicks
+            />
           </FlexContainer>
         </FlexContainer>
       </ColumnItem>
@@ -1265,6 +1289,6 @@
       }
     ]}
   >
-    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-colors duration', 'border-zinc-800']}>Right click here!</div>
+    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration', 'border-zinc-800']}>Right click here!</div>
   </ContextMenu>
 {/snippet}

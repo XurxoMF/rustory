@@ -4,23 +4,28 @@
   export const SELECT_MODE_CLASSES = {
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-blue-500 not-data-disabled:hover:text-blue-200 bg-blue-800/30 not-data-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800'
+      'text-blue-500 not-data-disabled:hover:text-blue-200 bg-blue-800/30 not-data-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800',
+      't-light:text-blue-500 t-light:not-data-disabled:hover:text-blue-800 t-light:bg-blue-300/30 t-light:not-data-disabled:hover:bg-blue-300 t-light:inset-ring-blue-300 t-light:ring-blue-300'
     ],
     success: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-green-500 not-data-disabled:hover:text-green-200 bg-green-800/30 not-data-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800'
+      'text-green-500 not-data-disabled:hover:text-green-200 bg-green-800/30 not-data-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800',
+      't-light:text-green-500 t-light:not-data-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-data-disabled:hover:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
     ],
     warning: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-yellow-500 not-data-disabled:hover:text-yellow-200 bg-yellow-800/30 not-data-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800'
+      'text-yellow-500 not-data-disabled:hover:text-yellow-200 bg-yellow-800/30 not-data-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800',
+      't-light:text-yellow-500 t-light:not-data-disabled:hover:text-yellow-800 t-light:bg-yellow-300/30 t-light:not-data-disabled:hover:bg-yellow-300 t-light:inset-ring-yellow-300 t-light:ring-yellow-300'
     ],
     danger: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-red-500 not-data-disabled:hover:text-red-200 bg-red-800/30 not-data-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800'
+      'text-red-500 not-data-disabled:hover:text-red-200 bg-red-800/30 not-data-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800',
+      't-light:text-red-500 t-light:not-data-disabled:hover:text-red-800 t-light:bg-red-300/30 t-light:not-data-disabled:hover:bg-red-300 t-light:inset-ring-red-300 t-light:ring-red-300'
     ]
   } as const
 
@@ -76,7 +81,7 @@
 <Select.Root bind:value={value as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
-      'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-colors',
+      'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       ...SELECT_MODE_CLASSES[mode]
@@ -86,7 +91,7 @@
     {#if selected && selected.length > 0}
       <span class="leading-tight">{selected.map((s) => s.label).join(', ')}</span>
     {:else}
-      <span class="text-current/20 leading-tight">{placeholder}</span>
+      <span class="text-current/30 leading-tight">{placeholder}</span>
     {/if}
     <PHCaretUpDownBoldIcon />
   </Select.Trigger>
@@ -95,11 +100,12 @@
     <Select.Content
       sideOffset={4}
       class={[
-        'max-h-[calc(var(--bits-select-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-colors @container',
+        'max-h-[calc(var(--bits-select-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-        'inset-ring-2',
-        'bg-zinc-900/95 inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800',
+        't-light:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
       {...contentProps}
     >
@@ -110,10 +116,11 @@
             {label}
             {disabled}
             class={[
-              'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-colors',
+              'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-all',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
-              'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
+              'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+              't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
             ]}
           >
             {#snippet children({ selected })}

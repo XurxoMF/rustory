@@ -14,17 +14,17 @@
 </script>
 
 {#each info as inf, i (i)}
-  <p class={['flex items-center gap-1 font-medium leading-tight text-blue-500']}><PHInfoBoldIcon />{inf}</p>
+  <p class={['flex items-center gap-1 font-medium leading-tight', 'text-blue-500', 't-light:text-blue-500']}><PHInfoBoldIcon />{inf}</p>
 {/each}
 
 {#each success as suc, i (i)}
-  <p class={['flex items-center gap-1 font-medium leading-tight text-green-500']}><PHCheckBoldIcon />{suc}</p>
+  <p class={['flex items-center gap-1 font-medium leading-tight', 'text-green-500', 't-light:text-green-500']}><PHCheckBoldIcon />{suc}</p>
 {/each}
 
 {#each warning as war, i (i)}
-  <p class={['flex items-center gap-1 font-medium leading-tight text-yellow-500']}><PHWarningBoldIcon />{war}</p>
+  <p class={['flex items-center gap-1 font-medium leading-tight', 'text-yellow-500', 't-light:text-yellow-500']}><PHWarningBoldIcon />{war}</p>
 {/each}
 
 {#each error as err, i (i)}
-  <p class={['flex items-center gap-1 font-medium leading-tight text-red-500']}><PHProhibitedBoldIcon />{err}</p>
+  <p class={['flex items-center gap-1 font-medium leading-tight', 'text-red-500', 't-light:text-red-500']}><PHProhibitedBoldIcon />{err}</p>
 {/each}

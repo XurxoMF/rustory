@@ -110,10 +110,15 @@
   export type DropdownMenuGroupTypes = DropdownMenuGroup | DropdownMenuRadioGroup
 
   export const DROPDOWN_MENU_TRIGGER_MODE_CLASSES = {
-    transparent: ['focus-visible:inset-ring-1 focus-visible:ring-2', 'not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'],
+    transparent: [
+      'focus-visible:inset-ring-1 focus-visible:ring-2',
+      'not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+    ],
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
@@ -194,7 +199,7 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-colors',
+      'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
       ...DROPDOWN_MENU_TRIGGER_MODE_CLASSES[mode],
@@ -209,17 +214,18 @@
   <DropdownMenu.Portal to="#portal">
     <DropdownMenu.Content
       class={[
-        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-colors @container',
+        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-        'inset-ring-2',
-        'bg-zinc-900/95 inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800',
+        't-light:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
       {...contentProps}
     >
       {@render DRenderGroups(groups)}
 
-      <DropdownMenu.Arrow class={['transition-colors', 'text-zinc-800']} {...arrowProps} />
+      <DropdownMenu.Arrow class={['transition-all', 'text-zinc-800', 't-light:text-zinc-300']} {...arrowProps} />
     </DropdownMenu.Content>
   </DropdownMenu.Portal>
 </DropdownMenu.Root>
@@ -240,10 +246,11 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
+      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
+      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
     ]}
     {...itemProps}
   >
@@ -262,11 +269,12 @@
       {checked}
       onCheckedChange={onchange}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-colors',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all',
+        'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 inset-ring-zinc-300 ring-zinc-300'
       ]}
       {...checkboxItemProps}
     >
@@ -303,11 +311,12 @@
       {value}
       {disabled}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-colors',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all',
+        'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 inset-ring-zinc-300 ring-zinc-300 data-[state=checked]:inset-ring-zinc-800 data-[state=checked]:ring-zinc-800'
       ]}
       {...radioItemProps}
     />
@@ -320,10 +329,11 @@
   <DropdownMenu.Sub {...submenuProps}>
     <DropdownMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
       ]}
       {...submenuTriggerProps}
     >
@@ -337,11 +347,12 @@
     <DropdownMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-colors @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-        'inset-ring-2',
-        'bg-zinc-900/95 inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800',
+        't-light:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
       {...submenuContentProps}
     >
@@ -367,10 +378,11 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-colors',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
       ]}
       {...itemSubmenuTriggerProps}
     >
@@ -384,11 +396,12 @@
     <DropdownMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-colors @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all @container',
+        'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-        'inset-ring-2',
-        'bg-zinc-900/95 inset-ring-zinc-800'
+        'bg-zinc-900/95 inset-ring-zinc-800',
+        't-light:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
       {...itemSubmenuContentProps}
     >

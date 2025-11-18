@@ -26,7 +26,13 @@
 </script>
 
 {#if !MainWindow.instance.fullscreened}
-  <div class={['app-drag shrink-0 w-full flex items-center justify-between gap-2 border-b transition-colors', 'text-current/50 border-b-zinc-800']}>
+  <div
+    class={[
+      'app-drag shrink-0 w-full flex items-center justify-between gap-2 text-current/50 border-b transition-all',
+      'border-b-zinc-800',
+      't-light:border-b-zinc-300'
+    ]}
+  >
     <div class="flex-1 h-full flex items-center justify-start">
       <div class="app-no-drag flex items-center justify-center p-1">
         <Button mode="transparent" onclick={() => history.back()} title={m.common__previous()}>
