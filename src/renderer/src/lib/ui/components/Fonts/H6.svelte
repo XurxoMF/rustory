@@ -36,6 +36,6 @@
   let { mode = 'primary', align = 'start', overflow = 'base', children, ...restProps }: H6Props = $props()
 </script>
 
-<h6 class={['text-base font-bold leading-tight', ...H6_OVERFLOW_CLASSES[overflow], ...H6_MODE_CLASSES[mode], ...H6_ALIGN_CLASSES[align]]} {...restProps}>
+<h6 class={['text-base font-bold', ...H6_OVERFLOW_CLASSES[overflow], ...H6_MODE_CLASSES[mode], ...H6_ALIGN_CLASSES[align]]} {...restProps}>
   {@render children?.()}
 </h6>

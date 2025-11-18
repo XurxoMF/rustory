@@ -81,7 +81,7 @@
 <Select.Root bind:value={value as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
-      'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
+      'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       ...SELECT_MODE_CLASSES[mode]
@@ -89,9 +89,9 @@
     {...triggerProps}
   >
     {#if selected && selected.length > 0}
-      <span class="leading-tight">{selected.map((s) => s.label).join(', ')}</span>
+      <span>{selected.map((s) => s.label).join(', ')}</span>
     {:else}
-      <span class="text-current/30 leading-tight">{placeholder}</span>
+      <span class="text-current/30">{placeholder}</span>
     {/if}
     <PHCaretUpDownBoldIcon />
   </Select.Trigger>
@@ -125,8 +125,8 @@
           >
             {#snippet children({ selected })}
               <span class="w-full flex items-center gap-2">
-                <span class="leading-tight">{label}</span>
-                <span class="text-current/50 text-sm leading-tight">{comment}</span>
+                <span>{label}</span>
+                <span class="text-current/50 text-sm">{comment}</span>
               </span>
 
               {#if selected}

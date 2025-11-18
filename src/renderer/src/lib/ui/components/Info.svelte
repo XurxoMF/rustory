@@ -23,7 +23,7 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'shrink-0 flex items-center justify-center rounded-full outline-none leading-tight transition-all',
+        'shrink-0 flex items-center justify-center rounded-full outline-none transition-all',
         'focus-visible:inset-ring-1 focus-visible:ring-2',
         'cursor-help data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
@@ -39,7 +39,7 @@
       <Tooltip.Content
         sideOffset={8}
         class={[
-          'p-2 z-600 rounded-sm backdrop-blur-xs shadow-xl leading-tight transition-all',
+          'p-2 z-600 rounded-sm backdrop-blur-xs shadow-xl transition-all',
           'inset-ring-2',
           'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',

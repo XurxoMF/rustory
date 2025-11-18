@@ -37,6 +37,6 @@
   let { mode = 'primary', fat = false, align = 'start', overflow = 'base', children, ...restProps }: PProps = $props()
 </script>
 
-<p class={['leading-tight', fat && 'font-medium', ...P_OVERFLOW_CLASSES[overflow], ...P_MODE_CLASSES[mode], ...P_ALIGN_CLASSES[align]]} {...restProps}>
+<p class={[fat && 'font-medium', ...P_OVERFLOW_CLASSES[overflow], ...P_MODE_CLASSES[mode], ...P_ALIGN_CLASSES[align]]} {...restProps}>
   {@render children?.()}
 </p>

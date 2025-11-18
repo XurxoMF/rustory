@@ -199,7 +199,7 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
+      'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
       ...DROPDOWN_MENU_TRIGGER_MODE_CLASSES[mode],
@@ -257,7 +257,7 @@
     {#if Icon}
       <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
     {/if}
-    <span class="leading-tight">{label}</span>
+    <span>{label}</span>
   </DropdownMenu.Item>
 {/snippet}
 
@@ -289,7 +289,7 @@
       {/snippet}
     </DropdownMenu.CheckboxItem>
 
-    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
+    <span class={[disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -321,7 +321,7 @@
       {...radioItemProps}
     />
 
-    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
+    <span class={[disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -340,7 +340,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span class="leading-tight">{label}</span>
+      <span>{label}</span>
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 
@@ -389,7 +389,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span class="leading-tight">{label}</span>
+      <span>{label}</span>
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </DropdownMenu.SubTrigger>
 

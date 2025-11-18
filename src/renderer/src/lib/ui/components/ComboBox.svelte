@@ -129,7 +129,7 @@
     <Combobox.Input
       clearOnDeselect
       class={[
-        'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
+        'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
         'data-disabled:opacity-40',
         'placeholder:text-current/30',
@@ -140,7 +140,7 @@
 
     <Combobox.Trigger
       class={[
-        'absolute right-0 shrink-0 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all',
+        'absolute right-0 shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none transition-all',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         ...COMBOBOX_TRIGGER_MODE_CLASSES[mode]
@@ -181,8 +181,8 @@
           >
             {#snippet children({ selected })}
               <span class="w-full flex items-end gap-2">
-                <span class="leading-tight">{label}</span>
-                <span class="text-current/50 leading-tight text-sm">{comment}</span>
+                <span>{label}</span>
+                <span class="text-current/50 text-sm">{comment}</span>
               </span>
 
               {#if selected}

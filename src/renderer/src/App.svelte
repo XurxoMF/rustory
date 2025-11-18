@@ -96,7 +96,7 @@
           {#each Loader.TASKS as TASK (TASK.id)}
             {@const isCompleted = loader.completedTasks.includes(TASK.id)}
 
-            <div class="w-fit flex items-center gap-1 text-current/50 leading-tight font-medium">
+            <div class="w-fit flex items-center gap-1 text-current/50 font-medium">
               {#if isCompleted}
                 <PHCheckCircleBoldIcon class="text-xl text-green-700" />
               {:else}

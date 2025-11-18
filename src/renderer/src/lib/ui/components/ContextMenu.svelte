@@ -201,7 +201,7 @@
     {#if Icon}
       <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
     {/if}
-    <span class="leading-tight">{label}</span>
+    <span>{label}</span>
   </ContextMenu.Item>
 {/snippet}
 
@@ -233,7 +233,7 @@
       {/snippet}
     </ContextMenu.CheckboxItem>
 
-    <span class={['leading-tight', disabled && 'opacity-40']}>{label}</span>
+    <span class={[disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -265,7 +265,7 @@
       {...radioItemProps}
     />
 
-    <span class={['leading-tight font-medium', disabled && 'opacity-40']}>{label}</span>
+    <span class={['font-medium', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -284,7 +284,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span class="leading-tight">{label}</span>
+      <span>{label}</span>
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
@@ -333,7 +333,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span class="leading-tight">{label}</span>
+      <span>{label}</span>
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 

@@ -107,7 +107,7 @@
         <Command.Root class="w-full">
           <Command.Input
             class={[
-              'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none transition-all',
+              'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all',
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
               'placeholder:text-current/30',
@@ -135,7 +135,7 @@
 
 {#snippet CGroup({ label, items }: CommandGroup)}
   <Command.Group class={['flex flex-col my-2']}>
-    <Command.GroupHeading class={['text-current/50 leading-tight font-medium m-2']}>{label}</Command.GroupHeading>
+    <Command.GroupHeading class={['text-current/50 font-medium m-2']}>{label}</Command.GroupHeading>
 
     <Command.GroupItems>
       {#each items as item (item.value)}
@@ -154,7 +154,7 @@
       closeCommand()
     }}
     class={[
-      'w-full flex items-center justify-start gap-2 p-2 rounded-sm leading-tight font-medium outline-none transition-all',
+      'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none transition-all',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',

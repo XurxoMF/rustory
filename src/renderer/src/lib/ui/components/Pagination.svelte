@@ -46,7 +46,7 @@
       <FlexContainer gap="sm">
         <Pagination.PrevButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
+            'shrink-0 min-w-10 min-h-10 flex items-center justify-center p-2 font-medium rounded-sm outline-none transition-all',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
@@ -60,12 +60,12 @@
 
         {#each pages as page (page.key)}
           {#if page.type === 'ellipsis'}
-            <div class={['h-9 w-9 flex items-center justify-center shrink-0 p-1 rounded-md']} {...ellipsisProps}>...</div>
+            <div class={['h-10 w-10 flex items-center justify-center shrink-0 p-1 rounded-md']} {...ellipsisProps}>...</div>
           {:else}
             <Pagination.Page
               {page}
               class={[
-                'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
+                'shrink-0 min-w-10 min-h-10 flex items-center justify-center p-2 font-medium rounded-sm outline-none transition-all',
                 'focus-visible:inset-ring-1 focus-visible:ring-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
@@ -81,7 +81,7 @@
 
         <Pagination.NextButton
           class={[
-            'shrink-0 min-w-9 min-h-9 flex items-center justify-center p-2 leading-tight font-medium rounded-sm outline-none transition-all',
+            'shrink-0 min-w-10 min-h-10 flex items-center justify-center p-2 font-medium rounded-sm outline-none transition-all',
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',

@@ -105,7 +105,7 @@
       {/if}
 
       {#if withTickLabels}
-        <Slider.TickLabel {index} class={['text-xs leading-tight font-medium transition-all', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
+        <Slider.TickLabel {index} class={['text-xs font-medium transition-all', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
           {value}
         </Slider.TickLabel>
       {/if}

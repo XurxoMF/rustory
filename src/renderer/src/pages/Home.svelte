@@ -409,7 +409,80 @@
             <P mode="secondary">Progress Bar is used to show the progress of a task.</P>
           </FlexContainer>
 
-          <ProgressBar value={50} min={0} max={100} />
+          <FlexContainer direction="col" gap="sm">
+            <FlexContainer gap="sm">
+              <Label>Neutral ProgressBar</Label>
+              <Info>ProgressBar with neutral style!</Info>
+            </FlexContainer>
+
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm" alignX="between">
+                <P mode="secondary">Installing...</P>
+                <P mode="secondary">50%</P>
+              </FlexContainer>
+              <ProgressBar mode="neutral" value={50} min={0} max={100} />
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer direction="col" gap="sm">
+            <FlexContainer gap="sm">
+              <Label>Info ProgressBar</Label>
+              <Info>ProgressBar with info style!</Info>
+            </FlexContainer>
+
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm" alignX="between">
+                <P mode="secondary">Installing...</P>
+                <P mode="secondary">50%</P>
+              </FlexContainer>
+              <ProgressBar mode="info" value={50} min={0} max={100} />
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer direction="col" gap="sm">
+            <FlexContainer gap="sm">
+              <Label>Success ProgressBar</Label>
+              <Info>ProgressBar with success style!</Info>
+            </FlexContainer>
+
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm" alignX="between">
+                <P mode="secondary">Installing...</P>
+                <P mode="secondary">50%</P>
+              </FlexContainer>
+              <ProgressBar mode="success" value={50} min={0} max={100} />
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer direction="col" gap="sm">
+            <FlexContainer gap="sm">
+              <Label>Warning ProgressBar</Label>
+              <Info>ProgressBar with warning style!</Info>
+            </FlexContainer>
+
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm" alignX="between">
+                <P mode="secondary">Installing...</P>
+                <P mode="secondary">50%</P>
+              </FlexContainer>
+              <ProgressBar mode="warning" value={50} min={0} max={100} />
+            </FlexContainer>
+          </FlexContainer>
+
+          <FlexContainer direction="col" gap="sm">
+            <FlexContainer gap="sm">
+              <Label>Error ProgressBar</Label>
+              <Info>ProgressBar with error style!</Info>
+            </FlexContainer>
+
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm" alignX="between">
+                <P mode="secondary">Installing...</P>
+                <P mode="secondary">50%</P>
+              </FlexContainer>
+              <ProgressBar mode="danger" value={50} min={0} max={100} />
+            </FlexContainer>
+          </FlexContainer>
         </FlexContainer>
       </ColumnItem>
 

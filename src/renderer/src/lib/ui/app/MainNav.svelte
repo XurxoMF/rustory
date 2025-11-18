@@ -33,7 +33,7 @@
       active: { absolute: true, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
     }}
     class={[
-      'w-full h-9 flex items-center justify-start gap-2 p-2 text-current/50 font-medium leading-tight rounded-sm outline-none transition-all',
+      'w-full h-10 flex items-center justify-start gap-2 p-2 text-current/50 font-medium rounded-sm outline-none transition-all',
       'focus-visible:inset-ring-1 focus-visible:ring-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

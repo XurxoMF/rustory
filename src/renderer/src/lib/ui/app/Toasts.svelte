@@ -52,7 +52,7 @@
 <div class="pointer-events-none absolute w-full top-0 right-0 z-500 p-4 flex flex-col items-end justify-start gap-2">
   {#each Toasts.instance.toasts as toast (toast.id)}
     <div
-      class={['shrink-0 w-1/5 leading-tight rounded-md pointer-events-auto outline-none backdrop-blur-xs transition-all', ...MODE_CLASSES[toast.type]]}
+      class={['shrink-0 w-1/5 rounded-md pointer-events-auto outline-none backdrop-blur-xs transition-all', ...MODE_CLASSES[toast.type]]}
       onmouseenter={() => Toasts.instance.clearToast(toast)}
       onmouseleave={() => Toasts.instance.restartToast(toast)}
       role="alert"
