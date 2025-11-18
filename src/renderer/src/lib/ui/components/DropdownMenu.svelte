@@ -274,7 +274,7 @@
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 inset-ring-zinc-300 ring-zinc-300'
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
       ]}
       {...checkboxItemProps}
     >
@@ -312,11 +312,11 @@
       {disabled}
       class={[
         'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all duration-200',
-        'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
+        'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'data-disabled:opacity-40',
         'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 inset-ring-zinc-300 ring-zinc-300 data-[state=checked]:inset-ring-zinc-800 data-[state=checked]:ring-zinc-800'
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300 t-light:data-[state=checked]:inset-ring-zinc-800 t-light:data-[state=checked]:ring-zinc-800'
       ]}
       {...radioItemProps}
     />
@@ -433,7 +433,7 @@
     {/if}
 
     {#if i < groups.length - 1}
-      <DropdownMenu.Separator class={['w-full h-px', 'bg-zinc-800']} {...separatorProps} />
+      <DropdownMenu.Separator class={['w-full h-px', 'bg-zinc-800', 't-light:bg-zinc-300']} {...separatorProps} />
     {/if}
   {/each}
 {/snippet}
