@@ -6,7 +6,7 @@ Rustory is the unoficial launcher for Vintage Story. It's also the successor of 
 
 With this launcher you can easily install multiple versions of Vintage Story, create multiple Instances ans Servers with different configs, mods, worlds, etc... with just a few clicks!
 
-## What do Rustory?
+## What do Rustory do?
 
 - Install and manage VS Instances and Servers
 - Install, update and manage Mods
