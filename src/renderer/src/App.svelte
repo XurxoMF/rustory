@@ -116,17 +116,17 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen overflow-hidden bg-image bg-cover bg-center transition-all @container @container/app',
-      'bg-zinc-900 border-zinc-800',
-      't-light:bg-zinc-100 t-light:border-zinc-300',
+      'relative w-screen h-screen bg-image overflow-hidden bg-cover bg-center transition-all',
+      'text-zinc-200 bg-zinc-900 border-zinc-800',
+      't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
     <div
       class={[
-        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all',
-        'text-zinc-200 bg-zinc-900/95',
-        't-light:text-zinc-800 t-light:bg-zinc-100/95'
+        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all @container @container/app',
+        'bg-zinc-900/95',
+        't-light:bg-zinc-100/95'
       ]}
     >
       <WindowBar />
@@ -138,19 +138,19 @@
           <Router {routes} />
         </main>
       </div>
-
-      <Toasts />
-      <Command />
-      <AlertManager />
-
-      <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->
-      <div
-        id="portal"
-        class={[
-          'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
-          MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
-        ]}
-      ></div>
     </div>
+
+    <Toasts />
+    <Command />
+    <AlertManager />
+
+    <!-- NEVER USE overflow-hidden ON THE PORTAL! It breaks all the animations comming from outside this one.-->
+    <div
+      id="portal"
+      class={[
+        'fixed top-0 left-0 w-screen h-screen pointer-events-none select-none @container @container/portal',
+        MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
+      ]}
+    ></div>
   </div>
 {/if}
