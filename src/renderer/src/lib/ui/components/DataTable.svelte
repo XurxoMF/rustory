@@ -28,7 +28,6 @@
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import { PHSortAscendingBoldIcon, PHSortDescendingIcon, PHListBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Checkbox from '@renderer/lib/ui/components/Checkbox.svelte'
-  import Button from './Button.svelte'
 
   let { columns, rows, selectable = false, selected = $bindable([]) }: DataTableProps<T> = $props()
 
@@ -88,7 +87,18 @@
         {#each columns as col (col.key)}
           <th class={['text-start p-2 whitespace-nowrap']}>
             {#if col.sort}
-              <Button mode="transparent" padding="none" noMinSize onclick={() => handleSort(col)}>
+              <button
+                type="button"
+                onclick={() => handleSort(col)}
+                class={[
+                  'flex items-center justify-center gap-2 rounded-sm outline-none',
+                  'focus-visible:inset-ring-1 focus-visible:ring-2',
+                  'cursor-pointer disabled:cursor-not-allowed',
+                  'disabled:opacity-40',
+                  'inset-ring-zinc-800 ring-zinc-800',
+                  't-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+                ]}
+              >
                 <span>{col.label}</span>
 
                 {#if sortColumn?.key === col.key}
@@ -100,7 +110,7 @@
                 {:else}
                   <PHListBoldIcon class="text-current/50" />
                 {/if}
-              </Button>
+              </button>
             {:else}
               {col.label}
             {/if}
