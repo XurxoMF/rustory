@@ -19,7 +19,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type GridContainerHeightClasses = keyof typeof GRID_CONTAINER_HEIGHT_CLASSES
+  export type GridContainerHeightTypes = keyof typeof GRID_CONTAINER_HEIGHT_CLASSES
 
   export const GRID_CONTAINER_WIDTH_CLASSES = {
     fit: ['w-fit'],
@@ -27,7 +27,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type GridContainerWidthClasses = keyof typeof GRID_CONTAINER_WIDTH_CLASSES
+  export type GridContainerWidthTypes = keyof typeof GRID_CONTAINER_WIDTH_CLASSES
 
   export const GRID_CONTAINER_GAP_CLASSES = {
     none: ['gap-0'],
@@ -60,7 +60,7 @@
     xl: ['rounded-xl']
   } as const
 
-  export type GridContainerRoundedClasses = keyof typeof GRID_CONTAINER_ROUNDED_CLASSES
+  export type GridContainerRoundedTypes = keyof typeof GRID_CONTAINER_ROUNDED_CLASSES
 
   export const GRID_CONTAINER_MODE_CLASSES = {
     transparent: [],
@@ -92,11 +92,11 @@
   export type GridContainerProps = {
     children: Snippet
     columns?: GridContainerColumnTypes | undefined
-    height?: GridContainerHeightClasses | undefined
-    width?: GridContainerWidthClasses | undefined
+    height?: GridContainerHeightTypes | undefined
+    width?: GridContainerWidthTypes | undefined
     gap?: GridContainerGapTypes | undefined
     padding?: GridContainerPaddingTypes | undefined
-    rounded?: GridContainerRoundedClasses | undefined
+    rounded?: GridContainerRoundedTypes | undefined
     mode?: GridContainerModeTypes | undefined
     overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined

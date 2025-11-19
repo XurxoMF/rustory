@@ -146,7 +146,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type DropdownMenuTriggerHeightClasses = keyof typeof DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES
+  export type DropdownMenuTriggerHeightTypes = keyof typeof DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES
 
   export const DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES = {
     fit: ['w-fit'],
@@ -154,7 +154,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type DropdownMenuTriggerWidthClasses = keyof typeof DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES
+  export type DropdownMenuTriggerWidthTypes = keyof typeof DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES
 
   export const DROPDOWN_MENU_TRIGGER_PADDING_CLASSES = {
     none: ['p-0'],
@@ -176,7 +176,7 @@
     xl: ['rounded-xl']
   } as const
 
-  export type DropdownMenuTriggerRoundedClasses = keyof typeof DROPDOWN_MENU_TRIGGER_ROUNDED_CLASSES
+  export type DropdownMenuTriggerRoundedTypes = keyof typeof DROPDOWN_MENU_TRIGGER_ROUNDED_CLASSES
 
   export const DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES = {
     start: ['justify-start'],
@@ -184,7 +184,7 @@
     end: ['justify-end']
   } as const
 
-  export type DropdownMenuTriggerAlignClasses = keyof typeof DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES
+  export type DropdownMenuTriggerAlignTypes = keyof typeof DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES
 
   export type DropdownMenuTriggerProps = WithoutKeys<WithoutChildrenOrChild<DropdownMenu.TriggerProps>, 'class'>
 
@@ -197,11 +197,11 @@
   export type DropdownMenuProps = WithoutKeys<DropdownMenu.RootProps, 'class'> & {
     groups: DropdownMenuGroupTypes[]
     mode?: DropdownMenuTriggerModeTypes | undefined
-    triggerHeight?: DropdownMenuTriggerHeightClasses | undefined
-    triggerWidth?: DropdownMenuTriggerWidthClasses | undefined
-    triggerAlign?: DropdownMenuTriggerAlignClasses | undefined
+    triggerHeight?: DropdownMenuTriggerHeightTypes | undefined
+    triggerWidth?: DropdownMenuTriggerWidthTypes | undefined
+    triggerAlign?: DropdownMenuTriggerAlignTypes | undefined
     triggerPadding?: DropdownMenuTriggerPaddingTypes | undefined
-    triggerRounded?: DropdownMenuTriggerRoundedClasses | undefined
+    triggerRounded?: DropdownMenuTriggerRoundedTypes | undefined
     triggerProps?: DropdownMenuTriggerProps | undefined
     contentProps?: DropdownMenuContentProps | undefined
     arrowProps?: DropdownMenuArrowProps | undefined

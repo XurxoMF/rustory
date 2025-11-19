@@ -6,7 +6,7 @@
     row: ['flex-row']
   } as const
 
-  export type FlexContainerDirectionClasses = keyof typeof FLEX_CONTAINER_DIRECTION_CLASSES
+  export type FlexContainerDirectionTypes = keyof typeof FLEX_CONTAINER_DIRECTION_CLASSES
 
   export type FlexContainerAlignments = 'start' | 'center' | 'end' | 'between' | 'arround'
 
@@ -32,7 +32,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type FlexContainerHeightClasses = keyof typeof FLEX_CONTAINER_HEIGHT_CLASSES
+  export type FlexContainerHeightTypes = keyof typeof FLEX_CONTAINER_HEIGHT_CLASSES
 
   export const FLEX_CONTAINER_WIDTH_CLASSES = {
     fit: ['w-fit'],
@@ -40,7 +40,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type FlexContainerWidthClasses = keyof typeof FLEX_CONTAINER_WIDTH_CLASSES
+  export type FlexContainerWidthTypes = keyof typeof FLEX_CONTAINER_WIDTH_CLASSES
 
   export const FLEX_CONTAINER_GAP_CLASSES = {
     none: ['gap-0'],
@@ -73,7 +73,7 @@
     xl: ['rounded-xl']
   } as const
 
-  export type FlexContainerRoundedClasses = keyof typeof FLEX_CONTAINER_ROUNDED_CLASSES
+  export type FlexContainerRoundedTypes = keyof typeof FLEX_CONTAINER_ROUNDED_CLASSES
 
   export const FLEX_CONTAINER_MODE_CLASSES = {
     transparent: [],
@@ -103,7 +103,7 @@
   export type FlexContainerModeTypes = keyof typeof FLEX_CONTAINER_MODE_CLASSES
 
   export type FlexContainerProps = WithoutKeys<HTMLAttributes<HTMLDivElement>, 'class'> & {
-    direction?: FlexContainerDirectionClasses | undefined
+    direction?: FlexContainerDirectionTypes | undefined
     /**
      * Take in account that *between* and *arround* are only valid for *row* direction.
      */
@@ -114,9 +114,9 @@
     alignY?: FlexContainerAlignments | undefined
     gap?: FlexContainerGapTypes | undefined
     padding?: FlexContainerPaddingTypes | undefined
-    rounded?: FlexContainerRoundedClasses | undefined
-    height?: FlexContainerHeightClasses | undefined
-    width?: FlexContainerWidthClasses | undefined
+    rounded?: FlexContainerRoundedTypes | undefined
+    height?: FlexContainerHeightTypes | undefined
+    width?: FlexContainerWidthTypes | undefined
     mode?: FlexContainerModeTypes | undefined
     wrap?: boolean | undefined
     overflowHidden?: boolean | undefined

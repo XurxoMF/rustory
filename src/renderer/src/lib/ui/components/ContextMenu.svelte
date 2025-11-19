@@ -115,7 +115,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type ContextMenuTriggerHeightClasses = keyof typeof CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES
+  export type ContextMenuTriggerHeightTypes = keyof typeof CONTEXT_MENU_TRIGGER_HEIGHT_CLASSES
 
   export type ContextMenuTriggerProps = WithoutKeys<WithoutChildrenOrChild<ContextMenu.TriggerProps>, 'class'>
 
@@ -125,7 +125,7 @@
 
   export type ContextMenuProps = ContextMenu.RootProps & {
     groups: ContextMenuGroupTypes[]
-    triggerHeight?: ContextMenuTriggerHeightClasses | undefined
+    triggerHeight?: ContextMenuTriggerHeightTypes | undefined
     triggerProps?: ContextMenuTriggerProps | undefined
     contentProps?: ContextMenuContentProps | undefined
     separatorProps?: ContextMenuSeparatorProps | undefined

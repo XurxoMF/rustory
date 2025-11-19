@@ -10,7 +10,7 @@
     full: ['w-full']
   } as const
 
-  export type SheetWidthClasses = keyof typeof SHEET_WIDTH_CLASSES
+  export type SheetWidthTypes = keyof typeof SHEET_WIDTH_CLASSES
 
   export type SheetOverlayProps = WithoutKeys<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
@@ -24,7 +24,7 @@
     title: string
     description: string
     onclose?: (() => void | Promise<void>) | undefined
-    width?: SheetWidthClasses | undefined
+    width?: SheetWidthTypes | undefined
     overlayProps?: SheetOverlayProps | undefined
     contentProps?: SheetContentProps | undefined
     titleProps?: SheetTitleProps | undefined

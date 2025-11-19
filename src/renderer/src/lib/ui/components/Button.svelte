@@ -42,7 +42,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type ButtonHeightClasses = keyof typeof BUTTON_HEIGHT_CLASSES
+  export type ButtonHeightTypes = keyof typeof BUTTON_HEIGHT_CLASSES
 
   export const BUTTON_WIDTH_CLASSES = {
     fit: ['w-fit'],
@@ -50,7 +50,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type ButtonWidthClasses = keyof typeof BUTTON_WIDTH_CLASSES
+  export type ButtonWidthTypes = keyof typeof BUTTON_WIDTH_CLASSES
 
   export const BUTTON_PADDING_CLASSES = {
     none: ['p-0'],
@@ -72,7 +72,7 @@
     xl: ['rounded-xl']
   } as const
 
-  export type ButtonRoundedClasses = keyof typeof BUTTON_ROUNDED_CLASSES
+  export type ButtonRoundedTypes = keyof typeof BUTTON_ROUNDED_CLASSES
 
   export const BUTTON_ALIGN_CLASSES = {
     start: ['justify-start'],
@@ -80,15 +80,15 @@
     end: ['justify-end']
   } as const
 
-  export type ButtonAlignClasses = keyof typeof BUTTON_ALIGN_CLASSES
+  export type ButtonAlignTypes = keyof typeof BUTTON_ALIGN_CLASSES
 
   export type ButtonProps = WithoutKeys<HTMLButtonAttributes, 'class'> & {
     mode?: ButtonModeTypes | undefined
-    height?: ButtonHeightClasses | undefined
-    width?: ButtonWidthClasses | undefined
+    height?: ButtonHeightTypes | undefined
+    width?: ButtonWidthTypes | undefined
     padding?: ButtonPaddingTypes | undefined
-    rounded?: ButtonRoundedClasses | undefined
-    align?: ButtonAlignClasses | undefined
+    rounded?: ButtonRoundedTypes | undefined
+    align?: ButtonAlignTypes | undefined
   }
 </script>
 

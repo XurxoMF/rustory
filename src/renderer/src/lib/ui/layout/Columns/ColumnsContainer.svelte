@@ -19,7 +19,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type ColumnsContainerHeightClasses = keyof typeof COLUMNS_CONTAINER_HEIGHT_CLASSES
+  export type ColumnsContainerHeightTypes = keyof typeof COLUMNS_CONTAINER_HEIGHT_CLASSES
 
   export const COLUMNS_CONTAINER_WIDTH_CLASSES = {
     fit: ['w-fit'],
@@ -27,7 +27,7 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type ColumnsContainerWidthClasses = keyof typeof COLUMNS_CONTAINER_WIDTH_CLASSES
+  export type ColumnsContainerWidthTypes = keyof typeof COLUMNS_CONTAINER_WIDTH_CLASSES
 
   export const COLUMNS_CONTAINER_COLUMNS_CLASSES = {
     none: ['gap-x-0 space-y-0'],
@@ -60,7 +60,7 @@
     xl: ['rounded-xl']
   } as const
 
-  export type ColumnsContainerRoundedClasses = keyof typeof COLUMNS_CONTAINER_ROUNDED_CLASSES
+  export type ColumnsContainerRoundedTypes = keyof typeof COLUMNS_CONTAINER_ROUNDED_CLASSES
 
   export const COLUMNS_CONTAINER_MODE_CLASSES = {
     transparent: [],
@@ -91,11 +91,11 @@
 
   export type ColumnsContainerProps = WithoutKeys<HTMLAttributes<HTMLDivElement>, 'class'> & {
     columns?: ColumnsContainerColumnTypes | undefined
-    height?: ColumnsContainerHeightClasses | undefined
-    width?: ColumnsContainerWidthClasses | undefined
+    height?: ColumnsContainerHeightTypes | undefined
+    width?: ColumnsContainerWidthTypes | undefined
     gap?: ColumnsContainerGapTypes | undefined
     padding?: ColumnsContainerPaddingTypes | undefined
-    rounded?: ColumnsContainerRoundedClasses | undefined
+    rounded?: ColumnsContainerRoundedTypes | undefined
     mode?: ColumnsContainerModeTypes | undefined
     overflowHidden?: boolean | undefined
     isBreakpoint?: boolean | undefined

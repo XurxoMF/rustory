@@ -40,12 +40,12 @@
     'flex-1': ['flex-1']
   } as const
 
-  export type InputWidthClasses = keyof typeof WIDTH_CLASSES
+  export type InputWidthTypes = keyof typeof WIDTH_CLASSES
 
   export type InputProps = WithoutKeys<WithoutChildren<HTMLInputAttributes>, 'class' | 'type'> & {
     type: InputTypes
     mode?: InputModeTypes | undefined
-    width?: InputWidthClasses | undefined
+    width?: InputWidthTypes | undefined
   }
 </script>
 

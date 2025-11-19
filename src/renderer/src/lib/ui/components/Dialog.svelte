@@ -9,7 +9,7 @@
     full: ['w-full']
   } as const
 
-  export type DialogWidthClasses = keyof typeof DIALOG_WIDTH_CLASSES
+  export type DialogWidthTypes = keyof typeof DIALOG_WIDTH_CLASSES
 
   export type DialogOverlayProps = WithoutKeys<WithoutChildrenOrChild<Dialog.OverlayProps>, 'class'>
 
@@ -23,7 +23,7 @@
     title: string
     description: string
     onclose?: (() => void | Promise<void>) | undefined
-    width?: DialogWidthClasses | undefined
+    width?: DialogWidthTypes | undefined
     overlayProps?: DialogOverlayProps | undefined
     contentProps?: DialogContentProps | undefined
     titleProps?: DialogTitleProps | undefined
