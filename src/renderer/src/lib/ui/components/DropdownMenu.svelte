@@ -140,6 +140,14 @@
 
   export type DropdownMenuTriggerModeTypes = keyof typeof DROPDOWN_MENU_TRIGGER_MODE_CLASSES
 
+  export const DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full'],
+    'flex-1': ['flex-1']
+  } as const
+
+  export type DropdownMenuTriggerHeightClasses = keyof typeof DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES
+
   export const DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES = {
     fit: ['w-fit'],
     full: ['w-full'],
@@ -147,6 +155,28 @@
   } as const
 
   export type DropdownMenuTriggerWidthClasses = keyof typeof DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES
+
+  export const DROPDOWN_MENU_TRIGGER_PADDING_CLASSES = {
+    none: ['p-0'],
+    xs: ['p-1'],
+    sm: ['p-2'],
+    base: ['p-4'],
+    lg: ['p-6'],
+    xl: ['p-8']
+  } as const
+
+  export type DropdownMenuTriggerPaddingTypes = keyof typeof DROPDOWN_MENU_TRIGGER_PADDING_CLASSES
+
+  export const DROPDOWN_MENU_TRIGGER_ROUNDED_CLASSES = {
+    none: ['rounded-none'],
+    xs: ['rounded-xs'],
+    sm: ['rounded-sm'],
+    base: ['rounded-md'],
+    lg: ['rounded-lg'],
+    xl: ['rounded-xl']
+  } as const
+
+  export type DropdownMenuTriggerRoundedClasses = keyof typeof DROPDOWN_MENU_TRIGGER_ROUNDED_CLASSES
 
   export const DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES = {
     start: ['justify-start'],
@@ -167,8 +197,12 @@
   export type DropdownMenuProps = WithoutKeys<DropdownMenu.RootProps, 'class'> & {
     groups: DropdownMenuGroupTypes[]
     mode?: DropdownMenuTriggerModeTypes | undefined
+    triggerHeight?: DropdownMenuTriggerHeightClasses | undefined
     triggerWidth?: DropdownMenuTriggerWidthClasses | undefined
     triggerAlign?: DropdownMenuTriggerAlignClasses | undefined
+    triggerPadding?: DropdownMenuTriggerPaddingTypes | undefined
+    triggerRounded?: DropdownMenuTriggerRoundedClasses | undefined
+    triggerNoMinSize?: boolean | undefined
     triggerProps?: DropdownMenuTriggerProps | undefined
     contentProps?: DropdownMenuContentProps | undefined
     arrowProps?: DropdownMenuArrowProps | undefined
@@ -186,7 +220,11 @@
     groups,
     mode = 'neutral',
     triggerWidth = 'fit',
+    triggerHeight = 'fit',
     triggerAlign = 'center',
+    triggerPadding = 'sm',
+    triggerRounded = 'sm',
+    triggerNoMinSize = false,
     children,
     triggerProps,
     contentProps,
@@ -199,11 +237,15 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none',
+      'shrink-0 flex items-center justify-center gap-2 p-2 rounded-sm outline-none',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
+      !triggerNoMinSize && 'min-w-10 min-h-10',
       ...DROPDOWN_MENU_TRIGGER_MODE_CLASSES[mode],
       ...DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES[triggerWidth],
+      ...DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES[triggerHeight],
+      ...DROPDOWN_MENU_TRIGGER_PADDING_CLASSES[triggerPadding],
+      ...DROPDOWN_MENU_TRIGGER_ROUNDED_CLASSES[triggerRounded],
       ...DROPDOWN_MENU_TRIGGER_ALIGN_CLASSES[triggerAlign]
     ]}
     {...triggerProps}
