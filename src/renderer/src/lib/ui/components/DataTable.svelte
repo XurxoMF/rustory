@@ -120,10 +120,7 @@
     </thead>
     <tbody class={['divide-y', 'divide-zinc-800', 't-light:divide-zinc-300']}>
       {#each sortedRows as row (row.id)}
-        <tr
-          data-selected={selected.some((s) => s.id === row.id)}
-          class={['data-[selected=true]:bg-zinc-800 hover:bg-zinc-800', 't-light:data-[selected=true]:bg-zinc-300 t-light:hover:bg-zinc-300']}
-        >
+        <tr class={['hover:bg-zinc-800', 't-light:hover:bg-zinc-300']}>
           {#if selectable}
             <td class={['w-px text-start p-2 whitespace-nowrap']}>
               <Checkbox checked={selected.some((s) => s.id === row.id)} onCheckedChange={() => toggleRow(row)} />
