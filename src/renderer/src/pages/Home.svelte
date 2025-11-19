@@ -94,9 +94,9 @@
   // ProgressBar data to sync them all
   let progressValue = $state(20)
   setInterval(() => {
-    if (progressValue === 100) return progressValue = 0
-    progressValue++
-  }, 100);
+    if (progressValue === 100) return (progressValue = 0)
+    return progressValue++
+  }, 100)
 </script>
 
 <ScrollableContainer isBreakpoint>
@@ -1390,8 +1390,6 @@
       }
     ]}
   >
-    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border duration', 'border-zinc-800']}>
-      Right click here!
-    </div>
+    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border duration', 'border-zinc-800']}>Right click here!</div>
   </ContextMenu>
 {/snippet}

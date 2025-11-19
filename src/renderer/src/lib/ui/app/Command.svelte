@@ -84,9 +84,9 @@
     <Dialog.Content
       class={[
         'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 w-1/3 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none @container',
+        'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
-        'inset-ring-2',
         'bg-zinc-900/95 inset-ring-zinc-800',
         't-ligh:bg-zinc-100/95 t-light:inset-ring-zinc-300'
       ]}
@@ -108,12 +108,12 @@
           <Command.Input
             class={[
               'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none',
+              'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
               'placeholder:text-current/30',
-              'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800/70 inset-ring-zinc-800 ring-zinc-800',
+              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300/70 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
             ]}
             placeholder={`${m.common__search()}...`}
           />
@@ -157,8 +157,8 @@
       'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',
-      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300'
+      'not-data-disabled:hover:bg-zinc-800/70 data-selected:bg-zinc-800',
+      't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:data-selected:bg-zinc-300'
     ]}
   >
     <Icon class="shrink-0 flex items-center justify-center text-lg" />

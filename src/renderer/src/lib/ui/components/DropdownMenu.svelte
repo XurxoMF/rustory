@@ -112,29 +112,29 @@
   export const DROPDOWN_MENU_TRIGGER_MODE_CLASSES = {
     transparent: [
       'focus-visible:inset-ring-1 focus-visible:ring-2',
-      'not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-      't-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+      'not-disabled:hover:bg-zinc-800/70 inset-ring-zinc-800 ring-zinc-800',
+      't-light:not-disabled:hover:bg-zinc-300/70 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
     ],
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-      't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800/70 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300/70 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-blue-500 not-disabled:hover:text-blue-200 bg-blue-800/30 not-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800'
+      'text-blue-500 not-disabled:hover:text-blue-200 bg-blue-800/30 not-disabled:hover:bg-blue-800/70 inset-ring-blue-800 ring-blue-800'
     ],
     success: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800'
+      'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800/70 inset-ring-green-800 ring-green-800'
     ],
     warning: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-yellow-500 not-disabled:hover:text-yellow-200 bg-yellow-800/30 not-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800'
+      'text-yellow-500 not-disabled:hover:text-yellow-200 bg-yellow-800/30 not-disabled:hover:bg-yellow-800/70 inset-ring-yellow-800 ring-yellow-800'
     ],
     danger: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'text-red-500 not-disabled:hover:text-red-200 bg-red-800/30 not-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800'
+      'text-red-500 not-disabled:hover:text-red-200 bg-red-800/30 not-disabled:hover:bg-red-800/70 inset-ring-red-800 ring-red-800'
     ]
   } as const
 
@@ -249,8 +249,8 @@
       'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+      'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+      't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
     ]}
     {...itemProps}
   >
@@ -273,8 +273,8 @@
         'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800/70 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300/70 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
       ]}
       {...checkboxItemProps}
     >
@@ -316,8 +316,8 @@
         'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'data-[state=unchecked]:not-hover:text-current/20',
         'data-disabled:opacity-40',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300 t-light:data-[state=checked]:inset-ring-zinc-800 t-light:data-[state=checked]:ring-zinc-800'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800/70 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300/70 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300 t-light:data-[state=checked]:inset-ring-zinc-800 t-light:data-[state=checked]:ring-zinc-800'
       ]}
       {...radioItemProps}
     />
@@ -333,8 +333,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+        't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
       ]}
       {...submenuTriggerProps}
     >
@@ -382,8 +382,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+        't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
       ]}
       {...itemSubmenuTriggerProps}
     >

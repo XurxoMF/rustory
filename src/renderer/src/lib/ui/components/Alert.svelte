@@ -93,8 +93,8 @@
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',
-              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800/70 inset-ring-zinc-800 ring-zinc-800',
+              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300/70 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
             ]}
           >
             Calcel
@@ -110,8 +110,8 @@
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',
-              'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800',
-              't-light:text-green-500 t-light:not-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-disabled:hover:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
+              'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800/70 inset-ring-green-800 ring-green-800',
+              't-light:text-green-500 t-light:not-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-disabled:hover:bg-green-300/70 t-light:inset-ring-green-300 t-light:ring-green-300'
             ]}
           >
             Accept

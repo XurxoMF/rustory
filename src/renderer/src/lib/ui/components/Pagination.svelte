@@ -50,8 +50,8 @@
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-            't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+            'not-disabled:hover:bg-zinc-800/70 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+            't-light:not-disabled:hover:bg-zinc-300/70 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
           ]}
           {...prevButtonProps}
         >
@@ -69,8 +69,8 @@
                 'focus-visible:inset-ring-1 focus-visible:ring-2',
                 'cursor-pointer disabled:cursor-not-allowed',
                 'disabled:opacity-40',
-                'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-                't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+                'not-disabled:hover:bg-zinc-800/70 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+                't-light:not-disabled:hover:bg-zinc-300/70 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
               ]}
               {...pageProps}
             >
@@ -85,8 +85,8 @@
             'focus-visible:inset-ring-1 focus-visible:ring-2',
             'cursor-pointer disabled:cursor-not-allowed',
             'disabled:opacity-40',
-            'not-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-            't-light:not-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+            'not-disabled:hover:bg-zinc-800/70 data-selected:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+            't-light:not-disabled:hover:bg-zinc-300/70 t-light:data-selected:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
           ]}
           {...nextButtonProps}
         >

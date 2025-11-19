@@ -193,8 +193,8 @@
       'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+      'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+      't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
     ]}
     {...itemProps}
   >
@@ -218,8 +218,8 @@
         'data-[state=unchecked]:not-hover:text-current/20',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800/70 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300/70 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
       ]}
       {...checkboxItemProps}
     >
@@ -260,8 +260,8 @@
         'cursor-pointer data-disabled:cursor-not-allowed',
         'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'data-disabled:opacity-40',
-        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
-        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300 t-light:data-[state=checked]:inset-ring-zinc-800 t-light:data-[state=checked]:ring-zinc-800'
+        'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800/70 data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800 data-[state=checked]:inset-ring-zinc-200 data-[state=checked]:ring-zinc-200',
+        't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300/70 t-light:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300 t-light:data-[state=checked]:inset-ring-zinc-800 t-light:data-[state=checked]:ring-zinc-800'
       ]}
       {...radioItemProps}
     />
@@ -277,8 +277,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+        't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
       ]}
       {...submenuTriggerProps}
     >
@@ -326,8 +326,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800/70 ddata-highlighted:bg-zinc-800/70',
+        't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:ddata-highlighted:bg-zinc-300/70'
       ]}
       {...itemSubmenuTriggerProps}
     >
