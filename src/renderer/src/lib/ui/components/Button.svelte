@@ -109,7 +109,7 @@
 <button
   {type}
   class={[
-    'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 font-medium rounded-sm outline-none transition-all duration-200',
+    'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 font-medium rounded-sm outline-none',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
     ...BUTTON_MODE_CLASSES[mode],

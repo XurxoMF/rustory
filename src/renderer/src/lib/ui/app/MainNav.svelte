@@ -11,7 +11,7 @@
 
 <nav
   class={[
-    'shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r transition-all duration-200',
+    'shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r',
     'border-r-zinc-800',
     't-light:border-r-zinc-200'
   ]}
@@ -37,7 +37,7 @@
       active: { absolute: true, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
     }}
     class={[
-      'w-full h-10 flex items-center justify-start gap-2 p-2 text-current/50 font-medium rounded-sm outline-none transition-all duration-200',
+      'w-full h-10 flex items-center justify-start gap-2 p-2 text-current/50 font-medium rounded-sm outline-none',
       'focus-visible:inset-ring-1 focus-visible:ring-2',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',

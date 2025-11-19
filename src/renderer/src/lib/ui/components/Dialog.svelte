@@ -63,7 +63,7 @@
   <Dialog.Portal to="#portal">
     <Dialog.Overlay
       class={[
-        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs transition-all duration-200',
+        'absolute top-0 left-0 z-100 w-screen h-screen backdrop-blur-xs',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-md'
@@ -73,7 +73,7 @@
 
     <Dialog.Content
       class={[
-        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none transition-all duration-200 @container',
+        'absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2 z-100 max-w-full h-fit max-h-full rounded-md shadow-xl outline-none @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',

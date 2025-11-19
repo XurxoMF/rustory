@@ -79,17 +79,17 @@
 {#if loader.isVisible}
   <div
     class={[
-      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8 transition-all duration-200',
+      'fixed z-1000 w-screen h-screen flex flex-col items-center justify-center gap-8',
       'text-zinc-200 bg-zinc-900 border-zinc-800',
       't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300'
     ]}
-    out:fade={{ duration: 200, delay: 200 }}
+    out:fade={{ duration: 150, delay: 200 }}
   >
     <img src={RustoryIcon} alt="Rustory" class="w-36 h-36" />
 
     <div class="w-full flex flex-col items-center justify-center gap-8">
       <div class="w-1/3">
-        <ProgressBar value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
+        <ProgressBar mode="success" value={(loader.completedTasks.length / Loader.TOTAL_TASKS) * 100} />
       </div>
 
       <div class="w-full max-h-40">
@@ -116,18 +116,14 @@
 {#if loader.loadUI}
   <div
     class={[
-      'relative w-screen h-screen bg-image overflow-hidden bg-cover bg-center transition-all duration-200',
+      'relative w-screen h-screen bg-image overflow-hidden bg-cover bg-center',
       'text-zinc-200 bg-zinc-900 border-zinc-800',
       't-light:text-zinc-800 t-light:bg-zinc-100 t-light:border-zinc-300',
       MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'border rounded-md'
     ]}
   >
     <div
-      class={[
-        'w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden transition-all duration-200 @container @container/app',
-        'bg-zinc-900/95',
-        't-light:bg-zinc-100/95'
-      ]}
+      class={['w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden @container @container/app', 'bg-zinc-900/95', 't-light:bg-zinc-100/95']}
     >
       <WindowBar />
 

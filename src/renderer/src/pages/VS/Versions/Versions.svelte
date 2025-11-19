@@ -150,7 +150,7 @@
                   <P mode="secondary">{vsVersion.task.type === TaskBase.Type.VS_VERSION_INSTALL && 'Installing...'}</P>
                   <P mode="secondary">{vsVersion.task.progress}%</P>
                 </FlexContainer>
-                <ProgressBar value={vsVersion.task.progress} />
+                <ProgressBar mode="success" value={vsVersion.task.progress} />
               </FlexContainer>
             {/if}
           </FlexContainer>

@@ -81,7 +81,7 @@
 <Select.Root bind:value={value as never} {allowDeselect} {...restProps}>
   <Select.Trigger
     class={[
-      'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none transition-all duration-200',
+      'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       ...SELECT_MODE_CLASSES[mode]
@@ -100,7 +100,7 @@
     <Select.Content
       sideOffset={4}
       class={[
-        'max-h-[calc(var(--bits-select-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
+        'max-h-[calc(var(--bits-select-content-available-height)-0.5rem)] w-(--bits-select-anchor-width) z-300 flex flex-col backdrop-blur-xs rounded-sm shadow-xl outline-none @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -116,7 +116,7 @@
             {label}
             {disabled}
             class={[
-              'w-full flex items-center justify-between p-2 rounded-sm outline-none transition-all duration-200',
+              'w-full flex items-center justify-between p-2 rounded-sm outline-none',
               'cursor-pointer data-disabled:cursor-not-allowed',
               'data-disabled:opacity-40',
               'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',

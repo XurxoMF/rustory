@@ -160,7 +160,7 @@
   <ContextMenu.Portal to="#portal">
     <ContextMenu.Content
       class={[
-        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
+        'max-h-(--bits-context-menu-content-available-height) min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -190,7 +190,7 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
+      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -206,14 +206,14 @@
 {/snippet}
 
 {#snippet CMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: ContextMenuCheckboxItem)}
-  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium rounded-sm transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium rounded-sm">
     <ContextMenu.CheckboxItem
       {value}
       {disabled}
       {checked}
       onCheckedChange={onchange}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all duration-200',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none',
         'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
         'data-[state=unchecked]:not-hover:text-current/20',
         'cursor-pointer data-disabled:cursor-not-allowed',
@@ -251,12 +251,12 @@
 {/snippet}
 
 {#snippet CMRadioItem({ label, value, disabled, radioItemProps }: ContextMenuRadioItem)}
-  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm">
     <ContextMenu.RadioItem
       {value}
       {disabled}
       class={[
-        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none transition-all duration-200',
+        'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-5 h-5 flex items-center justify-center rounded-full p-1 outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'inset-ring-2 focus-visible:inset-ring-1 data-[state=checked]:inset-ring-4 focus-visible:ring-2',
         'data-disabled:opacity-40',
@@ -274,7 +274,7 @@
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -292,7 +292,7 @@
     <ContextMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
@@ -323,7 +323,7 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none transition-all duration-200',
+        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
@@ -341,7 +341,7 @@
     <ContextMenu.SubContent
       sideOffset={8}
       class={[
-        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none transition-all duration-200 @container',
+        'max-h-screen min-w-60 z-200 flex flex-col m-1 backdrop-blur-xs rounded-sm shadow-xl outline-none @container',
         'inset-ring-2',
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',

@@ -90,6 +90,13 @@
   let radioCheckedD = $state('radio-one')
   let checkboxOneCheckedD = $state(false)
   let checkboxTwoCheckedD = $state(true)
+
+  // ProgressBar data to sync them all
+  let progressValue = $state(20)
+  setInterval(() => {
+    if (progressValue === 100) return progressValue = 0
+    progressValue++
+  }, 100);
 </script>
 
 <ScrollableContainer isBreakpoint>
@@ -470,9 +477,9 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm" alignX="between">
                 <P mode="secondary">Installing...</P>
-                <P mode="secondary">50%</P>
+                <P mode="secondary">{progressValue}%</P>
               </FlexContainer>
-              <ProgressBar mode="neutral" value={50} min={0} max={100} />
+              <ProgressBar mode="neutral" value={progressValue} min={0} max={100} />
             </FlexContainer>
           </FlexContainer>
 
@@ -485,9 +492,9 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm" alignX="between">
                 <P mode="secondary">Installing...</P>
-                <P mode="secondary">50%</P>
+                <P mode="secondary">{progressValue}%</P>
               </FlexContainer>
-              <ProgressBar mode="info" value={50} min={0} max={100} />
+              <ProgressBar mode="info" value={progressValue} min={0} max={100} />
             </FlexContainer>
           </FlexContainer>
 
@@ -500,9 +507,9 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm" alignX="between">
                 <P mode="secondary">Installing...</P>
-                <P mode="secondary">50%</P>
+                <P mode="secondary">{progressValue}%</P>
               </FlexContainer>
-              <ProgressBar mode="success" value={50} min={0} max={100} />
+              <ProgressBar mode="success" value={progressValue} min={0} max={100} />
             </FlexContainer>
           </FlexContainer>
 
@@ -515,9 +522,9 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm" alignX="between">
                 <P mode="secondary">Installing...</P>
-                <P mode="secondary">50%</P>
+                <P mode="secondary">{progressValue}%</P>
               </FlexContainer>
-              <ProgressBar mode="warning" value={50} min={0} max={100} />
+              <ProgressBar mode="warning" value={progressValue} min={0} max={100} />
             </FlexContainer>
           </FlexContainer>
 
@@ -530,9 +537,9 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm" alignX="between">
                 <P mode="secondary">Installing...</P>
-                <P mode="secondary">50%</P>
+                <P mode="secondary">{progressValue}%</P>
               </FlexContainer>
-              <ProgressBar mode="danger" value={50} min={0} max={100} />
+              <ProgressBar mode="danger" value={progressValue} min={0} max={100} />
             </FlexContainer>
           </FlexContainer>
         </FlexContainer>
@@ -1383,7 +1390,7 @@
       }
     ]}
   >
-    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border transition-all duration-200 duration', 'border-zinc-800']}>
+    <div class={['w-full h-full flex items-center justify-center p-6 rounded-md border duration', 'border-zinc-800']}>
       Right click here!
     </div>
   </ContextMenu>

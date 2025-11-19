@@ -28,7 +28,7 @@
 {#if !MainWindow.instance.fullscreened}
   <div
     class={[
-      'app-drag shrink-0 w-full flex items-center justify-between gap-2 text-current/50 border-b transition-all duration-200',
+      'app-drag shrink-0 w-full flex items-center justify-between gap-2 text-current/50 border-b',
       'border-b-zinc-800',
       't-light:border-b-zinc-300'
     ]}

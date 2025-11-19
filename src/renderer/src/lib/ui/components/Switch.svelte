@@ -68,7 +68,7 @@
 <Switch.Root
   bind:checked
   class={[
-    'group shrink-0 w-12 h-6 flex items-center p-1 rounded-full outline-none transition-all duration-200',
+    'group shrink-0 w-12 h-6 flex items-center p-1 rounded-full outline-none',
     'cursor-pointer data-disabled:cursor-not-allowed',
     'data-disabled:opacity-40',
     ...SWITCH_ROOT_MODE_CLASSES[mode]
@@ -77,7 +77,7 @@
 >
   <Switch.Thumb
     class={[
-      'shrink-0 w-4 h-4 data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0 inline rounded-full outline-none transition-all duration-200',
+      'shrink-0 w-4 h-4 data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0 inline rounded-full outline-none',
       ...SWITCH_THUMB_MODE_CLASSES[mode]
     ]}
     {...thumbProps}
