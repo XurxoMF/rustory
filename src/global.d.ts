@@ -9,7 +9,7 @@ declare global {
 
   type TSizeUits = 'KB' | 'MB' | 'GB' | 'TB'
 
-  type TPaths = 'home' | 'appData' | 'userData' | 'temp' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos' | 'logs'
+  type TPaths = 'home' | 'appData' | 'userData' | 'temp' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos'
 
   type TVSAccount = {
     id: number

@@ -33,7 +33,7 @@ To create a new theme you've to follow the next steps.
 }
 ```
 
-> _Replace `<themename>` with the name of the theme. Only letters and lowercase._
+> Replace `<themename>` with the name of the theme. Only letters and lowercase.
 
 #### If Tailwind CSS DOESN'T have the colors you need, add the color palette on the `@layout {}` of the `app.css` like this:
 
@@ -63,7 +63,7 @@ To create a new theme you've to follow the next steps.
 }
 ```
 
-> _Replace `<themename>` with the name of the theme. Only letters and lowercase._
+> Replace `<themename>` with the name of the theme. Only letters and lowercase.
 
 #### If Tailwind CSS HAVE the colors you need, add the missing colors on the `app.css` like this:
 
@@ -82,7 +82,7 @@ To create a new theme you've to follow the next steps.
 }
 ```
 
-> _Replace `<color>` with the name of the theme. Only letters and lowercase._
+> Replace `<color>` with the name of the theme. Only letters and lowercase.
 
 #### Add the theme to the selector on the `lib/classes/RustoryConfig.svelte.ts` like this:
 
@@ -94,9 +94,9 @@ export const THEMES_DATA = [
 ];
 ```
 
-> _Replace `<themename>` with the name of the theme. Only letters and lowercase. Check another theme as example._  
-> _Replace `<color/themename>` and `<variant>` with the name and variant of the main background color._  
-> _Add the `name` using `Sherlock for VS Code` or on the `messages/en.json`. Use another theme key as example._
+> Replace `<themename>` with the name of the theme. Only letters and lowercase. Check another theme as example.  
+> Replace `<color/themename>` and `<variant>` with the name and variant of the main background color.  
+> Add the `name` on the `messages/en.json`. Use another theme key as example.
 
 #### Add the theme styles all over the app `.svelte` files as needed like this:
 
@@ -108,12 +108,12 @@ class={[
 ]}
 ```
 
-> _Replace `<themename>` with the name of the theme. Only letters and lowercase._  
-> _Replace `<color/themename>` and `<variant>` with the name and variant of the color needed. Check the **Custom color palettes** and **How to use color palettes** sections above._
+> Replace `<themename>` with the name of the theme. Only letters and lowercase.  
+> Replace `<color/themename>` and `<variant>` with the name and variant of the color needed. Check the **Custom color palettes** and **How to use color palettes** sections above.
 
 ## z-index
 
-This is an extremely important topic if we want everything to work as expected.  
+This is an extremely important topic if we want everything to work as expected. Also remember the stacking context! You can create new stacking contexts with position, backdrop... and this will create a new context where z-index will be different.  
 Here's a table with the z-index layers used on the project:
 
 | z-index  | layer       | elements                    |
@@ -125,20 +125,54 @@ Here's a table with the z-index layers used on the project:
 
 > [!NOTE]
 > When I'm writing this we have:  
-> Z-1000 -> Loader  
-> Z-600 -> Tooltip and Info  
-> Z-500 -> Toasts  
-> Z-300 -> Combobox and Select  
-> Z-200 -> ContextMenu, DropdownMenu
-> Z-100 -> Dialog, Alert, Sheet and Command
+> Z-1000: Loader  
+> Z-600: Tooltip and Info  
+> Z-500: Toasts  
+> Z-300: Combobox and Select  
+> Z-200: ContextMenu, DropdownMenu  
+> Z-100: Dialog, Alert, Sheet and Command
 
 ## Paddings and Gaps
 
 Most of the layout components we have designed count with 2 properties: gap and padding. This ones come in 6 variants:
 
-- xl -> gap-8 & p-8
-- lg -> gap-6 & p-6
-- base -> gap-4 & p-4
-- sm -> gap-2 & p-2
-- xs -> gap-1 & p-1
-- none -> gap-0 & p-0
+- **xl**: `gap-8` & `p-8`
+- **lg**: `gap-6` & `p-6`
+- **base**: `gap-4` & `p-4`
+- **sm**: `gap-2` & `p-2`
+- **xs**: `gap-1` & `p-1`
+- **none**: `gap-0` & `p-0`
+
+## Size
+
+Most of the components alco have 2 or 3 variants for the width and height:
+
+- **fit**: `w-fit` & `h-fit`
+- **full**: `w-full` & `h-full`
+- **flex-1**: `flex-1`
+
+## Rounded / Border radius
+
+Most of the components also have a rounded property to set the border radius:
+
+- **none**: `rounded-none`
+- **xs**: `rounded-xs`
+- **sm**: `rounded-sm`
+- **base**: `rounded-md`
+- **lg**: `rounded-lg`
+- **xl**: `rounded-xl`
+
+## Variants
+
+Most of the components alco have variantes like this ones:
+
+- **transparent**: Background and border/ring show on hover and focus only.
+- **neutral**: Colors of the theme.
+- **info**: Blue variant.
+- **success**: Green variant.
+- **warning**: Yellow variant.
+- **danger**: Red variant.
+
+## Icons
+
+Icons MUST be created as Svelte components inside the `./src/renderer/src/lib/ui/components/Icons` folder following the folder structure.
