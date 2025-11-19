@@ -44,7 +44,7 @@
           'data-[state=delayed-open]:animate-in data-[state=delayed-open]:fade-in-0 data-[state=delayed-open]:zoom-in-95',
           'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95',
           'bg-zinc-900/95 inset-ring-zinc-800',
-          't-light:bg-zinc-100/95 t-light:inset-ring-zinc-300'
+          't-light:bg-zinc-100/90 t-light:inset-ring-zinc-300'
         ]}
         {...contentProps}
       >

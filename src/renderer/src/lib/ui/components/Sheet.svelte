@@ -78,7 +78,7 @@
         'data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-right-10',
         'data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:slide-out-to-right-10',
         'bg-zinc-900/95 border-zinc-800',
-        't-light:bg-zinc-100/95 t-light:border-zinc-300',
+        't-light:bg-zinc-100/90 t-light:border-zinc-300',
         width !== 'full' && 'border-l-2',
         ...SHEET_WIDTH_CLASSES[width],
         MainWindow.instance && !MainWindow.instance.maximized && !MainWindow.instance.fullscreened && 'rounded-r-md'

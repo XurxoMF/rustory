@@ -123,7 +123,7 @@
     ]}
   >
     <div
-      class={['w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden @container @container/app', 'bg-zinc-900/95', 't-light:bg-zinc-100/95']}
+      class={['w-full h-full flex flex-col select-none backdrop-blur-xs overflow-hidden @container @container/app', 'bg-zinc-900/95', 't-light:bg-zinc-100/90']}
     >
       <WindowBar />
 
