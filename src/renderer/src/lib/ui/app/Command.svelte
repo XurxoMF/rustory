@@ -112,8 +112,8 @@
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
               'placeholder:text-current/30',
-              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800/70 inset-ring-zinc-800 ring-zinc-800',
-              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300/70 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+              'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+              't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
             ]}
             placeholder={`${m.common__search()}...`}
           />
@@ -157,8 +157,8 @@
       'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800/70 data-selected:bg-zinc-800',
-      't-light:not-data-disabled:hover:bg-zinc-300/70 t-light:data-selected:bg-zinc-300'
+      'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',
+      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-selected:bg-zinc-300'
     ]}
   >
     <Icon class="shrink-0 flex items-center justify-center text-lg" />
