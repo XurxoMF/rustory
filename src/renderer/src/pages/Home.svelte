@@ -26,11 +26,16 @@
   import { PHDotsThreeBoldIcon, PHGitForkBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import { ask } from '@renderer/lib/ui/app/AlertManager.svelte'
+  import type { DataTableColumns, DataTableRows } from '@renderer/lib/ui/components/DataTable.svelte'
+  import DataTable from '@renderer/lib/ui/components/DataTable.svelte'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
 
   Breadcrumbs.instance.segments = []
 
+  // Input data to sync them all
   let inputValue = $state('')
 
+  // Select data to sync them all
   const SELECT_ITEMS: SelectItem[] = [
     { label: 'Disabled Value', value: 'disabled-value', disabled: true },
     { label: 'Enabled Value', value: 'enabled-value' },
@@ -38,6 +43,7 @@
   ]
   let selectValue = $state(undefined)
 
+  // ComboBox data to sync them all
   const COMBOBOX_ITEMS: ComboBoxItem[] = [
     { label: 'Disabled Value', value: 'disabled-value', disabled: true },
     { label: 'Enabled Value', value: 'enabled-value' },
@@ -45,22 +51,42 @@
   ]
   let comboboxValue = $state(undefined)
 
+  // DataTable data
+  type User = { id: string; name: string; age: number }
+  const DATA_TABLE_COLUMNS: DataTableColumns<User> = [
+    { key: 'id', label: 'ID', format: (value) => value.id, sort: (a, b) => Number(a.id) - Number(b.id) },
+    { key: 'name', label: 'Name', format: (value) => value.name, sort: (a, b) => a.name.localeCompare(b.name, Config.instance.locale) },
+    { key: 'age', label: 'Age', format: (value) => `${value.age} años`, sort: (a, b) => a.age - b.age }
+  ]
+  const DATA_TABLE_ROWS: DataTableRows<User> = [
+    { id: '1', name: 'John Doe', age: 30 },
+    { id: '2', name: 'Jane Doe', age: 25 },
+    { id: '3', name: 'Bob Smith', age: 40 }
+  ]
+  let dataTableSelectedRows = $state([])
+
+  // Slider data to sync them all
   const SLIDER_MIN = 0
   const SLIDER_MAX = 50
   const SLIDER_INTERVAL = 5
   let sliderValue = $state([15, 35])
 
+  // Checkbox data to sync them all
   let checkboxValue = $state(false)
 
+  // Switch data to sync them all
   let switchValue = $state(false)
 
+  // Dialog and Sheet data
   let dialogOpen = $state(false)
   let sheetOpen = $state(false)
 
+  // ContextMenu data
   let radioCheckedCM = $state('radio-one')
   let checkboxOneCheckedCM = $state(false)
   let checkboxTwoCheckedCM = $state(true)
 
+  // DroopdownMenu data
   let radioCheckedD = $state('radio-one')
   let checkboxOneCheckedD = $state(false)
   let checkboxTwoCheckedD = $state(true)
@@ -381,6 +407,18 @@
               />
             </FlexContainer>
           </FlexContainer>
+        </FlexContainer>
+      </ColumnItem>
+
+      <!-- DataTable -->
+      <ColumnItem>
+        <FlexContainer direction="col" gap="lg">
+          <FlexContainer direction="col" gap="xs">
+            <H3>DataTable</H3>
+            <P mode="secondary">DataTable is used to display data in a table.</P>
+          </FlexContainer>
+
+          <DataTable columns={DATA_TABLE_COLUMNS} rows={DATA_TABLE_ROWS} selectable bind:selected={dataTableSelectedRows} />
         </FlexContainer>
       </ColumnItem>
 

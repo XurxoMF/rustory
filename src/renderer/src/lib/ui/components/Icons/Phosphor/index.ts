@@ -22,6 +22,11 @@ export { default as PHTrayArrowDownBoldIcon } from './TrayArrowDownBoldIcon.svel
 export { default as PHQuestionMarkBoldIcon } from './QuestionMarkBoldIcon.svelte'
 export { default as PHCheckBoldIcon } from './CheckBoldIcon.svelte'
 export { default as PHCaretUpDownBoldIcon } from './CaretUpDownBoldIcon.svelte'
+export { default as PHCaretUpBoldIcon } from './CaretUpBoldIcon.svelte'
+export { default as PHCaretDownBoldIcon } from './CaretDownBoldIcon.svelte'
+export { default as PHListBoldIcon } from './ListBoldIcon.svelte'
+export { default as PHSortAscendingBoldIcon } from './SortAscendingIcon.svelte'
+export { default as PHSortDescendingIcon } from './SortDescendingIcon.svelte'
 
 // DUOTONE
 export { default as PHHandHeartDuotoneIcon } from './HandHeartDuotoneIcon.svelte'

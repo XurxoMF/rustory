@@ -206,7 +206,7 @@
 {/snippet}
 
 {#snippet CMCheckboxItem({ label, value, disabled, checked, onchange, checkboxItemProps }: ContextMenuCheckboxItem)}
-  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium text-current/50 rounded-sm transition-opacity">
+  <div class="relative w-full flex items-center justify-start p-2 pl-9 font-medium rounded-sm transition-opacity">
     <ContextMenu.CheckboxItem
       {value}
       {disabled}
@@ -215,6 +215,7 @@
       class={[
         'absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center rounded-sm p-1 outline-none transition-all duration-200',
         'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+        'data-[state=unchecked]:not-hover:text-current/20',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
@@ -233,7 +234,7 @@
       {/snippet}
     </ContextMenu.CheckboxItem>
 
-    <span class={[disabled && 'opacity-40']}>{label}</span>
+    <span class={['text-current/50', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 

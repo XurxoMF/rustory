@@ -1,13 +1,13 @@
 <script lang="ts" module>
   import Alert from '../components/Alert.svelte'
 
-  export type AlertManagerQuestionType = {
+  export type AlertManagerQuestion = {
     title: string
     description: string
     resolve: (value: boolean) => void
   }
 
-  const queue: AlertManagerQuestionType[] = $state([])
+  const queue: AlertManagerQuestion[] = $state([])
 
   export function ask(title: string, description: string): Promise<boolean> {
     return new Promise((resolve) => {

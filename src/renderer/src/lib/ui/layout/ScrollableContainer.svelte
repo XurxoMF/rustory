@@ -12,19 +12,19 @@
 </script>
 
 <ScrollArea.Root bind:ref type="always" class="w-full h-full" {...restProps}>
-  <ScrollArea.Viewport class={['w-full h-full', isBreakpoint && '@container']}>
+  <ScrollArea.Viewport class={['w-full h-full outline-none', isBreakpoint && '@container']}>
     {@render children?.()}
   </ScrollArea.Viewport>
 
   {#if orientation === 'vertical' || orientation === 'both'}
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5 flex p-px transition-all duration-200">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-all duration-200', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1">
+      <ScrollArea.Thumb class={['rounded-full', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}
 
   {#if orientation === 'horizontal' || orientation === 'both'}
-    <ScrollArea.Scrollbar orientation="vertical" class="h-2 flex p-px transition-color">
-      <ScrollArea.Thumb class={['flex-1 rounded-full transition-all duration-200', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
+    <ScrollArea.Scrollbar orientation="horizontal" class="flex h-1">
+      <ScrollArea.Thumb class={['rounded-full', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}
 
