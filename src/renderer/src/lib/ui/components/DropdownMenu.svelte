@@ -202,7 +202,6 @@
     triggerAlign?: DropdownMenuTriggerAlignClasses | undefined
     triggerPadding?: DropdownMenuTriggerPaddingTypes | undefined
     triggerRounded?: DropdownMenuTriggerRoundedClasses | undefined
-    triggerNoMinSize?: boolean | undefined
     triggerProps?: DropdownMenuTriggerProps | undefined
     contentProps?: DropdownMenuContentProps | undefined
     arrowProps?: DropdownMenuArrowProps | undefined
@@ -224,7 +223,6 @@
     triggerAlign = 'center',
     triggerPadding = 'sm',
     triggerRounded = 'sm',
-    triggerNoMinSize = false,
     children,
     triggerProps,
     contentProps,
@@ -237,10 +235,9 @@
 <DropdownMenu.Root bind:open {...restProps}>
   <DropdownMenu.Trigger
     class={[
-      'shrink-0 flex items-center justify-center gap-2 p-2 rounded-sm outline-none',
+      'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 rounded-sm outline-none',
       'cursor-pointer disabled:cursor-not-allowed',
       'disabled:opacity-40',
-      !triggerNoMinSize && 'min-w-10 min-h-10',
       ...DROPDOWN_MENU_TRIGGER_MODE_CLASSES[mode],
       ...DROPDOWN_MENU_TRIGGER_WIDTH_CLASSES[triggerWidth],
       ...DROPDOWN_MENU_TRIGGER_HEIGHT_CLASSES[triggerHeight],

@@ -89,7 +89,6 @@
     padding?: ButtonPaddingTypes | undefined
     rounded?: ButtonRoundedClasses | undefined
     align?: ButtonAlignClasses | undefined
-    noMinSize?: boolean | undefined
   }
 </script>
 
@@ -102,7 +101,6 @@
     padding = 'sm',
     rounded = 'sm',
     align = 'center',
-    noMinSize = false,
     children,
     ...restProps
   }: ButtonProps = $props()
@@ -111,10 +109,9 @@
 <button
   {type}
   class={[
-    'shrink-0 flex items-center justify-center gap-2 font-medium rounded-sm outline-none',
+    'shrink-0 min-w-10 min-h-10 flex items-center justify-center gap-2 font-medium rounded-sm outline-none',
     'cursor-pointer disabled:cursor-not-allowed',
     'disabled:opacity-40',
-    !noMinSize && 'min-w-10 min-h-10',
     ...BUTTON_MODE_CLASSES[mode],
     ...BUTTON_HEIGHT_CLASSES[height],
     ...BUTTON_WIDTH_CLASSES[width],
