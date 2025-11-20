@@ -1,4 +1,49 @@
 <script lang="ts" module>
+  import type { Component } from 'svelte'
+  import type { IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
+
+  export const DATA_TABLE_BUTTON_MODE_CLASSES = {
+    transparent: [
+      'focus-visible:inset-ring-1 focus-visible:ring-2',
+      'not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+    ],
+    neutral: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+    ],
+    info: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-blue-500 not-disabled:hover:text-blue-200 bg-blue-800/30 not-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800',
+      't-light:text-blue-500 t-light:not-disabled:hover:text-blue-800 t-light:bg-blue-300/30 t-light:not-disabled:hover:bg-blue-300 t-light:inset-ring-blue-300 t-light:ring-blue-300'
+    ],
+    success: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800',
+      't-light:text-green-500 t-light:not-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-disabled:hover:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
+    ],
+    warning: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-yellow-500 not-disabled:hover:text-yellow-200 bg-yellow-800/30 not-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800',
+      't-light:text-yellow-500 t-light:not-disabled:hover:text-yellow-800 t-light:bg-yellow-300/30 t-light:not-disabled:hover:bg-yellow-300 t-light:inset-ring-yellow-300 t-light:ring-yellow-300'
+    ],
+    danger: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-red-500 not-disabled:hover:text-red-200 bg-red-800/30 not-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800',
+      't-light:text-red-500 t-light:not-disabled:hover:text-red-800 t-light:bg-red-300/30 t-light:not-disabled:hover:bg-red-300 t-light:inset-ring-red-300 t-light:ring-red-300'
+    ]
+  } as const
+
+  export type DataTableButtonModeTypes = keyof typeof DATA_TABLE_BUTTON_MODE_CLASSES
+
+  export type DataTableButton<T> = {
+    icon?: Component<IconProps> | undefined
+    label?: string | undefined
+    mode?: DataTableButtonModeTypes | undefined
+    onclick: (row: T) => void
+  }
+
   export type DataTableColumn<T extends DataTableRequiredRowFileds, K extends keyof T> = {
     key: K
     label: string
@@ -19,6 +64,7 @@
   export type DataTableProps<T extends DataTableRequiredRowFileds> = {
     columns: DataTableColumns<T>
     rows: DataTableRows<T>
+    buttons?: DataTableButton<T>[] | undefined
     selectable?: boolean | undefined
     selected?: DataTableRows<T> | undefined
   }
@@ -29,7 +75,7 @@
   import { PHSortAscendingBoldIcon, PHSortDescendingIcon, PHListBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Checkbox from '@renderer/lib/ui/components/Checkbox.svelte'
 
-  let { columns, rows, selectable = false, selected = $bindable([]) }: DataTableProps<T> = $props()
+  let { columns, rows, buttons = [], selectable = false, selected = $bindable([]) }: DataTableProps<T> = $props()
 
   let sortColumn: DataTableColumn<T, keyof T> | null = $state(null)
   let sortDirection: 'asc' | 'desc' | null = $state(null)
@@ -85,13 +131,13 @@
           </th>
         {/if}
         {#each columns as col (col.key)}
-          <th class={['text-start p-2 whitespace-nowrap']}>
+          <th class={['text-start px-1 py-2 whitespace-nowrap']}>
             {#if col.sort}
               <button
                 type="button"
                 onclick={() => handleSort(col)}
                 class={[
-                  'flex items-center justify-center gap-2 rounded-sm outline-none',
+                  'flex items-center justify-center gap-2 px-1 rounded-sm outline-none',
                   'focus-visible:inset-ring-1 focus-visible:ring-2',
                   'cursor-pointer disabled:cursor-not-allowed',
                   'disabled:opacity-40',
@@ -116,6 +162,9 @@
             {/if}
           </th>
         {/each}
+        {#if buttons.length > 0}
+          <th class={['w-px text-start p-2 whitespace-nowrap']}>Actions</th>
+        {/if}
       </tr>
     </thead>
     <tbody class={['divide-y', 'divide-zinc-800', 't-light:divide-zinc-300']}>
@@ -131,6 +180,28 @@
               {col.format(row)}
             </td>
           {/each}
+          {#if buttons.length > 0}
+            <td class={['flex items-center gap-2 p-2 text-start whitespace-nowrap']}>
+              {#each buttons as button, i (row.id + i)}
+                {@const Icon = button.icon}
+                <button
+                  type="button"
+                  class={[
+                    'shrink-0 min-w-6 min-h-6 flex items-center justify-center gap-1 p-1 leading-tight font-medium text-sm rounded-sm outline-none',
+                    'cursor-pointer disabled:cursor-not-allowed',
+                    'disabled:opacity-40',
+                    ...DATA_TABLE_BUTTON_MODE_CLASSES[button.mode || 'neutral']
+                  ]}
+                  onclick={() => button.onclick?.(row)}
+                >
+                  {#if Icon}
+                    <Icon />
+                  {/if}
+                  {button.label}
+                </button>
+              {/each}
+            </td>
+          {/if}
         </tr>
       {/each}
     </tbody>

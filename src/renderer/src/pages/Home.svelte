@@ -23,10 +23,10 @@
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import FormInfo from '@renderer/lib/ui/components/FormInfo.svelte'
-  import { PHDotsThreeBoldIcon, PHGitForkBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHDotsThreeBoldIcon, PHGitForkBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
   import { ask } from '@renderer/lib/ui/app/AlertManager.svelte'
-  import type { DataTableColumns, DataTableRows } from '@renderer/lib/ui/components/DataTable.svelte'
+  import type { DataTableButton, DataTableColumns, DataTableRows } from '@renderer/lib/ui/components/DataTable.svelte'
   import DataTable from '@renderer/lib/ui/components/DataTable.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
 
@@ -62,6 +62,37 @@
     { id: '1', name: 'John Doe', age: 30 },
     { id: '2', name: 'Jane Doe', age: 25 },
     { id: '3', name: 'Bob Smith', age: 40 }
+  ]
+  const DATA_TABLE_BUTTONS: DataTableButton<User>[] = [
+    {
+      icon: PHTrashBoldIcon,
+      label: 'Actions',
+      mode: 'danger',
+      onclick: (row) => {
+        const toast = new Toast({ title: 'Deleted user!', type: Toast.Type.DANGER, description: `You deleted the user ${row.name}` })
+        Toasts.instance.addToast(toast)
+      }
+    },
+    {
+      icon: PHTrashBoldIcon,
+      mode: 'success',
+      onclick: (row) => {
+        const toast = new Toast({ title: 'Saved user!', type: Toast.Type.SUCCESS, description: `You saved the user ${row.name}` })
+        Toasts.instance.addToast(toast)
+      }
+    },
+    {
+      label: 'Actions',
+      mode: 'neutral',
+      onclick: (row) => {
+        const toast = new Toast({
+          title: 'NULL user!',
+          type: Toast.Type.NEUTRAL,
+          description: `You did something to the user ${row.name}. NULL beccause I don't know what to say xD`
+        })
+        Toasts.instance.addToast(toast)
+      }
+    }
   ]
   let dataTableSelectedRows = $state([])
 
@@ -112,7 +143,7 @@
         <P mode="secondary">DataTable is used to display data in a table.</P>
       </FlexContainer>
 
-      <DataTable columns={DATA_TABLE_COLUMNS} rows={DATA_TABLE_ROWS} selectable bind:selected={dataTableSelectedRows} />
+      <DataTable columns={DATA_TABLE_COLUMNS} rows={DATA_TABLE_ROWS} buttons={DATA_TABLE_BUTTONS} selectable bind:selected={dataTableSelectedRows} />
     </FlexContainer>
 
     <ColumnsContainer columns={3} gap="xl">
