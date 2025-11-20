@@ -134,13 +134,7 @@
               </FlexContainer>
 
               <FlexContainer gap="sm">
-                <Tooltip disableHoverableContent>
-                  {#snippet trigger()}
-                    <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
-                  {/snippet}
-
-                  {vsVersion.path}
-                </Tooltip>
+                <P mode="secondary" overflow="ellipsis">{vsVersion.path} asd sad adas da</P>
               </FlexContainer>
             </FlexContainer>
 
