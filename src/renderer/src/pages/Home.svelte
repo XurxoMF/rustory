@@ -106,6 +106,15 @@
       <P mode="secondary">This is a demo of all the components! Mostly used during development.</P>
     </FlexContainer>
 
+    <FlexContainer direction="col" gap="lg">
+      <FlexContainer direction="col" gap="xs">
+        <H3>DataTable</H3>
+        <P mode="secondary">DataTable is used to display data in a table.</P>
+      </FlexContainer>
+
+      <DataTable columns={DATA_TABLE_COLUMNS} rows={DATA_TABLE_ROWS} selectable bind:selected={dataTableSelectedRows} />
+    </FlexContainer>
+
     <ColumnsContainer columns={3} gap="xl">
       <!-- Inputs & Buttons -->
       <ColumnItem>
@@ -414,18 +423,6 @@
               />
             </FlexContainer>
           </FlexContainer>
-        </FlexContainer>
-      </ColumnItem>
-
-      <!-- DataTable -->
-      <ColumnItem>
-        <FlexContainer direction="col" gap="lg">
-          <FlexContainer direction="col" gap="xs">
-            <H3>DataTable</H3>
-            <P mode="secondary">DataTable is used to display data in a table.</P>
-          </FlexContainer>
-
-          <DataTable columns={DATA_TABLE_COLUMNS} rows={DATA_TABLE_ROWS} selectable bind:selected={dataTableSelectedRows} />
         </FlexContainer>
       </ColumnItem>
 
