@@ -23,7 +23,7 @@
   <Tooltip.Root bind:open {...restProps}>
     <Tooltip.Trigger
       class={[
-        'shrink-0 flex items-center justify-center rounded-full outline-none',
+        'shrink-0 rounded-full outline-none',
         'focus-visible:inset-ring-1 focus-visible:ring-2',
         'cursor-help data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',

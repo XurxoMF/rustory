@@ -190,7 +190,7 @@
     {disabled}
     textValue={value}
     class={[
-      'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
+      'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
@@ -201,7 +201,7 @@
     {#if Icon}
       <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
     {/if}
-    <span>{label}</span>
+    {label}
   </ContextMenu.Item>
 {/snippet}
 
@@ -234,7 +234,7 @@
       {/snippet}
     </ContextMenu.CheckboxItem>
 
-    <span class={['text-current/50', disabled && 'opacity-40']}>{label}</span>
+    <span class={['text-current/50 font-medium leading-tight', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -266,7 +266,7 @@
       {...radioItemProps}
     />
 
-    <span class={['font-medium', disabled && 'opacity-40']}>{label}</span>
+    <span class={['text-current/50 font-medium leading-tight', disabled && 'opacity-40']}>{label}</span>
   </div>
 {/snippet}
 
@@ -274,7 +274,7 @@
   <ContextMenu.Sub {...submenuProps}>
     <ContextMenu.SubTrigger
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
+        'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
@@ -285,7 +285,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span>{label}</span>
+      {label}
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 
@@ -323,7 +323,7 @@
       {disabled}
       textValue={value}
       class={[
-        'relative w-full flex items-center justify-between p-2 pl-9 font-medium rounded-sm outline-none',
+        'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
@@ -334,7 +334,7 @@
       {#if Icon}
         <Icon class="absolute left-1 top-1/2 -translate-y-1/2 shrink-0 w-6 h-6 flex items-center justify-center text-lg text-current/50" />
       {/if}
-      <span>{label}</span>
+      {label}
       <PHCaretRightBoldIcon class="pl-4 ml-auto flex items-center justify-center opacity-40" />
     </ContextMenu.SubTrigger>
 

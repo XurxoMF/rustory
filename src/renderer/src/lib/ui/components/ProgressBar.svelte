@@ -13,10 +13,10 @@
 
   export const PROGRESS_BAR_INNER_MODE_CLASSES: Record<ProgressBarModeTypes, string[]> = {
     neutral: ['bg-zinc-800', 't-light:bg-zinc-300'],
-    info: ['bg-blue-500', 't-light:bg-blue-500'],
-    success: ['bg-green-500', 't-light:bg-green-500'],
-    warning: ['bg-yellow-500', 't-light:bg-yellow-500'],
-    danger: ['bg-red-500', 't-light:bg-red-500']
+    info: ['bg-blue-800', 't-light:bg-blue-300'],
+    success: ['bg-green-800', 't-light:bg-green-300'],
+    warning: ['bg-yellow-800', 't-light:bg-yellow-300'],
+    danger: ['bg-red-800', 't-light:bg-red-300']
   } as const
 
   export type ProgressBarProps = WithoutKeys<WithoutChildrenOrChild<Progress.RootProps>, 'class'> & {

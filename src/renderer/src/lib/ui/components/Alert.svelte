@@ -89,7 +89,7 @@
               oncancel?.()
             }}
             class={[
-              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none',
+              'shrink-0 flex-1 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight font-medium rounded-sm outline-none',
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',
@@ -106,7 +106,7 @@
               onaccept?.()
             }}
             class={[
-              'shrink-0 flex-1 min-w-10 min-h-10 flex items-center justify-center gap-2 p-2 font-medium rounded-sm outline-none',
+              'shrink-0 flex-1 min-w-9 min-h-9 flex items-center justify-center gap-2 p-2 leading-tight font-medium rounded-sm outline-none',
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',

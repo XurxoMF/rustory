@@ -96,7 +96,7 @@
           <FlexContainer gap="base" alignX="between">
             <Dialog.Title class="text-2xl font-bold">{m.common__search()}</Dialog.Title>
 
-            <Button mode="transparent" tabindex={-1}>
+            <Button mode="transparent" onclick={() => closeCommand()} tabindex={-1}>
               <PHXBoldIcon class="text-current/50" />
             </Button>
           </FlexContainer>
@@ -107,7 +107,7 @@
         <Command.Root class="w-full">
           <Command.Input
             class={[
-              'w-full min-w-10 min-h-10 flex items-center justify-between gap-2 p-2 rounded-sm outline-none',
+              'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none',
               'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
               'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
@@ -154,7 +154,7 @@
       closeCommand()
     }}
     class={[
-      'w-full flex items-center justify-start gap-2 p-2 rounded-sm font-medium outline-none',
+      'w-full flex items-center justify-start gap-2 p-2 leading-tight rounded-sm font-medium outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
       'not-data-disabled:hover:bg-zinc-800 data-selected:bg-zinc-800',
