@@ -134,7 +134,7 @@
               </FlexContainer>
 
               <FlexContainer gap="sm">
-                <Tooltip triggerWidth="full">
+                <Tooltip triggerWidth="full" delayDuration={500}>
                   {#snippet trigger()}
                     <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
                   {/snippet}
