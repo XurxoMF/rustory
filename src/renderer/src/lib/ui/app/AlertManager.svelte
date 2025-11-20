@@ -19,21 +19,27 @@
     })
   }
 
-  function onaccept(): void {
-    const question = queue.shift()
+  function onaccept(question: AlertManagerQuestion): void {
     if (question) {
       question.resolve(true)
     }
   }
 
-  function oncancel(): void {
-    const question = queue.shift()
+  function oncancel(question: AlertManagerQuestion): void {
     if (question) {
       question.resolve(false)
     }
+    deleteQuestion()
+  }
+
+  // This is done this way so the animation plays before dissapearing
+  function deleteQuestion(): void {
+    setTimeout(() => {
+      queue.shift()
+    }, 200)
   }
 </script>
 
 {#if queue.length > 0}
-  <Alert title={queue[0].title} description={queue[0].description} {onaccept} {oncancel} />
+  <Alert title={queue[0].title} description={queue[0].description} onaccept={() => onaccept(queue[0])} oncancel={() => oncancel(queue[0])} />
 {/if}

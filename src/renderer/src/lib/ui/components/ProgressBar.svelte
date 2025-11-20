@@ -30,7 +30,7 @@
   let { value = 0, mode = 'neutral', ...restProps }: ProgressBarProps = $props()
 </script>
 
-<Progress.Root {value} class={[['w-full h-2 rounded-full overflow-hidden shadow-xl', 'inset-ring-2', ...PROGRESS_BAR_ROOT_MODE_CLASSES[mode]]]} {...restProps}>
+<Progress.Root {value} class={[['w-full h-2 rounded-full overflow-hidden shadow-xl', 'inset-ring-1', ...PROGRESS_BAR_ROOT_MODE_CLASSES[mode]]]} {...restProps}>
   <div
     class={['w-full h-full flex-1 rounded-full transition-transform', ...PROGRESS_BAR_INNER_MODE_CLASSES[mode]]}
     style={`transform: translateX(-${100 - (100 * (value ?? 0)) / 100}%)`}

@@ -77,7 +77,7 @@
 >
   <Switch.Thumb
     class={[
-      'shrink-0 w-4 h-4 data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0 inline rounded-full outline-none',
+      'shrink-0 w-4 h-4 data-[state=checked]:translate-x-6 data-[state=unchecked]:translate-x-0 inline rounded-full outline-none transition-transform',
       ...SWITCH_THUMB_MODE_CLASSES[mode]
     ]}
     {...thumbProps}

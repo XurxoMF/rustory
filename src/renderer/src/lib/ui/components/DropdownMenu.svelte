@@ -288,8 +288,8 @@
       'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
       'cursor-pointer data-disabled:cursor-not-allowed',
       'data-disabled:opacity-40',
-      'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
-      't-light:not-data-disabled:hover:bg-zinc-300 t-light:ddata-highlighted:bg-zinc-300'
+      'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+      't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
     ]}
     {...itemProps}
   >
@@ -372,8 +372,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:ddata-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
       ]}
       {...submenuTriggerProps}
     >
@@ -421,8 +421,8 @@
         'relative w-full flex items-center justify-between p-2 pl-9 leading-tight font-medium rounded-sm outline-none',
         'cursor-pointer data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
-        'not-data-disabled:hover:bg-zinc-800 ddata-highlighted:bg-zinc-800',
-        't-light:not-data-disabled:hover:bg-zinc-300 t-light:ddata-highlighted:bg-zinc-300'
+        'not-data-disabled:hover:bg-zinc-800 data-highlighted:bg-zinc-800',
+        't-light:not-data-disabled:hover:bg-zinc-300 t-light:data-highlighted:bg-zinc-300'
       ]}
       {...itemSubmenuTriggerProps}
     >

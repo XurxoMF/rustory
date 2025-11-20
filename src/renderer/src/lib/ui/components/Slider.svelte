@@ -4,11 +4,11 @@
   export type SliderModes = 'neutral' | 'info' | 'success' | 'warning' | 'danger'
 
   export const SLIDER_SPAN_MODE_CLASSES: Record<SliderModes, string[]> = {
-    neutral: ['inset-ring-2', 'bg-zinc-800/50 inset-ring-zinc-800', 't-light:bg-zinc-300/50 t-light:inset-ring-zinc-300'],
-    info: ['inset-ring-2', 'bg-blue-800/30 inset-ring-blue-800', 't-light:bg-blue-300/30 t-light:inset-ring-blue-300'],
-    success: ['inset-ring-2', 'bg-green-800/30 inset-ring-green-800', 't-light:bg-green-300/30 t-light:inset-ring-green-300'],
-    warning: ['inset-ring-2', 'bg-yellow-800/30 inset-ring-yellow-800', 't-light:bg-yellow-300/30 t-light:inset-ring-yellow-300'],
-    danger: ['inset-ring-2', 'bg-red-800/30 inset-ring-red-800', 't-light:bg-red-300/30 t-light:inset-ring-red-300']
+    neutral: ['inset-ring-1', 'bg-zinc-800/50 inset-ring-zinc-800', 't-light:bg-zinc-300/50 t-light:inset-ring-zinc-300'],
+    info: ['inset-ring-1', 'bg-blue-800/30 inset-ring-blue-800', 't-light:bg-blue-300/30 t-light:inset-ring-blue-300'],
+    success: ['inset-ring-1', 'bg-green-800/30 inset-ring-green-800', 't-light:bg-green-300/30 t-light:inset-ring-green-300'],
+    warning: ['inset-ring-1', 'bg-yellow-800/30 inset-ring-yellow-800', 't-light:bg-yellow-300/30 t-light:inset-ring-yellow-300'],
+    danger: ['inset-ring-1', 'bg-red-800/30 inset-ring-red-800', 't-light:bg-red-300/30 t-light:inset-ring-red-300']
   } as const
 
   export const SLIDER_RANGE_MODE_CLASSES: Record<SliderModes, string[]> = {
@@ -92,11 +92,11 @@
 >
   {#snippet children({ thumbItems, tickItems })}
     <span class={['relative w-full h-2 rounded-full', ...SLIDER_SPAN_MODE_CLASSES[mode]]}>
-      <Slider.Range class={['absolute h-full rounded-full', ...SLIDER_RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
+      <Slider.Range class={['absolute h-full rounded-full transition-all', ...SLIDER_RANGE_MODE_CLASSES[mode]]} {...rangeProps} />
     </span>
 
     {#each thumbItems as { index } (index)}
-      <Slider.Thumb {index} class={['w-5 h-5 z-10 rounded-full outline-none', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
+      <Slider.Thumb {index} class={['w-5 h-5 z-10 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
     {/each}
 
     {#each tickItems as { value, index } (index)}
@@ -105,7 +105,7 @@
       {/if}
 
       {#if withTickLabels}
-        <Slider.TickLabel {index} class={['text-xs font-medium', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
+        <Slider.TickLabel {index} class={['text-xs font-medium transition-colors', ...SLIDER_TICK_LABEL_MODE_CLASSES[mode]]} {...tickLabelProps}>
           {value}
         </Slider.TickLabel>
       {/if}
