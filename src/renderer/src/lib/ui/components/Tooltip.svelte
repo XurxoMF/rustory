@@ -2,12 +2,30 @@
   import { type WithoutChildrenOrChild } from 'bits-ui'
   import type { Snippet } from 'svelte'
 
+  export const TOOLTIP_TRIGGER_HEIGHT_CLASSES = {
+    fit: ['h-fit'],
+    full: ['h-full'],
+    'flex-1': ['flex-1']
+  } as const
+
+  export type TooltipTriggerHeightTypes = keyof typeof TOOLTIP_TRIGGER_HEIGHT_CLASSES
+
+  export const TOOLTIP_TRIGGER_WIDTH_CLASSES = {
+    fit: ['w-fit'],
+    full: ['w-full'],
+    'flex-1': ['flex-1']
+  } as const
+
+  export type TooltipTriggerWidthTypes = keyof typeof TOOLTIP_TRIGGER_WIDTH_CLASSES
+
   export type TooltipTriggerProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.TriggerProps>, 'class'>
 
   export type TooltipContentProps = WithoutKeys<WithoutChildrenOrChild<Tooltip.ContentProps>, 'class' | 'sideOffset'>
 
   export type TooltipProps = WithoutKeys<Tooltip.RootProps, 'class'> & {
     trigger: Snippet
+    triggerWidth?: TooltipTriggerWidthTypes | undefined
+    triggerHeight?: TooltipTriggerHeightTypes | undefined
     triggerProps?: TooltipTriggerProps | undefined
     contentProps?: TooltipContentProps | undefined
   }
@@ -16,7 +34,16 @@
 <script lang="ts">
   import { Tooltip } from 'bits-ui'
 
-  let { open = $bindable(false), children, trigger, triggerProps, contentProps, ...restProps }: TooltipProps = $props()
+  let {
+    open = $bindable(false),
+    children,
+    trigger,
+    triggerWidth = 'fit',
+    triggerHeight = 'fit',
+    triggerProps,
+    contentProps,
+    ...restProps
+  }: TooltipProps = $props()
 </script>
 
 <Tooltip.Provider delayDuration={150}>
@@ -28,7 +55,9 @@
         'cursor-help data-disabled:cursor-not-allowed',
         'data-disabled:opacity-40',
         'inset-ring-zinc-800 ring-zinc-800',
-        't-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+        't-light:inset-ring-zinc-300 t-light:ring-zinc-300',
+        ...TOOLTIP_TRIGGER_HEIGHT_CLASSES[triggerHeight],
+        ...TOOLTIP_TRIGGER_WIDTH_CLASSES[triggerWidth]
       ]}
       {...triggerProps}
     >

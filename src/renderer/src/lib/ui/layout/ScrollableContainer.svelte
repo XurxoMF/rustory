@@ -17,13 +17,13 @@
   </ScrollArea.Viewport>
 
   {#if orientation === 'vertical' || orientation === 'both'}
-    <ScrollArea.Scrollbar orientation="vertical" class="w-1">
+    <ScrollArea.Scrollbar orientation="vertical" class="w-1.5">
       <ScrollArea.Thumb class={['rounded-full', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}
 
   {#if orientation === 'horizontal' || orientation === 'both'}
-    <ScrollArea.Scrollbar orientation="horizontal" class="flex h-1">
+    <ScrollArea.Scrollbar orientation="horizontal" class="flex h-1.5">
       <ScrollArea.Thumb class={['rounded-full', 't-dark:bg-zinc-800', 't-light:bg-zinc-300']} />
     </ScrollArea.Scrollbar>
   {/if}

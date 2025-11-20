@@ -64,7 +64,7 @@
     </div>
 
     <div class="app-no-drag flex-1 h-full flex items-center justify-center">
-      <Button mode="neutral" width="full" onclick={() => openCommand()}>
+      <Button mode="neutral" width="full" padding="sm" onclick={() => openCommand()}>
         <span class="relative w-full h-full">
           {m.placeholders__search_or_use_a_command()}
 

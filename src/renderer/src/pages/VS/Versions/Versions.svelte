@@ -134,7 +134,13 @@
               </FlexContainer>
 
               <FlexContainer gap="sm">
-                <P mode="secondary" overflow="ellipsis">{vsVersion.path} asd sad adas da</P>
+                <Tooltip triggerWidth="full">
+                  {#snippet trigger()}
+                    <P mode="secondary" overflow="ellipsis">{vsVersion.path}</P>
+                  {/snippet}
+
+                  {vsVersion.path}
+                </Tooltip>
               </FlexContainer>
             </FlexContainer>
 
