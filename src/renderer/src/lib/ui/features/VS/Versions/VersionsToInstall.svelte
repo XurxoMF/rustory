@@ -3,14 +3,9 @@
   import { onMount } from 'svelte'
   import { mergeProps } from 'bits-ui'
 
-  import { m } from '@renderer/paraglide/messages'
-
-  import { someInSet } from '@shared/utils/common'
-
   import { Request } from '@renderer/lib/classes/Request.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
-  import { Data } from '@renderer/lib/classes/Data.svelte'
 
   import ComboBox, { type ComboBoxInputProps, type ComboBoxProps } from '@renderer/lib/ui/components/ComboBox.svelte'
 
@@ -35,7 +30,7 @@
 
   let mergedInputProps = $derived(
     mergeProps(inputProps, {
-      placeholder: m.vintagestory__version()
+      placeholder: 'VS Version'
     })
   )
 
@@ -53,8 +48,7 @@
   items={versions.map((v) => ({
     label: v.version,
     value: v.version,
-    comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`,
-    disabled: someInSet(Data.instance.vsVersions, (vsv) => vsv.version === v.version)
+    comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`
   }))}
   onValueChange={handleValueChange}
   inputProps={mergedInputProps}

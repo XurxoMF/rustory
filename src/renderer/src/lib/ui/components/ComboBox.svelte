@@ -90,8 +90,6 @@
 <script lang="ts">
   import { Combobox, mergeProps } from 'bits-ui'
 
-  import { m } from '@renderer/paraglide/messages'
-
   import { PHCaretUpDownBoldIcon, PHCheckBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
@@ -130,7 +128,7 @@
       clearOnDeselect
       class={[
         'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none',
-        'cursor-pointer data-disabled:cursor-not-allowed read-only:cursor-default',
+        'cursor-text data-disabled:cursor-not-allowed read-only:cursor-default',
         'data-disabled:opacity-40',
         'placeholder:text-current/30',
         ...COMBOBOX_INPUT_MODE_CLASSES[mode]
@@ -192,7 +190,7 @@
           </Combobox.Item>
         {:else}
           <span class={['w-full flex items-center justify-center px-2 py-4 text-sm text-current/50 cursor-pointer']}>
-            {`${m.common__no_results_found()}...`}
+            {`No results found...`}
           </span>
         {/each}
       </Combobox.Viewport>

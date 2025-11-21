@@ -240,14 +240,12 @@
                     <Button mode="danger">Error Button</Button>
                   </FlexContainer>
 
-                  <FlexContainer direction="col" gap="xs">
-                    <FormInfo
-                      info={['This input needs more info']}
-                      success={['If the input were correct you would see this']}
-                      warning={["This field is not correct but it'll work"]}
-                      error={['This field has errors']}
-                    />
-                  </FlexContainer>
+                  <FormInfo
+                    info={['This input needs more info']}
+                    success={['If the input were correct you would see this']}
+                    warning={["This field is not correct but it'll work"]}
+                    error={['This field has errors']}
+                  />
                 </FlexContainer>
               </FlexContainer>
             </FlexContainer>

@@ -35,41 +35,46 @@
   import { Dialog, Command } from 'bits-ui'
   import { goto } from '@mateothegreat/svelte5-router'
 
-  import { m } from '@renderer/paraglide/messages'
-
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { PHFolderOpenBoldIcon, PHGearBoldIcon, PHGitForkBoldIcon, PHHouseBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let groups: CommandGroup[] = [
     {
-      label: m.common__pages(),
+      label: 'Pages',
       items: [
         {
           value: 'home-page',
-          keywords: [m.common__home(), m.common__pages()],
-          label: m.common__home(),
+          keywords: ['Home', 'Pages'],
+          label: 'Home',
           icon: PHHouseBoldIcon,
           onclick: () => goto('/')
         },
         {
           value: 'vs-versions-page',
-          keywords: [m.vintagestory__versions(), m.common__pages()],
-          label: m.vintagestory__versions(),
+          keywords: ['Vintage Story Versions', 'Pages'],
+          label: 'Vintage Story Versions',
           icon: PHGitForkBoldIcon,
           onclick: () => goto('/vs/versions')
         },
         {
           value: 'vs-instances-page',
-          keywords: ['VS Instances', m.common__pages()],
-          label: 'VS Instances',
+          keywords: ['Vintage Story Instances', 'Pages'],
+          label: 'Vintage Story Instances',
           icon: PHFolderOpenBoldIcon,
           onclick: () => goto('/vs/instances')
         },
         {
+          value: 'vs-add-instance-page',
+          keywords: ['Add a Vintage Story Instance', 'Pages'],
+          label: 'Add a Vintage Story Instance',
+          icon: PHFolderOpenBoldIcon,
+          onclick: () => goto('/vs/instances/add')
+        },
+        {
           value: 'config-page',
-          keywords: [m.common__config(), m.common__pages()],
-          label: m.common__config(),
+          keywords: ['Config', 'Pages'],
+          label: 'Config',
           icon: PHGearBoldIcon,
           onclick: () => goto('/config')
         }
@@ -101,7 +106,7 @@
       <FlexContainer direction="col" height="full" padding="xl" gap="xl">
         <FlexContainer direction="col" gap="xs">
           <FlexContainer gap="base" alignX="between">
-            <Dialog.Title class="text-2xl font-bold">{m.common__search()}</Dialog.Title>
+            <Dialog.Title class="text-2xl font-bold">Search</Dialog.Title>
 
             <Button mode="transparent" onclick={() => closeCommand()} tabindex={-1}>
               <PHXBoldIcon class="text-current/50" />
@@ -116,19 +121,19 @@
             class={[
               'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none',
               'inset-ring-2 focus-visible:not-read-only:inset-ring-1 focus-visible:not-read-only:ring-2',
-              'cursor-pointer disabled:cursor-not-allowed read-only:cursor-default',
+              'cursor-text disabled:cursor-not-allowed read-only:cursor-default',
               'disabled:opacity-40',
               'placeholder:text-current/30',
               'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
               't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
             ]}
-            placeholder={`${m.common__search()}...`}
+            placeholder={`Searching...`}
           />
 
           <Command.List class="max-h-96 w-full overflow-y-auto @container">
             <Command.Viewport class="w-full">
               <Command.Empty class={['w-full flex items-center justify-center mt-8 text-current/50 cursor-pointer']}>
-                {`${m.common__no_results_found()}...`}
+                {`No results found...`}
               </Command.Empty>
 
               {@render CRenderGroups(groups)}

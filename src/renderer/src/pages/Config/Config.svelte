@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { m } from '@renderer/paraglide/messages'
-
   import { Config } from '@renderer/lib/classes/Config.svelte'
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
 
@@ -17,14 +15,14 @@
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import { P, H1, H3 } from '@renderer/lib/ui/components/Fonts'
 
-  Breadcrumbs.instance.segments = [{ label: m.common__config(), href: '/config' }]
+  Breadcrumbs.instance.segments = [{ label: 'Configuration', href: '/config' }]
 </script>
 
 <ScrollableContainer isBreakpoint>
   <FlexContainer direction="col" padding="xl" gap="xl">
     <FlexContainer direction="col" gap="base">
-      <H1>{m.common__config()}</H1>
-      <P mode="secondary">{m.descriptions__config_page()}</P>
+      <H1>Configuration</H1>
+      <P mode="secondary">Configure the app to fit your needs.</P>
     </FlexContainer>
 
     <FlexContainer direction="col" gap="lg">
@@ -37,8 +35,8 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label for="lang">{m.settings__language()}</Label>
-              <Info>{m.settings__language_description()}</Info>
+              <Label for="lang">Language</Label>
+              <Info>The language of the app.</Info>
             </FlexContainer>
 
             <Lang inputProps={{ id: 'lang' }} />
@@ -48,8 +46,8 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label for="scale">{m.settings__uiscale()}</Label>
-              <Info>{m.settings__uiscale_description()}</Info>
+              <Label for="scale">UI scale</Label>
+              <Info>The scale of the UI of the app.</Info>
             </FlexContainer>
 
             <Scale triggerProps={{ id: 'scale' }} />
@@ -59,8 +57,8 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label>{m.settings__theme()}</Label>
-              <Info>{m.settings__theme_description()}</Info>
+              <Label>Theme</Label>
+              <Info>The color theme of the app.</Info>
             </FlexContainer>
 
             <FlexContainer gap="xs">
@@ -81,17 +79,17 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label for="instanes-folder">{m.settings__vs_instances_folder()}</Label>
-              <Info>{m.settings__vs_instances_folder_description()}</Info>
+              <Label for="instanes-folder">VS Instances</Label>
+              <Info>The folder where the VS Instances will be created.</Info>
             </FlexContainer>
 
             <FlexContainer gap="xs">
               <Button
                 mode="neutral"
                 id="instanes-folder"
-                title={m.common__select_folder()}
+                title="Select a folder"
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__vs_instances_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog('VS Instances', 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
                   Config.instance.setVSInstancesPath(folder[0])
                 }}
@@ -99,13 +97,7 @@
                 <PHMagnifyingGlassBoldIcon />
               </Button>
 
-              <Input
-                type="text"
-                name={m.settings__vs_instances_folder()}
-                placeholder={m.settings__vs_instances_folder()}
-                value={Config.instance.vsInstancesPath}
-                readonly
-              />
+              <Input type="text" placeholder="Path" value={Config.instance.vsInstancesPath} readonly />
             </FlexContainer>
           </FlexContainer>
         </GridItem>
@@ -113,17 +105,17 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label for="versions-folder">{m.settings__vs_versions_folder()}</Label>
-              <Info>{m.settings__vs_versions_folder_description()}</Info>
+              <Label for="versions-folder">VS Versions folder</Label>
+              <Info>The folder where the VS Versions will be installed.</Info>
             </FlexContainer>
 
             <FlexContainer gap="xs">
               <Button
                 mode="neutral"
                 id="versions-folder"
-                title={m.common__select_folder()}
+                title="Select a folder"
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__vs_versions_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog('VS Versions', 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
                   Config.instance.setVSVersionsPath(folder[0])
                 }}
@@ -131,13 +123,7 @@
                 <PHMagnifyingGlassBoldIcon />
               </Button>
 
-              <Input
-                type="text"
-                name={m.settings__vs_versions_folder()}
-                placeholder={m.settings__vs_versions_folder()}
-                value={Config.instance.vsVersionsPath}
-                readonly
-              />
+              <Input type="text" placeholder="Path" value={Config.instance.vsVersionsPath} readonly />
             </FlexContainer>
           </FlexContainer>
         </GridItem>
@@ -145,17 +131,17 @@
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
-              <Label for="backups-folder">{m.settings__vs_instance_backups_folder()}</Label>
-              <Info>{m.settings__vs_instance_backups_folder_description()}</Info>
+              <Label for="backups-folder">Backups folder</Label>
+              <Info>The folder where the backups will be saved if new path is not specified.</Info>
             </FlexContainer>
 
             <FlexContainer gap="xs">
               <Button
                 mode="neutral"
                 id="backups-folder"
-                title={m.common__select_folder()}
+                title="Select a folder"
                 onclick={async () => {
-                  const folder = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
+                  const folder = await window.api.fs.showDialog('Backups', 'openDirectory', false, [])
                   if (!folder || folder.length < 1) return
                   Config.instance.setVSInstanceBackupsPath(folder[0])
                 }}
@@ -163,13 +149,7 @@
                 <PHMagnifyingGlassBoldIcon />
               </Button>
 
-              <Input
-                type="text"
-                name={m.settings__vs_instance_backups_folder()}
-                placeholder={m.settings__vs_instance_backups_folder()}
-                value={Config.instance.vsInstanceBackupsPath}
-                readonly
-              />
+              <Input type="text" placeholder="Path" value={Config.instance.vsInstanceBackupsPath} readonly />
             </FlexContainer>
           </FlexContainer>
         </GridItem>

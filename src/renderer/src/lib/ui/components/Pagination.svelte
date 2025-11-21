@@ -22,8 +22,6 @@
 <script lang="ts">
   import { Pagination } from 'bits-ui'
 
-  import { m } from '@renderer/paraglide/messages'
-
   import { P } from '@renderer/lib/ui/components/Fonts'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { PHCaretLeftBoldIcon, PHCaretRightBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
@@ -95,7 +93,7 @@
       </FlexContainer>
 
       {#if resume}
-        <P mode="secondary">{m.common__showing()} {range.start} - {range.end}</P>
+        <P mode="secondary">Showing {range.start} - {range.end}</P>
       {/if}
     </FlexContainer>
   {/snippet}

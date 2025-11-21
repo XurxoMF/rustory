@@ -1,5 +1,3 @@
-import { m } from '@renderer/paraglide/messages'
-
 /**
  * Loader to manage the loading process.
  */
@@ -21,10 +19,10 @@ export class Loader {
    * If you want to add a new tasks to the list just add a new task here.
    */
   public static TASKS = [
-    { id: 'app-init', description: m.loader__tasks__desc__app_init() },
-    { id: 'hotkeys-loading', description: m.loader__tasks__desc__hotkeys_loading() },
-    { id: 'data-loading', description: m.loader__tasks__desc__data_loading() },
-    { id: 'timeout', description: m.loader__tasks__desc__timeout() }
+    { id: 'app-init', description: 'Loading app config...' },
+    { id: 'hotkeys-loading', description: 'Loading hotkeys...' },
+    { id: 'data-loading', description: 'Loading app data...' },
+    { id: 'timeout', description: 'Rendering the UI...' }
   ] as const
 
   /**

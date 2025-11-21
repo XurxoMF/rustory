@@ -2,8 +2,6 @@
   import { type Component } from 'svelte'
   import { route } from '@mateothegreat/svelte5-router'
 
-  import { m } from '@renderer/paraglide/messages'
-
   import { type IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { PHGearBoldIcon, PHGitForkBoldIcon, PHHandHeartDuotoneIcon, PHHouseBoldIcon, PHFolderOpenBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
@@ -11,17 +9,17 @@
 
 <nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r', 'border-r-zinc-800', 't-light:border-r-zinc-200']}>
   <div class="w-full flex flex-col items-start justify-between gap-1">
-    {@render NavLink(PHHouseBoldIcon, m.common__home(), '/')}
+    {@render NavLink(PHHouseBoldIcon, 'Hope', '/')}
     {@render NavLink(PHFolderOpenBoldIcon, 'VS Instances', '/vs/instances')}
-    {@render NavLink(PHGitForkBoldIcon, m.vintagestory__versions(), '/vs/versions')}
+    {@render NavLink(PHGitForkBoldIcon, 'VS Versions', '/vs/versions')}
   </div>
 
   <div class="w-full flex flex-col items-start justify-between gap-1">
     <Button mode="transparent" width="full" align="start" onclick={() => window.api.shell.openURL('https://ko-fi.com/xurxomf')}>
       <PHHandHeartDuotoneIcon class="text-2xl text-pink-500" />
-      <span class="text-pink-500">{m.common__donations()}</span>
+      <span class="text-pink-500">Support Us</span>
     </Button>
-    {@render NavLink(PHGearBoldIcon, m.common__config(), '/config')}
+    {@render NavLink(PHGearBoldIcon, 'Config', '/config')}
   </div>
 </nav>
 

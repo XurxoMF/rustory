@@ -1,12 +1,9 @@
 <script lang="ts">
-  import { m } from '@renderer/paraglide/messages'
-
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { Data } from '@renderer/lib/classes/Data.svelte'
   import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
   import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
-  import { Toasts, Toast } from '@renderer/lib/classes/Toasts.svelte'
 
   import { PHFolderOpenBoldIcon, PHMagnifyingGlassBoldIcon, PHPlusBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Button from '@renderer/lib/ui/components/Button.svelte'
@@ -25,7 +22,7 @@
   import { ask } from '@renderer/lib/ui/app/AlertManager.svelte'
   import FormInfo from '@renderer/lib/ui/components/FormInfo.svelte'
 
-  Breadcrumbs.instance.segments = [{ label: m.vintagestory__versions(), href: '/vs/versions' }]
+  Breadcrumbs.instance.segments = [{ label: 'VS Versions', href: '/vs/versions' }]
 
   // If the dialog to install a version is open
   let isAddVSVersionDialogOpen = $state(false)
@@ -53,14 +50,6 @@
       clearInstallVersion()
       return
     }
-
-    // If there are errors, show a toast
-    const toast = new Toast({
-      title: m.toasts__title__missing_fields(),
-      type: Toast.Type.DANGER,
-      description: m.toasts__description__missing_fields()
-    })
-    Toasts.instance.addToast(toast)
   }
 
   function clearInstallVersion(): void {
@@ -78,7 +67,7 @@
   <FlexContainer direction="col" padding="xl" gap="xl">
     <FlexContainer direction="col" gap="base">
       <FlexContainer gap="base">
-        <H1>{m.vintagestory__versions()}</H1>
+        <H1>VS Versions</H1>
 
         <Tooltip disableHoverableContent>
           {#snippet trigger()}
@@ -91,7 +80,7 @@
         </Tooltip>
       </FlexContainer>
 
-      <P mode="secondary">{m.descriptions__vs_versions_page()}</P>
+      <P mode="secondary">Manage your Vintage Story Versions and everythig related with them.</P>
     </FlexContainer>
 
     <GridContainer columns={3} gap="lg">
@@ -173,53 +162,51 @@
       <FlexContainer direction="col" gap="base">
         <FlexContainer direction="col" gap="sm">
           <FlexContainer gap="sm">
-            <Label for="versions-to-install">{m.vintagestory__version()}</Label>
-            <Info>{m.descriptions__vs_version_to_install()}</Info>
+            <Label for="versions-to-install">Vintage Story Version</Label>
+            <Info>The Vinatger Story Version to install.</Info>
           </FlexContainer>
 
-          <VersionsToInstall bind:version mode={versionErrors.length > 0 ? 'danger' : 'neutral'} onValueChange={() => (versionErrors = [])} required />
+          <VersionsToInstall
+            inputProps={{ id: 'versions-to-install' }}
+            bind:version
+            mode={versionErrors.length > 0 ? 'danger' : 'neutral'}
+            onValueChange={() => (versionErrors = [])}
+            required
+          />
 
-          <FlexContainer direction="col" gap="xs">
-            <FormInfo error={versionErrors} />
-          </FlexContainer>
+          <FormInfo error={versionErrors} />
         </FlexContainer>
 
         <FlexContainer direction="col" gap="sm">
           <FlexContainer gap="sm">
-            <Label for="version-path">{m.labels__vs_version_path()}</Label>
-            <Info>{m.descriptions__vs_version_path()}</Info>
+            <Label for="version-path">Path</Label>
+            <Info>The path where the VS Version will be installed.<br />It'll use the default path + the version if left empty.</Info>
           </FlexContainer>
 
           <FlexContainer gap="xs">
             <Button
               mode="neutral"
               id="version-path"
-              title={m.common__select_folder()}
+              title="Select a folder"
               onclick={async () => {
-                const selected = await window.api.fs.showDialog(m.settings__vs_instance_backups_folder(), 'openDirectory', false, [])
+                const selected = await window.api.fs.showDialog('Select a folder', 'openDirectory', false, [])
                 path = selected[0]
               }}
             >
               <PHMagnifyingGlassBoldIcon />
             </Button>
 
-            <Input type="text" name={m.labels__vs_version_path()} placeholder={m.labels__vs_version_path()} value={path} readonly required />
+            <Input type="text" placeholder="Path" value={path} readonly required />
           </FlexContainer>
 
-          <FlexContainer direction="col" gap="xs">
-            <FormInfo error={pathErrors} />
-          </FlexContainer>
+          <FormInfo error={pathErrors} />
         </FlexContainer>
       </FlexContainer>
 
       <FlexContainer gap="sm">
-        <Button mode="neutral" width="flex-1" onclick={clearInstallVersion}>
-          {m.common__cancel()}
-        </Button>
+        <Button mode="neutral" width="flex-1" onclick={clearInstallVersion}>Cancel</Button>
 
-        <Button mode="success" width="flex-1" type="submit">
-          {m.common__install()}
-        </Button>
+        <Button mode="success" width="flex-1" type="submit">Install</Button>
       </FlexContainer>
     </FlexContainer>
   </Form>

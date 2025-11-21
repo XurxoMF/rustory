@@ -160,7 +160,7 @@ export class RAPIVSVersion {
   public toJSON(): RAPIVSVersionType {
     return {
       version: this._version,
-      type: this._type as RAPIVSVersionType,
+      type: this._type as RAPIVSVersionTypes,
       releaseDate: this._releaseDate,
       importedDate: this._importedDate,
       windows: this._windows,
@@ -232,5 +232,5 @@ export namespace RAPIVSVersion {
    *
    * Must have at least the same properties as {@link RAPIVSVersionType}.
    */
-  export type Type = RAPIVSVersionType
+  export type Type = RAPIVSVersionTypes
 }

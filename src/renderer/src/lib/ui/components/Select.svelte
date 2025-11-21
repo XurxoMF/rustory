@@ -60,7 +60,6 @@
 <script lang="ts">
   import { Select } from 'bits-ui'
 
-  import { m } from '@renderer/paraglide/messages'
   import { PHCaretUpDownBoldIcon, PHCheckBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let {
@@ -137,7 +136,7 @@
           </Select.Item>
         {:else}
           <span class={['w-full flex items-center justify-center px-2 py-4 text-sm text-current/50 cursor-pointer']}>
-            {`${m.common__no_results_found()}...`}
+            {`No results found...`}
           </span>
         {/each}
       </Select.Viewport>

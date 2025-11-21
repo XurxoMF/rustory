@@ -9,7 +9,7 @@ declare global {
 
   type SizeUitsType = 'KB' | 'MB' | 'GB' | 'TB'
 
-  type PathsTypes = 'home' | 'appData' | 'userData' | 'temp' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos'
+  type PathsTypes = 'home' | 'appData' | 'userData' | 'logs' | 'desktop' | 'documents' | 'downloads' | 'music' | 'pictures' | 'videos'
 
   type VSAccountType = {
     id: number
@@ -149,11 +149,11 @@ declare global {
     path: string
   }
 
-  type RAPIVSVersionType = 'stable' | 'rc' | 'pre'
+  type RAPIVSVersionTypes = 'stable' | 'rc' | 'pre'
 
   type RAPIVSVersionType = {
     version: string
-    type: RAPIVSVersionType
+    type: RAPIVSVersionTypes
     releaseDate: number
     importedDate: number
     windows: string

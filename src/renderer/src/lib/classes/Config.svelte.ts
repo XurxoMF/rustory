@@ -1,4 +1,3 @@
-import { m } from '@renderer/paraglide/messages'
 import { getLocale, isLocale, setLocale, type Locale } from '@renderer/paraglide/runtime'
 import { RustoryConfigError } from '@shared/errors/RustoryConfigError'
 
@@ -24,8 +23,8 @@ export class Config {
    * List of all the available themes.
    */
   public static THEMES = [
-    { key: 'dark', name: m.themes__dark(), color: 'bg-zinc-900' },
-    { key: 'light', name: m.themes__light(), color: 'bg-zinc-100' }
+    { key: 'dark', name: 'Dark', color: 'bg-zinc-900' },
+    { key: 'light', name: 'Light', color: 'bg-zinc-100' }
   ] as const
 
   /**
