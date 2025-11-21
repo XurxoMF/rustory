@@ -6,8 +6,8 @@
   export const SWITCH_ROOT_MODE_CLASSES: Record<SwitchModes, string[]> = {
     neutral: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
-      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
-      't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+      'bg-zinc-800/50 not-data-disabled:hover:bg-zinc-800 not-data-disabled:data-[state=checked]:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-data-disabled:hover:bg-zinc-300 t-light:not-data-disabled:data-[state=checked]:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
     ],
     info: [
       'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',

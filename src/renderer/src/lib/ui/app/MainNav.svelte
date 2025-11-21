@@ -63,7 +63,7 @@
   <a
     href={link}
     use:route={{
-      active: { absolute: true, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
+      active: { absolute: false, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
     }}
     class={[
       'w-full h-9 flex items-center justify-between gap-2 p-2 text-current/50 font-medium rounded-sm outline-none',

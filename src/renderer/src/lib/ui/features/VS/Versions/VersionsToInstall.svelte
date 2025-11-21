@@ -2,7 +2,6 @@
   import json5 from 'json5'
   import { onMount } from 'svelte'
   import { mergeProps } from 'bits-ui'
-  import { someInSet } from '@shared/utils/common'
 
   import { Request } from '@renderer/lib/classes/Request.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
@@ -51,7 +50,7 @@
   items={versions.map((v) => ({
     label: v.version,
     value: v.version,
-    disabled: disableInstalled && someInSet(Data.instance.vsInstances, (i) => i.version === v.version),
+    disabled: disableInstalled && Data.instance.vsInstances.some((vsv) => vsv.version === v.version),
     comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`
   }))}
   onValueChange={handleValueChange}

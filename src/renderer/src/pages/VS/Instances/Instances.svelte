@@ -16,7 +16,10 @@
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { PHFolderOpenBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
-  Breadcrumbs.instance.segments = [{ label: 'VS Instances', href: '/vs/instnces' }]
+  Breadcrumbs.instance.segments = [
+    { label: 'VS', href: '/vs' },
+    { label: 'Instances', href: '/vs/instnces' }
+  ]
 </script>
 
 <ScrollableContainer isBreakpoint>
@@ -68,7 +71,7 @@
                           )
                           if (ok) {
                             await vsInstance.delete()
-                            Data.instance.vsInstances.delete(vsInstance)
+                            Data.instance.vsInstances = Data.instance.vsInstances.filter((i) => i.id !== vsInstance.id)
                           }
                         }}
                       >

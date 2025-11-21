@@ -106,7 +106,7 @@
                           const ok = await ask('Are you sure?', 'Are you sure you want to delete this VS Version? This action cannot be undone!')
                           if (ok) {
                             await vsVersion.delete()
-                            Data.instance.vsVersions.delete(vsVersion)
+                            Data.instance.vsVersions = Data.instance.vsVersions.filter((v) => v.version !== vsVersion.version)
                           }
                         }}
                       >

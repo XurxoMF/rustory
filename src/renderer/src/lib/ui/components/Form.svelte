@@ -1,7 +1,7 @@
 <script lang="ts" module>
   import type { HTMLAttributes } from 'svelte/elements'
 
-  export type FormProps = WithoutKeys<HTMLAttributes<HTMLFormElement>, 'class'>
+  export type FormProps = WithoutKeys<HTMLAttributes<HTMLFormElement>, 'class' | 'novalidate'>
 </script>
 
 <script lang="ts">
@@ -9,6 +9,7 @@
 </script>
 
 <form
+  novalidate
   class="w-full h-full"
   onsubmit={(e) => {
     e.preventDefault()

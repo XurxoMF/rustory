@@ -83,7 +83,7 @@
   bind:value
   bind:ref
   class={[
-    'relative w-full h-6 flex items-center justify-center',
+    'relative w-full h-5 flex items-center justify-center',
     'cursor-pointer data-disabled:cursor-not-allowed',
     'data-disabled:opacity-40',
     withTickLabels && 'mt-4'
@@ -96,7 +96,7 @@
     </span>
 
     {#each thumbItems as { index } (index)}
-      <Slider.Thumb {index} class={['w-5 h-5 z-10 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
+      <Slider.Thumb {index} class={['w-4.5 h-4.5 z-10 rounded-full outline-none transition-all', ...SLIDER_THUMB_MODE_CLASSES[mode]]} {...thumbProps} />
     {/each}
 
     {#each tickItems as { value, index } (index)}
