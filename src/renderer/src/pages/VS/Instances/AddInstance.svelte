@@ -13,6 +13,7 @@
   import VersionsToInstall from '@renderer/lib/ui/features/VS/Versions/VersionsToInstall.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { PHMagnifyingGlassBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import Form from '@renderer/lib/ui/components/Form.svelte'
 
   Breadcrumbs.instance.segments = [
     { label: 'VS Instances', href: '/vs/instnces' },
@@ -34,108 +35,129 @@
   // Icon form data
   let icon: string | undefined = $state()
   let iconErrors: string[] = $state([])
+
+  let totalErrors = $derived(versionErrors.length + pathErrors.length)
+
+  function manageAddInstance(): void {
+    // Check if a version is selected
+    if (!version) versionErrors.push('You need to select a version!')
+
+    // Check the name
+    if (!name) nameErrors.push('You need to enter a name!')
+
+    if (totalErrors <= 0) {
+      // TODO: Install the version if needed and add the instance
+    }
+  }
 </script>
 
 <ScrollableContainer isBreakpoint>
   <FlexContainer direction="col" padding="xl" gap="xl">
-    <FlexContainer direction="col" gap="base">
-      <H1>Add a new VS Instance</H1>
-      <P mode="secondary">Manage your Vintage Story Instances and everythig related with them.</P>
-    </FlexContainer>
+    <Form onsubmit={manageAddInstance}>
+      <FlexContainer direction="col" gap="base">
+        <FlexContainer gap="base">
+          <H1>Add a new VS Instance</H1>
 
-    <FlexContainer direction="col" gap="lg">
-      <FlexContainer direction="col" gap="xs">
-        <H3>Basics</H3>
-        <P mode="secondary">Basic data required on a VS Instance.</P>
+          <Button mode="success" type="submit">Save</Button>
+        </FlexContainer>
+
+        <P mode="secondary">Manage your Vintage Story Instances and everythig related with them.</P>
       </FlexContainer>
 
-      <GridContainer columns={2} gap="base">
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="instance-name" required>Name</Label>
-              <Info>The name of the VS Instance</Info>
+      <FlexContainer direction="col" gap="lg">
+        <FlexContainer direction="col" gap="xs">
+          <H3>Basics</H3>
+          <P mode="secondary">Basic data required on a VS Instance.</P>
+        </FlexContainer>
+
+        <GridContainer columns={2} gap="base">
+          <GridItem>
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm">
+                <Label for="instance-name" required>Name</Label>
+                <Info>The name of the VS Instance</Info>
+              </FlexContainer>
+
+              <Input id="instance-name" type="text" placeholder="Name" bind:value={name} required />
+
+              <FormInfo error={nameErrors} />
             </FlexContainer>
+          </GridItem>
 
-            <Input id="instance-name" type="text" placeholder="Name" bind:value={name} required />
+          <GridItem>
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm">
+                <Label for="versions-to-install" required>Vintage Story Version</Label>
+                <Info>The Vintage Story Version of the Vintage Story Instance</Info>
+              </FlexContainer>
 
-            <FormInfo error={nameErrors} />
-          </FlexContainer>
-        </GridItem>
+              <VersionsToInstall
+                inputProps={{ id: 'versions-to-install' }}
+                bind:version
+                mode={versionErrors.length > 0 ? 'danger' : 'neutral'}
+                onValueChange={() => (versionErrors = [])}
+                required
+              />
 
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="versions-to-install" required>Vintage Story Version</Label>
-              <Info>The Vintage Story Version of the Vintage Story Instance</Info>
+              <FormInfo error={versionErrors} />
             </FlexContainer>
+          </GridItem>
 
-            <VersionsToInstall
-              inputProps={{ id: 'versions-to-install' }}
-              bind:version
-              mode={versionErrors.length > 0 ? 'danger' : 'neutral'}
-              onValueChange={() => (versionErrors = [])}
-              required
-            />
+          <GridItem>
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm">
+                <Label for="instance-path">Path</Label>
+                <Info>The path where the VS Instance will save the data.<br />It'll use the default path + the name if left empty.</Info>
+              </FlexContainer>
 
-            <FormInfo error={versionErrors} />
-          </FlexContainer>
-        </GridItem>
+              <FlexContainer gap="xs">
+                <Button
+                  mode="neutral"
+                  id="instance-path"
+                  title="Select folder"
+                  onclick={async () => {
+                    const selected = await window.api.fs.showDialog('VS Instance Path', 'openDirectory', false, [])
+                    path = selected[0]
+                  }}
+                >
+                  <PHMagnifyingGlassBoldIcon />
+                </Button>
 
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="instance-path">Path</Label>
-              <Info>The path where the VS Instance will save the data.<br />It'll use the default path + the name if left empty.</Info>
+                <Input type="text" placeholder="Path" value={path} readonly />
+              </FlexContainer>
+
+              <FormInfo error={pathErrors} />
             </FlexContainer>
+          </GridItem>
 
-            <FlexContainer gap="xs">
-              <Button
-                mode="neutral"
-                id="instance-path"
-                title="Select folder"
-                onclick={async () => {
-                  const selected = await window.api.fs.showDialog('VS Instance Path', 'openDirectory', false, [])
-                  path = selected[0]
-                }}
-              >
-                <PHMagnifyingGlassBoldIcon />
-              </Button>
+          <GridItem>
+            <FlexContainer direction="col" gap="sm">
+              <FlexContainer gap="sm">
+                <Label for="icon-path">Icon</Label>
+                <Info>The path to the icon for the VS Instance</Info>
+              </FlexContainer>
 
-              <Input type="text" placeholder="Path" value={path} readonly />
+              <FlexContainer gap="xs">
+                <Button
+                  mode="neutral"
+                  id="icon-path"
+                  title="Select file"
+                  onclick={async () => {
+                    const selected = await window.api.fs.showDialog('VS Instance Icon', 'openFile', false, ['png', 'jpg'])
+                    icon = selected[0]
+                  }}
+                >
+                  <PHMagnifyingGlassBoldIcon />
+                </Button>
+
+                <Input type="text" placeholder="Icon" value={icon} readonly />
+              </FlexContainer>
+
+              <FormInfo error={iconErrors} />
             </FlexContainer>
-
-            <FormInfo error={pathErrors} />
-          </FlexContainer>
-        </GridItem>
-
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="icon-path">Icon</Label>
-              <Info>The path to the icon for the VS Instance</Info>
-            </FlexContainer>
-
-            <FlexContainer gap="xs">
-              <Button
-                mode="neutral"
-                id="icon-path"
-                title="Select file"
-                onclick={async () => {
-                  const selected = await window.api.fs.showDialog('VS Instance Icon', 'openFile', false, ['png', 'jpg'])
-                  icon = selected[0]
-                }}
-              >
-                <PHMagnifyingGlassBoldIcon />
-              </Button>
-
-              <Input type="text" placeholder="Icon" value={icon} readonly />
-            </FlexContainer>
-
-            <FormInfo error={iconErrors} />
-          </FlexContainer>
-        </GridItem>
-      </GridContainer>
-    </FlexContainer>
+          </GridItem>
+        </GridContainer>
+      </FlexContainer>
+    </Form>
   </FlexContainer>
 </ScrollableContainer>

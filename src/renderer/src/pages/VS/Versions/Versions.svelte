@@ -35,17 +35,14 @@
   let path: string | undefined = $state()
   let pathErrors: string[] = $state([])
 
-  function manageInstallVersion(): void {
-    let errors = 0
+  let totalErrors = $derived(versionErrors.length + pathErrors.length)
 
+  function manageInstallVersion(): void {
     // Check if a version is selected
-    if (!version) {
-      versionErrors = ['You need to select a version!']
-      errors++
-    }
+    if (!version) versionErrors.push('You need to select a version!')
 
     // Install the version if there are no errors
-    if (errors <= 0) {
+    if (totalErrors <= 0) {
       version?.addAndInstall(path)
       clearInstallVersion()
       return
@@ -171,6 +168,7 @@
             bind:version
             mode={versionErrors.length > 0 ? 'danger' : 'neutral'}
             onValueChange={() => (versionErrors = [])}
+            disableInstalled
             required
           />
 
