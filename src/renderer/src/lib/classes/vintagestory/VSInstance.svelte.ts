@@ -27,6 +27,11 @@ export class VSInstance {
   private _version: string
 
   /**
+   * The mods of the VS Instance.
+   */
+  private _mods: VSModType[]
+
+  /**
    * The start parameters of the VS Instance.
    */
   private _startParams: string
@@ -90,6 +95,7 @@ export class VSInstance {
     this._name = $state(data.name)
     this._path = data.path
     this._version = $state(data.version)
+    this._mods = $state([])
     this._startParams = $state(data.startParams)
     this._backupsLimit = $state(data.backupsLimit)
     this._backupsAuto = $state(data.backupsAuto)
@@ -127,6 +133,13 @@ export class VSInstance {
    */
   public get version(): string {
     return this._version
+  }
+
+  /**
+   * The mods of the VS Instance.
+   */
+  public get mods(): VSModType[] {
+    return this._mods
   }
 
   /**
