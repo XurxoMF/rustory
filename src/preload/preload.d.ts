@@ -69,7 +69,7 @@ declare global {
        * @param path Key of the path.
        * @returns The path.
        */
-      getPath: (path: TPaths) => Promise<string>
+      getPath: (path: PathsTypes) => Promise<string>
       /**
        * Change permissions to the specified paths.
        * @param paths Paths to change perms to.
@@ -260,19 +260,19 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        saveVSVersion: (version: TVSVersion) => Promise<void>
+        saveVSVersion: (version: VSVersionType) => Promise<void>
         /**
          * Delete a VS Version from the DB.
          * @param version The VS Version to delete.
          * @throws A RustoryDBError error.
          */
-        deleteVSVersion: (version: TVSVersion) => Promise<void>
+        deleteVSVersion: (version: VSVersionType) => Promise<void>
         /**
          * Get all the VS Versions from the DB.
          * @returns The VS Versions found.
          * @throws A RustoryDBError error.
          */
-        getVSVersions: () => Promise<TVSVersion[]>
+        getVSVersions: () => Promise<VSVersionType[]>
       }
       /**
        * Interact with the vsInstance table.
@@ -284,19 +284,19 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        saveVSInstance: (instance: TVSInstance) => Promise<void>
+        saveVSInstance: (instance: VSInstanceType) => Promise<void>
         /**
          * Delete an VS Instance from the DB.
          * @param instance The VS Instance to delete.
          * @throws A RustoryDBError error.
          */
-        deleteVSInstance: (instance: TVSInstance) => Promise<void>
+        deleteVSInstance: (instance: VSInstanceType) => Promise<void>
         /**
          * Get all the VS Instances from the DB.
          * @returns The VS Instances found.
          * @throws A RustoryDBError error.
          */
-        getVSInstances: () => Promise<TVSInstance[]>
+        getVSInstances: () => Promise<VSInstanceType[]>
       }
     }
     /**

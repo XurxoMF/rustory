@@ -1,7 +1,7 @@
 /**
  * Vintage Story user account.
  *
- * Must have at least the same properties as {@link TVSAccount}.
+ * Must have at least the same properties as {@link VSAccountType}.
  */
 export class VSAccount {
   /**
@@ -135,10 +135,10 @@ export class VSAccount {
   }
 
   /**
-   * Convert this {@link VSAccount} into a {@link TVSAccount} json.
-   * @returns The {@link TVSAccount} json.
+   * Convert this {@link VSAccount} into a {@link VSAccountType} json.
+   * @returns The {@link VSAccountType} json.
    */
-  public toJSON(): TVSAccount {
+  public toJSON(): VSAccountType {
     return {
       id: this._id,
       email: this._email,
@@ -153,11 +153,11 @@ export class VSAccount {
   }
 
   /**
-   * Converts a {@link TVSAccount} json to a {@link VSAccount}.
-   * @param json The {@link TVSAccount} to convert.
+   * Converts a {@link VSAccountType} json to a {@link VSAccount}.
+   * @param json The {@link VSAccountType} to convert.
    * @returns The {@link VSAccount}.
    */
-  public static fromJSON(json: TVSAccount): VSAccount {
+  public static fromJSON(json: VSAccountType): VSAccount {
     return new VSAccount({
       id: json.id,
       email: json.email,

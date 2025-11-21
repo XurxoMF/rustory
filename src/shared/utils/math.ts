@@ -4,8 +4,8 @@
  * @param unit The unit to convert to. Defaults to 'MB'.
  * @returns Bytes converted to the selected unit.
  */
-export function bytesToX(bytes: number, unit: TSizeUits = 'MB'): number {
-  const units: TSizeUits[] = ['KB', 'MB', 'GB', 'TB']
+export function bytesToX(bytes: number, unit: SizeUitsType = 'MB'): number {
+  const units: SizeUitsType[] = ['KB', 'MB', 'GB', 'TB']
   const index = units.indexOf(unit)
 
   if (index === -1) throw new Error('Invalid unit!')

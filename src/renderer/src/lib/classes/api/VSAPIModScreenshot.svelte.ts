@@ -1,7 +1,7 @@
 /**
  * Mod Screenshot queried from the ModDB.
  *
- * Must have at least the same properties as {@link TVSAPIModScreenshot}.
+ * Must have at least the same properties as {@link VSAPIModScreenshotType}.
  */
 export class VSAPIModScreenshot {
   /**
@@ -73,10 +73,10 @@ export class VSAPIModScreenshot {
   }
 
   /**
-   * Convert this {@link VSAPIModScreenshot} into a {@link TVSAPIModScreenshot} json.
-   * @returns The {@link TVSAPIModScreenshot} json.
+   * Convert this {@link VSAPIModScreenshot} into a {@link VSAPIModScreenshotType} json.
+   * @returns The {@link VSAPIModScreenshotType} json.
    */
-  public toJSON(): TVSAPIModScreenshot {
+  public toJSON(): VSAPIModScreenshotType {
     return {
       fileid: this._fileid,
       mainfile: this._mainfile,
@@ -87,11 +87,11 @@ export class VSAPIModScreenshot {
   }
 
   /**
-   * Converts a {@link TVSAPIModScreenshot} json to a {@link VSAPIModScreenshot}.
-   * @param json The {@link TVSAPIModScreenshot} to convert.
+   * Converts a {@link VSAPIModScreenshotType} json to a {@link VSAPIModScreenshot}.
+   * @param json The {@link VSAPIModScreenshotType} to convert.
    * @returns The {@link VSAPIModScreenshot}.
    */
-  public static fromJSON(json: TVSAPIModScreenshot): VSAPIModScreenshot {
+  public static fromJSON(json: VSAPIModScreenshotType): VSAPIModScreenshot {
     return new VSAPIModScreenshot({
       fileid: json.fileid,
       mainfile: json.mainfile,

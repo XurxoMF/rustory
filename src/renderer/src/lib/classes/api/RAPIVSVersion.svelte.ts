@@ -6,7 +6,7 @@ import { Data } from '@renderer/lib/classes/Data.svelte'
 /**
  * Version queried from the Rustory API.
  *
- * Must have at least the same properties as {@link TRAPIVSVersion}.
+ * Must have at least the same properties as {@link RAPIVSVersionType}.
  */
 export class RAPIVSVersion {
   /**
@@ -154,13 +154,13 @@ export class RAPIVSVersion {
   }
 
   /**
-   * Convert this {@link RAPIVSVersion} into a {@link TRAPIVSVersion} json.
-   * @returns The {@link TRAPIVSVersion} json.
+   * Convert this {@link RAPIVSVersion} into a {@link RAPIVSVersionType} json.
+   * @returns The {@link RAPIVSVersionType} json.
    */
-  public toJSON(): TRAPIVSVersion {
+  public toJSON(): RAPIVSVersionType {
     return {
       version: this._version,
-      type: this._type as TRAPIVSVersionType,
+      type: this._type as RAPIVSVersionType,
       releaseDate: this._releaseDate,
       importedDate: this._importedDate,
       windows: this._windows,
@@ -173,11 +173,11 @@ export class RAPIVSVersion {
   }
 
   /**
-   * Converts a {@link TRAPIVSVersion} json to a {@link RAPIVSVersion}.
-   * @param json The {@link TRAPIVSVersion} to convert.
+   * Converts a {@link RAPIVSVersionType} json to a {@link RAPIVSVersion}.
+   * @param json The {@link RAPIVSVersionType} to convert.
    * @returns The {@link RAPIVSVersion}.
    */
-  public static fromJSON(json: TRAPIVSVersion): RAPIVSVersion {
+  public static fromJSON(json: RAPIVSVersionType): RAPIVSVersion {
     return new RAPIVSVersion({
       version: json.version,
       type: json.type as RAPIVSVersion.Type,
@@ -230,7 +230,7 @@ export namespace RAPIVSVersion {
   /**
    * Type of the version.
    *
-   * Must have at least the same properties as {@link TRAPIVSVersionType}.
+   * Must have at least the same properties as {@link RAPIVSVersionType}.
    */
-  export type Type = TRAPIVSVersionType
+  export type Type = RAPIVSVersionType
 }

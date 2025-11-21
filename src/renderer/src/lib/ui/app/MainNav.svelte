@@ -6,12 +6,13 @@
 
   import { type IconProps } from '@renderer/lib/ui/components/Icons/BaseIcon.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import { PHGearBoldIcon, PHGitForkBoldIcon, PHHandHeartDuotoneIcon, PHHouseBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHGearBoldIcon, PHGitForkBoldIcon, PHHandHeartDuotoneIcon, PHHouseBoldIcon, PHFolderOpenBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 </script>
 
 <nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r', 'border-r-zinc-800', 't-light:border-r-zinc-200']}>
   <div class="w-full flex flex-col items-start justify-between gap-1">
     {@render NavLink(PHHouseBoldIcon, m.common__home(), '/')}
+    {@render NavLink(PHFolderOpenBoldIcon, 'VS Instances', '/vs/instances')}
     {@render NavLink(PHGitForkBoldIcon, m.vintagestory__versions(), '/vs/versions')}
   </div>
 

@@ -18,7 +18,7 @@ export let mainWindow: BrowserWindow
 export async function createMainWindow(): Promise<void> {
   logger.info('Getting old state...')
 
-  let oldState: TMainWindowState = {
+  let oldState: MainWindowStateType = {
     width: 1600,
     height: 900,
     x: 0,
@@ -114,7 +114,7 @@ async function saveCurrentWindowState(): Promise<void> {
   const [x, y] = mainWindow.getPosition()
   const maximized = mainWindow.isMaximized()
 
-  const newState: TMainWindowState = {
+  const newState: MainWindowStateType = {
     width,
     height,
     x,

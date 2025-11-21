@@ -6,7 +6,7 @@ import { Tasks } from '@renderer/lib/classes/Tasks.svelte'
 /**
  * VS Version.
  *
- * Must have at least the same properties as {@link TVSVersion}.
+ * Must have at least the same properties as {@link VSVersionType}.
  */
 export class VSVersion {
   /**
@@ -72,10 +72,10 @@ export class VSVersion {
   }
 
   /**
-   * Convert this {@link VSVersion} into a {@link TVSVersion} json.
-   * @returns The {@link TVSVersion} json.
+   * Convert this {@link VSVersion} into a {@link VSVersionType} json.
+   * @returns The {@link VSVersionType} json.
    */
-  public toJSON(): TVSVersion {
+  public toJSON(): VSVersionType {
     return {
       version: this._version,
       path: this._path
@@ -83,12 +83,12 @@ export class VSVersion {
   }
 
   /**
-   * Converts a {@link TVSVersion} json to a {@link VSVersion}.
-   * @param json The {@link TVSVersion} to convert.
+   * Converts a {@link VSVersionType} json to a {@link VSVersion}.
+   * @param json The {@link VSVersionType} to convert.
    * @param state The state of the versino.
    * @returns The {@link VSVersion}.
    */
-  public static fromJSON(json: TVSVersion, state?: VSVersion.State | undefined): VSVersion {
+  public static fromJSON(json: VSVersionType, state?: VSVersion.State | undefined): VSVersion {
     return new VSVersion({
       version: json.version,
       path: json.path,

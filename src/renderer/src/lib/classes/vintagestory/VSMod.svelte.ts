@@ -3,7 +3,7 @@ import { VSAPIMod } from '@renderer/lib/classes/api/VSAPIMod.svelte'
 /**
  * Installed VS Mod info.
  *
- * Must have at least the same properties as {@link TVSMod}.
+ * Must have at least the same properties as {@link VSModType}.
  */
 export class VSMod {
   /**
@@ -193,10 +193,10 @@ export class VSMod {
   }
 
   /**
-   * Convert this {@link VSMod} into a {@link TVSMod} json.
-   * @returns The {@link TVSMod} json.
+   * Convert this {@link VSMod} into a {@link VSModType} json.
+   * @returns The {@link VSModType} json.
    */
-  public toJSON(): TVSMod {
+  public toJSON(): VSModType {
     return {
       vsInstanceId: this._vsInstanceId,
       name: this._name,
@@ -214,11 +214,11 @@ export class VSMod {
   }
 
   /**
-   * Converts a {@link TVSMod} json to a {@link VSMod}.
-   * @param json The {@link TVSMod} to convert.
+   * Converts a {@link VSModType} json to a {@link VSMod}.
+   * @param json The {@link VSModType} to convert.
    * @returns The {@link VSMod}.
    */
-  public static fromJSON(json: TVSMod, state?: VSMod.State | undefined): VSMod {
+  public static fromJSON(json: VSModType, state?: VSMod.State | undefined): VSMod {
     return new VSMod({
       vsInstanceId: json.vsInstanceId,
       name: json.name,

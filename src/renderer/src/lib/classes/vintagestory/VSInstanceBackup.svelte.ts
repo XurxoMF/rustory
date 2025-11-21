@@ -1,7 +1,7 @@
 /**
  * VS Instance Backup.
  *
- * Must have at least the same properties as {@link TVSInstanceBackup}.
+ * Must have at least the same properties as {@link VSInstanceBackupType}.
  */
 export class VSInstanceBackup {
   /**
@@ -73,10 +73,10 @@ export class VSInstanceBackup {
   }
 
   /**
-   * Convert this {@link VSInstanceBackup} into a {@link TVSInstanceBackup} json.
-   * @returns The {@link TVSInstanceBackup} json.
+   * Convert this {@link VSInstanceBackup} into a {@link VSInstanceBackupType} json.
+   * @returns The {@link VSInstanceBackupType} json.
    */
-  public toJSON(): TVSInstanceBackup {
+  public toJSON(): VSInstanceBackupType {
     return {
       id: this._id,
       vsInstanceId: this._vsInstanceId,
@@ -86,11 +86,11 @@ export class VSInstanceBackup {
   }
 
   /**
-   * Converts a {@link TVSInstanceBackup} json to a {@link VSInstanceBackup}.
-   * @param json The {@link TVSInstanceBackup} to convert.
+   * Converts a {@link VSInstanceBackupType} json to a {@link VSInstanceBackup}.
+   * @param json The {@link VSInstanceBackupType} to convert.
    * @returns The {@link VSInstanceBackup}.
    */
-  public static fromJSON(json: TVSInstanceBackup, state?: VSInstanceBackup.State | undefined): VSInstanceBackup {
+  public static fromJSON(json: VSInstanceBackupType, state?: VSInstanceBackup.State | undefined): VSInstanceBackup {
     return new VSInstanceBackup({
       id: json.id,
       vsInstanceId: json.vsInstanceId,

@@ -17,7 +17,7 @@ export async function registerFSHandlers(): Promise<void> {
 
   ipcMain.handle(IPC_CHANNELS.fs.join, async (_event, ...parts: string[]): Promise<string> => join(...parts))
 
-  ipcMain.handle(IPC_CHANNELS.fs.getPath, async (_event, path: TPaths): Promise<string> => app.getPath(path))
+  ipcMain.handle(IPC_CHANNELS.fs.getPath, async (_event, path: PathsTypes): Promise<string> => app.getPath(path))
 
   ipcMain.handle(IPC_CHANNELS.fs.changePerms, async (_event, paths: string[], perms: number): Promise<void> => await changePerms(paths, perms))
 

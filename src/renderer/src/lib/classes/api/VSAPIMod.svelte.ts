@@ -5,7 +5,7 @@ import { VSAPIModScreenshot } from '@renderer/lib/classes/api/VSAPIModScreenshot
  * Mod info queried from the ModDB.
  * This is the complete mod from /api/mods/{modid}.
  *
- * Must have at least the same properties as {@link TVSAPIMod}.
+ * Must have at least the same properties as {@link VSAPIModType}.
  */
 export class VSAPIMod {
   /**
@@ -349,10 +349,10 @@ export class VSAPIMod {
   }
 
   /**
-   * Convert this {@link VSAPIMod} into a {@link TVSAPIMod} json.
-   * @returns The {@link TVSAPIMod} json.
+   * Convert this {@link VSAPIMod} into a {@link VSAPIModType} json.
+   * @returns The {@link VSAPIModType} json.
    */
-  public toJSON(): TVSAPIMod {
+  public toJSON(): VSAPIModType {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -382,11 +382,11 @@ export class VSAPIMod {
   }
 
   /**
-   * Converts a {@link TVSAPIMod} json to a {@link VSAPIMod}.
-   * @param json The {@link TVSAPIMod} to convert.
+   * Converts a {@link VSAPIModType} json to a {@link VSAPIMod}.
+   * @param json The {@link VSAPIModType} to convert.
    * @returns The {@link VSAPIMod}.
    */
-  public static fromJSON(json: TVSAPIMod): VSAPIMod {
+  public static fromJSON(json: VSAPIModType): VSAPIMod {
     return new VSAPIMod({
       modid: json.modid,
       assetid: json.assetid,

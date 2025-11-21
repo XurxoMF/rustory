@@ -2,7 +2,7 @@
  * Mod queried from the ModDB.
  * This is the simplified mod from /api/mods.
  *
- * Must have at least the same properties as {@link TVSAPIModListed}.
+ * Must have at least the same properties as {@link VSAPIModListedType}.
  */
 export class VSAPIModListed {
   /**
@@ -234,10 +234,10 @@ export class VSAPIModListed {
   }
 
   /**
-   * Convert this {@link VSAPIModListed} into a {@link TVSAPIModListed} json
+   * Convert this {@link VSAPIModListed} into a {@link VSAPIModListedType} json
    * @returns The {@link VSAPIModListed} json
    */
-  public toJSON(): TVSAPIModListed {
+  public toJSON(): VSAPIModListedType {
     return {
       modid: this._modid,
       assetid: this._assetid,
@@ -259,11 +259,11 @@ export class VSAPIModListed {
   }
 
   /**
-   * Converts a {@link TVSAPIModListed} json to a {@link VSAPIModListed}
-   * @param json The {@link TVSAPIModListed} to convert
+   * Converts a {@link VSAPIModListedType} json to a {@link VSAPIModListed}
+   * @param json The {@link VSAPIModListedType} to convert
    * @returns The {@link VSAPIModListed}
    */
-  public static fromJSON(json: TVSAPIModListed): VSAPIModListed {
+  public static fromJSON(json: VSAPIModListedType): VSAPIModListed {
     return new VSAPIModListed({
       modid: json.modid,
       assetid: json.assetid,

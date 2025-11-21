@@ -1,7 +1,7 @@
 /**
  * Mod Game Version queried from the ModDB.
  *
- * Must have at least the same properties as {@link TVSAPIModGameVersion}.
+ * Must have at least the same properties as {@link VSAPIModGameVersionType}.
  */
 export class VSAPIModGameVersion {
   /**
@@ -47,10 +47,10 @@ export class VSAPIModGameVersion {
   }
 
   /**
-   * Convert this {@link VSAPIModGameVersion} into a {@link TVSAPIModGameVersion} json.
-   * @returns The {@link TVSAPIModGameVersion} json.
+   * Convert this {@link VSAPIModGameVersion} into a {@link VSAPIModGameVersionType} json.
+   * @returns The {@link VSAPIModGameVersionType} json.
    */
-  public toJSON(): TVSAPIModGameVersion {
+  public toJSON(): VSAPIModGameVersionType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -59,11 +59,11 @@ export class VSAPIModGameVersion {
   }
 
   /**
-   * Converts a {@link TVSAPIModGameVersion} json to a {@link VSAPIModGameVersion}.
-   * @param json The {@link TVSAPIModGameVersion} to convert.
+   * Converts a {@link VSAPIModGameVersionType} json to a {@link VSAPIModGameVersion}.
+   * @param json The {@link VSAPIModGameVersionType} to convert.
    * @returns The {@link VSAPIModGameVersion}.
    */
-  public static fromJSON(json: TVSAPIModGameVersion): VSAPIModGameVersion {
+  public static fromJSON(json: VSAPIModGameVersionType): VSAPIModGameVersion {
     return new VSAPIModGameVersion({
       tagid: json.tagid,
       name: json.name,

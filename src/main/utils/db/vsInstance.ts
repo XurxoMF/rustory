@@ -8,7 +8,7 @@ import { eq } from 'drizzle-orm'
  * @returns The VS Instances found.
  * @throws A {@link RustoryDBError} error.
  */
-export async function getVSInstances(): Promise<TVSInstance[]> {
+export async function getVSInstances(): Promise<VSInstanceType[]> {
   try {
     const instances = await db.select().from(vsInstance)
 
@@ -26,7 +26,7 @@ export async function getVSInstances(): Promise<TVSInstance[]> {
  * @returns If it was saved or not.
  * @throws A {@link RustoryDBError} error.
  */
-export async function saveVSInstance(instance: TVSInstance): Promise<void> {
+export async function saveVSInstance(instance: VSInstanceType): Promise<void> {
   try {
     const inserted = await db.insert(vsInstance).values(instance).onConflictDoUpdate({ target: vsInstance.id, set: instance })
 
@@ -43,7 +43,7 @@ export async function saveVSInstance(instance: TVSInstance): Promise<void> {
  * @param instance The VS Instance to delete.
  * @throws A {@link RustoryDBError} error.
  */
-export async function deleteVSInstance(instance: TVSInstance): Promise<void> {
+export async function deleteVSInstance(instance: VSInstanceType): Promise<void> {
   try {
     const deleted = await db.delete(vsInstance).where(eq(vsInstance.id, instance.id))
 

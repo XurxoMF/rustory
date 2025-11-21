@@ -1,7 +1,7 @@
 /**
  * Mod Author info queried from the ModDB.
  *
- * Must have at least the same properties as {@link TVSAPIModAuthor}.
+ * Must have at least the same properties as {@link VSAPIModAuthorType}.
  */
 export class VSAPIModAuthor {
   /**
@@ -34,10 +34,10 @@ export class VSAPIModAuthor {
   }
 
   /**
-   * Convert this {@link VSAPIModAuthor} into a {@link TVSAPIModAuthor} json.
-   * @returns The {@link TVSAPIModAuthor} json.
+   * Convert this {@link VSAPIModAuthor} into a {@link VSAPIModAuthorType} json.
+   * @returns The {@link VSAPIModAuthorType} json.
    */
-  public toJSON(): TVSAPIModAuthor {
+  public toJSON(): VSAPIModAuthorType {
     return {
       userid: this._userid,
       name: this._name
@@ -45,11 +45,11 @@ export class VSAPIModAuthor {
   }
 
   /**
-   * Converts a {@link TVSAPIModAuthor} json to a {@link VSAPIModAuthor}.
-   * @param json The {@link TVSAPIModAuthor} to convert.
+   * Converts a {@link VSAPIModAuthorType} json to a {@link VSAPIModAuthor}.
+   * @param json The {@link VSAPIModAuthorType} to convert.
    * @returns The {@link VSAPIModAuthor}.
    */
-  public static fromJSON(json: TVSAPIModAuthor): VSAPIModAuthor {
+  public static fromJSON(json: VSAPIModAuthorType): VSAPIModAuthor {
     return new VSAPIModAuthor({
       userid: json.userid,
       name: json.name

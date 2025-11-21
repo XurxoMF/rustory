@@ -1,7 +1,7 @@
 /**
  * Mod Tag queried from the ModDB.
  *
- * Must have at least the same properties as {@link TVSAPIModTag}.
+ * Must have at least the same properties as {@link VSAPIModTagType}.
  */
 export class VSAPIModTag {
   /**
@@ -47,10 +47,10 @@ export class VSAPIModTag {
   }
 
   /**
-   * Convert this {@link VSAPIModTag} into a {@link TVSAPIModTag} json.
-   * @returns The {@link TVSAPIModTag} json.
+   * Convert this {@link VSAPIModTag} into a {@link VSAPIModTagType} json.
+   * @returns The {@link VSAPIModTagType} json.
    */
-  public toJSON(): TVSAPIModTag {
+  public toJSON(): VSAPIModTagType {
     return {
       tagid: this._tagid,
       name: this._name,
@@ -59,11 +59,11 @@ export class VSAPIModTag {
   }
 
   /**
-   * Converts a {@link TVSAPIModTag} json to a {@link VSAPIModTag}.
-   * @param json The {@link TVSAPIModTag} to convert.
+   * Converts a {@link VSAPIModTagType} json to a {@link VSAPIModTag}.
+   * @param json The {@link VSAPIModTagType} to convert.
    * @returns The {@link VSAPIModTag}.
    */
-  public static fromJSON(json: TVSAPIModTag): VSAPIModTag {
+  public static fromJSON(json: VSAPIModTagType): VSAPIModTag {
     return new VSAPIModTag({
       tagid: json.tagid,
       name: json.name,

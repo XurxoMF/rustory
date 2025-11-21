@@ -41,7 +41,7 @@
 
   onMount(async () => {
     const res = await Request.instance.get('https://vslapi.xurxomf.xyz/versions')
-    const json: TRAPIVSVersion[] = json5.parse(res)
+    const json: RAPIVSVersionType[] = json5.parse(res)
 
     versions = json.map((v) => RAPIVSVersion.fromJSON(v))
   })

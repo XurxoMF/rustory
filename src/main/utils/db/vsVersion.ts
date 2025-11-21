@@ -8,7 +8,7 @@ import { eq } from 'drizzle-orm'
  * @returns The VS Versions found.
  * @throws A {@link RustoryDBError} error.
  */
-export async function getVSVersions(): Promise<TVSVersion[]> {
+export async function getVSVersions(): Promise<VSVersionType[]> {
   try {
     const versions = await db.select().from(vsVersion)
 
@@ -26,7 +26,7 @@ export async function getVSVersions(): Promise<TVSVersion[]> {
  * @returns If it was saved or not.
  * @throws A {@link RustoryDBError} error.
  */
-export async function saveVSVersion(version: TVSVersion): Promise<void> {
+export async function saveVSVersion(version: VSVersionType): Promise<void> {
   try {
     const inserted = await db.insert(vsVersion).values(version).onConflictDoUpdate({ target: vsVersion.version, set: version })
 
@@ -43,7 +43,7 @@ export async function saveVSVersion(version: TVSVersion): Promise<void> {
  * @param version The VS Version to delete.
  * @throws A {@link RustoryDBError} error.
  */
-export async function deleteVSVersion(version: TVSVersion): Promise<void> {
+export async function deleteVSVersion(version: VSVersionType): Promise<void> {
   try {
     const deleted = await db.delete(vsVersion).where(eq(vsVersion.version, version.version))
 

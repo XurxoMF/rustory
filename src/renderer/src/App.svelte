@@ -29,11 +29,13 @@
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
   import VSVersionsPage from '@renderer/pages/VS/Versions/Versions.svelte'
+  import PHFolderOpenBoldIcon from '@renderer/pages/VS/Instances/Instances.svelte'
 
   // Routes of the app
   const routes: RouteConfig[] = [
     { path: '/', component: HomePage },
     { path: '/vs/versions', component: VSVersionsPage },
+    { path: '/vs/instances', component: PHFolderOpenBoldIcon },
     { path: '/config', component: ConfigPage }
   ]
 

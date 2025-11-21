@@ -1,7 +1,7 @@
 /**
  * Mod Release queried from ModDB.
  *
- * Must have at least the same properties as {@link TVSAPIModRelease}.
+ * Must have at least the same properties as {@link VSAPIModReleaseType}.
  */
 export class VSAPIModRelease {
   /**
@@ -149,10 +149,10 @@ export class VSAPIModRelease {
   }
 
   /**
-   * Convert this {@link VSAPIModRelease} into a {@link TVSAPIModRelease} json.
-   * @returns The {@link TVSAPIModRelease} json.
+   * Convert this {@link VSAPIModRelease} into a {@link VSAPIModReleaseType} json.
+   * @returns The {@link VSAPIModReleaseType} json.
    */
-  public toJSON(): TVSAPIModRelease {
+  public toJSON(): VSAPIModReleaseType {
     return {
       releaseid: this._releaseid,
       mainfile: this._mainfile,
@@ -168,11 +168,11 @@ export class VSAPIModRelease {
   }
 
   /**
-   * Converts a {@link TVSAPIModRelease} json to a {@link VSAPIModRelease}.
-   * @param json The {@link TVSAPIModRelease} to convert.
+   * Converts a {@link VSAPIModReleaseType} json to a {@link VSAPIModRelease}.
+   * @param json The {@link VSAPIModReleaseType} to convert.
    * @returns The {@link VSAPIModRelease}.
    */
-  public static fromJSON(json: TVSAPIModRelease): VSAPIModRelease {
+  public static fromJSON(json: VSAPIModReleaseType): VSAPIModRelease {
     return new VSAPIModRelease({
       releaseid: json.releaseid,
       mainfile: json.mainfile,

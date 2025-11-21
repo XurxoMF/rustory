@@ -3,7 +3,7 @@ import { RustoryVSInstanceError } from '@shared/errors/RustoryVSInstanceError'
 /**
  * VS Instance.
  *
- * Must have at least the same properties as {@link TVSInstance}.
+ * Must have at least the same properties as {@link VSInstanceType}.
  */
 export class VSInstance {
   /**
@@ -193,10 +193,10 @@ export class VSInstance {
   }
 
   /**
-   * Convert this {@link VSInstance} into a {@link TVSInstance} json.
-   * @returns The {@link TVSInstance} json.
+   * Convert this {@link VSInstance} into a {@link VSInstanceType} json.
+   * @returns The {@link VSInstanceType} json.
    */
-  public toJSON(): TVSInstance {
+  public toJSON(): VSInstanceType {
     return {
       id: this._id,
       name: this._name,
@@ -214,11 +214,11 @@ export class VSInstance {
   }
 
   /**
-   * Converts a {@link TVSInstance} json to a {@link VSInstance}.
-   * @param json The {@link TVSInstance} to convert.
+   * Converts a {@link VSInstanceType} json to a {@link VSInstance}.
+   * @param json The {@link VSInstanceType} to convert.
    * @returns The {@link VSInstance}.
    */
-  public static fromJSON(json: TVSInstance, state?: VSInstance.State | undefined): VSInstance {
+  public static fromJSON(json: VSInstanceType, state?: VSInstance.State | undefined): VSInstance {
     return new VSInstance({
       id: json.id,
       name: json.name,
