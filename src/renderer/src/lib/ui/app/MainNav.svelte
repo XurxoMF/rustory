@@ -7,6 +7,7 @@
     Icon: Component<IconProps>
     name: string
     link: string
+    absolute?: boolean | undefined
   }
 
   export type NavGroupProps = {
@@ -38,7 +39,7 @@
 
 <nav class={['shrink-0 h-full w-60 flex flex-col items-start justify-between gap-2 p-2 border-r', 'border-r-zinc-800', 't-light:border-r-zinc-200']}>
   <FlexContainer direction="col" gap="xs">
-    {@render NavLink({ Icon: PHHouseBoldIcon, name: 'Home', link: '/' })}
+    {@render NavLink({ Icon: PHHouseBoldIcon, name: 'Home', link: '/', absolute: true })}
     {@render NavGroup({
       id: 'vs',
       Icon: PHFolderOpenBoldIcon,
@@ -59,11 +60,11 @@
   </FlexContainer>
 </nav>
 
-{#snippet NavLink({ Icon, name, link }: NavLinkProps)}
+{#snippet NavLink({ Icon, name, link, absolute = false }: NavLinkProps)}
   <a
     href={link}
     use:route={{
-      active: { absolute: false, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
+      active: { absolute, class: ['text-current', 'bg-zinc-800', 't-light:bg-zinc-300'] }
     }}
     class={[
       'w-full h-9 flex items-center justify-between gap-2 p-2 text-current/50 font-medium rounded-sm outline-none',
