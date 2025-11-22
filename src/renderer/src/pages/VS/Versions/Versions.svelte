@@ -105,7 +105,7 @@
                         mode="danger"
                         disabled={vsVersion.state === VSVersion.State.DELETING || vsVersion.state === VSVersion.State.INSTALLING}
                         onclick={async () => {
-                          const ok = await ask('Are you sure?', 'Are you sure you want to delete this VS Version? This action cannot be undone!')
+                          const ok = await ask('Are you sure?', 'Are you sure you want to delete this VS Version? This action cannot be undone!', 'danger')
                           if (ok) {
                             await vsVersion.delete()
                             Data.instance.vsVersions = Data.instance.vsVersions.filter((v) => v.version !== vsVersion.version)

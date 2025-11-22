@@ -1,19 +1,21 @@
 <script lang="ts" module>
-  import Alert from '../components/Alert.svelte'
+  import Alert, { type AlertModeTypes } from '../components/Alert.svelte'
 
   export type AlertManagerQuestion = {
     title: string
     description: string
+    mode?: AlertModeTypes | undefined
     resolve: (value: boolean) => void
   }
 
   const queue: AlertManagerQuestion[] = $state([])
 
-  export function ask(title: string, description: string): Promise<boolean> {
+  export function ask(title: string, description: string, mode?: AlertModeTypes | undefined): Promise<boolean> {
     return new Promise((resolve) => {
       queue.push({
         title,
         description,
+        mode,
         resolve
       })
     })
@@ -42,5 +44,11 @@
 </script>
 
 {#if queue.length > 0}
-  <Alert title={queue[0].title} description={queue[0].description} onaccept={() => onaccept(queue[0])} oncancel={() => oncancel(queue[0])} />
+  <Alert
+    title={queue[0].title}
+    description={queue[0].description}
+    mode={queue[0].mode}
+    onaccept={() => onaccept(queue[0])}
+    oncancel={() => oncancel(queue[0])}
+  />
 {/if}

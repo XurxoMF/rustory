@@ -72,7 +72,8 @@
                         onclick={async () => {
                           const ok = await ask(
                             'Are you sure?',
-                            "Are you sure you want to delete this VS Instance? This action cannot be undone and you'll loose your worlds!"
+                            "Are you sure you want to delete this VS Instance? This action cannot be undone and you'll loose your worlds!",
+                            'danger'
                           )
                           if (ok) {
                             await vsInstance.delete()

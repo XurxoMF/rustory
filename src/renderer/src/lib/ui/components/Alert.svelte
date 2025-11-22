@@ -1,6 +1,36 @@
 <script lang="ts" module>
   import { type WithoutChildren, type WithoutChildrenOrChild } from 'bits-ui'
 
+  export const ALERT_MODE_CLASSES = {
+    neutral: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'bg-zinc-800/50 not-disabled:hover:bg-zinc-800 inset-ring-zinc-800 ring-zinc-800',
+      't-light:bg-zinc-300/50 t-light:not-disabled:hover:bg-zinc-300 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+    ],
+    info: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-blue-500 not-disabled:hover:text-blue-200 bg-blue-800/30 not-disabled:hover:bg-blue-800 inset-ring-blue-800 ring-blue-800',
+      't-light:text-blue-500 t-light:not-disabled:hover:text-blue-800 t-light:bg-blue-300/30 t-light:not-disabled:hover:bg-blue-300 t-light:inset-ring-blue-300 t-light:ring-blue-300'
+    ],
+    success: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800',
+      't-light:text-green-500 t-light:not-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-disabled:hover:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
+    ],
+    warning: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-yellow-500 not-disabled:hover:text-yellow-200 bg-yellow-800/30 not-disabled:hover:bg-yellow-800 inset-ring-yellow-800 ring-yellow-800',
+      't-light:text-yellow-500 t-light:not-disabled:hover:text-yellow-800 t-light:bg-yellow-300/30 t-light:not-disabled:hover:bg-yellow-300 t-light:inset-ring-yellow-300 t-light:ring-yellow-300'
+    ],
+    danger: [
+      'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+      'text-red-500 not-disabled:hover:text-red-200 bg-red-800/30 not-disabled:hover:bg-red-800 inset-ring-red-800 ring-red-800',
+      't-light:text-red-500 t-light:not-disabled:hover:text-red-800 t-light:bg-red-300/30 t-light:not-disabled:hover:bg-red-300 t-light:inset-ring-red-300 t-light:ring-red-300'
+    ]
+  } as const
+
+  export type AlertModeTypes = keyof typeof ALERT_MODE_CLASSES
+
   export type AlertOverlayProps = WithoutKeys<WithoutChildrenOrChild<AlertDialog.OverlayProps>, 'class'>
 
   export type AlertContentProps = WithoutKeys<WithoutChildrenOrChild<AlertDialog.ContentProps>, 'class' | 'onInteractOutside' | 'onEscapeKeydown'>
@@ -12,6 +42,7 @@
   export type AlertProps = WithoutChildren<AlertDialog.RootProps> & {
     title: string
     description: string
+    mode?: AlertModeTypes | undefined
     onaccept?: (() => void | Promise<void>) | undefined
     oncancel?: (() => void | Promise<void>) | undefined
     overlayProps?: AlertOverlayProps | undefined
@@ -32,6 +63,7 @@
     open = $bindable(true),
     title,
     description,
+    mode = 'success',
     onaccept,
     oncancel,
     overlayProps,
@@ -110,8 +142,7 @@
               'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
               'cursor-pointer disabled:cursor-not-allowed',
               'disabled:opacity-40',
-              'text-green-500 not-disabled:hover:text-green-200 bg-green-800/30 not-disabled:hover:bg-green-800 inset-ring-green-800 ring-green-800',
-              't-light:text-green-500 t-light:not-disabled:hover:text-green-800 t-light:bg-green-300/30 t-light:not-disabled:hover:bg-green-300 t-light:inset-ring-green-300 t-light:ring-green-300'
+              ...ALERT_MODE_CLASSES[mode]
             ]}
           >
             Accept
