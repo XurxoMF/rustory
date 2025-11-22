@@ -164,3 +164,19 @@ export async function ensurePathExists(path: string): Promise<void> {
     throw new RustoryFSError(`Error ensuring path ${path} exists!`, RustoryFSError.Codes.FS_ERROR)
   }
 }
+
+/**
+ * Copy a file from A to B.
+ * @param src Source file.
+ * @param dest Destination file.
+ * @throws A {@link RustoryFSError} error.
+ */
+export async function copyFile(src: string, dest: string): Promise<void> {
+  try {
+    await fse.copyFile(src, dest)
+  } catch (err) {
+    logger.error(`Error copying file ${src} to ${dest}!`)
+    logger.debug(`Error copying file ${src} to ${dest}:\n${JSON.stringify(err)}`)
+    throw new RustoryFSError(`Error copying file ${src} to ${dest}!`, RustoryFSError.Codes.FS_ERROR)
+  }
+}

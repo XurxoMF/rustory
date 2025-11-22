@@ -100,6 +100,12 @@
                 </Tooltip>
 
                 <P mode="secondary">{vsInstance.version}</P>
+
+                {#await window.api.fs.join('VS', 'Instances', `${vsInstance.id}.png`)}
+                  <p>Cargando icono...</p>
+                {:then icon}
+                  <img src={`icons:${icon}`} alt="Icono" />
+                {/await}
               </FlexContainer>
             </FlexContainer>
           </FlexContainer>

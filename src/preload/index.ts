@@ -21,7 +21,8 @@ const api: BridgeAPI = {
     getPath: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.getPath, ...params),
     changePerms: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.changePerms, ...params),
     deletePaths: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.deletePaths, ...params),
-    ensurePathExists: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.ensurePathExists, ...params)
+    ensurePathExists: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.ensurePathExists, ...params),
+    copyFile: (...params) => ipcRenderer.invoke(IPC_CHANNELS.fs.copyFile, ...params)
   },
   system: {
     getOSInfo: () => ipcRenderer.invoke(IPC_CHANNELS.system.getOSInfo),

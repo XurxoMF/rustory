@@ -1,5 +1,7 @@
 import { RustoryVSInstanceError } from '@shared/errors/RustoryVSInstanceError'
-import type { VSInstanceBackup } from './VSInstanceBackup.svelte'
+import type { VSInstanceBackup } from '@renderer/lib/classes/vintagestory/VSInstanceBackup.svelte'
+
+import { Info } from '@renderer/lib/classes/Info.svelte'
 
 /**
  * VS Instance.
@@ -271,7 +273,9 @@ export class VSInstance {
     try {
       window.api.logger.info(`Deleting VS Instance ${this._id}...`)
 
-      await window.api.fs.deletePaths([this._path])
+      const iconPath = await window.api.fs.join(Info.instance.dataPath, 'Icons', 'VS', 'Instances', `${this._id}.png`)
+
+      await window.api.fs.deletePaths([this._path, ...this._backups.map((b) => b.path), iconPath])
 
       await window.api.db.vsInstance.delete(this.toJSON())
 

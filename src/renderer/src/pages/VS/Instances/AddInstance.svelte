@@ -1,9 +1,16 @@
 <script lang="ts">
+  import { goto } from '@mateothegreat/svelte5-router'
+
   import { testENVs } from '@shared/utils/vintagestory'
+  import { cleanStringPath } from '@shared/utils/string'
 
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
+  import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
+  import { Data } from '@renderer/lib/classes/Data.svelte'
+  import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
 
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { P, H1, H3 } from '@renderer/lib/ui/components/Fonts'
@@ -19,12 +26,6 @@
   import Form from '@renderer/lib/ui/components/Form.svelte'
   import Switch from '@renderer/lib/ui/components/Switch.svelte'
   import Slider from '@renderer/lib/ui/components/Slider.svelte'
-  import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
-  import { Data } from '@renderer/lib/classes/Data.svelte'
-  import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
-  import { Config } from '@renderer/lib/classes/Config.svelte'
-  import { cleanStringPath } from '@shared/utils/string'
-  import { goto } from '@mateothegreat/svelte5-router'
 
   Breadcrumbs.instance.segments = [
     { label: 'VS', href: '/vs' },
@@ -106,8 +107,17 @@
 
       await window.api.fs.ensurePathExists(path)
 
+      const instanceID = crypto.randomUUID()
+
+      if (icon) {
+        const destDirPart = await window.api.fs.join(AppInfo.instance.dataPath, 'Icons', 'VS', 'Instances')
+        const destPath = await window.api.fs.join(destDirPart, `${instanceID}.png`)
+        await window.api.fs.ensurePathExists(destDirPart)
+        await window.api.fs.copyFile(icon, destPath)
+      }
+
       const instance = new VSInstance({
-        id: crypto.randomUUID(),
+        id: instanceID,
         name,
         version: iVersion.version,
         path: path,
@@ -232,7 +242,7 @@
                   id="icon-path"
                   title="Select file"
                   onclick={async () => {
-                    const selected = await window.api.fs.showDialog('VS Instance Icon', 'openFile', false, ['png', 'jpg'])
+                    const selected = await window.api.fs.showDialog('VS Instance Icon', 'openFile', false, ['png'])
                     icon = selected[0]
                   }}
                 >

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu } from 'electron'
+import { app, BrowserWindow, Menu, net, protocol } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import { autoUpdater } from 'electron-updater'
@@ -13,6 +13,7 @@ import { createMainWindow } from '@main/mainWindow'
 import { createTray } from '@main/mainTray'
 import { bytesToX } from '@shared/utils/math'
 import { padRight } from '@shared/utils/string'
+import { pathToFileURL } from 'url'
 
 // Ensure there is only 1 instance of the app running
 const gotTheLock = app.requestSingleInstanceLock()
@@ -55,6 +56,13 @@ app.whenReady().then(async () => {
   }
 
   await initIPCs()
+
+  protocol.handle('icons', (req) => {
+    const srcPath = join(app.getPath('userData'), 'Icons')
+    const reqURL = new URL(req.url)
+    const path = pathToFileURL(join(srcPath, reqURL.pathname)).toString()
+    return net.fetch(path)
+  })
 
   logger.info('Electron is ready! Creating main window...')
 

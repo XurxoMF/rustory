@@ -14,7 +14,8 @@ export const IPC_CHANNELS = {
     getPath: 'fs-get-path',
     changePerms: 'fs-change-perms',
     deletePaths: 'fs-delete-paths',
-    ensurePathExists: 'fs-ensure-path-exists'
+    ensurePathExists: 'fs-ensure-path-exists',
+    copyFile: 'fs-copy-file'
   },
   system: {
     getOSInfo: 'system-get-os-info',

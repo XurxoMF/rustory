@@ -89,6 +89,13 @@ declare global {
        * @throws A RustoryFSError error.
        */
       ensurePathExists: (path: string) => Promise<void>
+      /**
+       * Copy a file from A to B.
+       * @param src Source file.
+       * @param dest Destination file.
+       * @throws A {@link RustoryFSError} error.
+       */
+      copyFile: (src: string, dest: string) => Promise<void>
     }
     /**
      * Get the system info of various hardware and software components.
