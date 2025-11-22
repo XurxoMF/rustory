@@ -81,19 +81,19 @@
       <Button
         mode="transparent"
         onclick={() => {
-          if (!restProps.max || restProps.max > value) value++
+          if (!restProps.min || restProps.min < value) value--
         }}
       >
-        <PHPlusBoldIcon />
+        <PHMinusBoldIcon />
       </Button>
 
       <Button
         mode="transparent"
         onclick={() => {
-          if (!restProps.min || restProps.min < value) value--
+          if (!restProps.max || restProps.max > value) value++
         }}
       >
-        <PHMinusBoldIcon />
+        <PHPlusBoldIcon />
       </Button>
     </div>
   {/if}
