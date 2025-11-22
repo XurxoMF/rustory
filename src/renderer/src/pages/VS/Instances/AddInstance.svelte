@@ -97,15 +97,20 @@
       let iVersion: VSVersion | undefined = Data.instance.vsVersions.find((vsv) => vsv.version === version?.version)
 
       if (!iVersion) {
-        iVersion = await version!.add()
+        iVersion = await version!.toVSVersion()
+        Data.instance.vsVersions.push(iVersion)
         iVersion.install(version!)
       }
+
+      if (!path) path = await window.api.fs.join(Config.instance.vsInstancesPath, cleanStringPath(name))
+
+      await window.api.fs.ensurePathExists(path)
 
       const instance = new VSInstance({
         id: crypto.randomUUID(),
         name,
         version: iVersion.version,
-        path: path || (await window.api.fs.join(Config.instance.vsInstancesPath, cleanStringPath(name))),
+        path: path,
         backupsAuto,
         backupsLimit,
         compressionLevel: backupsCompression,
@@ -116,8 +121,6 @@
         totalTimePlayed: 0,
         state: VSInstance.State.STOPPED
       })
-
-      // TODO: Ensure the path used for the instance exists
 
       Data.instance.vsInstances.push(instance)
       instance.save()

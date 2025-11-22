@@ -1,4 +1,5 @@
 import { RustoryVSInstanceError } from '@shared/errors/RustoryVSInstanceError'
+import type { VSInstanceBackup } from './VSInstanceBackup.svelte'
 
 /**
  * VS Instance.
@@ -30,6 +31,11 @@ export class VSInstance {
    * The mods of the VS Instance.
    */
   private _mods: VSModType[]
+
+  /**
+   * The backups of the VS Instance.
+   */
+  private _backups: VSInstanceBackup[]
 
   /**
    * The start parameters of the VS Instance.
@@ -96,6 +102,7 @@ export class VSInstance {
     this._path = data.path
     this._version = $state(data.version)
     this._mods = $state([])
+    this._backups = $state([])
     this._startParams = $state(data.startParams)
     this._backupsLimit = $state(data.backupsLimit)
     this._backupsAuto = $state(data.backupsAuto)
@@ -140,6 +147,13 @@ export class VSInstance {
    */
   public get mods(): VSModType[] {
     return this._mods
+  }
+
+  /**
+   * The backups of the VS Instance.
+   */
+  public get backups(): VSInstanceBackup[] {
+    return this._backups
   }
 
   /**

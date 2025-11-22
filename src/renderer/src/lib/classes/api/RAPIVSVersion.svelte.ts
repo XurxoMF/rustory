@@ -195,16 +195,10 @@ export class RAPIVSVersion {
    * Add the VS Version and install it.
    * @throws A {@link RustoryVSVersionError} error.
    */
-  public async add(path?: string | undefined): Promise<VSVersion> {
-    window.api.logger.info(`Adding VS Version ${this._version}...`)
+  public async toVSVersion(): Promise<VSVersion> {
+    const installPath = await window.api.fs.join(Config.instance.vsVersionsPath, this._version)
 
-    const installPath = path ?? (await window.api.fs.join(Config.instance.vsVersionsPath, this._version))
-
-    const vsVersion = new VSVersion({ version: this._version, path: installPath, state: VSVersion.State.NOT_INSTALLED })
-
-    Data.instance.vsVersions.push(vsVersion)
-
-    return vsVersion
+    return new VSVersion({ version: this._version, path: installPath, state: VSVersion.State.NOT_INSTALLED })
   }
 }
 

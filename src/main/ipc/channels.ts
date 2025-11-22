@@ -13,7 +13,8 @@ export const IPC_CHANNELS = {
     join: 'fs-join',
     getPath: 'fs-get-path',
     changePerms: 'fs-change-perms',
-    deletePaths: 'fs-delete-paths'
+    deletePaths: 'fs-delete-paths',
+    ensurePathExists: 'fs-ensure-path-exists'
   },
   system: {
     getOSInfo: 'system-get-os-info',

@@ -6,12 +6,11 @@
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
 
-  import { PHFolderOpenBoldIcon, PHMagnifyingGlassBoldIcon, PHPlusBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHFolderOpenBoldIcon, PHPlusBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { GridItem, GridContainer } from '@renderer/lib/ui/layout/Grid'
   import Label from '@renderer/lib/ui/components/Label.svelte'
   import Info from '@renderer/lib/ui/components/Info.svelte'
-  import Input from '@renderer/lib/ui/components/Input.svelte'
   import { VersionsToInstall } from '@renderer/lib/ui/features/VS/Versions'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { P, H1, H4 } from '@renderer/lib/ui/components/Fonts'
@@ -32,24 +31,20 @@
   let version: RAPIVSVersion | undefined = $state()
   let versionErrors: string[] = $state([])
 
-  // Path form data
-  let path: string | undefined = $state()
-  let pathErrors: string[] = $state([])
-
-  let totalErrors = $derived(versionErrors.length + pathErrors.length)
+  let totalErrors = $derived(versionErrors.length)
 
   async function manageInstallVersion(): Promise<void> {
     // Clear errors
     versionErrors = []
-    pathErrors = []
 
     // Check if a version is selected
     if (!version) versionErrors.push('You need to select a version!')
 
     // Install the version if there are no errors
     if (totalErrors <= 0) {
-      const vsv = await version!.add(path)
-      vsv.install(version!)
+      const vsVersion = await version!.toVSVersion()
+      Data.instance.vsVersions.push(vsVersion)
+      vsVersion.install(version!)
       clearInstallVersion()
       return
     }
@@ -60,9 +55,6 @@
 
     version = undefined
     versionErrors = []
-
-    path = undefined
-    pathErrors = []
   }
 </script>
 
@@ -183,31 +175,6 @@
           />
 
           <FormInfo error={versionErrors} />
-        </FlexContainer>
-
-        <FlexContainer direction="col" gap="sm">
-          <FlexContainer gap="sm">
-            <Label for="version-path">Path</Label>
-            <Info>The path where the VS Version will be installed.<br />It'll use the default path + the version if left empty.</Info>
-          </FlexContainer>
-
-          <FlexContainer gap="xs">
-            <Button
-              mode="neutral"
-              id="version-path"
-              title="Select a folder"
-              onclick={async () => {
-                const selected = await window.api.fs.showDialog('Select a folder', 'openDirectory', false, [])
-                path = selected[0]
-              }}
-            >
-              <PHMagnifyingGlassBoldIcon />
-            </Button>
-
-            <Input type="text" placeholder="Path" value={path} readonly required />
-          </FlexContainer>
-
-          <FormInfo error={pathErrors} />
         </FlexContainer>
       </FlexContainer>
 

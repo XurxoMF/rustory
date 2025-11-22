@@ -2,7 +2,7 @@ import { app, ipcMain } from 'electron'
 import { join } from 'path'
 
 import { IPC_CHANNELS } from '@main/ipc/channels'
-import { changePerms, deletePaths, openDialog, readJSON, writeJSON } from '@main/utils/fs'
+import { changePerms, deletePaths, ensurePathExists, openDialog, readJSON, writeJSON } from '@main/utils/fs'
 
 export async function registerFSHandlers(): Promise<void> {
   ipcMain.handle(IPC_CHANNELS.fs.readJSON, async (_event, filePath: string): Promise<any | undefined> => await readJSON(filePath))
@@ -22,4 +22,6 @@ export async function registerFSHandlers(): Promise<void> {
   ipcMain.handle(IPC_CHANNELS.fs.changePerms, async (_event, paths: string[], perms: number): Promise<void> => await changePerms(paths, perms))
 
   ipcMain.handle(IPC_CHANNELS.fs.deletePaths, async (_event, paths: string[]): Promise<void> => await deletePaths(paths))
+
+  ipcMain.handle(IPC_CHANNELS.fs.ensurePathExists, async (_event, path: string): Promise<void> => await ensurePathExists(path))
 }

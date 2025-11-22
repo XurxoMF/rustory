@@ -144,7 +144,7 @@ export class VSVersion {
    * Install this VS Version.
    * @param url The url to download the VS Version from.
    */
-  public async install(rAPIVSVersion: RAPIVSVersion): Promise<void> {
+  public async install(apiVersion: RAPIVSVersion): Promise<void> {
     window.api.logger.info(`Installing VS Version ${this._version}...`)
 
     this._state = VSVersion.State.INSTALLING
@@ -153,13 +153,13 @@ export class VSVersion {
 
     switch (Info.instance.os.platform) {
       case 'linux':
-        url = rAPIVSVersion.linux
+        url = apiVersion.linux
         break
       case 'darwin':
-        url = rAPIVSVersion.mac
+        url = apiVersion.mac
         break
       case 'Windows':
-        url = rAPIVSVersion.windows
+        url = apiVersion.windows
         break
       default:
         window.api.logger.error(`Unsupported OS! ${Info.instance.os.platform}`)

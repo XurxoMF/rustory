@@ -83,6 +83,12 @@ declare global {
        * @throws A RustoryFSError error.
        */
       deletePaths: (paths: string[]) => Promise<void>
+      /**
+       * Ensure that the specified path exists. If it doesn't, it will be created.
+       * @param path Path to ensure.
+       * @throws A RustoryFSError error.
+       */
+      ensurePathExists: (path: string) => Promise<void>
     }
     /**
      * Get the system info of various hardware and software components.

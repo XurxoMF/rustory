@@ -119,7 +119,7 @@ export async function changePerms(paths: string[], perms: number): Promise<void>
 
         worker.on('exit', (code) => {
           if (code !== 0) {
-            logger.warn(`Worker exited with errors changing perms to ${paths.length}!`)
+            logger.error(`Worker exited with errors changing perms to ${paths.length}!`)
             logger.debug(`Worker exited with errors changing perms to ${paths.length}. Code: ${code}`)
             reject(new RustoryFSError(`Worker exited with errors changing perms to ${paths.length}!`, RustoryFSError.Codes.FS_ERROR))
           }
@@ -127,7 +127,7 @@ export async function changePerms(paths: string[], perms: number): Promise<void>
       }
     })
   } catch (err) {
-    logger.warn(`Error changing perms to ${paths.length}!`)
+    logger.error(`Error changing perms to ${paths.length}!`)
     logger.debug(`Error changing perms to ${paths.length}:\n${JSON.stringify(err)}`)
     throw new RustoryFSError(`Error changing perms to ${paths.length}!`, RustoryFSError.Codes.FS_ERROR)
   }
@@ -144,8 +144,23 @@ export async function deletePaths(paths: string[]): Promise<void> {
       await fse.remove(path)
     }
   } catch (err) {
-    logger.warn(`Worker error deleting ${paths.length} paths!`)
+    logger.error(`Worker error deleting ${paths.length} paths!`)
     logger.debug(`Worker error deleting ${paths.length} paths:\n${JSON.stringify(err)}`)
     throw new RustoryFSError(`Worker error deleting ${paths.length} paths!`, RustoryFSError.Codes.FS_ERROR)
+  }
+}
+
+/**
+ * Ensure the specified path exists. If it doesn't, it will be created.
+ * @param path Path to ensure exists.
+ * @throws A {@link RustoryFSError} error.
+ */
+export async function ensurePathExists(path: string): Promise<void> {
+  try {
+    await fse.ensureDir(path)
+  } catch (err) {
+    logger.error(`Error ensuring path ${path} exists!`)
+    logger.debug(`Error ensuring path ${path} exists:\n${JSON.stringify(err)}`)
+    throw new RustoryFSError(`Error ensuring path ${path} exists!`, RustoryFSError.Codes.FS_ERROR)
   }
 }
