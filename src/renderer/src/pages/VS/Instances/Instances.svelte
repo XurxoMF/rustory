@@ -6,6 +6,7 @@
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { Data } from '@renderer/lib/classes/Data.svelte'
   import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
+  import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
 
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { P, H1, H4 } from '@renderer/lib/ui/components/Fonts'
@@ -30,12 +31,16 @@
 
         <Tooltip disableHoverableContent>
           {#snippet trigger()}
-            <Button mode="neutral" onclick={() => goto('/vs/instances/add')}>
+            <Button mode="neutral" onclick={() => goto('/vs/instances/add')} disabled={!AppInfo.instance.online}>
               <PHPlusBoldIcon class="text-2xl text-current/50" />
             </Button>
           {/snippet}
 
-          Add a new VS Instance
+          {#if AppInfo.instance.online}
+            Add a new VS Instance
+          {:else}
+            You need to be online to add a new VS Instance.
+          {/if}
         </Tooltip>
       </FlexContainer>
 

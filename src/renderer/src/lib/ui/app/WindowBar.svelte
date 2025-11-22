@@ -19,8 +19,10 @@
     PHHouseBoldIcon,
     PHMinusBoldIcon,
     PHTrayArrowDownBoldIcon,
+    PHWifiHighBoldIcon,
     PHXBoldIcon
   } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { Info } from '@renderer/lib/classes/Info.svelte'
 </script>
 
 {#if !MainWindow.instance.fullscreened}
@@ -75,6 +77,19 @@
     </div>
 
     <div class="flex-1 h-full flex items-center justify-end">
+      <div class="app-no-drag flex items-center justify-center p-1">
+        <!-- TODO: onclick rechech online/offline status -->
+        <Button mode="transparent" title={Info.instance.online ? 'Online' : 'Offline'}>
+          {#if Info.instance.online}
+            <PHWifiHighBoldIcon class="text-green-500" />
+          {:else}
+            <PHWifiHighBoldIcon class="text-red-500" />
+          {/if}
+        </Button>
+      </div>
+
+      <Separator orientation="vertical" />
+
       <div class="app-no-drag flex items-center justify-center p-1">
         <Button mode="transparent" onclick={() => window.api.window.minimize()} title="Minimize">
           <PHMinusBoldIcon />

@@ -31,6 +31,11 @@ export class Info {
   private _version: string
 
   /**
+   * Whether the APP is online.
+   */
+  private _online: boolean
+
+  /**
    * OS info.
    */
   private _os: Systeminformation.OsData
@@ -102,6 +107,7 @@ export class Info {
   }) {
     this._name = data.name
     this._version = data.version
+    this._online = $state(navigator.onLine)
     this._os = data.os
     this._cpu = data.cpu
     this._ram = data.ram
@@ -113,6 +119,10 @@ export class Info {
     this._cachePath = data.cachePath
     this._tempPath = data.tempPath
     this._logsPath = data.logsPath
+
+    // Listen to online/offline events
+    window.addEventListener('online', () => (this._online = true))
+    window.addEventListener('offline', () => (this._online = false))
   }
 
   /**
@@ -174,6 +184,13 @@ export class Info {
    */
   public get version(): string {
     return this._version
+  }
+
+  /**
+   * Whether the APP is online.
+   */
+  public get online(): boolean {
+    return this._online
   }
 
   /**

@@ -4,6 +4,7 @@
   import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
   import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
+  import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
 
   import { PHFolderOpenBoldIcon, PHMagnifyingGlassBoldIcon, PHPlusBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import Button from '@renderer/lib/ui/components/Button.svelte'
@@ -73,12 +74,16 @@
 
         <Tooltip disableHoverableContent>
           {#snippet trigger()}
-            <Button mode="neutral" onclick={() => (isAddVSVersionDialogOpen = true)}>
+            <Button mode="neutral" onclick={() => (isAddVSVersionDialogOpen = true)} disabled={!AppInfo.instance.online}>
               <PHPlusBoldIcon class="text-2xl text-current/50" />
             </Button>
           {/snippet}
 
-          Install a new VS Version
+          {#if AppInfo.instance.online}
+            Install a new VS Version.
+          {:else}
+            You need to be online to install a new VS Version.
+          {/if}
         </Tooltip>
       </FlexContainer>
 
