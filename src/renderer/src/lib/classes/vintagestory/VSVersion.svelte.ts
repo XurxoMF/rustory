@@ -109,7 +109,7 @@ export class VSVersion {
       this._state = VSVersion.State.DELETING
 
       await window.api.fs.deletePaths([this._path])
-      await window.api.db.vsVersion.deleteVSVersion(this.toJSON())
+      await window.api.db.vsVersion.delete(this.toJSON())
 
       window.api.logger.info(`Successfully deleted VS Version ${this._version}!`)
     } catch (err) {
@@ -127,7 +127,7 @@ export class VSVersion {
     try {
       window.api.logger.info(`Saving VS Version ${this._version}...`)
 
-      await window.api.db.vsVersion.saveVSVersion(this.toJSON())
+      await window.api.db.vsVersion.save(this.toJSON())
 
       window.api.logger.info(`Successfully saved VS Version ${this._version}!`)
     } catch (err) {
@@ -193,7 +193,7 @@ export class VSVersion {
     try {
       window.api.logger.info('Getting all the VS Versions from the DB...')
 
-      const versions = await window.api.db.vsVersion.getVSVersions()
+      const versions = await window.api.db.vsVersion.getAll()
 
       window.api.logger.info('Successfully got all the VS Versions from the DB!')
 

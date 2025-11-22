@@ -260,19 +260,19 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        saveVSVersion: (version: VSVersionType) => Promise<void>
+        save: (version: VSVersionType) => Promise<void>
         /**
          * Delete a VS Version from the DB.
          * @param version The VS Version to delete.
          * @throws A RustoryDBError error.
          */
-        deleteVSVersion: (version: VSVersionType) => Promise<void>
+        delete: (version: VSVersionType) => Promise<void>
         /**
          * Get all the VS Versions from the DB.
          * @returns The VS Versions found.
          * @throws A RustoryDBError error.
          */
-        getVSVersions: () => Promise<VSVersionType[]>
+        getAll: () => Promise<VSVersionType[]>
       }
       /**
        * Interact with the vsInstance table.
@@ -284,19 +284,19 @@ declare global {
          * @returns If it was saved or not.
          * @throws A RustoryDBError error.
          */
-        saveVSInstance: (instance: VSInstanceType) => Promise<void>
+        save: (instance: VSInstanceType) => Promise<void>
         /**
          * Delete an VS Instance from the DB.
          * @param instance The VS Instance to delete.
          * @throws A RustoryDBError error.
          */
-        deleteVSInstance: (instance: VSInstanceType) => Promise<void>
+        delete: (instance: VSInstanceType) => Promise<void>
         /**
          * Get all the VS Instances from the DB.
          * @returns The VS Instances found.
          * @throws A RustoryDBError error.
          */
-        getVSInstances: () => Promise<VSInstanceType[]>
+        getAll: () => Promise<VSInstanceType[]>
       }
     }
     /**

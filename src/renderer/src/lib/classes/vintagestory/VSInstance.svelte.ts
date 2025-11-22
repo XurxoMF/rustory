@@ -259,7 +259,7 @@ export class VSInstance {
 
       await window.api.fs.deletePaths([this._path])
 
-      await window.api.db.vsInstance.deleteVSInstance(this.toJSON())
+      await window.api.db.vsInstance.delete(this.toJSON())
 
       window.api.logger.info(`Successfully deleted VS Instance ${this._id}!`)
     } catch (err) {
@@ -277,7 +277,7 @@ export class VSInstance {
     try {
       window.api.logger.info(`Saving VS Instance ${this._id}...`)
 
-      await window.api.db.vsInstance.saveVSInstance(this.toJSON())
+      await window.api.db.vsInstance.save(this.toJSON())
 
       window.api.logger.info(`Successfully saved VS Instance ${this._id}!`)
     } catch (err) {
@@ -299,7 +299,7 @@ export class VSInstance {
     try {
       window.api.logger.info('Getting all the VS Instances from the DB...')
 
-      const instances = await window.api.db.vsInstance.getVSInstances()
+      const instances = await window.api.db.vsInstance.getAll()
 
       window.api.logger.info('Successfully got all the VS Instances from the DB!')
 

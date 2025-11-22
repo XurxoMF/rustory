@@ -1,6 +1,5 @@
 import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
 import { Config } from '@renderer/lib/classes/Config.svelte'
-import { Info } from '@renderer/lib/classes/Info.svelte'
 import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
 import { Data } from '@renderer/lib/classes/Data.svelte'
 /**

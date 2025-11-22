@@ -70,14 +70,14 @@ const api: BridgeAPI = {
       setItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.setItem, ...params)
     },
     vsVersion: {
-      getVSVersions: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.getVSVersions, ...params),
-      saveVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.saveVSVersion, ...params),
-      deleteVSVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.deleteVSVersion, ...params)
+      getAll: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.getAll, ...params),
+      save: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.save, ...params),
+      delete: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.delete, ...params)
     },
     vsInstance: {
-      getVSInstances: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.getVSInstances, ...params),
-      saveVSInstance: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.saveVSInstance, ...params),
-      deleteVSInstance: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.deleteVSInstance, ...params)
+      getAll: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.getAll, ...params),
+      save: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.save, ...params),
+      delete: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.delete, ...params)
     }
   },
   zip: {
