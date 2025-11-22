@@ -257,8 +257,7 @@ export class VSInstance {
     try {
       window.api.logger.info(`Deleting VS Instance ${this._id}...`)
 
-      // TODO: Delete path IF the user wanted to.
-      // await window.api.fs.deletePaths([this._path])
+      await window.api.fs.deletePaths([this._path])
 
       await window.api.db.vsInstance.deleteVSInstance(this.toJSON())
 

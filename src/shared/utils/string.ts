@@ -30,3 +30,16 @@ export function padLeft(str: string, length: number, padChar: string = ' '): str
 export function padMid(strLeft: string, strRight: string, length: number, padChar: string = ' '): string {
   return strLeft + padChar.repeat(Math.max(0, length - (strLeft.length + strRight.length))) + strRight
 }
+
+/**
+ * Cleans a string to use it on paths. Removes special characters, spaces and other things.
+ * @param str The string to clean.
+ * @returns The clean string.
+ */
+export function cleanStringPath(str: string): string {
+  return str
+    .replace(/[<>:"/\\|?*]/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+}

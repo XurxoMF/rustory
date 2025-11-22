@@ -2,6 +2,8 @@ import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
 import { TaskInstallVSVersion } from '@renderer/lib/classes/tasks/TaskInstallVSVersion.svelte'
 import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
 import { Tasks } from '@renderer/lib/classes/Tasks.svelte'
+import { Info } from '@renderer/lib/classes/Info.svelte'
+import type { RAPIVSVersion } from '../api/RAPIVSVersion.svelte'
 
 /**
  * VS Version.
@@ -142,10 +144,27 @@ export class VSVersion {
    * Install this VS Version.
    * @param url The url to download the VS Version from.
    */
-  public async install(url: string): Promise<void> {
+  public async install(rAPIVSVersion: RAPIVSVersion): Promise<void> {
     window.api.logger.info(`Installing VS Version ${this._version}...`)
 
     this._state = VSVersion.State.INSTALLING
+
+    let url: string
+
+    switch (Info.instance.os.platform) {
+      case 'linux':
+        url = rAPIVSVersion.linux
+        break
+      case 'darwin':
+        url = rAPIVSVersion.mac
+        break
+      case 'Windows':
+        url = rAPIVSVersion.windows
+        break
+      default:
+        window.api.logger.error(`Unsupported OS! ${Info.instance.os.platform}`)
+        throw new RustoryVSVersionError(`Unsupported OS: ${Info.instance.os.platform}`, RustoryVSVersionError.Codes.UNSUPORTED_OS)
+    }
 
     const task = new TaskInstallVSVersion({ version: this._version, url, outputPath: this._path })
 

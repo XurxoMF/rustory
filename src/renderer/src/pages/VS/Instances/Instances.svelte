@@ -79,12 +79,12 @@
                       </Button>
                     {/snippet}
 
-                    Uninstall VS Version
+                    Uninstall VS Instance
                   </Tooltip>
                 </FlexContainer>
               </FlexContainer>
 
-              <FlexContainer gap="sm">
+              <FlexContainer direction="col" gap="sm">
                 <Tooltip triggerWidth="full" delayDuration={500}>
                   {#snippet trigger()}
                     <P mode="secondary" overflow="ellipsis">{vsInstance.path}</P>
@@ -93,13 +93,7 @@
                   {vsInstance.path}
                 </Tooltip>
 
-                <Tooltip triggerWidth="full" delayDuration={500}>
-                  {#snippet trigger()}
-                    <P mode="secondary" overflow="ellipsis">{vsInstance.version}</P>
-                  {/snippet}
-
-                  {vsInstance.version}
-                </Tooltip>
+                <P mode="secondary">{vsInstance.version}</P>
               </FlexContainer>
             </FlexContainer>
           </FlexContainer>

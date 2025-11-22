@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { testENVs } from '@shared/utils/vintagestory'
+
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
@@ -17,6 +19,12 @@
   import Form from '@renderer/lib/ui/components/Form.svelte'
   import Switch from '@renderer/lib/ui/components/Switch.svelte'
   import Slider from '@renderer/lib/ui/components/Slider.svelte'
+  import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
+  import { Data } from '@renderer/lib/classes/Data.svelte'
+  import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
+  import { Config } from '@renderer/lib/classes/Config.svelte'
+  import { cleanStringPath } from '@shared/utils/string'
+  import { goto } from '@mateothegreat/svelte5-router'
 
   Breadcrumbs.instance.segments = [
     { label: 'VS', href: '/vs' },
@@ -58,19 +66,63 @@
   let envVarsErrors: string[] = $state([])
 
   // Mesa Gl Thread data
-  let mesaGlthread = $state(false)
+  let mesaGlThread = $state(false)
 
-  let totalErrors = $derived(nameErrors.length + versionErrors.length + pathErrors.length + iconErrors.length)
+  let totalErrors = $derived(nameErrors.length + versionErrors.length + pathErrors.length + iconErrors.length + startParamsErrors.length + envVarsErrors.length)
 
-  function manageAddInstance(): void {
+  async function manageAddInstance(): Promise<void> {
+    // Clear errors
+    nameErrors = []
+    versionErrors = []
+    pathErrors = []
+    iconErrors = []
+    startParamsErrors = []
+    envVarsErrors = []
+
     // Check if a version is selected
     if (!version) versionErrors.push('You need to select a version!')
 
     // Check the name
     if (!name) nameErrors.push('You need to enter a name!')
+    if (name.length > 50) nameErrors.push('The name is too long! 1-50 characters.')
+    if (Data.instance.vsInstances.some((i) => i.name.toLowerCase() === name.toLowerCase())) nameErrors.push('There is already an instance with that name!')
+
+    // Check start params
+    if (startParams.includes('--dataPath')) startParamsErrors.push('You cannot use the --dataPath start parameter!')
+
+    // Check ENV variables
+    if (envVars && !testENVs(envVars)) envVarsErrors.push('There is an error with the ENV variables.')
 
     if (totalErrors <= 0) {
-      // TODO: Install the version if needed and add the instance
+      let iVersion: VSVersion | undefined = Data.instance.vsVersions.find((vsv) => vsv.version === version?.version)
+
+      if (!iVersion) {
+        iVersion = await version!.add()
+        iVersion.install(version!)
+      }
+
+      const instance = new VSInstance({
+        id: crypto.randomUUID(),
+        name,
+        version: iVersion.version,
+        path: path || (await window.api.fs.join(Config.instance.vsInstancesPath, cleanStringPath(name))),
+        backupsAuto,
+        backupsLimit,
+        compressionLevel: backupsCompression,
+        envVars,
+        mesaGlThread,
+        startParams,
+        lastTimePlayed: 0,
+        totalTimePlayed: 0,
+        state: VSInstance.State.STOPPED
+      })
+
+      // TODO: Ensure the path used for the instance exists
+
+      Data.instance.vsInstances.push(instance)
+      instance.save()
+
+      goto('/vs/instances')
     }
   }
 </script>
@@ -106,6 +158,8 @@
                 id="instance-name"
                 onchange={() => (nameErrors = [])}
                 mode={nameErrors.length > 0 ? 'danger' : 'neutral'}
+                minlength={1}
+                maxlength={50}
                 type="text"
                 placeholder="Name"
                 bind:value={name}
@@ -213,7 +267,7 @@
                 <Info>The maximum number of backups made.<br />Once this limit is reached, the oldest backups will be deleted.</Info>
               </FlexContainer>
 
-              <Input id="backups-limi" type="number" min={1} max={100} placeholder="Limit" bind:value={backupsLimit} />
+              <Input id="backups-limit" type="number" min={1} max={100} placeholder="Limit" bind:value={backupsLimit} />
             </FlexContainer>
           </GridItem>
 
@@ -241,14 +295,14 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm">
                 <Label for="start-params">Start params</Label>
-                <Info>The start parameters for theis VS Instance.</Info>
+                <Info>The start parameters for theis VS Instance.<br />--dataPath not allowe as it's used internally by Rustory.</Info>
               </FlexContainer>
 
               <Input
                 id="start-params"
                 mode={startParamsErrors.length > 0 ? 'danger' : 'neutral'}
                 type="text"
-                placeholder="Start params"
+                placeholder="--connect <server_ip> --pw <server_pw> ..."
                 bind:value={startParams}
               />
 
@@ -260,10 +314,16 @@
             <FlexContainer direction="col" gap="sm">
               <FlexContainer gap="sm">
                 <Label for="env-variables">ENV variables</Label>
-                <Info>The ENV variables for theis VS Instance.</Info>
+                <Info>The ENV variables for theis VS Instance sepparated with commas.</Info>
               </FlexContainer>
 
-              <Input id="env-variables" mode={envVarsErrors.length > 0 ? 'danger' : 'neutral'} type="text" placeholder="ENV variables" bind:value={envVars} />
+              <Input
+                id="env-variables"
+                mode={envVarsErrors.length > 0 ? 'danger' : 'neutral'}
+                type="text"
+                placeholder="ENV_1=value,ENV_2=value,..."
+                bind:value={envVars}
+              />
 
               <FormInfo error={envVarsErrors} />
             </FlexContainer>
@@ -284,7 +344,7 @@
                 <Label for="mesa-glthread">mesa_glthread</Label>
                 <Info>Enable mesa_glthread.<br />Improves performance on some Linux systems.</Info>
 
-                <Switch id="mesa-glthread" bind:checked={mesaGlthread} />
+                <Switch id="mesa-glthread" bind:checked={mesaGlThread} />
               </FlexContainer>
             </GridItem>
           </GridContainer>

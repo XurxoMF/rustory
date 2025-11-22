@@ -196,7 +196,7 @@ export class RAPIVSVersion {
    * Add the VS Version and install it.
    * @throws A {@link RustoryVSVersionError} error.
    */
-  public async addAndInstall(path?: string | undefined): Promise<void> {
+  public async add(path?: string | undefined): Promise<VSVersion> {
     window.api.logger.info(`Adding VS Version ${this._version}...`)
 
     const installPath = path ?? (await window.api.fs.join(Config.instance.vsVersionsPath, this._version))
@@ -205,24 +205,7 @@ export class RAPIVSVersion {
 
     Data.instance.vsVersions.push(vsVersion)
 
-    let url: string
-
-    switch (Info.instance.os.platform) {
-      case 'linux':
-        url = this._linux
-        break
-      case 'darwin':
-        url = this._mac
-        break
-      case 'Windows':
-        url = this._windows
-        break
-      default:
-        window.api.logger.error(`Unsupported OS! ${Info.instance.os.platform}`)
-        throw new RustoryVSVersionError(`Unsupported OS: ${Info.instance.os.platform}`, RustoryVSVersionError.Codes.UNSUPORTED_OS)
-    }
-
-    await vsVersion.install(url)
+    return vsVersion
   }
 }
 

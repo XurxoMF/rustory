@@ -23,6 +23,7 @@
     if (question) {
       question.resolve(true)
     }
+    deleteQuestion()
   }
 
   function oncancel(question: AlertManagerQuestion): void {

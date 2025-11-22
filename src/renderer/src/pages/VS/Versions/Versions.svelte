@@ -37,13 +37,18 @@
 
   let totalErrors = $derived(versionErrors.length + pathErrors.length)
 
-  function manageInstallVersion(): void {
+  async function manageInstallVersion(): Promise<void> {
+    // Clear errors
+    versionErrors = []
+    pathErrors = []
+
     // Check if a version is selected
     if (!version) versionErrors.push('You need to select a version!')
 
     // Install the version if there are no errors
     if (totalErrors <= 0) {
-      version?.addAndInstall(path)
+      const vsv = await version!.add(path)
+      vsv.install(version!)
       clearInstallVersion()
       return
     }
