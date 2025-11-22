@@ -50,20 +50,63 @@
 </script>
 
 <script lang="ts">
-  let { value = $bindable(), mode = 'neutral', width = 'full', readonly, tabindex, ...restProps }: InputProps = $props()
+  import Button from '@renderer/lib/ui/components/Button.svelte'
+  import { PHEyeBoldIcon, PHEyeClosedBoldIcon, PHMinusBoldIcon, PHPlusBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+
+  let { value = $bindable(), type, mode = 'neutral', width = 'full', readonly, tabindex, ...restProps }: InputProps = $props()
+
+  let passwordVisible = $state(false)
 </script>
 
-<input
-  bind:value
-  {readonly}
-  tabindex={readonly ? -1 : tabindex}
-  class={[
-    'w-full min-w-9 min-h-9 flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none',
-    'cursor-text disabled:cursor-not-allowed read-only:cursor-default',
-    'disabled:opacity-40',
-    'placeholder:text-current/30',
-    ...INPUT_MODE_CLASSES[mode],
-    ...WIDTH_CLASSES[width]
-  ]}
-  {...restProps}
-/>
+<div class={['relative min-w-9 min-h-9', ...WIDTH_CLASSES[width]]}>
+  <input
+    bind:value
+    {readonly}
+    type={type === 'password' && passwordVisible ? 'text' : type}
+    tabindex={readonly ? -1 : tabindex}
+    class={[
+      'w-full flex items-center justify-between gap-2 p-2 leading-tight rounded-sm outline-none',
+      'cursor-text disabled:cursor-not-allowed read-only:cursor-default',
+      'disabled:opacity-40',
+      'placeholder:text-current/30',
+      type === 'number' && 'pr-18',
+      type === 'password' && 'pr-9',
+      ...INPUT_MODE_CLASSES[mode]
+    ]}
+    {...restProps}
+  />
+
+  {#if type === 'number'}
+    <div class="absolute top-0 right-0 flex items-center">
+      <Button
+        mode="transparent"
+        onclick={() => {
+          if (!restProps.max || restProps.max > value) value++
+        }}
+      >
+        <PHPlusBoldIcon />
+      </Button>
+
+      <Button
+        mode="transparent"
+        onclick={() => {
+          if (!restProps.min || restProps.min < value) value--
+        }}
+      >
+        <PHMinusBoldIcon />
+      </Button>
+    </div>
+  {/if}
+
+  {#if type === 'password'}
+    <div class="absolute top-0 right-0 flex items-center">
+      <Button mode="transparent" onclick={() => (passwordVisible = !passwordVisible)}>
+        {#if passwordVisible}
+          <PHEyeClosedBoldIcon />
+        {:else}
+          <PHEyeBoldIcon />
+        {/if}
+      </Button>
+    </div>
+  {/if}
+</div>

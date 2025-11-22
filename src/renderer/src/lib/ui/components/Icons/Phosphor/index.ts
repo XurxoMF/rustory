@@ -28,6 +28,8 @@ export { default as PHListBoldIcon } from './ListBoldIcon.svelte'
 export { default as PHSortAscendingBoldIcon } from './SortAscendingIcon.svelte'
 export { default as PHSortDescendingIcon } from './SortDescendingIcon.svelte'
 export { default as PHWifiHighBoldIcon } from './WifiHighBoldIcon.svelte'
+export { default as PHEyeBoldIcon } from './EyeBoldIcon.svelte'
+export { default as PHEyeClosedBoldIcon } from './EyeClosedBoldIcon.svelte'
 
 // DUOTONE
 export { default as PHHandHeartDuotoneIcon } from './HandHeartDuotoneIcon.svelte'
