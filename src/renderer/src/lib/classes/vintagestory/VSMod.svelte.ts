@@ -57,9 +57,9 @@ export class VSMod {
   private _type?: string | undefined
 
   /**
-   * The image of the VS Mod.
+   * If the VS Mod has an image.
    */
-  private _image?: string | undefined
+  private _image: boolean
 
   /**
    * The VS Mod info from the ModDB.
@@ -82,7 +82,7 @@ export class VSMod {
     authors: string[]
     contributors: string[]
     type?: string | undefined
-    image?: string | undefined
+    image: boolean
     mod: VSAPIMod
     state?: VSMod.State | undefined
   }) {
@@ -172,9 +172,9 @@ export class VSMod {
   }
 
   /**
-   * The image of the VS Mod.
+   * If the VS Mod has an image.
    */
-  public get image(): string | undefined {
+  public get image(): boolean {
     return this._image
   }
 

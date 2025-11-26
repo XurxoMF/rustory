@@ -96,6 +96,12 @@ declare global {
        * @throws A {@link RustoryFSError} error.
        */
       copyFile: (src: string, dest: string) => Promise<void>
+      /**
+       * Check if the specified path exists.
+       * @param path Path to check.
+       * @returns If the path exists or not.
+       */
+      pathExists: (path: string) => Promise<boolean>
     }
     /**
      * Get the system info of various hardware and software components.

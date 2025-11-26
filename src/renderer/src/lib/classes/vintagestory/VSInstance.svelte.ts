@@ -44,6 +44,11 @@ export class VSInstance {
   private _backups: VSInstanceBackup[]
 
   /**
+   * If the VS Instance has an icon or not.
+   */
+  private _icon: boolean
+
+  /**
    * The start parameters of the VS Instance.
    */
   private _startParams: string
@@ -98,6 +103,9 @@ export class VSInstance {
     name: string
     path: string
     version: string
+    mods: VSModType[]
+    backups: VSInstanceBackup[]
+    icon: boolean
     startParams: string
     backupsLimit: number
     backupsAuto: boolean
@@ -112,8 +120,9 @@ export class VSInstance {
     this._name = $state(data.name)
     this._path = data.path
     this._version = $state(data.version)
-    this._mods = $state([])
-    this._backups = $state([])
+    this._mods = $state(data.mods)
+    this._backups = $state(data.backups)
+    this._icon = $state(data.icon)
     this._startParams = $state(data.startParams)
     this._backupsLimit = $state(data.backupsLimit)
     this._backupsAuto = $state(data.backupsAuto)
@@ -166,6 +175,13 @@ export class VSInstance {
    */
   public get backups(): VSInstanceBackup[] {
     return this._backups
+  }
+
+  /**
+   * If the VS Instance has an icon or not.
+   */
+  public get icon(): boolean {
+    return this._icon
   }
 
   /**
@@ -264,12 +280,27 @@ export class VSInstance {
    * @param json The {@link VSInstanceType} to convert.
    * @returns The {@link VSInstance}.
    */
-  public static fromJSON(json: VSInstanceType, state?: VSInstance.State | undefined): VSInstance {
+  public static async fromJSON(json: VSInstanceType, state?: VSInstance.State | undefined): Promise<VSInstance> {
+    const iconPath = await window.api.fs.join(json.path, 'icon.png')
+    const iconExists = await window.api.fs.pathExists(iconPath)
+
+    if (iconExists) {
+      const iconCachePath = await window.api.fs.join(Info.instance.cachePath, 'Icons', 'VS', 'Instances')
+      const iconCahceDest = await window.api.fs.join(iconCachePath, `${json.id}.png`)
+      await window.api.fs.ensurePathExists(iconCachePath)
+      await window.api.fs.copyFile(iconPath, iconCahceDest)
+    }
+
+    // TODO: Load mods and backups
+
     return new VSInstance({
       id: json.id,
       name: json.name,
       path: json.path,
       version: json.version,
+      mods: [],
+      backups: [],
+      icon: iconExists,
       startParams: json.startParams,
       backupsLimit: json.backupsLimit,
       backupsAuto: json.backupsAuto,
@@ -290,9 +321,9 @@ export class VSInstance {
     try {
       window.api.logger.info(`Deleting VS Instance ${this._id}...`)
 
-      const iconPath = await window.api.fs.join(Info.instance.cachePath, 'Icons', 'VS', 'Instances', `${this._id}.png`)
+      const cacheIconPath = await window.api.fs.join(Info.instance.cachePath, 'Icons', 'VS', 'Instances', `${this._id}.png`)
 
-      await window.api.fs.deletePaths([this._path, iconPath])
+      await window.api.fs.deletePaths([this._path, cacheIconPath])
 
       await window.api.db.vsInstance.delete(this.toJSON())
 
@@ -386,7 +417,7 @@ export class VSInstance {
 
       window.api.logger.info('Successfully got all the VS Instances from the DB!')
 
-      return instances.map((i) => VSInstance.fromJSON(i))
+      return await Promise.all(instances.map((i) => VSInstance.fromJSON(i)))
     } catch (err) {
       window.api.logger.error('There was an error getting the VS Instances!')
       window.api.logger.debug(`There was an error getting the VS Instances:\n${JSON.stringify(err)}`)

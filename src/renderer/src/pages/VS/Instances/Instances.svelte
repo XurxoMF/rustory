@@ -103,6 +103,18 @@
 
                 <P mode="secondary">{vsInstance.version}</P>
 
+                {#if vsInstance.icon}
+                  {#await window.api.fs.join('Icons', 'VS', 'Instances', `${vsInstance.id}.png`)}
+                    <P mode="secondary">Loading icon...</P>
+                  {:then icon}
+                    <img src={`cache:${icon}`} alt="Icono" />
+                  {:catch}
+                    <P mode="secondary">Error loading icon</P>
+                  {/await}
+                {:else}
+                  <P mode="secondary">No icon</P>
+                {/if}
+
                 {#if vsInstance.task}
                   <FlexContainer direction="col" gap="sm">
                     <FlexContainer gap="sm" alignX="between">

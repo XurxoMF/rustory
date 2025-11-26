@@ -1,4 +1,5 @@
 import { RustoryDataError } from '@shared/errors/RustoryDataError'
+
 import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
 
 /**
@@ -35,7 +36,7 @@ export class Data {
     try {
       // Load all the VS Instances
       const vsInstancesJSON = await VSInstance.getAllFromDB()
-      const vsInstances = vsInstancesJSON.map((vsijson) => VSInstance.fromJSON(vsijson))
+      const vsInstances = await Promise.all(vsInstancesJSON.map((vsijson) => VSInstance.fromJSON(vsijson)))
 
       Data._instance = new Data({
         vsInstances

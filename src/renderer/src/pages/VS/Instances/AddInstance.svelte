@@ -101,10 +101,14 @@
       const instanceID = crypto.randomUUID()
 
       if (icon) {
-        const destDirPart = await window.api.fs.join(AppInfo.instance.cachePath, 'Icons', 'VS', 'Instances')
-        const destPath = await window.api.fs.join(destDirPart, `${instanceID}.png`)
-        await window.api.fs.ensurePathExists(destDirPart)
+        const destPath = await window.api.fs.join(path, 'icon.png')
+        await window.api.fs.ensurePathExists(path)
         await window.api.fs.copyFile(icon, destPath)
+
+        const iconCachePath = await window.api.fs.join(AppInfo.instance.cachePath, 'Icons', 'VS', 'Instances')
+        const iconCahceDest = await window.api.fs.join(iconCachePath, `${instanceID}.png`)
+        await window.api.fs.ensurePathExists(iconCachePath)
+        await window.api.fs.copyFile(destPath, iconCahceDest)
       }
 
       const instance = new VSInstance({
@@ -112,6 +116,9 @@
         name,
         version: version!.version,
         path: path,
+        mods: [],
+        backups: [],
+        icon: !!icon,
         backupsAuto,
         backupsLimit,
         compressionLevel: backupsCompression,
@@ -120,7 +127,7 @@
         startParams,
         lastTimePlayed: 0,
         totalTimePlayed: 0,
-        state: VSInstance.State.STOPPED
+        state: VSInstance.State.INSTALLING_VERSION
       })
 
       Data.instance.vsInstances.push(instance)

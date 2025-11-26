@@ -113,7 +113,7 @@ declare global {
     authors: string[]
     contributors: string[]
     type?: string | undefined
-    image?: string | undefined
+    image: boolean
     mod: VSAPIModType
   }
 

@@ -180,3 +180,12 @@ export async function copyFile(src: string, dest: string): Promise<void> {
     throw new RustoryFSError(`Error copying file ${src} to ${dest}!`, RustoryFSError.Codes.FS_ERROR)
   }
 }
+
+/**
+ * Check if the specified path exists.
+ * @param path Path to check.
+ * @returns If the path exists or not.
+ */
+export async function pathExists(path: string): Promise<boolean> {
+  return await fse.pathExists(path)
+}
