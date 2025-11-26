@@ -27,7 +27,7 @@
   import AlertManager from '@renderer/lib/ui/app/AlertManager.svelte'
 
   import HomePage from '@renderer/pages/Home.svelte'
-  import ConfigPage from '@renderer/pages/Config/Config.svelte'
+  import ConfigPage from '@renderer/pages/Config.svelte'
   import VSInstanceListPage from '@renderer/pages/VS/Instances/List.svelte'
   import VSInstanceAddPage from '@renderer/pages/VS/Instances/Add.svelte'
   import VSInstanceEditPage from '@renderer/pages/VS/Instances/Edit.svelte'

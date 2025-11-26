@@ -1,17 +1,17 @@
 <script lang="ts" module>
   import { type Snippet } from 'svelte'
 
-  export const GLID_CONTAINER_COLUMN_CLASSES = {
+  export const GRID_CONTAINER_COLUMN_CLASSES = {
     1: ['grid-cols-1'],
-    2: ['grid-cols-1 @3xl:grid-cols-2'],
-    3: ['grid-cols-1 @2xl:grid-cols-2 @6xl:grid-cols-3'],
-    4: ['grid-cols-1 @xl:grid-cols-2 @4xl:grid-cols-3 @8xl:grid-cols-4'],
-    5: ['grid-cols-1 @lg:grid-cols-2 @3xl:grid-cols-3 @6xl:grid-cols-4 @9xl:grid-cols-5'],
-    6: ['grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-6'],
-    7: ['grid-cols-1 @sm:grid-cols-2 @2xl:grid-cols-3 @4xl:grid-cols-4 @6xl:grid-cols-6 @9xl:grid-cols-7']
+    2: ['grid-cols-1 @7xl:grid-cols-2'],
+    3: ['grid-cols-1 @5xl:grid-cols-2 @7xl:grid-cols-3'],
+    4: ['grid-cols-1 @3xl:grid-cols-2 @5xl:grid-cols-3 @7xl:grid-cols-4'],
+    5: ['grid-cols-1 @xl:grid-cols-2 @3xl:grid-cols-3 @5xl:grid-cols-4 @7xl:grid-cols-5'],
+    6: ['grid-cols-1 @md:grid-cols-2 @xl:grid-cols-3 @3xl:grid-cols-4 @5xl:grid-cols-5 @7xl:grid-cols-6'],
+    7: ['grid-cols-1 @xs:grid-cols-2 @md:grid-cols-3 @xl:grid-cols-4 @3xl:grid-cols-5 @5xl:grid-cols-6 @7xl:grid-cols-7']
   } as const
 
-  export type GridContainerColumnTypes = keyof typeof GLID_CONTAINER_COLUMN_CLASSES
+  export type GridContainerColumnTypes = keyof typeof GRID_CONTAINER_COLUMN_CLASSES
 
   export const GRID_CONTAINER_HEIGHT_CLASSES = {
     fit: ['h-fit'],
@@ -123,7 +123,7 @@
     'grid',
     overflowHidden && 'overflow-hidden',
     isBreakpoint && '@container',
-    ...GLID_CONTAINER_COLUMN_CLASSES[columns],
+    ...GRID_CONTAINER_COLUMN_CLASSES[columns],
     ...GRID_CONTAINER_HEIGHT_CLASSES[height],
     ...GRID_CONTAINER_WIDTH_CLASSES[width],
     ...GRID_CONTAINER_GAP_CLASSES[gap],

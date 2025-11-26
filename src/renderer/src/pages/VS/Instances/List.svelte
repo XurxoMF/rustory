@@ -14,10 +14,11 @@
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import Tooltip from '@renderer/lib/ui/components/Tooltip.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import { PHPencilBoldIcon, PHPlusBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHPencilBoldIcon, PHPlusBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { PHFolderOpenBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
+  import { SpinnersRingResizeIcon } from '@renderer/lib/ui/components/Icons/Spinners'
 
   Breadcrumbs.instance.segments = [
     { label: 'VS', href: '/vs' },
@@ -49,27 +50,44 @@
       <P mode="secondary">Manage your Vintage Story Instances and everythig related with them.</P>
     </FlexContainer>
 
-    <GridContainer columns={3} gap="lg">
+    <GridContainer columns={2} gap="lg" isBreakpoint>
       {#each Data.instance.vsInstances as vsInstance (vsInstance.id)}
         <GridItem>
-          <FlexContainer overflowHidden direction="col" gap="base" padding="base" mode="neutral">
-            <FlexContainer direction="col" gap="sm">
-              <FlexContainer gap="base" alignX="start">
+          <FlexContainer gap="base" padding="base" mode="neutral">
+            <div class={['shrink-0 h-24 w-24 flex items-center justify-center text-2xl text-current/50']}>
+              {#if vsInstance.icon}
+                {#await window.api.fs.join('Icons', 'VS', 'Instances', `${vsInstance.id}.png`)}
+                  <SpinnersRingResizeIcon />
+                {:then icon}
+                  <img src={`cache:${icon}`} alt="Icon" class="w-full h-full object-cover rounded-sm" />
+                {:catch}
+                  <PHXBoldIcon />
+                {/await}
+              {:else}
+                <div
+                  class={[
+                    'w-full h-full rounded-sm',
+                    'inset-ring-2 focus-visible:inset-ring-1 focus-visible:ring-2',
+                    'bg-zinc-800/50 inset-ring-zinc-800 ring-zinc-800',
+                    't-light:bg-zinc-300/50 t-light:inset-ring-zinc-300 t-light:ring-zinc-300'
+                  ]}
+                ></div>
+              {/if}
+            </div>
+
+            <FlexContainer overflowHidden direction="col" gap="sm">
+              <FlexContainer gap="base" alignX="start" wrap>
                 <H4 overflow="nowrap">{vsInstance.name}</H4>
 
-                <FlexContainer gap="sm">
+                <FlexContainer gap="sm" width="fit">
                   <Tooltip disableHoverableContent>
                     {#snippet trigger()}
-                      <Button mode="neutral" onclick={() => goto(`/vs/instances/edit/${vsInstance.id}`)} disabled={!AppInfo.instance.online}>
+                      <Button mode="neutral" onclick={() => goto(`/vs/instances/edit/${vsInstance.id}`)}>
                         <PHPencilBoldIcon />
                       </Button>
                     {/snippet}
 
-                    {#if AppInfo.instance.online}
-                      Edit VS Instance
-                    {:else}
-                      You need to be online to edit a VS Instance.
-                    {/if}
+                    Edit VS Instance
                   </Tooltip>
 
                   <Tooltip disableHoverableContent>
@@ -106,39 +124,23 @@
                 </FlexContainer>
               </FlexContainer>
 
-              <FlexContainer direction="col" gap="sm">
-                <Tooltip triggerWidth="full" delayDuration={500}>
-                  {#snippet trigger()}
-                    <P mode="secondary" overflow="ellipsis">{vsInstance.path}</P>
-                  {/snippet}
+              <Tooltip triggerWidth="full" delayDuration={500}>
+                {#snippet trigger()}
+                  <P mode="secondary" overflow="ellipsis">{vsInstance.version} · {vsInstance.path}</P>
+                {/snippet}
 
-                  {vsInstance.path}
-                </Tooltip>
+                {vsInstance.version} · {vsInstance.path}
+              </Tooltip>
 
-                <P mode="secondary">{vsInstance.version}</P>
-
-                {#if vsInstance.icon}
-                  {#await window.api.fs.join('Icons', 'VS', 'Instances', `${vsInstance.id}.png`)}
-                    <P mode="secondary">Loading icon...</P>
-                  {:then icon}
-                    <img src={`cache:${icon}`} alt="Icono" />
-                  {:catch}
-                    <P mode="secondary">Error loading icon</P>
-                  {/await}
-                {:else}
-                  <P mode="secondary">No icon</P>
-                {/if}
-
-                {#if vsInstance.task}
-                  <FlexContainer direction="col" gap="sm">
-                    <FlexContainer gap="sm" alignX="between">
-                      <P mode="secondary">{vsInstance.task instanceof TaskInstallVSVersion && 'Installing...'}</P>
-                      <P mode="secondary">{vsInstance.task.progress}%</P>
-                    </FlexContainer>
-                    <ProgressBar mode="success" value={vsInstance.task.progress} />
+              {#if vsInstance.task}
+                <FlexContainer direction="col" gap="sm">
+                  <FlexContainer gap="sm" alignX="between">
+                    <P mode="secondary">{vsInstance.task instanceof TaskInstallVSVersion && 'Installing...'}</P>
+                    <P mode="secondary">{vsInstance.task.progress}%</P>
                   </FlexContainer>
-                {/if}
-              </FlexContainer>
+                  <ProgressBar mode="success" value={vsInstance.task.progress} />
+                </FlexContainer>
+              {/if}
             </FlexContainer>
           </FlexContainer>
         </GridItem>

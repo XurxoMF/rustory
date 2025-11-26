@@ -108,6 +108,8 @@
       instance.envVars = envVars
       instance.mesaGlThread = mesaGlThread
 
+      instance.save()
+
       goto('/vs/instances')
     }
   }
