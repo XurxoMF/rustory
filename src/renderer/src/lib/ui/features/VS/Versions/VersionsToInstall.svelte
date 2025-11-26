@@ -6,18 +6,16 @@
   import { Request } from '@renderer/lib/classes/Request.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
-  import { Data } from '@renderer/lib/classes/Data.svelte'
 
   import ComboBox, { type ComboBoxInputProps, type ComboBoxProps } from '@renderer/lib/ui/components/ComboBox.svelte'
 
   type VersionsToInstallProps = WithoutKeys<ComboBoxProps, 'items' | 'type' | 'value' | 'onValueChange'> & {
     version?: RAPIVSVersion | undefined
     onValueChange?: ((version: RAPIVSVersion) => void) | undefined
-    disableInstalled?: boolean | undefined
     inputProps?: WithoutKeys<ComboBoxInputProps, 'placeholder'> | undefined
   }
 
-  let { version = $bindable(), onValueChange, disableInstalled = false, inputProps, ...restProps }: VersionsToInstallProps = $props()
+  let { version = $bindable(), onValueChange, inputProps, ...restProps }: VersionsToInstallProps = $props()
 
   let versions: RAPIVSVersion[] = $state([])
 
@@ -50,7 +48,6 @@
   items={versions.map((v) => ({
     label: v.version,
     value: v.version,
-    disabled: disableInstalled && Data.instance.vsInstances.some((vsv) => vsv.version === v.version),
     comment: `${v.type} · ${new Date(v.releaseDate).toLocaleDateString(Config.instance.locale)}`
   }))}
   onValueChange={handleValueChange}

@@ -62,6 +62,9 @@ const api: BridgeAPI = {
     getVersion: () => ipcRenderer.invoke(IPC_CHANNELS.rustory.getVersion),
     exit: (...params) => ipcRenderer.send(IPC_CHANNELS.rustory.exit, ...params)
   },
+  vs: {
+    getVersion: (...params) => ipcRenderer.invoke(IPC_CHANNELS.vs.getVersion, ...params)
+  },
   shell: {
     openURL: (...params) => ipcRenderer.send(IPC_CHANNELS.shell.openURL, ...params),
     openPath: (...params) => ipcRenderer.send(IPC_CHANNELS.shell.openPath, ...params)
@@ -70,11 +73,6 @@ const api: BridgeAPI = {
     config: {
       getItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.getItem, ...params),
       setItem: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.config.setItem, ...params)
-    },
-    vsVersion: {
-      getAll: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.getAll, ...params),
-      save: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.save, ...params),
-      delete: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsVersion.delete, ...params)
     },
     vsInstance: {
       getAll: (...params) => ipcRenderer.invoke(IPC_CHANNELS.db.vsInstance.getAll, ...params),

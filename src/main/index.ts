@@ -57,8 +57,8 @@ app.whenReady().then(async () => {
 
   await initIPCs()
 
-  protocol.handle('icons', (req) => {
-    const srcPath = join(app.getPath('userData'), 'Icons')
+  protocol.handle('cache', (req) => {
+    const srcPath = join(app.getPath('userData'), 'Cache')
     const reqURL = new URL(req.url)
     const path = pathToFileURL(join(srcPath, reqURL.pathname)).toString()
     return net.fetch(path)

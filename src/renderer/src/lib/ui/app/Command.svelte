@@ -37,7 +37,7 @@
 
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import { PHFolderOpenBoldIcon, PHGearBoldIcon, PHGitForkBoldIcon, PHHouseBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHFolderOpenBoldIcon, PHGearBoldIcon, PHHouseBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let groups: CommandGroup[] = [
     {
@@ -49,13 +49,6 @@
           label: 'Home',
           icon: PHHouseBoldIcon,
           onclick: () => goto('/')
-        },
-        {
-          value: 'vs-versions-page',
-          keywords: ['Vintage Story Versions', 'Pages'],
-          label: 'Vintage Story Versions',
-          icon: PHGitForkBoldIcon,
-          onclick: () => goto('/vs/versions')
         },
         {
           value: 'vs-instances-page',

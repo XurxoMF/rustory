@@ -26,7 +26,6 @@
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import {
     PHGearBoldIcon,
-    PHGitForkBoldIcon,
     PHHandHeartDuotoneIcon,
     PHHouseBoldIcon,
     PHFolderOpenBoldIcon,
@@ -44,10 +43,7 @@
       id: 'vs',
       Icon: PHFolderOpenBoldIcon,
       name: 'Vintage Story',
-      links: [
-        { Icon: PHFolderOpenBoldIcon, name: 'Instances', link: '/vs/instances' },
-        { Icon: PHGitForkBoldIcon, name: 'Versions', link: '/vs/versions' }
-      ]
+      links: [{ Icon: PHFolderOpenBoldIcon, name: 'Instances', link: '/vs/instances' }]
     })}
   </FlexContainer>
 

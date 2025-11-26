@@ -225,6 +225,17 @@ declare global {
       exit: (code: number) => void
     }
     /**
+     * Interact with Vintage Story.
+     */
+    vs: {
+      /**
+       * Look for the version installed on a path.
+       * @param path Where to look for the executable to use.
+       * @returns The version installed on that path.
+       */
+      getVersion: (path: string) => Promise<string | undefined>
+    }
+    /**
      * Execute programs and other shell action.
      */
     shell: {
@@ -262,30 +273,6 @@ declare global {
          * @throws A RustoryDBError error.
          */
         setItem: (key: string, value: string) => Promise<void>
-      }
-      /**
-       * Interact with the vsVersion table.
-       */
-      vsVersion: {
-        /**
-         * Add or update a VS Version to the DB.
-         * @param version The VS Version to save.
-         * @returns If it was saved or not.
-         * @throws A RustoryDBError error.
-         */
-        save: (version: VSVersionType) => Promise<void>
-        /**
-         * Delete a VS Version from the DB.
-         * @param version The VS Version to delete.
-         * @throws A RustoryDBError error.
-         */
-        delete: (version: VSVersionType) => Promise<void>
-        /**
-         * Get all the VS Versions from the DB.
-         * @returns The VS Versions found.
-         * @throws A RustoryDBError error.
-         */
-        getAll: () => Promise<VSVersionType[]>
       }
       /**
        * Interact with the vsInstance table.

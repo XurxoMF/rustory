@@ -75,7 +75,7 @@
         <P mode="secondary">Default folder used by the app.</P>
       </FlexContainer>
 
-      <GridContainer columns={3} gap="base">
+      <GridContainer columns={1} gap="base">
         <GridItem>
           <FlexContainer direction="col" gap="sm">
             <FlexContainer gap="sm">
@@ -98,58 +98,6 @@
               </Button>
 
               <Input type="text" placeholder="Path" value={Config.instance.vsInstancesPath} readonly />
-            </FlexContainer>
-          </FlexContainer>
-        </GridItem>
-
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="versions-folder">VS Versions folder</Label>
-              <Info>The folder where the VS Versions will be installed.</Info>
-            </FlexContainer>
-
-            <FlexContainer gap="xs">
-              <Button
-                mode="neutral"
-                id="versions-folder"
-                title="Select a folder"
-                onclick={async () => {
-                  const folder = await window.api.fs.showDialog('VS Versions', 'openDirectory', false, [])
-                  if (!folder || folder.length < 1) return
-                  Config.instance.setVSVersionsPath(folder[0])
-                }}
-              >
-                <PHMagnifyingGlassBoldIcon />
-              </Button>
-
-              <Input type="text" placeholder="Path" value={Config.instance.vsVersionsPath} readonly />
-            </FlexContainer>
-          </FlexContainer>
-        </GridItem>
-
-        <GridItem>
-          <FlexContainer direction="col" gap="sm">
-            <FlexContainer gap="sm">
-              <Label for="backups-folder">Backups folder</Label>
-              <Info>The folder where the backups will be saved if new path is not specified.</Info>
-            </FlexContainer>
-
-            <FlexContainer gap="xs">
-              <Button
-                mode="neutral"
-                id="backups-folder"
-                title="Select a folder"
-                onclick={async () => {
-                  const folder = await window.api.fs.showDialog('Backups', 'openDirectory', false, [])
-                  if (!folder || folder.length < 1) return
-                  Config.instance.setVSInstanceBackupsPath(folder[0])
-                }}
-              >
-                <PHMagnifyingGlassBoldIcon />
-              </Button>
-
-              <Input type="text" placeholder="Path" value={Config.instance.vsInstanceBackupsPath} readonly />
             </FlexContainer>
           </FlexContainer>
         </GridItem>

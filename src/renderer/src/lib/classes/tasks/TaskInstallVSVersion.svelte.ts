@@ -6,11 +6,6 @@ import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
  */
 export class TaskInstallVSVersion implements TaskBase {
   /**
-   * Type of the task.
-   */
-  public readonly type: TaskBase.Type = TaskBase.Type.VS_VERSION_INSTALL
-
-  /**
    * ID of the task.
    */
   private _id: string

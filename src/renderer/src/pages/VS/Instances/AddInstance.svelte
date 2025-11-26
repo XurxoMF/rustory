@@ -7,7 +7,6 @@
   import { Breadcrumbs } from '@renderer/lib/classes/Breadcrumbs.svelte'
   import { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
   import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
-  import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
   import { Data } from '@renderer/lib/classes/Data.svelte'
   import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
   import { Config } from '@renderer/lib/classes/Config.svelte'
@@ -95,14 +94,6 @@
     if (envVars && !testENVs(envVars)) envVarsErrors.push('There is an error with the ENV variables.')
 
     if (totalErrors <= 0) {
-      let iVersion: VSVersion | undefined = Data.instance.vsVersions.find((vsv) => vsv.version === version?.version)
-
-      if (!iVersion) {
-        iVersion = await version!.toVSVersion()
-        Data.instance.vsVersions.push(iVersion)
-        iVersion.install(version!)
-      }
-
       if (!path) path = await window.api.fs.join(Config.instance.vsInstancesPath, cleanStringPath(name))
 
       await window.api.fs.ensurePathExists(path)
@@ -110,7 +101,7 @@
       const instanceID = crypto.randomUUID()
 
       if (icon) {
-        const destDirPart = await window.api.fs.join(AppInfo.instance.dataPath, 'Icons', 'VS', 'Instances')
+        const destDirPart = await window.api.fs.join(AppInfo.instance.cachePath, 'Icons', 'VS', 'Instances')
         const destPath = await window.api.fs.join(destDirPart, `${instanceID}.png`)
         await window.api.fs.ensurePathExists(destDirPart)
         await window.api.fs.copyFile(icon, destPath)
@@ -119,7 +110,7 @@
       const instance = new VSInstance({
         id: instanceID,
         name,
-        version: iVersion.version,
+        version: version!.version,
         path: path,
         backupsAuto,
         backupsLimit,
@@ -134,6 +125,7 @@
 
       Data.instance.vsInstances.push(instance)
       instance.save()
+      instance.install(version!)
 
       goto('/vs/instances')
     }

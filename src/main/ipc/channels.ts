@@ -46,6 +46,9 @@ export const IPC_CHANNELS = {
     getVersion: 'rustory-get-version',
     exit: 'app-exit'
   },
+  vs: {
+    getVersion: 'vs-get-version'
+  },
   shell: {
     openURL: 'shell-open-url',
     openPath: 'shell-open-path'
@@ -54,11 +57,6 @@ export const IPC_CHANNELS = {
     config: {
       setItem: 'db-config-set-item',
       getItem: 'db-config-get-item'
-    },
-    vsVersion: {
-      save: 'db-vs-version-save-version',
-      delete: 'db-vs-version-delete-version',
-      getAll: 'db-vs-version-get-versions'
     },
     vsInstance: {
       save: 'db-vs-instance-save-instance',

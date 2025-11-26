@@ -1,7 +1,11 @@
 import { RustoryVSInstanceError } from '@shared/errors/RustoryVSInstanceError'
-import type { VSInstanceBackup } from '@renderer/lib/classes/vintagestory/VSInstanceBackup.svelte'
 
+import type { VSInstanceBackup } from '@renderer/lib/classes/vintagestory/VSInstanceBackup.svelte'
 import { Info } from '@renderer/lib/classes/Info.svelte'
+import type { RAPIVSVersion } from '@renderer/lib/classes/api/RAPIVSVersion.svelte'
+import { TaskBase } from '@renderer/lib/classes/tasks/TaskBase.svelte'
+import { TaskInstallVSVersion } from '@renderer/lib/classes/tasks/TaskInstallVSVersion.svelte'
+import { Tasks } from '../Tasks.svelte'
 
 /**
  * VS Instance.
@@ -84,6 +88,11 @@ export class VSInstance {
    */
   private _state: VSInstance.State
 
+  /**
+   * The task running on this VS Version.
+   */
+  private _task: TaskBase | null
+
   public constructor(data: {
     id: string
     name: string
@@ -114,6 +123,7 @@ export class VSInstance {
     this._mesaGlThread = $state(data.mesaGlThread)
     this._envVars = $state(data.envVars)
     this._state = $state(data.state ?? VSInstance.State.STOPPED)
+    this._task = $state(null)
   }
 
   /**
@@ -222,6 +232,13 @@ export class VSInstance {
   }
 
   /**
+   * The task running on this VS Version.
+   */
+  public get task(): TaskBase | null {
+    return this._task
+  }
+
+  /**
    * Convert this {@link VSInstance} into a {@link VSInstanceType} json.
    * @returns The {@link VSInstanceType} json.
    */
@@ -273,9 +290,9 @@ export class VSInstance {
     try {
       window.api.logger.info(`Deleting VS Instance ${this._id}...`)
 
-      const iconPath = await window.api.fs.join(Info.instance.dataPath, 'Icons', 'VS', 'Instances', `${this._id}.png`)
+      const iconPath = await window.api.fs.join(Info.instance.cachePath, 'Icons', 'VS', 'Instances', `${this._id}.png`)
 
-      await window.api.fs.deletePaths([this._path, ...this._backups.map((b) => b.path), iconPath])
+      await window.api.fs.deletePaths([this._path, iconPath])
 
       await window.api.db.vsInstance.delete(this.toJSON())
 
@@ -309,6 +326,54 @@ export class VSInstance {
   }
 
   /**
+   * Install this VS Instance.
+   * @param apiVersion The version to download.
+   */
+  public async install(apiVersion: RAPIVSVersion): Promise<void> {
+    window.api.logger.info(`Installing VS Version ${this._version} on VS Instance ${this._id}...`)
+
+    this._state = VSInstance.State.INSTALLING_VERSION
+
+    let url: string
+
+    switch (Info.instance.os.platform) {
+      case 'linux':
+        url = apiVersion.linux
+        break
+      case 'darwin':
+        url = apiVersion.mac
+        break
+      case 'Windows':
+        url = apiVersion.windows
+        break
+      default:
+        window.api.logger.error(`Unsupported OS! ${Info.instance.os.platform}`)
+        throw new RustoryVSInstanceError(`Unsupported OS: ${Info.instance.os.platform}`, RustoryVSInstanceError.Codes.UNSUPORTED_OS)
+    }
+
+    const outputPath = await window.api.fs.join(this._path, 'version')
+
+    await window.api.fs.deletePaths([outputPath])
+
+    const task = new TaskInstallVSVersion({ version: this._version, url, outputPath })
+
+    this._task = task
+
+    Tasks.instance.tasks.push(task)
+
+    const status = await task.execute()
+
+    if (status === TaskBase.Status.COMPLETED) {
+      window.api.logger.info(`Successfully installed VS Version ${this._version} on VS Instance ${this._id}!`)
+      this._state = VSInstance.State.STOPPED
+      this.save()
+      this._task = null
+    } else {
+      this._state = VSInstance.State.ERROR
+    }
+  }
+
+  /**
    * Get all the VS Instances from the DB.
    * @returns All the {@link VSInstance} from the DB.
    * @throws A {@link RustoryVSInstanceError} error.
@@ -335,9 +400,12 @@ export namespace VSInstance {
    * State of the VS Instance.
    */
   export enum State {
-    BACKUPING = 'backuping',
+    STOPPED = 'stopped',
     PLAYING_CLIENT = 'playing_client',
     PLAYING_SERVER = 'playing_server',
-    STOPPED = 'stopped'
+    BACKUPING = 'backuping',
+    INSTALLING_VERSION = 'installing_version',
+    DELETING = 'deleting',
+    ERROR = 'error'
   }
 }

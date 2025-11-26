@@ -1,7 +1,3 @@
-import { RustoryVSVersionError } from '@shared/errors/RustoryVSVersionError'
-import { Config } from '@renderer/lib/classes/Config.svelte'
-import { VSVersion } from '@renderer/lib/classes/vintagestory/VSVersion.svelte'
-import { Data } from '@renderer/lib/classes/Data.svelte'
 /**
  * Version queried from the Rustory API.
  *
@@ -189,16 +185,6 @@ export class RAPIVSVersion {
       mac: json.mac,
       macSha: json.macSha
     })
-  }
-
-  /**
-   * Add the VS Version and install it.
-   * @throws A {@link RustoryVSVersionError} error.
-   */
-  public async toVSVersion(): Promise<VSVersion> {
-    const installPath = await window.api.fs.join(Config.instance.vsVersionsPath, this._version)
-
-    return new VSVersion({ version: this._version, path: installPath, state: VSVersion.State.NOT_INSTALLED })
   }
 }
 

@@ -20,6 +20,10 @@ export namespace RustoryVSInstanceError {
     /**
      * Generic, not specified.
      */
-    VSINSTANCE_ERROR = 'VSINSTANCE_ERROR'
+    VSINSTANCE_ERROR = 'VSINSTANCE_ERROR',
+    /**
+     * Unsupported OS.
+     */
+    UNSUPORTED_OS = 'UNSUPORTED_OS'
   }
 }

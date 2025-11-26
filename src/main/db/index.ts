@@ -10,7 +10,6 @@ import { config } from './schemas/config.schema'
 import { vsAccount } from './schemas/vsAccount.schema'
 import { vsInstance } from './schemas/vsInstance.schema'
 import { vsInstanceBackup } from './schemas/vsInstanceBackup.schema'
-import { vsVersion } from './schemas/vsVersion.schema'
 import { RustoryDBError } from '@shared/errors/RustoryDBError'
 
 let db: LibSQLDatabase<Record<string, unknown>>
@@ -48,4 +47,4 @@ async function initDB(): Promise<void> {
   logger.info('Migrations applied successfully!')
 }
 
-export { initDB, db, config, vsAccount, vsInstance, vsInstanceBackup, vsVersion }
+export { initDB, db, config, vsAccount, vsInstance, vsInstanceBackup }

@@ -144,11 +144,6 @@ declare global {
     color: string
   }
 
-  type VSVersionType = {
-    version: string
-    path: string
-  }
-
   type RAPIVSVersionTypes = 'stable' | 'rc' | 'pre'
 
   type RAPIVSVersionType = {

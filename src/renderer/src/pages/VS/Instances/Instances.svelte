@@ -7,6 +7,7 @@
   import { Data } from '@renderer/lib/classes/Data.svelte'
   import { VSInstance } from '@renderer/lib/classes/vintagestory/VSInstance.svelte'
   import { Info as AppInfo } from '@renderer/lib/classes/Info.svelte'
+  import { TaskInstallVSVersion } from '@renderer/lib/classes/tasks/TaskInstallVSVersion.svelte'
 
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
   import { P, H1, H4 } from '@renderer/lib/ui/components/Fonts'
@@ -16,6 +17,7 @@
   import { PHPlusBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { PHFolderOpenBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
 
   Breadcrumbs.instance.segments = [
     { label: 'VS', href: '/vs' },
@@ -101,11 +103,15 @@
 
                 <P mode="secondary">{vsInstance.version}</P>
 
-                {#await window.api.fs.join('VS', 'Instances', `${vsInstance.id}.png`)}
-                  <p>Cargando icono...</p>
-                {:then icon}
-                  <img src={`icons:${icon}`} alt="Icono" />
-                {/await}
+                {#if vsInstance.task}
+                  <FlexContainer direction="col" gap="sm">
+                    <FlexContainer gap="sm" alignX="between">
+                      <P mode="secondary">{vsInstance.task instanceof TaskInstallVSVersion && 'Installing...'}</P>
+                      <P mode="secondary">{vsInstance.task.progress}%</P>
+                    </FlexContainer>
+                    <ProgressBar mode="success" value={vsInstance.task.progress} />
+                  </FlexContainer>
+                {/if}
               </FlexContainer>
             </FlexContainer>
           </FlexContainer>
