@@ -35,9 +35,18 @@
   import { Dialog, Command } from 'bits-ui'
   import { goto } from '@mateothegreat/svelte5-router'
 
+  import { Data } from '@renderer/lib/classes/Data.svelte'
+
   import Button from '@renderer/lib/ui/components/Button.svelte'
   import { FlexContainer } from '@renderer/lib/ui/layout/Flex'
-  import { PHFolderOpenBoldIcon, PHGearBoldIcon, PHHouseBoldIcon, PHXBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import {
+    PHFolderOpenBoldIcon,
+    PHGearBoldIcon,
+    PHHouseBoldIcon,
+    PHPencilBoldIcon,
+    PHPlusBoldIcon,
+    PHXBoldIcon
+  } from '@renderer/lib/ui/components/Icons/Phosphor'
 
   let groups: CommandGroup[] = [
     {
@@ -61,9 +70,16 @@
           value: 'vs-add-instance-page',
           keywords: ['Add a Vintage Story Instance', 'Pages'],
           label: 'Add a Vintage Story Instance',
-          icon: PHFolderOpenBoldIcon,
+          icon: PHPlusBoldIcon,
           onclick: () => goto('/vs/instances/add')
         },
+        ...Data.instance.vsInstances.map((i) => ({
+          value: `vs-instance-${i.id}`,
+          keywords: [`Edit ${i.name} Vintage Story Instance`, 'Pages'],
+          label: `Edit ${i.name} Vintage Story Instance`,
+          icon: PHPencilBoldIcon,
+          onclick: () => goto(`/vs/instances/edit/${i.id}`)
+        })),
         {
           value: 'config-page',
           keywords: ['Config', 'Pages'],

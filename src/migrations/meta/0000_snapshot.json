@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "5d9410f1-b57a-41a2-bf0c-3449ddf22aed",
+  "id": "e075bca6-ec19-4af4-9e60-97ae613b1d0b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "config": {
@@ -25,7 +25,9 @@
       "indexes": {
         "config_key_unique": {
           "name": "config_key_unique",
-          "columns": ["key"],
+          "columns": [
+            "key"
+          ],
           "isUnique": true
         }
       },
@@ -104,7 +106,9 @@
       "indexes": {
         "vs_account_id_unique": {
           "name": "vs_account_id_unique",
-          "columns": ["id"],
+          "columns": [
+            "id"
+          ],
           "isUnique": true
         }
       },
@@ -204,7 +208,9 @@
       "indexes": {
         "vs_instance_id_unique": {
           "name": "vs_instance_id_unique",
-          "columns": ["id"],
+          "columns": [
+            "id"
+          ],
           "isUnique": true
         }
       },
@@ -248,37 +254,9 @@
       "indexes": {
         "vs_instance_backup_id_unique": {
           "name": "vs_instance_backup_id_unique",
-          "columns": ["id"],
-          "isUnique": true
-        }
-      },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "vs_version": {
-      "name": "vs_version",
-      "columns": {
-        "version": {
-          "name": "version",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "path": {
-          "name": "path",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        }
-      },
-      "indexes": {
-        "vs_version_version_unique": {
-          "name": "vs_version_version_unique",
-          "columns": ["version"],
+          "columns": [
+            "id"
+          ],
           "isUnique": true
         }
       },

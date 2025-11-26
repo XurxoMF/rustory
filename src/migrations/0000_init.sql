@@ -40,10 +40,4 @@ CREATE TABLE `vs_instance_backup` (
 	`path` text NOT NULL
 );
 --> statement-breakpoint
-CREATE UNIQUE INDEX `vs_instance_backup_id_unique` ON `vs_instance_backup` (`id`);--> statement-breakpoint
-CREATE TABLE `vs_version` (
-	`version` text PRIMARY KEY NOT NULL,
-	`path` text NOT NULL
-);
---> statement-breakpoint
-CREATE UNIQUE INDEX `vs_version_version_unique` ON `vs_version` (`version`);
+CREATE UNIQUE INDEX `vs_instance_backup_id_unique` ON `vs_instance_backup` (`id`);
