@@ -28,14 +28,16 @@
 
   import HomePage from '@renderer/pages/Home.svelte'
   import ConfigPage from '@renderer/pages/Config/Config.svelte'
-  import VSInstancesPage from '@renderer/pages/VS/Instances/Instances.svelte'
-  import VSAddInstancePage from '@renderer/pages/VS/Instances/AddInstance.svelte'
+  import VSInstanceListPage from '@renderer/pages/VS/Instances/List.svelte'
+  import VSInstanceAddPage from '@renderer/pages/VS/Instances/Add.svelte'
+  import VSInstanceEditPage from '@renderer/pages/VS/Instances/Edit.svelte'
 
   // Routes of the app
   const routes: RouteConfig[] = [
     { path: '/', component: HomePage },
-    { path: '/vs/instances', component: VSInstancesPage },
-    { path: '/vs/instances/add', component: VSAddInstancePage },
+    { path: '/vs/instances', component: VSInstanceListPage },
+    { path: '/vs/instances/add', component: VSInstanceAddPage },
+    { path: '/vs/instances/edit/(?<id>.*)', component: VSInstanceEditPage },
     { path: '/config', component: ConfigPage }
   ]
 

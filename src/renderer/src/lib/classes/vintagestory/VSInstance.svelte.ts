@@ -150,6 +150,13 @@ export class VSInstance {
   }
 
   /**
+   * The name of the VS Instance.
+   */
+  public set name(name: string) {
+    this._name = name
+  }
+
+  /**
    * The path of the VS Instance.
    */
   public get path(): string {
@@ -164,10 +171,24 @@ export class VSInstance {
   }
 
   /**
+   * The version of the VS Instance.
+   */
+  public set version(version: string) {
+    this._version = version
+  }
+
+  /**
    * The mods of the VS Instance.
    */
   public get mods(): VSModType[] {
     return this._mods
+  }
+
+  /**
+   * The mods of the VS Instance.
+   */
+  public set mods(mods: VSModType[]) {
+    this._mods = mods
   }
 
   /**
@@ -178,10 +199,24 @@ export class VSInstance {
   }
 
   /**
+   * The backups of the VS Instance.
+   */
+  public set backups(backups: VSInstanceBackup[]) {
+    this._backups = backups
+  }
+
+  /**
    * If the VS Instance has an icon or not.
    */
   public get icon(): boolean {
     return this._icon
+  }
+
+  /**
+   * If the VS Instance has an icon or not.
+   */
+  public set icon(icon: boolean) {
+    this._icon = icon
   }
 
   /**
@@ -192,10 +227,24 @@ export class VSInstance {
   }
 
   /**
+   * The start parameters of the VS Instance.
+   */
+  public set startParams(startParams: string) {
+    this._startParams = startParams
+  }
+
+  /**
    * The backups limit of the VS Instance.
    */
   public get backupsLimit(): number {
     return this._backupsLimit
+  }
+
+  /**
+   * The backups limit of the VS Instance.
+   */
+  public set backupsLimit(backupsLimit: number) {
+    this._backupsLimit = backupsLimit
   }
 
   /**
@@ -206,10 +255,24 @@ export class VSInstance {
   }
 
   /**
+   * The backups auto of the VS Instance.
+   */
+  public set backupsAuto(backupsAuto: boolean) {
+    this._backupsAuto = backupsAuto
+  }
+
+  /**
    * The compression level of the VS Instance.
    */
   public get compressionLevel(): number {
     return this._compressionLevel
+  }
+
+  /**
+   * The compression level of the VS Instance.
+   */
+  public set compressionLevel(compressionLevel: number) {
+    this._compressionLevel = compressionLevel
   }
 
   /**
@@ -220,10 +283,24 @@ export class VSInstance {
   }
 
   /**
+   * The last time played of the VS Instance.
+   */
+  public set lastTimePlayed(lastTimePlayed: number) {
+    this._lastTimePlayed = lastTimePlayed
+  }
+
+  /**
    * The total time played of the VS Instance.
    */
   public get totalTimePlayed(): number {
     return this._totalTimePlayed
+  }
+
+  /**
+   * The total time played of the VS Instance.
+   */
+  public set totalTimePlayed(totalTimePlayed: number) {
+    this._totalTimePlayed = totalTimePlayed
   }
 
   /**
@@ -234,10 +311,24 @@ export class VSInstance {
   }
 
   /**
+   * The mesa gl thread of the VS Instance.
+   */
+  public set mesaGlThread(mesaGlThread: boolean) {
+    this._mesaGlThread = mesaGlThread
+  }
+
+  /**
    * The env vars of the VS Instance.
    */
   public get envVars(): string {
     return this._envVars
+  }
+
+  /**
+   * The env vars of the VS Instance.
+   */
+  public set envVars(envVars: string) {
+    this._envVars = envVars
   }
 
   /**
@@ -248,10 +339,24 @@ export class VSInstance {
   }
 
   /**
+   * The state of the VS Instance.
+   */
+  public set state(state: VSInstance.State) {
+    this._state = state
+  }
+
+  /**
    * The task running on this VS Version.
    */
   public get task(): TaskBase | null {
     return this._task
+  }
+
+  /**
+   * The task running on this VS Version.
+   */
+  public set task(task: TaskBase | null) {
+    this._task = task
   }
 
   /**
@@ -372,7 +477,7 @@ export class VSInstance {
         url = apiVersion.linux
         break
       case 'darwin':
-        url = apiVersion.mac
+        url = apiVersion.macos
         break
       case 'Windows':
         url = apiVersion.windows

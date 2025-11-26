@@ -14,7 +14,7 @@
   import ScrollableContainer from '@renderer/lib/ui/layout/ScrollableContainer.svelte'
   import Tooltip from '@renderer/lib/ui/components/Tooltip.svelte'
   import Button from '@renderer/lib/ui/components/Button.svelte'
-  import { PHPlusBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
+  import { PHPencilBoldIcon, PHPlusBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import { GridContainer, GridItem } from '@renderer/lib/ui/layout/Grid'
   import { PHFolderOpenBoldIcon, PHTrashBoldIcon } from '@renderer/lib/ui/components/Icons/Phosphor'
   import ProgressBar from '@renderer/lib/ui/components/ProgressBar.svelte'
@@ -58,6 +58,20 @@
                 <H4 overflow="nowrap">{vsInstance.name}</H4>
 
                 <FlexContainer gap="sm">
+                  <Tooltip disableHoverableContent>
+                    {#snippet trigger()}
+                      <Button mode="neutral" onclick={() => goto(`/vs/instances/edit/${vsInstance.id}`)} disabled={!AppInfo.instance.online}>
+                        <PHPencilBoldIcon />
+                      </Button>
+                    {/snippet}
+
+                    {#if AppInfo.instance.online}
+                      Edit VS Instance
+                    {:else}
+                      You need to be online to edit a VS Instance.
+                    {/if}
+                  </Tooltip>
+
                   <Tooltip disableHoverableContent>
                     {#snippet trigger()}
                       <Button mode="neutral" onclick={() => window.api.shell.openPath(vsInstance.path)}><PHFolderOpenBoldIcon /></Button>

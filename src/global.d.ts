@@ -155,8 +155,8 @@ declare global {
     windowsSha: string
     linux: string
     linuxSha: string
-    mac: string
-    macSha: string
+    macos: string
+    macosSha: string
   }
 
   type WithoutKeys<T, K extends keyof any> = T extends object ? Omit<T, Extract<keyof T, K>> : T

@@ -30,6 +30,7 @@ export { default as PHSortDescendingIcon } from './SortDescendingIcon.svelte'
 export { default as PHWifiHighBoldIcon } from './WifiHighBoldIcon.svelte'
 export { default as PHEyeBoldIcon } from './EyeBoldIcon.svelte'
 export { default as PHEyeClosedBoldIcon } from './EyeClosedBoldIcon.svelte'
+export { default as PHPencilBoldIcon } from './PencilBoldIcon.svelte'
 
 // DUOTONE
 export { default as PHHandHeartDuotoneIcon } from './HandHeartDuotoneIcon.svelte'

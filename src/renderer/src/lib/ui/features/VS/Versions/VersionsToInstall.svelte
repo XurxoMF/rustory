@@ -19,7 +19,7 @@
 
   let versions: RAPIVSVersion[] = $state([])
 
-  let value: string | undefined = $state()
+  let value: string | undefined = $state(version?.version)
 
   function handleValueChange(e: string) {
     value = e

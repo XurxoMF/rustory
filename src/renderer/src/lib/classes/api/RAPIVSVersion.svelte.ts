@@ -47,12 +47,12 @@ export class RAPIVSVersion {
   /**
    * The download link for macOS.
    */
-  private _mac: string
+  private _macos: string
 
   /**
    * The sha256 checksum for macOS.
    */
-  private _macSha: string
+  private _macosSha: string
 
   public constructor(data: {
     version: string
@@ -63,8 +63,8 @@ export class RAPIVSVersion {
     windowsSha: string
     linux: string
     linuxSha: string
-    mac: string
-    macSha: string
+    macos: string
+    macosSha: string
   }) {
     this._version = data.version
     this._type = data.type
@@ -74,8 +74,8 @@ export class RAPIVSVersion {
     this._windowsSha = data.windowsSha
     this._linux = data.linux
     this._linuxSha = data.linuxSha
-    this._mac = data.mac
-    this._macSha = data.macSha
+    this._macos = data.macos
+    this._macosSha = data.macosSha
   }
 
   /**
@@ -137,15 +137,15 @@ export class RAPIVSVersion {
   /**
    * The download link for macOS.
    */
-  public get mac(): string {
-    return this._mac
+  public get macos(): string {
+    return this._macos
   }
 
   /**
    * The sha256 checksum for macOS.
    */
-  public get macSha(): string {
-    return this._macSha
+  public get macosSha(): string {
+    return this._macosSha
   }
 
   /**
@@ -162,8 +162,8 @@ export class RAPIVSVersion {
       windowsSha: this._windowsSha,
       linux: this._linux,
       linuxSha: this._linuxSha,
-      mac: this._mac,
-      macSha: this._macSha
+      macos: this._macos,
+      macosSha: this._macosSha
     }
   }
 
@@ -182,8 +182,8 @@ export class RAPIVSVersion {
       windowsSha: json.windowsSha,
       linux: json.linux,
       linuxSha: json.linuxSha,
-      mac: json.mac,
-      macSha: json.macSha
+      macos: json.macos,
+      macosSha: json.macosSha
     })
   }
 }
