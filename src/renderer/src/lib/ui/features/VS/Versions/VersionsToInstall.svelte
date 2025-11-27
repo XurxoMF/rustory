@@ -1,6 +1,5 @@
 <script lang="ts">
   import json5 from 'json5'
-  import { onMount } from 'svelte'
   import { mergeProps } from 'bits-ui'
 
   import { Request } from '@renderer/lib/classes/Request.svelte'
@@ -18,12 +17,23 @@
   let { version = $bindable(), onValueChange, inputProps, ...restProps }: VersionsToInstallProps = $props()
 
   let versions: RAPIVSVersion[] = $state([])
+  Request.instance
+    .get('https://vslapi.xurxomf.xyz/versions')
+    .then((res): Promise<RAPIVSVersion[]> => json5.parse(res))
+    .then((json) => (versions = json.map((v) => RAPIVSVersion.fromJSON(v))))
+    .catch((err) => {
+      window.api.logger.error('There was an error loading the RSAPIVersions!')
+      window.api.logger.debug(`There was an error loading the RSAPIVersions:\n${JSON.stringify(err)}`)
+    })
 
   let value: string | undefined = $state(version?.version)
 
+  $effect(() => {
+    value = version?.version
+  })
+
   function handleValueChange(e: string) {
-    value = e
-    version = versions.find((v) => v.version === value)
+    version = versions.find((v) => v.version === e)
     if (!version) throw new Error('The selected version does not exist!')
     onValueChange?.(version)
   }
@@ -33,13 +43,6 @@
       placeholder: 'VS Version'
     })
   )
-
-  onMount(async () => {
-    const res = await Request.instance.get('https://vslapi.xurxomf.xyz/versions')
-    const json: RAPIVSVersionType[] = json5.parse(res)
-
-    versions = json.map((v) => RAPIVSVersion.fromJSON(v))
-  })
 </script>
 
 <ComboBox
