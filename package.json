@@ -39,7 +39,7 @@
     "json5": "^2.2.3",
     "runed": "^0.36.0",
     "semver": "^7.7.2",
-    "systeminformation": "^5.27.7",
+    "systeminformation": "^5.27.14",
     "yauzl": "^3.2.0"
   },
   "devDependencies": {
