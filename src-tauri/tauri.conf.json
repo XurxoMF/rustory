@@ -1,0 +1,78 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "rustory",
+  "version": "0.1.0",
+  "identifier": "xyz.rustory.app",
+  "build": {
+    "beforeDevCommand": "bun run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "bun run build",
+    "frontendDist": "../build"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Rustory",
+        "width": 1280,
+        "height": 720,
+        "center": true,
+        "minWidth": 1024,
+        "minHeight": 600,
+        "visible": true,
+        "decorations": false,
+        "shadow": false,
+        "transparent": true
+      }
+    ],
+    "security": {
+      "csp": {
+        "default-src": [
+          "'self'",
+          "asset:"
+        ],
+        "connect-src": [
+          "ipc:",
+          "http://ipc.localhost"
+        ],
+        "img-src": [
+          "'self'",
+          "asset:",
+          "http://asset.localhost"
+        ],
+        "style-src": [
+          "'unsafe-inline'",
+          "'self'"
+        ]
+      },
+      "assetProtocol": {
+        "enable": true,
+        "scope": {
+          "allow": []
+        }
+      },
+      "capabilities": [
+        "default",
+        "desktop-capability"
+      ]
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "appimage",
+      "deb",
+      "dmg",
+      "nsis",
+      "rpm"
+    ],
+    "createUpdaterArtifacts": true,
+    "icon": [
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
+  }
+}
