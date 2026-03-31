@@ -52,8 +52,7 @@
         }
       },
       "capabilities": [
-        "default",
-        "desktop-capability"
+        "default"
       ]
     }
   },
