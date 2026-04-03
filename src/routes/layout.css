@@ -1,6 +1,7 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "@fontsource-variable/inter";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import '@fontsource-variable/inter';
+@import "shadcn-svelte/tailwind.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -11,8 +12,8 @@
 	--card-foreground: oklch(0.147 0.004 49.25);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
-	--primary: oklch(0.532 0.157 131.589);
-	--primary-foreground: oklch(0.986 0.031 120.757);
+	--primary: oklch(0.841 0.238 128.85);
+	--primary-foreground: oklch(0.405 0.101 131.063);
 	--secondary: oklch(0.967 0.001 286.375);
 	--secondary-foreground: oklch(0.21 0.006 285.885);
 	--muted: oklch(0.97 0.001 106.424);
@@ -23,11 +24,11 @@
 	--border: oklch(0.923 0.003 48.717);
 	--input: oklch(0.923 0.003 48.717);
 	--ring: oklch(0.709 0.01 56.259);
-	--chart-1: oklch(0.897 0.196 126.665);
-	--chart-2: oklch(0.768 0.233 130.85);
-	--chart-3: oklch(0.648 0.2 131.684);
-	--chart-4: oklch(0.532 0.157 131.589);
-	--chart-5: oklch(0.453 0.124 130.933);
+	--chart-1: oklch(0.869 0.005 56.366);
+	--chart-2: oklch(0.553 0.013 58.071);
+	--chart-3: oklch(0.444 0.011 73.639);
+	--chart-4: oklch(0.374 0.01 67.558);
+	--chart-5: oklch(0.268 0.007 34.298);
 	--radius: 0.45rem;
 	--sidebar: oklch(0.985 0.001 106.423);
 	--sidebar-foreground: oklch(0.147 0.004 49.25);
@@ -46,8 +47,8 @@
 	--card-foreground: oklch(0.985 0.001 106.423);
 	--popover: oklch(0.216 0.006 56.043);
 	--popover-foreground: oklch(0.985 0.001 106.423);
-	--primary: oklch(0.453 0.124 130.933);
-	--primary-foreground: oklch(0.986 0.031 120.757);
+	--primary: oklch(0.768 0.233 130.85);
+	--primary-foreground: oklch(0.405 0.101 131.063);
 	--secondary: oklch(0.274 0.006 286.033);
 	--secondary-foreground: oklch(0.985 0 0);
 	--muted: oklch(0.268 0.007 34.298);
@@ -58,11 +59,11 @@
 	--border: oklch(1 0 0 / 10%);
 	--input: oklch(1 0 0 / 15%);
 	--ring: oklch(0.553 0.013 58.071);
-	--chart-1: oklch(0.897 0.196 126.665);
-	--chart-2: oklch(0.768 0.233 130.85);
-	--chart-3: oklch(0.648 0.2 131.684);
-	--chart-4: oklch(0.532 0.157 131.589);
-	--chart-5: oklch(0.453 0.124 130.933);
+	--chart-1: oklch(0.869 0.005 56.366);
+	--chart-2: oklch(0.553 0.013 58.071);
+	--chart-3: oklch(0.444 0.011 73.639);
+	--chart-4: oklch(0.374 0.01 67.558);
+	--chart-5: oklch(0.268 0.007 34.298);
 	--sidebar: oklch(0.216 0.006 56.043);
 	--sidebar-foreground: oklch(0.985 0.001 106.423);
 	--sidebar-primary: oklch(0.768 0.233 130.85);
@@ -128,25 +129,29 @@
 }
 
 @custom-variant data-open {
-	&:where([data-state="open"]), &:where([data-open]:not([data-open="false"])) {
+	&:where([data-state='open']),
+	&:where([data-open]:not([data-open='false'])) {
 		@slot;
 	}
 }
 
 @custom-variant data-closed {
-	&:where([data-state="closed"]), &:where([data-closed]:not([data-closed="false"])) {
+	&:where([data-state='closed']),
+	&:where([data-closed]:not([data-closed='false'])) {
 		@slot;
 	}
 }
 
 @custom-variant data-checked {
-	&:where([data-state="checked"]), &:where([data-checked]:not([data-checked="false"])) {
+	&:where([data-state='checked']),
+	&:where([data-checked]:not([data-checked='false'])) {
 		@slot;
 	}
 }
 
 @custom-variant data-unchecked {
-	&:where([data-state="unchecked"]), &:where([data-unchecked]:not([data-unchecked="false"])) {
+	&:where([data-state='unchecked']),
+	&:where([data-unchecked]:not([data-unchecked='false'])) {
 		@slot;
 	}
 }
@@ -158,25 +163,27 @@
 }
 
 @custom-variant data-disabled {
-	&:where([data-disabled="true"]), &:where([data-disabled]:not([data-disabled="false"])) {
+	&:where([data-disabled='true']),
+	&:where([data-disabled]:not([data-disabled='false'])) {
 		@slot;
 	}
 }
 
 @custom-variant data-active {
-	&:where([data-state="active"]), &:where([data-active]:not([data-active="false"])) {
+	&:where([data-state='active']),
+	&:where([data-active]:not([data-active='false'])) {
 		@slot;
 	}
 }
 
 @custom-variant data-horizontal {
-	&:where([data-orientation="horizontal"]) {
+	&:where([data-orientation='horizontal']) {
 		@slot;
 	}
 }
 
 @custom-variant data-vertical {
-	&:where([data-orientation="vertical"]) {
+	&:where([data-orientation='vertical']) {
 		@slot;
 	}
 }
