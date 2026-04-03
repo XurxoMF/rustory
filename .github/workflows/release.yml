@@ -1,4 +1,4 @@
-name: 'Build and release Rustory'
+name: "Build and release Rustory"
 
 on:
   push:
@@ -13,14 +13,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # for Arm based macs (M1 and above).
-            args: '--target aarch64-apple-darwin'
-          - platform: 'macos-latest' # for Intel based macs.
-            args: '--target x86_64-apple-darwin'
-          - platform: 'ubuntu-24.04' # for Linux.
-            args: ''
-          - platform: 'windows-latest' # for Windows.
-            args: ''
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin"
+          - platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin"
+          - platform: "ubuntu-24.04" # for Linux.
+            args: ""
+          - platform: "windows-latest" # for Windows.
+            args: ""
 
     runs-on: ${{ matrix.platform }}
     steps:
@@ -47,7 +47,7 @@ jobs:
       - name: Rust cache
         uses: swatinem/rust-cache@v2
         with:
-          workspaces: './src-tauri -> target'
+          workspaces: "./src-tauri -> target"
 
       - name: Install frontend dependencies
         run: bun install
@@ -59,9 +59,9 @@ jobs:
           TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
-          tagName: '__VERSION__'
-          releaseName: 'v__VERSION__'
-          releaseBody: 'Rustory __VERSION__ is now live!'
+          tagName: "__VERSION__"
+          releaseName: "v__VERSION__"
+          releaseBody: "Rustory __VERSION__ is now live!"
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}

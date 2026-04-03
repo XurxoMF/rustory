@@ -1,7 +1,7 @@
-import { paraglideVitePlugin } from '@inlang/paraglide-js';
-import { defineConfig } from 'vite';
-import { sveltekit } from '@sveltejs/kit/vite';
-import tailwindcss from '@tailwindcss/vite';
+import { paraglideVitePlugin } from "@inlang/paraglide-js";
+import { defineConfig } from "vite";
+import { sveltekit } from "@sveltejs/kit/vite";
+import tailwindcss from "@tailwindcss/vite";
 
 const host = process.env.TAURI_DEV_HOST;
 
@@ -11,9 +11,9 @@ export default defineConfig(async () => ({
 		sveltekit(),
 		tailwindcss(),
 		paraglideVitePlugin({
-			project: './rustory.inlang',
-			outdir: './src/lib/paraglide',
-			strategy: ['localStorage', 'baseLocale']
+			project: "./rustory.inlang",
+			outdir: "./src/lib/paraglide",
+			strategy: ["localStorage", "baseLocale"]
 		})
 	],
 
@@ -27,10 +27,10 @@ export default defineConfig(async () => ({
 		port: 1420,
 		strictPort: true,
 		host: host || false,
-		hmr: host ? { protocol: 'ws', host, port: 1421 } : undefined,
+		hmr: host ? { protocol: "ws", host, port: 1421 } : undefined,
 		watch: {
 			// 3. tell Vite to ignore watching `src-tauri`
-			ignored: ['**/src-tauri/**']
+			ignored: ["**/src-tauri/**"]
 		}
 	}
 }));

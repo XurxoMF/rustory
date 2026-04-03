@@ -1,96 +1,67 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "rustory",
-  "version": "0.1.0",
-  "identifier": "xyz.rustory.app",
-  "build": {
-    "beforeDevCommand": "bun run dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "bun run build",
-    "frontendDist": "../build"
-  },
-  "app": {
-    "windows": [
-      {
-        "label": "main",
-        "title": "Rustory",
-        "width": 1280,
-        "height": 720,
-        "center": true,
-        "visible": true,
-        "decorations": false,
-        "shadow": false,
-        "transparent": true
-      }
-    ],
-    "security": {
-      "csp": {
-        "default-src": [
-          "'self'",
-          "asset:"
-        ],
-        "connect-src": [
-          "ipc:",
-          "http://ipc.localhost"
-        ],
-        "img-src": [
-          "'self'",
-          "asset:",
-          "http://asset.localhost"
-        ],
-        "style-src": [
-          "'unsafe-inline'",
-          "'self'"
-        ]
-      },
-      "assetProtocol": {
-        "enable": true,
-        "scope": {
-          "allow": []
-        }
-      },
-      "capabilities": [
-        "default"
-      ]
-    }
-  },
-  "plugins": {
-    "cli": {
-      "description": "Launcher for Vintage Story. Everything you need, one click away!",
-      "args": [
-        {
-          "short": "d",
-          "name": "debug",
-          "description": "Enable advanced logs for debugging"
-        }
-      ]
-    },
-    "updater": {
-      "endpoints": [
-        "https://github.com/XurxoMF/rustory/releases/latest/download/latest.json"
-      ],
-      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENCRkEwOTc0RjVCOEJCMkQKUldRdHU3ajFkQW42eTNSQWw2UjFSN3ZDTjd4WTk5a1puU3hQUnlOT3ozamlKS2JNWE1mcWhYOWYK",
-      "windows": {
-        "installMode": "passive"
-      }
-    }
-  },
-  "bundle": {
-    "active": true,
-    "targets": [
-      "app",
-      "appimage",
-      "deb",
-      "dmg",
-      "nsis",
-      "rpm"
-    ],
-    "createUpdaterArtifacts": true,
-    "icon": [
-      "icons/128x128.png",
-      "icons/128x128@2x.png",
-      "icons/icon.icns",
-      "icons/icon.ico"
-    ]
-  }
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "rustory",
+	"version": "0.1.0",
+	"identifier": "xyz.rustory.app",
+	"build": {
+		"beforeDevCommand": "bun run dev",
+		"devUrl": "http://localhost:1420",
+		"beforeBuildCommand": "bun run build",
+		"frontendDist": "../build"
+	},
+	"app": {
+		"windows": [
+			{
+				"label": "main",
+				"title": "Rustory",
+				"width": 1280,
+				"height": 720,
+				"center": true,
+				"visible": true,
+				"decorations": false,
+				"shadow": false,
+				"transparent": true
+			}
+		],
+		"security": {
+			"csp": {
+				"default-src": ["'self'", "asset:"],
+				"connect-src": ["ipc:", "http://ipc.localhost"],
+				"img-src": ["'self'", "asset:", "http://asset.localhost"],
+				"style-src": ["'unsafe-inline'", "'self'"]
+			},
+			"assetProtocol": {
+				"enable": true,
+				"scope": {
+					"allow": []
+				}
+			},
+			"capabilities": ["default"]
+		}
+	},
+	"plugins": {
+		"cli": {
+			"description": "Launcher for Vintage Story. Everything you need, one click away!",
+			"args": [
+				{
+					"short": "d",
+					"name": "debug",
+					"description": "Enable advanced logs for debugging"
+				}
+			]
+		},
+		"updater": {
+			"endpoints": ["https://github.com/XurxoMF/rustory/releases/latest/download/latest.json"],
+			"pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IENCRkEwOTc0RjVCOEJCMkQKUldRdHU3ajFkQW42eTNSQWw2UjFSN3ZDTjd4WTk5a1puU3hQUnlOT3ozamlKS2JNWE1mcWhYOWYK",
+			"windows": {
+				"installMode": "passive"
+			}
+		}
+	},
+	"bundle": {
+		"active": true,
+		"targets": ["app", "appimage", "deb", "dmg", "nsis", "rpm"],
+		"createUpdaterArtifacts": true,
+		"icon": ["icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"]
+	}
 }

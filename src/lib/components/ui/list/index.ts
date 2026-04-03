@@ -1,6 +1,6 @@
-import Item from './list-item.svelte';
-import Ordered from './ordered-list.svelte';
-import Unordered from './unordered-list.svelte';
+import Item from "./list-item.svelte";
+import Ordered from "./ordered-list.svelte";
+import Unordered from "./unordered-list.svelte";
 
 export {
 	Item,

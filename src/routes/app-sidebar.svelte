@@ -1,9 +1,9 @@
 <script lang="ts">
-	import type { ComponentProps } from 'svelte';
+	import type { ComponentProps } from "svelte";
 
-	import * as Sidebar from '$lib/components/ui/sidebar';
+	import * as Sidebar from "$lib/components/ui/sidebar";
 
-	import AppSidebarMain from './app-sidebar-main.svelte';
+	import AppSidebarMain from "./app-sidebar-main.svelte";
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>

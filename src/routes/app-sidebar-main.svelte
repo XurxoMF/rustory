@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
+	import { resolve } from "$app/paths";
 
-	import { IconChevronRight, IconDeviceGamepad } from '@tabler/icons-svelte';
+	import { IconChevronRight, IconDeviceGamepad } from "@tabler/icons-svelte";
 
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import * as Collapsible from '$lib/components/ui/collapsible';
+	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Collapsible from "$lib/components/ui/collapsible";
 </script>
 
 <Sidebar.Group>
@@ -16,7 +16,7 @@
 				<Sidebar.MenuItem {...props}>
 					<Sidebar.MenuButton tooltipContent="Instances">
 						{#snippet child({ props })}
-							<a href={resolve('/')} {...props}>
+							<a href={resolve("/")} {...props}>
 								<IconDeviceGamepad />
 								<span>Instances</span>
 							</a>
@@ -35,12 +35,12 @@
 					<Collapsible.Content>
 						<Sidebar.MenuSub>
 							<Sidebar.MenuSubItem>
-								<Sidebar.MenuSubButton href={resolve('/')}>
+								<Sidebar.MenuSubButton href={resolve("/")}>
 									<span>Instance 1</span>
 								</Sidebar.MenuSubButton>
 							</Sidebar.MenuSubItem>
 							<Sidebar.MenuSubItem>
-								<Sidebar.MenuSubButton href={resolve('/')}>
+								<Sidebar.MenuSubButton href={resolve("/")}>
 									<span>Instance 2</span>
 								</Sidebar.MenuSubButton>
 							</Sidebar.MenuSubItem>

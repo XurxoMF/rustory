@@ -1,13 +1,13 @@
 {
-  "recommendations": [
-    "svelte.svelte-vscode",
-    "tauri-apps.tauri-vscode",
-    "rust-lang.rust-analyzer",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "inlang.vs-code-extension",
-    "mvoof.tarus-vscode-extension",
-    "bradlc.vscode-tailwindcss",
-    "aaron-bond.better-comments"
-  ]
+	"recommendations": [
+		"svelte.svelte-vscode",
+		"tauri-apps.tauri-vscode",
+		"rust-lang.rust-analyzer",
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"inlang.vs-code-extension",
+		"mvoof.tarus-vscode-extension",
+		"bradlc.vscode-tailwindcss",
+		"aaron-bond.better-comments"
+	]
 }

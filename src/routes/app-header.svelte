@@ -1,14 +1,14 @@
 <script lang="ts">
-	import { toggleMode } from 'mode-watcher';
-	import { resolve } from '$app/paths';
-	import { getCurrentWindow } from '@tauri-apps/api/window';
+	import { toggleMode } from "mode-watcher";
+	import { resolve } from "$app/paths";
+	import { getCurrentWindow } from "@tauri-apps/api/window";
 
-	import { IconSun, IconMoon, IconX, IconMinus, IconMaximize } from '@tabler/icons-svelte';
+	import { IconSun, IconMoon, IconX, IconMinus, IconMaximize } from "@tabler/icons-svelte";
 
-	import * as Sidebar from '$lib/components/ui/sidebar';
-	import * as Separator from '$lib/components/ui/separator';
-	import * as Breadcrumb from '$lib/components/ui/breadcrumb';
-	import * as Button from '$lib/components/ui/button';
+	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Separator from "$lib/components/ui/separator";
+	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Button from "$lib/components/ui/button";
 
 	const appWindow = getCurrentWindow();
 </script>
@@ -22,7 +22,7 @@
 		<Breadcrumb.Root>
 			<Breadcrumb.List>
 				<Breadcrumb.Item class="hidden md:block">
-					<Breadcrumb.Link href={resolve('/')}>Home</Breadcrumb.Link>
+					<Breadcrumb.Link href={resolve("/")}>Home</Breadcrumb.Link>
 				</Breadcrumb.Item>
 
 				<Breadcrumb.Separator class="hidden md:block" />

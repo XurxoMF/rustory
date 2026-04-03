@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { ModeWatcher } from 'mode-watcher';
+	import { ModeWatcher } from "mode-watcher";
 
-	import { page } from '$app/state';
+	import { page } from "$app/state";
 
-	import './layout.css';
+	import "./layout.css";
 
-	import * as Sidebar from '$lib/components/ui/sidebar';
+	import * as Sidebar from "$lib/components/ui/sidebar";
 
-	import AppHeader from './app-header.svelte';
-	import AppSidebar from './app-sidebar.svelte';
+	import AppHeader from "./app-header.svelte";
+	import AppSidebar from "./app-sidebar.svelte";
 
-	import { locales, localizeHref } from '$lib/paraglide/runtime';
+	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
 	let { children } = $props();
 </script>
