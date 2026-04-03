@@ -25,9 +25,7 @@
 			<AppSidebar />
 
 			<Sidebar.Inset>
-				<header class="flex shrink-0 flex-row items-center justify-between gap-2 p-2"></header>
-
-				<div class="flex flex-1 flex-col gap-4 p-4 pt-0">
+				<div class="flex flex-1 flex-col gap-4 p-4">
 					{@render children()}
 				</div>
 			</Sidebar.Inset>

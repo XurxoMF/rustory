@@ -17,8 +17,6 @@
         "width": 1280,
         "height": 720,
         "center": true,
-        "minWidth": 1024,
-        "minHeight": 600,
         "visible": true,
         "decorations": false,
         "shadow": false,
