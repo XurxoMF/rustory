@@ -23,7 +23,7 @@
 
 <ModeWatcher defaultMode="dark" />
 
-<Sidebar.Provider open={true}>
+<Sidebar.Provider open={false}>
 	<AppSidebar />
 
 	<Sidebar.Inset>

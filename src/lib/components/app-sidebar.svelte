@@ -10,7 +10,7 @@
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>
 
-<Sidebar.Root bind:ref variant="inset" {...restProps}>
+<Sidebar.Root bind:ref collapsible="icon" {...restProps}>
 	<Sidebar.Content>
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Vintage Story</Sidebar.GroupLabel>
