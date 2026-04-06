@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/state";
+	import { resolve } from "$app/paths";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { getCurrentWindow } from "@tauri-apps/api/window";
@@ -40,6 +41,12 @@
 
 	import RustoryIcon from "$assets/icon.png";
 
+	import IconSun from "@tabler/icons-svelte/icons/sun";
+	import IconMoon from "@tabler/icons-svelte/icons/moon";
+	import IconMinus from "@tabler/icons-svelte/icons/minus";
+	import IconMaximize from "@tabler/icons-svelte/icons/maximize";
+	import IconX from "@tabler/icons-svelte/icons/x";
+
 	import { sleep } from "$lib/utils";
 
 	import { Info } from "$lib/classes/Info.svelte";
@@ -47,13 +54,16 @@
 	import { MainWindow } from "$lib/classes/MainWindow.svelte";
 	import { Hotkeys } from "$lib/classes/Hotkeys.svelte";
 	import { Data } from "$lib/classes/Data.svelte";
+	import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
 
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
-	import { Toaster } from "$lib/components/ui/sonner";
+	import * as Separator from "$lib/components/ui/separator";
+	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
+	import * as Button from "$lib/components/ui/button";
+	import * as Toaster from "$lib/components/ui/sonner";
 
-	import AppHeader from "./app-header.svelte";
 	import AppSidebar from "./app-sidebar.svelte";
 
 	let { children } = $props();
@@ -61,7 +71,7 @@
 	let showLoader = $state(true);
 	let loadApp = $state(false);
 
-	const currentWindow = getCurrentWindow();
+	const appWindow = getCurrentWindow();
 
 	// Load all the data ince the loader is mounted.
 	onMount(async () => {
@@ -73,7 +83,7 @@
 		await MainWindow.init();
 
 		// Show the window and wait a few ms for it to load.
-		await currentWindow.show();
+		await appWindow.show();
 		await sleep(500);
 
 		// Load the hotkeys.
@@ -103,23 +113,76 @@
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
 {#if loadApp}
-	<Toaster />
+	<Toaster.Root />
 
-	<div class="[--header-height:calc(--spacing(12))]">
-		<Sidebar.Provider open={true} class="flex flex-col">
-			<AppHeader />
+	<Sidebar.Provider open={true}>
+		<AppSidebar />
 
-			<div class="flex flex-1">
-				<AppSidebar />
+		<Sidebar.Inset>
+			<header
+				class="flex h-16 shrink-0 flex-row items-center justify-between gap-2 px-4 transition-[width,height,padding] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 group-has-data-[collapsible=icon]/sidebar-wrapper:p-2"
+			>
+				<div class="flex flex-1 flex-row items-center justify-start gap-2">
+					<Sidebar.Trigger />
 
-				<Sidebar.Inset>
-					<div class="flex flex-1 flex-col gap-4 p-4">
-						{@render children()}
+					<Separator.Root orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
+
+					<Breadcrumb.Root class="hidden md:block">
+						<Breadcrumb.List>
+							<Breadcrumb.Item>
+								<Breadcrumb.Link href={resolve("/")}>Home</Breadcrumb.Link>
+							</Breadcrumb.Item>
+
+							{#each Breadcrumbs.instance.segments as breadcrumb (breadcrumb.href)}
+								<Breadcrumb.Separator />
+
+								<Breadcrumb.Item>
+									<Breadcrumb.Link href={breadcrumb.href}>{breadcrumb.label}</Breadcrumb.Link>
+								</Breadcrumb.Item>
+							{/each}
+						</Breadcrumb.List>
+					</Breadcrumb.Root>
+				</div>
+
+				<div class="flex flex-1 flex-row items-center justify-center">
+					<p>Rustory</p>
+				</div>
+
+				<div class="flex flex-1 flex-row items-center justify-end gap-2">
+					<div class="flex flex-row items-center">
+						<Button.Root onclick={() => Config.instance.setTheme(Config.instance.theme === "dark" ? "light" : "dark")} variant="ghost" size="icon-sm">
+							<IconSun class="scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90" />
+							<IconMoon class="absolute scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0" />
+							<span class="sr-only">Toggle theme</span>
+						</Button.Root>
 					</div>
-				</Sidebar.Inset>
+
+					<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
+
+					<div class="flex flex-row items-center">
+						<Button.Root onclick={() => appWindow.hide()} variant="ghost" size="icon-sm">
+							<IconMinus />
+							<span class="sr-only">Minimize app to tray</span>
+						</Button.Root>
+
+						<Button.Root onclick={() => appWindow.toggleMaximize()} variant="ghost" size="icon-sm">
+							<IconMaximize />
+							<span class="sr-only">Maximize or minimize app</span>
+						</Button.Root>
+
+						<Button.Root onclick={() => appWindow.close()} variant="ghost" size="icon-sm">
+							<IconX />
+							<span class="sr-only">Close app</span>
+						</Button.Root>
+					</div>
+				</div>
+			</header>
+
+			<div class="flex flex-1 flex-col gap-4 p-4">
+				{@render children()}
 			</div>
-		</Sidebar.Provider>
-	</div>
+		</Sidebar.Inset>
+	</Sidebar.Provider>
 {/if}
 
 <div style="display:none">

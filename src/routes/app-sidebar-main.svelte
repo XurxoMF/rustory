@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import { IconChevronRight, IconDeviceGamepad } from "@tabler/icons-svelte";
+	import IconChevronRight from "@tabler/icons-svelte/icons/chevron-right";
+	import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Collapsible from "$lib/components/ui/collapsible";

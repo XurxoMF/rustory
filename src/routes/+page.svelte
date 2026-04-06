@@ -1,9 +1,13 @@
 <script>
 	import { resolve } from "$app/paths";
 
+	import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
+
 	import { H1, H2, H3, H4, H5, H6, P, Blockquote, InlineCode, Leading, Link } from "$lib/components/ui/typography";
 	import * as List from "$lib/components/ui/list";
 	import * as Accordion from "$lib/components/ui/accordion";
+
+	Breadcrumbs.instance.segments = [];
 </script>
 
 <H1>Heading 1</H1>

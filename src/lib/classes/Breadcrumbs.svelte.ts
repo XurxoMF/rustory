@@ -5,7 +5,7 @@
  * Path: /foo/bar
  * Segments: [{ label: 'foo', href: '/foo' }, { label: 'bar', href: '/foo/bar' }]
  */
-export type BreadcrumbSegment = {
+export type BreadcrumbsSegment = {
 	label: string;
 	href: string;
 };
@@ -13,37 +13,37 @@ export type BreadcrumbSegment = {
 /**
  * Breadcrums store.
  */
-export class Breadcrumb {
+export class Breadcrumbs {
 	/**
 	 * Singleton instance of the Breadcrumb.
 	 */
-	private static _instance: Breadcrumb = new Breadcrumb();
+	private static _instance: Breadcrumbs = new Breadcrumbs();
 
 	/**
 	 * Get the instance of the Breadcrumb.
 	 */
-	public static get instance(): Breadcrumb {
-		return Breadcrumb._instance;
+	public static get instance(): Breadcrumbs {
+		return Breadcrumbs._instance;
 	}
 
 	/**
 	 * Breadcrumb from the current page. Set them manually on each page.
 	 */
-	private _segments: BreadcrumbSegment[] = $state([]);
+	private _segments: BreadcrumbsSegment[] = $state([]);
 
 	private constructor() {}
 
 	/**
 	 * Breadcrumb from the current page. Set them manually on each page.
 	 */
-	public get segments(): BreadcrumbSegment[] {
+	public get segments(): BreadcrumbsSegment[] {
 		return this._segments;
 	}
 
 	/**
 	 * Breadcrumb from the current page. Set them manually on each page.
 	 */
-	public set segments(segments: BreadcrumbSegment[]) {
+	public set segments(segments: BreadcrumbsSegment[]) {
 		this._segments = segments;
 	}
 }
