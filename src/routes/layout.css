@@ -120,11 +120,33 @@
 	* {
 		@apply border-border outline-ring/50;
 	}
+
 	body {
-		@apply bg-background text-foreground transition-colors;
+		@apply bg-background text-foreground;
 	}
+
 	html {
 		@apply font-sans;
+	}
+
+	html[data-uiscale="50"] {
+		font-size: 0.5rem;
+	}
+
+	html[data-uiscale="75"] {
+		font-size: 0.75rem;
+	}
+
+	html[data-uiscale="100"] {
+		font-size: 1rem;
+	}
+
+	html[data-uiscale="125"] {
+		font-size: 1.25rem;
+	}
+
+	html[data-uiscale="150"] {
+		font-size: 1.5rem;
 	}
 }
 
