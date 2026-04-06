@@ -11,7 +11,10 @@ const config = {
 	kit: {
 		adapter: adapter({
 			fallback: "index.html"
-		})
+		}),
+		alias: {
+			$assets: "src/assets"
+		}
 	}
 };
 

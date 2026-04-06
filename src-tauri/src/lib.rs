@@ -28,7 +28,7 @@ pub fn run() {
             .format(|out, message, record| {
                 out.finish(format_args!(
                     "[{}][{}] {}",
-                    Local::now().format("%Y-%m-%d %H:%M:%S"),
+                    Local::now().format("%Y-%m-%d %H:%M:%S%.6f"),
                     record.level(),
                     message
                 ));

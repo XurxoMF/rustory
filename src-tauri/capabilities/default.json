@@ -8,6 +8,7 @@
 		"core:window:allow-close",
 		"core:window:allow-hide",
 		"core:window:allow-toggle-maximize",
+		"core:window:allow-show",
 		"log:default",
 		"clipboard-manager:default",
 		"notification:default",

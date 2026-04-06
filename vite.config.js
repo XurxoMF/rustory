@@ -13,7 +13,7 @@ export default defineConfig(async () => ({
 		paraglideVitePlugin({
 			project: "./rustory.inlang",
 			outdir: "./src/lib/paraglide",
-			strategy: ["localStorage", "baseLocale"]
+			strategy: ["baseLocale"]
 		})
 	],
 

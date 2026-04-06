@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { toggleMode } from "mode-watcher";
 	import { resolve } from "$app/paths";
 	import { getCurrentWindow } from "@tauri-apps/api/window";
 
 	import { IconSun, IconMoon, IconX, IconMinus, IconMaximize } from "@tabler/icons-svelte";
+
+	import { Config } from "$lib/classes/Config.svelte";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Separator from "$lib/components/ui/separator";
@@ -40,7 +41,7 @@
 
 	<div class="flex flex-1 flex-row items-center justify-end gap-2">
 		<div class="flex flex-row items-center">
-			<Button.Root onclick={toggleMode} variant="ghost" size="icon-sm">
+			<Button.Root onclick={() => Config.instance.setTheme(Config.instance.theme === "dark" ? "light" : "dark")} variant="ghost" size="icon-sm">
 				<IconSun class="scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90" />
 				<IconMoon class="absolute scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0" />
 				<span class="sr-only">Toggle theme</span>
