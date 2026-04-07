@@ -122,11 +122,11 @@
 	}
 
 	body {
-		@apply bg-background text-foreground;
+		@apply h-full w-full overflow-hidden border bg-background text-foreground;
 	}
 
 	html {
-		@apply font-sans;
+		@apply h-screen w-screen overflow-hidden font-sans;
 	}
 
 	html[data-uiscale="50"] {

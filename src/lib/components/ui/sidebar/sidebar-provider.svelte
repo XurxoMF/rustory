@@ -36,7 +36,8 @@
 	<div
 		data-slot="sidebar-wrapper"
 		style="--sidebar-width: {SIDEBAR_WIDTH}; --sidebar-width-icon: {SIDEBAR_WIDTH_ICON}; {style}"
-		class={cn("group/sidebar-wrapper flex min-h-svh w-full has-data-[variant=inset]:bg-sidebar", className)}
+		// Changed min-h-svh for h-full so it can fit inside containers
+		class={cn("group/sidebar-wrapper flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
 		bind:this={ref}
 		{...restProps}
 	>

@@ -63,6 +63,7 @@
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 	import * as Button from "$lib/components/ui/button";
 	import * as Toaster from "$lib/components/ui/sonner";
+	import * as ScrollArea from "$lib/components/ui/scroll-area";
 
 	import AppSidebar from "./app-sidebar.svelte";
 
@@ -118,9 +119,11 @@
 	<Sidebar.Provider open={true}>
 		<AppSidebar />
 
-		<Sidebar.Inset>
+		<Sidebar.Inset
+			class="[--header-height:calc(--spacing(16))] [--header-padding-x:calc(--spacing(4))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-height:calc(--spacing(12))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-padding-x:calc(--spacing(2))]"
+		>
 			<header
-				class="flex h-16 shrink-0 flex-row items-center justify-between gap-2 px-4 transition-[width,height,padding] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 group-has-data-[collapsible=icon]/sidebar-wrapper:p-2"
+				class="flex h-(--header-height) w-full shrink-0 flex-row items-center justify-between gap-2 px-(--header-padding-x) transition-[width,height,padding] ease-linear"
 			>
 				<div class="flex flex-1 flex-row items-center justify-start gap-2">
 					<Sidebar.Trigger />
@@ -178,9 +181,11 @@
 				</div>
 			</header>
 
-			<div class="flex flex-1 flex-col gap-4 p-4">
-				{@render children()}
-			</div>
+			<ScrollArea.ScrollArea class="h-[calc(100%-var(--header-height))] w-full">
+				<div class="flex flex-col gap-4 p-4">
+					{@render children()}
+				</div>
+			</ScrollArea.ScrollArea>
 		</Sidebar.Inset>
 	</Sidebar.Provider>
 {/if}
