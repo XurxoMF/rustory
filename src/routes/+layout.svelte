@@ -64,6 +64,7 @@
 	import * as Button from "$lib/components/ui/button";
 	import * as Toaster from "$lib/components/ui/sonner";
 	import * as ScrollArea from "$lib/components/ui/scroll-area";
+	import * as Confirm from "$lib/components/confirm";
 
 	import AppSidebar from "./app-sidebar.svelte";
 
@@ -114,6 +115,8 @@
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
 {#if loadApp}
+	<Confirm.Root />
+
 	<Toaster.Root />
 
 	<Sidebar.Provider open={true}>
