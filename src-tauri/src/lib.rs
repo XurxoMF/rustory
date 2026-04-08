@@ -69,9 +69,6 @@ pub fn run() {
     // Init process plugin
     builder = builder.plugin(tauri_plugin_process::init());
 
-    // Init store plugin
-    builder = builder.plugin(tauri_plugin_store::Builder::new().build());
-
     // Init http plugin
     builder = builder.plugin(tauri_plugin_http::init());
 

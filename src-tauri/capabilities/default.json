@@ -17,7 +17,6 @@
 		"os:default",
 		"shell:default",
 		"opener:default",
-		"store:default",
 		"http:default",
 		"upload:default",
 		"fs:default"
