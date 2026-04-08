@@ -123,6 +123,7 @@
 			class="[--header-height:calc(--spacing(16))] [--header-padding-x:calc(--spacing(4))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-height:calc(--spacing(12))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-padding-x:calc(--spacing(2))]"
 		>
 			<header
+				data-tauri-drag-region
 				class="flex h-(--header-height) w-full shrink-0 flex-row items-center justify-between gap-2 px-(--header-padding-x) transition-[width,height,padding] ease-linear"
 			>
 				<div class="flex flex-1 flex-row items-center justify-start gap-2">
@@ -163,14 +164,14 @@
 					<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
 
 					<div class="flex flex-row items-center">
-						<Button.Root onclick={() => appWindow.hide()} variant="ghost" size="icon-sm">
+						<Button.Root onclick={() => appWindow.minimize()} variant="ghost" size="icon-sm">
 							<IconMinus />
-							<span class="sr-only">Minimize app to tray</span>
+							<span class="sr-only">Minimize app</span>
 						</Button.Root>
 
 						<Button.Root onclick={() => appWindow.toggleMaximize()} variant="ghost" size="icon-sm">
 							<IconMaximize />
-							<span class="sr-only">Maximize or minimize app</span>
+							<span class="sr-only">Maximize or window app</span>
 						</Button.Root>
 
 						<Button.Root onclick={() => appWindow.close()} variant="ghost" size="icon-sm">
