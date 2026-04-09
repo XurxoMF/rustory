@@ -19,6 +19,17 @@
 		"opener:default",
 		"http:default",
 		"upload:default",
-		"fs:default"
+		"fs:default",
+		{
+			"identifier": "fs:scope",
+			"allow": [
+				{ "path": "$APPDATA" },
+				{ "path": "$APPDATA/**/*" },
+				{ "path": "$APPCONFIG" },
+				{ "path": "$APPCONFIG/**/*" },
+				{ "path": "$APPCACHE" },
+				{ "path": "$APPCACHE/**/*" }
+			]
+		}
 	]
 }

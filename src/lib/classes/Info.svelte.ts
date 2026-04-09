@@ -83,6 +83,11 @@ export class Info {
 	private _netRuntimes: string[];
 
 	/**
+	 * Path for the APP config.
+	 */
+	private _configPath: string;
+
+	/**
 	 * Path for the APP data.
 	 */
 	private _dataPath: string;
@@ -112,6 +117,7 @@ export class Info {
 		osVersion: string;
 		netSdks: string[];
 		netRuntimes: string[];
+		configPath: string;
 		dataPath: string;
 		cachePath: string;
 		tempPath: string;
@@ -127,6 +133,7 @@ export class Info {
 		this._osVersion = info.osVersion;
 		this._netSdks = info.netSdks;
 		this._netRuntimes = info.netRuntimes;
+		this._configPath = info.configPath;
 		this._dataPath = info.dataPath;
 		this._cachePath = info.cachePath;
 		this._tempPath = info.tempPath;
@@ -157,6 +164,7 @@ export class Info {
 			const netRuntimes: string[] = [];
 
 			// Load paths
+			const configPath = await path.appConfigDir();
 			const dataPath = await path.appDataDir();
 			const cachePath = await path.appCacheDir();
 			const logsPath = await path.appLogDir();
@@ -173,6 +181,7 @@ export class Info {
 				osVersion,
 				netSdks,
 				netRuntimes,
+				configPath,
 				dataPath,
 				cachePath,
 				tempPath,
@@ -253,6 +262,13 @@ export class Info {
 	 */
 	public get netRuntimes(): string[] {
 		return this._netRuntimes;
+	}
+
+	/**
+	 * Path for the APP config.
+	 */
+	public get configPath(): string {
+		return this._configPath;
 	}
 
 	/**
