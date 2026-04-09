@@ -31,6 +31,15 @@ export class RustoryError extends Error {
 	public get code(): RustoryErrorCodes {
 		return this._code;
 	}
+
+	public toJSON() {
+		return {
+			name: this._name,
+			code: this._code,
+			message: this.message,
+			stack: this.stack
+		};
+	}
 }
 
 /**

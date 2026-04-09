@@ -8,24 +8,56 @@ import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelt
  * Manage requests with cache.
  */
 export class Request {
-	/**
-	 * Singleton instance of the Request.
-	 */
-	private static _instance: Request = new Request();
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	private constructor() {
+		this._cache = new SvelteMap<string, RequestResponse>();
+	}
 
 	/**
-	 * Get the instance of the Request.
+	 * Loads the app request.
+	 * @returns An instance of the request of the app.
 	 */
-	public static get instance(): Request {
-		return Request._instance;
+	public static async init(): Promise<Request> {
+		try {
+			return new Request();
+		} catch (err) {
+			error("There was an error initializating the request!");
+			debug(`There was an error initializating the request:\n${JSON.stringify(err)}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
+		}
 	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
 
 	/**
 	 * Map to save cache. This is an url <-> data map.
 	 */
-	private _cache: Map<string, RequestResponse> = new SvelteMap();
+	private _cache: Map<string, RequestResponse>;
 
-	private constructor() {}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 
 	/**
 	 * Makes a get request to the specified URL.

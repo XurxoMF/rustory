@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { resolve } from "$app/paths";
-	import { onDestroy, onMount } from "svelte";
+	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
-	import { getCurrentWindow } from "@tauri-apps/api/window";
 
 	import "./layout.css";
 
@@ -11,18 +10,12 @@
 
 	import IconSun from "@tabler/icons-svelte/icons/sun";
 	import IconMoon from "@tabler/icons-svelte/icons/moon";
+	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
 	import IconMinus from "@tabler/icons-svelte/icons/minus";
 	import IconMaximize from "@tabler/icons-svelte/icons/maximize";
 	import IconX from "@tabler/icons-svelte/icons/x";
 
-	import { extendConsoleLog, sleep } from "$lib/utils";
-
-	import { Info } from "$lib/classes/Info.svelte";
-	import { Config } from "$lib/classes/Config.svelte";
-	import { Hotkeys } from "$lib/classes/Hotkeys.svelte";
-	import { Data } from "$lib/classes/Data.svelte";
-	import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
-	import { Tray } from "$lib/classes/Tray.svelte";
+	import { App } from "$lib/classes/App.svelte";
 
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
@@ -38,53 +31,14 @@
 
 	let { children } = $props();
 
-	let revertConsoleLog: (() => void) | null = null;
-
-	let showLoader = $state(true);
-	let loadApp = $state(false);
-
-	const appWindow = getCurrentWindow();
-
-	// Load all the data.
-	onMount(async () => {
-		showLoader = true;
-
-		revertConsoleLog = await extendConsoleLog();
-
-		// Load the info, config, window state and hotkeys.
-		await Info.init();
-		await Config.init();
-		await Hotkeys.init();
-		await Tray.init();
-
-		// Show the window and wait a few ms for it to load.
-		await appWindow.show();
-		await sleep(500);
-
-		// Load data like Versions, Instances...
-		await Data.init();
-
-		// Here will be added the future tasks like Instance and Server loading, app updating, check mod updates...
-
-		// Start preloading the UI on the background, wait a few ms for it to load and then complete the last task.
-		loadApp = true;
-		await sleep(500);
-		showLoader = false;
-	});
-
-	// Remove events and resources when the app is restarted.
-	onDestroy(() => {
-		// Destroy the tray and hotkeys.
-		Tray.instance.destroy();
-		Hotkeys.instance.destroy();
-
-		// Revert console logs to the original state.
-		revertConsoleLog?.();
+	onMount(() => {
+		// Initialize the app.
+		App.init();
 	});
 </script>
 
 <!-- Show the loader while configs, data and other things are loading. -->
-{#if showLoader}
+{#if App.loader.showLoader}
 	<div
 		class="absolute top-0 right-0 bottom-0 left-0 z-1000 flex h-screen w-screen flex-col items-center justify-center gap-8 bg-background"
 		out:fade={{ duration: 150, delay: 200 }}
@@ -94,7 +48,7 @@
 {/if}
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
-{#if loadApp}
+{#if App.loader.loadApp}
 	<Confirm.Root />
 
 	<Toaster.Root />
@@ -120,7 +74,7 @@
 								<Breadcrumb.Link href={resolve("/")}>Home</Breadcrumb.Link>
 							</Breadcrumb.Item>
 
-							{#each Breadcrumbs.instance.segments as breadcrumb (breadcrumb.href)}
+							{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.href)}
 								<Breadcrumb.Separator />
 
 								<Breadcrumb.Item>
@@ -137,7 +91,7 @@
 
 				<div class="flex flex-1 flex-row items-center justify-end gap-2">
 					<div class="flex flex-row items-center">
-						<Button.Root onclick={() => Config.instance.setTheme(Config.instance.theme === "dark" ? "light" : "dark")} variant="ghost" size="icon-sm">
+						<Button.Root onclick={() => App.config.setTheme(App.config.theme === "dark" ? "light" : "dark")} variant="ghost" size="icon-sm">
 							<IconSun class="scale-100 rotate-0 transition-all! dark:scale-0 dark:-rotate-90" />
 							<IconMoon class="absolute scale-0 rotate-90 transition-all! dark:scale-100 dark:rotate-0" />
 							<span class="sr-only">Toggle theme</span>
@@ -147,17 +101,22 @@
 					<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
 
 					<div class="flex flex-row items-center">
-						<Button.Root onclick={() => appWindow.minimize()} variant="ghost" size="icon-sm">
+						<Button.Root onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
+							<IconChevronDown />
+							<span class="sr-only">Minimize app</span>
+						</Button.Root>
+
+						<Button.Root onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
 							<IconMinus />
 							<span class="sr-only">Minimize app</span>
 						</Button.Root>
 
-						<Button.Root onclick={() => appWindow.toggleMaximize()} variant="ghost" size="icon-sm">
+						<Button.Root onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
 							<IconMaximize />
 							<span class="sr-only">Maximize or window app</span>
 						</Button.Root>
 
-						<Button.Root onclick={() => appWindow.close()} variant="ghost" size="icon-sm">
+						<Button.Root onclick={() => App.window.close()} variant="ghost" size="icon-sm">
 							<IconX />
 							<span class="sr-only">Close app</span>
 						</Button.Root>

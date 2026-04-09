@@ -2,6 +2,50 @@
  * Installed VS Mod info.
  */
 export class VSMod {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsMod: {
+		vsInstanceId: string;
+		name: string;
+		modid: string;
+		version: string;
+		path: string;
+		description?: string | undefined;
+		side?: string | undefined;
+		authors: string[];
+		contributors: string[];
+		type?: string | undefined;
+		image: boolean;
+		state?: VSModState | undefined;
+	}) {
+		this._vsInstanceId = vsMod.vsInstanceId;
+		this._name = vsMod.name;
+		this._modid = vsMod.modid;
+		this._version = vsMod.version;
+		this._path = vsMod.path;
+		this._description = vsMod.description;
+		this._side = vsMod.side;
+		this._authors = vsMod.authors;
+		this._contributors = vsMod.contributors;
+		this._type = vsMod.type;
+		this._image = vsMod.image;
+		this._state = $state(vsMod.state ?? VSModState.INSTALLED);
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the VS Instance this VS Mod is from.
 	 */
@@ -62,33 +106,9 @@ export class VSMod {
 	 */
 	private _state: VSModState;
 
-	public constructor(vsMod: {
-		vsInstanceId: string;
-		name: string;
-		modid: string;
-		version: string;
-		path: string;
-		description?: string | undefined;
-		side?: string | undefined;
-		authors: string[];
-		contributors: string[];
-		type?: string | undefined;
-		image: boolean;
-		state?: VSModState | undefined;
-	}) {
-		this._vsInstanceId = vsMod.vsInstanceId;
-		this._name = vsMod.name;
-		this._modid = vsMod.modid;
-		this._version = vsMod.version;
-		this._path = vsMod.path;
-		this._description = vsMod.description;
-		this._side = vsMod.side;
-		this._authors = vsMod.authors;
-		this._contributors = vsMod.contributors;
-		this._type = vsMod.type;
-		this._image = vsMod.image;
-		this._state = $state(vsMod.state ?? VSModState.INSTALLED);
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the VS Instance this VS Mod is from.
@@ -173,6 +193,14 @@ export class VSMod {
 	public get state(): VSModState {
 		return this._state;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }
 
 /**

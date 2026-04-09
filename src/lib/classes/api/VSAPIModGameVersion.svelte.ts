@@ -2,6 +2,28 @@
  * Mod Game Version queried from the ModDB.
  */
 export class VSAPIModGameVersion {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsApiModGameVersion: { tagid: string; name: string; color: string }) {
+		this._tagid = vsApiModGameVersion.tagid;
+		this._name = vsApiModGameVersion.name;
+		this._color = vsApiModGameVersion.color;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the game version.
 	 */
@@ -17,11 +39,9 @@ export class VSAPIModGameVersion {
 	 */
 	private _color: string;
 
-	public constructor(vsApiModGameVersion: { tagid: string; name: string; color: string }) {
-		this._tagid = vsApiModGameVersion.tagid;
-		this._name = vsApiModGameVersion.name;
-		this._color = vsApiModGameVersion.color;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the game version.
@@ -43,4 +63,12 @@ export class VSAPIModGameVersion {
 	public get color(): string {
 		return this._color;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

@@ -2,6 +2,46 @@
  * Mod Release queried from ModDB.
  */
 export class VSAPIModRelease {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsApiModRelease: {
+		releaseid: number;
+		mainfile: string;
+		filename: string;
+		fileid: number;
+		downloads: number;
+		tags: string[];
+		modidstr: string;
+		modversion: string;
+		created: string;
+		changelog: string;
+	}) {
+		this._releaseid = vsApiModRelease.releaseid;
+		this._mainfile = vsApiModRelease.mainfile;
+		this._filename = vsApiModRelease.filename;
+		this._fileid = vsApiModRelease.fileid;
+		this._downloads = vsApiModRelease.downloads;
+		this._tags = vsApiModRelease.tags;
+		this._modidstr = vsApiModRelease.modidstr;
+		this._modversion = vsApiModRelease.modversion;
+		this._created = vsApiModRelease.created;
+		this._changelog = vsApiModRelease.changelog;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the release.
 	 */
@@ -52,29 +92,9 @@ export class VSAPIModRelease {
 	 */
 	private _changelog: string;
 
-	public constructor(vsApiModRelease: {
-		releaseid: number;
-		mainfile: string;
-		filename: string;
-		fileid: number;
-		downloads: number;
-		tags: string[];
-		modidstr: string;
-		modversion: string;
-		created: string;
-		changelog: string;
-	}) {
-		this._releaseid = vsApiModRelease.releaseid;
-		this._mainfile = vsApiModRelease.mainfile;
-		this._filename = vsApiModRelease.filename;
-		this._fileid = vsApiModRelease.fileid;
-		this._downloads = vsApiModRelease.downloads;
-		this._tags = vsApiModRelease.tags;
-		this._modidstr = vsApiModRelease.modidstr;
-		this._modversion = vsApiModRelease.modversion;
-		this._created = vsApiModRelease.created;
-		this._changelog = vsApiModRelease.changelog;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the release.
@@ -145,4 +165,12 @@ export class VSAPIModRelease {
 	public get changelog(): string {
 		return this._changelog;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

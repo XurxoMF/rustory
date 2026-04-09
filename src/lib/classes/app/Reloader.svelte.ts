@@ -1,0 +1,91 @@
+import { debug, error } from "@tauri-apps/plugin-log";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+
+/**
+ * Store for the reaload functions.
+ *
+ * Reload functions are callbacks that will be executed when the reload page button is clicked.
+ */
+export class Reloader {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	private constructor() {
+		this._callbacks = [];
+	}
+
+	/**
+	 * Loads the app reloader.
+	 * @returns An instance of the reloader of the app.
+	 */
+	public static async init(): Promise<Reloader> {
+		try {
+			return new Reloader();
+		} catch (err) {
+			error("There was an error initializating the reloader!");
+			debug(`There was an error initializating the reloader:\n${JSON.stringify(err)}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");
+		}
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
+	/**
+	 * The callbacks that will be executed when the page is reloaded.
+	 */
+	private _callbacks: ReloaderTask[];
+
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
+
+	/**
+	 * Add a new task to the reloader.
+	 * @param task - The task to add to the onReload list
+	 */
+	public addTask(task: ReloaderTask) {
+		this._callbacks.push(task);
+	}
+
+	/**
+	 * Remove a task from the reloader.
+	 * @param id - The if of the task to remove from the onReload list
+	 */
+	public removeTask(id: string) {
+		this._callbacks = this._callbacks.filter((task) => task.id !== id);
+	}
+
+	/**
+	 * Executes the reload tasks.
+	 */
+	public executeTasks() {
+		for (const task of this._callbacks) {
+			task.action();
+		}
+	}
+}
+
+/**
+ * A task to executer when the page is reloaded.
+ */
+export type ReloaderTask = { id: string; action: () => void | Promise<void> };

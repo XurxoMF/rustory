@@ -2,6 +2,30 @@
  * VS Instance Backup.
  */
 export class VSInstanceBackup {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsInstanceBackup: { id: string; vsInstanceId: string; date: number; path: string; state?: VSInstanceBackupState | undefined }) {
+		this._id = vsInstanceBackup.id;
+		this._vsInstanceId = vsInstanceBackup.vsInstanceId;
+		this._date = vsInstanceBackup.date;
+		this._path = vsInstanceBackup.path;
+		this._state = $state(vsInstanceBackup.state ?? VSInstanceBackupState.READY);
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the VS Instance Backup.
 	 */
@@ -27,13 +51,9 @@ export class VSInstanceBackup {
 	 */
 	private _state: VSInstanceBackupState;
 
-	public constructor(vsInstanceBackup: { id: string; vsInstanceId: string; date: number; path: string; state?: VSInstanceBackupState | undefined }) {
-		this._id = vsInstanceBackup.id;
-		this._vsInstanceId = vsInstanceBackup.vsInstanceId;
-		this._date = vsInstanceBackup.date;
-		this._path = vsInstanceBackup.path;
-		this._state = $state(vsInstanceBackup.state ?? VSInstanceBackupState.READY);
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the VS Instance Backup.
@@ -69,6 +89,14 @@ export class VSInstanceBackup {
 	public get state(): VSInstanceBackupState {
 		return this._state;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }
 
 /**

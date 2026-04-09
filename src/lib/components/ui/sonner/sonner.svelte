@@ -7,13 +7,13 @@
 	import { IconInfoCircle } from "@tabler/icons-svelte";
 	import { IconAlertTriangle } from "@tabler/icons-svelte";
 
-	import { Config } from "$lib/classes/Config.svelte";
+	import { App } from "$lib/classes/App.svelte";
 
 	let { ...restProps }: SonnerProps = $props();
 </script>
 
 <Sonner
-	theme={Config.instance.theme}
+	theme={App.config.theme}
 	class="toaster group"
 	style="--normal-bg: var(--color-popover); --normal-text: var(--color-popover-foreground); --normal-border: var(--color-border);"
 	{...restProps}

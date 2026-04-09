@@ -6,6 +6,74 @@ import { VSAPIModScreenshot } from "$lib/classes/api/VSAPIModScreenshot.svelte";
  * This is the complete mod from /api/mods/{modid}.
  */
 export class VSAPIMod {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsApiMod: {
+		modid: number;
+		assetid: number;
+		name: string;
+		text: string;
+		author: string;
+		urlalias?: string | undefined;
+		logofilename?: string | undefined;
+		logofile?: string | undefined;
+		homepageurl?: string | undefined;
+		sourcecodeurl?: string | undefined;
+		trailervideourl?: string | undefined;
+		issuetrackerurl?: string | undefined;
+		wikiurl?: string | undefined;
+		downloads: number;
+		follows: number;
+		trendingpoints: number;
+		comments: number;
+		side: string;
+		type: string;
+		createdat: string;
+		lastmodified: string;
+		tags: string[];
+		releases: VSAPIModRelease[];
+		screenshots: VSAPIModScreenshot[];
+	}) {
+		this._modid = vsApiMod.modid;
+		this._assetid = vsApiMod.assetid;
+		this._name = vsApiMod.name;
+		this._text = vsApiMod.text;
+		this._author = vsApiMod.author;
+		this._urlalias = vsApiMod.urlalias;
+		this._logofilename = vsApiMod.logofilename;
+		this._logofile = vsApiMod.logofile;
+		this._homepageurl = vsApiMod.homepageurl;
+		this._sourcecodeurl = vsApiMod.sourcecodeurl;
+		this._trailervideourl = vsApiMod.trailervideourl;
+		this._issuetrackerurl = vsApiMod.issuetrackerurl;
+		this._wikiurl = vsApiMod.wikiurl;
+		this._downloads = vsApiMod.downloads;
+		this._follows = vsApiMod.follows;
+		this._trendingpoints = vsApiMod.trendingpoints;
+		this._comments = vsApiMod.comments;
+		this._side = vsApiMod.side;
+		this._type = vsApiMod.type;
+		this._createdat = vsApiMod.createdat;
+		this._lastmodified = vsApiMod.lastmodified;
+		this._tags = vsApiMod.tags;
+		this._releases = vsApiMod.releases;
+		this._screenshots = vsApiMod.screenshots;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the mod.
 	 */
@@ -126,57 +194,9 @@ export class VSAPIMod {
 	 */
 	private _screenshots: VSAPIModScreenshot[];
 
-	public constructor(vsApiMod: {
-		modid: number;
-		assetid: number;
-		name: string;
-		text: string;
-		author: string;
-		urlalias?: string | undefined;
-		logofilename?: string | undefined;
-		logofile?: string | undefined;
-		homepageurl?: string | undefined;
-		sourcecodeurl?: string | undefined;
-		trailervideourl?: string | undefined;
-		issuetrackerurl?: string | undefined;
-		wikiurl?: string | undefined;
-		downloads: number;
-		follows: number;
-		trendingpoints: number;
-		comments: number;
-		side: string;
-		type: string;
-		createdat: string;
-		lastmodified: string;
-		tags: string[];
-		releases: VSAPIModRelease[];
-		screenshots: VSAPIModScreenshot[];
-	}) {
-		this._modid = vsApiMod.modid;
-		this._assetid = vsApiMod.assetid;
-		this._name = vsApiMod.name;
-		this._text = vsApiMod.text;
-		this._author = vsApiMod.author;
-		this._urlalias = vsApiMod.urlalias;
-		this._logofilename = vsApiMod.logofilename;
-		this._logofile = vsApiMod.logofile;
-		this._homepageurl = vsApiMod.homepageurl;
-		this._sourcecodeurl = vsApiMod.sourcecodeurl;
-		this._trailervideourl = vsApiMod.trailervideourl;
-		this._issuetrackerurl = vsApiMod.issuetrackerurl;
-		this._wikiurl = vsApiMod.wikiurl;
-		this._downloads = vsApiMod.downloads;
-		this._follows = vsApiMod.follows;
-		this._trendingpoints = vsApiMod.trendingpoints;
-		this._comments = vsApiMod.comments;
-		this._side = vsApiMod.side;
-		this._type = vsApiMod.type;
-		this._createdat = vsApiMod.createdat;
-		this._lastmodified = vsApiMod.lastmodified;
-		this._tags = vsApiMod.tags;
-		this._releases = vsApiMod.releases;
-		this._screenshots = vsApiMod.screenshots;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The modid of the mod.
@@ -345,4 +365,12 @@ export class VSAPIMod {
 	public get screenshots(): VSAPIModScreenshot[] {
 		return this._screenshots;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

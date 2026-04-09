@@ -1,5 +1,4 @@
 import { error, debug } from "@tauri-apps/plugin-log";
-import { exit } from "@tauri-apps/plugin-process";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -7,23 +6,17 @@ import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelt
  * Hotkeys of the app.
  */
 export class Hotkeys {
-	/**
-	 * Singleton instance of the Hotkeys.
-	 */
-	private static _instance: Hotkeys | null = null;
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
 
-	/**
-	 * Get the instance of the Hotkeys.
-	 */
-	public static get instance(): Hotkeys {
-		if (Hotkeys._instance === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Hotkeys not initialized!");
-		return Hotkeys._instance;
-	}
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
 
-	/**
-	 * Hotkeys of the app.
-	 */
-	private _hotkeys: Hotkey[];
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
 
 	private constructor(hotkeys: { hotkeys: Hotkey[] }) {
 		this._hotkeys = $state(hotkeys.hotkeys);
@@ -35,7 +28,7 @@ export class Hotkeys {
 	/**
 	 * Loads all the hotkeys on this instance.
 	 */
-	public static async init(): Promise<void> {
+	public static async init(): Promise<Hotkeys> {
 		try {
 			const hotkeys: Hotkey[] = [];
 
@@ -49,29 +42,28 @@ export class Hotkeys {
 
 			// TODO: Load all the Hotkeys
 
-			Hotkeys._instance = new Hotkeys({
+			return new Hotkeys({
 				hotkeys
 			});
 		} catch (err) {
-			error("There was an error initializating the hotkeys! The app will be closed!");
+			error("There was an error initializating the hotkeys!");
 			debug(`There was an error initializating the hotkeys:\n${JSON.stringify(err)}`);
-			exit(1);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
 		}
 	}
 
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
-	 * Clear events and remove unused things. Run it before restarting the app.
+	 * Hotkeys of the app.
 	 */
-	public destroy(): void {
-		try {
-			// Remove the event listener to detect pressed keys
-			window.removeEventListener("keydown", this.handleKeyDown);
-		} catch (err) {
-			error("There was an error destroying the tray!");
-			debug(`There was an error destroying the tray:\n${JSON.stringify(err)}`);
-			exit(1);
-		}
-	}
+	private _hotkeys: Hotkey[];
+
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * Hotkeys of the app.
@@ -80,12 +72,20 @@ export class Hotkeys {
 		return this._hotkeys;
 	}
 
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
+
 	/**
 	 * Normalizes a key.
 	 * @param key The key to normalize.
 	 * @returns The key normalized.
 	 */
-	private normalizeKey(key: string): string {
+	private static normalizeKey(key: string): string {
 		return key.toLowerCase();
 	}
 
@@ -101,13 +101,13 @@ export class Hotkeys {
 		if (e.altKey) pressed.push("alt");
 		if (e.metaKey) pressed.push("meta");
 
-		const mainKey = this.normalizeKey(e.key);
+		const mainKey = Hotkeys.normalizeKey(e.key);
 		if (!["control", "shift", "alt", "meta"].includes(mainKey)) {
 			pressed.push(mainKey);
 		}
 
 		for (const hk of this._hotkeys) {
-			if (this.isMatch(hk.keys, pressed)) {
+			if (Hotkeys.isMatch(hk.keys, pressed)) {
 				e.preventDefault();
 				hk.action();
 				break;
@@ -121,7 +121,7 @@ export class Hotkeys {
 	 * @param pressed The keys pressed.
 	 * @returns True if the keys are the same.
 	 */
-	private isMatch(defined: string[], pressed: string[]): boolean {
+	private static isMatch(defined: string[], pressed: string[]): boolean {
 		const a = [...defined].sort().join("+");
 		const b = [...pressed].sort().join("+");
 		return a === b;
@@ -132,6 +132,28 @@ export class Hotkeys {
  * A Hotkey.
  */
 export class Hotkey {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(hotkey: { id: string; keys: string[]; action: () => void | Promise<void> }) {
+		this._id = hotkey.id;
+		this._keys = hotkey.keys;
+		this._action = hotkey.action;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The ID of the hotkey.
 	 */
@@ -147,11 +169,9 @@ export class Hotkey {
 	 */
 	private _action: () => void | Promise<void>;
 
-	public constructor(hotkey: { id: string; keys: string[]; action: () => void | Promise<void> }) {
-		this._id = hotkey.id;
-		this._keys = hotkey.keys;
-		this._action = hotkey.action;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The ID of the hotkey.
@@ -173,4 +193,12 @@ export class Hotkey {
 	public get action(): () => void | Promise<void> {
 		return this._action;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

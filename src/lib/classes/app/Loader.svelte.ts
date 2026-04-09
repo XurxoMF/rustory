@@ -1,7 +1,4 @@
-/**
- * Mod Tag queried from the ModDB.
- */
-export class VSAPIModTag {
+export class Loader {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -14,10 +11,9 @@ export class VSAPIModTag {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModTag: { tagid: number; name: string; color: string }) {
-		this._tagid = vsApiModTag.tagid;
-		this._name = vsApiModTag.name;
-		this._color = vsApiModTag.color;
+	constructor() {
+		this._showLoader = $state(true);
+		this._loadApp = $state(false);
 	}
 
 	// *************************
@@ -25,43 +21,45 @@ export class VSAPIModTag {
 	// *************************
 
 	/**
-	 * The id of the tag.
+	 * If the loader must be shown.
 	 */
-	private _tagid: number;
+	private _showLoader;
 
 	/**
-	 * The name of the tag.
+	 * If the app must be loaded.
 	 */
-	private _name: string;
-
-	/**
-	 * The color of the tag.
-	 */
-	private _color: string;
+	private _loadApp;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
 
 	/**
-	 * The id of the tag.
+	 * If the loader must be shown.
 	 */
-	public get tagid(): number {
-		return this._tagid;
+	public get showLoader(): boolean {
+		return this._showLoader;
 	}
 
 	/**
-	 * The name of the tag.
+	 * If the loader must be shown.
 	 */
-	public get name(): string {
-		return this._name;
+	public set showLoader(showLoader: boolean) {
+		this._showLoader = showLoader;
 	}
 
 	/**
-	 * The color of the tag.
+	 * If the app must be loaded.
 	 */
-	public get color(): string {
-		return this._color;
+	public get loadApp(): boolean {
+		return this._loadApp;
+	}
+
+	/**
+	 * If the app must be loaded.
+	 */
+	public set loadApp(loadApp: boolean) {
+		this._loadApp = loadApp;
 	}
 
 	// ********************

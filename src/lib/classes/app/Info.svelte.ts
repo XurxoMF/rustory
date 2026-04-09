@@ -1,5 +1,4 @@
 import { error, debug } from "@tauri-apps/plugin-log";
-import { exit } from "@tauri-apps/plugin-process";
 import {
 	arch as getOsArch,
 	family as getOsFamily,
@@ -12,6 +11,8 @@ import {
 	type Platform as OsPlatform
 } from "@tauri-apps/plugin-os";
 import { app, path } from "@tauri-apps/api";
+import { defaultWindowIcon } from "@tauri-apps/api/app";
+import type { Image } from "@tauri-apps/api/image";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -19,18 +20,112 @@ import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelt
  * Info of the app.
  */
 export class Info {
-	/**
-	 * Singleton instance of the Info.
-	 */
-	private static _instance: Info | null = null;
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	private constructor(info: {
+		name: string;
+		version: string;
+		icon: Image | undefined;
+		osArch: OsArch;
+		osFamily: OsFamily;
+		osPlatform: OsPlatform;
+		osType: OsType;
+		osVersion: string;
+		netSdks: string[];
+		netRuntimes: string[];
+		configPath: string;
+		dataPath: string;
+		cachePath: string;
+		tempPath: string;
+		logsPath: string;
+	}) {
+		this._name = info.name;
+		this._version = info.version;
+		this._icon = info.icon;
+		this._isOnline = $state(navigator.onLine);
+		this._osArch = info.osArch;
+		this._osFamily = info.osFamily;
+		this._osPlatform = info.osPlatform;
+		this._osType = info.osType;
+		this._osVersion = info.osVersion;
+		this._netSdks = info.netSdks;
+		this._netRuntimes = info.netRuntimes;
+		this._configPath = info.configPath;
+		this._dataPath = info.dataPath;
+		this._cachePath = info.cachePath;
+		this._tempPath = info.tempPath;
+		this._logsPath = info.logsPath;
+
+		// Listen to online/offline events
+		window.addEventListener("online", () => (this._isOnline = true));
+		window.addEventListener("offline", () => (this._isOnline = false));
+	}
 
 	/**
-	 * Get the instance of the Info.
+	 * Loads all the info of the app.
+	 * @returns An instance of the info of the app.
 	 */
-	public static get instance(): Info {
-		if (Info._instance === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Info not initialized!");
-		return Info._instance;
+	public static async init(): Promise<Info> {
+		try {
+			// Load basic info.
+			const name = await app.getName();
+			const version = await app.getVersion();
+			const icon = await defaultWindowIcon();
+
+			// Load system info.
+			const osArch = getOsArch();
+			const osFamily = getOsFamily();
+			const osPlatform = getOsPlatform();
+			const osType = getOsType();
+			const osVersion = getOsVersion();
+			// TODO: Load all the NET SDKs and Runtimes
+			const netSdks: string[] = [];
+			const netRuntimes: string[] = [];
+
+			// Load paths
+			const configPath = await path.appConfigDir();
+			const dataPath = await path.appDataDir();
+			const cachePath = await path.appCacheDir();
+			const logsPath = await path.appLogDir();
+			const tempPath = await path.join(cachePath, "tmp");
+
+			return new Info({
+				name,
+				version,
+				icon: icon ?? undefined,
+				osArch,
+				osFamily,
+				osPlatform,
+				osType,
+				osVersion,
+				netSdks,
+				netRuntimes,
+				configPath,
+				dataPath,
+				cachePath,
+				tempPath,
+				logsPath
+			});
+		} catch (err) {
+			error("There was an error initializating the info!");
+			debug(`There was an error initializating the info:\n${JSON.stringify(err)}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
+		}
 	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
 
 	/**
 	 * Name of the app.
@@ -41,6 +136,11 @@ export class Info {
 	 * Current version of the app.
 	 */
 	private _version: string;
+
+	/**
+	 * Icon of the app.
+	 */
+	private _icon: Image | undefined;
 
 	/**
 	 * Whether the app is online.
@@ -107,92 +207,9 @@ export class Info {
 	 */
 	private _logsPath: string;
 
-	private constructor(info: {
-		name: string;
-		version: string;
-		osArch: OsArch;
-		osFamily: OsFamily;
-		osPlatform: OsPlatform;
-		osType: OsType;
-		osVersion: string;
-		netSdks: string[];
-		netRuntimes: string[];
-		configPath: string;
-		dataPath: string;
-		cachePath: string;
-		tempPath: string;
-		logsPath: string;
-	}) {
-		this._name = info.name;
-		this._version = info.version;
-		this._isOnline = $state(navigator.onLine);
-		this._osArch = info.osArch;
-		this._osFamily = info.osFamily;
-		this._osPlatform = info.osPlatform;
-		this._osType = info.osType;
-		this._osVersion = info.osVersion;
-		this._netSdks = info.netSdks;
-		this._netRuntimes = info.netRuntimes;
-		this._configPath = info.configPath;
-		this._dataPath = info.dataPath;
-		this._cachePath = info.cachePath;
-		this._tempPath = info.tempPath;
-		this._logsPath = info.logsPath;
-
-		// Listen to online/offline events
-		window.addEventListener("online", () => (this._isOnline = true));
-		window.addEventListener("offline", () => (this._isOnline = false));
-	}
-
-	/**
-	 * Loads all the info about Rustory on this instance.
-	 */
-	public static async init(): Promise<void> {
-		try {
-			// Load basic info.
-			const name = await app.getName();
-			const version = await app.getVersion();
-
-			// Load system info.
-			const osArch = getOsArch();
-			const osFamily = getOsFamily();
-			const osPlatform = getOsPlatform();
-			const osType = getOsType();
-			const osVersion = getOsVersion();
-			// TODO: Load all the NET SDKs and Runtimes
-			const netSdks: string[] = [];
-			const netRuntimes: string[] = [];
-
-			// Load paths
-			const configPath = await path.appConfigDir();
-			const dataPath = await path.appDataDir();
-			const cachePath = await path.appCacheDir();
-			const logsPath = await path.appLogDir();
-			const tempPath = await path.join(cachePath, "tmp");
-
-			// Set the info
-			Info._instance = new Info({
-				name,
-				version,
-				osArch,
-				osFamily,
-				osPlatform,
-				osType,
-				osVersion,
-				netSdks,
-				netRuntimes,
-				configPath,
-				dataPath,
-				cachePath,
-				tempPath,
-				logsPath
-			});
-		} catch (err) {
-			error("There was an error initializating the info! The app will be closed!");
-			debug(`There was an error initializating the info:\n${JSON.stringify(err)}`);
-			exit(1);
-		}
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * Name of the app.
@@ -206,6 +223,13 @@ export class Info {
 	 */
 	public get version(): string {
 		return this._version;
+	}
+
+	/**
+	 * Icon of the app.
+	 */
+	public get icon(): Image | undefined {
+		return this._icon;
 	}
 
 	/**
@@ -298,4 +322,12 @@ export class Info {
 	public get logsPaths(): string {
 		return this._logsPath;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

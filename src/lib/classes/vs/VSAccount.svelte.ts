@@ -2,6 +2,44 @@
  * Vintage Story user account.
  */
 export class VSAccount {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsAccound: {
+		id: number;
+		email: string;
+		playerName: string;
+		playerUid: string;
+		playerEntitlements: string;
+		sessionKey: string;
+		sessionSignature: string;
+		mptoken?: string | undefined;
+		hostGameServer: boolean;
+	}) {
+		this._id = vsAccound.id;
+		this._email = vsAccound.email;
+		this._playerName = vsAccound.playerName;
+		this._playerUid = vsAccound.playerUid;
+		this._playerEntitlements = vsAccound.playerEntitlements;
+		this._sessionKey = vsAccound.sessionKey;
+		this._sessionSignature = vsAccound.sessionSignature;
+		this._mptoken = vsAccound.mptoken;
+		this._hostGameServer = vsAccound.hostGameServer;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the account.
 	 */
@@ -47,27 +85,9 @@ export class VSAccount {
 	 */
 	private _hostGameServer: boolean;
 
-	public constructor(vsAccound: {
-		id: number;
-		email: string;
-		playerName: string;
-		playerUid: string;
-		playerEntitlements: string;
-		sessionKey: string;
-		sessionSignature: string;
-		mptoken?: string | undefined;
-		hostGameServer: boolean;
-	}) {
-		this._id = vsAccound.id;
-		this._email = vsAccound.email;
-		this._playerName = vsAccound.playerName;
-		this._playerUid = vsAccound.playerUid;
-		this._playerEntitlements = vsAccound.playerEntitlements;
-		this._sessionKey = vsAccound.sessionKey;
-		this._sessionSignature = vsAccound.sessionSignature;
-		this._mptoken = vsAccound.mptoken;
-		this._hostGameServer = vsAccound.hostGameServer;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the account.
@@ -131,4 +151,12 @@ export class VSAccount {
 	public get hostGameServer(): boolean {
 		return this._hostGameServer;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

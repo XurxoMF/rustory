@@ -1,33 +1,38 @@
 import { path } from "@tauri-apps/api";
 import { debug, error } from "@tauri-apps/plugin-log";
-import { exit } from "@tauri-apps/plugin-process";
 
-import { type Locale, baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
+import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
-import { Info } from "$lib/classes/Info.svelte";
+import { App } from "$lib/classes/App.svelte";
+
+/**
+ * Keys of the available themes.
+ */
+export type ThemeKeys = (typeof Config.THEMES)[number]["key"];
+
+/**
+ * Keys of the available locales.
+ */
+export type LocaleKeys = (typeof Config.LOCALES)[number]["lang"];
+
+/**
+ * Keys of the available scales.
+ */
+export type ScaleKeys = (typeof Config.SCALES)[number]["scale"];
 
 /**
  * Config of the app.
  */
 export class Config {
-	/**
-	 * Singleton instance of the Config.
-	 */
-	private static _instance: Config | null = null;
-
-	/**
-	 * Get the instance of the Config.
-	 */
-	public static get instance(): Config {
-		if (Config._instance === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "The Config is not initialized!");
-		return Config._instance;
-	}
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
 
 	/**
 	 * List of all the available themes.
 	 */
-	public static THEMES = [
+	private static _THEMES = [
 		{ key: "dark", name: "Dark", color: "bg-stone-900" },
 		{ key: "light", name: "Light", color: "bg-stone-100" }
 	] as const;
@@ -35,7 +40,7 @@ export class Config {
 	/**
 	 * List of all the available locales with their data.
 	 */
-	public static LANGUAGES = [
+	private static _LOCALES = [
 		{ lang: "en-EN", name: "English", credits: ["XurxoMF"] },
 		{ lang: "es-ES", name: "Español", credits: ["XurxoMF"] }
 	] as const;
@@ -43,7 +48,7 @@ export class Config {
 	/**
 	 * List of scales for the UI.
 	 */
-	public static SCALES = [
+	private static _SCALES = [
 		{ scale: "50", name: "50%" },
 		{ scale: "75", name: "75%" },
 		{ scale: "100", name: "100%" },
@@ -51,25 +56,34 @@ export class Config {
 		{ scale: "150", name: "150%" }
 	] as const;
 
-	/**
-	 * Key of the current used theme.
-	 */
-	private _theme: ThemeKeys;
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
 
 	/**
-	 * Key of the selected language.
+	 * List of all the available themes.
 	 */
-	private _locale: LocaleKeys;
+	public static get THEMES(): typeof Config._THEMES {
+		return Config._THEMES;
+	}
 
 	/**
-	 * Key of the selected scale.
+	 * List of all the available locales.
 	 */
-	private _scale: ScaleKeys;
+	public static get LOCALES(): typeof Config._LOCALES {
+		return Config._LOCALES;
+	}
 
 	/**
-	 * Path where Instances will be saved.
+	 * List of scales for the UI.
 	 */
-	private _vsInstancesPath: string;
+	public static get SCALES(): typeof Config._SCALES {
+		return Config._SCALES;
+	}
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
 
 	private constructor(config: { theme: ThemeKeys; locale: LocaleKeys; scale: ScaleKeys; vsInstancesPath: string }) {
 		this._theme = $state(config.theme);
@@ -79,9 +93,9 @@ export class Config {
 	}
 
 	/**
-	 * Loads all the configs on this instance.
+	 * Loads all the config of the app.
 	 */
-	public static async init(): Promise<void> {
+	public static async init(): Promise<Config> {
 		try {
 			// TODO: Get the locale from the config
 			const locale = baseLocale;
@@ -103,15 +117,43 @@ export class Config {
 			Config.applyScale(scale);
 
 			// TODO: Get the vsInstancesPath from the config
-			const vsInstancesPath = await path.join(Info.instance.dataPath, "VintageStory");
+			const vsInstancesPath = await path.join(App.info.dataPath, "VintageStory");
 
-			Config._instance = new Config({ theme, locale, scale, vsInstancesPath });
+			return new Config({ theme, locale, scale, vsInstancesPath });
 		} catch (err) {
-			error("There was an error initializating the config! The app will be closed!");
+			error("There was an error initializating the config!");
 			debug(`There was an error initializating the config:\n${JSON.stringify(err)}`);
-			exit(RustoryErrorCodes.ERROR_INITIALIZING);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
+	/**
+	 * Key of the current used theme.
+	 */
+	private _theme: ThemeKeys;
+
+	/**
+	 * Key of the selected language.
+	 */
+	private _locale: LocaleKeys;
+
+	/**
+	 * Key of the selected scale.
+	 */
+	private _scale: ScaleKeys;
+
+	/**
+	 * Path where Instances will be saved.
+	 */
+	private _vsInstancesPath: string;
+
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * Key of the selected language.
@@ -119,6 +161,35 @@ export class Config {
 	public get locale(): LocaleKeys {
 		return this._locale;
 	}
+
+	/**
+	 * Key of the selected theme.
+	 */
+	public get theme(): ThemeKeys {
+		return this._theme;
+	}
+
+	/**
+	 * Key of the selected scale.
+	 */
+	public get scale(): ScaleKeys {
+		return this._scale;
+	}
+
+	/**
+	 * Path where VS Instances will be saved.
+	 */
+	public get vsInstancesPath(): string {
+		return this._vsInstancesPath;
+	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 
 	/**
 	 * Set a new locale. Set's english if there provided locale is invalid.
@@ -133,13 +204,6 @@ export class Config {
 		} else {
 			setLocale(baseLocale, { reload: false });
 		}
-	}
-
-	/**
-	 * Key of the selected theme.
-	 */
-	public get theme(): ThemeKeys {
-		return this._theme;
 	}
 
 	/**
@@ -188,13 +252,6 @@ export class Config {
 	}
 
 	/**
-	 * Key of the selected scale.
-	 */
-	public get scale(): ScaleKeys {
-		return this._scale;
-	}
-
-	/**
 	 * Set a new UI scale.
 	 * @param scale - The key of the scale to apply.
 	 */
@@ -234,13 +291,6 @@ export class Config {
 	}
 
 	/**
-	 * Path where VS Instances will be saved.
-	 */
-	public get vsInstancesPath(): string {
-		return this._vsInstancesPath;
-	}
-
-	/**
 	 * Set a new path for the VS Instances.
 	 * @param scale - The path to save.
 	 */
@@ -270,12 +320,3 @@ export class Config {
 		}
 	}
 }
-
-// Keys of the available themes
-export type ThemeKeys = (typeof Config.THEMES)[number]["key"];
-
-// Keys of the available locales
-export type LocaleKeys = Locale;
-
-// Keys of the available scales
-export type ScaleKeys = (typeof Config.SCALES)[number]["scale"];

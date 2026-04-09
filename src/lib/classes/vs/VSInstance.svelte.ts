@@ -1,10 +1,62 @@
-import type { VSInstanceBackup } from "$lib/classes/VSInstanceBackup.svelte";
-import type { VSMod } from "$lib/classes/VSMod.svelte";
+import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
+import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
 
 /**
  * VS Instance.
  */
 export class VSInstance {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsInstance: {
+		id: string;
+		name: string;
+		path: string;
+		version: string;
+		mods: VSMod[];
+		backups: VSInstanceBackup[];
+		icon: boolean;
+		startParams: string;
+		backupsLimit: number;
+		backupsAuto: boolean;
+		compressionLevel: number;
+		lastTimePlayed: number;
+		totalTimePlayed: number;
+		mesaGlThread: boolean;
+		envVars: string;
+		state?: VSInstanceState | undefined;
+	}) {
+		this._id = vsInstance.id;
+		this._name = $state(vsInstance.name);
+		this._path = vsInstance.path;
+		this._version = $state(vsInstance.version);
+		this._mods = $state(vsInstance.mods);
+		this._backups = $state(vsInstance.backups);
+		this._icon = $state(vsInstance.icon);
+		this._startParams = $state(vsInstance.startParams);
+		this._backupsLimit = $state(vsInstance.backupsLimit);
+		this._backupsAuto = $state(vsInstance.backupsAuto);
+		this._compressionLevel = $state(vsInstance.compressionLevel);
+		this._lastTimePlayed = $state(vsInstance.lastTimePlayed);
+		this._totalTimePlayed = $state(vsInstance.totalTimePlayed);
+		this._mesaGlThread = $state(vsInstance.mesaGlThread);
+		this._envVars = $state(vsInstance.envVars);
+		this._state = $state(vsInstance.state ?? VSInstanceState.STOPPED);
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the VS Instance.
 	 */
@@ -85,41 +137,9 @@ export class VSInstance {
 	 */
 	private _state: VSInstanceState;
 
-	public constructor(vsInstance: {
-		id: string;
-		name: string;
-		path: string;
-		version: string;
-		mods: VSMod[];
-		backups: VSInstanceBackup[];
-		icon: boolean;
-		startParams: string;
-		backupsLimit: number;
-		backupsAuto: boolean;
-		compressionLevel: number;
-		lastTimePlayed: number;
-		totalTimePlayed: number;
-		mesaGlThread: boolean;
-		envVars: string;
-		state?: VSInstanceState | undefined;
-	}) {
-		this._id = vsInstance.id;
-		this._name = $state(vsInstance.name);
-		this._path = vsInstance.path;
-		this._version = $state(vsInstance.version);
-		this._mods = $state(vsInstance.mods);
-		this._backups = $state(vsInstance.backups);
-		this._icon = $state(vsInstance.icon);
-		this._startParams = $state(vsInstance.startParams);
-		this._backupsLimit = $state(vsInstance.backupsLimit);
-		this._backupsAuto = $state(vsInstance.backupsAuto);
-		this._compressionLevel = $state(vsInstance.compressionLevel);
-		this._lastTimePlayed = $state(vsInstance.lastTimePlayed);
-		this._totalTimePlayed = $state(vsInstance.totalTimePlayed);
-		this._mesaGlThread = $state(vsInstance.mesaGlThread);
-		this._envVars = $state(vsInstance.envVars);
-		this._state = $state(vsInstance.state ?? VSInstanceState.STOPPED);
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the VS Instance.
@@ -330,6 +350,14 @@ export class VSInstance {
 	public set state(state: VSInstanceState) {
 		this._state = state;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }
 
 /**

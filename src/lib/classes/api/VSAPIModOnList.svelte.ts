@@ -3,6 +3,58 @@
  * This is the simplified mod from /api/mods.
  */
 export class VSAPIModOnList {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsApiModOnList: {
+		modid: number;
+		assetid: number;
+		downloads: number;
+		follows: number;
+		trendingpoints: number;
+		comments: number;
+		name: string;
+		summary?: string | undefined;
+		modidstrs: string[];
+		author: string;
+		urlalias?: string | undefined;
+		side: string;
+		type: string;
+		logo: string;
+		tags: string[];
+		lastreleased: string;
+	}) {
+		this._modid = vsApiModOnList.modid;
+		this._assetid = vsApiModOnList.assetid;
+		this._downloads = vsApiModOnList.downloads;
+		this._follows = vsApiModOnList.follows;
+		this._trendingpoints = vsApiModOnList.trendingpoints;
+		this._comments = vsApiModOnList.comments;
+		this._name = vsApiModOnList.name;
+		this._summary = vsApiModOnList.summary;
+		this._modidstrs = vsApiModOnList.modidstrs;
+		this._author = vsApiModOnList.author;
+		this._urlalias = vsApiModOnList.urlalias;
+		this._side = vsApiModOnList.side;
+		this._type = vsApiModOnList.type;
+		this._logo = vsApiModOnList.logo;
+		this._tags = vsApiModOnList.tags;
+		this._lastreleased = vsApiModOnList.lastreleased;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the mod.
 	 */
@@ -83,41 +135,9 @@ export class VSAPIModOnList {
 	 */
 	private _lastreleased: string;
 
-	public constructor(vsApiModOnList: {
-		modid: number;
-		assetid: number;
-		downloads: number;
-		follows: number;
-		trendingpoints: number;
-		comments: number;
-		name: string;
-		summary?: string | undefined;
-		modidstrs: string[];
-		author: string;
-		urlalias?: string | undefined;
-		side: string;
-		type: string;
-		logo: string;
-		tags: string[];
-		lastreleased: string;
-	}) {
-		this._modid = vsApiModOnList.modid;
-		this._assetid = vsApiModOnList.assetid;
-		this._downloads = vsApiModOnList.downloads;
-		this._follows = vsApiModOnList.follows;
-		this._trendingpoints = vsApiModOnList.trendingpoints;
-		this._comments = vsApiModOnList.comments;
-		this._name = vsApiModOnList.name;
-		this._summary = vsApiModOnList.summary;
-		this._modidstrs = vsApiModOnList.modidstrs;
-		this._author = vsApiModOnList.author;
-		this._urlalias = vsApiModOnList.urlalias;
-		this._side = vsApiModOnList.side;
-		this._type = vsApiModOnList.type;
-		this._logo = vsApiModOnList.logo;
-		this._tags = vsApiModOnList.tags;
-		this._lastreleased = vsApiModOnList.lastreleased;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the mod.
@@ -230,4 +250,12 @@ export class VSAPIModOnList {
 	public get lastreleased(): string {
 		return this._lastreleased;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }

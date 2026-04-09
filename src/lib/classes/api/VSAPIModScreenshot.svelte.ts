@@ -2,6 +2,30 @@
  * Mod Screenshot queried from the ModDB.
  */
 export class VSAPIModScreenshot {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	public constructor(vsApiModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
+		this._fileid = vsApiModScreenshot.fileid;
+		this._mainfile = vsApiModScreenshot.mainfile;
+		this._filename = vsApiModScreenshot.filename;
+		this._thumbnailfile = vsApiModScreenshot.thumbnailfile;
+		this._createdat = vsApiModScreenshot.createdat;
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
+
 	/**
 	 * The id of the screenshot.
 	 */
@@ -27,13 +51,9 @@ export class VSAPIModScreenshot {
 	 */
 	private _createdat: string;
 
-	public constructor(vsApiModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
-		this._fileid = vsApiModScreenshot.fileid;
-		this._mainfile = vsApiModScreenshot.mainfile;
-		this._filename = vsApiModScreenshot.filename;
-		this._thumbnailfile = vsApiModScreenshot.thumbnailfile;
-		this._createdat = vsApiModScreenshot.createdat;
-	}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * The id of the screenshot.
@@ -69,4 +89,12 @@ export class VSAPIModScreenshot {
 	public get createdat(): string {
 		return this._createdat;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 }
