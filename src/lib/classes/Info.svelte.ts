@@ -33,17 +33,17 @@ export class Info {
 	}
 
 	/**
-	 * Name of the APP.
+	 * Name of the app.
 	 */
 	private _name: string;
 
 	/**
-	 * Current version of the APP.
+	 * Current version of the app.
 	 */
 	private _version: string;
 
 	/**
-	 * Whether the APP is online.
+	 * Whether the app is online.
 	 */
 	private _isOnline: boolean;
 
@@ -83,27 +83,27 @@ export class Info {
 	private _netRuntimes: string[];
 
 	/**
-	 * Path for the APP config.
+	 * Path for the app config.
 	 */
 	private _configPath: string;
 
 	/**
-	 * Path for the APP data.
+	 * Path for the app data.
 	 */
 	private _dataPath: string;
 
 	/**
-	 * Path for the APP cache.
+	 * Path for the app cache.
 	 */
 	private _cachePath: string;
 
 	/**
-	 * Path for the APP temporals.
+	 * Path for the app temporals.
 	 */
 	private _tempPath: string;
 
 	/**
-	 * Path for the APP logs.
+	 * Path for the app logs.
 	 */
 	private _logsPath: string;
 
@@ -195,21 +195,21 @@ export class Info {
 	}
 
 	/**
-	 * Name of the APP.
+	 * Name of the app.
 	 */
 	public get name(): string {
 		return this._name;
 	}
 
 	/**
-	 * Current version of the APP.
+	 * Current version of the app.
 	 */
 	public get version(): string {
 		return this._version;
 	}
 
 	/**
-	 * Whether the APP is online.
+	 * Whether the app is online.
 	 */
 	public get isOnline(): boolean {
 		return this._isOnline;
@@ -265,35 +265,35 @@ export class Info {
 	}
 
 	/**
-	 * Path for the APP config.
+	 * Path for the app config.
 	 */
 	public get configPath(): string {
 		return this._configPath;
 	}
 
 	/**
-	 * Path for the APP data.
+	 * Path for the app data.
 	 */
 	public get dataPath(): string {
 		return this._dataPath;
 	}
 
 	/**
-	 * Path for the APP cache.
+	 * Path for the app cache.
 	 */
 	public get cachePath(): string {
 		return this._cachePath;
 	}
 
 	/**
-	 * Path for the APP temporals.
+	 * Path for the app temporals.
 	 */
 	public get tempPath(): string {
 		return this._tempPath;
 	}
 
 	/**
-	 * Path for the APP logs.
+	 * Path for the app logs.
 	 */
 	public get logsPaths(): string {
 		return this._logsPath;

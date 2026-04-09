@@ -28,6 +28,7 @@ export class Hotkeys {
 	private constructor(hotkeys: { hotkeys: Hotkey[] }) {
 		this._hotkeys = $state(hotkeys.hotkeys);
 
+		// Add the event listener to detect pressed keys
 		window.addEventListener("keydown", this.handleKeyDown);
 	}
 
@@ -54,6 +55,20 @@ export class Hotkeys {
 		} catch (err) {
 			error("There was an error initializating the hotkeys! The app will be closed!");
 			debug(`There was an error initializating the hotkeys:\n${JSON.stringify(err)}`);
+			exit(1);
+		}
+	}
+
+	/**
+	 * Clear events and remove unused things. Run it before restarting the app.
+	 */
+	public destroy(): void {
+		try {
+			// Remove the event listener to detect pressed keys
+			window.removeEventListener("keydown", this.handleKeyDown);
+		} catch (err) {
+			error("There was an error destroying the tray!");
+			debug(`There was an error destroying the tray:\n${JSON.stringify(err)}`);
 			exit(1);
 		}
 	}

@@ -1,41 +1,9 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { resolve } from "$app/paths";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
 	import { getCurrentWindow } from "@tauri-apps/api/window";
-	import { trace, info, warn, error, debug } from "@tauri-apps/plugin-log";
-
-	// Save the original console log methods
-	const original = {
-		log: console.log,
-		warn: console.warn,
-		error: console.error,
-		trace: console.trace,
-		debug: console.debug
-	};
-
-	// Override the console log methods to log to both the log files and the web console
-	console.log = (...args) => {
-		original.log(...args);
-		info(`[WEB CONSOLE] ${args.join(" | ")}`);
-	};
-	console.warn = (...args) => {
-		original.warn(...args);
-		warn(`[WEB CONSOLE] ${args.join(" | ")}`);
-	};
-	console.error = (...args) => {
-		original.error(...args);
-		error(`[WEB CONSOLE] ${args.join(" | ")}`);
-	};
-	console.trace = (...args) => {
-		original.trace(...args);
-		trace(`[WEB CONSOLE] ${args.join(" | ")}`);
-	};
-	console.debug = (...args) => {
-		original.debug(...args);
-		debug(`[WEB CONSOLE] ${args.join(" | ")}`);
-	};
 
 	import "./layout.css";
 
@@ -47,14 +15,14 @@
 	import IconMaximize from "@tabler/icons-svelte/icons/maximize";
 	import IconX from "@tabler/icons-svelte/icons/x";
 
-	import { sleep } from "$lib/utils";
+	import { extendConsoleLog, sleep } from "$lib/utils";
 
 	import { Info } from "$lib/classes/Info.svelte";
 	import { Config } from "$lib/classes/Config.svelte";
-	import { MainWindow } from "$lib/classes/MainWindow.svelte";
 	import { Hotkeys } from "$lib/classes/Hotkeys.svelte";
 	import { Data } from "$lib/classes/Data.svelte";
 	import { Breadcrumbs } from "$lib/classes/Breadcrumbs.svelte";
+	import { Tray } from "$lib/classes/Tray.svelte";
 
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
@@ -70,26 +38,28 @@
 
 	let { children } = $props();
 
+	let revertConsoleLog: (() => void) | null = null;
+
 	let showLoader = $state(true);
 	let loadApp = $state(false);
 
 	const appWindow = getCurrentWindow();
 
-	// Load all the data ince the loader is mounted.
+	// Load all the data.
 	onMount(async () => {
 		showLoader = true;
 
-		// Load the info, config, window state and tasks.
+		revertConsoleLog = await extendConsoleLog();
+
+		// Load the info, config, window state and hotkeys.
 		await Info.init();
 		await Config.init();
-		await MainWindow.init();
+		await Hotkeys.init();
+		await Tray.init();
 
 		// Show the window and wait a few ms for it to load.
 		await appWindow.show();
 		await sleep(500);
-
-		// Load the hotkeys.
-		await Hotkeys.init();
 
 		// Load data like Versions, Instances...
 		await Data.init();
@@ -100,6 +70,16 @@
 		loadApp = true;
 		await sleep(500);
 		showLoader = false;
+	});
+
+	// Remove events and resources when the app is restarted.
+	onDestroy(() => {
+		// Destroy the tray and hotkeys.
+		Tray.instance.destroy();
+		Hotkeys.instance.destroy();
+
+		// Revert console logs to the original state.
+		revertConsoleLog?.();
 	});
 </script>
 

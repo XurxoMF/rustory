@@ -5,6 +5,7 @@ import { exit } from "@tauri-apps/plugin-process";
 import { type Locale, baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { Info } from "$lib/classes/Info.svelte";
 
 /**
  * Config of the app.
@@ -102,8 +103,7 @@ export class Config {
 			Config.applyScale(scale);
 
 			// TODO: Get the vsInstancesPath from the config
-			const vsInstancesPath = await path.join(await path.homeDir(), "VintageStory");
-			Config.saveVSInstancesPath(vsInstancesPath);
+			const vsInstancesPath = await path.join(Info.instance.dataPath, "VintageStory");
 
 			Config._instance = new Config({ theme, locale, scale, vsInstancesPath });
 		} catch (err) {

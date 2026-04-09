@@ -5,6 +5,7 @@
 	"windows": ["main"],
 	"permissions": [
 		"core:default",
+		"core:app:allow-default-window-icon",
 		"core:window:allow-close",
 		"core:window:allow-hide",
 		"core:window:allow-toggle-maximize",
