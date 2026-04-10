@@ -1,4 +1,4 @@
-import { debug, error } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -30,10 +30,11 @@ export class Reloader {
 	 */
 	public static async init(): Promise<Reloader> {
 		try {
-			return new Reloader();
+			const reloader = new Reloader();
+
+			return reloader;
 		} catch (err) {
-			error("There was an error initializating the reloader!");
-			debug(`There was an error initializating the reloader:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the reloader:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");
 		}
 	}

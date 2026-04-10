@@ -1,4 +1,4 @@
-import { debug, error } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 
 import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -32,12 +32,13 @@ export class Data {
 			// TODO: Load vsInstances from the config
 			const vsInstances: VSInstance[] = [];
 
-			return new Data({
+			const data = new Data({
 				vsInstances
 			});
+
+			return data;
 		} catch (err) {
-			error("There was an error initializating the data!");
-			debug(`There was an error initializating the data:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the data:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
 		}
 	}

@@ -1,4 +1,4 @@
-import { debug, error } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, type TrayIconOptions } from "@tauri-apps/api/tray";
 
@@ -57,10 +57,11 @@ export class Tray {
 
 			const icon = await TrayIcon.new(options);
 
-			return new Tray({ menu, options, icon });
+			const tray = new Tray({ menu, options, icon });
+
+			return tray;
 		} catch (err) {
-			error("There was an error initializating the tray!");
-			debug(`There was an error initializating the tray:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the tray:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
 		}
 	}

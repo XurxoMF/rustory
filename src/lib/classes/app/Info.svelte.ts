@@ -1,4 +1,4 @@
-import { error, debug } from "@tauri-apps/plugin-log";
+import { error, info } from "@tauri-apps/plugin-log";
 import {
 	arch as getOsArch,
 	family as getOsFamily,
@@ -14,6 +14,7 @@ import { app, path } from "@tauri-apps/api";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import type { Image } from "@tauri-apps/api/image";
 import { Command } from "@tauri-apps/plugin-shell";
+import { exists, mkdir } from "@tauri-apps/plugin-fs";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -92,14 +93,12 @@ export class Info {
 
 			// Load .NET SDKs info
 			const netSdksCommand = await Command.create("check-dotnet", ["--list-sdks"]).execute();
-			debug("NET SDKs:\n" + JSON.stringify(netSdksCommand));
 			const netSdks: string[] = netSdksCommand.stdout
 				.trim()
 				.split("\n")
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
-
-			debug("NET SDKs:\n" + JSON.stringify(netSdks));
+			info(`NET SDKs: ${netSdks.join(", ")}`);
 
 			// Load .NET Runtimes info
 			const netRuntimesCommand = await Command.create("check-dotnet", ["--list-runtimes"]).execute();
@@ -109,15 +108,32 @@ export class Info {
 				.filter((line) => line.startsWith("Microsoft.NETCore.App"))
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
+			info(`NET Runtimes: ${netRuntimes.join(", ")}`);
 
-			debug("NET Runtimes:\n" + JSON.stringify(netRuntimes));
-
-			// Load paths
+			// Load config path
 			const configPath = await path.appConfigDir();
+			const configPathExists = await exists(configPath);
+			if (!configPathExists) await mkdir(configPath, { recursive: true });
+
+			// Load data path
 			const dataPath = await path.appDataDir();
+			const dataPathExists = await exists(dataPath);
+			if (!dataPathExists) await mkdir(dataPath, { recursive: true });
+
+			// Load cache path
 			const cachePath = await path.appCacheDir();
+			const cachePathExists = await exists(cachePath);
+			if (!cachePathExists) await mkdir(cachePath, { recursive: true });
+
+			// Load logs path
 			const logsPath = await path.appLogDir();
+			const logsPathExists = await exists(logsPath);
+			if (!logsPathExists) await mkdir(logsPath, { recursive: true });
+
+			// Load temp path
 			const tempPath = await path.join(cachePath, "tmp");
+			const tempPathExists = await exists(tempPath);
+			if (!tempPathExists) await mkdir(tempPath, { recursive: true });
 
 			return new Info({
 				name,
@@ -137,8 +153,7 @@ export class Info {
 				logsPath
 			});
 		} catch (err) {
-			error("There was an error initializating the info!");
-			debug(`There was an error initializating the info:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the info:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
 		}
 	}

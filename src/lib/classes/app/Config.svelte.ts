@@ -1,5 +1,6 @@
 import { path } from "@tauri-apps/api";
-import { debug, error } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
+import { readTextFile, exists, create, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 
 import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
@@ -20,6 +21,16 @@ export type LocaleKeys = (typeof Config.LOCALES)[number]["lang"];
  * Keys of the available scales.
  */
 export type ScaleKeys = (typeof Config.SCALES)[number]["scale"];
+
+/**
+ * JSON of the config.
+ */
+export type ConfigJSON = {
+	theme: ThemeKeys;
+	locale: LocaleKeys;
+	scale: ScaleKeys;
+	vsInstancesPath: string;
+};
 
 /**
  * Config of the app.
@@ -97,32 +108,34 @@ export class Config {
 	 */
 	public static async init(): Promise<Config> {
 		try {
-			// TODO: Get the locale from the config
-			const locale = baseLocale;
+			const configFilePath = await Config.getConfigFilePath();
+			const oldConfigString = await readTextFile(configFilePath);
+			const oldConfigJSON: ConfigJSON = JSON.parse(oldConfigString);
 
-			// TODO: Get the theme from the config
-			let theme: ThemeKeys = "dark";
-			if (!theme) {
-				theme = Config.THEMES[0].key;
-				Config.saveTheme(theme);
-			}
+			// Load the locale
+			const locale = oldConfigJSON.locale || baseLocale;
+			Config.applyLocale(locale);
+
+			// Load the theme
+			const theme: ThemeKeys = oldConfigJSON.theme || "dark";
 			Config.applyTheme(theme);
 
-			// TODO: Get the scale from the config
-			let scale: ScaleKeys = "100";
-			if (!scale) {
-				scale = Config.SCALES[2].scale;
-				Config.saveScale(scale);
-			}
+			// Load the scale
+			const scale: ScaleKeys = oldConfigJSON.scale || "100";
 			Config.applyScale(scale);
 
-			// TODO: Get the vsInstancesPath from the config
-			const vsInstancesPath = await path.join(App.info.dataPath, "VintageStory");
+			// Load the Vintage Story Instances path.
+			const defaultVSInstancesPath = await path.join(App.info.dataPath, "VintageStory");
+			const vsInstancesPath = oldConfigJSON.vsInstancesPath || defaultVSInstancesPath;
+			await Config.ensureVSInstancesPath(vsInstancesPath);
 
-			return new Config({ theme, locale, scale, vsInstancesPath });
+			const config = new Config({ theme, locale, scale, vsInstancesPath });
+
+			await config.save();
+
+			return config;
 		} catch (err) {
-			error("There was an error initializating the config!");
-			debug(`There was an error initializating the config:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the config:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
@@ -187,6 +200,20 @@ export class Config {
 	// *  STATIC METHODS  *
 	// ********************
 
+	/**
+	 * Get's the config file path ensuring it exists first.
+	 * @returns The config file path.
+	 */
+	public static async getConfigFilePath(): Promise<string> {
+		const filePath = await path.join(App.info.configPath, "config.json");
+		const fileExists = await exists(filePath);
+		if (!fileExists) await create(filePath);
+		const fileContents = await readTextFile(filePath);
+		if (!fileContents.startsWith("{")) await writeTextFile(filePath, "{}");
+
+		return filePath;
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
@@ -201,9 +228,18 @@ export class Config {
 		if (isLocale(locale)) {
 			setLocale(locale, { reload: false });
 			this._locale = locale;
+			await this.save();
 		} else {
 			setLocale(baseLocale, { reload: false });
 		}
+	}
+
+	/**
+	 * Apply a locale.
+	 * @param locale The locale to apply.
+	 */
+	private static applyLocale(locale: LocaleKeys): void {
+		setLocale(locale, { reload: false });
 	}
 
 	/**
@@ -212,28 +248,12 @@ export class Config {
 	 */
 	public async setTheme(theme: ThemeKeys): Promise<void> {
 		try {
-			await Config.saveTheme(theme);
 			Config.applyTheme(theme);
 			this._theme = theme;
+			await this.save();
 		} catch (err) {
-			error("There was an error setting the new theme!");
-			debug(`There was an error setting the new theme:\n${JSON.stringify(err)}`);
+			error(`There was an error setting the new theme:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
-		}
-	}
-
-	/**
-	 * Save a theme.
-	 * @param theme - The key of the theme to save.
-	 */
-	private static async saveTheme(theme: ThemeKeys): Promise<void> {
-		try {
-			// TODO: Save the theme to the config
-			console.log(theme);
-		} catch (err) {
-			error("There was an error saving the new theme!");
-			debug(`There was an error saving the new theme:\n${JSON.stringify(err)}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new theme!");
 		}
 	}
 
@@ -244,9 +264,7 @@ export class Config {
 	private static applyTheme(theme: ThemeKeys): void {
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark");
-			document.documentElement.classList.remove("light");
 		} else {
-			document.documentElement.classList.add("light");
 			document.documentElement.classList.remove("dark");
 		}
 	}
@@ -257,34 +275,18 @@ export class Config {
 	 */
 	public async setScale(scale: ScaleKeys): Promise<void> {
 		try {
-			await Config.saveScale(scale);
 			Config.applyScale(scale);
 			this._scale = scale;
+			await this.save();
 		} catch (err) {
-			error("There was an error setting the new scale!");
-			debug(`There was an error setting the new scale:\n${JSON.stringify(err)}`);
+			error(`There was an error setting the new scale:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
 		}
 	}
 
 	/**
-	 * Save a scale.
-	 * @param scale - The key of the scale to save.
-	 */
-	private static async saveScale(scale: ScaleKeys): Promise<void> {
-		try {
-			// TODO: Save the scale to the config
-			console.log(scale);
-		} catch (err) {
-			error("There was an error saving the new scale!");
-			debug(`There was an error saving the new scale:\n${JSON.stringify(err)}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new scale!");
-		}
-	}
-
-	/**
 	 * Apply a scale.
-	 * @param scale The scale to apply.
+	 * @param scale The scale.
 	 */
 	private static applyScale(scale: ScaleKeys): void {
 		document.documentElement.setAttribute("data-uiscale", scale);
@@ -292,31 +294,66 @@ export class Config {
 
 	/**
 	 * Set a new path for the VS Instances.
-	 * @param scale - The path to save.
+	 * @param scale - The path.
 	 */
 	public async setVSInstancesPath(path: string): Promise<void> {
 		try {
-			await Config.saveVSInstancesPath(path);
 			this._vsInstancesPath = path;
+			await this.save();
 		} catch (err) {
-			error("There was an error saving the new VS Instances path!");
-			debug(`There was an error saving the new VS Instances path:\n${JSON.stringify(err)}`);
+			error(`There was an error saving the new VS Instances path:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new VS Instances path!");
 		}
 	}
 
 	/**
-	 * Save a path for the VS Instances.
-	 * @param path - The path to save.
+	 * Ensures the Vintage Story Instances path exists.
+	 * @param vsInstancesPath The Vinatage Story Instances path.
 	 */
-	private static async saveVSInstancesPath(path: string): Promise<void> {
+	private static async ensureVSInstancesPath(vsInstancesPath: string): Promise<void> {
 		try {
-			// TODO: Save the path to the config
-			console.log(path);
+			const pathExists = await exists(vsInstancesPath);
+			if (!pathExists) await mkdir(vsInstancesPath, { recursive: true });
 		} catch (err) {
-			error("There was an error saving the new Instances path!");
-			debug(`There was an error saving the new Instances path:\n${JSON.stringify(err)}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Instances path!");
+			error(`There was an error ensuring the Vintage Story Instances path exists:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the Vintage Story Instances path exists!");
 		}
+	}
+
+	/**
+	 * Saves the config to the config file.
+	 */
+	private async save(): Promise<void> {
+		try {
+			const config = await this.exportToJSON();
+			await writeTextFile(await Config.getConfigFilePath(), JSON.stringify(config, null, 2));
+		} catch (err) {
+			error(`There was an error saving the config:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
+		}
+	}
+
+	/**
+	 * Imports the config from a JSON file.
+	 * @param config The
+	 */
+	private async importFromJSON(config: ConfigJSON): Promise<void> {
+		this._theme = config.theme;
+		this._locale = config.locale;
+		this._scale = config.scale;
+		this._vsInstancesPath = config.vsInstancesPath;
+	}
+
+	/**
+	 * Exports the config to a JSON.
+	 * @returns A JSON with the config.
+	 */
+	private async exportToJSON(): Promise<ConfigJSON> {
+		return {
+			theme: this._theme,
+			locale: this._locale,
+			scale: this._scale,
+			vsInstancesPath: this._vsInstancesPath
+		};
 	}
 }

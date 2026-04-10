@@ -1,4 +1,4 @@
-import { error, debug } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -30,7 +30,7 @@ export class Hotkeys {
 	 */
 	public static async init(): Promise<Hotkeys> {
 		try {
-			const hotkeys: Hotkey[] = [];
+			const hks: Hotkey[] = [];
 
 			const hkOpenCommand = new Hotkey({
 				id: "hkOpenCommand",
@@ -38,16 +38,15 @@ export class Hotkeys {
 				// TODO: Open command
 				action: () => console.log("Open command")
 			});
-			hotkeys.push(hkOpenCommand);
+			hks.push(hkOpenCommand);
 
-			// TODO: Load all the Hotkeys
-
-			return new Hotkeys({
-				hotkeys
+			const hotkeys = new Hotkeys({
+				hotkeys: hks
 			});
+
+			return hotkeys;
 		} catch (err) {
-			error("There was an error initializating the hotkeys!");
-			debug(`There was an error initializating the hotkeys:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the hotkeys:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
 		}
 	}

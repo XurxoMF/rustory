@@ -5,7 +5,7 @@ import { trace, info, warn, error, debug } from "@tauri-apps/plugin-log";
 import { sleep } from "$lib/utils";
 
 import { RustoryError, RustoryErrorCodes } from "./RustoryError.svelte";
-import { Loader } from "$lib/classes/app/Loader.svelte";
+import { Loader } from "$lib/classes/Loader.svelte";
 import { Info } from "$lib/classes/app/Info.svelte";
 import { Config } from "$lib/classes/app/Config.svelte";
 import { Hotkeys } from "$lib/classes/app/Hotkeys.svelte";
@@ -211,8 +211,7 @@ export class App {
 
 			App._isInitialized = true;
 		} catch (err) {
-			error("There was an error initializating the app! The app will be closed!");
-			debug(`There was an error initializating the app:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the app:\n${err}`);
 			exit(1);
 		}
 	}

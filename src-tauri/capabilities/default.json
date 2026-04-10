@@ -21,6 +21,11 @@
 		"http:default",
 		"upload:default",
 		"fs:default",
+		"fs:allow-create",
+		"fs:allow-exists",
+		"fs:allow-mkdir",
+		"fs:allow-read-text-file",
+		"fs:allow-write-text-file",
 		{
 			"identifier": "fs:scope",
 			"allow": [

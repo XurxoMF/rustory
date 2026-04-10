@@ -1,5 +1,5 @@
 import { SvelteMap } from "svelte/reactivity";
-import { error, debug } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 import { fetch } from "@tauri-apps/plugin-http";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -30,10 +30,11 @@ export class Request {
 	 */
 	public static async init(): Promise<Request> {
 		try {
-			return new Request();
+			const request = new Request();
+
+			return request;
 		} catch (err) {
-			error("There was an error initializating the request!");
-			debug(`There was an error initializating the request:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the request:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
 		}
 	}
@@ -82,8 +83,7 @@ export class Request {
 			if (cache) this._cache.set(url, { timestamp: Date.now(), response });
 			return response;
 		} catch (err) {
-			error(`There was an error making the request to ${url}!`);
-			debug(`There was an error making the request to ${url}:\n${JSON.stringify(err)}`);
+			error(`There was an error making the request to ${url}:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
 		}
 	}

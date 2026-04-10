@@ -1,4 +1,4 @@
-import { debug, error } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -40,10 +40,11 @@ export class Breadcrumbs {
 	 */
 	public static async init(): Promise<Breadcrumbs> {
 		try {
-			return new Breadcrumbs();
+			const breadcrumbs = new Breadcrumbs();
+
+			return breadcrumbs;
 		} catch (err) {
-			error("There was an error initializating the breadcrumbs!");
-			debug(`There was an error initializating the breadcrumbs:\n${JSON.stringify(err)}`);
+			error(`There was an error initializating the breadcrumbs:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
 		}
 	}
