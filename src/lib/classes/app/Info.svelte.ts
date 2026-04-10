@@ -13,6 +13,7 @@ import {
 import { app, path } from "@tauri-apps/api";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import type { Image } from "@tauri-apps/api/image";
+import { Command } from "@tauri-apps/plugin-shell";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
@@ -88,9 +89,28 @@ export class Info {
 			const osPlatform = getOsPlatform();
 			const osType = getOsType();
 			const osVersion = getOsVersion();
-			// TODO: Load all the NET SDKs and Runtimes
-			const netSdks: string[] = [];
-			const netRuntimes: string[] = [];
+
+			// Load .NET SDKs info
+			const netSdksCommand = await Command.create("check-dotnet", ["--list-sdks"]).execute();
+			debug("NET SDKs:\n" + JSON.stringify(netSdksCommand));
+			const netSdks: string[] = netSdksCommand.stdout
+				.trim()
+				.split("\n")
+				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
+				.filter((line) => line !== undefined);
+
+			debug("NET SDKs:\n" + JSON.stringify(netSdks));
+
+			// Load .NET Runtimes info
+			const netRuntimesCommand = await Command.create("check-dotnet", ["--list-runtimes"]).execute();
+			const netRuntimes: string[] = netRuntimesCommand.stdout
+				.trim()
+				.split("\n")
+				.filter((line) => line.startsWith("Microsoft.NETCore.App"))
+				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
+				.filter((line) => line !== undefined);
+
+			debug("NET Runtimes:\n" + JSON.stringify(netRuntimes));
 
 			// Load paths
 			const configPath = await path.appConfigDir();

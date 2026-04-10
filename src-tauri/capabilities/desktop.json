@@ -4,5 +4,11 @@
 	"description": "Capability for the main window. Desktop only.",
 	"platforms": ["macOS", "windows", "linux"],
 	"windows": ["main"],
-	"permissions": ["cli:default", "updater:default", "window-state:default", "process:default"]
+	"permissions": [
+		"cli:default",
+		"updater:default",
+		"window-state:default",
+		"process:default",
+		{ "identifier": "shell:allow-execute", "allow": [{ "name": "check-dotnet", "cmd": "dotnet", "args": true }] }
+	]
 }
