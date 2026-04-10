@@ -11,6 +11,4 @@ It works on Linux, Windows and MacOS.
 - Create, manage and share Modpacks
 - Create, manage and restore Backups
 - Multi-language
-- Extremely optimiced with a very low use of RAM and CPU
-- Multi-task
-- Easy to install and use
+- Optimiced to use almost no resources
