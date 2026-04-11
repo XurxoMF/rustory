@@ -210,7 +210,11 @@ export class App {
 			// If the App is already initialized, do nothing.
 			if (App.isInitialized) return;
 
-			App.extendConsoleLog();
+			App.forwardConsole("log", trace);
+			App.forwardConsole("debug", debug);
+			App.forwardConsole("info", info);
+			App.forwardConsole("warn", warn);
+			App.forwardConsole("error", error);
 
 			App._window = getCurrentWindow();
 
@@ -261,36 +265,11 @@ export class App {
 	/**
 	 * Extends the console log methods to log to both the log files and the web console.
 	 */
-	private static extendConsoleLog() {
-		// Save the original console log methods
-		const original = {
-			log: console.log,
-			warn: console.warn,
-			error: console.error,
-			trace: console.trace,
-			debug: console.debug
-		};
-
-		// Override the console log methods to log to both the log files and the web console
-		console.log = (...args) => {
-			original.log(...args);
-			info(`[WEB CONSOLE] ${args.join(" | ")}`);
-		};
-		console.warn = (...args) => {
-			original.warn(...args);
-			warn(`[WEB CONSOLE] ${args.join(" | ")}`);
-		};
-		console.error = (...args) => {
-			original.error(...args);
-			error(`[WEB CONSOLE] ${args.join(" | ")}`);
-		};
-		console.trace = (...args) => {
-			original.trace(...args);
-			trace(`[WEB CONSOLE] ${args.join(" | ")}`);
-		};
-		console.debug = (...args) => {
-			original.debug(...args);
-			debug(`[WEB CONSOLE] ${args.join(" | ")}`);
+	private static forwardConsole(fnName: "log" | "debug" | "info" | "warn" | "error", logger: (message: string) => Promise<void>) {
+		const original = console[fnName];
+		console[fnName] = (message) => {
+			original(message);
+			logger(message);
 		};
 	}
 
