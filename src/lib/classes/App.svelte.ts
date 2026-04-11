@@ -5,7 +5,7 @@ import { trace, info, warn, error, debug } from "@tauri-apps/plugin-log";
 import { sleep } from "$lib/utils";
 
 import { RustoryError, RustoryErrorCodes } from "./RustoryError.svelte";
-import { Loader } from "$lib/classes/Loader.svelte";
+import { Loader } from "$lib/classes/utils/Loader.svelte";
 import { Info } from "$lib/classes/app/Info.svelte";
 import { Config } from "$lib/classes/app/Config.svelte";
 import { Hotkeys } from "$lib/classes/app/Hotkeys.svelte";
