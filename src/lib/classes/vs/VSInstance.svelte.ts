@@ -1,5 +1,6 @@
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
+import type { Directory } from "$lib/classes/utils/Directory.svelte";
 
 /**
  * VS Instance.
@@ -20,7 +21,7 @@ export class VSInstance {
 	public constructor(vsInstance: {
 		id: string;
 		name: string;
-		path: string;
+		dir: Directory;
 		version: string;
 		mods: VSMod[];
 		backups: VSInstanceBackup[];
@@ -37,7 +38,7 @@ export class VSInstance {
 	}) {
 		this._id = vsInstance.id;
 		this._name = $state(vsInstance.name);
-		this._path = vsInstance.path;
+		this._dir = vsInstance.dir;
 		this._version = $state(vsInstance.version);
 		this._mods = $state(vsInstance.mods);
 		this._backups = $state(vsInstance.backups);
@@ -68,9 +69,9 @@ export class VSInstance {
 	private _name: string;
 
 	/**
-	 * The path of the VS Instance.
+	 * The directory of the VS Instance.
 	 */
-	private _path: string;
+	private _dir: Directory;
 
 	/**
 	 * The version of the VS Instance.
@@ -163,10 +164,10 @@ export class VSInstance {
 	}
 
 	/**
-	 * The path of the VS Instance.
+	 * The directory of the VS Instance.
 	 */
-	public get path(): string {
-		return this._path;
+	public get dir(): Directory {
+		return this._dir;
 	}
 
 	/**

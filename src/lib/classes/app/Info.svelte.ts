@@ -14,9 +14,9 @@ import { app, path } from "@tauri-apps/api";
 import { defaultWindowIcon } from "@tauri-apps/api/app";
 import type { Image } from "@tauri-apps/api/image";
 import { Command } from "@tauri-apps/plugin-shell";
-import { exists, mkdir } from "@tauri-apps/plugin-fs";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { Directory } from "$lib/classes/utils/Directory.svelte";
 
 /**
  * Info of the app.
@@ -45,11 +45,11 @@ export class Info {
 		osVersion: string;
 		netSdks: string[];
 		netRuntimes: string[];
-		configPath: string;
-		dataPath: string;
-		cachePath: string;
-		tempPath: string;
-		logsPath: string;
+		configDir: Directory;
+		dataDir: Directory;
+		cacheDir: Directory;
+		tempDir: Directory;
+		logsDir: Directory;
 	}) {
 		this._name = info.name;
 		this._version = info.version;
@@ -62,11 +62,11 @@ export class Info {
 		this._osVersion = info.osVersion;
 		this._netSdks = info.netSdks;
 		this._netRuntimes = info.netRuntimes;
-		this._configPath = info.configPath;
-		this._dataPath = info.dataPath;
-		this._cachePath = info.cachePath;
-		this._tempPath = info.tempPath;
-		this._logsPath = info.logsPath;
+		this._configDir = info.configDir;
+		this._dataDir = info.dataDir;
+		this._cacheDir = info.cacheDir;
+		this._tempDir = info.tempDir;
+		this._logsDir = info.logsDir;
 
 		// Listen to online/offline events
 		window.addEventListener("online", () => (this._isOnline = true));
@@ -111,29 +111,24 @@ export class Info {
 			info(`NET Runtimes: ${netRuntimes.join(", ")}`);
 
 			// Load config path
-			const configPath = await path.appConfigDir();
-			const configPathExists = await exists(configPath);
-			if (!configPathExists) await mkdir(configPath, { recursive: true });
+			const configDirectory = await path.appConfigDir();
+			const configDir = await Directory.create(configDirectory);
 
 			// Load data path
-			const dataPath = await path.appDataDir();
-			const dataPathExists = await exists(dataPath);
-			if (!dataPathExists) await mkdir(dataPath, { recursive: true });
+			const dataDirectory = await path.appDataDir();
+			const dataDir = await Directory.create(dataDirectory);
 
 			// Load cache path
-			const cachePath = await path.appCacheDir();
-			const cachePathExists = await exists(cachePath);
-			if (!cachePathExists) await mkdir(cachePath, { recursive: true });
+			const cacheDirectory = await path.appCacheDir();
+			const cacheDir = await Directory.create(cacheDirectory);
 
 			// Load logs path
-			const logsPath = await path.appLogDir();
-			const logsPathExists = await exists(logsPath);
-			if (!logsPathExists) await mkdir(logsPath, { recursive: true });
+			const logsDirectory = await path.appLogDir();
+			const logsDir = await Directory.create(logsDirectory);
 
 			// Load temp path
-			const tempPath = await path.join(cachePath, "tmp");
-			const tempPathExists = await exists(tempPath);
-			if (!tempPathExists) await mkdir(tempPath, { recursive: true });
+			const tempDirectory = await path.join(cacheDirectory, "tmp");
+			const tempDir = await Directory.create(tempDirectory);
 
 			return new Info({
 				name,
@@ -146,11 +141,11 @@ export class Info {
 				osVersion,
 				netSdks,
 				netRuntimes,
-				configPath,
-				dataPath,
-				cachePath,
-				tempPath,
-				logsPath
+				configDir,
+				dataDir,
+				cacheDir,
+				tempDir,
+				logsDir
 			});
 		} catch (err) {
 			error(`There was an error initializating the info:\n${err}`);
@@ -218,29 +213,29 @@ export class Info {
 	private _netRuntimes: string[];
 
 	/**
-	 * Path for the app config.
+	 * Directory for the app config.
 	 */
-	private _configPath: string;
+	private _configDir: Directory;
 
 	/**
-	 * Path for the app data.
+	 * Directory for the app data.
 	 */
-	private _dataPath: string;
+	private _dataDir: Directory;
 
 	/**
-	 * Path for the app cache.
+	 * Directory for the app cache.
 	 */
-	private _cachePath: string;
+	private _cacheDir: Directory;
 
 	/**
-	 * Path for the app temporals.
+	 * Directory for the app temporals.
 	 */
-	private _tempPath: string;
+	private _tempDir: Directory;
 
 	/**
-	 * Path for the app logs.
+	 * Directory for the app logs.
 	 */
-	private _logsPath: string;
+	private _logsDir: Directory;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
@@ -324,38 +319,38 @@ export class Info {
 	}
 
 	/**
-	 * Path for the app config.
+	 * Directory for the app config.
 	 */
-	public get configPath(): string {
-		return this._configPath;
+	public get configDir(): Directory {
+		return this._configDir;
 	}
 
 	/**
-	 * Path for the app data.
+	 * Directory for the app data.
 	 */
-	public get dataPath(): string {
-		return this._dataPath;
+	public get dataDir(): Directory {
+		return this._dataDir;
 	}
 
 	/**
-	 * Path for the app cache.
+	 * Directory for the app cache.
 	 */
-	public get cachePath(): string {
-		return this._cachePath;
+	public get cacheDir(): Directory {
+		return this._cacheDir;
 	}
 
 	/**
-	 * Path for the app temporals.
+	 * Directory for the app temporals.
 	 */
-	public get tempPath(): string {
-		return this._tempPath;
+	public get tempDir(): Directory {
+		return this._tempDir;
 	}
 
 	/**
-	 * Path for the app logs.
+	 * Directory for the app logs.
 	 */
-	public get logsPaths(): string {
-		return this._logsPath;
+	public get logsDir(): Directory {
+		return this._logsDir;
 	}
 
 	// ********************

@@ -22,10 +22,13 @@
 		"upload:default",
 		"fs:default",
 		"fs:allow-create",
-		"fs:allow-exists",
 		"fs:allow-mkdir",
-		"fs:allow-read-text-file",
-		"fs:allow-write-text-file",
+		"fs:allow-exists",
+		"fs:read-all",
+		"fs:write-all",
+		"fs:allow-rename",
+		"fs:allow-copy-file",
+		"fs:allow-remove",
 		{
 			"identifier": "fs:scope",
 			"allow": [

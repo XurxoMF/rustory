@@ -1,3 +1,5 @@
+import type { File } from "../utils/File.svelte";
+
 /**
  * Installed VS Mod info.
  */
@@ -19,7 +21,7 @@ export class VSMod {
 		name: string;
 		modid: string;
 		version: string;
-		path: string;
+		file: File;
 		description?: string | undefined;
 		side?: string | undefined;
 		authors: string[];
@@ -32,7 +34,7 @@ export class VSMod {
 		this._name = vsMod.name;
 		this._modid = vsMod.modid;
 		this._version = vsMod.version;
-		this._path = vsMod.path;
+		this._file = vsMod.file;
 		this._description = vsMod.description;
 		this._side = vsMod.side;
 		this._authors = vsMod.authors;
@@ -67,9 +69,9 @@ export class VSMod {
 	private _version: string;
 
 	/**
-	 * The path to the VS Mod.
+	 * The file of the VS Mod.
 	 */
-	private _path: string;
+	private _file: File;
 
 	/**
 	 * The description of the VS Mod.
@@ -139,10 +141,10 @@ export class VSMod {
 	}
 
 	/**
-	 * The path to the VS Mod.
+	 * The file of the VS Mod.
 	 */
-	public get path(): string {
-		return this._path;
+	public get file(): File {
+		return this._file;
 	}
 
 	/**

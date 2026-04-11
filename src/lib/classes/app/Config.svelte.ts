@@ -1,11 +1,11 @@
-import { path } from "@tauri-apps/api";
 import { error } from "@tauri-apps/plugin-log";
-import { readTextFile, exists, create, mkdir, writeTextFile } from "@tauri-apps/plugin-fs";
 
 import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { App } from "$lib/classes/App.svelte";
+import { Directory } from "$lib/classes/utils/Directory.svelte";
+import { File } from "$lib/classes/utils/File.svelte";
 
 /**
  * Keys of the available themes.
@@ -96,11 +96,12 @@ export class Config {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	private constructor(config: { theme: ThemeKeys; locale: LocaleKeys; scale: ScaleKeys; vsInstancesPath: string }) {
+	private constructor(config: { file: File; theme: ThemeKeys; locale: LocaleKeys; scale: ScaleKeys; vsInstancesDir: Directory }) {
+		this._file = config.file;
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
 		this._scale = $state(config.scale);
-		this._vsInstancesPath = $state(config.vsInstancesPath);
+		this._vsInstancesDir = config.vsInstancesDir;
 	}
 
 	/**
@@ -108,28 +109,27 @@ export class Config {
 	 */
 	public static async init(): Promise<Config> {
 		try {
-			const configFilePath = await Config.getConfigFilePath();
-			const oldConfigString = await readTextFile(configFilePath);
-			const oldConfigJSON: ConfigJSON = JSON.parse(oldConfigString);
+			const path = await App.info.configDir.join("config.json");
+			const file = await File.create(path);
+			const configJSON = await file.readJSON<ConfigJSON>();
 
 			// Load the locale
-			const locale = oldConfigJSON.locale || baseLocale;
+			const locale = configJSON.locale || baseLocale;
 			Config.applyLocale(locale);
 
 			// Load the theme
-			const theme: ThemeKeys = oldConfigJSON.theme || "dark";
+			const theme: ThemeKeys = configJSON.theme || "dark";
 			Config.applyTheme(theme);
 
 			// Load the scale
-			const scale: ScaleKeys = oldConfigJSON.scale || "100";
+			const scale: ScaleKeys = configJSON.scale || "100";
 			Config.applyScale(scale);
 
 			// Load the Vintage Story Instances path.
-			const defaultVSInstancesPath = await path.join(App.info.dataPath, "VintageStory");
-			const vsInstancesPath = oldConfigJSON.vsInstancesPath || defaultVSInstancesPath;
-			await Config.ensureVSInstancesPath(vsInstancesPath);
+			const defaultVSInstancesPath = await App.info.dataDir.join("VintageStory");
+			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
-			const config = new Config({ theme, locale, scale, vsInstancesPath });
+			const config = new Config({ file, theme, locale, scale, vsInstancesDir });
 
 			await config.save();
 
@@ -143,6 +143,8 @@ export class Config {
 	// *************************
 	// *  INSTANCE PROPERTIES  *
 	// *************************
+
+	private _file: File;
 
 	/**
 	 * Key of the current used theme.
@@ -160,13 +162,20 @@ export class Config {
 	private _scale: ScaleKeys;
 
 	/**
-	 * Path where Instances will be saved.
+	 * Directory where Instances will be saved.
 	 */
-	private _vsInstancesPath: string;
+	private _vsInstancesDir: Directory;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
+
+	/**
+	 * The config file.
+	 */
+	public get file(): File {
+		return this._file;
+	}
 
 	/**
 	 * Key of the selected language.
@@ -190,29 +199,15 @@ export class Config {
 	}
 
 	/**
-	 * Path where VS Instances will be saved.
+	 * Directory where VS Instances will be saved.
 	 */
-	public get vsInstancesPath(): string {
-		return this._vsInstancesPath;
+	public get vsInstancesDir(): Directory {
+		return this._vsInstancesDir;
 	}
 
 	// ********************
 	// *  STATIC METHODS  *
 	// ********************
-
-	/**
-	 * Get's the config file path ensuring it exists first.
-	 * @returns The config file path.
-	 */
-	public static async getConfigFilePath(): Promise<string> {
-		const filePath = await path.join(App.info.configPath, "config.json");
-		const fileExists = await exists(filePath);
-		if (!fileExists) await create(filePath);
-		const fileContents = await readTextFile(filePath);
-		if (!fileContents.startsWith("{")) await writeTextFile(filePath, "{}");
-
-		return filePath;
-	}
 
 	// **********************
 	// *  INSTANCE METHODS	*
@@ -298,7 +293,7 @@ export class Config {
 	 */
 	public async setVSInstancesPath(path: string): Promise<void> {
 		try {
-			this._vsInstancesPath = path;
+			this._vsInstancesDir = await Directory.create(path);
 			await this.save();
 		} catch (err) {
 			error(`There was an error saving the new VS Instances path:\n${err}`);
@@ -307,26 +302,13 @@ export class Config {
 	}
 
 	/**
-	 * Ensures the Vintage Story Instances path exists.
-	 * @param vsInstancesPath The Vinatage Story Instances path.
-	 */
-	private static async ensureVSInstancesPath(vsInstancesPath: string): Promise<void> {
-		try {
-			const pathExists = await exists(vsInstancesPath);
-			if (!pathExists) await mkdir(vsInstancesPath, { recursive: true });
-		} catch (err) {
-			error(`There was an error ensuring the Vintage Story Instances path exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the Vintage Story Instances path exists!");
-		}
-	}
-
-	/**
 	 * Saves the config to the config file.
 	 */
 	private async save(): Promise<void> {
 		try {
-			const config = await this.exportToJSON();
-			await writeTextFile(await Config.getConfigFilePath(), JSON.stringify(config, null, 2));
+			const JSON = await this.exportToJSON();
+
+			this._file.writeJSON(JSON);
 		} catch (err) {
 			error(`There was an error saving the config:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
@@ -341,7 +323,7 @@ export class Config {
 		this._theme = config.theme;
 		this._locale = config.locale;
 		this._scale = config.scale;
-		this._vsInstancesPath = config.vsInstancesPath;
+		this._vsInstancesDir = await Directory.create(config.vsInstancesPath);
 	}
 
 	/**
@@ -353,7 +335,7 @@ export class Config {
 			theme: this._theme,
 			locale: this._locale,
 			scale: this._scale,
-			vsInstancesPath: this._vsInstancesPath
+			vsInstancesPath: this._vsInstancesDir.path
 		};
 	}
 }

@@ -1,3 +1,5 @@
+import { File } from "$lib/classes/utils/File.svelte";
+
 /**
  * VS Instance Backup.
  */
@@ -14,11 +16,11 @@ export class VSInstanceBackup {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsInstanceBackup: { id: string; vsInstanceId: string; date: number; path: string; state?: VSInstanceBackupState | undefined }) {
+	public constructor(vsInstanceBackup: { id: string; vsInstanceId: string; date: number; file: File; state?: VSInstanceBackupState | undefined }) {
 		this._id = vsInstanceBackup.id;
 		this._vsInstanceId = vsInstanceBackup.vsInstanceId;
 		this._date = vsInstanceBackup.date;
-		this._path = vsInstanceBackup.path;
+		this._file = vsInstanceBackup.file;
 		this._state = $state(vsInstanceBackup.state ?? VSInstanceBackupState.READY);
 	}
 
@@ -42,9 +44,9 @@ export class VSInstanceBackup {
 	private _date: number;
 
 	/**
-	 * The path of the VS Instance Backup.
+	 * The file of the VS Instance Backup.
 	 */
-	private _path: string;
+	private _file: File;
 
 	/**
 	 * The state of the VS Instance Backup.
@@ -77,10 +79,10 @@ export class VSInstanceBackup {
 	}
 
 	/**
-	 * The path of the VS Instance Backup.
+	 * The file of the VS Instance Backup.
 	 */
-	public get path(): string {
-		return this._path;
+	public get file(): File {
+		return this._file;
 	}
 
 	/**
