@@ -1,6 +1,6 @@
 import { error } from "@tauri-apps/plugin-log";
 
-import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
+import { baseLocale, isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { App } from "$lib/classes/App.svelte";
@@ -10,25 +10,20 @@ import { File } from "$lib/classes/utils/File.svelte";
 /**
  * Keys of the available themes.
  */
-export type ThemeKeys = (typeof Config.THEMES)[number]["key"];
+export type Themes = "dark" | "light";
 
 /**
  * Keys of the available locales.
  */
-export type LocaleKeys = (typeof Config.LOCALES)[number]["lang"];
-
-/**
- * Keys of the available scales.
- */
-export type ScaleKeys = (typeof Config.SCALES)[number]["scale"];
+export type Locales = Locale;
 
 /**
  * JSON of the config.
  */
 export type ConfigJSON = {
-	theme: ThemeKeys;
-	locale: LocaleKeys;
-	scale: ScaleKeys;
+	theme: Themes;
+	locale: Locales;
+	scale: number;
 	vsInstancesPath: string;
 };
 
@@ -40,63 +35,15 @@ export class Config {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
-	/**
-	 * List of all the available themes.
-	 */
-	private static _THEMES = [
-		{ key: "dark", name: "Dark", color: "bg-stone-900" },
-		{ key: "light", name: "Light", color: "bg-stone-100" }
-	] as const;
-
-	/**
-	 * List of all the available locales with their data.
-	 */
-	private static _LOCALES = [
-		{ lang: "en-EN", name: "English", credits: ["XurxoMF"] },
-		{ lang: "es-ES", name: "Español", credits: ["XurxoMF"] }
-	] as const;
-
-	/**
-	 * List of scales for the UI.
-	 */
-	private static _SCALES = [
-		{ scale: "50", name: "50%" },
-		{ scale: "75", name: "75%" },
-		{ scale: "100", name: "100%" },
-		{ scale: "125", name: "125%" },
-		{ scale: "150", name: "150%" }
-	] as const;
-
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
-
-	/**
-	 * List of all the available themes.
-	 */
-	public static get THEMES(): typeof Config._THEMES {
-		return Config._THEMES;
-	}
-
-	/**
-	 * List of all the available locales.
-	 */
-	public static get LOCALES(): typeof Config._LOCALES {
-		return Config._LOCALES;
-	}
-
-	/**
-	 * List of scales for the UI.
-	 */
-	public static get SCALES(): typeof Config._SCALES {
-		return Config._SCALES;
-	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	private constructor(config: { file: File; theme: ThemeKeys; locale: LocaleKeys; scale: ScaleKeys; vsInstancesDir: Directory }) {
+	private constructor(config: { file: File; theme: Themes; locale: Locales; scale: number; vsInstancesDir: Directory }) {
 		this._file = config.file;
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
@@ -118,11 +65,11 @@ export class Config {
 			Config.applyLocale(locale);
 
 			// Load the theme
-			const theme: ThemeKeys = configJSON.theme || "dark";
+			const theme: Themes = configJSON.theme || "dark";
 			Config.applyTheme(theme);
 
 			// Load the scale
-			const scale: ScaleKeys = configJSON.scale || "100";
+			const scale: number = configJSON.scale || 100;
 			Config.applyScale(scale);
 
 			// Load the Vintage Story Instances path.
@@ -149,17 +96,17 @@ export class Config {
 	/**
 	 * Key of the current used theme.
 	 */
-	private _theme: ThemeKeys;
+	private _theme: Themes;
 
 	/**
 	 * Key of the selected language.
 	 */
-	private _locale: LocaleKeys;
+	private _locale: Locales;
 
 	/**
 	 * Key of the selected scale.
 	 */
-	private _scale: ScaleKeys;
+	private _scale: number;
 
 	/**
 	 * Directory where Instances will be saved.
@@ -180,21 +127,21 @@ export class Config {
 	/**
 	 * Key of the selected language.
 	 */
-	public get locale(): LocaleKeys {
+	public get locale(): Locales {
 		return this._locale;
 	}
 
 	/**
 	 * Key of the selected theme.
 	 */
-	public get theme(): ThemeKeys {
+	public get theme(): Themes {
 		return this._theme;
 	}
 
 	/**
 	 * Key of the selected scale.
 	 */
-	public get scale(): ScaleKeys {
+	public get scale(): number {
 		return this._scale;
 	}
 
@@ -217,7 +164,7 @@ export class Config {
 	 * Set a new locale. Set's english if there provided locale is invalid.
 	 * @param locale - The key of the language to change to.
 	 */
-	public async setLocale(locale: LocaleKeys): Promise<void> {
+	public async setLocale(locale: Locales): Promise<void> {
 		if (!locale) locale = baseLocale;
 
 		if (isLocale(locale)) {
@@ -233,7 +180,7 @@ export class Config {
 	 * Apply a locale.
 	 * @param locale The locale to apply.
 	 */
-	private static applyLocale(locale: LocaleKeys): void {
+	private static applyLocale(locale: Locales): void {
 		setLocale(locale, { reload: false });
 	}
 
@@ -241,7 +188,7 @@ export class Config {
 	 * Set a new theme.
 	 * @param theme - The key of the theme to apply.
 	 */
-	public async setTheme(theme: ThemeKeys): Promise<void> {
+	public async setTheme(theme: Themes): Promise<void> {
 		try {
 			Config.applyTheme(theme);
 			this._theme = theme;
@@ -256,7 +203,7 @@ export class Config {
 	 * Apply a theme.
 	 * @param theme The theme to apply.
 	 */
-	private static applyTheme(theme: ThemeKeys): void {
+	private static applyTheme(theme: Themes): void {
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark");
 		} else {
@@ -268,7 +215,7 @@ export class Config {
 	 * Set a new UI scale.
 	 * @param scale - The key of the scale to apply.
 	 */
-	public async setScale(scale: ScaleKeys): Promise<void> {
+	public async setScale(scale: number): Promise<void> {
 		try {
 			Config.applyScale(scale);
 			this._scale = scale;
@@ -283,8 +230,8 @@ export class Config {
 	 * Apply a scale.
 	 * @param scale The scale.
 	 */
-	private static applyScale(scale: ScaleKeys): void {
-		document.documentElement.setAttribute("data-uiscale", scale);
+	private static applyScale(scale: number): void {
+		document.documentElement.style.fontSize = `${scale}%rem`;
 	}
 
 	/**
