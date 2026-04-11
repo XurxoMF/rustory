@@ -8,21 +8,11 @@ import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
 /**
- * Keys of the available themes.
- */
-export type Themes = "dark" | "light";
-
-/**
- * Keys of the available locales.
- */
-export type Locales = Locale;
-
-/**
  * JSON of the config.
  */
 export type ConfigJSON = {
-	theme: Themes;
-	locale: Locales;
+	theme: (typeof Config.THEMES)[number]["key"];
+	locale: (typeof Config.LOCALES)[number]["key"];
 	scale: number;
 	vsInstancesPath: string;
 };
@@ -35,20 +25,56 @@ export class Config {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	/**
+	 * Available themes.
+	 */
+	private static _THEMES: { key: "dark" | "light"; name: string }[] = [
+		{ key: "dark", name: "Dark" },
+		{ key: "light", name: "Light" }
+	] as const;
+
+	/**
+	 * Available locales.
+	 */
+	private static _LOCALES: { key: Locale; name: string }[] = [
+		{ key: "en-EN", name: "English" },
+		{ key: "es-ES", name: "Spanish" }
+	] as const;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	/**
+	 * Available themes.
+	 */
+	public static get THEMES(): typeof Config._THEMES {
+		return Config._THEMES;
+	}
+
+	/**
+	 * Available locales.
+	 */
+	public static get LOCALES(): typeof Config._LOCALES {
+		return Config._LOCALES;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	private constructor(config: { file: File; theme: Themes; locale: Locales; scale: number; vsInstancesDir: Directory }) {
+	private constructor(config: {
+		file: File;
+		theme: (typeof Config.THEMES)[number]["key"];
+		locale: (typeof Config.LOCALES)[number]["key"];
+		scale: number;
+		vsInstancesDir: Directory;
+	}) {
 		this._file = config.file;
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
 		this._scale = $state(config.scale);
-		this._vsInstancesDir = config.vsInstancesDir;
+		this._vsInstancesDir = $state(config.vsInstancesDir);
 	}
 
 	/**
@@ -61,15 +87,15 @@ export class Config {
 			const configJSON = await file.readJSON<ConfigJSON>();
 
 			// Load the locale
-			const locale = configJSON.locale || baseLocale;
+			const locale: (typeof Config.LOCALES)[number]["key"] = configJSON.locale || baseLocale;
 			Config.applyLocale(locale);
 
 			// Load the theme
-			const theme: Themes = configJSON.theme || "dark";
+			const theme: (typeof Config.THEMES)[number]["key"] = configJSON.theme || "dark";
 			Config.applyTheme(theme);
 
 			// Load the scale
-			const scale: number = configJSON.scale || 100;
+			const scale: number = configJSON.scale || 1;
 			Config.applyScale(scale);
 
 			// Load the Vintage Story Instances path.
@@ -96,12 +122,12 @@ export class Config {
 	/**
 	 * Key of the current used theme.
 	 */
-	private _theme: Themes;
+	private _theme: (typeof Config.THEMES)[number]["key"];
 
 	/**
 	 * Key of the selected language.
 	 */
-	private _locale: Locales;
+	private _locale: (typeof Config.LOCALES)[number]["key"];
 
 	/**
 	 * Key of the selected scale.
@@ -127,14 +153,14 @@ export class Config {
 	/**
 	 * Key of the selected language.
 	 */
-	public get locale(): Locales {
+	public get locale(): (typeof Config.LOCALES)[number]["key"] {
 		return this._locale;
 	}
 
 	/**
 	 * Key of the selected theme.
 	 */
-	public get theme(): Themes {
+	public get theme(): (typeof Config.THEMES)[number]["key"] {
 		return this._theme;
 	}
 
@@ -164,7 +190,7 @@ export class Config {
 	 * Set a new locale. Set's english if there provided locale is invalid.
 	 * @param locale - The key of the language to change to.
 	 */
-	public async setLocale(locale: Locales): Promise<void> {
+	public async setLocale(locale: (typeof Config.LOCALES)[number]["key"]): Promise<void> {
 		if (!locale) locale = baseLocale;
 
 		if (isLocale(locale)) {
@@ -180,7 +206,7 @@ export class Config {
 	 * Apply a locale.
 	 * @param locale The locale to apply.
 	 */
-	private static applyLocale(locale: Locales): void {
+	private static applyLocale(locale: (typeof Config.LOCALES)[number]["key"]): void {
 		setLocale(locale, { reload: false });
 	}
 
@@ -188,7 +214,7 @@ export class Config {
 	 * Set a new theme.
 	 * @param theme - The key of the theme to apply.
 	 */
-	public async setTheme(theme: Themes): Promise<void> {
+	public async setTheme(theme: (typeof Config.THEMES)[number]["key"]): Promise<void> {
 		try {
 			Config.applyTheme(theme);
 			this._theme = theme;
@@ -203,7 +229,7 @@ export class Config {
 	 * Apply a theme.
 	 * @param theme The theme to apply.
 	 */
-	private static applyTheme(theme: Themes): void {
+	private static applyTheme(theme: (typeof Config.THEMES)[number]["key"]): void {
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark");
 		} else {
@@ -231,16 +257,16 @@ export class Config {
 	 * @param scale The scale.
 	 */
 	private static applyScale(scale: number): void {
-		document.documentElement.style.fontSize = `${scale}%rem`;
+		document.documentElement.style.fontSize = `${scale}rem`;
 	}
 
 	/**
-	 * Set a new path for the VS Instances.
-	 * @param scale - The path.
+	 * Set a new directory for the VS Instances.
+	 * @param dir - The directory.
 	 */
-	public async setVSInstancesPath(path: string): Promise<void> {
+	public async setVSInstancesDir(dir: Directory): Promise<void> {
 		try {
-			this._vsInstancesDir = await Directory.create(path);
+			this._vsInstancesDir = dir;
 			await this.save();
 		} catch (err) {
 			error(`There was an error saving the new VS Instances path:\n${err}`);

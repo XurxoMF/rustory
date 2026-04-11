@@ -66,6 +66,9 @@ pub fn run() {
     // Init opener plugin
     builder = builder.plugin(tauri_plugin_opener::init());
 
+    // Init dialog plugin
+    builder = builder.plugin(tauri_plugin_dialog::init());
+
     // Init process plugin
     builder = builder.plugin(tauri_plugin_process::init());
 

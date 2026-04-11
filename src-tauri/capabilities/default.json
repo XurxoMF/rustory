@@ -20,6 +20,7 @@
 		"opener:default",
 		"http:default",
 		"upload:default",
+		"dialog:default",
 		"fs:default",
 		"fs:allow-create",
 		"fs:allow-mkdir",
