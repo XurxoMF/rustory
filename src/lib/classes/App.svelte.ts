@@ -2,7 +2,7 @@ import { exit } from "@tauri-apps/plugin-process";
 import { getCurrentWindow, Window } from "@tauri-apps/api/window";
 import { trace, info, warn, error, debug } from "@tauri-apps/plugin-log";
 
-import { sleep } from "$lib/utils";
+import { sleep, padSides } from "$lib/utils";
 
 import { RustoryError, RustoryErrorCodes } from "./RustoryError.svelte";
 import { Loader } from "$lib/classes/utils/Loader.svelte";
@@ -210,34 +210,40 @@ export class App {
 			// If the App is already initialized, do nothing.
 			if (App.isInitialized) return;
 
+			// Forward webview console logs to the logger.
 			App.forwardConsole("log", trace);
 			App.forwardConsole("debug", debug);
 			App.forwardConsole("info", info);
 			App.forwardConsole("warn", warn);
 			App.forwardConsole("error", error);
 
+			// Save the app window.
 			App._window = getCurrentWindow();
 
+			// Initialize the required modules.
 			App._info = await Info.init();
 			App._config = await Config.init();
+			App._tray = await Tray.init();
+
+			// Show the window and wait a few ms for it to show up.
+			await App.window.show();
+
+			// Initialize the heavy loading modules.
 			App._command = await Command.init();
 			App._hotkeys = await Hotkeys.init();
 			App._breadcrumbs = await Breadcrumbs.init();
 			App._reloader = await Reloader.init();
 			App._request = await Request.init();
 			App._confirm = await Confirm.init();
-			App._tray = await Tray.init();
-
-			// Show the window and wait a few ms for it to show up.
-			await App.window.show();
-
-			await sleep(500);
-
 			App._data = await Data.init();
 
-			// Start preloading the UI behind the loader and wait a few ms for it to load.
+			// Log the welcome message.
+			await App.logWelcome();
+
+			// Start preloading the UI behind the loader.
 			App.loader.loadApp = true;
 
+			// Wait a few miliseconds for the UI to finish loading.
 			await sleep(500);
 
 			// Hide the loader.
@@ -271,6 +277,32 @@ export class App {
 			original(message);
 			logger(message);
 		};
+	}
+
+	/**
+	 * Logs a welcome message with some useful info.
+	 */
+	private static async logWelcome() {
+		const WIDTH = 110;
+		const SEPARATOR = `+${"-".repeat(WIDTH + 2)}+`;
+		const VERSION: string = `Version: v${App.info.version}`;
+
+		const osInfo: string = `OS Type: ${App.info.osType} · OS Version: ${App.info.osVersion} · OS Arch: ${App.info.osArch}`;
+		const netSdksInfo: string = `.NET SDKs: ${App.info.netSdks.join(", ")}`;
+		const netRuntimes: string = `.NET Runtimes: ${App.info.netRuntimes.join(", ")}`;
+
+		info(SEPARATOR);
+		info(`| ${padSides("    ____  __  _________________  ______  __", WIDTH)} |`);
+		info(`| ${padSides("   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️", WIDTH)} |`);
+		info(`| ${padSides("  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF", WIDTH)} |`);
+		info(`| ${padSides(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${VERSION}`, WIDTH)} |`);
+		info(`| ${padSides("/_/ |_|\\____//____//_/  \\____/_/ |_| /_/", WIDTH)} |`);
+		info(SEPARATOR);
+		info(`| ${padSides(osInfo, WIDTH)} |`);
+		info(SEPARATOR);
+		info(`| ${padSides(netSdksInfo, WIDTH)} |`);
+		info(`| ${padSides(netRuntimes, WIDTH)} |`);
+		info(SEPARATOR);
 	}
 
 	// **********************

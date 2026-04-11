@@ -1,4 +1,4 @@
-import { error, info } from "@tauri-apps/plugin-log";
+import { error } from "@tauri-apps/plugin-log";
 import {
 	arch as getOsArch,
 	family as getOsFamily,
@@ -98,7 +98,6 @@ export class Info {
 				.split("\n")
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
-			info(`NET SDKs: ${netSdks.join(", ")}`);
 
 			// Load .NET Runtimes info
 			const netRuntimesCommand = await Command.create("check-dotnet", ["--list-runtimes"]).execute();
@@ -108,7 +107,6 @@ export class Info {
 				.filter((line) => line.startsWith("Microsoft.NETCore.App"))
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
-			info(`NET Runtimes: ${netRuntimes.join(", ")}`);
 
 			// Load config path
 			const configDirectory = await path.appConfigDir();

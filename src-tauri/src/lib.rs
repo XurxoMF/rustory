@@ -1,5 +1,6 @@
 use chrono::Local;
 use tauri::Manager;
+use tauri_plugin_log::log::Level;
 use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -26,10 +27,18 @@ pub fn run() {
         tauri_plugin_log::Builder::new()
             .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
             .format(|out, message, record| {
+                let level_icon = match record.level() {
+                    Level::Error => "🔴 ERROR",
+                    Level::Warn => "🟡 WARN",
+                    Level::Info => "🟢 INFO",
+                    Level::Debug => "🔵 DEBUG",
+                    Level::Trace => "⚪ TRACE",
+                };
+
                 out.finish(format_args!(
                     "[{}][{}] {}",
                     Local::now().format("%Y-%m-%d %H:%M:%S%.6f"),
-                    record.level(),
+                    level_icon,
                     message
                 ));
             })
