@@ -1,5 +1,5 @@
 import Root from "./confirm.svelte";
-import { ConfirmStore as Store } from "./ConfirmStore.svelte";
+import { Store } from "./Store.svelte";
 
 export {
 	Root,

@@ -15,6 +15,8 @@ import { Request } from "$lib/classes/app/Request.svelte";
 import { Data } from "$lib/classes/app/Data.svelte";
 import { Tray } from "$lib/classes/app/Tray.svelte";
 
+import { CommandStore } from "$lib/components/command";
+
 /**
  * App manager. Used to initialize and store the different parts of the app.
  */
@@ -200,6 +202,8 @@ export class App {
 			await sleep(500);
 
 			App._data = await Data.init();
+
+			await CommandStore.instance.loadCommands();
 
 			// Start preloading the UI behind the loader and wait a few ms for it to load.
 			App.loader.loadApp = true;

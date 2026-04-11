@@ -11,25 +11,47 @@ export type ConfirmQuestion = {
 /**
  * Store for the confirm requests.
  */
-export class ConfirmStore {
-	/**
-	 * Singleton instance of the ConfirmStore.
-	 */
-	private static _instance: ConfirmStore = new ConfirmStore();
+export class Store {
+	// ***********************
+	// *  STATIC PROPERTIES  *
+	// ***********************
 
 	/**
-	 * Get the instance of the ConfirmStore.
+	 * Singleton instance of the Store.
 	 */
-	public static get instance(): ConfirmStore {
-		return ConfirmStore._instance;
+	private static _instance: Store = new Store();
+
+	// *******************************
+	// *  STATIC GETTERS & SETTERS	 *
+	// *******************************
+
+	/**
+	 * Get the instance of the Store.
+	 */
+	public static get instance(): Store {
+		return Store._instance;
 	}
+
+	// ************************
+	// *  CONSTRUCTOR & INIT  *
+	// ************************
+
+	private constructor() {
+		this._queue = $state([]);
+	}
+
+	// *************************
+	// *  INSTANCE PROPERTIES  *
+	// *************************
 
 	/**
 	 * Queue to process.
 	 */
-	private _queue: ConfirmQuestion[] = $state([]);
+	private _queue: ConfirmQuestion[];
 
-	private constructor() {}
+	// *********************************
+	// *  INSTANCE GETTERS & SETTERS	 *
+	// *********************************
 
 	/**
 	 * Queue to process.
@@ -44,6 +66,14 @@ export class ConfirmStore {
 	public set queue(queue: ConfirmQuestion[]) {
 		this._queue = queue;
 	}
+
+	// ********************
+	// *  STATIC METHODS  *
+	// ********************
+
+	// **********************
+	// *  INSTANCE METHODS	*
+	// **********************
 
 	public ask(question: Omit<ConfirmQuestion, "resolve">): Promise<boolean> {
 		console.log(question);

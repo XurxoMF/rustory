@@ -26,6 +26,7 @@
 	import * as Toaster from "$lib/components/ui/sonner";
 	import * as ScrollArea from "$lib/components/ui/scroll-area";
 	import * as Confirm from "$lib/components/confirm";
+	import * as Command from "$lib/components/command";
 
 	import AppSidebar from "./app-sidebar.svelte";
 
@@ -49,6 +50,8 @@
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
 {#if App.loader.loadApp}
+	<Command.Root />
+
 	<Confirm.Root />
 
 	<Toaster.Root />
