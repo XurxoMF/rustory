@@ -30,9 +30,7 @@ export class Request {
 	 */
 	public static async init(): Promise<Request> {
 		try {
-			const request = new Request();
-
-			return request;
+			return new Request();
 		} catch (err) {
 			error(`There was an error initializating the request:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");

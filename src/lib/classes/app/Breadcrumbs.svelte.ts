@@ -40,9 +40,7 @@ export class Breadcrumbs {
 	 */
 	public static async init(): Promise<Breadcrumbs> {
 		try {
-			const breadcrumbs = new Breadcrumbs();
-
-			return breadcrumbs;
+			return new Breadcrumbs();
 		} catch (err) {
 			error(`There was an error initializating the breadcrumbs:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");

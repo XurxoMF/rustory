@@ -30,9 +30,7 @@ export class Reloader {
 	 */
 	public static async init(): Promise<Reloader> {
 		try {
-			const reloader = new Reloader();
-
-			return reloader;
+			return new Reloader();
 		} catch (err) {
 			error(`There was an error initializating the reloader:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");

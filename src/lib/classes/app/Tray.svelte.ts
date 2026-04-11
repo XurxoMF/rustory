@@ -57,9 +57,7 @@ export class Tray {
 
 			const icon = await TrayIcon.new(options);
 
-			const tray = new Tray({ menu, options, icon });
-
-			return tray;
+			return new Tray({ menu, options, icon });
 		} catch (err) {
 			error(`There was an error initializating the tray:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");

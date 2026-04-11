@@ -32,13 +32,16 @@ export class File {
 	 * @returns The File instance.
 	 */
 	public static async create(path: string): Promise<File> {
-		const directoryPath = await dirname(path);
+		try {
+			const directoryPath = await dirname(path);
 
-		const directory = await Directory.create(directoryPath);
+			const directory = await Directory.create(directoryPath);
 
-		const file = new File({ path, directory });
-
-		return file;
+			return new File({ path, directory });
+		} catch (err) {
+			error(`There was an error creating the file:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
+		}
 	}
 
 	// *************************

@@ -31,19 +31,24 @@ export class Directory {
 	 * @returns The Directory instance.
 	 */
 	public static async create(path: string): Promise<Directory> {
-		const parentPath = await dirname(path);
+		try {
+			let parentPath: string;
 
-		if (parentPath === path) {
-			const directory = new Directory({ path, parent: null });
+			try {
+				parentPath = await dirname(path);
+			} catch (err) {
+				if (err === "path does not have a parent") return new Directory({ path, parent: null });
 
-			return directory;
+				throw err;
+			}
+
+			const parent = await Directory.create(parentPath);
+
+			return new Directory({ path, parent });
+		} catch (err) {
+			error(`There was an error creating the directory:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
 		}
-
-		const parent = await Directory.create(parentPath);
-
-		const directory = new Directory({ path, parent });
-
-		return directory;
 	}
 
 	// *************************

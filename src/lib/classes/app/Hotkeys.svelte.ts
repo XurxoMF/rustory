@@ -40,11 +40,9 @@ export class Hotkeys {
 			});
 			hks.push(hkOpenCommand);
 
-			const hotkeys = new Hotkeys({
+			return new Hotkeys({
 				hotkeys: hks
 			});
-
-			return hotkeys;
 		} catch (err) {
 			error(`There was an error initializating the hotkeys:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");

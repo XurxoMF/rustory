@@ -32,11 +32,9 @@ export class Data {
 			// TODO: Load vsInstances from the config
 			const vsInstances: VSInstance[] = [];
 
-			const data = new Data({
+			return new Data({
 				vsInstances
 			});
-
-			return data;
 		} catch (err) {
 			error(`There was an error initializating the data:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
