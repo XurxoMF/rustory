@@ -8,14 +8,14 @@ import { RustoryError, RustoryErrorCodes } from "./RustoryError.svelte";
 import { Loader } from "$lib/classes/utils/Loader.svelte";
 import { Info } from "$lib/classes/app/Info.svelte";
 import { Config } from "$lib/classes/app/Config.svelte";
+import { Command } from "$lib/classes/app/Command.svelte";
 import { Hotkeys } from "$lib/classes/app/Hotkeys.svelte";
 import { Breadcrumbs } from "$lib/classes/app/Breadcrumbs.svelte";
 import { Reloader } from "$lib/classes/app/Reloader.svelte";
 import { Request } from "$lib/classes/app/Request.svelte";
+import { Confirm } from "$lib/classes/app/Confirm.svelte";
 import { Data } from "$lib/classes/app/Data.svelte";
 import { Tray } from "$lib/classes/app/Tray.svelte";
-
-import { CommandStore } from "$lib/components/command";
 
 /**
  * App manager. Used to initialize and store the different parts of the app.
@@ -51,6 +51,11 @@ export class App {
 	private static _config: Config | null = null;
 
 	/**
+	 * App commands.
+	 */
+	private static _command: Command | null = null;
+
+	/**
 	 * App hotkeys.
 	 */
 	private static _hotkeys: Hotkeys | null = null;
@@ -69,6 +74,11 @@ export class App {
 	 * App request.
 	 */
 	private static _request: Request | null = null;
+
+	/**
+	 * App confirm.
+	 */
+	private static _confirm: Confirm | null = null;
 
 	/**
 	 * App tray.
@@ -123,6 +133,14 @@ export class App {
 	}
 
 	/**
+	 * App commands.
+	 */
+	public static get command(): Command {
+		if (App._command === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Command not initialized!");
+		return App._command;
+	}
+
+	/**
 	 * App hotkeys.
 	 */
 	public static get hotkeys(): Hotkeys {
@@ -152,6 +170,14 @@ export class App {
 	public static get request(): Request {
 		if (App._request === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Request not initialized!");
 		return App._request;
+	}
+
+	/**
+	 * App confirm.
+	 */
+	public static get confirm(): Confirm {
+		if (App._confirm === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Confirm not initialized!");
+		return App._confirm;
 	}
 
 	/**
@@ -190,10 +216,12 @@ export class App {
 
 			App._info = await Info.init();
 			App._config = await Config.init();
+			App._command = await Command.init();
 			App._hotkeys = await Hotkeys.init();
 			App._breadcrumbs = await Breadcrumbs.init();
 			App._reloader = await Reloader.init();
 			App._request = await Request.init();
+			App._confirm = await Confirm.init();
 			App._tray = await Tray.init();
 
 			// Show the window and wait a few ms for it to show up.
@@ -202,8 +230,6 @@ export class App {
 			await sleep(500);
 
 			App._data = await Data.init();
-
-			await CommandStore.instance.loadCommands();
 
 			// Start preloading the UI behind the loader and wait a few ms for it to load.
 			App.loader.loadApp = true;

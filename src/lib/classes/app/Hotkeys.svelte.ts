@@ -1,8 +1,7 @@
 import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
-
-import { CommandStore } from "$lib/components/command";
+import { App } from "$lib/classes/App.svelte";
 
 /**
  * Hotkeys of the app.
@@ -38,7 +37,7 @@ export class Hotkeys {
 				id: "hkOpenCommand",
 				keys: ["ctrl", "k"],
 				action: () => {
-					CommandStore.instance.open = true;
+					App.command.open = true;
 				}
 			});
 

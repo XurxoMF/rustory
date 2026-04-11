@@ -11,26 +11,14 @@ export type ConfirmQuestion = {
 /**
  * Store for the confirm requests.
  */
-export class Store {
+export class Confirm {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
-	/**
-	 * Singleton instance of the Store.
-	 */
-	private static _instance: Store = new Store();
-
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
-
-	/**
-	 * Get the instance of the Store.
-	 */
-	public static get instance(): Store {
-		return Store._instance;
-	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -38,6 +26,10 @@ export class Store {
 
 	private constructor() {
 		this._queue = $state([]);
+	}
+
+	public static async init(): Promise<Confirm> {
+		return new Confirm();
 	}
 
 	// *************************
