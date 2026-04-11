@@ -6,6 +6,7 @@
 
 	import { App } from "$lib/classes/App.svelte";
 	import { Config } from "$lib/classes/app/Config.svelte";
+	import { Directory } from "$lib/classes/utils/Directory.svelte";
 
 	import * as Sheet from "$lib/components/ui/sheet";
 	import { buttonVariants } from "$lib/components/ui/button";
@@ -14,7 +15,6 @@
 	import { Input } from "$lib/components/ui/input";
 	import { Button } from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
-	import { Directory } from "$lib/classes/utils/Directory.svelte";
 </script>
 
 <Sheet.Root>
@@ -32,13 +32,19 @@
 				<Field.Field>
 					<Field.Label for="theme">Theme</Field.Label>
 
-					<Select.Root type="single" onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}>
+					<Select.Root
+						type="single"
+						value={App.config.theme}
+						onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}
+					>
 						<Select.Trigger id="theme">Theme</Select.Trigger>
 
 						<Select.Content>
-							{#each Config.THEMES as { key, name } (key)}
-								<Select.Item value={key}>{name}</Select.Item>
-							{/each}
+							<Select.Group>
+								{#each Config.THEMES as { key, name } (key)}
+									<Select.Item value={key}>{name}</Select.Item>
+								{/each}
+							</Select.Group>
 						</Select.Content>
 					</Select.Root>
 
@@ -49,13 +55,19 @@
 				<Field.Field>
 					<Field.Label for="locale">Locale</Field.Label>
 
-					<Select.Root type="single" onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}>
+					<Select.Root
+						type="single"
+						value={App.config.locale}
+						onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
+					>
 						<Select.Trigger id="locale">Locale</Select.Trigger>
 
 						<Select.Content>
-							{#each Config.LOCALES as { key, name } (key)}
-								<Select.Item value={key}>{name}</Select.Item>
-							{/each}
+							<Select.Group>
+								{#each Config.LOCALES as { key, name } (key)}
+									<Select.Item value={key}>{name}</Select.Item>
+								{/each}
+							</Select.Group>
 						</Select.Content>
 					</Select.Root>
 
