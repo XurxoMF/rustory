@@ -11,7 +11,6 @@
 	import { buttonVariants } from "$lib/components/ui/button";
 
 	import * as Sheet from "$lib/components/ui/sheet";
-	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Select from "$lib/components/ui/select";
 	import { Slider } from "$lib/components/ui/slider";
 	import { Input } from "$lib/components/ui/input";
@@ -20,15 +19,7 @@
 </script>
 
 <Sheet.Root>
-	<Tooltip.Root delayDuration={500}>
-		<Tooltip.Trigger>
-			<Sheet.Trigger class={buttonVariants({ variant: "ghost", size: "icon-sm" })}><IconSettings /></Sheet.Trigger>
-		</Tooltip.Trigger>
-
-		<Tooltip.Content>
-			<p>Settings</p>
-		</Tooltip.Content>
-	</Tooltip.Root>
+	<Sheet.Trigger class={buttonVariants({ variant: "ghost", size: "icon-sm" })}><IconSettings /></Sheet.Trigger>
 
 	<Sheet.Content side="right">
 		<Sheet.Header>

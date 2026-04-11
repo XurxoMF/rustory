@@ -16,8 +16,6 @@
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 	import { Button } from "$lib/components/ui/button";
 	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Tooltip from "$lib/components/ui/tooltip";
-	import * as Kbd from "$lib/components/ui/kbd";
 
 	import ConfigSheet from "./config-sheet.svelte";
 </script>
@@ -50,96 +48,41 @@
 
 	<div class="flex flex-1 flex-row items-center justify-end gap-2">
 		<div class="flex flex-row items-center">
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button onclick={() => (App.command.open = true)} variant="ghost" size="icon-sm">
-						<IconSearch />
-						<span class="sr-only">Search</span>
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content>
-					<p>
-						Search anything
-						<Kbd.Group>
-							<Kbd.Root>Ctrl</Kbd.Root>
-							<span>+</span>
-							<Kbd.Root>K</Kbd.Root>
-						</Kbd.Group>
-					</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
+			<Button onclick={() => (App.command.open = true)} variant="ghost" size="icon-sm">
+				<IconSearch />
+				<span class="sr-only">Search</span>
+			</Button>
 
 			<ConfigSheet />
 
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
-						<IconWorld />
-						<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content>
-					<p>{App.info.isOnline ? "Online" : "Offline"}</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
+			<Button variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
+				<IconWorld />
+				<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>
+			</Button>
 		</div>
 
 		<Separator orientation="vertical" class="data-[orientation=vertical]:h-4" />
 
 		<div class="flex flex-row items-center">
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
-						<IconChevronDown />
-						<span class="sr-only">Minimize app</span>
-					</Button>
-				</Tooltip.Trigger>
+			<Button onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
+				<IconChevronDown />
+				<span class="sr-only">Minimize app</span>
+			</Button>
 
-				<Tooltip.Content>
-					<p>Hide the app to the tray</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
+			<Button onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
+				<IconMinus />
+				<span class="sr-only">Minimize app</span>
+			</Button>
 
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
-						<IconMinus />
-						<span class="sr-only">Minimize app</span>
-					</Button>
-				</Tooltip.Trigger>
+			<Button onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
+				<IconMaximize />
+				<span class="sr-only">Maximize or window app</span>
+			</Button>
 
-				<Tooltip.Content>
-					<p>Minimize the app</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
-
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
-						<IconMaximize />
-						<span class="sr-only">Maximize or window app</span>
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content>
-					<p>Maximize the app</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
-
-			<Tooltip.Root delayDuration={500}>
-				<Tooltip.Trigger>
-					<Button onclick={() => App.window.close()} variant="ghost" size="icon-sm">
-						<IconX />
-						<span class="sr-only">Close app</span>
-					</Button>
-				</Tooltip.Trigger>
-
-				<Tooltip.Content>
-					<p>Close the app</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
+			<Button onclick={() => App.window.close()} variant="ghost" size="icon-sm">
+				<IconX />
+				<span class="sr-only">Close app</span>
+			</Button>
 		</div>
 	</div>
 </header>
