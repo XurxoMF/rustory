@@ -3,7 +3,6 @@
 
 	import { cn } from "$lib/utils";
 
-	import IconSearch from "@tabler/icons-svelte/icons/search";
 	import IconWorld from "@tabler/icons-svelte/icons/world";
 	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
 	import IconMinus from "@tabler/icons-svelte/icons/minus";
@@ -16,8 +15,6 @@
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 	import { Button } from "$lib/components/ui/button";
 	import * as Sidebar from "$lib/components/ui/sidebar";
-
-	import ConfigSheet from "./config-sheet.svelte";
 </script>
 
 <header
@@ -48,13 +45,6 @@
 
 	<div class="flex flex-1 flex-row items-center justify-end gap-2">
 		<div class="flex flex-row items-center">
-			<Button onclick={() => (App.command.open = true)} variant="ghost" size="icon-sm">
-				<IconSearch />
-				<span class="sr-only">Search</span>
-			</Button>
-
-			<ConfigSheet />
-
 			<Button variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
 				<IconWorld />
 				<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>

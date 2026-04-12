@@ -36,6 +36,7 @@ export class Info {
 
 	private constructor(info: {
 		name: string;
+		capitalizedName: string;
 		version: string;
 		icon: Image | undefined;
 		osArch: OsArch;
@@ -52,6 +53,7 @@ export class Info {
 		logsDir: Directory;
 	}) {
 		this._name = info.name;
+		this._capitalizedName = info.capitalizedName;
 		this._version = info.version;
 		this._icon = info.icon;
 		this._isOnline = $state(navigator.onLine);
@@ -81,6 +83,7 @@ export class Info {
 		try {
 			// Load basic info.
 			const name = await app.getName();
+			const capitalizedName = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
 			const version = await app.getVersion();
 			const icon = await defaultWindowIcon();
 
@@ -130,6 +133,7 @@ export class Info {
 
 			return new Info({
 				name,
+				capitalizedName,
 				version,
 				icon: icon ?? undefined,
 				osArch,
@@ -159,6 +163,11 @@ export class Info {
 	 * Name of the app.
 	 */
 	private _name: string;
+
+	/**
+	 * Capitalized name of the app.
+	 */
+	private _capitalizedName: string;
 
 	/**
 	 * Current version of the app.
@@ -244,6 +253,13 @@ export class Info {
 	 */
 	public get name(): string {
 		return this._name;
+	}
+
+	/**
+	 * Capitalized name of the app.
+	 */
+	public get capitalizedName(): string {
+		return this._capitalizedName;
 	}
 
 	/**

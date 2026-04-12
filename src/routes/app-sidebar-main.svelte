@@ -1,54 +1,36 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import IconChevronRight from "@tabler/icons-svelte/icons/chevron-right";
 	import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
+	import IconPlus from "@tabler/icons-svelte/icons/plus";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
-	import * as Collapsible from "$lib/components/ui/collapsible";
 </script>
 
 <Sidebar.Group>
-	<Sidebar.GroupLabel>Vintage Story</Sidebar.GroupLabel>
+	<Sidebar.GroupLabel>VS Instances</Sidebar.GroupLabel>
 
 	<Sidebar.Menu>
-		<Collapsible.Root open={true}>
-			{#snippet child({ props })}
-				<Sidebar.MenuItem {...props}>
-					<Sidebar.MenuButton tooltipContent="Instances">
-						{#snippet child({ props })}
-							<a href={resolve("/")} {...props}>
-								<IconDeviceGamepad />
-								<span>Instances</span>
-							</a>
-						{/snippet}
-					</Sidebar.MenuButton>
+		<Sidebar.MenuItem>
+			<Sidebar.MenuButton>
+				{#snippet child({ props })}
+					<a href={resolve("/vs-instances")} {...props}>
+						<IconDeviceGamepad />
+						<span>Manage</span>
+					</a>
+				{/snippet}
+			</Sidebar.MenuButton>
+		</Sidebar.MenuItem>
 
-					<Collapsible.Trigger>
-						{#snippet child({ props })}
-							<Sidebar.MenuAction {...props} class="data-[state=open]:rotate-90">
-								<IconChevronRight />
-								<span class="sr-only">Toggle</span>
-							</Sidebar.MenuAction>
-						{/snippet}
-					</Collapsible.Trigger>
-
-					<Collapsible.Content>
-						<Sidebar.MenuSub>
-							<Sidebar.MenuSubItem>
-								<Sidebar.MenuSubButton href={resolve("/")}>
-									<span>Instance 1</span>
-								</Sidebar.MenuSubButton>
-							</Sidebar.MenuSubItem>
-							<Sidebar.MenuSubItem>
-								<Sidebar.MenuSubButton href={resolve("/")}>
-									<span>Instance 2</span>
-								</Sidebar.MenuSubButton>
-							</Sidebar.MenuSubItem>
-						</Sidebar.MenuSub>
-					</Collapsible.Content>
-				</Sidebar.MenuItem>
-			{/snippet}
-		</Collapsible.Root>
+		<Sidebar.MenuItem>
+			<Sidebar.MenuButton>
+				{#snippet child({ props })}
+					<a href={resolve("/vs-instances/create")} {...props}>
+						<IconPlus />
+						<span>Create</span>
+					</a>
+				{/snippet}
+			</Sidebar.MenuButton>
+		</Sidebar.MenuItem>
 	</Sidebar.Menu>
 </Sidebar.Group>

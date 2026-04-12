@@ -18,7 +18,10 @@
 		"os:default",
 		"shell:default",
 		"opener:default",
-		"http:default",
+		{
+			"identifier": "http:default",
+			"allow": [{ "url": "https://api.rustory.xyz" }]
+		},
 		"upload:default",
 		"dialog:default",
 		"fs:default",

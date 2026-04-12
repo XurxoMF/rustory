@@ -3,6 +3,19 @@ import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
 import type { Directory } from "$lib/classes/utils/Directory.svelte";
 
 /**
+ * State of the VS Instance.
+ */
+export enum VSInstanceState {
+	STOPPED = "stopped",
+	PLAYING_CLIENT = "playing_client",
+	PLAYING_SERVER = "playing_server",
+	BACKUPING = "backuping",
+	INSTALLING_VERSION = "installing_version",
+	DELETING = "deleting",
+	ERROR = "error"
+}
+
+/**
  * VS Instance.
  */
 export class VSInstance {
@@ -25,7 +38,6 @@ export class VSInstance {
 		version: string;
 		mods: VSMod[];
 		backups: VSInstanceBackup[];
-		icon: boolean;
 		startParams: string;
 		backupsLimit: number;
 		backupsAuto: boolean;
@@ -42,7 +54,6 @@ export class VSInstance {
 		this._version = $state(vsInstance.version);
 		this._mods = $state(vsInstance.mods);
 		this._backups = $state(vsInstance.backups);
-		this._icon = $state(vsInstance.icon);
 		this._startParams = $state(vsInstance.startParams);
 		this._backupsLimit = $state(vsInstance.backupsLimit);
 		this._backupsAuto = $state(vsInstance.backupsAuto);
@@ -87,11 +98,6 @@ export class VSInstance {
 	 * The backups of the VS Instance.
 	 */
 	private _backups: VSInstanceBackup[];
-
-	/**
-	 * If the VS Instance has an icon or not.
-	 */
-	private _icon: boolean;
 
 	/**
 	 * The start parameters of the VS Instance.
@@ -210,20 +216,6 @@ export class VSInstance {
 	 */
 	public set backups(backups: VSInstanceBackup[]) {
 		this._backups = backups;
-	}
-
-	/**
-	 * If the VS Instance has an icon or not.
-	 */
-	public get icon(): boolean {
-		return this._icon;
-	}
-
-	/**
-	 * If the VS Instance has an icon or not.
-	 */
-	public set icon(icon: boolean) {
-		this._icon = icon;
 	}
 
 	/**
@@ -359,17 +351,4 @@ export class VSInstance {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
-}
-
-/**
- * State of the VS Instance.
- */
-export enum VSInstanceState {
-	STOPPED = "stopped",
-	PLAYING_CLIENT = "playing_client",
-	PLAYING_SERVER = "playing_server",
-	BACKUPING = "backuping",
-	INSTALLING_VERSION = "installing_version",
-	DELETING = "deleting",
-	ERROR = "error"
 }

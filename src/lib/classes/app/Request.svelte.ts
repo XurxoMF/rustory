@@ -70,7 +70,7 @@ export class Request {
 
 			if (cachedData) {
 				// If the data is less than 30 minutes old, return it
-				if (Date.now() - cachedData.timestamp < 1000 * 60 * 30) return cachedData.response;
+				if (Date.now() - cachedData.timestamp < 1000 * 60 * 30) return cachedData.response.clone();
 				// If it's more than 30 minutes old, remove it from the cache
 				this._cache.delete(url);
 			}
@@ -78,7 +78,7 @@ export class Request {
 
 		try {
 			const response = await fetch(url);
-			if (cache) this._cache.set(url, { timestamp: Date.now(), response });
+			if (cache) this._cache.set(url, { timestamp: Date.now(), response: response.clone() });
 			return response;
 		} catch (err) {
 			error(`There was an error making the request to ${url}:\n${err}`);

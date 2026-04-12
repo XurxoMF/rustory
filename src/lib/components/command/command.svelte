@@ -4,7 +4,7 @@
 	import * as Command from "$lib/components/ui/command";
 </script>
 
-<Command.Dialog open={App.command.open} class="rounded-lg border shadow-md md:min-w-120">
+<Command.Dialog bind:open={App.command.open} class="rounded-lg border shadow-md md:min-w-120">
 	<Command.Input placeholder="Type a command or search..." />
 
 	<Command.List>
