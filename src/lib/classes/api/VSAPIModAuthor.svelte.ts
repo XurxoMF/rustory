@@ -1,4 +1,12 @@
 /**
+ * JSON of the Mod Author queried from the ModDB.
+ */
+export type VSAPIModAuthorJSON = {
+	userid: string;
+	name: string;
+};
+
+/**
  * Mod Author info queried from the ModDB.
  */
 export class VSAPIModAuthor {

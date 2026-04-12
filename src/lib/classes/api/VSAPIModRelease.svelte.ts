@@ -1,4 +1,20 @@
 /**
+ * JSON of the Mod Release queried from the ModDB.
+ */
+export type VSAPIModReleaseJSON = {
+	releaseid: number;
+	mainfile: string;
+	filename: string;
+	fileid: number;
+	downloads: number;
+	tags: string[];
+	modidstr: string;
+	modversion: string;
+	created: string;
+	changelog: string;
+};
+
+/**
  * Mod Release queried from ModDB.
  */
 export class VSAPIModRelease {

@@ -1,5 +1,35 @@
-import { VSAPIModRelease } from "$lib/classes/api/VSAPIModRelease.svelte";
-import { VSAPIModScreenshot } from "$lib/classes/api/VSAPIModScreenshot.svelte";
+import { VSAPIModRelease, type VSAPIModReleaseJSON } from "$lib/classes/api/VSAPIModRelease.svelte";
+import { VSAPIModScreenshot, type VSAPIModScreenshotJSON } from "$lib/classes/api/VSAPIModScreenshot.svelte";
+
+/**
+ * JSON of the Mod queried from the ModDB.
+ */
+export type VSAPIModJSON = {
+	modid: number;
+	assetid: number;
+	name: string;
+	text: string;
+	author: string;
+	urlalias?: string | undefined;
+	logofilename?: string | undefined;
+	logofile?: string | undefined;
+	homepageurl?: string | undefined;
+	sourcecodeurl?: string | undefined;
+	trailervideourl?: string | undefined;
+	issuetrackerurl?: string | undefined;
+	wikiurl?: string | undefined;
+	downloads: number;
+	follows: number;
+	trendingpoints: number;
+	comments: number;
+	side: string;
+	type: string;
+	createdat: string;
+	lastmodified: string;
+	tags: string[];
+	releases: VSAPIModReleaseJSON[];
+	screenshots: VSAPIModScreenshotJSON[];
+};
 
 /**
  * Mod info queried from the ModDB.

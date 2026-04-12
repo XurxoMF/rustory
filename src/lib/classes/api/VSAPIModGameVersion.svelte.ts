@@ -1,4 +1,13 @@
 /**
+ * JSON of the Mod Game Version queried from the ModDB.
+ */
+export type VSAPIModGameVersionJSON = {
+	tagid: string;
+	name: string;
+	color: string;
+};
+
+/**
  * Mod Game Version queried from the ModDB.
  */
 export class VSAPIModGameVersion {

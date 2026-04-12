@@ -1,4 +1,15 @@
 /**
+ * JSON of the Mod Screenshot queried from the ModDB.
+ */
+export type VSAPIModScreenshotJSON = {
+	fileid: number;
+	mainfile: string;
+	filename: string;
+	thumbnailfile: string;
+	createdat: string;
+};
+
+/**
  * Mod Screenshot queried from the ModDB.
  */
 export class VSAPIModScreenshot {

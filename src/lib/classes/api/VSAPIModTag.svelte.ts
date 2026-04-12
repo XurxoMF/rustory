@@ -1,4 +1,13 @@
 /**
+ * JSON of the Mod Tag queried from the ModDB.
+ */
+export type VSAPIModTagJSON = {
+	tagid: number;
+	name: string;
+	color: string;
+};
+
+/**
  * Mod Tag queried from the ModDB.
  */
 export class VSAPIModTag {

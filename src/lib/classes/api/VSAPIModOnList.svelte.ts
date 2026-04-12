@@ -1,4 +1,26 @@
 /**
+ * JSON of the Mod queried from the ModDB.
+ */
+export type VSAPIModListedType = {
+	modid: number;
+	assetid: number;
+	downloads: number;
+	follows: number;
+	trendingpoints: number;
+	comments: number;
+	name: string;
+	summary?: string | undefined;
+	modidstrs: string[];
+	author: string;
+	urlalias?: string | undefined;
+	side: string;
+	type: string;
+	logo: string;
+	tags: string[];
+	lastreleased: string;
+};
+
+/**
  * Mod queried from the ModDB.
  * This is the simplified mod from /api/mods.
  */
