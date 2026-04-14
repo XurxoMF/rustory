@@ -7,10 +7,16 @@
 	import { App } from "$lib/classes/App.svelte";
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 
+	import { H1, Leading } from "$lib/components/ui/typography";
 	import * as Command from "$lib/components/ui/command";
 	import * as Popover from "$lib/components/ui/popover";
 	import { Button } from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
+
+	App.breadcrumbs.segments = [
+		{ label: "VS Instances", href: "/vs-instances" },
+		{ label: "Create", href: "/vs-instances/create" }
+	];
 
 	let vsVersions: RAPIVSVersion[] = $state([]);
 	let vsVersionsOpen = $state(false);
@@ -27,59 +33,66 @@
 		});
 </script>
 
-<Field.Set class="px-4">
+<H1>Create a Vintage Story Instance</H1>
+<Leading>Create a new Vintage Story Instance for your needs.</Leading>
+
+<div class="mt-6">
 	<Field.Group>
-		<!-- Vintage Story Version -->
-		<Field.Field>
-			<Field.Label for="vs-version">Vintage Story Version</Field.Label>
+		<Field.Set>
+			<Field.Group>
+				<!-- Vintage Story Version -->
+				<Field.Field>
+					<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
-			<Popover.Root bind:open={vsVersionsOpen}>
-				<Popover.Trigger bind:ref={vsVersionsTriggerRef}>
-					{#snippet child({ props })}
-						<Button {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={vsVersionsOpen}>
-							{vsVersionsSelected?.version || "Select a framework..."}
+					<Popover.Root bind:open={vsVersionsOpen}>
+						<Popover.Trigger bind:ref={vsVersionsTriggerRef}>
+							{#snippet child({ props })}
+								<Button {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={vsVersionsOpen}>
+									{vsVersionsSelected?.version || "Select a framework..."}
 
-							<IconSelector class="opacity-50" />
-						</Button>
-					{/snippet}
-				</Popover.Trigger>
+									<IconSelector class="opacity-50" />
+								</Button>
+							{/snippet}
+						</Popover.Trigger>
 
-				<Popover.Content class="w-(--bits-floating-anchor-width) p-0">
-					<Command.Root>
-						<Command.Input placeholder="Select the VS Version..." />
+						<Popover.Content class="w-(--bits-floating-anchor-width) p-0">
+							<Command.Root>
+								<Command.Input placeholder="Select the VS Version..." />
 
-						<Command.List>
-							<Command.Empty>No VS Versions found.</Command.Empty>
+								<Command.List>
+									<Command.Empty>No VS Versions found.</Command.Empty>
 
-							<Command.Group value="frameworks">
-								{#each vsVersions as vsVersion (vsVersion.version)}
-									<Command.Item
-										data-checked={vsVersion.version === vsVersionsValue}
-										value={vsVersion.version}
-										onSelect={() => {
-											vsVersionsValue = vsVersion.version;
+									<Command.Group value="frameworks">
+										{#each vsVersions as vsVersion (vsVersion.version)}
+											<Command.Item
+												data-checked={vsVersion.version === vsVersionsValue}
+												value={vsVersion.version}
+												onSelect={() => {
+													vsVersionsValue = vsVersion.version;
 
-											vsVersionsOpen = false;
+													vsVersionsOpen = false;
 
-											// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
-											tick().then(() => {
-												vsVersionsTriggerRef.focus();
-											});
-										}}
-										class="flex w-full justify-between"
-									>
-										<span>{vsVersion.version}</span>
-									</Command.Item>
-								{/each}
-							</Command.Group>
-						</Command.List>
-					</Command.Root>
-				</Popover.Content>
-			</Popover.Root>
+													// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
+													tick().then(() => {
+														vsVersionsTriggerRef.focus();
+													});
+												}}
+												class="flex w-full justify-between"
+											>
+												<span>{vsVersion.version}</span>
+											</Command.Item>
+										{/each}
+									</Command.Group>
+								</Command.List>
+							</Command.Root>
+						</Popover.Content>
+					</Popover.Root>
 
-			<Field.Description>Select the Vintage Story Version to use.</Field.Description>
-		</Field.Field>
+					<Field.Description>Select the Vintage Story Version to use.</Field.Description>
+				</Field.Field>
+			</Field.Group>
+		</Field.Set>
+
+		<Button type="button">Create</Button>
 	</Field.Group>
-</Field.Set>
-
-<Button type="button">Create</Button>
+</div>

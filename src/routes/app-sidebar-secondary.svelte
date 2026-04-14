@@ -5,6 +5,7 @@
 	import IconHeart from "@tabler/icons-svelte/icons/heart";
 	import IconSettings from "@tabler/icons-svelte/icons/settings";
 	import IconSearch from "@tabler/icons-svelte/icons/search";
+	import IconExternalLink from "@tabler/icons-svelte/icons/external-link";
 
 	import { App } from "$lib/classes/App.svelte";
 
@@ -15,9 +16,10 @@
 	<Sidebar.GroupContent>
 		<Sidebar.Menu>
 			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="sm" onclick={() => openUrl("https://ko-fi.com/xurxomf")}>
+				<Sidebar.MenuButton size="sm" class="cursor-pointer" onclick={() => openUrl("https://ko-fi.com/xurxomf")}>
 					<IconHeart class="text-pink-500" />
 					<span>Support</span>
+					<IconExternalLink class="size-3!" />
 				</Sidebar.MenuButton>
 			</Sidebar.MenuItem>
 

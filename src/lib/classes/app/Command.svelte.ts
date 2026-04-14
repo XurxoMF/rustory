@@ -3,6 +3,9 @@ import { resolve } from "$app/paths";
 import type { Icon } from "@tabler/icons-svelte";
 
 import IconHome from "@tabler/icons-svelte/icons/home";
+import IconList from "@tabler/icons-svelte/icons/list";
+import IconPlus from "@tabler/icons-svelte/icons/plus";
+import IconSettings from "@tabler/icons-svelte/icons/settings";
 
 export class CommandItem {
 	// ***********************
@@ -186,7 +189,30 @@ export class Command {
 	 * Loads all the available commands.
 	 */
 	public static async init(): Promise<Command> {
-		const pages = [new CommandItem({ value: "home", title: "Home", icon: IconHome, keywords: ["page", "home"], onselect: () => goto(resolve("/")) })];
+		const pages = [
+			new CommandItem({ value: "home", title: "Home", icon: IconHome, keywords: ["page", "home"], onselect: () => goto(resolve("/")) }),
+			new CommandItem({
+				value: "vs-instances",
+				title: "Vintage Story Instances",
+				icon: IconList,
+				keywords: ["page", "instance", "vintage story"],
+				onselect: () => goto(resolve("/vs-instances"))
+			}),
+			new CommandItem({
+				value: "vs-instances-create",
+				title: "Create a Vintage Story Instance",
+				icon: IconPlus,
+				keywords: ["page", "instance", "vintage story", "create"],
+				onselect: () => goto(resolve("/vs-instances/create"))
+			}),
+			new CommandItem({
+				value: "settings",
+				title: "Settings",
+				icon: IconSettings,
+				keywords: ["page", "settings"],
+				onselect: () => goto(resolve("/settings"))
+			})
+		];
 
 		const pagesGroup = new CommandGroup({ heading: "Pages", items: pages });
 

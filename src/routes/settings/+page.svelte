@@ -7,110 +7,132 @@
 	import { Config } from "$lib/classes/app/Config.svelte";
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 
+	import { H1, Leading } from "$lib/components/ui/typography";
 	import * as Select from "$lib/components/ui/select";
 	import { Slider } from "$lib/components/ui/slider";
 	import { Input } from "$lib/components/ui/input";
 	import { Button } from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
+
+	App.breadcrumbs.segments = [{ label: "Settings", href: "/settings" }];
 </script>
 
-<Field.Set class="px-4">
+<H1>Settings</H1>
+<Leading>Customize the app.</Leading>
+
+<div class="mt-6">
 	<Field.Group>
-		<!-- Theme -->
-		<Field.Field>
-			<Field.Label for="theme">Theme</Field.Label>
+		<Field.Set>
+			<Field.Legend>UI settings</Field.Legend>
+			<Field.Description>Customize the UI.</Field.Description>
 
-			<Select.Root
-				type="single"
-				value={App.config.theme}
-				onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}
-			>
-				<Select.Trigger id="theme">Theme</Select.Trigger>
+			<Field.Group>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<!-- Theme -->
+					<Field.Field>
+						<Field.Label for="theme">Theme</Field.Label>
 
-				<Select.Content>
-					<Select.Group>
-						{#each Config.THEMES as { key, name } (key)}
-							<Select.Item value={key}>{name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+						<Select.Root
+							type="single"
+							value={App.config.theme}
+							onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}
+						>
+							<Select.Trigger id="theme">Theme</Select.Trigger>
 
-			<Field.Description>Change the theme of the app.</Field.Description>
-		</Field.Field>
+							<Select.Content>
+								<Select.Group>
+									{#each Config.THEMES as { key, name } (key)}
+										<Select.Item value={key}>{name}</Select.Item>
+									{/each}
+								</Select.Group>
+							</Select.Content>
+						</Select.Root>
 
-		<!-- Locale -->
-		<Field.Field>
-			<Field.Label for="locale">Locale</Field.Label>
+						<Field.Description>Change the theme of the app.</Field.Description>
+					</Field.Field>
 
-			<Select.Root
-				type="single"
-				value={App.config.locale}
-				onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
-			>
-				<Select.Trigger id="locale">Locale</Select.Trigger>
+					<!-- Locale -->
+					<Field.Field>
+						<Field.Label for="locale">Locale</Field.Label>
 
-				<Select.Content>
-					<Select.Group>
-						{#each Config.LOCALES as { key, name } (key)}
-							<Select.Item value={key}>{name}</Select.Item>
-						{/each}
-					</Select.Group>
-				</Select.Content>
-			</Select.Root>
+						<Select.Root
+							type="single"
+							value={App.config.locale}
+							onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
+						>
+							<Select.Trigger id="locale">Locale</Select.Trigger>
 
-			<Field.Description>Change the theme of the app.</Field.Description>
-		</Field.Field>
+							<Select.Content>
+								<Select.Group>
+									{#each Config.LOCALES as { key, name } (key)}
+										<Select.Item value={key}>{name}</Select.Item>
+									{/each}
+								</Select.Group>
+							</Select.Content>
+						</Select.Root>
 
-		<!-- Scale -->
-		<Field.Field>
-			<Field.Label for="scale">Scale</Field.Label>
+						<Field.Description>Change the theme of the app.</Field.Description>
+					</Field.Field>
 
-			<Slider
-				type="single"
-				id="scale"
-				min={0.5}
-				max={1.5}
-				step={0.1}
-				value={App.config.scale}
-				onValueCommit={(value) => {
-					if (value !== App.config.scale) App.config.setScale(value);
-				}}
-			/>
+					<!-- Scale -->
+					<Field.Field class="md:col-span-2">
+						<Field.Label for="scale">Scale</Field.Label>
 
-			<Field.Description>Change the scale of the UI.</Field.Description>
-		</Field.Field>
+						<Slider
+							type="single"
+							id="scale"
+							min={0.5}
+							max={1.5}
+							step={0.1}
+							value={App.config.scale}
+							onValueCommit={(value) => {
+								if (value !== App.config.scale) App.config.setScale(value);
+							}}
+						/>
 
-		<!-- Vintage Story Isntances directory -->
-		<Field.Field>
-			<Field.Label for="vs-instances-dir">VS Instances Directory</Field.Label>
+						<Field.Description>Change the scale of the UI.</Field.Description>
+					</Field.Field>
+				</div>
+			</Field.Group>
+		</Field.Set>
 
-			<div class="flex gap-2">
-				<Button
-					size="icon"
-					variant="outline"
-					onclick={async () => {
-						const path = await open({
-							directory: true,
-							defaultPath: App.info.dataDir.path,
-							recursive: true,
-							title: "Select a directory"
-						});
+		<Field.Separator />
 
-						if (path) {
-							const dir = await Directory.create(path);
+		<Field.Set>
+			<Field.Legend>Vintage Story settings</Field.Legend>
+			<Field.Description>Customize the Vintage Story related settings.</Field.Description>
 
-							App.config.setVSInstancesDir(dir);
-						}
-					}}
-				>
-					<IconFolder />
-				</Button>
+			<!-- Vintage Story Isntances directory -->
+			<Field.Field>
+				<Field.Label for="vs-instances-dir">VS Instances Directory</Field.Label>
 
-				<Input id="vs-instances-dir" value={App.config.vsInstancesDir.path} readonly />
-			</div>
+				<div class="flex gap-2">
+					<Button
+						size="icon"
+						variant="outline"
+						onclick={async () => {
+							const path = await open({
+								directory: true,
+								defaultPath: App.info.dataDir.path,
+								recursive: true,
+								title: "Select a directory"
+							});
 
-			<Field.Description>Directory where Vintage Story Insta nces will be stored by default.</Field.Description>
-		</Field.Field>
+							if (path) {
+								const dir = await Directory.create(path);
+
+								App.config.setVSInstancesDir(dir);
+							}
+						}}
+					>
+						<IconFolder />
+					</Button>
+
+					<Input id="vs-instances-dir" value={App.config.vsInstancesDir.path} readonly />
+				</div>
+
+				<Field.Description>Directory where Vintage Story Insta nces will be stored by default.</Field.Description>
+			</Field.Field>
+		</Field.Set>
 	</Field.Group>
-</Field.Set>
+</div>
