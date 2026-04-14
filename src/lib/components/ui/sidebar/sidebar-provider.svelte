@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as Tooltip from "$lib/components/ui/tooltip/index.js";
 	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from "./constants.js";
@@ -32,15 +31,13 @@
 
 <svelte:window onkeydown={sidebar.handleShortcutKeydown} />
 
-<Tooltip.Provider delayDuration={0}>
-	<div
-		data-slot="sidebar-wrapper"
-		style="--sidebar-width: {SIDEBAR_WIDTH}; --sidebar-width-icon: {SIDEBAR_WIDTH_ICON}; {style}"
-		// Changed min-h-svh for h-full so it can fit inside containers
-		class={cn("group/sidebar-wrapper flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
-		bind:this={ref}
-		{...restProps}
-	>
-		{@render children?.()}
-	</div>
-</Tooltip.Provider>
+<div
+	data-slot="sidebar-wrapper"
+	style="--sidebar-width: {SIDEBAR_WIDTH}; --sidebar-width-icon: {SIDEBAR_WIDTH_ICON}; {style}"
+	// Changed min-h-svh for h-full so it can fit inside containers
+	class={cn("group/sidebar-wrapper flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
+	bind:this={ref}
+	{...restProps}
+>
+	{@render children?.()}
+</div>

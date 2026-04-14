@@ -12,8 +12,8 @@
 
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
+	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Sidebar from "$lib/components/ui/sidebar";
-
 	import * as Toaster from "$lib/components/ui/sonner";
 	import * as ScrollArea from "$lib/components/ui/scroll-area";
 	import * as Confirm from "$lib/components/confirm";
@@ -42,27 +42,29 @@
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
 {#if App.loader.loadApp}
-	<Command.Root />
+	<Tooltip.Provider delayDuration={500}>
+		<Command.Root />
 
-	<Confirm.Root />
+		<Confirm.Root />
 
-	<Toaster.Root />
+		<Toaster.Root />
 
-	<Sidebar.Provider open={true}>
-		<AppSidebar />
+		<Sidebar.Provider open={true}>
+			<AppSidebar />
 
-		<Sidebar.Inset
-			class="[--header-height:calc(--spacing(16))] [--header-padding-x:calc(--spacing(4))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-height:calc(--spacing(12))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-padding-x:calc(--spacing(2))]"
-		>
-			<AppHeader />
+			<Sidebar.Inset
+				class="[--header-height:calc(--spacing(16))] [--header-padding-x:calc(--spacing(4))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-height:calc(--spacing(12))] group-has-data-[collapsible=icon]/sidebar-wrapper:[--header-padding-x:calc(--spacing(2))]"
+			>
+				<AppHeader />
 
-			<ScrollArea.ScrollArea class="h-[calc(100%-var(--header-height))] w-full">
-				<div class="flex flex-col gap-4 p-4">
-					{@render children()}
-				</div>
-			</ScrollArea.ScrollArea>
-		</Sidebar.Inset>
-	</Sidebar.Provider>
+				<ScrollArea.ScrollArea class="h-[calc(100%-var(--header-height))] w-full">
+					<div class="flex flex-col gap-4 p-4">
+						{@render children()}
+					</div>
+				</ScrollArea.ScrollArea>
+			</Sidebar.Inset>
+		</Sidebar.Provider>
+	</Tooltip.Provider>
 {/if}
 
 <div style="display:none">

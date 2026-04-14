@@ -16,7 +16,7 @@
 		<Collapsible.Root>
 			{#snippet child({ props })}
 				<Sidebar.MenuItem {...props}>
-					<Sidebar.MenuButton>
+					<Sidebar.MenuButton tooltipContent="Vintage Story Instances">
 						{#snippet child({ props })}
 							<a href={resolve("/vs-instances")} {...props}>
 								<IconDeviceGamepad />
