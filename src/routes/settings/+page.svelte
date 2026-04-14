@@ -27,7 +27,7 @@
 			<Field.Description>Customize the UI.</Field.Description>
 
 			<Field.Group>
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
 					<!-- Theme -->
 					<Field.Field>
 						<Field.Label for="theme">Theme</Field.Label>
@@ -73,26 +73,26 @@
 
 						<Field.Description>Change the theme of the app.</Field.Description>
 					</Field.Field>
-
-					<!-- Scale -->
-					<Field.Field class="md:col-span-2">
-						<Field.Label for="scale">Scale</Field.Label>
-
-						<Slider
-							type="single"
-							id="scale"
-							min={0.5}
-							max={1.5}
-							step={0.1}
-							value={App.config.scale}
-							onValueCommit={(value) => {
-								if (value !== App.config.scale) App.config.setScale(value);
-							}}
-						/>
-
-						<Field.Description>Change the scale of the UI.</Field.Description>
-					</Field.Field>
 				</div>
+
+				<!-- Scale -->
+				<Field.Field>
+					<Field.Label for="scale">Scale</Field.Label>
+
+					<Slider
+						type="single"
+						id="scale"
+						min={0.5}
+						max={1.5}
+						step={0.1}
+						value={App.config.scale}
+						onValueCommit={(value) => {
+							if (value !== App.config.scale) App.config.setScale(value);
+						}}
+					/>
+
+					<Field.Description>Change the scale of the UI.</Field.Description>
+				</Field.Field>
 			</Field.Group>
 		</Field.Set>
 
@@ -108,6 +108,7 @@
 
 				<div class="flex gap-2">
 					<Button
+						id="vs-instances-dir"
 						size="icon"
 						variant="outline"
 						onclick={async () => {
@@ -128,7 +129,7 @@
 						<IconFolder />
 					</Button>
 
-					<Input id="vs-instances-dir" value={App.config.vsInstancesDir.path} readonly />
+					<Input value={App.config.vsInstancesDir.path} readonly />
 				</div>
 
 				<Field.Description>Directory where Vintage Story Insta nces will be stored by default.</Field.Description>

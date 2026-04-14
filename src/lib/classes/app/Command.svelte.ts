@@ -3,7 +3,7 @@ import { resolve } from "$app/paths";
 import type { Icon } from "@tabler/icons-svelte";
 
 import IconHome from "@tabler/icons-svelte/icons/home";
-import IconList from "@tabler/icons-svelte/icons/list";
+import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 import IconPlus from "@tabler/icons-svelte/icons/plus";
 import IconSettings from "@tabler/icons-svelte/icons/settings";
 
@@ -194,7 +194,7 @@ export class Command {
 			new CommandItem({
 				value: "vs-instances",
 				title: "Vintage Story Instances",
-				icon: IconList,
+				icon: IconDeviceGamepad,
 				keywords: ["page", "instance", "vintage story"],
 				onselect: () => goto(resolve("/vs-instances"))
 			}),

@@ -45,7 +45,7 @@ export class VSInstance {
 		lastTimePlayed: number;
 		totalTimePlayed: number;
 		mesaGlThread: boolean;
-		envVars: string;
+		envVars: { key: string; value: string }[];
 		state?: VSInstanceState | undefined;
 	}) {
 		this._id = vsInstance.id;
@@ -137,7 +137,7 @@ export class VSInstance {
 	/**
 	 * The env vars of the VS Instance.
 	 */
-	private _envVars: string;
+	private _envVars: { key: string; value: string }[];
 
 	/**
 	 * The state of the VS Instance.
@@ -319,14 +319,14 @@ export class VSInstance {
 	/**
 	 * The env vars of the VS Instance.
 	 */
-	public get envVars(): string {
+	public get envVars(): { key: string; value: string }[] {
 		return this._envVars;
 	}
 
 	/**
 	 * The env vars of the VS Instance.
 	 */
-	public set envVars(envVars: string) {
+	public set envVars(envVars: { key: string; value: string }[]) {
 		this._envVars = envVars;
 	}
 
