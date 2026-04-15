@@ -37,7 +37,7 @@
 							value={App.config.theme}
 							onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}
 						>
-							<Select.Trigger id="theme">Theme</Select.Trigger>
+							<Select.Trigger id="theme">{Config.THEMES.find(({ key }) => key === App.config.theme)?.name || "Theme"}</Select.Trigger>
 
 							<Select.Content>
 								<Select.Group>
@@ -60,7 +60,7 @@
 							value={App.config.locale}
 							onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
 						>
-							<Select.Trigger id="locale">Locale</Select.Trigger>
+							<Select.Trigger id="locale">{Config.LOCALES.find(({ key }) => key === App.config.locale)?.name || "Locale"}</Select.Trigger>
 
 							<Select.Content>
 								<Select.Group>
