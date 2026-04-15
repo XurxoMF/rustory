@@ -186,21 +186,29 @@ export class Info {
 
 	/**
 	 * System architecture.
+	 *
+	 * 'x86', 'x86_64', 'arm', 'aarch64', 'mips', 'mips64', 'powerpc', 'powerpc64', 'riscv64', 's390x' or 'sparc64'
 	 */
 	private _osArch: OsArch;
 
 	/**
 	 * System family.
+	 *
+	 * 'unix' or 'windows'
 	 */
 	private _osFamily: OsFamily;
 
 	/**
 	 * System platform.
+	 *
+	 * 'linux', 'macos', 'ios', 'freebsd', 'dragonfly', 'netbsd', 'openbsd', 'solaris', 'android' or 'windows'
 	 */
 	private _osPlatform: OsPlatform;
 
 	/**
 	 * System type.
+	 *
+	 * 'linux', 'macos', 'windows', 'ios' or 'android'
 	 */
 	private _osType: OsType;
 
@@ -285,6 +293,8 @@ export class Info {
 
 	/**
 	 * System architecture.
+	 *
+	 * 'x86', 'x86_64', 'arm', 'aarch64', 'mips', 'mips64', 'powerpc', 'powerpc64', 'riscv64', 's390x', 'sparc64'
 	 */
 	public get osArch(): OsArch {
 		return this._osArch;
@@ -292,6 +302,8 @@ export class Info {
 
 	/**
 	 * System family.
+	 *
+	 * 'unix' or 'windows
 	 */
 	public get osFamily(): OsFamily {
 		return this._osFamily;
@@ -299,6 +311,8 @@ export class Info {
 
 	/**
 	 * System platform.
+	 *
+	 * 'linux', 'macos', 'ios', 'freebsd', 'dragonfly', 'netbsd', 'openbsd', 'solaris', 'android' or 'windows'
 	 */
 	public get osPlatform(): OsPlatform {
 		return this._osPlatform;
@@ -306,6 +320,8 @@ export class Info {
 
 	/**
 	 * System type.
+	 *
+	 * 'linux', 'macos', 'windows', 'ios' or 'android'
 	 */
 	public get osType(): OsType {
 		return this._osType;
