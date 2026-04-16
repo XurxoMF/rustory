@@ -15,7 +15,6 @@ export type ConfigJSON = {
 	locale: (typeof Config.LOCALES)[number]["key"];
 	scale: number;
 	vsInstancesPath: string;
-	vsVersionsPath: string;
 };
 
 /**
@@ -70,14 +69,12 @@ export class Config {
 		locale: (typeof Config.LOCALES)[number]["key"];
 		scale: number;
 		vsInstancesDir: Directory;
-		vsVersionsDir: Directory;
 	}) {
 		this._file = config.file;
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
 		this._scale = $state(config.scale);
 		this._vsInstancesDir = $state(config.vsInstancesDir);
-		this._vsVersionsDir = $state(config.vsVersionsDir);
 	}
 
 	/**
@@ -105,11 +102,7 @@ export class Config {
 			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
 			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
-			// Load the Vintage Story Versions dir
-			const defaultVSVersionsPath = await App.info.dataDir.join("VSVersions");
-			const vsVersionsDir = await Directory.create(configJSON.vsVersionsPath || defaultVSVersionsPath);
-
-			const config = new Config({ file, theme, locale, scale, vsInstancesDir, vsVersionsDir });
+			const config = new Config({ file, theme, locale, scale, vsInstancesDir });
 
 			await config.save();
 
@@ -145,11 +138,6 @@ export class Config {
 	 * Directory where Instances will be saved.
 	 */
 	private _vsInstancesDir: Directory;
-
-	/**
-	 * Directory where VS Versions will be saved.
-	 */
-	private _vsVersionsDir: Directory;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
@@ -188,13 +176,6 @@ export class Config {
 	 */
 	public get vsInstancesDir(): Directory {
 		return this._vsInstancesDir;
-	}
-
-	/**
-	 * Directory where VS Versions will be saved.
-	 */
-	public get vsVersionsDir(): Directory {
-		return this._vsVersionsDir;
 	}
 
 	// ********************
@@ -294,20 +275,6 @@ export class Config {
 	}
 
 	/**
-	 * Set a new directory for the VS Versions.
-	 * @param dir - The directory.
-	 */
-	public async setVSVersionsDir(dir: Directory): Promise<void> {
-		try {
-			this._vsVersionsDir = dir;
-			await this.save();
-		} catch (err) {
-			error(`There was an error saving the new VS Versions path:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new VS Versions path!");
-		}
-	}
-
-	/**
 	 * Saves the config to the config file.
 	 */
 	private async save(): Promise<void> {
@@ -330,7 +297,6 @@ export class Config {
 		this._locale = config.locale;
 		this._scale = config.scale;
 		this._vsInstancesDir = await Directory.create(config.vsInstancesPath);
-		this._vsVersionsDir = await Directory.create(config.vsVersionsPath);
 	}
 
 	/**
@@ -342,8 +308,7 @@ export class Config {
 			theme: this._theme,
 			locale: this._locale,
 			scale: this._scale,
-			vsInstancesPath: this._vsInstancesDir.path,
-			vsVersionsPath: this._vsVersionsDir.path
+			vsInstancesPath: this._vsInstancesDir.path
 		};
 	}
 }

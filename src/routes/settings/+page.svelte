@@ -102,71 +102,40 @@
 			<Field.Legend>Vintage Story settings</Field.Legend>
 			<Field.Description>Customize the Vintage Story related settings.</Field.Description>
 
-			<!-- Vintage Story Isntances directory -->
-			<Field.Field>
-				<Field.Label for="vs-instances-dir">VS Instances Directory</Field.Label>
+			<Field.Group>
+				<!-- Vintage Story Isntances directory -->
+				<Field.Field>
+					<Field.Label for="vs-instances-dir">VS Instances Directory</Field.Label>
 
-				<div class="flex gap-2">
-					<Button
-						id="vs-instances-dir"
-						size="icon"
-						variant="outline"
-						onclick={async () => {
-							const path = await open({
-								directory: true,
-								defaultPath: App.info.dataDir.path,
-								recursive: true,
-								title: "Select a directory"
-							});
+					<div class="flex gap-2">
+						<Button
+							id="vs-instances-dir"
+							size="icon"
+							variant="outline"
+							onclick={async () => {
+								const path = await open({
+									directory: true,
+									defaultPath: App.info.dataDir.path,
+									recursive: true,
+									title: "Select a directory"
+								});
 
-							if (path) {
-								const dir = await Directory.create(path);
+								if (path) {
+									const dir = await Directory.create(path);
 
-								App.config.setVSInstancesDir(dir);
-							}
-						}}
-					>
-						<IconFolder />
-					</Button>
+									App.config.setVSInstancesDir(dir);
+								}
+							}}
+						>
+							<IconFolder />
+						</Button>
 
-					<Input value={App.config.vsInstancesDir.path} readonly />
-				</div>
+						<Input value={App.config.vsInstancesDir.path} readonly />
+					</div>
 
-				<Field.Description>Directory where Vintage Story Instances will be stored.</Field.Description>
-			</Field.Field>
-
-			<!-- Vintage Story Versions directory -->
-			<Field.Field>
-				<Field.Label for="vs-versions-dir">VS Versions Directory</Field.Label>
-
-				<div class="flex gap-2">
-					<Button
-						id="vs-versions-dir"
-						size="icon"
-						variant="outline"
-						onclick={async () => {
-							const path = await open({
-								directory: true,
-								defaultPath: App.info.dataDir.path,
-								recursive: true,
-								title: "Select a directory"
-							});
-
-							if (path) {
-								const dir = await Directory.create(path);
-
-								App.config.setVSVersionsDir(dir);
-							}
-						}}
-					>
-						<IconFolder />
-					</Button>
-
-					<Input value={App.config.vsVersionsDir.path} readonly />
-				</div>
-
-				<Field.Description>Directory where Vintage Story Versions will be stored.</Field.Description>
-			</Field.Field>
+					<Field.Description>Directory where Vintage Story Instances will be stored.</Field.Description>
+				</Field.Field>
+			</Field.Group>
 		</Field.Set>
 	</Field.Group>
 </div>
