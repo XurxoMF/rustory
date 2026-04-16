@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { tick } from "svelte";
 	import { debug, error } from "@tauri-apps/plugin-log";
-	import { open } from "@tauri-apps/plugin-dialog";
 
 	import IconSelector from "@tabler/icons-svelte/icons/selector";
-	import IconFolder from "@tabler/icons-svelte/icons/folder";
 
 	import { App } from "$lib/classes/App.svelte";
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
@@ -26,9 +24,6 @@
 
 	let name: string = $state("");
 	let nameErrors: string[] = $state([]);
-
-	let path: string = $state("");
-	let pathErrors: string[] = $state([]);
 
 	let vsVersions: RAPIVSVersion[] = $state([]);
 	let vsVersionsOpen: boolean = $state(false);
@@ -65,7 +60,6 @@
 
 	async function create() {
 		nameErrors = [];
-		pathErrors = [];
 		vsVersionsValueErrors = [];
 		backupsLimitErrors = [];
 		backupsAutoErrors = [];
@@ -87,7 +81,6 @@
 
 		if (
 			nameErrors.length <= 0 &&
-			pathErrors.length <= 0 &&
 			vsVersionsValueErrors.length <= 0 &&
 			backupsLimitErrors.length <= 0 &&
 			backupsAutoErrors.length <= 0 &&
@@ -204,52 +197,6 @@
 						<Field.Description>The game version you select will be installed here.</Field.Description>
 					</Field.Field>
 				</div>
-
-				<!-- Path-->
-				<Field.Field data-invalid={pathErrors.length > 0}>
-					<Field.Label for="path">Directory</Field.Label>
-
-					<div class="flex gap-2">
-						<Button
-							id="path"
-							size="icon"
-							variant="outline"
-							onclick={async () => {
-								const selected = await open({
-									directory: true,
-									defaultPath: App.info.dataDir.path,
-									recursive: true,
-									title: "Select a directory"
-								});
-
-								if (selected) {
-									path = selected;
-								}
-							}}
-							aria-invalid={pathErrors.length > 0}
-						>
-							<IconFolder />
-						</Button>
-
-						<Input value={path} placeholder="Select a directory..." readonly aria-invalid={pathErrors.length > 0} />
-					</div>
-
-					{#if pathErrors.length > 0}
-						<Field.Error>
-							<List.Unordered>
-								{#each pathErrors as error (error)}
-									<List.Item>
-										{error}
-									</List.Item>
-								{/each}
-							</List.Unordered>
-						</Field.Error>
-					{/if}
-
-					<Field.Description>
-						The game, the data and the backups will be stored here. It'll use the default path if you don't select one.
-					</Field.Description>
-				</Field.Field>
 			</Field.Group>
 		</Field.Set>
 
