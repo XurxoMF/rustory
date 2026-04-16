@@ -1,8 +1,9 @@
-import { error } from "@tauri-apps/plugin-log";
+import { debug, error } from "@tauri-apps/plugin-log";
 
 import { App } from "$lib/classes/App.svelte";
-import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
+import { VSInstance, type VSInstanceJSON } from "$lib/classes/vs/VSInstance.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
 /**
@@ -41,10 +42,54 @@ export class Data {
 		try {
 			const path = await App.info.dataDir.join("data.json");
 			const file = await File.create(path);
-			// const dataJSON = await file.readJSON<DataJSON>();
+			const dataJSON = await file.readJSON<DataJSON>();
 
-			// TODO: Load vsInstances from the config
-			const vsInstances: VSInstance[] = [];
+			debug(`${JSON.stringify(dataJSON)}`);
+
+			let vsInstances: VSInstance[] = [];
+
+			if (dataJSON.vsInstancesPaths !== undefined && dataJSON.vsInstancesPaths.length > 0) {
+				const loadedVsInstances = await Promise.all(
+					dataJSON.vsInstancesPaths.map(async (vsInstancePath) => {
+						const dir = await Directory.create(vsInstancePath);
+
+						const versionPath = await dir.join("Version");
+						const versionDir = await Directory.create(versionPath);
+
+						const dataPath = await dir.join("Data");
+						const dataDir = await Directory.create(dataPath);
+
+						const backupsPath = await dir.join("Backups");
+						const backupsDir = await Directory.create(backupsPath);
+
+						const filePath = await dir.join("instance.json");
+						const file = await File.create(filePath);
+
+						const vsInataceJSON = await file.readJSON<VSInstanceJSON>();
+
+						return await VSInstance.create({
+							file,
+							id: vsInataceJSON.id,
+							name: vsInataceJSON.name,
+							dir,
+							versionDir,
+							dataDir,
+							backupsDir,
+							version: vsInataceJSON.version,
+							startParams: vsInataceJSON.startParams,
+							backupsLimit: vsInataceJSON.backupsLimit,
+							backupsAuto: vsInataceJSON.backupsAuto,
+							backupsCompressionLevel: vsInataceJSON.backupsCompressionLevel,
+							lastTimePlayed: vsInataceJSON.lastTimePlayed,
+							totalTimePlayed: vsInataceJSON.totalTimePlayed,
+							mesaGlThread: vsInataceJSON.mesaGlThread,
+							envVars: vsInataceJSON.envVars
+						});
+					})
+				);
+
+				vsInstances = loadedVsInstances;
+			}
 
 			return new Data({
 				file,
@@ -123,13 +168,6 @@ export class Data {
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
 		}
 	}
-
-	// TODO: Implement this.
-	/**
-	 * Imports the data from a JSON file.
-	 * @param data The JSON with the data.
-	 */
-	// private async importFromJSON(data: DataJSON): Promise<void> {}
 
 	/**
 	 * Exports the data to a JSON.

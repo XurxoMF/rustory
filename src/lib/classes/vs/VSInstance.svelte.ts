@@ -1,8 +1,5 @@
 import { error } from "@tauri-apps/plugin-log";
 
-import { cleanPath } from "$lib/utils";
-
-import { App } from "$lib/classes/App.svelte";
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -103,45 +100,32 @@ export class VSInstance {
 	 * @returns The File instance.
 	 */
 	public static async create(vsInstance: {
+		file: File;
+		id: string;
 		name: string;
-		dir?: Directory | undefined;
+		dir: Directory;
+		versionDir: Directory;
+		dataDir: Directory;
+		backupsDir: Directory;
 		version: string;
 		startParams: string;
 		backupsLimit: number;
 		backupsAuto: boolean;
 		backupsCompressionLevel: number;
+		lastTimePlayed: number;
+		totalTimePlayed: number;
 		mesaGlThread: boolean;
 		envVars: string;
 	}): Promise<VSInstance> {
 		try {
-			const id = crypto.randomUUID();
-
-			const cleanName = cleanPath(vsInstance.name);
-			const defaultPath = await App.config.vsInstancesDir.join(cleanName);
-			const defaultDir = await Directory.create(defaultPath);
-
-			const dir = vsInstance.dir ?? defaultDir;
-
-			const versionPath = await dir.join("Version");
-			const versionDir = await Directory.create(versionPath);
-
-			const dataPath = await dir.join("Data");
-			const dataDir = await Directory.create(dataPath);
-
-			const backupsPath = await dir.join("Backups");
-			const backupsDir = await Directory.create(backupsPath);
-
-			const filePath = await dir.join("instance.json");
-			const file = await File.create(filePath);
-
 			return new VSInstance({
-				file,
-				id,
+				file: vsInstance.file,
+				id: vsInstance.id,
 				name: vsInstance.name,
-				dir,
-				versionDir,
-				dataDir,
-				backupsDir,
+				dir: vsInstance.dir,
+				versionDir: vsInstance.versionDir,
+				dataDir: vsInstance.dataDir,
+				backupsDir: vsInstance.backupsDir,
 				version: vsInstance.version,
 				mods: [],
 				backups: [],
@@ -149,15 +133,15 @@ export class VSInstance {
 				backupsLimit: vsInstance.backupsLimit,
 				backupsAuto: vsInstance.backupsAuto,
 				backupsCompressionLevel: vsInstance.backupsCompressionLevel,
-				lastTimePlayed: 0,
-				totalTimePlayed: 0,
+				lastTimePlayed: vsInstance.lastTimePlayed,
+				totalTimePlayed: vsInstance.totalTimePlayed,
 				mesaGlThread: vsInstance.mesaGlThread,
 				envVars: vsInstance.envVars,
 				state: VSInstanceState.STOPPED
 			});
 		} catch (err) {
-			error(`There was an error creating the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
+			error(`There was an error creating the Vintage Story Instance:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
 		}
 	}
 
@@ -509,13 +493,6 @@ export class VSInstance {
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
 		}
 	}
-
-	// TODO: Implement this.
-	/**
-	 * Imports the Vintage Story Instance from a JSON file.
-	 * @param data The JSON with the Vinatge Story Instance.
-	 */
-	// private async importFromJSON(data: Vintage Story InstanceJSON): Promise<void> {}
 
 	/**
 	 * Exports the Vintage Story Instance to a JSON.

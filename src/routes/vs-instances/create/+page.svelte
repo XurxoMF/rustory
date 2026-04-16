@@ -6,9 +6,12 @@
 	import IconSelector from "@tabler/icons-svelte/icons/selector";
 	import IconFolder from "@tabler/icons-svelte/icons/folder";
 
+	import { cleanPath } from "$lib/utils";
+
 	import { App } from "$lib/classes/App.svelte";
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
+	import { File } from "$lib/classes/utils/File.svelte";
 
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
@@ -107,14 +110,41 @@
 		) {
 			debug("Creating a new Vintage Story Instance...");
 
+			const id = crypto.randomUUID();
+
+			if (dir === undefined) {
+				const cleanName = cleanPath(name);
+				const defaultPath = await App.config.vsInstancesDir.join(cleanName);
+				dir = await Directory.create(defaultPath);
+			}
+
+			const versionPath = await dir.join("Version");
+			const versionDir = await Directory.create(versionPath);
+
+			const dataPath = await dir.join("Data");
+			const dataDir = await Directory.create(dataPath);
+
+			const backupsPath = await dir.join("Backups");
+			const backupsDir = await Directory.create(backupsPath);
+
+			const filePath = await dir.join("instance.json");
+			const file = await File.create(filePath);
+
 			const vsInstance = await VSInstance.create({
+				file,
+				id,
 				name,
 				dir,
+				versionDir,
+				dataDir,
+				backupsDir,
 				version: vsVersionsValue,
 				startParams,
 				backupsLimit,
 				backupsAuto,
 				backupsCompressionLevel,
+				lastTimePlayed: 0,
+				totalTimePlayed: 0,
 				envVars,
 				mesaGlThread
 			});
@@ -122,6 +152,16 @@
 			await vsInstance.save();
 
 			await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
+
+			name = "";
+			dir = undefined;
+			vsVersionsValue = "";
+			backupsLimit = 3;
+			backupsAuto = false;
+			backupsCompressionLevel = 4;
+			startParams = "";
+			envVars = "";
+			mesaGlThread = false;
 		}
 	}
 </script>

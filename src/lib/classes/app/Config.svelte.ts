@@ -99,7 +99,7 @@ export class Config {
 			Config.applyScale(scale);
 
 			// Load the Vintage Story Instances dir.
-			const defaultVSInstancesPath = await App.info.dataDir.join("vintage-story-instances");
+			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
 			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
 			const config = new Config({ file, theme, locale, scale, vsInstancesDir });
@@ -289,17 +289,6 @@ export class Config {
 			error(`There was an error saving the config:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
 		}
-	}
-
-	/**
-	 * Imports the config from a JSON file.
-	 * @param data The JSON with the config.
-	 */
-	private async importFromJSON(config: ConfigJSON): Promise<void> {
-		this._theme = config.theme;
-		this._locale = config.locale;
-		this._scale = config.scale;
-		this._vsInstancesDir = await Directory.create(config.vsInstancesPath);
 	}
 
 	/**
