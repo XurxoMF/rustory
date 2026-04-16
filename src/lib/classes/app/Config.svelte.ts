@@ -99,7 +99,7 @@ export class Config {
 			Config.applyScale(scale);
 
 			// Load the Vintage Story Instances dir.
-			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
+			const defaultVSInstancesPath = await App.info.dataDir.join("vintage-story-instances");
 			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
 			const config = new Config({ file, theme, locale, scale, vsInstancesDir });
