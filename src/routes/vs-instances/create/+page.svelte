@@ -8,6 +8,9 @@
 
 	import { App } from "$lib/classes/App.svelte";
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
+	import { Directory } from "$lib/classes/utils/Directory.svelte";
+
+	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
 	import { H1, Leading } from "$lib/components/ui/typography";
 	import * as Command from "$lib/components/ui/command";
@@ -27,8 +30,8 @@
 	let name: string = $state("");
 	let nameErrors: string[] = $state([]);
 
-	let path: string = $state("");
-	let pathErrors: string[] = $state([]);
+	let dir: Directory | undefined = $state();
+	let dirErrors: string[] = $state([]);
 
 	let vsVersions: RAPIVSVersion[] = $state([]);
 	let vsVersionsOpen: boolean = $state(false);
@@ -65,7 +68,7 @@
 
 	async function create() {
 		nameErrors = [];
-		pathErrors = [];
+		dirErrors = [];
 		vsVersionsValueErrors = [];
 		backupsLimitErrors = [];
 		backupsAutoErrors = [];
@@ -77,6 +80,12 @@
 		debug("Checking errors...");
 
 		if (name.length < 5 || name.length > 50) nameErrors.push("Name must be at least 5 characters long and a maximum of 50.");
+		if (App.data.vsInstances.some((i) => i.name.toLowerCase() === name.toLowerCase())) nameErrors.push("Name must be unique.");
+
+		if (dir !== undefined) {
+			const isDirEmpty = await dir.isEmpty();
+			if (isDirEmpty) dirErrors.push("Directory must not be empty.");
+		}
 
 		if (vsVersionsValue === "") vsVersionsValueErrors.push("You must select a Vintage Story Version.");
 
@@ -87,7 +96,7 @@
 
 		if (
 			nameErrors.length <= 0 &&
-			pathErrors.length <= 0 &&
+			dirErrors.length <= 0 &&
 			vsVersionsValueErrors.length <= 0 &&
 			backupsLimitErrors.length <= 0 &&
 			backupsAutoErrors.length <= 0 &&
@@ -97,6 +106,22 @@
 			mesaGlThreadErrors.length <= 0
 		) {
 			debug("Creating a new Vintage Story Instance...");
+
+			const vsInstance = await VSInstance.create({
+				name,
+				dir,
+				version: vsVersionsValue,
+				startParams,
+				backupsLimit,
+				backupsAuto,
+				backupsCompressionLevel,
+				envVars,
+				mesaGlThread
+			});
+
+			await vsInstance.save();
+
+			await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 		}
 	}
 </script>
@@ -206,7 +231,7 @@
 				</div>
 
 				<!-- Path-->
-				<Field.Field data-invalid={pathErrors.length > 0}>
+				<Field.Field data-invalid={dirErrors.length > 0}>
 					<Field.Label for="path">Directory</Field.Label>
 
 					<div class="flex gap-2">
@@ -215,29 +240,29 @@
 							size="icon"
 							variant="outline"
 							onclick={async () => {
-								const selected = await open({
+								const path = await open({
 									directory: true,
 									defaultPath: App.info.dataDir.path,
 									recursive: true,
 									title: "Select a directory"
 								});
 
-								if (selected) {
-									path = selected;
+								if (path) {
+									dir = await Directory.create(path);
 								}
 							}}
-							aria-invalid={pathErrors.length > 0}
+							aria-invalid={dirErrors.length > 0}
 						>
 							<IconFolder />
 						</Button>
 
-						<Input value={path} placeholder="Select a directory..." readonly aria-invalid={pathErrors.length > 0} />
+						<Input value={dir?.path || ""} placeholder="Select a directory..." readonly aria-invalid={dirErrors.length > 0} />
 					</div>
 
-					{#if pathErrors.length > 0}
+					{#if dirErrors.length > 0}
 						<Field.Error>
 							<List.Unordered>
-								{#each pathErrors as error (error)}
+								{#each dirErrors as error (error)}
 									<List.Item>
 										{error}
 									</List.Item>

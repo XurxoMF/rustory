@@ -117,6 +117,9 @@ export class Config {
 	// *  INSTANCE PROPERTIES  *
 	// *************************
 
+	/**
+	 * The config file.
+	 */
 	private _file: File;
 
 	/**
@@ -290,7 +293,7 @@ export class Config {
 
 	/**
 	 * Imports the config from a JSON file.
-	 * @param config The
+	 * @param data The JSON with the config.
 	 */
 	private async importFromJSON(config: ConfigJSON): Promise<void> {
 		this._theme = config.theme;

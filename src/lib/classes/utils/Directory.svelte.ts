@@ -1,5 +1,5 @@
 import { dirname, join } from "@tauri-apps/api/path";
-import { exists, mkdir } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir } from "@tauri-apps/plugin-fs";
 import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -99,6 +99,25 @@ export class Directory {
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) await mkdir(this.path, { recursive: true });
+		} catch (err) {
+			error(`There was an error ensuring the directory exists:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+		}
+	}
+
+	/**
+	 * Checks if the directory is empty or not.
+	 * @returns If the directory is empty or not.
+	 */
+	public async isEmpty(): Promise<boolean> {
+		try {
+			const directoryExists = await exists(this.path);
+
+			if (!directoryExists) return true;
+
+			const files = await readDir(this.path);
+
+			return files.length === 0;
 		} catch (err) {
 			error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
