@@ -78,7 +78,7 @@ export function padCenter(strLeft: string, strRight: string, length: number, opt
  * @param str The string to clean.
  * @returns The clean string.
  */
-export function cleanPath(str: string): string {
+export function cleanForPath(str: string): string {
 	return str
 		.replace(/[<>:"/\\|?*]/g, "-")
 		.replace(/\s+/g, "-")
