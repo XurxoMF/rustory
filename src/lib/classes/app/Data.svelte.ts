@@ -65,25 +65,25 @@ export class Data {
 						const filePath = await dir.join("instance.json");
 						const file = await File.create(filePath);
 
-						const vsInataceJSON = await file.readJSON<VSInstanceJSON>();
+						const vsInstanceJSON = await file.readJSON<VSInstanceJSON>();
 
 						return await VSInstance.create({
 							file,
-							id: vsInataceJSON.id,
-							name: vsInataceJSON.name,
+							id: vsInstanceJSON.id,
+							name: vsInstanceJSON.name,
 							dir,
 							versionDir,
 							dataDir,
 							backupsDir,
-							version: vsInataceJSON.version,
-							startParams: vsInataceJSON.startParams,
-							backupsLimit: vsInataceJSON.backupsLimit,
-							backupsAuto: vsInataceJSON.backupsAuto,
-							backupsCompressionLevel: vsInataceJSON.backupsCompressionLevel,
-							lastTimePlayed: vsInataceJSON.lastTimePlayed,
-							totalTimePlayed: vsInataceJSON.totalTimePlayed,
-							mesaGlThread: vsInataceJSON.mesaGlThread,
-							envVars: vsInataceJSON.envVars
+							version: vsInstanceJSON.version,
+							startParams: vsInstanceJSON.startParams,
+							backupsLimit: vsInstanceJSON.backupsLimit,
+							backupsAuto: vsInstanceJSON.backupsAuto,
+							backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel,
+							lastTimePlayed: vsInstanceJSON.lastTimePlayed,
+							totalTimePlayed: vsInstanceJSON.totalTimePlayed,
+							mesaGlThread: vsInstanceJSON.mesaGlThread,
+							envVars: vsInstanceJSON.envVars
 						});
 					})
 				);
