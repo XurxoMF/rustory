@@ -1,3 +1,5 @@
+mod commands;
+
 use chrono::Local;
 use tauri::Manager;
 use tauri_plugin_log::log::Level;
@@ -95,7 +97,10 @@ pub fn run() {
     builder = builder.plugin(tauri_plugin_persisted_scope::init());
 
     builder
-        .invoke_handler(tauri::generate_handler![])
+        .invoke_handler(tauri::generate_handler![
+            commands::zip::compress_to_zip,
+            commands::zip::extract_zip
+        ])
         .run(tauri::generate_context!())
         .expect("Error running Rustory");
 }
