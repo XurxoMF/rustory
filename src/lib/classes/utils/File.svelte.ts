@@ -101,6 +101,19 @@ export class File {
 	}
 
 	/**
+	 * Checks if the file exists or not.
+	 * @returns If the file exists or not.
+	 */
+	public async exists(): Promise<boolean> {
+		try {
+			return await exists(this.path);
+		} catch (err) {
+			error(`There was an error chcking if the file exists:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
+		}
+	}
+
+	/**
 	 * Reads a text from the file.
 	 * @returns The readed text.
 	 */

@@ -1,8 +1,10 @@
+import { invoke } from "@tauri-apps/api/core";
 import { dirname, join } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir } from "@tauri-apps/plugin-fs";
 import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 /**
  * Represents a directory that can be created, deleted...
@@ -133,5 +135,38 @@ export class Directory {
 		const path = await join(this.path, ...paths);
 
 		return path;
+	}
+
+	/**
+	 * Compress the directory to a zip.
+	 * @param destination The Directory to compress the zip to.
+	 * @param name The name of the zip file.
+	 * @param compressionLevel The compression level of the zip file.
+	 */
+	public async compress(destination: Directory, name: string, compressionLevel: number): Promise<Zip> {
+		try {
+			await destination.ensureExists();
+
+			const result: boolean = await invoke("compress_to_zip", {
+				sourceDir: this.path,
+				destDir: destination.path,
+				filename: name,
+				compressionLevel: compressionLevel
+			});
+
+			if (!result) {
+				error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
+				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
+			}
+
+			const zipPath = await join(destination.path, name);
+
+			const zip = await Zip.create(zipPath);
+
+			return zip;
+		} catch (err) {
+			error(`There was an error compressing the directory to a zip:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
+		}
 	}
 }
