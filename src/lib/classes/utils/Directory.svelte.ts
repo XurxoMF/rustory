@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { dirname, join } from "@tauri-apps/api/path";
-import { exists, mkdir, readDir } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
 import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -123,6 +123,22 @@ export class Directory {
 		} catch (err) {
 			error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+		}
+	}
+
+	/**
+	 * Deletes the directory.
+	 */
+	public async delete(): Promise<void> {
+		try {
+			const directoryExists = await exists(this.path);
+
+			if (!directoryExists) return;
+
+			await remove(this.path, { recursive: true });
+		} catch (err) {
+			error(`There was an error deleting the directory:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
 		}
 	}
 

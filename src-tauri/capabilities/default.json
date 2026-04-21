@@ -22,7 +22,10 @@
 			"identifier": "http:default",
 			"allow": [{ "url": "https://api.rustory.xyz" }]
 		},
-		"upload:default",
+		{
+			"identifier": "upload:default",
+			"allow": [{ "url": "https://api.rustory.xyz" }]
+		},
 		"dialog:default",
 		"fs:default",
 		"fs:allow-create",

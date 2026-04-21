@@ -1,5 +1,6 @@
 import { error } from "@tauri-apps/plugin-log";
 
+import type { RAPIVSVersion } from "$lib/classes/api/RAPIVSVersion.svelte";
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -479,6 +480,28 @@ export class VSInstance {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Installs a version on the Vintage Story Instance.
+	 * @param version The Rustory API Version to install.
+	 */
+	public async installVersion(version: RAPIVSVersion): Promise<void> {
+		try {
+			this._state = VSInstanceState.INSTALLING_VERSION;
+
+			const zip = await version.download();
+
+			await this._versionDir.delete();
+			await this._versionDir.ensureExists();
+
+			await zip.extract(this._versionDir);
+
+			this._state = VSInstanceState.STOPPED;
+		} catch (err) {
+			error(`There was an error installing the Vintage Story Instance Version:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance Version!");
+		}
+	}
 
 	/**
 	 * Saves the Vintage Story Isntance to the instance file.

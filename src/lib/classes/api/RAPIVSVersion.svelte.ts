@@ -1,3 +1,10 @@
+import { debug, error } from "@tauri-apps/plugin-log";
+import { download } from "@tauri-apps/plugin-upload";
+
+import { Zip } from "$lib/classes/utils/Zip.svelte";
+import { App } from "$lib/classes/App.svelte";
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+
 /**
  * JSON of the Rustory API Vintage Story Version.
  */
@@ -189,4 +196,30 @@ export class RAPIVSVersion {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Downloads this version on the temp dir.
+	 * @returns The Zip instance of the downloaded version.
+	 */
+	public async download(): Promise<Zip> {
+		try {
+			const url = App.info.osType === "windows" ? this.windows : App.info.osType === "linux" ? this.linux : this.macos;
+			const sha256 = App.info.osType === "windows" ? this.windowsSha : App.info.osType === "linux" ? this.linuxSha : this.macosSha;
+
+			const downloadPath = await App.info.tempDir.join(`${this.version}-${sha256}-${App.info.osType}.zip.tmp`);
+
+			debug(`Downloading version ${this.version}...`);
+			debug(`Download path: ${downloadPath}`);
+			debug(`Download URL: ${url}`);
+
+			await download(url, downloadPath);
+
+			const zip = await Zip.create(downloadPath);
+
+			return zip;
+		} catch (err) {
+			error(`There was an error downloading the version:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error downloading the version!");
+		}
+	}
 }

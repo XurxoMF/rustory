@@ -13,8 +13,10 @@
 <div class="mt-6">
 	<!-- List of Vintage Story Instances -->
 	{#each App.data.vsInstances as vsInstance (vsInstance.id)}
-		<div>
+		<div class="flex gap-4">
 			<p>{vsInstance.name}</p>
+			<p>{vsInstance.version}</p>
+			<p>{vsInstance.state}</p>
 			<Button variant="destructive" onclick={() => App.data.setVsInstances(App.data.vsInstances.filter((i) => i.id !== vsInstance.id))}>
 				Delete {vsInstance.name}
 			</Button>

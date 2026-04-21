@@ -261,9 +261,12 @@
 
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 
-				debug("Vintage Story Instance saved! Redirecting to the new Vintage Story Instance...");
+				debug("Vintage Story Instance saved! Redirecting to the new Vintage Story Instance and installing it...");
 
-				toast.success("New Vintage Story Instance created successfully!");
+				toast.success("New Vintage Story Instance created successfully! Installing it...");
+
+				vsInstance.installVersion(form.version!);
+
 				goto(resolve(`/vs-instances/[slug]`, { slug: id }));
 			} catch (err) {
 				error(`There was an error creating the new Vintage Story Instance:\n${err}`);
