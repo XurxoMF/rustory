@@ -1,7 +1,7 @@
 import type { File } from "../utils/File.svelte";
 
 /**
- * Installed VS Mod info.
+ * Installed Vintage Story Mod info.
  */
 export class VSMod {
 	// ***********************
@@ -49,62 +49,62 @@ export class VSMod {
 	// *************************
 
 	/**
-	 * The id of the VS Instance this VS Mod is from.
+	 * The id of the Vintage Story Instance this Vintage Story Mod is from.
 	 */
 	private _vsInstanceId: string;
 
 	/**
-	 * The name of the VS Mod.
+	 * The name of the Vintage Story Mod.
 	 */
 	private _name: string;
 
 	/**
-	 * The modid of the VS Mod.
+	 * The modid of the Vintage Story Mod.
 	 */
 	private _modid: string;
 
 	/**
-	 * The version of the VS Mod.
+	 * The version of the Vintage Story Mod.
 	 */
 	private _version: string;
 
 	/**
-	 * The file of the VS Mod.
+	 * The file of the Vintage Story Mod.
 	 */
 	private _file: File;
 
 	/**
-	 * The description of the VS Mod.
+	 * The description of the Vintage Story Mod.
 	 */
 	private _description?: string | undefined;
 
 	/**
-	 * The side of the VS Mod.
+	 * The side of the Vintage Story Mod.
 	 */
 	private _side?: string | undefined;
 
 	/**
-	 * The authors of the VS Mod.
+	 * The authors of the Vintage Story Mod.
 	 */
 	private _authors: string[];
 
 	/**
-	 * The contributors of the VS Mod.
+	 * The contributors of the Vintage Story Mod.
 	 */
 	private _contributors: string[];
 
 	/**
-	 * The type of the VS Mod.
+	 * The type of the Vintage Story Mod.
 	 */
 	private _type?: string | undefined;
 
 	/**
-	 * If the VS Mod has an image.
+	 * If the Vintage Story Mod has an image.
 	 */
 	private _image: boolean;
 
 	/**
-	 * The state of the VS Mod.
+	 * The state of the Vintage Story Mod.
 	 */
 	private _state: VSModState;
 
@@ -113,84 +113,84 @@ export class VSMod {
 	// *********************************
 
 	/**
-	 * The id of the VS Instance this VS Mod is from.
+	 * The id of the Vintage Story Instance this Vintage Story Mod is from.
 	 */
 	public get vsInstanceId(): string {
 		return this._vsInstanceId;
 	}
 
 	/**
-	 * The name of the VS Mod.
+	 * The name of the Vintage Story Mod.
 	 */
 	public get name(): string {
 		return this._name;
 	}
 
 	/**
-	 * The modid of the VS Mod.
+	 * The modid of the Vintage Story Mod.
 	 */
 	public get modid(): string {
 		return this._modid;
 	}
 
 	/**
-	 * The version of the VS Mod.
+	 * The version of the Vintage Story Mod.
 	 */
 	public get version(): string {
 		return this._version;
 	}
 
 	/**
-	 * The file of the VS Mod.
+	 * The file of the Vintage Story Mod.
 	 */
 	public get file(): File {
 		return this._file;
 	}
 
 	/**
-	 * The description of the VS Mod.
+	 * The description of the Vintage Story Mod.
 	 */
 	public get description(): string | undefined {
 		return this._description;
 	}
 
 	/**
-	 * The side of the VS Mod.
+	 * The side of the Vintage Story Mod.
 	 */
 	public get side(): string | undefined {
 		return this._side;
 	}
 
 	/**
-	 * The authors of the VS Mod.
+	 * The authors of the Vintage Story Mod.
 	 */
 	public get authors(): string[] {
 		return this._authors;
 	}
 
 	/**
-	 * The contributors of the VS Mod.
+	 * The contributors of the Vintage Story Mod.
 	 */
 	public get contributors(): string[] {
 		return this._contributors;
 	}
 
 	/**
-	 * The type of the VS Mod.
+	 * The type of the Vintage Story Mod.
 	 */
 	public get type(): string | undefined {
 		return this._type;
 	}
 
 	/**
-	 * If the VS Mod has an image.
+	 * If the Vintage Story Mod has an image.
 	 */
 	public get image(): boolean {
 		return this._image;
 	}
 
 	/**
-	 * The state of the VS Mod.
+	 * The state of the Vintage Story Mod.
 	 */
 	public get state(): VSModState {
 		return this._state;
@@ -206,7 +206,7 @@ export class VSMod {
 }
 
 /**
- * State of the VS Mod.
+ * State of the Vintage Story Mod.
  */
 export enum VSModState {
 	INSTALLED = "installed",

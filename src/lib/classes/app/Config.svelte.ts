@@ -14,6 +14,7 @@ export type ConfigJSON = {
 	theme: (typeof Config.THEMES)[number]["key"];
 	locale: (typeof Config.LOCALES)[number]["key"];
 	scale: number;
+	vsVersionsPath: string;
 	vsInstancesPath: string;
 };
 
@@ -68,12 +69,14 @@ export class Config {
 		theme: (typeof Config.THEMES)[number]["key"];
 		locale: (typeof Config.LOCALES)[number]["key"];
 		scale: number;
+		vsVersionsDir: Directory;
 		vsInstancesDir: Directory;
 	}) {
 		this._file = config.file;
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
 		this._scale = $state(config.scale);
+		this._vsVersionsDir = $state(config.vsVersionsDir);
 		this._vsInstancesDir = $state(config.vsInstancesDir);
 	}
 
@@ -98,11 +101,15 @@ export class Config {
 			const scale: number = configJSON.scale || 1;
 			Config.applyScale(scale);
 
+			// Load the Vintage Story Versions dir.
+			const defaultVSVersionsPath = await App.info.dataDir.join("VSVersions");
+			const vsVersionsDir = await Directory.create(configJSON.vsVersionsPath || defaultVSVersionsPath);
+
 			// Load the Vintage Story Instances dir.
 			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
 			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
-			const config = new Config({ file, theme, locale, scale, vsInstancesDir });
+			const config = new Config({ file, theme, locale, scale, vsVersionsDir, vsInstancesDir });
 
 			await config.save();
 
@@ -136,6 +143,11 @@ export class Config {
 	 * Key of the selected scale.
 	 */
 	private _scale: number;
+
+	/**
+	 * Directory where Vintage Story Versions will be saved.
+	 */
+	private _vsVersionsDir: Directory;
 
 	/**
 	 * Directory where Instances will be saved.
@@ -175,7 +187,14 @@ export class Config {
 	}
 
 	/**
-	 * Directory where VS Instances will be saved.
+	 * Directory where Vintage Story Versions will be saved.
+	 */
+	public get vsVersionsDir(): Directory {
+		return this._vsVersionsDir;
+	}
+
+	/**
+	 * Directory where Vintage Story Instances will be saved.
 	 */
 	public get vsInstancesDir(): Directory {
 		return this._vsInstancesDir;
@@ -264,7 +283,21 @@ export class Config {
 	}
 
 	/**
-	 * Set a new directory for the VS Instances.
+	 * Set a new directory for the Vintage Story Versions.
+	 * @param dir - The directory.
+	 */
+	public async setVSVersionsDir(dir: Directory): Promise<void> {
+		try {
+			this._vsVersionsDir = dir;
+			await this.save();
+		} catch (err) {
+			error(`There was an error saving the new Vintage Story Versions path:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
+		}
+	}
+
+	/**
+	 * Set a new directory for the Vintage Story Instances.
 	 * @param dir - The directory.
 	 */
 	public async setVSInstancesDir(dir: Directory): Promise<void> {
@@ -272,8 +305,8 @@ export class Config {
 			this._vsInstancesDir = dir;
 			await this.save();
 		} catch (err) {
-			error(`There was an error saving the new VS Instances path:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new VS Instances path!");
+			error(`There was an error saving the new Vintage Story Instances path:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
 		}
 	}
 
@@ -300,6 +333,7 @@ export class Config {
 			theme: this._theme,
 			locale: this._locale,
 			scale: this._scale,
+			vsVersionsPath: this._vsVersionsDir.path,
 			vsInstancesPath: this._vsInstancesDir.path
 		};
 	}

@@ -1,11 +1,12 @@
 import { error } from "@tauri-apps/plugin-log";
 
-import type { RAPIVSVersion } from "$lib/classes/api/RAPIVSVersion.svelte";
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
+import type { VSVersion } from "./VSVersion.svelte";
+import { App } from "../App.svelte";
 
 /**
  * State of the Vintage Story Instance.
@@ -15,7 +16,6 @@ export enum VSInstanceState {
 	PLAYING_CLIENT = "playing_client",
 	PLAYING_SERVER = "playing_server",
 	BACKUPING = "backuping",
-	INSTALLING_VERSION = "installing_version",
 	DELETING = "deleting",
 	ERROR = "error"
 }
@@ -58,10 +58,9 @@ export class VSInstance {
 		id: string;
 		name: string;
 		dir: Directory;
-		versionDir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
-		version: string;
+		version: VSVersion;
 		mods: VSMod[];
 		backups: VSInstanceBackup[];
 		startParams: string;
@@ -78,7 +77,6 @@ export class VSInstance {
 		this._id = vsInstance.id;
 		this._name = $state(vsInstance.name);
 		this._dir = vsInstance.dir;
-		this._versionDir = vsInstance.versionDir;
 		this._dataDir = vsInstance.dataDir;
 		this._backupsDir = vsInstance.backupsDir;
 		this._version = $state(vsInstance.version);
@@ -105,10 +103,9 @@ export class VSInstance {
 		id: string;
 		name: string;
 		dir: Directory;
-		versionDir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
-		version: string;
+		version: VSVersion;
 		startParams: string;
 		backupsLimit: number;
 		backupsAuto: boolean;
@@ -124,7 +121,6 @@ export class VSInstance {
 				id: vsInstance.id,
 				name: vsInstance.name,
 				dir: vsInstance.dir,
-				versionDir: vsInstance.versionDir,
 				dataDir: vsInstance.dataDir,
 				backupsDir: vsInstance.backupsDir,
 				version: vsInstance.version,
@@ -169,12 +165,6 @@ export class VSInstance {
 	 * The directory of the Vintage Story Instance.
 	 */
 	private _dir: Directory;
-
-	/**
-	 * The version directory of the Vintage Story Instance.
-	 */
-	private _versionDir: Directory;
-
 	/**
 	 * The data directory of the Vintage Story Instance.
 	 */
@@ -188,7 +178,7 @@ export class VSInstance {
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	private _version: string;
+	private _version: VSVersion;
 
 	/**
 	 * The mods of the Vintage Story Instance.
@@ -285,13 +275,6 @@ export class VSInstance {
 	}
 
 	/**
-	 * The version directory of the Vintage Story Instance.
-	 */
-	public get versionDir(): Directory {
-		return this._versionDir;
-	}
-
-	/**
 	 * The data directory of the Vintage Story Instance.
 	 */
 	public get dataDir(): Directory {
@@ -308,14 +291,14 @@ export class VSInstance {
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	public get version(): string {
+	public get version(): VSVersion {
 		return this._version;
 	}
 
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	public set version(version: string) {
+	public set version(version: VSVersion) {
 		this._version = version;
 	}
 
@@ -482,24 +465,21 @@ export class VSInstance {
 	// **********************
 
 	/**
-	 * Installs a version on the Vintage Story Instance.
-	 * @param version The Rustory API Version to install.
+	 * Deleted the Vintage Story Instance.
+	 * @param deleteContents If the data, version... should be deleted.
 	 */
-	public async installVersion(version: RAPIVSVersion): Promise<void> {
+	public async delete(deleteContents: boolean): Promise<void> {
 		try {
-			this._state = VSInstanceState.INSTALLING_VERSION;
+			this._state = VSInstanceState.DELETING;
 
-			const zip = await version.download();
+			if (deleteContents) {
+				await this._dir.delete();
+			}
 
-			await this._versionDir.delete();
-			await this._versionDir.ensureExists();
-
-			await zip.extract(this._versionDir);
-
-			this._state = VSInstanceState.STOPPED;
+			await App.data.setVsInstances(App.data.vsInstances.filter((instance) => instance.id !== this._id));
 		} catch (err) {
-			error(`There was an error installing the Vintage Story Instance Version:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance Version!");
+			error(`There was an error deleting the Vintage Story Instance:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}
 
@@ -525,7 +505,7 @@ export class VSInstance {
 		return {
 			id: this._id,
 			name: this._name,
-			version: this._version,
+			version: this._version.version,
 			startParams: this._startParams,
 			backupsLimit: this._backupsLimit,
 			backupsAuto: this._backupsAuto,

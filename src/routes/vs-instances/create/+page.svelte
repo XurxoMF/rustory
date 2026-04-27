@@ -41,7 +41,7 @@
 	import { Debounced } from "runed";
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
-	import { debug, error } from "@tauri-apps/plugin-log";
+	import { error } from "@tauri-apps/plugin-log";
 	import { open } from "@tauri-apps/plugin-dialog";
 
 	import IconSelector from "@tabler/icons-svelte/icons/selector";
@@ -65,6 +65,7 @@
 	import { Switch } from "$lib/components/ui/switch";
 	import * as List from "$lib/components/ui/list";
 	import { toast } from "$lib/components/ui/sonner";
+	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 	// If the user is offline, redirect them to the homepage.
 	if (!App.info.isOnline) {
@@ -73,7 +74,7 @@
 	}
 
 	App.breadcrumbs.segments = [
-		{ label: "VS Instances", href: "/vs-instances" },
+		{ label: "Vintage Story Instances", href: "/vs-instances" },
 		{ label: "Create", href: "/vs-instances/create" }
 	];
 
@@ -203,9 +204,7 @@
 	/**
 	 * Create a new Vintage Story Instance.
 	 */
-	async function create() {
-		debug("Creating a new Vintage Story Instance... Checking errors...");
-
+	async function handleCreation(): Promise<void> {
 		const newErrors = {
 			name: await checkers.name(form.name),
 			dir: await checkers.dir(form.dir),
@@ -220,12 +219,7 @@
 
 		if (!Object.values(newErrors).some((errors) => errors.length > 0)) {
 			try {
-				debug("No errors found! Creating the new Vintage Story Instance...");
-
 				const id = crypto.randomUUID();
-
-				const versionPath = await form.dir!.join("Version");
-				const versionDir = await Directory.create(versionPath);
 
 				const dataPath = await form.dir!.join("Data");
 				const dataDir = await Directory.create(dataPath);
@@ -236,15 +230,28 @@
 				const filePath = await form.dir!.join("instance.json");
 				const file = await File.create(filePath);
 
+				let version = App.data.vsVersions.find((v) => v.version === form.version!.version);
+
+				if (version === undefined) {
+					const newVersionPath = await App.config.vsVersionsDir.join(form.version!.version);
+					const newVersionDir = await Directory.create(newVersionPath);
+					const newVersion = await VSVersion.create({ version: form.version!.version, dir: newVersionDir });
+
+					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
+
+					version = newVersion;
+
+					newVersion.install(form.version!);
+				}
+
 				const vsInstance = await VSInstance.create({
 					file,
 					id,
 					name: form.name,
 					dir: form.dir!,
-					versionDir,
 					dataDir,
 					backupsDir,
-					version: form.version!.version,
+					version,
 					startParams: form.startParams,
 					backupsLimit: form.backupsLimit,
 					backupsAuto: form.backupsAuto,
@@ -255,17 +262,11 @@
 					mesaGlThread: form.mesaGlThread
 				});
 
-				debug("Vintage Story Instance created! Saving the new Vintage Story Instance...");
-
 				await vsInstance.save();
 
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 
-				debug("Vintage Story Instance saved! Redirecting to the new Vintage Story Instance and installing it...");
-
-				toast.success("New Vintage Story Instance created successfully! Installing it...");
-
-				vsInstance.installVersion(form.version!);
+				toast.success("New Vintage Story Instance created successfully!");
 
 				goto(resolve(`/vs-instances/[slug]`, { slug: id }));
 			} catch (err) {
@@ -273,8 +274,6 @@
 				toast.error("There was an error creating the new Vintage Story Instance! Contact support if the problem persists.");
 			}
 		} else {
-			debug("Errors found! Cancelling creation...");
-
 			errors = newErrors;
 		}
 	}
@@ -340,7 +339,7 @@
 									<Command.Input placeholder="Select the VS Version..." />
 
 									<Command.List>
-										<Command.Empty>No VS Versions found.</Command.Empty>
+										<Command.Empty>No Vintage Story Versions found.</Command.Empty>
 
 										<Command.Group>
 											{#each versions as version (version.version)}
@@ -614,6 +613,6 @@
 			</Field.Set>
 		{/if}
 
-		<Button onclick={create}>Create</Button>
+		<Button onclick={() => handleCreation()}>Create</Button>
 	</Field.Group>
 </div>

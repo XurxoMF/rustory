@@ -1,7 +1,7 @@
 import { File } from "$lib/classes/utils/File.svelte";
 
 /**
- * VS Instance Backup.
+ * Vintage Story Instance Backup.
  */
 export class VSInstanceBackup {
 	// ***********************
@@ -29,27 +29,27 @@ export class VSInstanceBackup {
 	// *************************
 
 	/**
-	 * The id of the VS Instance Backup.
+	 * The id of the Vintage Story Instance Backup.
 	 */
 	private _id: string;
 
 	/**
-	 * The id of the VS Instance this VS Instance Backup is from.
+	 * The id of the Vintage Story Instance this VS Instance Backup is from.
 	 */
 	private _vsInstanceId: string;
 
 	/**
-	 * The date of the VS Instance Backup.
+	 * The date of the Vintage Story Instance Backup.
 	 */
 	private _date: number;
 
 	/**
-	 * The file of the VS Instance Backup.
+	 * The file of the Vintage Story Instance Backup.
 	 */
 	private _file: File;
 
 	/**
-	 * The state of the VS Instance Backup.
+	 * The state of the Vintage Story Instance Backup.
 	 */
 	private _state: VSInstanceBackupState;
 
@@ -58,35 +58,35 @@ export class VSInstanceBackup {
 	// *********************************
 
 	/**
-	 * The id of the VS Instance Backup.
+	 * The id of the Vintage Story Instance Backup.
 	 */
 	public get id(): string {
 		return this._id;
 	}
 
 	/**
-	 * The id of the VS Instance this VS Instance Backup is from.
+	 * The id of the Vintage Story Instance this VS Instance Backup is from.
 	 */
 	public get vsInstanceId(): string {
 		return this._vsInstanceId;
 	}
 
 	/**
-	 * The date of the VS Instance Backup.
+	 * The date of the Vintage Story Instance Backup.
 	 */
 	public get date(): number {
 		return this._date;
 	}
 
 	/**
-	 * The file of the VS Instance Backup.
+	 * The file of the Vintage Story Instance Backup.
 	 */
 	public get file(): File {
 		return this._file;
 	}
 
 	/**
-	 * The state of the VS Instance Backup.
+	 * The state of the Vintage Story Instance Backup.
 	 */
 	public get state(): VSInstanceBackupState {
 		return this._state;
@@ -102,7 +102,7 @@ export class VSInstanceBackup {
 }
 
 /**
- * State of the VS Instance Backup.
+ * State of the Vintage Story Instance Backup.
  */
 export enum VSInstanceBackupState {
 	CREATING = "creating",

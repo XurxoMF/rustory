@@ -5,6 +5,7 @@ import { error } from "@tauri-apps/plugin-log";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { Zip } from "$lib/classes/utils/Zip.svelte";
+import { File } from "$lib/classes/utils/File.svelte";
 
 /**
  * Represents a directory that can be created, deleted...
@@ -108,6 +109,34 @@ export class Directory {
 	}
 
 	/**
+	 * Checks if the directory exists or not.
+	 * @returns If the directory exists or not.
+	 */
+	public async exists(): Promise<boolean> {
+		try {
+			return await exists(this.path);
+		} catch (err) {
+			error(`There was an error chcking if the directory exists:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
+		}
+	}
+
+	/**
+	 * Set's the permissions of the directory and it's contents on unix systems. Does nothing on other systems.
+	 * @param mode The new permissions mode.
+	 */
+	public async setPermissions(mode: number): Promise<void> {
+		try {
+			await this.ensureExists();
+
+			await invoke("set_permissions", { path: this._path, mode });
+		} catch (err) {
+			error(`There was an error setting the directory permissions:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
+		}
+	}
+
+	/**
 	 * Checks if the directory is empty or not.
 	 * @returns If the directory is empty or not.
 	 */
@@ -120,6 +149,40 @@ export class Directory {
 			const files = await readDir(this.path);
 
 			return files.length === 0;
+		} catch (err) {
+			error(`There was an error ensuring the directory exists:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+		}
+	}
+
+	/**
+	 * Gets the contents of the directory.
+	 * @returns The files and directories of the directory.
+	 */
+	public async getContents(): Promise<{ files: File[]; directories: Directory[] }> {
+		try {
+			const directoryExists = await exists(this.path);
+
+			if (!directoryExists) return { files: [], directories: [] };
+
+			const entries = await readDir(this.path);
+
+			const files: File[] = [];
+			const directories: Directory[] = [];
+
+			for (const entry of entries) {
+				const newPath = await this.join(entry.name);
+
+				if (entry.isDirectory) {
+					const newDir = await Directory.create(newPath);
+					directories.push(newDir);
+				} else {
+					const newFile = await File.create(newPath);
+					files.push(newFile);
+				}
+			}
+
+			return { files, directories };
 		} catch (err) {
 			error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");

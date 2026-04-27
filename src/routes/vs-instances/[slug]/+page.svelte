@@ -8,7 +8,7 @@
 	let { params }: PageProps = $props();
 
 	App.breadcrumbs.segments = [
-		{ label: "VS Instances", href: "/vs-instances" },
+		{ label: "Vintage Story Instances", href: "/vs-instances" },
 		{ label: "Manage", href: `/vs-instances/${() => params.slug}` }
 	];
 </script>

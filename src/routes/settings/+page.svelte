@@ -103,9 +103,42 @@
 			<Field.Description>Customize the Vintage Story related settings.</Field.Description>
 
 			<Field.Group>
-				<!-- Vintage Story Isntances directory -->
+				<!-- Vintage Story Versions directory -->
 				<Field.Field>
-					<Field.Label for="vs-instances-dir">VS Instances Directory</Field.Label>
+					<Field.Label for="vs-versions-dir">Vintage Story Versions Directory</Field.Label>
+
+					<div class="flex gap-2">
+						<Button
+							id="vs-versions-dir"
+							size="icon"
+							variant="outline"
+							onclick={async () => {
+								const path = await open({
+									directory: true,
+									defaultPath: App.info.dataDir.path,
+									recursive: true,
+									title: "Select a directory"
+								});
+
+								if (path) {
+									const dir = await Directory.create(path);
+
+									App.config.setVSVersionsDir(dir);
+								}
+							}}
+						>
+							<IconFolder />
+						</Button>
+
+						<Input value={App.config.vsVersionsDir.path} readonly />
+					</div>
+
+					<Field.Description>Directory where Vintage Story Versions will be stored.</Field.Description>
+				</Field.Field>
+
+				<!-- Vintage Story Instances directory -->
+				<Field.Field>
+					<Field.Label for="vs-instances-dir">Vintage Story Instances Directory</Field.Label>
 
 					<div class="flex gap-2">
 						<Button

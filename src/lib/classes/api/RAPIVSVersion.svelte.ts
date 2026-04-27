@@ -206,6 +206,8 @@ export class RAPIVSVersion {
 			const url = App.info.osType === "windows" ? this.windows : App.info.osType === "linux" ? this.linux : this.macos;
 			const sha256 = App.info.osType === "windows" ? this.windowsSha : App.info.osType === "linux" ? this.linuxSha : this.macosSha;
 
+			await App.info.tempDir.ensureExists();
+
 			const downloadPath = await App.info.tempDir.join(`${this.version}-${sha256}-${App.info.osType}.zip.tmp`);
 
 			debug(`Downloading version ${this.version}...`);

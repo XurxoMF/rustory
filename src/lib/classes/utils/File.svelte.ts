@@ -1,6 +1,7 @@
 import { dirname } from "@tauri-apps/api/path";
 import { create, exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
 import { error } from "@tauri-apps/plugin-log";
+import { invoke } from "@tauri-apps/api/core";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
@@ -110,6 +111,21 @@ export class File {
 		} catch (err) {
 			error(`There was an error chcking if the file exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
+		}
+	}
+
+	/**
+	 * Set's the permissions of the file on unix systems. Does nothing on other systems.
+	 * @param mode The new permissions mode.
+	 */
+	public async setPermissions(mode: number): Promise<void> {
+		try {
+			await this.ensureExists();
+
+			await invoke("set_permissions", { path: this._path, mode });
+		} catch (err) {
+			error(`There was an error setting the file permissions:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
 		}
 	}
 
