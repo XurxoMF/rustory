@@ -36,7 +36,7 @@ get along, so we shut typescript up by casting `value` to `never`.
 		>
 			<SliderPrimitive.Range data-slot="slider-range" class={cn("absolute bg-primary select-none data-horizontal:h-full data-vertical:w-full")} />
 		</span>
-		{#each thumbItems as thumb (thumb)}
+		{#each thumbItems as thumb (thumb.index)}
 			<SliderPrimitive.Thumb
 				data-slot="slider-thumb"
 				index={thumb.index}
