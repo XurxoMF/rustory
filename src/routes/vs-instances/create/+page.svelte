@@ -39,9 +39,10 @@
 <script lang="ts">
 	import { onMount, tick } from "svelte";
 	import { Debounced } from "runed";
+
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
-	import { error } from "@tauri-apps/plugin-log";
+
 	import { open } from "@tauri-apps/plugin-dialog";
 
 	import IconSelector from "@tabler/icons-svelte/icons/selector";
@@ -50,10 +51,14 @@
 	import { cleanForPath } from "$lib/utils";
 
 	import { App } from "$lib/classes/App.svelte";
+
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
+
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 	import { File } from "$lib/classes/utils/File.svelte";
+
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
+	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 	import { H1, Leading } from "$lib/components/ui/typography";
 	import * as Command from "$lib/components/ui/command";
@@ -64,12 +69,11 @@
 	import { Slider } from "$lib/components/ui/slider";
 	import { Switch } from "$lib/components/ui/switch";
 	import * as List from "$lib/components/ui/list";
-	import { toast } from "$lib/components/ui/sonner";
-	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 	// If the user is offline, redirect them to the homepage.
 	if (!App.info.isOnline) {
-		toast.error("You can't create a Vintage Story Instance while offline.");
+		App.logger.warn("You can't create a Vintage Story Instance while offline.");
+		App.toaster.toast.warning("You can't create a Vintage Story Instance while offline.");
 		goto(resolve("/"));
 	}
 
@@ -191,8 +195,8 @@
 			versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
 			form.version = versions[0];
 		} catch (err) {
-			error(`There was an error loading the Vintage Story Versions from the Rustory API:\n${err}`);
-			toast.error("Error loading Vintage Story Versions from the Rustory API");
+			App.logger.error(`There was an error loading the Vintage Story Versions from the Rustory API:\n${err}`);
+			App.toaster.toast.error("Error loading Vintage Story Versions from the Rustory API");
 			goto(resolve("/vs-instances"));
 		}
 
@@ -219,6 +223,8 @@
 
 		if (!Object.values(newErrors).some((errors) => errors.length > 0)) {
 			try {
+				App.logger.info("Creating a new Vintage Story Instance...");
+
 				const id = crypto.randomUUID();
 
 				const dataPath = await form.dir!.join("Data");
@@ -240,6 +246,8 @@
 					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
 
 					version = newVersion;
+
+					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
 					newVersion.install(form.version!);
 				}
@@ -266,12 +274,14 @@
 
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 
-				toast.success("New Vintage Story Instance created successfully!");
+				App.logger.info("New Vintage Story Instance created successfully!");
+
+				App.toaster.toast.success("New Vintage Story Instance created successfully!");
 
 				goto(resolve(`/vs-instances/[slug]`, { slug: id }));
 			} catch (err) {
-				error(`There was an error creating the new Vintage Story Instance:\n${err}`);
-				toast.error("There was an error creating the new Vintage Story Instance! Contact support if the problem persists.");
+				App.logger.error(`There was an error creating the new Vintage Story Instance:\n${err}`);
+				App.toaster.toast.error("There was an error creating the new Vintage Story Instance! Contact support if the problem persists.");
 			}
 		} else {
 			errors = newErrors;
@@ -296,7 +306,7 @@
 
 						<Input bind:value={form.name} id="name" placeholder="Choose a name..." aria-invalid={errors.name.length > 0} />
 
-						{#if error.name.length > 0}
+						{#if errors.name.length > 0}
 							<Field.Error>
 								<List.Unordered>
 									{#each errors.name as error (error)}

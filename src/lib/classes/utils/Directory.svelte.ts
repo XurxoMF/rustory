@@ -1,9 +1,11 @@
 import { invoke } from "@tauri-apps/api/core";
 import { dirname, join } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
-import { error } from "@tauri-apps/plugin-log";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Zip } from "$lib/classes/utils/Zip.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
@@ -49,7 +51,7 @@ export class Directory {
 
 			return new Directory({ path, parent });
 		} catch (err) {
-			error(`There was an error creating the directory:\n${err}`);
+			App.logger.error(`There was an error creating the directory:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
 		}
 	}
@@ -99,11 +101,13 @@ export class Directory {
 	 */
 	public async ensureExists(): Promise<void> {
 		try {
+			App.logger.debug(`Ensuring the directory ${this.path} exists...`);
+
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) await mkdir(this.path, { recursive: true });
 		} catch (err) {
-			error(`There was an error ensuring the directory exists:\n${err}`);
+			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -114,9 +118,11 @@ export class Directory {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
+			App.logger.debug(`Checking if the directory ${this.path} exists...`);
+
 			return await exists(this.path);
 		} catch (err) {
-			error(`There was an error chcking if the directory exists:\n${err}`);
+			App.logger.error(`There was an error chcking if the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
 		}
 	}
@@ -127,11 +133,13 @@ export class Directory {
 	 */
 	public async setPermissions(mode: number): Promise<void> {
 		try {
+			App.logger.debug(`Setting the directory ${this.path} permissions to ${mode}...`);
+
 			await this.ensureExists();
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
-			error(`There was an error setting the directory permissions:\n${err}`);
+			App.logger.error(`There was an error setting the directory permissions:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
 		}
 	}
@@ -142,6 +150,8 @@ export class Directory {
 	 */
 	public async isEmpty(): Promise<boolean> {
 		try {
+			App.logger.debug(`Checking if the directory ${this.path} is empty...`);
+
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) return true;
@@ -150,7 +160,7 @@ export class Directory {
 
 			return files.length === 0;
 		} catch (err) {
-			error(`There was an error ensuring the directory exists:\n${err}`);
+			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -161,6 +171,8 @@ export class Directory {
 	 */
 	public async getContents(): Promise<{ files: File[]; directories: Directory[] }> {
 		try {
+			App.logger.debug(`Getting the contents of the directory ${this.path}...`);
+
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) return { files: [], directories: [] };
@@ -184,7 +196,7 @@ export class Directory {
 
 			return { files, directories };
 		} catch (err) {
-			error(`There was an error ensuring the directory exists:\n${err}`);
+			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -194,13 +206,15 @@ export class Directory {
 	 */
 	public async delete(): Promise<void> {
 		try {
+			App.logger.debug(`Deleting the directory ${this.path}...`);
+
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) return;
 
 			await remove(this.path, { recursive: true });
 		} catch (err) {
-			error(`There was an error deleting the directory:\n${err}`);
+			App.logger.error(`There was an error deleting the directory:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
 		}
 	}
@@ -224,6 +238,10 @@ export class Directory {
 	 */
 	public async compress(destination: Directory, name: string, compressionLevel: number): Promise<Zip> {
 		try {
+			App.logger.debug(
+				`Compressing the directory ${this.path} to ${destination.path} with name ${name} and a compression level of ${compressionLevel}...`
+			);
+
 			await destination.ensureExists();
 
 			const result: boolean = await invoke("compress_to_zip", {
@@ -234,7 +252,7 @@ export class Directory {
 			});
 
 			if (!result) {
-				error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
+				App.logger.error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
 				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 			}
 
@@ -244,7 +262,7 @@ export class Directory {
 
 			return zip;
 		} catch (err) {
-			error(`There was an error compressing the directory to a zip:\n${err}`);
+			App.logger.error(`There was an error compressing the directory to a zip:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 		}
 	}

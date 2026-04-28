@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
+
 	import { openUrl } from "@tauri-apps/plugin-opener";
 
 	import IconHeart from "@tabler/icons-svelte/icons/heart";

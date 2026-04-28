@@ -1,10 +1,12 @@
 import { dirname } from "@tauri-apps/api/path";
 import { create, exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
-import { error } from "@tauri-apps/plugin-log";
 import { invoke } from "@tauri-apps/api/core";
 
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
 /**
  * Represents a file that can be read, wirtten, deleted...
@@ -40,7 +42,7 @@ export class File {
 
 			return new File({ path, directory });
 		} catch (err) {
-			error(`There was an error creating the file:\n${err}`);
+			App.logger.error(`There was an error creating the file:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
 		}
 	}
@@ -90,13 +92,15 @@ export class File {
 	 */
 	public async ensureExists(): Promise<void> {
 		try {
+			App.logger.debug(`Ensuring the file ${this.path} exists...`);
+
 			await this.dir.ensureExists();
 
 			const fileExists = await exists(this.path);
 
 			if (!fileExists) await create(this.path);
 		} catch (err) {
-			error(`There was an error ensuring the directory exists:\n${err}`);
+			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -107,9 +111,11 @@ export class File {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
+			App.logger.debug(`Checking if the file ${this.path} exists...`);
+
 			return await exists(this.path);
 		} catch (err) {
-			error(`There was an error chcking if the file exists:\n${err}`);
+			App.logger.error(`There was an error chcking if the file exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
 		}
 	}
@@ -120,11 +126,13 @@ export class File {
 	 */
 	public async setPermissions(mode: number): Promise<void> {
 		try {
+			App.logger.debug(`Setting the file ${this.path} permissions to ${mode}...`);
+
 			await this.ensureExists();
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
-			error(`There was an error setting the file permissions:\n${err}`);
+			App.logger.error(`There was an error setting the file permissions:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
 		}
 	}
@@ -135,13 +143,15 @@ export class File {
 	 */
 	public async readText(): Promise<string> {
 		try {
+			App.logger.debug(`Reading the file ${this.path} as text...`);
+
 			await this.ensureExists();
 
 			const fileContents = await readTextFile(this.path);
 
 			return fileContents;
 		} catch (err) {
-			error(`There was an error reading the file:\n${err}`);
+			App.logger.error(`There was an error reading the file:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -152,11 +162,13 @@ export class File {
 	 */
 	public async writeText(text: string): Promise<void> {
 		try {
+			App.logger.debug(`Writing the file ${this.path} as text...`);
+
 			await this.ensureExists();
 
 			await writeTextFile(this.path, text);
 		} catch (err) {
-			error(`There was an error writing the file:\n${err}`);
+			App.logger.error(`There was an error writing the file:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}
@@ -167,6 +179,8 @@ export class File {
 	 */
 	public async readJSON<T>(): Promise<T> {
 		try {
+			App.logger.debug(`Reading the file ${this.path} as JSON...`);
+
 			await this.ensureExists();
 
 			const fileContents = await readTextFile(this.path);
@@ -175,7 +189,7 @@ export class File {
 
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
-			error(`There was an error reading the file:\n${err}`);
+			App.logger.error(`There was an error reading the file:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -186,11 +200,13 @@ export class File {
 	 */
 	public async writeJSON<T>(data: T): Promise<void> {
 		try {
+			App.logger.debug(`Writing the file ${this.path} as JSON...`);
+
 			await this.ensureExists();
 
 			await writeTextFile(this.path, JSON.stringify(data, null, 2));
 		} catch (err) {
-			error(`There was an error writing the file:\n${err}`);
+			App.logger.error(`There was an error writing the file:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}

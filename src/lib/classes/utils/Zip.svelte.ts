@@ -1,10 +1,12 @@
 import { invoke } from "@tauri-apps/api/core";
 import { dirname } from "@tauri-apps/api/path";
-import { error } from "@tauri-apps/plugin-log";
 import { exists } from "@tauri-apps/plugin-fs";
 
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 
 /**
  * Represents a zip file that can be extracted, deleted, read files inside it...
@@ -40,7 +42,7 @@ export class Zip {
 
 			return new Zip({ path, directory });
 		} catch (err) {
-			error(`There was an error creating the zip:\n${err}`);
+			App.logger.error(`There was an error creating the zip:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the zip!");
 		}
 	}
@@ -91,9 +93,11 @@ export class Zip {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
+			App.logger.debug(`Checking if the zip ${this.path} exists...`);
+
 			return await exists(this.path);
 		} catch (err) {
-			error(`There was an error chcking if the zip exists:\n${err}`);
+			App.logger.error(`There was an error chcking if the zip exists:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
 		}
 	}
@@ -104,16 +108,18 @@ export class Zip {
 	 */
 	public async extract(destination: Directory): Promise<void> {
 		try {
+			App.logger.debug(`Extracting the zip ${this.path} to ${destination.path}...`);
+
 			await destination.ensureExists();
 
 			const result: boolean = await invoke("extract_zip", { zipPath: this.path, destDir: destination.path });
 
 			if (!result) {
-				error(`There was an error extracting the zip and couldn't be extracted!`);
+				App.logger.error(`There was an error extracting the zip and couldn't be extracted!`);
 				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 			}
 		} catch (err) {
-			error(`There was an error extracting the zip:\n${err}`);
+			App.logger.error(`There was an error extracting the zip:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 		}
 	}

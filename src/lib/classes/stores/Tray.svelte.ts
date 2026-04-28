@@ -1,9 +1,9 @@
-import { error } from "@tauri-apps/plugin-log";
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, type TrayIconOptions } from "@tauri-apps/api/tray";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
 
 /**
  * App tray.
@@ -33,6 +33,8 @@ export class Tray {
 	 */
 	public static async init(): Promise<Tray> {
 		try {
+			App.logger.debug("Initializing tray...");
+
 			const menu = await Menu.new({
 				items: [
 					{
@@ -59,7 +61,7 @@ export class Tray {
 
 			return new Tray({ menu, options, icon });
 		} catch (err) {
-			error(`There was an error initializating the tray:\n${err}`);
+			App.logger.error(`There was an error initializating the tray:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
 		}
 	}

@@ -1,9 +1,9 @@
-import { error } from "@tauri-apps/plugin-log";
+import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
-import { baseLocale, isLocale, setLocale, type Locale } from "$lib/paraglide/runtime";
-
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
 import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
@@ -14,6 +14,7 @@ export type ConfigJSON = {
 	theme: (typeof Config.THEMES)[number]["key"];
 	locale: (typeof Config.LOCALES)[number]["key"];
 	scale: number;
+	logLevel: (typeof Config.LOG_LEVELS)[number]["key"];
 	vsVersionsPath: string;
 	vsInstancesPath: string;
 };
@@ -29,7 +30,7 @@ export class Config {
 	/**
 	 * Available themes.
 	 */
-	private static _THEMES: { key: "dark" | "light"; name: string }[] = [
+	private static _THEMES = [
 		{ key: "dark", name: "Dark" },
 		{ key: "light", name: "Light" }
 	] as const;
@@ -37,9 +38,20 @@ export class Config {
 	/**
 	 * Available locales.
 	 */
-	private static _LOCALES: { key: Locale; name: string }[] = [
+	private static _LOCALES = [
 		{ key: "en-EN", name: "English" },
 		{ key: "es-ES", name: "Spanish" }
+	] as const;
+
+	/**
+	 * Available log levels.
+	 */
+	private static _LOG_LEVELS = [
+		{ key: "trace", name: "Trace" },
+		{ key: "debug", name: "Debug" },
+		{ key: "info", name: "Info" },
+		{ key: "warn", name: "Warn" },
+		{ key: "error", name: "Error" }
 	] as const;
 
 	// *******************************
@@ -60,6 +72,13 @@ export class Config {
 		return Config._LOCALES;
 	}
 
+	/**
+	 * Available log levels.
+	 */
+	public static get LOG_LEVELS(): typeof Config._LOG_LEVELS {
+		return Config._LOG_LEVELS;
+	}
+
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
@@ -69,6 +88,7 @@ export class Config {
 		theme: (typeof Config.THEMES)[number]["key"];
 		locale: (typeof Config.LOCALES)[number]["key"];
 		scale: number;
+		logLevel: (typeof Config.LOG_LEVELS)[number]["key"];
 		vsVersionsDir: Directory;
 		vsInstancesDir: Directory;
 	}) {
@@ -76,6 +96,7 @@ export class Config {
 		this._theme = $state(config.theme);
 		this._locale = $state(config.locale);
 		this._scale = $state(config.scale);
+		this._logLevel = $state(config.logLevel);
 		this._vsVersionsDir = $state(config.vsVersionsDir);
 		this._vsInstancesDir = $state(config.vsInstancesDir);
 	}
@@ -85,6 +106,8 @@ export class Config {
 	 */
 	public static async init(): Promise<Config> {
 		try {
+			App.logger.debug("Initializing config...");
+
 			const path = await App.info.configDir.join("config.json");
 			const file = await File.create(path);
 			const configJSON = await file.readJSON<ConfigJSON>();
@@ -101,6 +124,9 @@ export class Config {
 			const scale: number = configJSON.scale || 1;
 			Config.applyScale(scale);
 
+			// Load the log level
+			const logLevel: (typeof Config.LOG_LEVELS)[number]["key"] = configJSON.logLevel || "info";
+
 			// Load the Vintage Story Versions dir.
 			const defaultVSVersionsPath = await App.info.dataDir.join("VSVersions");
 			const vsVersionsDir = await Directory.create(configJSON.vsVersionsPath || defaultVSVersionsPath);
@@ -109,13 +135,13 @@ export class Config {
 			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
 			const vsInstancesDir = await Directory.create(configJSON.vsInstancesPath || defaultVSInstancesPath);
 
-			const config = new Config({ file, theme, locale, scale, vsVersionsDir, vsInstancesDir });
+			const config = new Config({ file, theme, locale, scale, logLevel, vsVersionsDir, vsInstancesDir });
 
 			await config.save();
 
 			return config;
 		} catch (err) {
-			error(`There was an error initializating the config:\n${err}`);
+			App.logger.error(`There was an error initializating the config:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
@@ -143,6 +169,11 @@ export class Config {
 	 * Key of the selected scale.
 	 */
 	private _scale: number;
+
+	/**
+	 * Log level of the app.
+	 */
+	private _logLevel: (typeof Config.LOG_LEVELS)[number]["key"];
 
 	/**
 	 * Directory where Vintage Story Versions will be saved.
@@ -187,6 +218,13 @@ export class Config {
 	}
 
 	/**
+	 * Log level of the app.
+	 */
+	public get logLevel(): (typeof Config.LOG_LEVELS)[number]["key"] {
+		return this._logLevel;
+	}
+
+	/**
 	 * Directory where Vintage Story Versions will be saved.
 	 */
 	public get vsVersionsDir(): Directory {
@@ -213,14 +251,25 @@ export class Config {
 	 * @param locale - The key of the language to change to.
 	 */
 	public async setLocale(locale: (typeof Config.LOCALES)[number]["key"]): Promise<void> {
-		if (!locale) locale = baseLocale;
+		try {
+			App.logger.debug(`Setting locale to ${locale}...`);
 
-		if (isLocale(locale)) {
-			setLocale(locale, { reload: false });
+			if (!isLocale(locale)) {
+				App.logger.warn(`Locale ${locale} is not a valid locale! Setting to ${baseLocale}...`);
+
+				locale = baseLocale;
+			}
+
+			Config.applyLocale(locale);
+
 			this._locale = locale;
+
 			await this.save();
-		} else {
-			setLocale(baseLocale, { reload: false });
+
+			App.logger.debug(`Locale set to ${locale}!`);
+		} catch (err) {
+			App.logger.error(`There was an error setting the new locale:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new locale!");
 		}
 	}
 
@@ -229,6 +278,8 @@ export class Config {
 	 * @param locale The locale to apply.
 	 */
 	private static applyLocale(locale: (typeof Config.LOCALES)[number]["key"]): void {
+		App.logger.debug(`Applying locale ${locale}...`);
+
 		setLocale(locale, { reload: false });
 	}
 
@@ -238,11 +289,15 @@ export class Config {
 	 */
 	public async setTheme(theme: (typeof Config.THEMES)[number]["key"]): Promise<void> {
 		try {
+			App.logger.debug(`Setting theme to ${theme}...`);
+
 			Config.applyTheme(theme);
+
 			this._theme = theme;
+
 			await this.save();
 		} catch (err) {
-			error(`There was an error setting the new theme:\n${err}`);
+			App.logger.error(`There was an error setting the new theme:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
 		}
 	}
@@ -252,6 +307,8 @@ export class Config {
 	 * @param theme The theme to apply.
 	 */
 	private static applyTheme(theme: (typeof Config.THEMES)[number]["key"]): void {
+		App.logger.debug(`Applying theme ${theme}...`);
+
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark");
 		} else {
@@ -265,11 +322,15 @@ export class Config {
 	 */
 	public async setScale(scale: number): Promise<void> {
 		try {
+			App.logger.debug(`Setting scale to ${scale}...`);
+
 			Config.applyScale(scale);
+
 			this._scale = scale;
+
 			await this.save();
 		} catch (err) {
-			error(`There was an error setting the new scale:\n${err}`);
+			App.logger.error(`There was an error setting the new scale:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
 		}
 	}
@@ -279,7 +340,26 @@ export class Config {
 	 * @param scale The scale.
 	 */
 	private static applyScale(scale: number): void {
+		App.logger.debug(`Applying scale ${scale}...`);
+
 		document.documentElement.style.fontSize = `${scale}rem`;
+	}
+
+	/**
+	 * Set a new log level.
+	 * @param logLevel - The key of the log level to apply.
+	 */
+	public async setLogLevel(logLevel: (typeof Config.LOG_LEVELS)[number]["key"]): Promise<void> {
+		try {
+			App.logger.debug(`Setting log level to ${logLevel}...`);
+
+			this._logLevel = logLevel;
+
+			await this.save();
+		} catch (err) {
+			App.logger.error(`There was an error setting the new log level:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new log level!");
+		}
 	}
 
 	/**
@@ -288,10 +368,13 @@ export class Config {
 	 */
 	public async setVSVersionsDir(dir: Directory): Promise<void> {
 		try {
+			App.logger.debug(`Setting Vintage Story Versions directory to ${dir.path}...`);
+
 			this._vsVersionsDir = dir;
+
 			await this.save();
 		} catch (err) {
-			error(`There was an error saving the new Vintage Story Versions path:\n${err}`);
+			App.logger.error(`There was an error saving the new Vintage Story Versions path:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
 		}
 	}
@@ -302,10 +385,13 @@ export class Config {
 	 */
 	public async setVSInstancesDir(dir: Directory): Promise<void> {
 		try {
+			App.logger.debug(`Setting Vintage Story Instances directory to ${dir.path}...`);
+
 			this._vsInstancesDir = dir;
+
 			await this.save();
 		} catch (err) {
-			error(`There was an error saving the new Vintage Story Instances path:\n${err}`);
+			App.logger.error(`There was an error saving the new Vintage Story Instances path:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
 		}
 	}
@@ -315,11 +401,13 @@ export class Config {
 	 */
 	private async save(): Promise<void> {
 		try {
+			App.logger.debug("Saving config...");
+
 			const JSON = await this.exportToJSON();
 
 			this._file.writeJSON(JSON);
 		} catch (err) {
-			error(`There was an error saving the config:\n${err}`);
+			App.logger.error(`There was an error saving the config:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
 		}
 	}
@@ -333,6 +421,7 @@ export class Config {
 			theme: this._theme,
 			locale: this._locale,
 			scale: this._scale,
+			logLevel: this._logLevel,
 			vsVersionsPath: this._vsVersionsDir.path,
 			vsInstancesPath: this._vsInstancesDir.path
 		};

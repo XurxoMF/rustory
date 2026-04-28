@@ -1,11 +1,16 @@
 import { goto } from "$app/navigation";
 import { resolve } from "$app/paths";
+
 import type { Icon } from "@tabler/icons-svelte";
 
 import IconHome from "@tabler/icons-svelte/icons/home";
 import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 import IconPlus from "@tabler/icons-svelte/icons/plus";
 import IconSettings from "@tabler/icons-svelte/icons/settings";
+
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
 
 export class CommandItem {
 	// ***********************
@@ -189,36 +194,43 @@ export class Command {
 	 * Loads all the available commands.
 	 */
 	public static async init(): Promise<Command> {
-		const pages = [
-			new CommandItem({ value: "home", title: "Home", icon: IconHome, keywords: ["page", "home"], onselect: () => goto(resolve("/")) }),
-			new CommandItem({
-				value: "vs-instances",
-				title: "Vintage Story Instances",
-				icon: IconDeviceGamepad,
-				keywords: ["page", "instance", "vintage story"],
-				onselect: () => goto(resolve("/vs-instances"))
-			}),
-			new CommandItem({
-				value: "vs-instances-create",
-				title: "Create a Vintage Story Instance",
-				icon: IconPlus,
-				keywords: ["page", "instance", "vintage story", "create"],
-				onselect: () => goto(resolve("/vs-instances/create"))
-			}),
-			new CommandItem({
-				value: "settings",
-				title: "Settings",
-				icon: IconSettings,
-				keywords: ["page", "settings"],
-				onselect: () => goto(resolve("/settings"))
-			})
-		];
+		try {
+			App.logger.debug("Initializing command...");
 
-		const pagesGroup = new CommandGroup({ heading: "Pages", items: pages });
+			const pages = [
+				new CommandItem({ value: "home", title: "Home", icon: IconHome, keywords: ["page", "home"], onselect: () => goto(resolve("/")) }),
+				new CommandItem({
+					value: "vs-instances",
+					title: "Vintage Story Instances",
+					icon: IconDeviceGamepad,
+					keywords: ["page", "instance", "vintage story"],
+					onselect: () => goto(resolve("/vs-instances"))
+				}),
+				new CommandItem({
+					value: "vs-instances-create",
+					title: "Create a Vintage Story Instance",
+					icon: IconPlus,
+					keywords: ["page", "instance", "vintage story", "create"],
+					onselect: () => goto(resolve("/vs-instances/create"))
+				}),
+				new CommandItem({
+					value: "settings",
+					title: "Settings",
+					icon: IconSettings,
+					keywords: ["page", "settings"],
+					onselect: () => goto(resolve("/settings"))
+				})
+			];
 
-		return new Command({
-			groups: [pagesGroup]
-		});
+			const pagesGroup = new CommandGroup({ heading: "Pages", items: pages });
+
+			return new Command({
+				groups: [pagesGroup]
+			});
+		} catch (err) {
+			App.logger.error(`There was an error initializating the command:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the command!");
+		}
 	}
 
 	// *************************

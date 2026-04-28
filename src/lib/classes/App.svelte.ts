@@ -1,21 +1,24 @@
-import { exit } from "@tauri-apps/plugin-process";
+import { exit as exitApp } from "@tauri-apps/plugin-process";
 import { getCurrentWindow, Window } from "@tauri-apps/api/window";
-import { trace, info, warn, error, debug } from "@tauri-apps/plugin-log";
 
 import { sleep, padSides } from "$lib/utils";
 
-import { RustoryError, RustoryErrorCodes } from "./RustoryError.svelte";
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 import { Loader } from "$lib/classes/utils/Loader.svelte";
-import { Info } from "$lib/classes/app/Info.svelte";
-import { Config } from "$lib/classes/app/Config.svelte";
-import { Command } from "$lib/classes/app/Command.svelte";
-import { Hotkeys } from "$lib/classes/app/Hotkeys.svelte";
-import { Breadcrumbs } from "$lib/classes/app/Breadcrumbs.svelte";
-import { Reloader } from "$lib/classes/app/Reloader.svelte";
-import { Request } from "$lib/classes/app/Request.svelte";
-import { Confirm } from "$lib/classes/app/Confirm.svelte";
-import { Data } from "$lib/classes/app/Data.svelte";
-import { Tray } from "$lib/classes/app/Tray.svelte";
+import { Toaster } from "$lib/classes/utils/Toaster.svelte";
+
+import { Info } from "$lib/classes/stores/Info.svelte";
+import { Config } from "$lib/classes/stores/Config.svelte";
+import { Command } from "$lib/classes/stores/Command.svelte";
+import { Hotkeys } from "$lib/classes/stores/Hotkeys.svelte";
+import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+import { Reloader } from "$lib/classes/stores/Reloader.svelte";
+import { Request } from "$lib/classes/stores/Request.svelte";
+import { Confirm } from "$lib/classes/stores/Confirm.svelte";
+import { Data } from "$lib/classes/stores/Data.svelte";
+import { Tray } from "$lib/classes/stores/Tray.svelte";
 
 /**
  * App manager. Used to initialize and store the different parts of the app.
@@ -31,9 +34,19 @@ export class App {
 	private static _isInitialized: boolean = false;
 
 	/**
+	 * App logger.
+	 */
+	private static _logger: Logger = new Logger();
+
+	/**
 	 * App loader.
 	 */
 	private static _loader: Loader = new Loader();
+
+	/**
+	 * App toaster.
+	 */
+	private static _toaster: Toaster = new Toaster();
 
 	/**
 	 * App window.
@@ -102,10 +115,24 @@ export class App {
 	}
 
 	/**
+	 * App logger.
+	 */
+	public static get logger(): Logger {
+		return App._logger;
+	}
+
+	/**
 	 * App loader.
 	 */
 	public static get loader(): Loader {
 		return App._loader;
+	}
+
+	/**
+	 * App toaster.
+	 */
+	public static get toaster(): Toaster {
+		return App._toaster;
 	}
 
 	/**
@@ -210,23 +237,35 @@ export class App {
 			// If the App is already initialized, do nothing.
 			if (App.isInitialized) return;
 
+			App._logger.info("Initializing app...");
+
+			App._logger.info("Forwarding console logs to the logger...");
+
 			// Forward webview console logs to the logger.
-			App.forwardConsole("log", trace);
-			App.forwardConsole("debug", debug);
-			App.forwardConsole("info", info);
-			App.forwardConsole("warn", warn);
-			App.forwardConsole("error", error);
+			App.forwardConsole("log", App._logger.trace);
+			App.forwardConsole("debug", App._logger.debug);
+			App.forwardConsole("info", App._logger.info);
+			App.forwardConsole("warn", App._logger.warn);
+			App.forwardConsole("error", App._logger.error);
+
+			App._logger.info("Saving the app window...");
 
 			// Save the app window.
 			App._window = getCurrentWindow();
+
+			App._logger.info("Initializing basic modules...");
 
 			// Initialize the required modules.
 			App._info = await Info.init();
 			App._config = await Config.init();
 			App._tray = await Tray.init();
 
+			App._logger.info("Showing window...");
+
 			// Show the window and wait a few ms for it to show up.
-			await App.window.show();
+			await App._window.show();
+
+			App._logger.info("Initializing heavy and data modules...");
 
 			// Initialize the heavy loading modules.
 			App._command = await Command.init();
@@ -241,18 +280,18 @@ export class App {
 			await App.logWelcome();
 
 			// Start preloading the UI behind the loader.
-			App.loader.loadApp = true;
+			App._loader.loadApp = true;
 
 			// Wait a few miliseconds for the UI to finish loading.
 			await sleep(500);
 
 			// Hide the loader.
-			App.loader.showLoader = false;
+			App._loader.showLoader = false;
 
 			App._isInitialized = true;
 		} catch (err) {
-			error(`There was an error initializating the app:\n${err}`);
-			exit(1);
+			App._logger.error(`There was an error initializating the app:\n${err}`);
+			App.exit(1);
 		}
 	}
 
@@ -268,10 +307,19 @@ export class App {
 	// *  STATIC METHODS  *
 	// ********************
 
+	public static async exit(code: number): Promise<void> {
+		App._logger.info("Exiting the app...");
+
+		await exitApp(code);
+	}
+
 	/**
 	 * Extends the console log methods to log to both the log files and the web console.
 	 */
-	private static forwardConsole(fnName: "log" | "debug" | "info" | "warn" | "error", logger: (message: string) => Promise<void>) {
+	private static forwardConsole(
+		fnName: "log" | "debug" | "info" | "warn" | "error",
+		logger: (message: string, args?: { file: string; line: number }) => Promise<void>
+	) {
 		const original = console[fnName];
 		console[fnName] = (message) => {
 			original(message);
@@ -291,18 +339,24 @@ export class App {
 		const netSdksInfo: string = `.NET SDKs: ${App.info.netSdks.join(", ")}`;
 		const netRuntimes: string = `.NET Runtimes: ${App.info.netRuntimes.join(", ")}`;
 
-		info(SEPARATOR);
-		info(`| ${padSides("    ____  __  _________________  ______  __", WIDTH)} |`);
-		info(`| ${padSides("   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️", WIDTH)} |`);
-		info(`| ${padSides("  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF", WIDTH)} |`);
-		info(`| ${padSides(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${VERSION}`, WIDTH)} |`);
-		info(`| ${padSides("/_/ |_|\\____//____//_/  \\____/_/ |_| /_/", WIDTH)} |`);
-		info(SEPARATOR);
-		info(`| ${padSides(osInfo, WIDTH)} |`);
-		info(SEPARATOR);
-		info(`| ${padSides(netSdksInfo, WIDTH)} |`);
-		info(`| ${padSides(netRuntimes, WIDTH)} |`);
-		info(SEPARATOR);
+		App._logger.info("");
+		App._logger.info("");
+		App._logger.info(SEPARATOR);
+		App._logger.info(`| ${padSides("    ____  __  _________________  ______  __", WIDTH)} |`);
+		App._logger.info(
+			`| ${padSides("   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️", WIDTH)} |`
+		);
+		App._logger.info(`| ${padSides("  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF", WIDTH)} |`);
+		App._logger.info(`| ${padSides(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${VERSION}`, WIDTH)} |`);
+		App._logger.info(`| ${padSides("/_/ |_|\\____//____//_/  \\____/_/ |_| /_/", WIDTH)} |`);
+		App._logger.info(SEPARATOR);
+		App._logger.info(`| ${padSides(osInfo, WIDTH)} |`);
+		App._logger.info(SEPARATOR);
+		App._logger.info(`| ${padSides(netSdksInfo, WIDTH)} |`);
+		App._logger.info(`| ${padSides(netRuntimes, WIDTH)} |`);
+		App._logger.info(SEPARATOR);
+		App._logger.info("");
+		App._logger.info("");
 	}
 
 	// **********************

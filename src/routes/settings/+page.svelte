@@ -4,7 +4,9 @@
 	import IconFolder from "@tabler/icons-svelte/icons/folder";
 
 	import { App } from "$lib/classes/App.svelte";
-	import { Config } from "$lib/classes/app/Config.svelte";
+
+	import { Config } from "$lib/classes/stores/Config.svelte";
+
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 
 	import { H1, Leading } from "$lib/components/ui/typography";
@@ -22,6 +24,7 @@
 
 <div class="mt-6">
 	<Field.Group>
+		<!-- UI Settings -->
 		<Field.Set>
 			<Field.Legend>UI settings</Field.Legend>
 			<Field.Description>Customize the UI.</Field.Description>
@@ -71,7 +74,7 @@
 							</Select.Content>
 						</Select.Root>
 
-						<Field.Description>Change the theme of the app.</Field.Description>
+						<Field.Description>Change the theme of the app. Requires a restart.</Field.Description>
 					</Field.Field>
 				</div>
 
@@ -98,6 +101,40 @@
 
 		<Field.Separator />
 
+		<!-- APP Settings -->
+		<Field.Set>
+			<Field.Legend>APP settings</Field.Legend>
+			<Field.Description>Customize the APP behaviour.</Field.Description>
+
+			<Field.Group>
+				<!-- Log level -->
+				<Field.Field>
+					<Field.Label for="log-level">Log level</Field.Label>
+
+					<Select.Root
+						type="single"
+						value={App.config.logLevel}
+						onValueChange={(value) => App.config.setLogLevel(value as (typeof Config.LOG_LEVELS)[number]["key"])}
+					>
+						<Select.Trigger id="log-level">{Config.LOG_LEVELS.find(({ key }) => key === App.config.logLevel)?.name || "Log level"}</Select.Trigger>
+
+						<Select.Content>
+							<Select.Group>
+								{#each Config.LOG_LEVELS as { key, name } (key)}
+									<Select.Item value={key}>{name}</Select.Item>
+								{/each}
+							</Select.Group>
+						</Select.Content>
+					</Select.Root>
+
+					<Field.Description>Change the log level of the app. Requires a restart.</Field.Description>
+				</Field.Field>
+			</Field.Group>
+		</Field.Set>
+
+		<Field.Separator />
+
+		<!-- Vintage Story Settings -->
 		<Field.Set>
 			<Field.Legend>Vintage Story settings</Field.Legend>
 			<Field.Description>Customize the Vintage Story related settings.</Field.Description>

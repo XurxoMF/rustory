@@ -1,3 +1,7 @@
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 /**
  * Structure of the queue.
  */
@@ -29,7 +33,14 @@ export class Confirm {
 	}
 
 	public static async init(): Promise<Confirm> {
-		return new Confirm();
+		try {
+			App.logger.debug("Initializing confirm...");
+
+			return new Confirm();
+		} catch (err) {
+			App.logger.error(`There was an error initializating the confirm:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the confirm!");
+		}
 	}
 
 	// *************************
@@ -68,7 +79,6 @@ export class Confirm {
 	// **********************
 
 	public ask(question: Omit<ConfirmQuestion, "resolve">): Promise<boolean> {
-		console.log(question);
 		return new Promise((resolve) => {
 			this.queue.push({
 				title: question.title,

@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { ComponentProps } from "svelte";
 
+	import { resolve } from "$app/paths";
+
 	import RustoryIcon from "$assets/icon.png";
 
 	import { App } from "$lib/classes/App.svelte";
@@ -9,7 +11,6 @@
 
 	import AppSidebarMain from "./app-sidebar-main.svelte";
 	import AppSidebarSecondary from "./app-sidebar-secondary.svelte";
-	import { resolve } from "$app/paths";
 
 	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
 </script>

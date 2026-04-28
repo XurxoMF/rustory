@@ -1,12 +1,11 @@
-import { debug, error } from "@tauri-apps/plugin-log";
-
 import { App } from "$lib/classes/App.svelte";
-import type { RAPIVSVersion } from "$lib/classes/api/RAPIVSVersion.svelte";
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
-import { toast } from "$lib/components/ui/sonner";
+import type { RAPIVSVersion } from "$lib/classes/api/RAPIVSVersion.svelte";
 
 /**
  * State of the Vintage Story Version.
@@ -53,7 +52,7 @@ export class VSVersion {
 				dir: vsInstance.dir
 			});
 		} catch (err) {
-			error(`There was an error creating the Vintage Story Version:\n${err}`);
+			App.logger.error(`There was an error creating the Vintage Story Version:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Version!");
 		}
 	}
@@ -119,6 +118,8 @@ export class VSVersion {
 	 */
 	public static async getExecutable(dir: Directory): Promise<File> {
 		try {
+			App.logger.debug(`Getting executable path...`);
+
 			const contents = await dir.getContents();
 
 			let executablePath: string | undefined;
@@ -126,7 +127,7 @@ export class VSVersion {
 			if (App.info.osType === "windows") {
 				for (const file of contents.files) {
 					if (file.path.endsWith("Vintagestory.exe")) {
-						debug(`Found executable: ${file.path}`);
+						App.logger.debug(`Found executable: ${file.path}`);
 						executablePath = file.path;
 						break;
 					}
@@ -136,11 +137,11 @@ export class VSVersion {
 			if (App.info.osType === "linux") {
 				for (const file of contents.files) {
 					if (file.path.endsWith("Vintagestory")) {
-						debug(`Found executable: ${file.path}`);
+						App.logger.debug(`Found executable: ${file.path}`);
 						executablePath = file.path;
 						break;
 					} else if (file.path.endsWith("Vintagestory.exe")) {
-						debug(`Found executable: ${file.path}`);
+						App.logger.debug(`Found executable: ${file.path}`);
 						executablePath = file.path;
 						break;
 					}
@@ -150,25 +151,27 @@ export class VSVersion {
 			if (App.info.osType === "macos") {
 				for (const file of contents.files) {
 					if (file.path.endsWith("Vintagestory")) {
-						debug(`Found executable: ${file.path}`);
+						App.logger.debug(`Found executable: ${file.path}`);
 						executablePath = file.path;
 						break;
 					} else if (file.path.endsWith("Vintagestory.exe")) {
-						debug(`Found executable: ${file.path}`);
+						App.logger.debug(`Found executable: ${file.path}`);
 						executablePath = file.path;
 						break;
 					}
 				}
 			}
 
-			if (!executablePath)
+			if (!executablePath) {
+				App.logger.error("There is no executable for this Vintage Story Version and the user platform!");
 				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There is no executable for this Vintage Story Version and the user platform!");
+			}
 
 			const executable = await File.create(executablePath);
 
 			return executable;
 		} catch (err) {
-			error(`There was an error getting the executable path:\n${err}`);
+			App.logger.error(`There was an error getting the executable path:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error getting the executable path!");
 		}
 	}
@@ -183,6 +186,8 @@ export class VSVersion {
 	 */
 	public async install(version: RAPIVSVersion): Promise<void> {
 		try {
+			App.logger.debug(`Installing Vintage Story Version ${this._version}...`);
+
 			this._state = VSVersionState.INSTALLING;
 
 			const zip = await version.download();
@@ -192,11 +197,13 @@ export class VSVersion {
 
 			await zip.extract(this._dir);
 
+			App.logger.debug(`Finished installing Vintage Story Version ${this._version}!`);
+
 			this._state = VSVersionState.INSTALLED;
 
-			toast.success(`Vintage Story Version ${this._version} installed successfully!`);
+			App.toaster.toast.success(`Vintage Story Version ${this._version} installed successfully!`);
 		} catch (err) {
-			error(`There was an error installing the Vintage Story Version:\n${err}`);
+			App.logger.error(`There was an error installing the Vintage Story Version:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Version!");
 		}
 	}
@@ -206,11 +213,13 @@ export class VSVersion {
 	 */
 	public async delete(): Promise<void> {
 		try {
+			App.logger.debug(`Deleting the Vintage Story Version ${this._version}...`);
+
 			this._state = VSVersionState.DELETING;
 
 			await this._dir.delete();
 		} catch (err) {
-			error(`There was an error deleting the Vintage Story Version:\n${err}`);
+			App.logger.error(`There was an error deleting the Vintage Story Version:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Version!");
 		}
 	}

@@ -1,12 +1,14 @@
-import { error } from "@tauri-apps/plugin-log";
 import { invoke } from "@tauri-apps/api/core";
 
 import { App } from "$lib/classes/App.svelte";
-import { VSInstance, type VSInstanceJSON } from "$lib/classes/vs/VSInstance.svelte";
-import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
+
+import { VSInstance, type VSInstanceJSON } from "$lib/classes/vs/VSInstance.svelte";
+import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 /**
  * JSON of the data.
@@ -44,9 +46,13 @@ export class Data {
 	 */
 	public static async init(): Promise<Data> {
 		try {
+			App.logger.debug("Initializing data...");
+
 			const path = await App.info.dataDir.join("data.json");
 			const file = await File.create(path);
 			const dataJSON = await file.readJSON<DataJSON>();
+
+			App.logger.debug("Loading Vintage Story Versions...");
 
 			let vsVersions: VSVersion[] = [];
 
@@ -70,6 +76,10 @@ export class Data {
 
 				vsVersions = loadedVsVersions;
 			}
+
+			App.logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions.`);
+
+			App.logger.debug("Loading Vintage Story Instances...");
 
 			let vsInstances: VSInstance[] = [];
 
@@ -124,13 +134,15 @@ export class Data {
 				vsInstances = loadedVsInstances;
 			}
 
+			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances.`);
+
 			return new Data({
 				file,
 				vsVersions,
 				vsInstances
 			});
 		} catch (err) {
-			error(`There was an error initializating the data:\n${err}`);
+			App.logger.error(`There was an error initializating the data:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
 		}
 	}
@@ -196,7 +208,7 @@ export class Data {
 			this._vsVersions = vsVersions;
 			await this.save();
 		} catch (err) {
-			error(`There was an error saving the new Vintage Story Versions:\n${err}`);
+			App.logger.error(`There was an error saving the new Vintage Story Versions:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions!");
 		}
 	}
@@ -210,7 +222,7 @@ export class Data {
 			this._vsInstances = vsInstances;
 			await this.save();
 		} catch (err) {
-			error(`There was an error saving the new Vintage Story Instances:\n${err}`);
+			App.logger.error(`There was an error saving the new Vintage Story Instances:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances!");
 		}
 	}
@@ -224,7 +236,7 @@ export class Data {
 
 			this._file.writeJSON(JSON);
 		} catch (err) {
-			error(`There was an error saving the data:\n${err}`);
+			App.logger.error(`There was an error saving the data:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
 		}
 	}

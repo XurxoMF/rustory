@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import { cn } from "$lib/utils";
-
 	import IconWorld from "@tabler/icons-svelte/icons/world";
 	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
 	import IconMinus from "@tabler/icons-svelte/icons/minus";
 	import IconMaximize from "@tabler/icons-svelte/icons/maximize";
 	import IconX from "@tabler/icons-svelte/icons/x";
+
+	import { cn } from "$lib/utils";
 
 	import { App } from "$lib/classes/App.svelte";
 

@@ -1,6 +1,6 @@
-import { error } from "@tauri-apps/plugin-log";
+import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
 
 /**
  * Each breadcrumb segment. It's the same as the path segments.
@@ -40,9 +40,11 @@ export class Breadcrumbs {
 	 */
 	public static async init(): Promise<Breadcrumbs> {
 		try {
+			App.logger.debug("Initializing breadcrumbs...");
+
 			return new Breadcrumbs();
 		} catch (err) {
-			error(`There was an error initializating the breadcrumbs:\n${err}`);
+			App.logger.error(`There was an error initializating the breadcrumbs:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
 		}
 	}

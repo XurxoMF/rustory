@@ -1,12 +1,13 @@
-import { error } from "@tauri-apps/plugin-log";
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
+import { Directory } from "$lib/classes/utils/Directory.svelte";
+import { File } from "$lib/classes/utils/File.svelte";
 
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import type { VSMod } from "$lib/classes/vs/VSMod.svelte";
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
-import { Directory } from "$lib/classes/utils/Directory.svelte";
-import { File } from "$lib/classes/utils/File.svelte";
-import type { VSVersion } from "./VSVersion.svelte";
-import { App } from "../App.svelte";
+import type { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 /**
  * State of the Vintage Story Instance.
@@ -137,7 +138,7 @@ export class VSInstance {
 				state: VSInstanceState.STOPPED
 			});
 		} catch (err) {
-			error(`There was an error creating the Vintage Story Instance:\n${err}`);
+			App.logger.error(`There was an error creating the Vintage Story Instance:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
 		}
 	}
@@ -465,20 +466,24 @@ export class VSInstance {
 	// **********************
 
 	/**
-	 * Deleted the Vintage Story Instance.
-	 * @param deleteContents If the data, version... should be deleted.
+	 * Deletes the Vintage Story Instance.
+	 *
+	 * NOTE: This doesn't delete the Instance from the App data. You must remove it manually.
+	 * @param deleteContents If the data, backups... should be deleted.
 	 */
 	public async delete(deleteContents: boolean): Promise<void> {
 		try {
+			App.logger.debug(`Deleting the Vintage Story Instance ${this._name}...`);
+
 			this._state = VSInstanceState.DELETING;
 
 			if (deleteContents) {
+				App.logger.debug(`Deleting the contents of the Vintage Story Instance...`);
+
 				await this._dir.delete();
 			}
-
-			await App.data.setVsInstances(App.data.vsInstances.filter((instance) => instance.id !== this._id));
 		} catch (err) {
-			error(`There was an error deleting the Vintage Story Instance:\n${err}`);
+			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}
@@ -488,11 +493,13 @@ export class VSInstance {
 	 */
 	public async save(): Promise<void> {
 		try {
+			App.logger.debug(`Saving the Vintage Story Instance ${this._name}...`);
+
 			const JSON = await this.exportToJSON();
 
 			this._file.writeJSON(JSON);
 		} catch (err) {
-			error(`There was an error saving the Vintage Story Instance:\n${err}`);
+			App.logger.error(`There was an error saving the Vintage Story Instance:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
 		}
 	}

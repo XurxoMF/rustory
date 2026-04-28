@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { error } from "@tauri-apps/plugin-log";
-
 	import { App } from "$lib/classes/App.svelte";
-	import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+
+	import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
 	import { H1, Leading } from "$lib/components/ui/typography";
@@ -10,7 +10,6 @@
 	import * as Dialog from "$lib/components/ui/dialog";
 	import { Checkbox } from "$lib/components/ui/checkbox";
 	import * as Field from "$lib/components/ui/field";
-	import { toast } from "$lib/components/ui/sonner";
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: "/vs-instances" }];
 
@@ -21,13 +20,19 @@
 	 */
 	async function handleDeletetion(vsInstance: VSInstance): Promise<void> {
 		try {
+			App.logger.info(`Deleting the Vintage Story Instance ${vsInstance.name}...`);
+
 			await vsInstance.delete(deleteContents);
 
-			toast.success("Vintage Story Instance deleted successfully!");
+			await App.data.setVsInstances(App.data.vsInstances.filter((i) => i.id !== vsInstance.id));
+
+			App.logger.info("Vintage Story Instance deleted successfully!");
+
+			App.toaster.toast.success("Vintage Story Instance deleted successfully!");
 
 			deleteContents = false;
 		} catch (err) {
-			error(`There was an error deleting the Vintage Story Instance:\n${err}`);
+			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}

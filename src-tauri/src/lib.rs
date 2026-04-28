@@ -1,8 +1,10 @@
 mod commands;
 
 use chrono::Local;
+
 use tauri::Manager;
-use tauri_plugin_log::log::Level;
+
+use tauri_plugin_log::log::{Level, LevelFilter};
 use tauri_plugin_window_state::StateFlags;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -21,12 +23,10 @@ pub fn run() {
         }));
     }
 
-    // Init CLI plugin
-    builder = builder.plugin(tauri_plugin_cli::init());
-
     // Init logger plugin
     builder = builder.plugin(
         tauri_plugin_log::Builder::new()
+            .level(read_log_level())
             .rotation_strategy(tauri_plugin_log::RotationStrategy::KeepAll)
             .format(|out, message, record| {
                 let level_icon = match record.level() {
@@ -46,6 +46,9 @@ pub fn run() {
             })
             .build(),
     );
+
+    // Init CLI plugin
+    builder = builder.plugin(tauri_plugin_cli::init());
 
     // Init updater plugin
     builder = builder.plugin(tauri_plugin_updater::Builder::new().build());
@@ -105,4 +108,34 @@ pub fn run() {
         ])
         .run(tauri::generate_context!())
         .expect("Error running Rustory");
+}
+
+fn read_log_level() -> LevelFilter {
+    let default_level = LevelFilter::Info;
+
+    let config_dir = match dirs::config_dir() {
+        Some(dir) => dir,
+        None => return default_level,
+    };
+
+    let path = config_dir.join("xyz.rustory.app").join("config.json");
+
+    let contents = match std::fs::read_to_string(path) {
+        Ok(c) => c,
+        Err(_) => return default_level,
+    };
+
+    let json: serde_json::Value = match serde_json::from_str(&contents) {
+        Ok(v) => v,
+        Err(_) => return default_level,
+    };
+
+    match json.get("logLevel").and_then(|v| v.as_str()) {
+        Some("trace") => LevelFilter::Trace,
+        Some("debug") => LevelFilter::Debug,
+        Some("info") => LevelFilter::Info,
+        Some("warn") => LevelFilter::Warn,
+        Some("error") => LevelFilter::Error,
+        _ => default_level,
+    }
 }

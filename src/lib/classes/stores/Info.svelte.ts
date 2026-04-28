@@ -1,4 +1,3 @@
-import { error } from "@tauri-apps/plugin-log";
 import {
 	arch as getOsArch,
 	family as getOsFamily,
@@ -15,7 +14,10 @@ import { defaultWindowIcon } from "@tauri-apps/api/app";
 import type { Image } from "@tauri-apps/api/image";
 import { Command } from "@tauri-apps/plugin-shell";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/RustoryError.svelte";
+import { App } from "$lib/classes/App.svelte";
+
+import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 
 /**
@@ -81,11 +83,17 @@ export class Info {
 	 */
 	public static async init(): Promise<Info> {
 		try {
+			App.logger.debug("Initializing info...");
+
+			App.logger.debug("Loading app info...");
+
 			// Load basic info.
 			const name = await app.getName();
 			const capitalizedName = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
 			const version = await app.getVersion();
 			const icon = await defaultWindowIcon();
+
+			App.logger.debug("Loading OS info...");
 
 			// Load system info.
 			const osArch = getOsArch();
@@ -93,6 +101,8 @@ export class Info {
 			const osPlatform = getOsPlatform();
 			const osType = getOsType();
 			const osVersion = getOsVersion();
+
+			App.logger.debug("Loading .NET info...");
 
 			// Load .NET SDKs info
 			const netSdksCommand = await Command.create("check-dotnet", ["--list-sdks"]).execute();
@@ -110,6 +120,8 @@ export class Info {
 				.filter((line) => line.startsWith("Microsoft.NETCore.App"))
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
+
+			App.logger.debug("Loading paths...");
 
 			// Load config path
 			const configDirectory = await path.appConfigDir();
@@ -150,7 +162,7 @@ export class Info {
 				logsDir
 			});
 		} catch (err) {
-			error(`There was an error initializating the info:\n${err}`);
+			App.logger.error(`There was an error initializating the info:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
 		}
 	}
