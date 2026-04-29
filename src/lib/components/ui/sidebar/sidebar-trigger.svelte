@@ -4,6 +4,7 @@
 	import { cn } from "$lib/utils.js";
 	import type { ComponentProps } from "svelte";
 	import { useSidebar } from "./context.svelte.js";
+	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	let {
 		ref = $bindable(null),
@@ -17,20 +18,31 @@
 	const sidebar = useSidebar();
 </script>
 
-<Button
-	bind:ref
-	data-sidebar="trigger"
-	data-slot="sidebar-trigger"
-	variant="ghost"
-	size="icon-sm"
-	class={cn("cn-sidebar-trigger", className)}
-	type="button"
-	onclick={(e) => {
-		onclick?.(e);
-		sidebar.toggle();
-	}}
-	{...restProps}
->
-	<IconLayoutSidebar />
-	<span class="sr-only">Toggle Sidebar</span>
-</Button>
+<Tooltip.Root>
+	<Tooltip.Trigger>
+		{#snippet child({ props })}
+			<Button
+				{...props}
+				bind:ref
+				data-sidebar="trigger"
+				data-slot="sidebar-trigger"
+				variant="ghost"
+				size="icon-sm"
+				class={cn("cn-sidebar-trigger", className)}
+				type="button"
+				onclick={(e) => {
+					onclick?.(e);
+					sidebar.toggle();
+				}}
+				{...restProps}
+			>
+				<IconLayoutSidebar />
+				<span class="sr-only">Toggle Sidebar</span>
+			</Button>
+		{/snippet}
+	</Tooltip.Trigger>
+
+	<Tooltip.Content>
+		<p>Toggle Sidebar</p>
+	</Tooltip.Content>
+</Tooltip.Root>
