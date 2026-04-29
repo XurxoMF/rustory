@@ -1,6 +1,7 @@
 <script lang="ts" module>
 	type Form = {
 		name: string;
+		description: string;
 		dir?: Directory | undefined;
 		version?: RAPIVSVersion | undefined;
 		backupsLimit: number;
@@ -13,6 +14,7 @@
 
 	type Errors = {
 		name: string[];
+		description: string[];
 		dir: string[];
 		version: string[];
 		backupsLimit: string[];
@@ -25,6 +27,7 @@
 
 	type FormCheckers = {
 		name: (name: string) => Promise<string[]>;
+		description: (description: string) => Promise<string[]>;
 		dir: (dir?: Directory | undefined) => Promise<string[]>;
 		version: (version?: RAPIVSVersion | undefined) => Promise<string[]>;
 		backupsLimit: (backupsLimit: number) => Promise<string[]>;
@@ -69,6 +72,7 @@
 	import { Slider } from "$lib/components/ui/slider";
 	import { Switch } from "$lib/components/ui/switch";
 	import * as List from "$lib/components/ui/list";
+	import { Textarea } from "$lib/components/ui/textarea";
 
 	// If the user is offline, redirect them to the homepage.
 	if (!App.info.isOnline) {
@@ -90,6 +94,7 @@
 
 	let form: Form = $state({
 		name: `Instance ${App.data.vsInstances.length + 1}`,
+		description: "",
 		dir: undefined,
 		version: undefined,
 		backupsLimit: 3,
@@ -104,6 +109,7 @@
 
 	let errors: Errors = $state({
 		name: [],
+		description: [],
 		dir: [],
 		version: [],
 		backupsLimit: [],
@@ -119,6 +125,11 @@
 			const errors: string[] = [];
 			if (name.length < 5 || name.length > 50) errors.push("Name must be at least 5 characters long and a maximum of 50.");
 			if (App.data.vsInstances.some((i) => i.name.toLowerCase() === name.toLowerCase())) errors.push("Name must be unique.");
+			return errors;
+		},
+		description: async (description: string): Promise<string[]> => {
+			const errors: string[] = [];
+			if (description.length > 250) errors.push("Description must be a maximum of 250 characters.");
 			return errors;
 		},
 		dir: async (dir?: Directory | undefined): Promise<string[]> => {
@@ -209,8 +220,9 @@
 	 * Create a new Vintage Story Instance.
 	 */
 	async function handleCreation(): Promise<void> {
-		const newErrors = {
+		const newErrors: Errors = {
 			name: await checkers.name(form.name),
+			description: await checkers.description(form.description),
 			dir: await checkers.dir(form.dir),
 			version: await checkers.version(form.version),
 			backupsLimit: await checkers.backupsLimit(form.backupsLimit),
@@ -256,6 +268,7 @@
 					file,
 					id,
 					name: form.name,
+					description: form.description,
 					dir: form.dir!,
 					dataDir,
 					backupsDir,
@@ -271,8 +284,6 @@
 				});
 
 				vsInstance.install();
-
-				await vsInstance.save();
 
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 
@@ -394,6 +405,33 @@
 						<Field.Description>The game version you select will be installed here.</Field.Description>
 					</Field.Field>
 				</div>
+
+				<!-- Description -->
+				<Field.Field data-invalid={errors.description.length > 0}>
+					<Field.Label for="description">Description</Field.Label>
+
+					<Textarea
+						bind:value={form.description}
+						id="description"
+						placeholder="Set a description..."
+						maxlength={250}
+						aria-invalid={errors.description.length > 0}
+					/>
+
+					{#if errors.description.length > 0}
+						<Field.Error>
+							<List.Unordered>
+								{#each errors.description as error (error)}
+									<List.Item>
+										{error}
+									</List.Item>
+								{/each}
+							</List.Unordered>
+						</Field.Error>
+					{/if}
+
+					<Field.Description>This is the description of the instance. It's optional and has a maximum of 250 characters.</Field.Description>
+				</Field.Field>
 
 				<!-- Path-->
 				<Field.Field data-invalid={errors.dir.length > 0}>

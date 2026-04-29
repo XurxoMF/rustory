@@ -97,9 +97,14 @@ export class Data {
 						const filePath = await dir.join("instance.json");
 						const file = await File.create(filePath);
 
-						const vsInstanceJSON = await file.readJSON<VSInstanceJSON>();
+						const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
 
 						let version = vsVersions.find((v) => v.version === vsInstanceJSON.version);
+
+						if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
+							App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
+							throw new RustoryError(RustoryErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
+						}
 
 						if (version === undefined) {
 							const newVersionPath = await App.config.vsVersionsDir.join(vsInstanceJSON.version);
@@ -115,18 +120,19 @@ export class Data {
 							file,
 							id: vsInstanceJSON.id,
 							name: vsInstanceJSON.name,
+							description: vsInstanceJSON.description ?? "",
 							dir,
 							dataDir,
 							backupsDir,
 							version,
-							startParams: vsInstanceJSON.startParams,
-							backupsLimit: vsInstanceJSON.backupsLimit,
-							backupsAuto: vsInstanceJSON.backupsAuto,
-							backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel,
-							lastTimePlayed: vsInstanceJSON.lastTimePlayed,
-							totalTimePlayed: vsInstanceJSON.totalTimePlayed,
-							mesaGlThread: vsInstanceJSON.mesaGlThread,
-							envVars: vsInstanceJSON.envVars
+							startParams: vsInstanceJSON.startParams ?? "",
+							backupsLimit: vsInstanceJSON.backupsLimit ?? 3,
+							backupsAuto: vsInstanceJSON.backupsAuto ?? false,
+							backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel ?? 4,
+							lastTimePlayed: vsInstanceJSON.lastTimePlayed ?? 0,
+							totalTimePlayed: vsInstanceJSON.totalTimePlayed ?? 0,
+							mesaGlThread: vsInstanceJSON.mesaGlThread ?? false,
+							envVars: vsInstanceJSON.envVars ?? ""
 						});
 					})
 				);
@@ -200,12 +206,15 @@ export class Data {
 	// **********************
 
 	/**
-	 * Sets the new Vintage Story Versions.
+	 * Sets the new Vintage Story Versions and saves them to the data file.
 	 * @param vsVersions The new Vintage Story Versions
 	 */
 	public async setVsVersions(vsVersions: VSVersion[]): Promise<void> {
 		try {
+			App.logger.debug("Setting new Vintage Story Versions...");
+
 			this._vsVersions = vsVersions;
+
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Versions:\n${err}`);
@@ -214,12 +223,15 @@ export class Data {
 	}
 
 	/**
-	 * Sets the new Vintage Story Instances.
+	 * Sets the new Vintage Story Instances and saves them to the data file.
 	 * @param vsInstances The new Vintage Story Instances
 	 */
 	public async setVsInstances(vsInstances: VSInstance[]): Promise<void> {
 		try {
+			App.logger.debug("Setting new Vintage Story Instances...");
+
 			this._vsInstances = vsInstances;
+
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Instances:\n${err}`);
@@ -232,6 +244,14 @@ export class Data {
 	 */
 	public async save(): Promise<void> {
 		try {
+			App.logger.debug("Saving data...");
+
+			await Promise.all(
+				this._vsInstances.map(async (vsInstance) => {
+					await vsInstance.save();
+				})
+			);
+
 			const JSON = await this.exportToJSON();
 
 			this._file.writeJSON(JSON);

@@ -27,6 +27,7 @@ export enum VSInstanceState {
 export type VSInstanceJSON = {
 	id: string;
 	name: string;
+	description: string;
 	version: string;
 	startParams: string;
 	backupsLimit: number;
@@ -58,6 +59,7 @@ export class VSInstance {
 		file: File;
 		id: string;
 		name: string;
+		description: string;
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
@@ -77,6 +79,7 @@ export class VSInstance {
 		this._file = vsInstance.file;
 		this._id = vsInstance.id;
 		this._name = $state(vsInstance.name);
+		this._description = $state(vsInstance.description);
 		this._dir = vsInstance.dir;
 		this._dataDir = vsInstance.dataDir;
 		this._backupsDir = vsInstance.backupsDir;
@@ -103,6 +106,7 @@ export class VSInstance {
 		file: File;
 		id: string;
 		name: string;
+		description: string;
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
@@ -121,6 +125,7 @@ export class VSInstance {
 				file: vsInstance.file,
 				id: vsInstance.id,
 				name: vsInstance.name,
+				description: vsInstance.description,
 				dir: vsInstance.dir,
 				dataDir: vsInstance.dataDir,
 				backupsDir: vsInstance.backupsDir,
@@ -161,6 +166,11 @@ export class VSInstance {
 	 * The name of the Vintage Story Instance.
 	 */
 	private _name: string;
+
+	/**
+	 * The description of the Vintage Story Instance.
+	 */
+	private _description: string;
 
 	/**
 	 * The directory of the Vintage Story Instance.
@@ -266,6 +276,20 @@ export class VSInstance {
 	 */
 	public set name(name: string) {
 		this._name = name;
+	}
+
+	/**
+	 * The description of the Vintage Story Instance.
+	 */
+	public get description(): string {
+		return this._description;
+	}
+
+	/**
+	 * The description of the Vintage Story Instance.
+	 */
+	public set description(description: string) {
+		this._description = description;
 	}
 
 	/**
@@ -530,6 +554,7 @@ export class VSInstance {
 		return {
 			id: this._id,
 			name: this._name,
+			description: this._description,
 			version: this._version.version,
 			startParams: this._startParams,
 			backupsLimit: this._backupsLimit,

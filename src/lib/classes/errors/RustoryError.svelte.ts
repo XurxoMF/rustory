@@ -48,5 +48,6 @@ export class RustoryError extends Error {
 export enum RustoryErrorCodes {
 	GENERIC_ERROR = 1,
 	NOT_INITIALIZED = 2,
-	ERROR_INITIALIZING = 3
+	ERROR_INITIALIZING = 3,
+	MALFORMED_DATA = 4
 }
