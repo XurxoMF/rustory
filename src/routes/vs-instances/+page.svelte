@@ -182,7 +182,7 @@
 						</Dialog.Content>
 					</Dialog.Root>
 
-					<Button class="flex-1" variant="outline" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Edit</Button>
+					<Button class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}>Manage</Button>
 
 					<Button class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button>
 				</Card.Footer>
