@@ -161,7 +161,7 @@ export class Config {
 	private _theme: (typeof Config.THEMES)[number]["key"];
 
 	/**
-	 * Key of the selected language.
+	 * Key of the selected locale.
 	 */
 	private _locale: (typeof Config.LOCALES)[number]["key"];
 
@@ -197,7 +197,7 @@ export class Config {
 	}
 
 	/**
-	 * Key of the selected language.
+	 * Key of the selected locale.
 	 */
 	public get locale(): (typeof Config.LOCALES)[number]["key"] {
 		return this._locale;
@@ -248,7 +248,7 @@ export class Config {
 
 	/**
 	 * Set a new locale. Set's english if there provided locale is invalid.
-	 * @param locale - The key of the language to change to.
+	 * @param locale - The key of the locale to change to.
 	 */
 	public async setLocale(locale: (typeof Config.LOCALES)[number]["key"]): Promise<void> {
 		try {
