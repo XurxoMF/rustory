@@ -46,7 +46,7 @@
 
 		<Confirm.Root />
 
-		<Toaster.Root />
+		<Toaster.Root position="top-center" />
 
 		<Sidebar.Provider open={true}>
 			<AppSidebar />
