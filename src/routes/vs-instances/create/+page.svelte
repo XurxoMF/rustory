@@ -270,6 +270,8 @@
 					mesaGlThread: form.mesaGlThread
 				});
 
+				vsInstance.install();
+
 				await vsInstance.save();
 
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);

@@ -489,6 +489,24 @@ export class VSInstance {
 	}
 
 	/**
+	 * Installs the Vintage Story Instance.
+	 */
+	public async install(): Promise<void> {
+		try {
+			App.logger.debug(`Installing the Vintage Story Instance ${this._name}...`);
+
+			await this._dir.ensureExists();
+			await this._dataDir.ensureExists();
+			await this._backupsDir.ensureExists();
+
+			App.logger.debug(`Finished installing the Vintage Story Instance ${this._name}!`);
+		} catch (err) {
+			App.logger.error(`There was an error installing the Vintage Story Instance:\n${err}`);
+			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance!");
+		}
+	}
+
+	/**
 	 * Saves the Vintage Story Isntance to the instance file.
 	 */
 	public async save(): Promise<void> {
