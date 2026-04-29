@@ -110,7 +110,7 @@ export class Config {
 
 			const path = await App.info.configDir.join("config.json");
 			const file = await File.create(path);
-			const configJSON = await file.readJSON<ConfigJSON>();
+			const configJSON = await file.readJSON<Partial<ConfigJSON>>();
 
 			// Load the locale
 			const locale: (typeof Config.LOCALES)[number]["key"] = configJSON.locale || baseLocale;
