@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+
 	import IconPlus from "@tabler/icons-svelte/icons/plus";
 
 	import { formatTime } from "$lib/utils";
@@ -52,7 +55,7 @@
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="icon" onclick={() => App.toaster.toast.info("Coming soon...")}>
+				<Button {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/new"))}>
 					<IconPlus />
 					<span class="sr-only">Create new Vintage Story Instance</span>
 				</Button>
