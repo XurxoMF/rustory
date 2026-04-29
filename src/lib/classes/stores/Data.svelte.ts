@@ -142,11 +142,15 @@ export class Data {
 
 			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances.`);
 
-			return new Data({
+			const data = new Data({
 				file,
 				vsVersions,
 				vsInstances
 			});
+
+			await data.save();
+
+			return data;
 		} catch (err) {
 			App.logger.error(`There was an error initializating the data:\n${err}`);
 			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
