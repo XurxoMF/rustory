@@ -85,3 +85,33 @@ export function cleanForPath(str: string): string {
 		.replace(/-+/g, "-")
 		.replace(/^-|-$/g, "");
 }
+
+/**
+ *	Formats a number of miliseconds to a string in the format passed. Defaults to seconds.
+ * @param time The number of miliseconds played.
+ * @param options.to The type of time to return.
+ * @param options.decimals The number of decimals to return.
+ * @returns A string with the formated time.
+ */
+export function formatTime(
+	ms: number,
+	options: { to?: "seconds" | "minutes" | "hours" | "days" | undefined; decimals?: number | undefined } = { to: "seconds", decimals: 0 }
+): string {
+	const seconds = ms / 1000;
+	const minutes = seconds / 60;
+	const hours = minutes / 60;
+	const days = hours / 24;
+
+	switch (options.to) {
+		case "seconds":
+			return `${seconds.toFixed(options.decimals)}`;
+		case "minutes":
+			return `${minutes.toFixed(options.decimals)}`;
+		case "hours":
+			return `${hours.toFixed(options.decimals)}`;
+		case "days":
+			return `${days.toFixed(options.decimals)}`;
+		default:
+			return `${seconds.toFixed(options.decimals)}`;
+	}
+}
