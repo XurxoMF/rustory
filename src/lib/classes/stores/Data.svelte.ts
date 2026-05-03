@@ -148,6 +148,12 @@ export class Data {
 				vsInstances
 			});
 
+			await Promise.all(
+				data.vsInstances.map(async (vsInstance) => {
+					await vsInstance.save();
+				})
+			);
+
 			await data.save();
 
 			return data;
@@ -249,12 +255,6 @@ export class Data {
 	public async save(): Promise<void> {
 		try {
 			App.logger.debug("Saving data...");
-
-			await Promise.all(
-				this._vsInstances.map(async (vsInstance) => {
-					await vsInstance.save();
-				})
-			);
 
 			const JSON = await this.exportToJSON();
 

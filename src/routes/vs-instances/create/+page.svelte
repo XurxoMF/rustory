@@ -2,8 +2,8 @@
 	type Form = {
 		name: string;
 		description: string;
-		dir?: Directory | undefined;
-		version?: RAPIVSVersion | undefined;
+		dir: Directory;
+		version: RAPIVSVersion;
 		backupsLimit: number;
 		backupsAuto: boolean;
 		backupsCompressionLevel: number;
@@ -25,11 +25,11 @@
 		mesaGlThread: string[];
 	};
 
-	type FormCheckers = {
+	type Checkers = {
 		name: (name: string) => Promise<string[]>;
 		description: (description: string) => Promise<string[]>;
-		dir: (dir?: Directory | undefined) => Promise<string[]>;
-		version: (version?: RAPIVSVersion | undefined) => Promise<string[]>;
+		dir: (dir: Directory) => Promise<string[]>;
+		version: (version: RAPIVSVersion) => Promise<string[]>;
 		backupsLimit: (backupsLimit: number) => Promise<string[]>;
 		backupsAuto: (backupsAuto: boolean) => Promise<string[]>;
 		backupsCompressionLevel: (backupsCompressionLevel: number) => Promise<string[]>;
@@ -40,7 +40,9 @@
 </script>
 
 <script lang="ts">
-	import { onMount, tick } from "svelte";
+	import { type PageProps } from "./$types";
+
+	import { tick, untrack } from "svelte";
 	import { Debounced } from "runed";
 
 	import { goto } from "$app/navigation";
@@ -55,7 +57,7 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
-	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
+	import { RAPIVSVersion } from "$lib/classes/api/RAPIVSVersion.svelte";
 
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 	import { File } from "$lib/classes/utils/File.svelte";
@@ -74,29 +76,24 @@
 	import * as List from "$lib/components/ui/list";
 	import { Textarea } from "$lib/components/ui/textarea";
 
-	// If the user is offline, redirect them to the homepage.
-	if (!App.info.isOnline) {
-		App.logger.warn("You can't create a Vintage Story Instance while offline.");
-		App.toaster.toast.warning("You can't create a Vintage Story Instance while offline.");
-		goto(resolve("/"));
-	}
+	let { data }: PageProps = $props();
 
 	App.breadcrumbs.segments = [
 		{ label: "Vintage Story Instances", href: "/vs-instances" },
 		{ label: "Create", href: "/vs-instances/create" }
 	];
 
-	let versions: RAPIVSVersion[] | undefined = $state();
+	let versions: RAPIVSVersion[] = $state(untrack(() => data.versions));
 	let versionsOpen: boolean = $state(false);
 	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
 
 	let manuallySelectedDir: boolean = $state(false);
 
 	let form: Form = $state({
-		name: `Instance ${App.data.vsInstances.length + 1}`,
+		name: untrack(() => data.name),
 		description: "",
-		dir: undefined,
-		version: undefined,
+		dir: untrack(() => data.dir),
+		version: versions[0],
 		backupsLimit: 3,
 		backupsAuto: false,
 		backupsCompressionLevel: 4,
@@ -120,7 +117,7 @@
 		mesaGlThread: []
 	});
 
-	const checkers: FormCheckers = {
+	const checkers: Checkers = {
 		name: async (name: string): Promise<string[]> => {
 			const errors: string[] = [];
 			if (name.length < 5 || name.length > 50) errors.push("Name must be at least 5 characters long and a maximum of 50.");
@@ -132,23 +129,18 @@
 			if (description.length > 250) errors.push("Description must be a maximum of 250 characters.");
 			return errors;
 		},
-		dir: async (dir?: Directory | undefined): Promise<string[]> => {
+		dir: async (dir: Directory): Promise<string[]> => {
 			const errors: string[] = [];
-			if (dir === undefined) {
-				errors.push("You must select a directory.");
+			if (dir.path === App.config.vsInstancesDir.path) {
+				errors.push("Directory must not be the same as the default Vintage Story Instances directory.");
 			} else {
-				if (dir.path === App.config.vsInstancesDir.path) {
-					errors.push("Directory must not be the same as the default Vintage Story Instances directory.");
-				} else {
-					const isDirEmpty = await dir.isEmpty();
-					if (!isDirEmpty) errors.push("Directory must be empty.");
-				}
+				const isDirEmpty = await dir.isEmpty();
+				if (!isDirEmpty) errors.push("Directory must be empty.");
 			}
 			return errors;
 		},
-		version: async (version?: RAPIVSVersion | undefined): Promise<string[]> => {
+		version: async (): Promise<string[]> => {
 			const errors: string[] = [];
-			if (version === undefined) errors.push("You must select a Vintage Story version.");
 			return errors;
 		},
 		backupsLimit: async (backupsLimit: number): Promise<string[]> => {
@@ -198,24 +190,6 @@
 		return () => (rerun = true);
 	});
 
-	// Load the Vintage Story Versions from the Rustory API and set the default directory based on the default name.
-	onMount(async () => {
-		try {
-			const resVersions: Response = await App.request.get("https://api.rustory.xyz/versions");
-			const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();
-			versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
-			form.version = versions[0];
-		} catch (err) {
-			App.logger.error(`There was an error loading the Vintage Story Versions from the Rustory API:\n${err}`);
-			App.toaster.toast.error("Error loading Vintage Story Versions from the Rustory API");
-			goto(resolve("/vs-instances"));
-		}
-
-		const cleanName = cleanForPath(form.name);
-		const path = await App.config.vsInstancesDir.join(cleanName);
-		form.dir = await Directory.create(path);
-	});
-
 	/**
 	 * Create a new Vintage Story Instance.
 	 */
@@ -239,19 +213,19 @@
 
 				const id = crypto.randomUUID();
 
-				const dataPath = await form.dir!.join("Data");
+				const dataPath = await form.dir.join("Data");
 				const dataDir = await Directory.create(dataPath);
 
-				const backupsPath = await form.dir!.join("Backups");
+				const backupsPath = await form.dir.join("Backups");
 				const backupsDir = await Directory.create(backupsPath);
 
-				const filePath = await form.dir!.join("instance.json");
+				const filePath = await form.dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				let version = App.data.vsVersions.find((v) => v.version === form.version!.version);
+				let version = App.data.vsVersions.find((v) => v.version === form.version.version);
 
 				if (version === undefined) {
-					const newVersionPath = await App.config.vsVersionsDir.join(form.version!.version);
+					const newVersionPath = await App.config.vsVersionsDir.join(form.version.version);
 					const newVersionDir = await Directory.create(newVersionPath);
 					const newVersion = await VSVersion.create({ version: form.version!.version, dir: newVersionDir });
 
@@ -261,7 +235,7 @@
 
 					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
-					newVersion.install(form.version!);
+					newVersion.install(form.version);
 				}
 
 				const vsInstance = await VSInstance.create({
@@ -269,7 +243,7 @@
 					id,
 					name: form.name,
 					description: form.description,
-					dir: form.dir!,
+					dir: form.dir,
 					dataDir,
 					backupsDir,
 					version,

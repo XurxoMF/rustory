@@ -1,6 +1,8 @@
 <script lang="ts">
 	import type { PageProps } from "./$types";
 
+	import { untrack } from "svelte";
+
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
@@ -12,11 +14,13 @@
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import { Button } from "$lib/components/ui/button";
 
-	let { params }: PageProps = $props();
+	let { data }: PageProps = $props();
+
+	const instance = untrack(() => data.instance);
 
 	App.breadcrumbs.segments = [
 		{ label: "Vintage Story Instances", href: "/vs-instances" },
-		{ label: "Manage", href: `/vs-instances/${() => params.slug}` }
+		{ label: `${instance.name}`, href: `/vs-instances/${() => instance.id}` }
 	];
 </script>
 
@@ -24,7 +28,7 @@
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: params.slug }))}>
+				<Button {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: instance.id }))}>
 					<IconPencil />
 					<span class="sr-only">Edit this Vintage Story Instance</span>
 				</Button>
@@ -37,9 +41,9 @@
 	</Tooltip.Root>
 </div>
 
-<H1>{params.slug}</H1>
+<H1>{instance.name}</H1>
 <Leading>Manage this Vintage Story Instance.</Leading>
 
 <div class="mt-6">
-	<P>{params.slug}</P>
+	<P>Checking {instance.name}</P>
 </div>
