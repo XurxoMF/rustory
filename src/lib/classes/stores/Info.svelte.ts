@@ -41,6 +41,7 @@ export class Info {
 		capitalizedName: string;
 		version: string;
 		icon: Image | undefined;
+		isOnline: boolean;
 		osArch: OsArch;
 		osFamily: OsFamily;
 		osPlatform: OsPlatform;
@@ -58,7 +59,7 @@ export class Info {
 		this._capitalizedName = info.capitalizedName;
 		this._version = info.version;
 		this._icon = info.icon;
-		this._isOnline = $state(navigator.onLine);
+		this._isOnline = $state(info.isOnline);
 		this._osArch = info.osArch;
 		this._osFamily = info.osFamily;
 		this._osPlatform = info.osPlatform;
@@ -92,6 +93,7 @@ export class Info {
 			const capitalizedName = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
 			const version = await app.getVersion();
 			const icon = await defaultWindowIcon();
+			const isOnline = navigator.onLine;
 
 			App.logger.debug("Loading OS info...");
 
@@ -148,6 +150,7 @@ export class Info {
 				capitalizedName,
 				version,
 				icon: icon ?? undefined,
+				isOnline,
 				osArch,
 				osFamily,
 				osPlatform,
