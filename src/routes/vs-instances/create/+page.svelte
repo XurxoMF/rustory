@@ -52,6 +52,8 @@
 
 	import IconSelector from "@tabler/icons-svelte/icons/selector";
 	import IconFolder from "@tabler/icons-svelte/icons/folder";
+	import IconArrowDown from "@tabler/icons-svelte/icons/arrow-down";
+	import IconCheck from "@tabler/icons-svelte/icons/check";
 
 	import { cleanForPath } from "$lib/utils";
 
@@ -324,7 +326,7 @@
 										aria-expanded={versionsOpen}
 										aria-invalid={errors.version.length > 0}
 									>
-										{form.version?.version || "Select a version..."}
+										{form.version.version || "Select a version..."}
 
 										<IconSelector class="opacity-50" />
 									</Button>
@@ -341,7 +343,7 @@
 										<Command.Group>
 											{#each versions as version (version.version)}
 												<Command.Item
-													data-checked={version.version === form.version?.version}
+													data-checked={version.version === form.version.version}
 													value={version.version}
 													onSelect={() => {
 														form.version = version;
@@ -355,6 +357,12 @@
 													}}
 													class="flex w-full justify-between"
 												>
+													{#if App.data.vsVersions.some((v) => v.version === version.version)}
+														<IconCheck />
+													{:else}
+														<IconArrowDown />
+													{/if}
+
 													<span>{version.version}</span>
 												</Command.Item>
 											{/each}
