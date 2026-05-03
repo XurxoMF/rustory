@@ -485,6 +485,79 @@ export class VSInstance {
 	// *  STATIC METHODS  *
 	// ********************
 
+	/**
+	 * Checks the name of the Vintage Story Instance.
+	 * @param name The name of the Vintage Story Instance.
+	 * @returns An array of errors.
+	 */
+	public static async validateName(name: string): Promise<string[]> {
+		const errors: string[] = [];
+
+		if (name.length < 5 || name.length > 50) errors.push("Name must be at least 5 characters long and a maximum of 50.");
+
+		if (App.data.vsInstances.some((i) => i.name.toLowerCase() === name.toLowerCase())) errors.push("Name must be unique.");
+
+		return errors;
+	}
+
+	/**
+	 * Checks the description of the Vintage Story Instance.
+	 * @param description The description of the Vintage Story Instance.
+	 * @returns An array of errors.
+	 */
+	public static async validateDescription(description: string): Promise<string[]> {
+		const errors: string[] = [];
+
+		if (description.length > 250) errors.push("Description must be a maximum of 250 characters.");
+
+		return errors;
+	}
+
+	/**
+	 * Checks the directory of the Vintage Story Instance.
+	 * @param dir The directory of the Vintage Story Instance.
+	 * @returns An array of errors.
+	 */
+	public static async validateDir(dir: Directory): Promise<string[]> {
+		const errors: string[] = [];
+
+		if (dir.path === App.config.vsInstancesDir.path) {
+			errors.push("Directory must not be the same as the default Vintage Story Instances directory.");
+		} else {
+			const isDirEmpty = await dir.isEmpty();
+
+			if (!isDirEmpty) errors.push("Directory must be empty.");
+		}
+
+		return errors;
+	}
+
+	/**
+	 * Checks the backups limit of the Vintage Story Instance.
+	 * @param backupsLimit The backups limit of the Vintage Story Instance.
+	 * @returns An array of errors.
+	 */
+	public static async validateBackupsLimit(backupsLimit: number): Promise<string[]> {
+		const errors: string[] = [];
+
+		if (backupsLimit < 1 || backupsLimit > 10) errors.push("Backups limit must be at least 1 and a maximum of 10.");
+
+		return errors;
+	}
+
+	/**
+	 * Checks the backups compression level of the Vintage Story Instance.
+	 * @param backupsCompressionLevel The backups compression level of the Vintage Story Instance.
+	 * @returns An array of errors.
+	 */
+	public static async validateBackupsCompressionLevel(backupsCompressionLevel: number): Promise<string[]> {
+		const errors: string[] = [];
+
+		if (backupsCompressionLevel < 0 || backupsCompressionLevel > 9) errors.push("Backups compression level must be at least 0 and a maximum of 9.");
+
+		return errors;
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************

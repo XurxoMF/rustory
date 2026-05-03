@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { PageProps } from "./$types";
 
-	import { untrack } from "svelte";
-
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
@@ -16,12 +14,14 @@
 
 	let { data }: PageProps = $props();
 
-	const instance = untrack(() => data.instance);
+	const instance = $derived(data.instance);
 
-	App.breadcrumbs.segments = [
-		{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-		{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
-	];
+	$effect(() => {
+		App.breadcrumbs.segments = [
+			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+			{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
+		];
+	});
 </script>
 
 <div class="absolute right-3 bottom-3 z-20 flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl">

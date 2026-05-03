@@ -1,44 +1,3 @@
-<script lang="ts" module>
-	type Form = {
-		name: string;
-		description: string;
-		dir: Directory;
-		version: RAPIVSVersion;
-		backupsLimit: number;
-		backupsAuto: boolean;
-		backupsCompressionLevel: number;
-		startParams: string;
-		envVars: string;
-		mesaGlThread: boolean;
-	};
-
-	type Errors = {
-		name: string[];
-		description: string[];
-		dir: string[];
-		version: string[];
-		backupsLimit: string[];
-		backupsAuto: string[];
-		backupsCompressionLevel: string[];
-		startParams: string[];
-		envVars: string[];
-		mesaGlThread: string[];
-	};
-
-	type Checkers = {
-		name: (name: string) => Promise<string[]>;
-		description: (description: string) => Promise<string[]>;
-		dir: (dir: Directory) => Promise<string[]>;
-		version: (version: RAPIVSVersion) => Promise<string[]>;
-		backupsLimit: (backupsLimit: number) => Promise<string[]>;
-		backupsAuto: (backupsAuto: boolean) => Promise<string[]>;
-		backupsCompressionLevel: (backupsCompressionLevel: number) => Promise<string[]>;
-		startParams: (startParams: string) => Promise<string[]>;
-		envVars: (envVars: string) => Promise<string[]>;
-		mesaGlThread: (mesaGlThread: boolean) => Promise<string[]>;
-	};
-</script>
-
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
@@ -85,178 +44,121 @@
 		{ label: "Create", href: resolve("/vs-instances/create") }
 	];
 
-	let versions: RAPIVSVersion[] = $state(untrack(() => data.versions));
+	let versions: RAPIVSVersion[] = $derived(data.versions);
 	let versionsOpen: boolean = $state(false);
 	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
 
 	let manuallySelectedDir: boolean = $state(false);
 
-	let form: Form = $state({
-		name: untrack(() => data.name),
-		description: "",
-		dir: untrack(() => data.dir),
-		version: versions[0],
-		backupsLimit: 3,
-		backupsAuto: false,
-		backupsCompressionLevel: 4,
-		startParams: "",
-		envVars: "",
-		mesaGlThread: false
-	});
+	let name: string = $state(untrack(() => data.name));
+	let debouncedName: Debounced<string> = new Debounced(() => name, 500);
+	let nameErrors: string[] = $state([]);
 
-	let debouncedName: Debounced<string> = new Debounced(() => form.name, 500);
+	let description: string = $state("");
+	let descriptionErrors: string[] = $state([]);
 
-	let errors: Errors = $state({
-		name: [],
-		description: [],
-		dir: [],
-		version: [],
-		backupsLimit: [],
-		backupsAuto: [],
-		backupsCompressionLevel: [],
-		startParams: [],
-		envVars: [],
-		mesaGlThread: []
-	});
+	let dir: Directory = $state(untrack(() => data.dir));
+	let dirErrors: string[] = $state([]);
 
-	const checkers: Checkers = {
-		name: async (name: string): Promise<string[]> => {
-			const errors: string[] = [];
-			if (name.length < 5 || name.length > 50) errors.push("Name must be at least 5 characters long and a maximum of 50.");
-			if (App.data.vsInstances.some((i) => i.name.toLowerCase() === name.toLowerCase())) errors.push("Name must be unique.");
-			return errors;
-		},
-		description: async (description: string): Promise<string[]> => {
-			const errors: string[] = [];
-			if (description.length > 250) errors.push("Description must be a maximum of 250 characters.");
-			return errors;
-		},
-		dir: async (dir: Directory): Promise<string[]> => {
-			const errors: string[] = [];
-			if (dir.path === App.config.vsInstancesDir.path) {
-				errors.push("Directory must not be the same as the default Vintage Story Instances directory.");
-			} else {
-				const isDirEmpty = await dir.isEmpty();
-				if (!isDirEmpty) errors.push("Directory must be empty.");
-			}
-			return errors;
-		},
-		version: async (): Promise<string[]> => {
-			const errors: string[] = [];
-			return errors;
-		},
-		backupsLimit: async (backupsLimit: number): Promise<string[]> => {
-			const errors: string[] = [];
-			if (backupsLimit < 1 || backupsLimit > 10) errors.push("Backups limit must be at least 1 and a maximum of 10.");
-			return errors;
-		},
-		backupsAuto: async (): Promise<string[]> => {
-			const errors: string[] = [];
-			return errors;
-		},
-		backupsCompressionLevel: async (backupsCompressionLevel: number): Promise<string[]> => {
-			const errors: string[] = [];
-			if (backupsCompressionLevel < 0 || backupsCompressionLevel > 9) errors.push("Backups compression level must be at least 0 and a maximum of 9.");
-			return errors;
-		},
-		startParams: async (): Promise<string[]> => {
-			const errors: string[] = [];
-			return errors;
-		},
-		envVars: async (): Promise<string[]> => {
-			const errors: string[] = [];
-			return errors;
-		},
-		mesaGlThread: async (): Promise<string[]> => {
-			const errors: string[] = [];
-			return errors;
-		}
-	};
+	let version: RAPIVSVersion = $derived(versions[0]);
+
+	let backupsLimit: number = $state(3);
+	let backupsLimitErrors: string[] = $state([]);
+
+	let backupsAuto: boolean = $state(false);
+
+	let backupsCompressionLevel: number = $state(4);
+	let backupsCompressionLevelErrors: string[] = $state([]);
+
+	let startParams: string = $state("");
+
+	let envVars: string = $state("");
+
+	let mesaGlThread: boolean = $state(false);
+
+	let totalErrors: number = $derived(
+		nameErrors.length + descriptionErrors.length + dirErrors.length + backupsLimitErrors.length + backupsCompressionLevelErrors.length
+	);
 
 	// When the name changes and, if the user haven't selected a directory manually,
 	// set the new directory based on the new name.
 	$effect(() => {
-		let rerun = false;
-
 		async function run() {
 			if (!manuallySelectedDir) {
 				const cleanName = cleanForPath(debouncedName.current);
 				const path = await App.config.vsInstancesDir.join(cleanName);
-				const dir = await Directory.create(path);
-				if (!rerun) form.dir = dir;
+				dir = await Directory.create(path);
 			}
 		}
 
 		run();
-
-		return () => (rerun = true);
 	});
 
 	/**
 	 * Create a new Vintage Story Instance.
 	 */
 	async function handleCreation(): Promise<void> {
-		const newErrors: Errors = {
-			name: await checkers.name(form.name),
-			description: await checkers.description(form.description),
-			dir: await checkers.dir(form.dir),
-			version: await checkers.version(form.version),
-			backupsLimit: await checkers.backupsLimit(form.backupsLimit),
-			backupsAuto: await checkers.backupsAuto(form.backupsAuto),
-			backupsCompressionLevel: await checkers.backupsCompressionLevel(form.backupsCompressionLevel),
-			startParams: await checkers.startParams(form.startParams),
-			envVars: await checkers.envVars(form.envVars),
-			mesaGlThread: await checkers.mesaGlThread(form.mesaGlThread)
-		};
+		const newNameErrors = await VSInstance.validateName(name);
+		const newDescriptionErrors = await VSInstance.validateDescription(description);
+		const newDirErrors = await VSInstance.validateDir(dir);
+		const newBackupsLimitErrors = await VSInstance.validateBackupsLimit(backupsLimit);
+		const newBackupsCompressionLevelErrors = await VSInstance.validateBackupsCompressionLevel(backupsCompressionLevel);
 
-		if (!Object.values(newErrors).some((errors) => errors.length > 0)) {
+		// Set them after checking everything so errors do not show one by one.
+		nameErrors = newNameErrors;
+		descriptionErrors = newDescriptionErrors;
+		dirErrors = newDirErrors;
+		backupsLimitErrors = newBackupsLimitErrors;
+		backupsCompressionLevelErrors = newBackupsCompressionLevelErrors;
+
+		if (totalErrors === 0) {
 			try {
 				App.logger.info("Creating a new Vintage Story Instance...");
 
 				const id = crypto.randomUUID();
 
-				const dataPath = await form.dir.join("Data");
+				const dataPath = await dir.join("Data");
 				const dataDir = await Directory.create(dataPath);
 
-				const backupsPath = await form.dir.join("Backups");
+				const backupsPath = await dir.join("Backups");
 				const backupsDir = await Directory.create(backupsPath);
 
-				const filePath = await form.dir.join("instance.json");
+				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				let version = App.data.vsVersions.find((v) => v.version === form.version.version);
+				let localVersion = App.data.vsVersions.find((v) => v.version === version.version);
 
-				if (version === undefined) {
-					const newVersionPath = await App.config.vsVersionsDir.join(form.version.version);
-					const newVersionDir = await Directory.create(newVersionPath);
-					const newVersion = await VSVersion.create({ version: form.version.version, dir: newVersionDir });
+				if (localVersion === undefined) {
+					const newLocalVersionPath = await App.config.vsVersionsDir.join(version.version);
+					const newLocalVersionDir = await Directory.create(newLocalVersionPath);
+					const newLocalVersion = await VSVersion.create({ version: version.version, dir: newLocalVersionDir });
 
-					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
+					await App.data.setVsVersions([...App.data.vsVersions, newLocalVersion]);
 
-					version = newVersion;
+					localVersion = newLocalVersion;
 
-					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
+					App.logger.info(`Installing Vintage Story Version ${newLocalVersion.version}...`);
 
-					newVersion.install(form.version);
+					newLocalVersion.install(version);
 				}
 
 				const vsInstance = await VSInstance.create({
 					file,
 					id,
-					name: form.name,
-					description: form.description,
-					dir: form.dir,
+					name: name,
+					description: description,
+					dir: dir,
 					dataDir,
 					backupsDir,
-					version,
-					startParams: form.startParams,
-					backupsLimit: form.backupsLimit,
-					backupsAuto: form.backupsAuto,
-					backupsCompressionLevel: form.backupsCompressionLevel,
+					version: localVersion,
+					startParams: startParams,
+					backupsLimit: backupsLimit,
+					backupsAuto: backupsAuto,
+					backupsCompressionLevel: backupsCompressionLevel,
 					lastTimePlayed: 0,
 					totalTimePlayed: 0,
-					envVars: form.envVars,
-					mesaGlThread: form.mesaGlThread
+					envVars: envVars,
+					mesaGlThread: mesaGlThread
 				});
 
 				vsInstance.install();
@@ -272,8 +174,6 @@
 				App.logger.error(`There was an error creating the new Vintage Story Instance:\n${err}`);
 				App.toaster.toast.error("There was an error creating the new Vintage Story Instance! Contact support if the problem persists.");
 			}
-		} else {
-			errors = newErrors;
 		}
 	}
 </script>
@@ -290,22 +190,15 @@
 			<Field.Group>
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<!-- Name-->
-					<Field.Field data-invalid={errors.name.length > 0}>
+					<Field.Field data-invalid={nameErrors.length > 0}>
 						<Field.Label for="name">Name</Field.Label>
 
-						<Input
-							bind:value={form.name}
-							minlength={5}
-							maxlength={50}
-							id="name"
-							placeholder="Choose a name..."
-							aria-invalid={errors.name.length > 0}
-						/>
+						<Input bind:value={name} minlength={5} maxlength={50} id="name" placeholder="Choose a name..." aria-invalid={nameErrors.length > 0} />
 
-						{#if errors.name.length > 0}
+						{#if nameErrors.length > 0}
 							<Field.Error>
 								<List.Unordered>
-									{#each errors.name as error (error)}
+									{#each nameErrors as error (error)}
 										<List.Item>
 											{error}
 										</List.Item>
@@ -318,22 +211,14 @@
 					</Field.Field>
 
 					<!-- Vintage Story Version -->
-					<Field.Field data-invalid={errors.version.length > 0}>
+					<Field.Field>
 						<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
 						<Popover.Root bind:open={versionsOpen}>
 							<Popover.Trigger bind:ref={versionsTriggerRef}>
 								{#snippet child({ props })}
-									<Button
-										{...props}
-										id="vs-version"
-										variant="outline"
-										class="justify-between"
-										role="combobox"
-										aria-expanded={versionsOpen}
-										aria-invalid={errors.version.length > 0}
-									>
-										{form.version.version || "Select a version..."}
+									<Button {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={versionsOpen}>
+										{version.version || "Select a version..."}
 
 										<IconSelector class="opacity-50" />
 									</Button>
@@ -348,12 +233,12 @@
 										<Command.Empty>No Vintage Story Versions found.</Command.Empty>
 
 										<Command.Group>
-											{#each versions as version (version.version)}
+											{#each versions as v (v.version)}
 												<Command.Item
-													data-checked={version.version === form.version.version}
-													value={version.version}
+													data-checked={version.version === v.version}
+													value={v.version}
 													onSelect={() => {
-														form.version = version;
+														version = v;
 
 														versionsOpen = false;
 
@@ -370,7 +255,7 @@
 														<IconArrowDown />
 													{/if}
 
-													<span>{version.version}</span>
+													<span>{v.version}</span>
 												</Command.Item>
 											{/each}
 										</Command.Group>
@@ -379,38 +264,26 @@
 							</Popover.Content>
 						</Popover.Root>
 
-						{#if errors.version.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each errors.version as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
-
 						<Field.Description>The game version you select will be installed here.</Field.Description>
 					</Field.Field>
 				</div>
 
 				<!-- Description -->
-				<Field.Field data-invalid={errors.description.length > 0}>
+				<Field.Field data-invalid={descriptionErrors.length > 0}>
 					<Field.Label for="description">Description</Field.Label>
 
 					<Textarea
-						bind:value={form.description}
+						bind:value={description}
 						id="description"
 						placeholder="Set a description..."
 						maxlength={250}
-						aria-invalid={errors.description.length > 0}
+						aria-invalid={descriptionErrors.length > 0}
 					/>
 
-					{#if errors.description.length > 0}
+					{#if descriptionErrors.length > 0}
 						<Field.Error>
 							<List.Unordered>
-								{#each errors.description as error (error)}
+								{#each descriptionErrors as error (error)}
 									<List.Item>
 										{error}
 									</List.Item>
@@ -423,7 +296,7 @@
 				</Field.Field>
 
 				<!-- Path-->
-				<Field.Field data-invalid={errors.dir.length > 0}>
+				<Field.Field data-invalid={dirErrors.length > 0}>
 					<Field.Label for="path">Directory</Field.Label>
 
 					<div class="flex gap-2">
@@ -440,21 +313,21 @@
 								});
 
 								if (path) {
-									form.dir = await Directory.create(path);
+									dir = await Directory.create(path);
 								}
 							}}
-							aria-invalid={errors.dir.length > 0}
+							aria-invalid={dirErrors.length > 0}
 						>
 							<IconFolder />
 						</Button>
 
-						<Input value={form.dir?.path || ""} placeholder="Select a directory..." readonly aria-invalid={errors.dir.length > 0} />
+						<Input value={dir?.path || ""} placeholder="Select a directory..." readonly aria-invalid={dirErrors.length > 0} />
 					</div>
 
-					{#if errors.dir.length > 0}
+					{#if dirErrors.length > 0}
 						<Field.Error>
 							<List.Unordered>
-								{#each errors.dir as error (error)}
+								{#each dirErrors as error (error)}
 									<List.Item>
 										{error}
 									</List.Item>
@@ -479,28 +352,16 @@
 			<Field.Group>
 				<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
 					<!-- Backups Auto -->
-					<Field.Field data-invalid={errors.backupsAuto.length > 0}>
+					<Field.Field>
 						<Field.Label for="backups-auto">Automatic backups</Field.Label>
 
-						<Switch id="backups-auto" bind:checked={form.backupsAuto} aria-invalid={errors.backupsAuto.length > 0} />
-
-						{#if errors.backupsAuto.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each errors.backupsAuto as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
+						<Switch id="backups-auto" bind:checked={backupsAuto} />
 
 						<Field.Description>If this option is enabled, backups will be made before you play.</Field.Description>
 					</Field.Field>
 
 					<!-- Backups Limit -->
-					<Field.Field data-invalid={errors.backupsLimit.length > 0}>
+					<Field.Field data-invalid={backupsLimitErrors.length > 0}>
 						<Field.Label for="backups-limit">Backups limit</Field.Label>
 
 						<Slider
@@ -509,14 +370,14 @@
 							min={1}
 							max={10}
 							step={1}
-							bind:value={form.backupsLimit}
-							aria-invalid={errors.backupsLimit.length > 0}
+							bind:value={backupsLimit}
+							aria-invalid={backupsLimitErrors.length > 0}
 						/>
 
-						{#if errors.backupsLimit.length > 0}
+						{#if backupsLimitErrors.length > 0}
 							<Field.Error>
 								<List.Unordered>
-									{#each errors.backupsLimit as error (error)}
+									{#each backupsLimitErrors as error (error)}
 										<List.Item>
 											{error}
 										</List.Item>
@@ -529,7 +390,7 @@
 					</Field.Field>
 
 					<!-- Backups Cmpression Level -->
-					<Field.Field class="lg:col-span-2 2xl:col-auto" data-invalid={errors.backupsCompressionLevel.length > 0}>
+					<Field.Field class="lg:col-span-2 2xl:col-auto" data-invalid={backupsCompressionLevelErrors.length > 0}>
 						<Field.Label for="backups-compression-level">Backups compression level</Field.Label>
 
 						<Slider
@@ -538,14 +399,14 @@
 							min={1}
 							max={9}
 							step={1}
-							bind:value={form.backupsCompressionLevel}
-							aria-invalid={errors.backupsCompressionLevel.length > 0}
+							bind:value={backupsCompressionLevel}
+							aria-invalid={backupsCompressionLevelErrors.length > 0}
 						/>
 
-						{#if errors.backupsCompressionLevel.length > 0}
+						{#if backupsCompressionLevelErrors.length > 0}
 							<Field.Error>
 								<List.Unordered>
-									{#each errors.backupsCompressionLevel as error (error)}
+									{#each backupsCompressionLevelErrors as error (error)}
 										<List.Item>
 											{error}
 										</List.Item>
@@ -568,27 +429,10 @@
 
 			<Field.Group>
 				<!-- Start Params -->
-				<Field.Field data-invalid={errors.startParams.length > 0}>
+				<Field.Field>
 					<Field.Label for="start-params">Start params</Field.Label>
 
-					<Input
-						bind:value={form.startParams}
-						id="start-params"
-						placeholder="--param1=value1 --param2=value2..."
-						aria-invalid={errors.startParams.length > 0}
-					/>
-
-					{#if errors.startParams.length > 0}
-						<Field.Error>
-							<List.Unordered>
-								{#each errors.startParams as error (error)}
-									<List.Item>
-										{error}
-									</List.Item>
-								{/each}
-							</List.Unordered>
-						</Field.Error>
-					{/if}
+					<Input bind:value={startParams} id="start-params" placeholder="--param1=value1 --param2=value2..." />
 
 					<Field.Description>
 						You can change how the game behaves adding this params. You can check the documentation on the Vintage Story Wiki.
@@ -596,22 +440,10 @@
 				</Field.Field>
 
 				<!-- ENV Vars -->
-				<Field.Field data-invalid={errors.envVars.length > 0}>
+				<Field.Field>
 					<Field.Label for="env-vars">Start params</Field.Label>
 
-					<Input bind:value={form.envVars} id="env-vars" placeholder="NEV1=value1,ENV2=value2..." aria-invalid={errors.envVars.length > 0} />
-
-					{#if errors.envVars.length > 0}
-						<Field.Error>
-							<List.Unordered>
-								{#each errors.envVars as error (error)}
-									<List.Item>
-										{error}
-									</List.Item>
-								{/each}
-							</List.Unordered>
-						</Field.Error>
-					{/if}
+					<Input bind:value={envVars} id="env-vars" placeholder="NEV1=value1,ENV2=value2..." />
 
 					<Field.Description>You can modify some things with ENV variables, not only for Vintage Story but for 3rd party tools.</Field.Description>
 				</Field.Field>
@@ -627,22 +459,10 @@
 
 				<Field.Group>
 					<!-- MesaGL Thread -->
-					<Field.Field data-invalid={errors.mesaGlThread.length > 0}>
+					<Field.Field>
 						<Field.Label for="mesagl-thread">MesaGL Thread</Field.Label>
 
-						<Switch id="mesagl-thread" bind:checked={form.mesaGlThread} aria-invalid={errors.mesaGlThread.length > 0} />
-
-						{#if errors.mesaGlThread.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each errors.mesaGlThread as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
+						<Switch id="mesagl-thread" bind:checked={mesaGlThread} />
 
 						<Field.Description>
 							MesaGL Thread may improve performance on some Linux systems. Disable it if it causes issues for you.
