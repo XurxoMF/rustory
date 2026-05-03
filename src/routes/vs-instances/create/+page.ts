@@ -1,6 +1,6 @@
 import type { PageLoad } from "./$types";
 
-import { goto } from "$app/navigation";
+import { redirect } from "@sveltejs/kit";
 import { resolve } from "$app/paths";
 
 import { cleanForPath } from "$lib/utils";
@@ -12,12 +12,8 @@ import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 
 export const load: PageLoad = async () => {
-	// If the user is offline, redirect them to the homepage.
-	if (!App.info.isOnline) {
-		App.logger.warn("You can't create a Vintage Story Instance while offline.");
-		App.toaster.toast.warning("You can't create a Vintage Story Instance while offline.");
-		goto(resolve("/"));
-	}
+	// If the app is offline, redirect the user to the Vintage Story Instances page.
+	if (!App.info.isOnline) redirect(307, resolve("/vs-instances"));
 
 	const name = `Instance ${App.data.vsInstances.length + 1}`;
 
