@@ -19,8 +19,8 @@
 	const instance = untrack(() => data.instance);
 
 	App.breadcrumbs.segments = [
-		{ label: "Vintage Story Instances", href: "/vs-instances" },
-		{ label: `${instance.name}`, href: `/vs-instances/${() => instance.id}` }
+		{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+		{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
 	];
 </script>
 

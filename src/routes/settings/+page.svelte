@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
+
 	import { open } from "@tauri-apps/plugin-dialog";
 
 	import IconFolder from "@tabler/icons-svelte/icons/folder";
@@ -16,7 +18,7 @@
 	import { Button } from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
 
-	App.breadcrumbs.segments = [{ label: "Settings", href: "/settings" }];
+	App.breadcrumbs.segments = [{ label: "Settings", href: resolve("/settings") }];
 </script>
 
 <H1>Settings</H1>

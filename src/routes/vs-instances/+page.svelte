@@ -24,7 +24,7 @@
 	import { Separator } from "$lib/components/ui/separator";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
-	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: "/vs-instances" }];
+	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }];
 
 	let deleteContents: boolean = $state(false);
 

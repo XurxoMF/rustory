@@ -1,3 +1,5 @@
+import type { ResolvedPathname } from "$app/types";
+
 import { App } from "$lib/classes/App.svelte";
 
 import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
@@ -7,11 +9,11 @@ import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryErro
  *
  * @example
  * Path: /foo/bar
- * Segments: [{ label: 'foo', href: '/foo' }, { label: 'bar', href: '/foo/bar' }]
+ * Segments: [{ label: 'foo', href: resolve("/foo") }, { label: 'bar', href: resolve("/foo/[slug]", { slug: "1234" }) }]
  */
 export type BreadcrumbsSegment = {
 	label: string;
-	href: string;
+	href: ResolvedPathname;
 };
 
 /**

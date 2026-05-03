@@ -79,8 +79,8 @@
 	let { data }: PageProps = $props();
 
 	App.breadcrumbs.segments = [
-		{ label: "Vintage Story Instances", href: "/vs-instances" },
-		{ label: "Create", href: "/vs-instances/create" }
+		{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+		{ label: "Create", href: resolve("/vs-instances/create") }
 	];
 
 	let versions: RAPIVSVersion[] = $state(untrack(() => data.versions));
@@ -227,7 +227,7 @@
 				if (version === undefined) {
 					const newVersionPath = await App.config.vsVersionsDir.join(form.version.version);
 					const newVersionDir = await Directory.create(newVersionPath);
-					const newVersion = await VSVersion.create({ version: form.version!.version, dir: newVersionDir });
+					const newVersion = await VSVersion.create({ version: form.version.version, dir: newVersionDir });
 
 					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
 
