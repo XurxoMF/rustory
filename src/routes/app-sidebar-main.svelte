@@ -4,6 +4,9 @@
 	import IconChevron from "@tabler/icons-svelte/icons/chevron-right";
 	import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 	import IconPlus from "@tabler/icons-svelte/icons/plus";
+	import IconTool from "@tabler/icons-svelte/icons/tool";
+
+	import { App } from "$lib/classes/App.svelte";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Collapsible from "$lib/components/ui/collapsible";
@@ -42,6 +45,15 @@
 									<span>Create</span>
 								</Sidebar.MenuSubButton>
 							</Sidebar.MenuSubItem>
+
+							{#each App.data.vsInstances as vsInstance (vsInstance.id)}
+								<Sidebar.MenuSubItem>
+									<Sidebar.MenuSubButton href={resolve("/vs-instances/[slug]", { slug: vsInstance.id })}>
+										<IconTool />
+										<span>{vsInstance.name}</span>
+									</Sidebar.MenuSubButton>
+								</Sidebar.MenuSubItem>
+							{/each}
 						</Sidebar.MenuSub>
 					</Collapsible.Content>
 				</Sidebar.MenuItem>

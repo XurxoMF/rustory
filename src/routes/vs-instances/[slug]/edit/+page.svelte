@@ -195,6 +195,8 @@
 				instance.envVars = form.envVars;
 				instance.mesaGlThread = form.mesaGlThread;
 
+				instance.save();
+
 				App.logger.info(`Vintage Story Instance ${instance.name} edited successfully!`);
 
 				App.toaster.toast.success(`Vintage Story Instance ${instance.name} edited successfully!`);
@@ -225,7 +227,14 @@
 					<Field.Field data-invalid={errors.name.length > 0}>
 						<Field.Label for="name">Name</Field.Label>
 
-						<Input bind:value={form.name} id="name" placeholder="Choose a name..." aria-invalid={errors.name.length > 0} />
+						<Input
+							bind:value={form.name}
+							minlength={5}
+							maxlength={50}
+							id="name"
+							placeholder="Choose a name..."
+							aria-invalid={errors.name.length > 0}
+						/>
 
 						{#if errors.name.length > 0}
 							<Field.Error>

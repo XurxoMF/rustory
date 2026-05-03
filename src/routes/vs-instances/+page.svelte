@@ -184,6 +184,8 @@
 
 					<Button class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}>Manage</Button>
 
+					<Button class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: vsInstance.id }))}>Edit</Button>
+
 					<Button class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button>
 				</Card.Footer>
 			</Card.Root>
