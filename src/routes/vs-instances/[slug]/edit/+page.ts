@@ -9,12 +9,18 @@ import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVe
 
 export const load: PageLoad = async ({ params }) => {
 	// If the app is offline, redirect the user to the homepage.
-	if (!App.info.isOnline) redirect(307, resolve("/vs-instances"));
+	if (!App.info.isOnline) {
+		App.toaster.toast.error("You are offline!", { description: "Please check your internet connection and try again." });
+		redirect(307, resolve("/vs-instances"));
+	}
 
 	const instance = App.data.vsInstances.find((i) => i.id === params.slug);
 
 	// If there is no instance with that id, redirect the user to the instances page.
-	if (instance === undefined) redirect(307, resolve("/vs-instances"));
+	if (instance === undefined) {
+		App.toaster.toast.error("Incorrect Vintage Story Instance!", { description: "That Vintage Story Instance does not exist!" });
+		redirect(307, resolve("/vs-instances"));
+	}
 
 	const resVersions: Response = await App.request.get("https://api.rustory.xyz/versions");
 	const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();

@@ -13,7 +13,10 @@ import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVe
 
 export const load: PageLoad = async () => {
 	// If the app is offline, redirect the user to the Vintage Story Instances page.
-	if (!App.info.isOnline) redirect(307, resolve("/vs-instances"));
+	if (!App.info.isOnline) {
+		App.toaster.toast.error("You are offline!", { description: "Please check your internet connection and try again." });
+		redirect(307, resolve("/vs-instances"));
+	}
 
 	const name = `Instance ${App.data.vsInstances.length + 1}`;
 
