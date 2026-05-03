@@ -48,7 +48,13 @@
 
 		<Toaster.Root position="top-center" />
 
-		<Sidebar.Provider open={true}>
+		{#if !App.info.isOnline}
+			<div class="flex h-6 w-full items-center justify-center bg-red-500 font-semibold text-background">
+				<p>You're offline! Some features may not work properly!</p>
+			</div>
+		{/if}
+
+		<Sidebar.Provider open={true} class={!App.info.isOnline ? "h-[calc(100vh-1.5rem)]" : ""}>
 			<AppSidebar />
 
 			<Sidebar.Inset
