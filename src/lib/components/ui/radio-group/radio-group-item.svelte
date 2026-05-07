@@ -1,9 +1,15 @@
+<script lang="ts" module>
+	export type ItemProps = WithoutChildrenOrChild<RadioGroupPrimitive.ItemProps>;
+</script>
+
 <script lang="ts">
 	import { RadioGroup as RadioGroupPrimitive } from "bits-ui";
-	import { IconCircle } from "@tabler/icons-svelte";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, ...restProps }: WithoutChildrenOrChild<RadioGroupPrimitive.ItemProps> = $props();
+	import IconCircle from "@tabler/icons-svelte/icons/circle";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: ItemProps = $props();
 </script>
 
 <RadioGroupPrimitive.Item

@@ -1,13 +1,13 @@
-import Item from "./list-item.svelte";
-import Ordered from "./ordered-list.svelte";
-import Unordered from "./unordered-list.svelte";
+import Item, { type ItemProps } from "./list-item.svelte";
+import Ordered, { type OrderedProps } from "./list-ordered.svelte";
+import Unordered, { type UnorderedProps } from "./list-unordered.svelte";
 
 export {
 	Item,
 	Ordered,
 	Unordered,
 	//
-	Item as ListItem,
-	Ordered as OrderedList,
-	Unordered as UnorderedList
+	type ItemProps,
+	type OrderedProps,
+	type UnorderedProps
 };

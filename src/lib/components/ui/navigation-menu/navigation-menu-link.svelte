@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type LinkProps = NavigationMenuPrimitive.LinkProps;
+</script>
+
 <script lang="ts">
 	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, ...restProps }: NavigationMenuPrimitive.LinkProps = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: LinkProps = $props();
 </script>
 
 <NavigationMenuPrimitive.Link

@@ -1,6 +1,6 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
@@ -144,7 +144,7 @@ export class VSInstance {
 			});
 		} catch (err) {
 			App.logger.error(`There was an error creating the Vintage Story Instance:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
 		}
 	}
 
@@ -581,7 +581,7 @@ export class VSInstance {
 			}
 		} catch (err) {
 			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}
 
@@ -599,7 +599,7 @@ export class VSInstance {
 			App.logger.debug(`Finished installing the Vintage Story Instance ${this._name}!`);
 		} catch (err) {
 			App.logger.error(`There was an error installing the Vintage Story Instance:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance!");
 		}
 	}
 
@@ -615,7 +615,7 @@ export class VSInstance {
 			this._file.writeJSON(JSON);
 		} catch (err) {
 			App.logger.error(`There was an error saving the Vintage Story Instance:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
 		}
 	}
 

@@ -1,16 +1,25 @@
 <script lang="ts" module>
-	export type Side = "top" | "right" | "bottom" | "left";
+	export type ContentSides = "top" | "right" | "bottom" | "left";
+
+	export type ContentProps = WithoutChildrenOrChild<SheetPrimitive.ContentProps> & {
+		portalProps?: WithoutChildrenOrChild<Sheet.PortalProps>;
+		side?: ContentSides;
+		showCloseButton?: boolean;
+		children: Snippet;
+	};
 </script>
 
 <script lang="ts">
 	import { Dialog as SheetPrimitive } from "bits-ui";
 	import type { Snippet } from "svelte";
-	import SheetPortal from "./sheet-portal.svelte";
-	import SheetOverlay from "./sheet-overlay.svelte";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { IconX } from "@tabler/icons-svelte";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
+
+	import IconX from "@tabler/icons-svelte/icons/x";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	import * as Sheet from ".";
 
 	let {
 		ref = $bindable(null),
@@ -20,16 +29,12 @@
 		portalProps,
 		children,
 		...restProps
-	}: WithoutChildrenOrChild<SheetPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof SheetPortal>>;
-		side?: Side;
-		showCloseButton?: boolean;
-		children: Snippet;
-	} = $props();
+	}: ContentProps = $props();
 </script>
 
-<SheetPortal {...portalProps}>
-	<SheetOverlay />
+<Sheet.Portal {...portalProps}>
+	<Sheet.Overlay />
+
 	<SheetPrimitive.Content
 		bind:ref
 		data-slot="sheet-content"
@@ -44,12 +49,12 @@
 		{#if showCloseButton}
 			<SheetPrimitive.Close data-slot="sheet-close">
 				{#snippet child({ props })}
-					<Button variant="ghost" class="absolute top-3 right-3" size="icon-sm" {...props}>
+					<Button.Root variant="ghost" class="absolute top-3 right-3" size="icon-sm" {...props}>
 						<IconX />
 						<span class="sr-only">Close</span>
-					</Button>
+					</Button.Root>
 				{/snippet}
 			</SheetPrimitive.Close>
 		{/if}
 	</SheetPrimitive.Content>
-</SheetPortal>
+</Sheet.Portal>

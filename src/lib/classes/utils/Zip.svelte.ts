@@ -4,7 +4,7 @@ import { exists } from "@tauri-apps/plugin-fs";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 
@@ -43,7 +43,7 @@ export class Zip {
 			return new Zip({ path, directory });
 		} catch (err) {
 			App.logger.error(`There was an error creating the zip:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the zip!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the zip!");
 		}
 	}
 
@@ -98,7 +98,7 @@ export class Zip {
 			return await exists(this.path);
 		} catch (err) {
 			App.logger.error(`There was an error chcking if the zip exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
 		}
 	}
 
@@ -116,11 +116,11 @@ export class Zip {
 
 			if (!result) {
 				App.logger.error(`There was an error extracting the zip and couldn't be extracted!`);
-				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
+				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 			}
 		} catch (err) {
 			App.logger.error(`There was an error extracting the zip:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 		}
 	}
 }

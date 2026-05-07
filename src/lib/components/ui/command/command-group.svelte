@@ -1,17 +1,15 @@
+<script lang="ts" module>
+	export type GroupProps = CommandPrimitive.GroupProps & {
+		heading?: string;
+	};
+</script>
+
 <script lang="ts">
 	import { Command as CommandPrimitive, useId } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		heading,
-		value,
-		...restProps
-	}: CommandPrimitive.GroupProps & {
-		heading?: string;
-	} = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, heading, value, ...restProps }: GroupProps = $props();
 </script>
 
 <CommandPrimitive.Group

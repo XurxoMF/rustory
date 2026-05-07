@@ -1,7 +1,7 @@
-import Root from "./textarea.svelte";
+import Root, { type RootProps } from "./textarea-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Textarea
+	type RootProps
 };

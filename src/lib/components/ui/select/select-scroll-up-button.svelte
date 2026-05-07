@@ -1,9 +1,15 @@
+<script lang="ts" module>
+	export type ScrollUpButtonProps = WithoutChildrenOrChild<SelectPrimitive.ScrollUpButtonProps>;
+</script>
+
 <script lang="ts">
 	import { Select as SelectPrimitive } from "bits-ui";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import { IconChevronUp } from "@tabler/icons-svelte";
 
-	let { ref = $bindable(null), class: className, ...restProps }: WithoutChildrenOrChild<SelectPrimitive.ScrollUpButtonProps> = $props();
+	import IconChevronUp from "@tabler/icons-svelte/icons/chevron-up";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: ScrollUpButtonProps = $props();
 </script>
 
 <SelectPrimitive.ScrollUpButton

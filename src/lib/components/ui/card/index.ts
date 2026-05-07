@@ -1,10 +1,10 @@
-import Root from "./card.svelte";
-import Content from "./card-content.svelte";
-import Description from "./card-description.svelte";
-import Footer from "./card-footer.svelte";
-import Header from "./card-header.svelte";
-import Title from "./card-title.svelte";
-import Action from "./card-action.svelte";
+import Root, { type RootProps } from "./card-root.svelte";
+import Content, { type ContentProps } from "./card-content.svelte";
+import Description, { type DescriptionProps } from "./card-description.svelte";
+import Footer, { type FooterProps } from "./card-footer.svelte";
+import Header, { type HeaderProps } from "./card-header.svelte";
+import Title, { type TitleProps } from "./card-title.svelte";
+import Action, { type ActionProps } from "./card-action.svelte";
 
 export {
 	Root,
@@ -15,11 +15,11 @@ export {
 	Title,
 	Action,
 	//
-	Root as Card,
-	Content as CardContent,
-	Description as CardDescription,
-	Footer as CardFooter,
-	Header as CardHeader,
-	Title as CardTitle,
-	Action as CardAction
+	type RootProps,
+	type ContentProps,
+	type DescriptionProps,
+	type FooterProps,
+	type HeaderProps,
+	type TitleProps,
+	type ActionProps
 };

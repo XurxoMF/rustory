@@ -2,7 +2,7 @@ import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
@@ -142,7 +142,7 @@ export class Config {
 			return config;
 		} catch (err) {
 			App.logger.error(`There was an error initializating the config:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
 
@@ -269,7 +269,7 @@ export class Config {
 			App.logger.debug(`Locale set to ${locale}!`);
 		} catch (err) {
 			App.logger.error(`There was an error setting the new locale:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new locale!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new locale!");
 		}
 	}
 
@@ -298,7 +298,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error setting the new theme:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
 		}
 	}
 
@@ -331,7 +331,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error setting the new scale:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
 		}
 	}
 
@@ -358,7 +358,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error setting the new log level:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the new log level!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new log level!");
 		}
 	}
 
@@ -375,7 +375,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Versions path:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
 		}
 	}
 
@@ -392,7 +392,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Instances path:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
 		}
 	}
 
@@ -408,7 +408,7 @@ export class Config {
 			this._file.writeJSON(JSON);
 		} catch (err) {
 			App.logger.error(`There was an error saving the config:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
 		}
 	}
 

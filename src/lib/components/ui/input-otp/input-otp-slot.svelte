@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type SlotProps = InputOTPPrimitive.CellProps;
+</script>
+
 <script lang="ts">
 	import { PinInput as InputOTPPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), cell, class: className, ...restProps }: InputOTPPrimitive.CellProps = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), cell, class: className, ...restProps }: SlotProps = $props();
 </script>
 
 <InputOTPPrimitive.Cell

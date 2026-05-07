@@ -1,25 +1,23 @@
+<script lang="ts" module>
+	export type ContainerProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
+		config: Chart.ChartConfig;
+	};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
-	import ChartStyle from "./chart-style.svelte";
-	import { setChartContext, type ChartConfig } from "./chart-utils.js";
+
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	import * as Chart from ".";
 
 	const uid = $props.id();
 
-	let {
-		ref = $bindable(null),
-		id = uid,
-		class: className,
-		children,
-		config,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLElement>> & {
-		config: ChartConfig;
-	} = $props();
+	let { ref = $bindable(null), id = uid, class: className, children, config, ...restProps }: ContainerProps = $props();
 
 	const chartId = $derived(`chart-${id || uid.replace(/:/g, "")}`);
 
-	setChartContext({
+	Chart.setChartContext({
 		get config() {
 			return config;
 		}
@@ -61,7 +59,7 @@
 		// Legend adjustments
 		"[&_.lc-legend-swatch-button]:items-center [&_.lc-legend-swatch-button]:gap-1.5",
 		"[&_.lc-legend-swatch-group]:items-center [&_.lc-legend-swatch-group]:gap-4",
-		"[&_.lc-legend-swatch]:size-2.5 [&_.lc-legend-swatch]:rounded-[2px]",
+		"[&_.lc-legend-swatch]:size-2.5 [&_.lc-legend-swatch]:rounded-xs",
 
 		// Labels
 		"[&_.lc-labels-text:not([fill])]:fill-foreground [&_text]:stroke-transparent",
@@ -75,6 +73,6 @@
 	)}
 	{...restProps}
 >
-	<ChartStyle id={chartId} {config} />
+	<Chart.Style id={chartId} {config} />
 	{@render children?.()}
 </div>

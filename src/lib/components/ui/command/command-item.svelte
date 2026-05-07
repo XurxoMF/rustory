@@ -1,9 +1,15 @@
+<script lang="ts" module>
+	export type ItemProps = CommandPrimitive.ItemProps;
+</script>
+
 <script lang="ts">
 	import { Command as CommandPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
-	import { IconCheck } from "@tabler/icons-svelte";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: CommandPrimitive.ItemProps = $props();
+	import IconCheck from "@tabler/icons-svelte/icons/check";
+
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();
 </script>
 
 <CommandPrimitive.Item

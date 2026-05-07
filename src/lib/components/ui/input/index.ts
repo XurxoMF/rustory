@@ -1,7 +1,8 @@
-import Root from "./input.svelte";
+import Root, { type RootProps, type RootTypes } from "./input-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Input
+	type RootProps,
+	type RootTypes
 };

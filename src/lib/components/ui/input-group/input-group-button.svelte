@@ -1,7 +1,5 @@
 <script lang="ts" module>
-	import { tv, type VariantProps } from "tailwind-variants";
-
-	const inputGroupButtonVariants = tv({
+	export const buttonVariants = tv({
 		base: "gap-2 text-sm flex items-center shadow-none",
 		variants: {
 			size: {
@@ -16,27 +14,23 @@
 		}
 	});
 
-	export type InputGroupButtonSize = VariantProps<typeof inputGroupButtonVariants>["size"];
+	export type ButtonSizes = VariantProps<typeof buttonVariants>["size"];
+
+	export type ButtonProps = Omit<Button.RootProps, "href" | "size"> & {
+		size?: ButtonSizes;
+	};
 </script>
 
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import { Button } from "$lib/components/ui/button/index.js";
+	import { tv, type VariantProps } from "tailwind-variants";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		type = "button",
-		variant = "ghost",
-		size = "xs",
-		...restProps
-	}: Omit<ComponentProps<typeof Button>, "href" | "size"> & {
-		size?: InputGroupButtonSize;
-	} = $props();
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	let { ref = $bindable(null), class: className, children, type = "button", variant = "ghost", size = "xs", ...restProps }: ButtonProps = $props();
 </script>
 
-<Button bind:ref {type} data-size={size} {variant} class={cn(inputGroupButtonVariants({ size }), className)} {...restProps}>
+<Button.Root bind:ref {type} data-size={size} {variant} class={cn(buttonVariants({ size }), className)} {...restProps}>
 	{@render children?.()}
-</Button>
+</Button.Root>

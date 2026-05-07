@@ -1,15 +1,15 @@
+<script lang="ts" module>
+	export type MonthSelectProps = WithoutChildrenOrChild<RangeCalendarPrimitive.MonthSelectProps>;
+</script>
+
 <script lang="ts">
 	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
+
 	import ChevronDownIcon from "@tabler/icons-svelte/icons/chevron-down";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		value,
-		onchange,
-		...restProps
-	}: WithoutChildrenOrChild<RangeCalendarPrimitive.MonthSelectProps> = $props();
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, value, onchange, ...restProps }: MonthSelectProps = $props();
 </script>
 
 <span

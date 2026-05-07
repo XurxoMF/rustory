@@ -1,15 +1,15 @@
+<script lang="ts" module>
+	export type GroupHeadingProps = ContextMenuPrimitive.GroupHeadingProps & {
+		inset?: boolean;
+	};
+</script>
+
 <script lang="ts">
 	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		inset,
-		...restProps
-	}: ContextMenuPrimitive.GroupHeadingProps & {
-		inset?: boolean;
-	} = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, inset, ...restProps }: GroupHeadingProps = $props();
 </script>
 
 <ContextMenuPrimitive.GroupHeading

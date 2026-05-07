@@ -1,7 +1,5 @@
 <script lang="ts" module>
-	import { tv, type VariantProps } from "tailwind-variants";
-
-	export const itemMediaVariants = tv({
+	export const mediaVariants = tv({
 		base: "gap-2 group-has-data-[slot=item-description]/item:translate-y-0.5 group-has-data-[slot=item-description]/item:self-start flex shrink-0 items-center justify-center [&_svg]:pointer-events-none",
 		variants: {
 			variant: {
@@ -16,22 +14,22 @@
 		}
 	});
 
-	export type ItemMediaVariant = VariantProps<typeof itemMediaVariants>["variant"];
+	export type MediaVariants = VariantProps<typeof mediaVariants>["variant"];
+
+	export type MediaProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		variant?: MediaVariants;
+	};
 </script>
 
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
+	import { tv, type VariantProps } from "tailwind-variants";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		variant = "default",
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & { variant?: ItemMediaVariant } = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, variant = "default", ...restProps }: MediaProps = $props();
 </script>
 
-<div bind:this={ref} data-slot="item-media" data-variant={variant} class={cn(itemMediaVariants({ variant }), className)} {...restProps}>
+<div bind:this={ref} data-slot="item-media" data-variant={variant} class={cn(mediaVariants({ variant }), className)} {...restProps}>
 	{@render children?.()}
 </div>

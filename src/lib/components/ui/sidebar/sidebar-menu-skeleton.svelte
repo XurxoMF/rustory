@@ -1,7 +1,13 @@
+<script lang="ts" module>
+	export type MenuSkeletonProps = WithElementRef<HTMLAttributes<HTMLElement>> & {};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
-	import { Skeleton } from "$lib/components/ui/skeleton/index.js";
 	import type { HTMLAttributes } from "svelte/elements";
+
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	import * as Skeleton from "$lib/components/ui/skeleton";
 
 	let {
 		ref = $bindable(null),
@@ -25,8 +31,8 @@
 	{...restProps}
 >
 	{#if showIcon}
-		<Skeleton class="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />
+		<Skeleton.Root class="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />
 	{/if}
-	<Skeleton class="h-4 max-w-(--skeleton-width) flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: {width};" />
+	<Skeleton.Root class="h-4 max-w-(--skeleton-width) flex-1" data-sidebar="menu-skeleton-text" style="--skeleton-width: {width};" />
 	{@render children?.()}
 </div>

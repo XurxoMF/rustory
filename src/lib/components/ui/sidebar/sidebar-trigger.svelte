@@ -1,27 +1,28 @@
+<script lang="ts" module>
+	export type TriggerProps = Button.RootProps & {
+		onclick?: (e: MouseEvent) => void;
+	};
+</script>
+
 <script lang="ts">
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { IconLayoutSidebar } from "@tabler/icons-svelte";
-	import { cn } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import { useSidebar } from "./context.svelte.js";
+	import IconLayoutSidebar from "@tabler/icons-svelte/icons/layout-sidebar";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		onclick,
-		...restProps
-	}: ComponentProps<typeof Button> & {
-		onclick?: (e: MouseEvent) => void;
-	} = $props();
+	import * as Sidebar from ".";
 
-	const sidebar = useSidebar();
+	let { ref = $bindable(null), class: className, onclick, ...restProps }: TriggerProps = $props();
+
+	const sidebar = Sidebar.useSidebar();
 </script>
 
 <Tooltip.Root>
 	<Tooltip.Trigger>
 		{#snippet child({ props })}
-			<Button
+			<Button.Root
 				{...props}
 				bind:ref
 				data-sidebar="trigger"
@@ -38,7 +39,7 @@
 			>
 				<IconLayoutSidebar />
 				<span class="sr-only">Toggle Sidebar</span>
-			</Button>
+			</Button.Root>
 		{/snippet}
 	</Tooltip.Trigger>
 

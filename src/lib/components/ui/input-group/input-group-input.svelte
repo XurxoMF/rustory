@@ -1,12 +1,16 @@
-<script lang="ts">
-	import { cn } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import { Input } from "$lib/components/ui/input/index.js";
-
-	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: ComponentProps<typeof Input> = $props();
+<script lang="ts" module>
+	export type InputProps = Input.RootProps;
 </script>
 
-<Input
+<script lang="ts">
+	import { cn } from "$lib/utils";
+
+	import * as Input from "$lib/components/ui/input";
+
+	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: InputProps = $props();
+</script>
+
+<Input.Root
 	bind:ref
 	data-slot="input-group-control"
 	class={cn(

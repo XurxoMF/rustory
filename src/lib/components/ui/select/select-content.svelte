@@ -1,26 +1,20 @@
-<script lang="ts">
-	import { Select as SelectPrimitive } from "bits-ui";
-	import SelectPortal from "./select-portal.svelte";
-	import SelectScrollUpButton from "./select-scroll-up-button.svelte";
-	import SelectScrollDownButton from "./select-scroll-down-button.svelte";
-	import { cn, type WithoutChild } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils.js";
-
-	let {
-		ref = $bindable(null),
-		class: className,
-		sideOffset = 4,
-		portalProps,
-		children,
-		preventScroll = true,
-		...restProps
-	}: WithoutChild<SelectPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof SelectPortal>>;
-	} = $props();
+<script lang="ts" module>
+	export type ContentProps = WithoutChild<SelectPrimitive.ContentProps> & {
+		portalProps?: WithoutChildrenOrChild<Select.PortalProps>;
+	};
 </script>
 
-<SelectPortal {...portalProps}>
+<script lang="ts">
+	import { Select as SelectPrimitive } from "bits-ui";
+
+	import { cn, type WithoutChild, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Select from ".";
+
+	let { ref = $bindable(null), class: className, sideOffset = 4, portalProps, children, preventScroll = true, ...restProps }: ContentProps = $props();
+</script>
+
+<Select.Portal {...portalProps}>
 	<SelectPrimitive.Content
 		bind:ref
 		{sideOffset}
@@ -32,10 +26,12 @@
 		)}
 		{...restProps}
 	>
-		<SelectScrollUpButton />
+		<Select.ScrollUpButton />
+
 		<SelectPrimitive.Viewport class={cn("h-(--bits-select-anchor-height) w-full min-w-(--bits-select-anchor-width) scroll-my-1")}>
 			{@render children?.()}
 		</SelectPrimitive.Viewport>
-		<SelectScrollDownButton />
+
+		<Select.ScrollDownButton />
 	</SelectPrimitive.Content>
-</SelectPortal>
+</Select.Portal>

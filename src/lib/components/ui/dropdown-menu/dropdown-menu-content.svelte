@@ -1,22 +1,20 @@
-<script lang="ts">
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import DropdownMenuPortal from "./dropdown-menu-portal.svelte";
-	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
-	import type { ComponentProps } from "svelte";
-
-	let {
-		ref = $bindable(null),
-		sideOffset = 4,
-		align = "start",
-		portalProps,
-		class: className,
-		...restProps
-	}: DropdownMenuPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof DropdownMenuPortal>>;
-	} = $props();
+<script lang="ts" module>
+	export type ContentProps = DropdownMenuPrimitive.ContentProps & {
+		portalProps?: WithoutChildrenOrChild<Dropdown.PortalProps>;
+	};
 </script>
 
-<DropdownMenuPortal {...portalProps}>
+<script lang="ts">
+	import { DropdownMenu as DropdownMenuPrimitive } from "bits-ui";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Dropdown from ".";
+
+	let { ref = $bindable(null), sideOffset = 4, align = "start", portalProps, class: className, ...restProps }: ContentProps = $props();
+</script>
+
+<Dropdown.Portal {...portalProps}>
 	<DropdownMenuPrimitive.Content
 		bind:ref
 		data-slot="dropdown-menu-content"
@@ -28,4 +26,4 @@
 		)}
 		{...restProps}
 	/>
-</DropdownMenuPortal>
+</Dropdown.Portal>

@@ -4,7 +4,7 @@ import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Zip } from "$lib/classes/utils/Zip.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
@@ -52,7 +52,7 @@ export class Directory {
 			return new Directory({ path, parent });
 		} catch (err) {
 			App.logger.error(`There was an error creating the directory:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
 		}
 	}
 
@@ -108,7 +108,7 @@ export class Directory {
 			if (!directoryExists) await mkdir(this.path, { recursive: true });
 		} catch (err) {
 			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
 
@@ -123,7 +123,7 @@ export class Directory {
 			return await exists(this.path);
 		} catch (err) {
 			App.logger.error(`There was an error chcking if the directory exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
 		}
 	}
 
@@ -140,7 +140,7 @@ export class Directory {
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
 			App.logger.error(`There was an error setting the directory permissions:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
 		}
 	}
 
@@ -161,7 +161,7 @@ export class Directory {
 			return files.length === 0;
 		} catch (err) {
 			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
 
@@ -197,7 +197,7 @@ export class Directory {
 			return { files, directories };
 		} catch (err) {
 			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
 
@@ -215,7 +215,7 @@ export class Directory {
 			await remove(this.path, { recursive: true });
 		} catch (err) {
 			App.logger.error(`There was an error deleting the directory:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
 		}
 	}
 
@@ -253,7 +253,7 @@ export class Directory {
 
 			if (!result) {
 				App.logger.error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
-				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
+				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 			}
 
 			const zipPath = await join(destination.path, name);
@@ -263,7 +263,7 @@ export class Directory {
 			return zip;
 		} catch (err) {
 			App.logger.error(`There was an error compressing the directory to a zip:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 		}
 	}
 }

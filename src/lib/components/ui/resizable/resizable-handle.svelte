@@ -1,15 +1,15 @@
+<script lang="ts" module>
+	export type HandleProps = WithoutChildrenOrChild<ResizablePrimitive.PaneResizerProps> & {
+		withHandle?: boolean;
+	};
+</script>
+
 <script lang="ts">
 	import * as ResizablePrimitive from "paneforge";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		withHandle = false,
-		...restProps
-	}: WithoutChildrenOrChild<ResizablePrimitive.PaneResizerProps> & {
-		withHandle?: boolean;
-	} = $props();
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, withHandle = false, ...restProps }: HandleProps = $props();
 </script>
 
 <ResizablePrimitive.PaneResizer

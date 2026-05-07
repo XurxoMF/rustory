@@ -1,17 +1,17 @@
+<script lang="ts" module>
+	export type RadioItemProps = WithoutChild<ContextMenuPrimitive.RadioItemProps> & {
+		inset?: boolean;
+	};
+</script>
+
 <script lang="ts">
 	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-	import { cn, type WithoutChild } from "$lib/utils.js";
-	import { IconCheck } from "@tabler/icons-svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		inset,
-		children: childrenProp,
-		...restProps
-	}: WithoutChild<ContextMenuPrimitive.RadioItemProps> & {
-		inset?: boolean;
-	} = $props();
+	import IconCheck from "@tabler/icons-svelte/icons/check";
+
+	import { cn, type WithoutChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, inset, children: childrenProp, ...restProps }: RadioItemProps = $props();
 </script>
 
 <ContextMenuPrimitive.RadioItem

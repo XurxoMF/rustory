@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type GroupProps = WithElementRef<HTMLAttributes<HTMLElement>>;
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: GroupProps = $props();
 </script>
 
 <kbd bind:this={ref} data-slot="kbd-group" class={cn("inline-flex items-center gap-1", className)} {...restProps}>

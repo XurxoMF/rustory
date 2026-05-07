@@ -1,15 +1,16 @@
-import Root, { buttonGroupVariants, type ButtonGroupOrientation } from "./button-group.svelte";
-import Text from "./button-group-text.svelte";
-import Separator from "./button-group-separator.svelte";
+import Root, { type RootOrientations, type RootProps, rootVariants } from "./button-group-root.svelte";
+import Text, { type TextProps } from "./button-group-text.svelte";
+import Separator, { type SeparatorProps } from "./button-group-separator.svelte";
 
 export {
 	Root,
 	Text,
 	Separator,
-	buttonGroupVariants,
-	type ButtonGroupOrientation,
 	//
-	Root as ButtonGroup,
-	Text as ButtonGroupText,
-	Separator as ButtonGroupSeparator
+	type RootOrientations,
+	type RootProps,
+	type TextProps,
+	type SeparatorProps,
+	//
+	rootVariants
 };

@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type RowProps = WithElementRef<HTMLAttributes<HTMLTableRowElement>>;
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLTableRowElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: RowProps = $props();
 </script>
 
 <tr

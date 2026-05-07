@@ -1,8 +1,8 @@
-import Root from "./tooltip.svelte";
-import Trigger from "./tooltip-trigger.svelte";
-import Content from "./tooltip-content.svelte";
-import Provider from "./tooltip-provider.svelte";
-import Portal from "./tooltip-portal.svelte";
+import Root, { type RootProps } from "./tooltip-root.svelte";
+import Trigger, { type TriggerProps } from "./tooltip-trigger.svelte";
+import Content, { type ContentProps } from "./tooltip-content.svelte";
+import Provider, { type ProviderProps } from "./tooltip-provider.svelte";
+import Portal, { type PortalProps } from "./tooltip-portal.svelte";
 
 export {
 	Root,
@@ -11,9 +11,9 @@ export {
 	Provider,
 	Portal,
 	//
-	Root as Tooltip,
-	Content as TooltipContent,
-	Trigger as TooltipTrigger,
-	Provider as TooltipProvider,
-	Portal as TooltipPortal
+	type RootProps,
+	type TriggerProps,
+	type ContentProps,
+	type ProviderProps,
+	type PortalProps
 };

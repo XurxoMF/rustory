@@ -1,6 +1,6 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * Structure of the queue.
@@ -39,7 +39,7 @@ export class Confirm {
 			return new Confirm();
 		} catch (err) {
 			App.logger.error(`There was an error initializating the confirm:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the confirm!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the confirm!");
 		}
 	}
 

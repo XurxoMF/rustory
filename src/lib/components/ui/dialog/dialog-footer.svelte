@@ -1,18 +1,18 @@
+<script lang="ts" module>
+	export type FooterProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		showCloseButton?: boolean;
+	};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import { Dialog as DialogPrimitive } from "bits-ui";
-	import { Button } from "$lib/components/ui/button/index.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		showCloseButton = false,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		showCloseButton?: boolean;
-	} = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	let { ref = $bindable(null), class: className, children, showCloseButton = false, ...restProps }: FooterProps = $props();
 </script>
 
 <div
@@ -25,7 +25,7 @@
 	{#if showCloseButton}
 		<DialogPrimitive.Close>
 			{#snippet child({ props })}
-				<Button variant="outline" {...props}>Close</Button>
+				<Button.Root variant="outline" {...props}>Close</Button.Root>
 			{/snippet}
 		</DialogPrimitive.Close>
 	{/if}

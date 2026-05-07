@@ -4,7 +4,7 @@ import { fetch } from "@tauri-apps/plugin-http";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * Manage requests with cache.
@@ -37,7 +37,7 @@ export class Request {
 			return new Request();
 		} catch (err) {
 			App.logger.error(`There was an error initializating the request:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
 		}
 	}
 
@@ -105,7 +105,7 @@ export class Request {
 			return response;
 		} catch (err) {
 			App.logger.error(`There was an error making the request to ${url}:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
 		}
 	}
 }

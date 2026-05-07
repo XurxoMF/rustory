@@ -1,17 +1,17 @@
+<script lang="ts" module>
+	export type SubTriggerProps = WithoutChild<ContextMenuPrimitive.SubTriggerProps> & {
+		inset?: boolean;
+	};
+</script>
+
 <script lang="ts">
 	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-	import { cn, type WithoutChild } from "$lib/utils.js";
-	import { IconChevronRight } from "@tabler/icons-svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		inset,
-		children,
-		...restProps
-	}: WithoutChild<ContextMenuPrimitive.SubTriggerProps> & {
-		inset?: boolean;
-	} = $props();
+	import IconChevronRight from "@tabler/icons-svelte/icons/chevron-right";
+
+	import { cn, type WithoutChild } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, inset, children, ...restProps }: SubTriggerProps = $props();
 </script>
 
 <ContextMenuPrimitive.SubTrigger

@@ -1,10 +1,10 @@
-import Root from "./radio-group.svelte";
-import Item from "./radio-group-item.svelte";
+import Root, { type RootProps } from "./radio-group-root.svelte";
+import Item, { type ItemProps } from "./radio-group-item.svelte";
 
 export {
 	Root,
 	Item,
 	//
-	Root as RadioGroup,
-	Item as RadioGroupItem
+	type RootProps,
+	type ItemProps
 };

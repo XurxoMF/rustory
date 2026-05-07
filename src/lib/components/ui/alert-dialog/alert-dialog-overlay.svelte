@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type OverlayProps = AlertDialogPrimitive.OverlayProps;
+</script>
+
 <script lang="ts">
 	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, ...restProps }: AlertDialogPrimitive.OverlayProps = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: OverlayProps = $props();
 </script>
 
 <AlertDialogPrimitive.Overlay

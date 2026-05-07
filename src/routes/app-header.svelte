@@ -12,9 +12,9 @@
 	import { App } from "$lib/classes/App.svelte";
 
 	import * as Tooltip from "$lib/components/ui/tooltip";
-	import { Separator } from "$lib/components/ui/separator";
+	import * as Separator from "$lib/components/ui/separator";
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
-	import { Button } from "$lib/components/ui/button";
+	import * as Button from "$lib/components/ui/button";
 	import * as Sidebar from "$lib/components/ui/sidebar";
 </script>
 
@@ -25,7 +25,7 @@
 	<div class="flex flex-1 flex-row items-center justify-start gap-2">
 		<Sidebar.Trigger />
 
-		<Separator orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
+		<Separator.Root orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
 
 		<Breadcrumb.Root class="hidden md:block">
 			<Breadcrumb.List>
@@ -49,10 +49,10 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button {...props} variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
+						<Button.Root {...props} variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
 							<IconWorld />
 							<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>
-						</Button>
+						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 
@@ -62,16 +62,16 @@
 			</Tooltip.Root>
 		</div>
 
-		<Separator orientation="vertical" class="data-[orientation=vertical]:h-4" />
+		<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
 
 		<div class="flex flex-row items-center">
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button {...props} onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
 							<IconChevronDown />
 							<span class="sr-only">Hide app to tray</span>
-						</Button>
+						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 
@@ -83,10 +83,10 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button {...props} onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
 							<IconMinus />
 							<span class="sr-only">Minimize app</span>
-						</Button>
+						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 
@@ -98,10 +98,10 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button {...props} onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
 							<IconMaximize />
 							<span class="sr-only">Maximize or window app</span>
-						</Button>
+						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 
@@ -113,10 +113,10 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button {...props} onclick={() => App.window.close()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => App.window.close()} variant="ghost" size="icon-sm">
 							<IconX />
 							<span class="sr-only">Close app</span>
-						</Button>
+						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 

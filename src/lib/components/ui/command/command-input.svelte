@@ -1,10 +1,17 @@
+<script lang="ts" module>
+	export type InputProps = CommandPrimitive.InputProps;
+</script>
+
 <script lang="ts">
 	import { Command as CommandPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
-	import * as InputGroup from "$lib/components/ui/input-group/index.js";
-	import { IconSearch } from "@tabler/icons-svelte";
 
-	let { ref = $bindable(null), class: className, value = $bindable(""), ...restProps }: CommandPrimitive.InputProps = $props();
+	import IconSearch from "@tabler/icons-svelte/icons/search";
+
+	import { cn } from "$lib/utils";
+
+	import * as InputGroup from "$lib/components/ui/input-group";
+
+	let { ref = $bindable(null), class: className, value = $bindable(""), ...restProps }: InputProps = $props();
 </script>
 
 <div data-slot="command-input-wrapper" class="p-1 pb-0">

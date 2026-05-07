@@ -1,9 +1,15 @@
+<script lang="ts" module>
+	export type EllipsisProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLSpanElement>>>;
+</script>
+
 <script lang="ts">
 	import type { HTMLAttributes } from "svelte/elements";
-	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils.js";
-	import { IconDots } from "@tabler/icons-svelte";
 
-	let { ref = $bindable(null), class: className, ...restProps }: WithoutChildren<WithElementRef<HTMLAttributes<HTMLSpanElement>>> = $props();
+	import IconDots from "@tabler/icons-svelte/icons/dots";
+
+	import { cn, type WithElementRef, type WithoutChildren } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: EllipsisProps = $props();
 </script>
 
 <span

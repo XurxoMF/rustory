@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type ContentProps = NavigationMenuPrimitive.ContentProps;
+</script>
+
 <script lang="ts">
 	import { NavigationMenu as NavigationMenuPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, ...restProps }: NavigationMenuPrimitive.ContentProps = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: ContentProps = $props();
 </script>
 
 <NavigationMenuPrimitive.Content

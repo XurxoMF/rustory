@@ -1,16 +1,16 @@
+<script lang="ts" module>
+	export type TextProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		child?: Snippet<[{ props: Record<string, unknown> }]>;
+	};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		child,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-	} = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, child, ...restProps }: TextProps = $props();
 
 	const mergedProps = $derived({
 		...restProps,

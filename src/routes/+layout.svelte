@@ -3,8 +3,6 @@
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
-	import { navigating } from "$app/state";
-
 	import "./layout.css";
 
 	import RustoryIcon from "$assets/icon.png";
@@ -19,7 +17,6 @@
 	import * as ScrollArea from "$lib/components/ui/scroll-area";
 	import * as Confirm from "$lib/components/confirm";
 	import * as Command from "$lib/components/command";
-	import { Spinner } from "$lib/components/ui/spinner";
 
 	import AppHeader from "./app-header.svelte";
 	import AppSidebar from "./app-sidebar.svelte";
@@ -57,7 +54,7 @@
 			</div>
 		{/if}
 
-		<Sidebar.Provider open={true} class={[!App.info.isOnline && "h-[calc(100vh-1.5rem)]", navigating.to && "pointer-events-none"]}>
+		<Sidebar.Provider open={true} class={[!App.info.isOnline && "h-[calc(100vh-1.5rem)]"]}>
 			<AppSidebar />
 
 			<Sidebar.Inset
@@ -65,17 +62,11 @@
 			>
 				<AppHeader />
 
-				<ScrollArea.ScrollArea class="h-[calc(100%-var(--header-height))] w-full">
-					{#if navigating.to}
-						<div class="grid h-full place-content-center">
-							<Spinner class="size-12 text-muted-foreground" />
-						</div>
-					{:else}
-						<div class="flex flex-col gap-4 p-4">
-							{@render children()}
-						</div>
-					{/if}
-				</ScrollArea.ScrollArea>
+				<ScrollArea.Root class="h-[calc(100%-var(--header-height))] w-full">
+					<div class="flex flex-col gap-4 p-4">
+						{@render children()}
+					</div>
+				</ScrollArea.Root>
 			</Sidebar.Inset>
 		</Sidebar.Provider>
 	</Tooltip.Provider>

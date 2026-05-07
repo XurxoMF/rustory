@@ -1,6 +1,4 @@
 <script lang="ts">
-	import type { ComponentProps } from "svelte";
-
 	import { resolve } from "$app/paths";
 
 	import RustoryIcon from "$assets/icon.png";
@@ -12,7 +10,7 @@
 	import AppSidebarMain from "./app-sidebar-main.svelte";
 	import AppSidebarSecondary from "./app-sidebar-secondary.svelte";
 
-	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
+	let { ref = $bindable(null), ...restProps }: Sidebar.RootProps = $props();
 </script>
 
 <Sidebar.Root bind:ref collapsible="icon" variant="sidebar" {...restProps}>

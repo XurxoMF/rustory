@@ -1,7 +1,7 @@
-import Root from "./label.svelte";
+import Root, { type RootProps } from "./label-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Label
+	type RootProps
 };

@@ -1,10 +1,10 @@
-import Root from "./kbd.svelte";
-import Group from "./kbd-group.svelte";
+import Key, { type KeyProps } from "./kbd-key.svelte";
+import Group, { type GroupProps } from "./kbd-group.svelte";
 
 export {
-	Root,
+	Key,
 	Group,
 	//
-	Root as Kbd,
-	Group as KbdGroup
+	type KeyProps,
+	type GroupProps
 };

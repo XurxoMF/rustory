@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
@@ -103,7 +103,7 @@ export class Data {
 
 						if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
 							App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
-							throw new RustoryError(RustoryErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
+							throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
 						}
 
 						if (version === undefined) {
@@ -159,7 +159,7 @@ export class Data {
 			return data;
 		} catch (err) {
 			App.logger.error(`There was an error initializating the data:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
 		}
 	}
 
@@ -228,7 +228,7 @@ export class Data {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Versions:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions!");
 		}
 	}
 
@@ -245,7 +245,7 @@ export class Data {
 			await this.save();
 		} catch (err) {
 			App.logger.error(`There was an error saving the new Vintage Story Instances:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances!");
 		}
 	}
 
@@ -261,7 +261,7 @@ export class Data {
 			this._file.writeJSON(JSON);
 		} catch (err) {
 			App.logger.error(`There was an error saving the data:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
 		}
 	}
 

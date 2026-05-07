@@ -43,16 +43,16 @@ export function getPayloadConfigFromPayload(
 	return configLabelKey in config ? config[configLabelKey] : config[key as keyof typeof config];
 }
 
-type ChartContextValue = {
+export type ChartContextValue = {
 	config: ChartConfig;
 };
 
-const chartContextKey = Symbol("chart-context");
+export const CHART_CONTEXT = Symbol("chart-context");
 
 export function setChartContext(value: ChartContextValue) {
-	return setContext(chartContextKey, value);
+	return setContext(CHART_CONTEXT, value);
 }
 
 export function useChart() {
-	return getContext<ChartContextValue>(chartContextKey);
+	return getContext<ChartContextValue>(CHART_CONTEXT);
 }

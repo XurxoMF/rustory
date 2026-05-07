@@ -1,12 +1,16 @@
-<script lang="ts">
-	import { Label } from "$lib/components/ui/label/index.js";
-	import { cn } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-
-	let { ref = $bindable(null), class: className, children, ...restProps }: ComponentProps<typeof Label> = $props();
+<script lang="ts" module>
+	export type LabelProps = Label.RootProps;
 </script>
 
-<Label
+<script lang="ts">
+	import { cn } from "$lib/utils";
+
+	import * as Label from "$lib/components/ui/label";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: LabelProps = $props();
+</script>
+
+<Label.Root
 	bind:ref
 	data-slot="field-label"
 	class={cn(
@@ -17,4 +21,4 @@
 	{...restProps}
 >
 	{@render children?.()}
-</Label>
+</Label.Root>

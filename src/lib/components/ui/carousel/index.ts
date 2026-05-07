@@ -1,8 +1,19 @@
-import Root from "./carousel.svelte";
-import Content from "./carousel-content.svelte";
-import Item from "./carousel-item.svelte";
-import Previous from "./carousel-previous.svelte";
-import Next from "./carousel-next.svelte";
+import Root, { type RootProps } from "./carousel-root.svelte";
+import Content, { type ContentProps } from "./carousel-content.svelte";
+import Item, { type ItemProps } from "./carousel-item.svelte";
+import Previous, { type PreviousProps } from "./carousel-previous.svelte";
+import Next, { type NextProps } from "./carousel-next.svelte";
+import {
+	type CarouselAPI,
+	type CarouselOptions,
+	type CarouselPlugins,
+	type CarouselProps,
+	type EmblaCarouselConfig,
+	type EmblaContext,
+	getEmblaContext,
+	setEmblaContext,
+	EMBLA_CAROUSEL_CONTEXT
+} from "./carousel-context";
 
 export {
 	Root,
@@ -11,9 +22,21 @@ export {
 	Previous,
 	Next,
 	//
-	Root as Carousel,
-	Content as CarouselContent,
-	Item as CarouselItem,
-	Previous as CarouselPrevious,
-	Next as CarouselNext
+	type RootProps,
+	type ContentProps,
+	type ItemProps,
+	type PreviousProps,
+	type NextProps,
+	//
+	type CarouselAPI,
+	type CarouselOptions,
+	type CarouselPlugins,
+	type CarouselProps,
+	type EmblaCarouselConfig,
+	type EmblaContext,
+	//
+	getEmblaContext,
+	setEmblaContext,
+	//
+	EMBLA_CAROUSEL_CONTEXT
 };

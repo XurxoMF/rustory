@@ -1,13 +1,13 @@
-import Root from "./collapsible.svelte";
-import Trigger from "./collapsible-trigger.svelte";
-import Content from "./collapsible-content.svelte";
+import Root, { type RootProps } from "./collapsible-root.svelte";
+import Trigger, { type TriggerProps } from "./collapsible-trigger.svelte";
+import Content, { type ContentProps } from "./collapsible-content.svelte";
 
 export {
 	Root,
 	Content,
 	Trigger,
 	//
-	Root as Collapsible,
-	Content as CollapsibleContent,
-	Trigger as CollapsibleTrigger
+	type RootProps,
+	type TriggerProps,
+	type ContentProps
 };

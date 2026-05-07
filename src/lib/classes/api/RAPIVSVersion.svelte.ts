@@ -2,7 +2,7 @@ import { download } from "@tauri-apps/plugin-upload";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Logger } from "$lib/classes/utils/Logger.svelte";
 import { Zip } from "$lib/classes/utils/Zip.svelte";
@@ -225,7 +225,7 @@ export class RAPIVSVersion {
 			return zip;
 		} catch (err) {
 			Logger.error(`There was an error downloading the version:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error downloading the version!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error downloading the version!");
 		}
 	}
 }

@@ -1,24 +1,21 @@
-<script lang="ts">
-	import { Drawer as DrawerPrimitive } from "vaul-svelte";
-	import DrawerPortal from "./drawer-portal.svelte";
-	import DrawerOverlay from "./drawer-overlay.svelte";
-	import { cn } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils.js";
-
-	let {
-		ref = $bindable(null),
-		class: className,
-		portalProps,
-		children,
-		...restProps
-	}: DrawerPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof DrawerPortal>>;
-	} = $props();
+<script lang="ts" module>
+	export type ContentProps = DrawerPrimitive.ContentProps & {
+		portalProps?: WithoutChildrenOrChild<Drawer.PortalProps>;
+	};
 </script>
 
-<DrawerPortal {...portalProps}>
-	<DrawerOverlay />
+<script lang="ts">
+	import { Drawer as DrawerPrimitive } from "vaul-svelte";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Drawer from ".";
+
+	let { ref = $bindable(null), class: className, portalProps, children, ...restProps }: ContentProps = $props();
+</script>
+
+<Drawer.Portal {...portalProps}>
+	<Drawer.Overlay />
 	<DrawerPrimitive.Content
 		bind:ref
 		data-slot="drawer-content"
@@ -28,9 +25,7 @@
 		)}
 		{...restProps}
 	>
-		<div
-			class="mx-auto mt-4 hidden h-1 w-[100px] shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block"
-		></div>
+		<div class="mx-auto mt-4 hidden h-1 w-25 shrink-0 rounded-full bg-muted group-data-[vaul-drawer-direction=bottom]/drawer-content:block"></div>
 		{@render children?.()}
 	</DrawerPrimitive.Content>
-</DrawerPortal>
+</Drawer.Portal>

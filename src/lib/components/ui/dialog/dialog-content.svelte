@@ -1,28 +1,27 @@
-<script lang="ts">
-	import { Dialog as DialogPrimitive } from "bits-ui";
-	import DialogPortal from "./dialog-portal.svelte";
-	import type { Snippet } from "svelte";
-	import * as Dialog from "./index.js";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-	import { Button } from "$lib/components/ui/button/index.js";
-	import { IconX } from "@tabler/icons-svelte";
-
-	let {
-		ref = $bindable(null),
-		class: className,
-		portalProps,
-		children,
-		showCloseButton = true,
-		...restProps
-	}: WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof DialogPortal>>;
+<script lang="ts" module>
+	export type ContentProps = WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
+		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps>;
 		children: Snippet;
 		showCloseButton?: boolean;
-	} = $props();
+	};
 </script>
 
-<DialogPortal {...portalProps}>
+<script lang="ts">
+	import { Dialog as DialogPrimitive } from "bits-ui";
+	import type { Snippet } from "svelte";
+
+	import IconX from "@tabler/icons-svelte/icons/x";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	import * as Dialog from ".";
+
+	let { ref = $bindable(null), class: className, portalProps, children, showCloseButton = true, ...restProps }: ContentProps = $props();
+</script>
+
+<Dialog.Portal {...portalProps}>
 	<Dialog.Overlay />
 	<DialogPrimitive.Content
 		bind:ref
@@ -37,12 +36,12 @@
 		{#if showCloseButton}
 			<DialogPrimitive.Close data-slot="dialog-close">
 				{#snippet child({ props })}
-					<Button variant="ghost" class="absolute top-2 right-2" size="icon-sm" {...props}>
+					<Button.Root variant="ghost" class="absolute top-2 right-2" size="icon-sm" {...props}>
 						<IconX />
 						<span class="sr-only">Close</span>
-					</Button>
+					</Button.Root>
 				{/snippet}
 			</DialogPrimitive.Close>
 		{/if}
 	</DialogPrimitive.Content>
-</DialogPortal>
+</Dialog.Portal>

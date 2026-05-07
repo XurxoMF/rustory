@@ -1,7 +1,7 @@
-import Root from "./sonner.svelte";
+import Root, { type RootProps } from "./sonner-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Toaster
+	type RootProps
 };

@@ -10,7 +10,7 @@ import IconSettings from "@tabler/icons-svelte/icons/settings";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 export class CommandItem {
 	// ***********************
@@ -229,7 +229,7 @@ export class Command {
 			});
 		} catch (err) {
 			App.logger.error(`There was an error initializating the command:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the command!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the command!");
 		}
 	}
 

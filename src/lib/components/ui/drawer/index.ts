@@ -1,14 +1,14 @@
-import Root from "./drawer.svelte";
-import Content from "./drawer-content.svelte";
-import Description from "./drawer-description.svelte";
-import Overlay from "./drawer-overlay.svelte";
-import Footer from "./drawer-footer.svelte";
-import Header from "./drawer-header.svelte";
-import Title from "./drawer-title.svelte";
-import NestedRoot from "./drawer-nested.svelte";
-import Close from "./drawer-close.svelte";
-import Trigger from "./drawer-trigger.svelte";
-import Portal from "./drawer-portal.svelte";
+import Root, { type RootProps } from "./drawer-root.svelte";
+import Content, { type ContentProps } from "./drawer-content.svelte";
+import Description, { type DescriptionProps } from "./drawer-description.svelte";
+import Overlay, { type OverlayProps } from "./drawer-overlay.svelte";
+import Footer, { type FooterProps } from "./drawer-footer.svelte";
+import Header, { type HeaderProps } from "./drawer-header.svelte";
+import Title, { type TitleProps } from "./drawer-title.svelte";
+import NestedRoot, { type NestedProps } from "./drawer-nested.svelte";
+import Close, { type CloseProps } from "./drawer-close.svelte";
+import Trigger, { type TriggerProps } from "./drawer-trigger.svelte";
+import Portal, { type PortalProps } from "./drawer-portal.svelte";
 
 export {
 	Root,
@@ -22,17 +22,16 @@ export {
 	Trigger,
 	Portal,
 	Close,
-
 	//
-	Root as Drawer,
-	NestedRoot as DrawerNestedRoot,
-	Content as DrawerContent,
-	Description as DrawerDescription,
-	Overlay as DrawerOverlay,
-	Footer as DrawerFooter,
-	Header as DrawerHeader,
-	Title as DrawerTitle,
-	Trigger as DrawerTrigger,
-	Portal as DrawerPortal,
-	Close as DrawerClose
+	type RootProps,
+	type NestedProps,
+	type ContentProps,
+	type DescriptionProps,
+	type OverlayProps,
+	type FooterProps,
+	type HeaderProps,
+	type TitleProps,
+	type TriggerProps,
+	type PortalProps,
+	type CloseProps
 };

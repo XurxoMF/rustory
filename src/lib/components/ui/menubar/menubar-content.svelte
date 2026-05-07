@@ -1,8 +1,15 @@
+<script lang="ts" module>
+	export type ContentProps = WithoutChildrenOrChild<MenubarPrimitive.ContentProps> & {
+		portalProps?: WithoutChildrenOrChild<Menubar.PortalProps>;
+	};
+</script>
+
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
-	import MenubarPortal from "./menubar-portal.svelte";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Menubar from ".";
 
 	let {
 		ref = $bindable(null),
@@ -13,12 +20,10 @@
 		side = "bottom",
 		portalProps,
 		...restProps
-	}: MenubarPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof MenubarPortal>>;
-	} = $props();
+	}: ContentProps = $props();
 </script>
 
-<MenubarPortal {...portalProps}>
+<Menubar.Portal {...portalProps}>
 	<MenubarPrimitive.Content
 		bind:ref
 		data-slot="menubar-content"
@@ -32,4 +37,4 @@
 		)}
 		{...restProps}
 	/>
-</MenubarPortal>
+</Menubar.Portal>

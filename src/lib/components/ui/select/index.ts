@@ -1,14 +1,14 @@
-import Root from "./select.svelte";
-import Group from "./select-group.svelte";
-import Label from "./select-label.svelte";
-import Item from "./select-item.svelte";
-import Content from "./select-content.svelte";
-import Trigger from "./select-trigger.svelte";
-import Separator from "./select-separator.svelte";
-import ScrollDownButton from "./select-scroll-down-button.svelte";
-import ScrollUpButton from "./select-scroll-up-button.svelte";
-import GroupHeading from "./select-group-heading.svelte";
-import Portal from "./select-portal.svelte";
+import Root, { type RootProps } from "./select-root.svelte";
+import Group, { type GroupProps } from "./select-group.svelte";
+import Label, { type LabelProps } from "./select-label.svelte";
+import Item, { type ItemProps } from "./select-item.svelte";
+import Content, { type ContentProps } from "./select-content.svelte";
+import Trigger, { type TriggerProps } from "./select-trigger.svelte";
+import Separator, { type SeparatorProps } from "./select-separator.svelte";
+import ScrollDownButton, { type ScrollDownButtonProps } from "./select-scroll-down-button.svelte";
+import ScrollUpButton, { type ScrollUpButtonProps } from "./select-scroll-up-button.svelte";
+import GroupHeading, { type GroupHeadingProps } from "./select-group-heading.svelte";
+import Portal, { type PortalProps } from "./select-portal.svelte";
 
 export {
 	Root,
@@ -23,15 +23,15 @@ export {
 	GroupHeading,
 	Portal,
 	//
-	Root as Select,
-	Group as SelectGroup,
-	Label as SelectLabel,
-	Item as SelectItem,
-	Content as SelectContent,
-	Trigger as SelectTrigger,
-	Separator as SelectSeparator,
-	ScrollDownButton as SelectScrollDownButton,
-	ScrollUpButton as SelectScrollUpButton,
-	GroupHeading as SelectGroupHeading,
-	Portal as SelectPortal
+	type RootProps,
+	type GroupProps,
+	type LabelProps,
+	type ItemProps,
+	type ContentProps,
+	type TriggerProps,
+	type SeparatorProps,
+	type ScrollDownButtonProps,
+	type ScrollUpButtonProps,
+	type GroupHeadingProps,
+	type PortalProps
 };

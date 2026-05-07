@@ -1,18 +1,18 @@
+<script lang="ts" module>
+	export type TriggerProps = WithoutChild<AccordionPrimitive.TriggerProps> & {
+		level?: AccordionPrimitive.HeaderProps["level"];
+	};
+</script>
+
 <script lang="ts">
 	import { Accordion as AccordionPrimitive } from "bits-ui";
-	import { cn, type WithoutChild } from "$lib/utils.js";
-	import { IconChevronDown } from "@tabler/icons-svelte";
-	import { IconChevronUp } from "@tabler/icons-svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		level = 3,
-		children,
-		...restProps
-	}: WithoutChild<AccordionPrimitive.TriggerProps> & {
-		level?: AccordionPrimitive.HeaderProps["level"];
-	} = $props();
+	import { cn, type WithoutChild } from "$lib/utils";
+
+	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
+	import IconChevronUp from "@tabler/icons-svelte/icons/chevron-up";
+
+	let { ref = $bindable(null), class: className, level = 3, children, ...restProps }: TriggerProps = $props();
 </script>
 
 <AccordionPrimitive.Header {level} class="flex">
@@ -26,10 +26,12 @@
 		{...restProps}
 	>
 		{@render children?.()}
+
 		<IconChevronDown
 			data-slot="accordion-trigger-icon"
 			class="cn-accordion-trigger-icon pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden"
 		/>
+
 		<IconChevronUp
 			data-slot="accordion-trigger-icon"
 			class="cn-accordion-trigger-icon pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline"

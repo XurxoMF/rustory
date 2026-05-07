@@ -1,6 +1,16 @@
-import Root from "./input-otp.svelte";
-import Group from "./input-otp-group.svelte";
-import Slot from "./input-otp-slot.svelte";
-import Separator from "./input-otp-separator.svelte";
+import Root, { type RootProps } from "./input-otp-root.svelte";
+import Group, { type GroupProps } from "./input-otp-group.svelte";
+import Slot, { type SlotProps } from "./input-otp-slot.svelte";
+import Separator, { type SeparatorProps } from "./input-otp-separator.svelte";
 
-export { Root, Group, Slot, Separator, Root as InputOTP, Group as InputOTPGroup, Slot as InputOTPSlot, Separator as InputOTPSeparator };
+export {
+	Root,
+	Group,
+	Slot,
+	Separator,
+	//
+	type RootProps,
+	type GroupProps,
+	type SlotProps,
+	type SeparatorProps
+};

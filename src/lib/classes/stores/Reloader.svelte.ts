@@ -1,6 +1,6 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * Store for the reaload functions.
@@ -35,7 +35,7 @@ export class Reloader {
 			return new Reloader();
 		} catch (err) {
 			App.logger.error(`There was an error initializating the reloader:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");
 		}
 	}
 

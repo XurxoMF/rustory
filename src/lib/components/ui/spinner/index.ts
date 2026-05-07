@@ -1,1 +1,7 @@
-export { default as Spinner } from "./spinner.svelte";
+import Root, { type RootProps } from "./spinner-root.svelte";
+
+export {
+	Root,
+	//
+	type RootProps
+};

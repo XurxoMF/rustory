@@ -1,3 +1,7 @@
-import Root from "./aspect-ratio.svelte";
+import Root, { type RootProps } from "./aspect-ratio-root.svelte";
 
-export { Root, Root as AspectRatio };
+export {
+	Root,
+	//
+	type RootProps
+};

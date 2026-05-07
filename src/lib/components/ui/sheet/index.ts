@@ -1,13 +1,13 @@
-import Root from "./sheet.svelte";
-import Portal from "./sheet-portal.svelte";
-import Trigger from "./sheet-trigger.svelte";
-import Close from "./sheet-close.svelte";
-import Overlay from "./sheet-overlay.svelte";
-import Content from "./sheet-content.svelte";
-import Header from "./sheet-header.svelte";
-import Footer from "./sheet-footer.svelte";
-import Title from "./sheet-title.svelte";
-import Description from "./sheet-description.svelte";
+import Root, { type RootProps } from "./sheet-root.svelte";
+import Portal, { type PortalProps } from "./sheet-portal.svelte";
+import Trigger, { type TriggerProps } from "./sheet-trigger.svelte";
+import Close, { type CloseProps } from "./sheet-close.svelte";
+import Overlay, { type OverlayProps } from "./sheet-overlay.svelte";
+import Content, { type ContentProps } from "./sheet-content.svelte";
+import Header, { type HeaderProps } from "./sheet-header.svelte";
+import Footer, { type FooterProps } from "./sheet-footer.svelte";
+import Title, { type TitleProps } from "./sheet-title.svelte";
+import Description, { type DescriptionProps } from "./sheet-description.svelte";
 
 export {
 	Root,
@@ -21,14 +21,14 @@ export {
 	Title,
 	Description,
 	//
-	Root as Sheet,
-	Close as SheetClose,
-	Trigger as SheetTrigger,
-	Portal as SheetPortal,
-	Overlay as SheetOverlay,
-	Content as SheetContent,
-	Header as SheetHeader,
-	Footer as SheetFooter,
-	Title as SheetTitle,
-	Description as SheetDescription
+	type RootProps,
+	type CloseProps,
+	type TriggerProps,
+	type PortalProps,
+	type OverlayProps,
+	type ContentProps,
+	type HeaderProps,
+	type FooterProps,
+	type TitleProps,
+	type DescriptionProps
 };

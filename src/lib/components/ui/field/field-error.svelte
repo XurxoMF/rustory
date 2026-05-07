@@ -1,18 +1,19 @@
+<script lang="ts" module>
+	export type ErrorError = { message?: string | undefined };
+
+	export type ErrorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		children?: Snippet;
+		errors?: ErrorError[];
+	};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 	import type { Snippet } from "svelte";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		errors,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		children?: Snippet;
-		errors?: { message?: string }[];
-	} = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, errors, ...restProps }: ErrorProps = $props();
 
 	const hasContent = $derived.by(() => {
 		// has slotted error

@@ -1,15 +1,18 @@
-<script lang="ts">
-	import type { ComponentProps } from "svelte";
-	import { cn } from "$lib/utils.js";
-	import { PaginationLink } from "./index.js";
-	import { IconChevronLeft } from "@tabler/icons-svelte";
-
-	type PaginationPreviousProps = ComponentProps<typeof PaginationLink>;
-
-	let { class: className, ...restProps }: PaginationPreviousProps = $props();
+<script lang="ts" module>
+	export type PreviousProps = Pagination.LinkProps;
 </script>
 
-<PaginationLink aria-label="Go to previous page" size="default" class={cn("pl-1.5!", className)} {...restProps}>
-	<IconChevronLeft data-icon="inline-start" />
+<script lang="ts">
+	import IconChevronLeft from "@tabler/icons-svelte/icons/chevron-left";
+
+	import { cn } from "$lib/utils";
+
+	import * as Pagination from ".";
+
+	let { class: className, ...restProps }: PreviousProps = $props();
+</script>
+
+<Pagination.Link aria-label="Go to previous page" size="default" class={cn("pr-1.5!", className)} {...restProps}>
 	<span class="cn-pagination-previous-text hidden sm:block">Previous</span>
-</PaginationLink>
+	<IconChevronLeft data-icon="inline-start" />
+</Pagination.Link>

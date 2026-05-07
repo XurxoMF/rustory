@@ -1,6 +1,6 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
@@ -53,7 +53,7 @@ export class VSVersion {
 			});
 		} catch (err) {
 			App.logger.error(`There was an error creating the Vintage Story Version:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Version!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Version!");
 		}
 	}
 
@@ -164,7 +164,7 @@ export class VSVersion {
 
 			if (!executablePath) {
 				App.logger.error("There is no executable for this Vintage Story Version and the user platform!");
-				throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There is no executable for this Vintage Story Version and the user platform!");
+				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There is no executable for this Vintage Story Version and the user platform!");
 			}
 
 			const executable = await File.create(executablePath);
@@ -172,7 +172,7 @@ export class VSVersion {
 			return executable;
 		} catch (err) {
 			App.logger.error(`There was an error getting the executable path:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error getting the executable path!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error getting the executable path!");
 		}
 	}
 
@@ -204,7 +204,7 @@ export class VSVersion {
 			App.toaster.toast.success(`Vintage Story Version ${this._version} installed successfully!`);
 		} catch (err) {
 			App.logger.error(`There was an error installing the Vintage Story Version:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Version!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Version!");
 		}
 	}
 
@@ -220,7 +220,7 @@ export class VSVersion {
 			await this._dir.delete();
 		} catch (err) {
 			App.logger.error(`There was an error deleting the Vintage Story Version:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Version!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Version!");
 		}
 	}
 }

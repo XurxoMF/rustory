@@ -1,7 +1,7 @@
-import Root from "./slider.svelte";
+import Root, { type RootProps } from "./slider-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Slider
+	type RootProps
 };

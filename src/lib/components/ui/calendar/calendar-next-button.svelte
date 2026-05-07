@@ -1,18 +1,19 @@
+<script lang="ts" module>
+	export type NextButtonProps = CalendarPrimitive.NextButtonProps & {
+		variant?: Button.RootVariants;
+	};
+</script>
+
 <script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
-	import ChevronRightIcon from "@tabler/icons-svelte/icons/chevron-right";
-	import { buttonVariants, type ButtonVariant } from "$lib/components/ui/button/index.js";
-	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		variant = "ghost",
-		...restProps
-	}: CalendarPrimitive.NextButtonProps & {
-		variant?: ButtonVariant;
-	} = $props();
+	import ChevronRightIcon from "@tabler/icons-svelte/icons/chevron-right";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	let { ref = $bindable(null), class: className, children, variant = "ghost", ...restProps }: NextButtonProps = $props();
 </script>
 
 {#snippet Fallback()}
@@ -21,7 +22,7 @@
 
 <CalendarPrimitive.NextButton
 	bind:ref
-	class={cn(buttonVariants({ variant }), "size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180", className)}
+	class={cn(Button.rootVariants({ variant }), "size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180", className)}
 	{...restProps}
 >
 	{#if children}

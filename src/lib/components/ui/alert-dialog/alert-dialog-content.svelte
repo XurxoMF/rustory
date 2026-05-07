@@ -1,24 +1,22 @@
-<script lang="ts">
-	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
-	import AlertDialogPortal from "./alert-dialog-portal.svelte";
-	import AlertDialogOverlay from "./alert-dialog-overlay.svelte";
-	import { cn, type WithoutChild, type WithoutChildrenOrChild } from "$lib/utils.js";
-	import type { ComponentProps } from "svelte";
-
-	let {
-		ref = $bindable(null),
-		class: className,
-		size = "default",
-		portalProps,
-		...restProps
-	}: WithoutChild<AlertDialogPrimitive.ContentProps> & {
+<script lang="ts" module>
+	export type ContentProps = WithoutChild<AlertDialogPrimitive.ContentProps> & {
 		size?: "default" | "sm";
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof AlertDialogPortal>>;
-	} = $props();
+		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps>;
+	};
 </script>
 
-<AlertDialogPortal {...portalProps}>
-	<AlertDialogOverlay />
+<script lang="ts">
+	import { AlertDialog as AlertDialogPrimitive } from "bits-ui";
+
+	import { cn, type WithoutChild, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Dialog from ".";
+
+	let { ref = $bindable(null), class: className, size = "default", portalProps, ...restProps }: ContentProps = $props();
+</script>
+
+<Dialog.Portal {...portalProps}>
+	<Dialog.Overlay />
 	<AlertDialogPrimitive.Content
 		bind:ref
 		data-slot="alert-dialog-content"
@@ -29,4 +27,4 @@
 		)}
 		{...restProps}
 	/>
-</AlertDialogPortal>
+</Dialog.Portal>

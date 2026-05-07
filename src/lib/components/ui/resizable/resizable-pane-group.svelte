@@ -1,15 +1,15 @@
+<script lang="ts" module>
+	export type PaneGroupProps = ResizablePrimitive.PaneGroupProps & {
+		this?: ResizablePrimitive.PaneGroup;
+	};
+</script>
+
 <script lang="ts">
 	import * as ResizablePrimitive from "paneforge";
-	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		this: paneGroup = $bindable(),
-		class: className,
-		...restProps
-	}: ResizablePrimitive.PaneGroupProps & {
-		this?: ResizablePrimitive.PaneGroup;
-	} = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), this: paneGroup = $bindable(), class: className, ...restProps }: PaneGroupProps = $props();
 </script>
 
 <ResizablePrimitive.PaneGroup

@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type ContentProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: ContentProps = $props();
 </script>
 
 <div bind:this={ref} data-slot="field-content" class={cn("group/field-content flex flex-1 flex-col gap-0.5 leading-snug", className)} {...restProps}>

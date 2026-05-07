@@ -4,7 +4,7 @@ import { invoke } from "@tauri-apps/api/core";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 
@@ -43,7 +43,7 @@ export class File {
 			return new File({ path, directory });
 		} catch (err) {
 			App.logger.error(`There was an error creating the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
 		}
 	}
 
@@ -101,7 +101,7 @@ export class File {
 			if (!fileExists) await create(this.path);
 		} catch (err) {
 			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
 
@@ -116,7 +116,7 @@ export class File {
 			return await exists(this.path);
 		} catch (err) {
 			App.logger.error(`There was an error chcking if the file exists:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
 		}
 	}
 
@@ -133,7 +133,7 @@ export class File {
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
 			App.logger.error(`There was an error setting the file permissions:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
 		}
 	}
 
@@ -152,7 +152,7 @@ export class File {
 			return fileContents;
 		} catch (err) {
 			App.logger.error(`There was an error reading the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
 
@@ -169,7 +169,7 @@ export class File {
 			await writeTextFile(this.path, text);
 		} catch (err) {
 			App.logger.error(`There was an error writing the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}
 
@@ -190,7 +190,7 @@ export class File {
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
 			App.logger.error(`There was an error reading the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
 
@@ -207,7 +207,7 @@ export class File {
 			await writeTextFile(this.path, JSON.stringify(data, null, 2));
 		} catch (err) {
 			App.logger.error(`There was an error writing the file:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}
 }

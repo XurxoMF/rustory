@@ -1,13 +1,13 @@
-import Root from "./dialog.svelte";
-import Portal from "./dialog-portal.svelte";
-import Title from "./dialog-title.svelte";
-import Footer from "./dialog-footer.svelte";
-import Header from "./dialog-header.svelte";
-import Overlay from "./dialog-overlay.svelte";
-import Content from "./dialog-content.svelte";
-import Description from "./dialog-description.svelte";
-import Trigger from "./dialog-trigger.svelte";
-import Close from "./dialog-close.svelte";
+import Root, { type RootProps } from "./dialog-root.svelte";
+import Portal, { type PortalProps } from "./dialog-portal.svelte";
+import Title, { type TitleProps } from "./dialog-title.svelte";
+import Footer, { type FooterProps } from "./dialog-footer.svelte";
+import Header, { type HeaderProps } from "./dialog-header.svelte";
+import Overlay, { type OverlayProps } from "./dialog-overlay.svelte";
+import Content, { type ContentProps } from "./dialog-content.svelte";
+import Description, { type DescriptionProps } from "./dialog-description.svelte";
+import Trigger, { type TriggerProps } from "./dialog-trigger.svelte";
+import Close, { type CloseProps } from "./dialog-close.svelte";
 
 export {
 	Root,
@@ -21,14 +21,14 @@ export {
 	Description,
 	Close,
 	//
-	Root as Dialog,
-	Title as DialogTitle,
-	Portal as DialogPortal,
-	Footer as DialogFooter,
-	Header as DialogHeader,
-	Trigger as DialogTrigger,
-	Overlay as DialogOverlay,
-	Content as DialogContent,
-	Description as DialogDescription,
-	Close as DialogClose
+	type RootProps,
+	type PortalProps,
+	type TitleProps,
+	type FooterProps,
+	type HeaderProps,
+	type OverlayProps,
+	type ContentProps,
+	type DescriptionProps,
+	type TriggerProps,
+	type CloseProps
 };

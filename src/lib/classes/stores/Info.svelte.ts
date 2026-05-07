@@ -16,7 +16,7 @@ import { Command } from "@tauri-apps/plugin-shell";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 
@@ -166,7 +166,7 @@ export class Info {
 			});
 		} catch (err) {
 			App.logger.error(`There was an error initializating the info:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
 		}
 	}
 

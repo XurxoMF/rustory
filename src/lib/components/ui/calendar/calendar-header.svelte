@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type HeaderProps = CalendarPrimitive.HeaderProps;
+</script>
+
 <script lang="ts">
 	import { Calendar as CalendarPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, ...restProps }: CalendarPrimitive.HeaderProps = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, ...restProps }: HeaderProps = $props();
 </script>
 
 <CalendarPrimitive.Header

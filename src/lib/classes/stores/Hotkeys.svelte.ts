@@ -1,6 +1,6 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * Hotkeys of the app.
@@ -49,7 +49,7 @@ export class Hotkeys {
 			});
 		} catch (err) {
 			App.logger.error(`There was an error initializating the hotkeys:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
 		}
 	}
 

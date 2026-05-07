@@ -1,8 +1,16 @@
+<script lang="ts" module>
+	export type ProviderProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
+		open?: boolean;
+		onOpenChange?: (open: boolean) => void;
+	};
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
-	import { SIDEBAR_COOKIE_MAX_AGE, SIDEBAR_COOKIE_NAME, SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON } from "./constants.js";
-	import { setSidebar } from "./context.svelte.js";
+
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	import * as Sidebar from ".";
 
 	let {
 		ref = $bindable(null),
@@ -12,19 +20,16 @@
 		style,
 		children,
 		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		open?: boolean;
-		onOpenChange?: (open: boolean) => void;
-	} = $props();
+	}: ProviderProps = $props();
 
-	const sidebar = setSidebar({
+	const sidebar = Sidebar.setSidebar({
 		open: () => open,
 		setOpen: (value: boolean) => {
 			open = value;
 			onOpenChange(value);
 
 			// This sets the cookie to keep the sidebar state.
-			document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+			document.cookie = `${Sidebar.SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${Sidebar.SIDEBAR_COOKIE_MAX_AGE}`;
 		}
 	});
 </script>
@@ -33,7 +38,7 @@
 
 <div
 	data-slot="sidebar-wrapper"
-	style="--sidebar-width: {SIDEBAR_WIDTH}; --sidebar-width-icon: {SIDEBAR_WIDTH_ICON}; {style}"
+	style="--sidebar-width: {Sidebar.SIDEBAR_WIDTH}; --sidebar-width-icon: {Sidebar.SIDEBAR_WIDTH_ICON}; {style}"
 	// Changed min-h-svh for h-full so it can fit inside containers
 	class={cn("group/sidebar-wrapper flex h-full w-full has-data-[variant=inset]:bg-sidebar", className)}
 	bind:this={ref}

@@ -1,9 +1,18 @@
+<script lang="ts" module>
+	export type CheckboxItemProps = WithoutChildrenOrChild<MenubarPrimitive.CheckboxItemProps> & {
+		inset?: boolean;
+		children?: Snippet;
+	};
+</script>
+
 <script lang="ts">
 	import { Menubar as MenubarPrimitive } from "bits-ui";
-	import { cn, type WithoutChildrenOrChild } from "$lib/utils.js";
 	import type { Snippet } from "svelte";
-	import { IconMinus } from "@tabler/icons-svelte";
-	import { IconCheck } from "@tabler/icons-svelte";
+
+	import IconMinus from "@tabler/icons-svelte/icons/minus";
+	import IconCheck from "@tabler/icons-svelte/icons/check";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
 
 	let {
 		ref = $bindable(null),
@@ -13,10 +22,7 @@
 		inset,
 		children: childrenProp,
 		...restProps
-	}: WithoutChildrenOrChild<MenubarPrimitive.CheckboxItemProps> & {
-		inset?: boolean;
-		children?: Snippet;
-	} = $props();
+	}: CheckboxItemProps = $props();
 </script>
 
 <MenubarPrimitive.CheckboxItem

@@ -1,7 +1,7 @@
-import Root from "./progress.svelte";
+import Root, { type RootProps } from "./progress-root.svelte";
 
 export {
 	Root,
 	//
-	Root as Progress
+	type RootProps
 };

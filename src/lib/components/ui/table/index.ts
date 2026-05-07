@@ -1,11 +1,11 @@
-import Root from "./table.svelte";
-import Body from "./table-body.svelte";
-import Caption from "./table-caption.svelte";
-import Cell from "./table-cell.svelte";
-import Footer from "./table-footer.svelte";
-import Head from "./table-head.svelte";
-import Header from "./table-header.svelte";
-import Row from "./table-row.svelte";
+import Root, { type RootProps } from "./table-root.svelte";
+import Body, { type BodyProps } from "./table-body.svelte";
+import Caption, { type CaptionProps } from "./table-caption.svelte";
+import Cell, { type CellProps } from "./table-cell.svelte";
+import Footer, { type FooterProps } from "./table-footer.svelte";
+import Head, { type HeadProps } from "./table-head.svelte";
+import Header, { type HeaderProps } from "./table-header.svelte";
+import Row, { type RowProps } from "./table-row.svelte";
 
 export {
 	Root,
@@ -17,12 +17,12 @@ export {
 	Header,
 	Row,
 	//
-	Root as Table,
-	Body as TableBody,
-	Caption as TableCaption,
-	Cell as TableCell,
-	Footer as TableFooter,
-	Head as TableHead,
-	Header as TableHeader,
-	Row as TableRow
+	type RootProps,
+	type BodyProps,
+	type CaptionProps,
+	type CellProps,
+	type FooterProps,
+	type HeadProps,
+	type HeaderProps,
+	type RowProps
 };

@@ -1,5 +1,13 @@
-import Root from "./native-select.svelte";
-import Option from "./native-select-option.svelte";
-import OptGroup from "./native-select-opt-group.svelte";
+import Root, { type RootProps } from "./native-select-root.svelte";
+import Option, { type OptionProps } from "./native-select-option.svelte";
+import OptGroup, { type OptGroupProps } from "./native-select-opt-group.svelte";
 
-export { Root, Option, OptGroup, Root as NativeSelect, Option as NativeSelectOption, OptGroup as NativeSelectOptGroup };
+export {
+	Root,
+	Option,
+	OptGroup,
+	//
+	type RootProps,
+	type OptionProps,
+	type OptGroupProps
+};

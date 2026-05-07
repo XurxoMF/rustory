@@ -8,20 +8,20 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
-	import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 	import { VSInstanceState, type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersionState } from "$lib/classes/vs/VSVersion.svelte";
 
-	import { H1, Leading, P } from "$lib/components/ui/typography";
-	import { Button, buttonVariants } from "$lib/components/ui/button";
+	import * as Typo from "$lib/components/ui/typography";
+	import * as Button from "$lib/components/ui/button";
 	import * as Dialog from "$lib/components/ui/dialog";
-	import { Checkbox } from "$lib/components/ui/checkbox";
+	import * as Checkbox from "$lib/components/ui/checkbox";
 	import * as Field from "$lib/components/ui/field";
 	import * as Card from "$lib/components/ui/card";
-	import { Badge } from "$lib/components/ui/badge";
-	import { Spinner } from "$lib/components/ui/spinner";
-	import { Separator } from "$lib/components/ui/separator";
+	import * as Badge from "$lib/components/ui/badge";
+	import * as Spinner from "$lib/components/ui/spinner";
+	import * as Separator from "$lib/components/ui/separator";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }];
@@ -46,7 +46,7 @@
 			deleteContents = false;
 		} catch (err) {
 			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}
 </script>
@@ -55,10 +55,10 @@
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/new"))}>
+				<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/new"))}>
 					<IconPlus />
 					<span class="sr-only">Create new Vintage Story Instance</span>
-				</Button>
+				</Button.Root>
 			{/snippet}
 		</Tooltip.Trigger>
 
@@ -68,8 +68,8 @@
 	</Tooltip.Root>
 </div>
 
-<H1>Vintage Story Instances</H1>
-<Leading>View and manage your Vintage Story Instances.</Leading>
+<Typo.H1>Vintage Story Instances</Typo.H1>
+<Typo.Leading>View and manage your Vintage Story Instances.</Typo.Leading>
 
 <div class="mt-6">
 	<!-- List of Vintage Story Instances -->
@@ -83,75 +83,75 @@
 
 					<Card.Action>
 						{#if vsInstance.version.state === VSVersionState.INSTALLING}
-							<Badge>
-								<Spinner />
+							<Badge.Root>
+								<Spinner.Root />
 								Installing...
-							</Badge>
+							</Badge.Root>
 						{:else if vsInstance.version.state === VSVersionState.DELETING || vsInstance.state === VSInstanceState.DELETING}
-							<Badge variant="destructive">
-								<Spinner />
+							<Badge.Root variant="destructive">
+								<Spinner.Root />
 								Deleting...
-							</Badge>
+							</Badge.Root>
 						{:else if vsInstance.state === VSInstanceState.BACKUPING}
-							<Badge>
-								<Spinner />
+							<Badge.Root>
+								<Spinner.Root />
 								Backing up...
-							</Badge>
+							</Badge.Root>
 						{:else if vsInstance.state === VSInstanceState.PLAYING_CLIENT}
-							<Badge>
-								<Spinner />
+							<Badge.Root>
+								<Spinner.Root />
 								Running client...
-							</Badge>
+							</Badge.Root>
 						{:else if vsInstance.state === VSInstanceState.PLAYING_SERVER}
-							<Badge>
-								<Spinner />
+							<Badge.Root>
+								<Spinner.Root />
 								Running server...
-							</Badge>
+							</Badge.Root>
 						{:else}
-							<Badge variant="outline">Stopped</Badge>
+							<Badge.Root variant="outline">Stopped</Badge.Root>
 						{/if}
 					</Card.Action>
 				</Card.Header>
 
 				<Card.Content class="mt-auto">
 					<div class="flex items-center justify-between gap-2 py-1">
-						<P class="text-muted-foreground">Vintage Story Version</P>
+						<p class="text-muted-foreground">Vintage Story Version</p>
 
-						<P class="font-bold">{vsInstance.version.version}</P>
+						<p class="font-bold">{vsInstance.version.version}</p>
 					</div>
 
-					<Separator />
+					<Separator.Root />
 
 					<div class="flex items-center justify-between gap-2 py-1">
-						<P class="text-muted-foreground">Installed mods</P>
+						<p class="text-muted-foreground">Installed mods</p>
 
-						<P class="font-bold">{vsInstance.mods.length}</P>
+						<p class="font-bold">{vsInstance.mods.length}</p>
 					</div>
 
-					<Separator />
+					<Separator.Root />
 
 					<div class="flex items-center justify-between gap-2 py-1">
-						<P class="text-muted-foreground">Last time played</P>
+						<p class="text-muted-foreground">Last time played</p>
 
-						<P class="font-bold">
+						<p class="font-bold">
 							{vsInstance.lastTimePlayed === 0 ? "Never" : new Date(vsInstance.lastTimePlayed).toLocaleString(App.config.locale)}
-						</P>
+						</p>
 					</div>
 
-					<Separator />
+					<Separator.Root />
 
 					<div class="flex items-center justify-between gap-2 py-1">
-						<P class="text-muted-foreground">Total time played</P>
+						<p class="text-muted-foreground">Total time played</p>
 
-						<P class="font-bold">
+						<p class="font-bold">
 							{`${formatTime(vsInstance.totalTimePlayed, { to: "minutes" })} minutes`}
-						</P>
+						</p>
 					</div>
 				</Card.Content>
 
 				<Card.Footer class="flex justify-end gap-2">
 					<Dialog.Root>
-						<Dialog.Trigger class={[buttonVariants({ variant: "destructive" }), "flex-1"]}>Delete</Dialog.Trigger>
+						<Dialog.Trigger class={[Button.rootVariants({ variant: "destructive" }), "flex-1"]}>Delete</Dialog.Trigger>
 
 						<Dialog.Content class="sm:max-w-120">
 							<Dialog.Header>
@@ -163,7 +163,7 @@
 							<Field.Set>
 								<Field.Group>
 									<Field.Field orientation="horizontal">
-										<Checkbox id="delete-contents" bind:checked={deleteContents} />
+										<Checkbox.Root id="delete-contents" bind:checked={deleteContents} />
 
 										<Field.Content>
 											<Field.Label for="delete-contents">Delte contents?</Field.Label>
@@ -175,16 +175,18 @@
 							</Field.Set>
 
 							<Dialog.Footer>
-								<Dialog.Close onclick={() => (deleteContents = false)} class={buttonVariants({ variant: "outline" })}>Cancel</Dialog.Close>
+								<Dialog.Close onclick={() => (deleteContents = false)} class={Button.rootVariants({ variant: "outline" })}>Cancel</Dialog.Close>
 
-								<Button variant="destructive" onclick={() => handleDeletetion(vsInstance)}>Delete</Button>
+								<Button.Root variant="destructive" onclick={() => handleDeletetion(vsInstance)}>Delete</Button.Root>
 							</Dialog.Footer>
 						</Dialog.Content>
 					</Dialog.Root>
 
-					<Button class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}>Manage</Button>
+					<Button.Root class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}
+						>Manage</Button.Root
+					>
 
-					<Button class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button>
+					<Button.Root class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button.Root>
 				</Card.Footer>
 			</Card.Root>
 		{/each}

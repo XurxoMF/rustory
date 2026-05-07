@@ -3,7 +3,7 @@ import { getCurrentWindow, Window } from "@tauri-apps/api/window";
 
 import { sleep, padSides } from "$lib/utils";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Logger } from "$lib/classes/utils/Logger.svelte";
 import { Loader } from "$lib/classes/utils/Loader.svelte";
@@ -139,7 +139,7 @@ export class App {
 	 * App window.
 	 */
 	public static get window(): Window {
-		if (App._window === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Window not initialized!");
+		if (App._window === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Window not initialized!");
 		return App._window;
 	}
 
@@ -147,7 +147,7 @@ export class App {
 	 * App info.
 	 */
 	public static get info(): Info {
-		if (App._info === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Info not initialized!");
+		if (App._info === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Info not initialized!");
 		return App._info;
 	}
 
@@ -155,7 +155,7 @@ export class App {
 	 * App config.
 	 */
 	public static get config(): Config {
-		if (App._config === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Config not initialized!");
+		if (App._config === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Config not initialized!");
 		return App._config;
 	}
 
@@ -163,7 +163,7 @@ export class App {
 	 * App commands.
 	 */
 	public static get command(): Command {
-		if (App._command === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Command not initialized!");
+		if (App._command === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Command not initialized!");
 		return App._command;
 	}
 
@@ -171,7 +171,7 @@ export class App {
 	 * App hotkeys.
 	 */
 	public static get hotkeys(): Hotkeys {
-		if (App._hotkeys === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Hotkeys not initialized!");
+		if (App._hotkeys === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Hotkeys not initialized!");
 		return App._hotkeys;
 	}
 
@@ -179,7 +179,7 @@ export class App {
 	 * App breadcrumbs.
 	 */
 	public static get breadcrumbs(): Breadcrumbs {
-		if (App._breadcrumbs === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Breadcrumbs not initialized!");
+		if (App._breadcrumbs === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Breadcrumbs not initialized!");
 		return App._breadcrumbs;
 	}
 
@@ -187,7 +187,7 @@ export class App {
 	 * App reloader.
 	 */
 	public static get reloader(): Reloader {
-		if (App._reloader === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Reloader not initialized!");
+		if (App._reloader === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Reloader not initialized!");
 		return App._reloader;
 	}
 
@@ -195,7 +195,7 @@ export class App {
 	 * App request.
 	 */
 	public static get request(): Request {
-		if (App._request === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Request not initialized!");
+		if (App._request === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Request not initialized!");
 		return App._request;
 	}
 
@@ -203,7 +203,7 @@ export class App {
 	 * App confirm.
 	 */
 	public static get confirm(): Confirm {
-		if (App._confirm === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Confirm not initialized!");
+		if (App._confirm === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Confirm not initialized!");
 		return App._confirm;
 	}
 
@@ -211,7 +211,7 @@ export class App {
 	 * App tray.
 	 */
 	public static get tray(): Tray {
-		if (App._tray === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Tray not initialized!");
+		if (App._tray === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Tray not initialized!");
 		return App._tray;
 	}
 
@@ -219,7 +219,7 @@ export class App {
 	 * App data.
 	 */
 	public static get data(): Data {
-		if (App._data === null) throw new RustoryError(RustoryErrorCodes.NOT_INITIALIZED, "Data not initialized!");
+		if (App._data === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Data not initialized!");
 		return App._data;
 	}
 

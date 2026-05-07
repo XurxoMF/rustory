@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type GroupCountProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
+</script>
+
 <script lang="ts">
 	import type { HTMLAttributes } from "svelte/elements";
-	import { cn, type WithElementRef } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: GroupCountProps = $props();
 </script>
 
 <div

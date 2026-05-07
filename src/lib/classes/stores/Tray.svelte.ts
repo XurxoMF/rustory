@@ -3,7 +3,7 @@ import { TrayIcon, type TrayIconOptions } from "@tauri-apps/api/tray";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * App tray.
@@ -62,7 +62,7 @@ export class Tray {
 			return new Tray({ menu, options, icon });
 		} catch (err) {
 			App.logger.error(`There was an error initializating the tray:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
 		}
 	}
 

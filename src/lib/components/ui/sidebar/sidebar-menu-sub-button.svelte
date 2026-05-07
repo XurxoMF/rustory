@@ -1,21 +1,18 @@
-<script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
-	import type { Snippet } from "svelte";
-	import type { HTMLAnchorAttributes } from "svelte/elements";
-
-	let {
-		ref = $bindable(null),
-		children,
-		child,
-		class: className,
-		size = "md",
-		isActive = false,
-		...restProps
-	}: WithElementRef<HTMLAnchorAttributes> & {
+<script lang="ts" module>
+	export type MenuSubButtonProps = WithElementRef<HTMLAnchorAttributes> & {
 		child?: Snippet<[{ props: Record<string, unknown> }]>;
 		size?: "sm" | "md";
 		isActive?: boolean;
-	} = $props();
+	};
+</script>
+
+<script lang="ts">
+	import type { Snippet } from "svelte";
+	import type { HTMLAnchorAttributes } from "svelte/elements";
+
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), children, child, class: className, size = "md", isActive = false, ...restProps }: MenuSubButtonProps = $props();
 
 	const mergedProps = $derived({
 		class: cn(

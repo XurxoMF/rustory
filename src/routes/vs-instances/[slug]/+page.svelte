@@ -1,49 +1,55 @@
 <script lang="ts">
 	import type { PageProps } from "./$types";
 
-	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
-	import IconPencil from "@tabler/icons-svelte/icons/pencil";
+	import { sleep } from "$lib/utils";
 
 	import { App } from "$lib/classes/App.svelte";
 
-	import { H1, Leading, P } from "$lib/components/ui/typography";
-	import * as Tooltip from "$lib/components/ui/tooltip";
-	import { Button } from "$lib/components/ui/button";
+	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
 
-	let { data }: PageProps = $props();
+	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
-	const instance = $derived(data.instance);
+	import PageSkeleton from "./page-skeleton.svelte";
+	import PageContent from "./page-content.svelte";
+	import PageError from "./page-error.svelte";
 
-	$effect(() => {
-		App.breadcrumbs.segments = [
-			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-			{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
-		];
-	});
+	let { params }: PageProps = $props();
+
+	const pageData = $derived.by(() => load(params.slug));
+
+	/**
+	 * Loads the page data.
+	 * @returns The page data.
+	 * @throws {PageLoadError} The error that happened while loading the page data.
+	 */
+	async function load(slug: string): Promise<{ instance: VSInstance }> {
+		try {
+			await sleep(2000);
+
+			const instance = App.data.vsInstances.find((i) => i.id === slug);
+
+			// If there is no instance with that id, redirect the user to the instances page.
+			if (instance === undefined) throw new PageLoadError(PageLoadErrorCodes.NOT_FOUND, "That Vintage Story Instance does not exist!");
+
+			App.breadcrumbs.segments = [
+				{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+				{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
+			];
+
+			return { instance };
+		} catch (err) {
+			App.logger.error(`There was an error loading the page data:\n${err}`);
+			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");
+		}
+	}
 </script>
 
-<div class="absolute right-3 bottom-3 z-20 flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl">
-	<Tooltip.Root>
-		<Tooltip.Trigger>
-			{#snippet child({ props })}
-				<Button {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: instance.id }))}>
-					<IconPencil />
-					<span class="sr-only">Edit this Vintage Story Instance</span>
-				</Button>
-			{/snippet}
-		</Tooltip.Trigger>
-
-		<Tooltip.Content>
-			<p>Edit this Vintage Story Instance</p>
-		</Tooltip.Content>
-	</Tooltip.Root>
-</div>
-
-<H1>{instance.name}</H1>
-<Leading>Manage this Vintage Story Instance.</Leading>
-
-<div class="mt-6">
-	<P>Checking {instance.name}</P>
-</div>
+{#await pageData}
+	<PageSkeleton />
+{:then data}
+	<PageContent {data} />
+{:catch err: PageLoadError}
+	<PageError {err} />
+{/await}

@@ -1,31 +1,23 @@
-<script lang="ts">
-	import type { ComponentProps } from "svelte";
-	import type Calendar from "./calendar.svelte";
-	import CalendarMonthSelect from "./calendar-month-select.svelte";
-	import CalendarYearSelect from "./calendar-year-select.svelte";
-	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
-
-	let {
-		captionLayout,
-		months,
-		monthFormat,
-		years,
-		yearFormat,
-		month,
-		locale,
-		placeholder = $bindable(),
-		monthIndex = 0
-	}: {
-		captionLayout: ComponentProps<typeof Calendar>["captionLayout"];
-		months: ComponentProps<typeof CalendarMonthSelect>["months"];
-		monthFormat: ComponentProps<typeof CalendarMonthSelect>["monthFormat"];
-		years: ComponentProps<typeof CalendarYearSelect>["years"];
-		yearFormat: ComponentProps<typeof CalendarYearSelect>["yearFormat"];
+<script lang="ts" module>
+	export type CaptionProps = {
+		captionLayout: Calendar.RootProps["captionLayout"];
+		months: Calendar.MonthSelectProps["months"];
+		monthFormat: Calendar.MonthSelectProps["monthFormat"];
+		years: Calendar.YearSelectProps["years"];
+		yearFormat: Calendar.YearSelectProps["yearFormat"];
 		month: DateValue;
 		placeholder: DateValue | undefined;
 		locale: string;
 		monthIndex: number;
-	} = $props();
+	};
+</script>
+
+<script lang="ts">
+	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
+
+	import * as Calendar from ".";
+
+	let { captionLayout, months, monthFormat, years, yearFormat, month, locale, placeholder = $bindable(), monthIndex = 0 }: CaptionProps = $props();
 
 	function formatYear(date: DateValue) {
 		const dateObj = date.toDate(getLocalTimeZone());
@@ -41,7 +33,7 @@
 </script>
 
 {#snippet MonthSelect()}
-	<CalendarMonthSelect
+	<Calendar.MonthSelect
 		{months}
 		{monthFormat}
 		value={month.month}
@@ -55,7 +47,7 @@
 {/snippet}
 
 {#snippet YearSelect()}
-	<CalendarYearSelect {years} {yearFormat} value={month.year} />
+	<YearSelect {years} {yearFormat} value={month.year} />
 {/snippet}
 
 {#if captionLayout === "dropdown"}

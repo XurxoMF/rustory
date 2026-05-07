@@ -1,10 +1,10 @@
-import Scrollbar from "./scroll-area-scrollbar.svelte";
-import Root from "./scroll-area.svelte";
+import Root, { type RootProps } from "./scroll-area-root.svelte";
+import Scrollbar, { type ScrollbarProps } from "./scroll-area-scrollbar.svelte";
 
 export {
 	Root,
 	Scrollbar,
-	//,
-	Root as ScrollArea,
-	Scrollbar as ScrollAreaScrollbar
+	//
+	type RootProps,
+	type ScrollbarProps
 };

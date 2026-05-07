@@ -1,18 +1,19 @@
+<script lang="ts" module>
+	export type PrevButtonProps = RangeCalendarPrimitive.PrevButtonProps & {
+		variant?: Button.RootVariants;
+	};
+</script>
+
 <script lang="ts">
 	import { RangeCalendar as RangeCalendarPrimitive } from "bits-ui";
-	import ChevronLeftIcon from "@tabler/icons-svelte/icons/chevron-left";
-	import { buttonVariants, type ButtonVariant } from "$lib/components/ui/button/index.js";
-	import { cn } from "$lib/utils.js";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		children,
-		variant = "ghost",
-		...restProps
-	}: RangeCalendarPrimitive.PrevButtonProps & {
-		variant?: ButtonVariant;
-	} = $props();
+	import ChevronLeftIcon from "@tabler/icons-svelte/icons/chevron-left";
+
+	import { cn } from "$lib/utils";
+
+	import * as Button from "$lib/components/ui/button";
+
+	let { ref = $bindable(null), class: className, children, variant = "ghost", ...restProps }: PrevButtonProps = $props();
 </script>
 
 {#snippet Fallback()}
@@ -21,7 +22,7 @@
 
 <RangeCalendarPrimitive.PrevButton
 	bind:ref
-	class={cn(buttonVariants({ variant }), "size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180", className)}
+	class={cn(Button.rootVariants({ variant }), "size-(--cell-size) bg-transparent p-0 select-none disabled:opacity-50 rtl:rotate-180", className)}
 	{...restProps}
 >
 	{#if children}

@@ -1,31 +1,23 @@
-<script lang="ts">
-	import type { ComponentProps } from "svelte";
-	import type RangeCalendar from "./range-calendar.svelte";
-	import RangeCalendarMonthSelect from "./range-calendar-month-select.svelte";
-	import RangeCalendarYearSelect from "./range-calendar-year-select.svelte";
-	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
-
-	let {
-		captionLayout,
-		months,
-		monthFormat,
-		years,
-		yearFormat,
-		month,
-		locale,
-		placeholder = $bindable(),
-		monthIndex = 0
-	}: {
-		captionLayout: ComponentProps<typeof RangeCalendar>["captionLayout"];
-		months: ComponentProps<typeof RangeCalendarMonthSelect>["months"];
-		monthFormat: ComponentProps<typeof RangeCalendarMonthSelect>["monthFormat"];
-		years: ComponentProps<typeof RangeCalendarYearSelect>["years"];
-		yearFormat: ComponentProps<typeof RangeCalendarYearSelect>["yearFormat"];
+<script lang="ts" module>
+	export type CaptionProps = {
+		captionLayout: RangeCalendar.RootProps["captionLayout"];
+		months: RangeCalendar.MonthSelectProps["months"];
+		monthFormat: RangeCalendar.MonthSelectProps["monthFormat"];
+		years: RangeCalendar.YearSelectProps["years"];
+		yearFormat: RangeCalendar.YearSelectProps["yearFormat"];
 		month: DateValue;
 		placeholder: DateValue | undefined;
 		locale: string;
 		monthIndex: number;
-	} = $props();
+	};
+</script>
+
+<script lang="ts">
+	import { DateFormatter, getLocalTimeZone, type DateValue } from "@internationalized/date";
+
+	import * as RangeCalendar from ".";
+
+	let { captionLayout, months, monthFormat, years, yearFormat, month, locale, placeholder = $bindable(), monthIndex = 0 }: CaptionProps = $props();
 
 	function formatYear(date: DateValue) {
 		const dateObj = date.toDate(getLocalTimeZone());
@@ -41,7 +33,7 @@
 </script>
 
 {#snippet MonthSelect()}
-	<RangeCalendarMonthSelect
+	<RangeCalendar.MonthSelect
 		{months}
 		{monthFormat}
 		value={month.month}
@@ -55,7 +47,7 @@
 {/snippet}
 
 {#snippet YearSelect()}
-	<RangeCalendarYearSelect {years} {yearFormat} value={month.year} />
+	<RangeCalendar.YearSelect {years} {yearFormat} value={month.year} />
 {/snippet}
 
 {#if captionLayout === "dropdown"}

@@ -1,21 +1,20 @@
-<script lang="ts">
-	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
-	import ContextMenuPortal from "./context-menu-portal.svelte";
-	import type { ComponentProps } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils.js";
-
-	let {
-		ref = $bindable(null),
-		portalProps,
-		class: className,
-		...restProps
-	}: ContextMenuPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof ContextMenuPortal>>;
-	} = $props();
+<script lang="ts" module>
+	export type ContentProps = ContextMenuPrimitive.ContentProps & {
+		portalProps?: WithoutChildrenOrChild<ContextMenu.PortalProps>;
+	};
 </script>
 
-<ContextMenuPortal {...portalProps}>
+<script lang="ts">
+	import { ContextMenu as ContextMenuPrimitive } from "bits-ui";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as ContextMenu from ".";
+
+	let { ref = $bindable(null), portalProps, class: className, ...restProps }: ContentProps = $props();
+</script>
+
+<ContextMenu.Portal {...portalProps}>
 	<ContextMenuPrimitive.Content
 		bind:ref
 		data-slot="context-menu-content"
@@ -25,4 +24,4 @@
 		)}
 		{...restProps}
 	/>
-</ContextMenuPortal>
+</ContextMenu.Portal>

@@ -1,9 +1,16 @@
+<script lang="ts" module>
+	export type ContentProps = TooltipPrimitive.ContentProps & {
+		arrowClasses?: string;
+		portalProps?: WithoutChildrenOrChild<Tooltip.RootProps>;
+	};
+</script>
+
 <script lang="ts">
 	import { Tooltip as TooltipPrimitive } from "bits-ui";
-	import { cn } from "$lib/utils.js";
-	import TooltipPortal from "./tooltip-portal.svelte";
-	import type { ComponentProps } from "svelte";
-	import type { WithoutChildrenOrChild } from "$lib/utils.js";
+
+	import { cn, type WithoutChildrenOrChild } from "$lib/utils";
+
+	import * as Tooltip from ".";
 
 	let {
 		ref = $bindable(null),
@@ -14,13 +21,10 @@
 		arrowClasses,
 		portalProps,
 		...restProps
-	}: TooltipPrimitive.ContentProps & {
-		arrowClasses?: string;
-		portalProps?: WithoutChildrenOrChild<ComponentProps<typeof TooltipPortal>>;
-	} = $props();
+	}: ContentProps = $props();
 </script>
 
-<TooltipPortal {...portalProps}>
+<Tooltip.Portal {...portalProps}>
 	<TooltipPrimitive.Content
 		bind:ref
 		data-slot="tooltip-content"
@@ -49,4 +53,4 @@
 			{/snippet}
 		</TooltipPrimitive.Arrow>
 	</TooltipPrimitive.Content>
-</TooltipPortal>
+</Tooltip.Portal>

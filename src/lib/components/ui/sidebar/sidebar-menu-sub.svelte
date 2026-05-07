@@ -1,8 +1,13 @@
+<script lang="ts" module>
+	export type MenuSubProps = WithElementRef<HTMLAttributes<HTMLUListElement>>;
+</script>
+
 <script lang="ts">
-	import { cn, type WithElementRef } from "$lib/utils.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLUListElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: MenuSubProps = $props();
 </script>
 
 <ul

@@ -1,17 +1,16 @@
+<script lang="ts" module>
+	export type LabelProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
+		inset?: boolean;
+	};
+</script>
+
 <script lang="ts">
-	import { cn } from "$lib/utils.js";
 	import { type WithElementRef } from "bits-ui";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	let {
-		ref = $bindable(null),
-		inset,
-		children,
-		class: className,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLElement>> & {
-		inset?: boolean;
-	} = $props();
+	import { cn } from "$lib/utils";
+
+	let { ref = $bindable(null), inset, children, class: className, ...restProps }: LabelProps = $props();
 </script>
 
 <div

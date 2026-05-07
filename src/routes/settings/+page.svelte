@@ -11,18 +11,18 @@
 
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 
-	import { H1, Leading } from "$lib/components/ui/typography";
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Select from "$lib/components/ui/select";
-	import { Slider } from "$lib/components/ui/slider";
-	import { Input } from "$lib/components/ui/input";
-	import { Button } from "$lib/components/ui/button";
+	import * as Slider from "$lib/components/ui/slider";
+	import * as Input from "$lib/components/ui/input";
+	import * as Button from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
 
 	App.breadcrumbs.segments = [{ label: "Settings", href: resolve("/settings") }];
 </script>
 
-<H1>Settings</H1>
-<Leading>Customize the app.</Leading>
+<Typo.H1>Settings</Typo.H1>
+<Typo.Leading>Customize the app.</Typo.Leading>
 
 <div class="mt-6">
 	<Field.Group>
@@ -84,7 +84,7 @@
 				<Field.Field>
 					<Field.Label for="scale">Scale</Field.Label>
 
-					<Slider
+					<Slider.Root
 						type="single"
 						id="scale"
 						min={0.5}
@@ -147,7 +147,7 @@
 					<Field.Label for="vs-versions-dir">Vintage Story Versions Directory</Field.Label>
 
 					<div class="flex gap-2">
-						<Button
+						<Button.Root
 							id="vs-versions-dir"
 							size="icon"
 							variant="outline"
@@ -167,9 +167,9 @@
 							}}
 						>
 							<IconFolder />
-						</Button>
+						</Button.Root>
 
-						<Input value={App.config.vsVersionsDir.path} readonly />
+						<Input.Root value={App.config.vsVersionsDir.path} readonly />
 					</div>
 
 					<Field.Description>Directory where Vintage Story Versions will be stored.</Field.Description>
@@ -180,7 +180,7 @@
 					<Field.Label for="vs-instances-dir">Vintage Story Instances Directory</Field.Label>
 
 					<div class="flex gap-2">
-						<Button
+						<Button.Root
 							id="vs-instances-dir"
 							size="icon"
 							variant="outline"
@@ -200,9 +200,9 @@
 							}}
 						>
 							<IconFolder />
-						</Button>
+						</Button.Root>
 
-						<Input value={App.config.vsInstancesDir.path} readonly />
+						<Input.Root value={App.config.vsInstancesDir.path} readonly />
 					</div>
 
 					<Field.Description>Directory where Vintage Story Instances will be stored.</Field.Description>

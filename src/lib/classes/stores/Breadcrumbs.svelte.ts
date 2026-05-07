@@ -2,7 +2,7 @@ import type { ResolvedPathname } from "$app/types";
 
 import { App } from "$lib/classes/App.svelte";
 
-import { RustoryError, RustoryErrorCodes } from "$lib/classes/errors/RustoryError.svelte";
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
  * Each breadcrumb segment. It's the same as the path segments.
@@ -47,7 +47,7 @@ export class Breadcrumbs {
 			return new Breadcrumbs();
 		} catch (err) {
 			App.logger.error(`There was an error initializating the breadcrumbs:\n${err}`);
-			throw new RustoryError(RustoryErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
 		}
 	}
 

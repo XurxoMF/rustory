@@ -1,12 +1,16 @@
-<script lang="ts">
-	import { cn } from "$lib/utils.js";
-	import { Textarea } from "$lib/components/ui/textarea/index.js";
-	import type { ComponentProps } from "svelte";
-
-	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: ComponentProps<typeof Textarea> = $props();
+<script lang="ts" module>
+	export type TextareaProps = Textarea.RootProps;
 </script>
 
-<Textarea
+<script lang="ts">
+	import { cn } from "$lib/utils";
+
+	import * as Textarea from "$lib/components/ui/textarea";
+
+	let { ref = $bindable(null), value = $bindable(), class: className, ...props }: TextareaProps = $props();
+</script>
+
+<Textarea.Root
 	bind:ref
 	data-slot="input-group-control"
 	class={cn(

@@ -1,11 +1,17 @@
+<script lang="ts" module>
+	export type ItemProps = WithElementRef<HTMLAttributes<HTMLDivElement>>;
+</script>
+
 <script lang="ts">
 	import type { HTMLAttributes } from "svelte/elements";
-	import { getEmblaContext } from "./context.js";
-	import { cn, type WithElementRef } from "$lib/utils.js";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: WithElementRef<HTMLAttributes<HTMLDivElement>> = $props();
+	import { cn, type WithElementRef } from "$lib/utils";
 
-	const emblaCtx = getEmblaContext("<Carousel.Item/>");
+	import * as Carousel from ".";
+
+	let { ref = $bindable(null), class: className, children, ...restProps }: ItemProps = $props();
+
+	const emblaCtx = Carousel.getEmblaContext("<Carousel.Item/>");
 </script>
 
 <div
