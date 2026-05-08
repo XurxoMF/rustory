@@ -204,7 +204,7 @@ export class File {
 
 			await this.ensureExists();
 
-			await writeTextFile(this.path, JSON.stringify(data, null, 2));
+			await writeTextFile(this.path, JSON.stringify(data, null, 4));
 		} catch (err) {
 			App.logger.error(`There was an error writing the file:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
