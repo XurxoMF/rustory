@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type DescriptionSkeletonProps = Skeleton.RootProps;
+	export type LegendSkeletonProps = Skeleton.RootProps;
 </script>
 
 <script lang="ts">
@@ -7,13 +7,14 @@
 
 	import * as Skeleton from "$lib/components/ui/skeleton";
 
-	let { class: className, ...restProps }: DescriptionSkeletonProps = $props();
+	let { ref = $bindable(null), class: className, ...restProps }: LegendSkeletonProps = $props();
 
 	let width = `${Math.floor(Math.random() * 60) + 40}%`;
 </script>
 
 <Skeleton.Root
-	class={cn("my-0.5 h-3.5 w-(--skeleton-width) rounded-full not-first:mt-1", className)}
+	class={cn("my-0.5 h-5 w-(--skeleton-width) rounded-full not-first:mt-1", className)}
 	style="--skeleton-width: {width};"
+	{ref}
 	{...restProps}
 />

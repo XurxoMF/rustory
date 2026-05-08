@@ -9,7 +9,7 @@
 
 	let { class: className, ...restProps }: CaptionSkeletonProps = $props();
 
-	let width = `${Math.floor(Math.random() * 50) + 40}%`;
+	let width = `${Math.floor(Math.random() * 60) + 40}%`;
 </script>
 
 <Skeleton.Root class={cn("h-4.5 w-full max-w-(--skeleton-width) rounded-full", className)} style="--skeleton-width: {width};" {...restProps} />

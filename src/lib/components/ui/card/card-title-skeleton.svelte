@@ -9,7 +9,11 @@
 
 	let { class: className, ...restProps }: TitleSkeletonProps = $props();
 
-	let width = `${Math.floor(Math.random() * 50) + 40}%`;
+	let width = `${Math.floor(Math.random() * 60) + 40}%`;
 </script>
 
-<Skeleton.Root class={cn("h-6.5 max-w-(--skeleton-width) flex-1 rounded-full", className)} style="--skeleton-width: {width};" {...restProps} />
+<Skeleton.Root
+	class={cn("my-0.5 h-5.5 w-(--skeleton-width) rounded-full not-first:mt-1", className)}
+	style="--skeleton-width: {width};"
+	{...restProps}
+/>

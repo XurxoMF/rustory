@@ -2,10 +2,10 @@
 	export const skeletonVariants = tv({
 		variants: {
 			size: {
-				default: "h-8 w-(--skeleton-width)",
-				xs: "h-6 w-(--skeleton-width) rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg",
-				sm: "h-7 w-(--skeleton-width) rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
-				lg: "h-9 w-(--skeleton-width)",
+				default: "h-8 min-w-(--skeleton-width)",
+				xs: "h-6 min-w-(--skeleton-width) rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg",
+				sm: "h-7 min-w-(--skeleton-width) rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",
+				lg: "h-9 min-w-(--skeleton-width)",
 				icon: "size-8",
 				"icon-xs": "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg",
 				"icon-sm": "size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg",

@@ -9,7 +9,7 @@
 
 	let { class: className, ...restProps }: CellSkeletonProps = $props();
 
-	let width = `${Math.floor(Math.random() * 50) + 40}%`;
+	let width = `${Math.floor(Math.random() * 60) + 40}%`;
 </script>
 
-<Skeleton.Root class={cn("h-5 w-full max-w-(--skeleton-width) rounded-full", className)} style="--skeleton-width: {width};" {...restProps} />
+<Skeleton.Root class={cn("h-5.5 w-full max-w-(--skeleton-width) rounded-full", className)} style="--skeleton-width: {width};" {...restProps} />
