@@ -123,4 +123,37 @@ export class Zip {
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 		}
 	}
+
+	/**
+	 * Reads a file as text from inside the zip. Returns an empty string if the file does not exist.
+	 * @param path The path to the insternal file to read.
+	 * @returns The contents of that file.
+	 */
+	public async readTextFromFile(path: string): Promise<string> {
+		try {
+			App.logger.debug(`Reading the text from the file ${path}...`);
+
+			const fileContents: string = await invoke("read_string_from_zip", { zipPath: this.path, filePath: path });
+
+			return fileContents;
+		} catch (err) {
+			App.logger.error(`There was an error reading the text from the file inside the zip:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the text from the file inside the zip!");
+		}
+	}
+
+	public async readJSONFromFile<T>(path: string): Promise<T> {
+		try {
+			App.logger.debug(`Reading the JSON from the file ${path}...`);
+
+			const fileContents: string = await invoke("read_string_from_zip", { zipPath: this.path, filePath: path });
+
+			if (!fileContents.startsWith("{")) return {} as T;
+
+			return JSON.parse(fileContents) as T;
+		} catch (err) {
+			App.logger.error(`There was an error reading the JSON from the file inside the zip:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the JSON from the file inside the zip!");
+		}
+	}
 }

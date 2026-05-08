@@ -78,3 +78,27 @@ pub async fn extract_zip(zip_path: String, dest_dir: String) -> Result<bool, Str
     .await
     .map_err(|e| e.to_string())?
 }
+
+#[tauri::command]
+pub async fn read_string_from_zip(zip_path: String, file_path: String) -> Result<String, String> {
+    tokio::task::spawn_blocking(move || {
+        let file = fs::File::open(&zip_path).map_err(|e| e.to_string())?;
+
+        let mut archive = zip::ZipArchive::new(file).map_err(|e| e.to_string())?;
+
+        let mut entry = match archive.by_name(&file_path) {
+            Ok(e) => e,
+            Err(_) => return Ok(String::new()),
+        };
+
+        let mut contents = String::new();
+
+        entry
+            .read_to_string(&mut contents)
+            .map_err(|e| e.to_string())?;
+
+        Ok(contents)
+    })
+    .await
+    .map_err(|e| e.to_string())?
+}

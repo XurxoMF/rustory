@@ -104,7 +104,8 @@ pub fn run() {
             commands::file_system::set_permissions,
             commands::vs_versions::get_vs_version,
             commands::zip::compress_to_zip,
-            commands::zip::extract_zip
+            commands::zip::extract_zip,
+            commands::zip::read_string_from_zip
         ])
         .run(tauri::generate_context!())
         .expect("Error running Rustory");
