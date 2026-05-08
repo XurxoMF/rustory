@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import { cleanForPath, sleep } from "$lib/utils";
+	import { cleanForPath } from "$lib/utils";
 
 	import { App } from "$lib/classes/App.svelte";
 
@@ -33,8 +33,6 @@
 	 */
 	async function load(): Promise<{ name: string; dir: Directory; versions: RAPIVSVersion[] }> {
 		try {
-			await sleep(2000);
-
 			// If there is no internet connection, no versions will be fetched, so throw an error.
 			if (!App.info.isOnline) throw new PageLoadError(PageLoadErrorCodes.OFFLINE, "There is no internet connection!");
 

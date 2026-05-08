@@ -3,8 +3,6 @@
 
 	import { resolve } from "$app/paths";
 
-	import { sleep } from "$lib/utils";
-
 	import { App } from "$lib/classes/App.svelte";
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
@@ -38,8 +36,6 @@
 	 */
 	async function load(slug: string): Promise<{ instance: VSInstance; versions: RAPIVSVersion[] }> {
 		try {
-			await sleep(2000);
-
 			// If the app is offline, redirect the user to the homepage.
 			if (!App.info.isOnline) throw new PageLoadError(PageLoadErrorCodes.OFFLINE, "There is no internet connection!");
 

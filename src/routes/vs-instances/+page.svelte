@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
 
-	import { sleep } from "$lib/utils";
-
 	import { App } from "$lib/classes/App.svelte";
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
@@ -28,8 +26,6 @@
 	 */
 	async function load(): Promise<{ instances: VSInstance[] }> {
 		try {
-			await sleep(2000);
-
 			const instances = App.data.vsInstances;
 
 			return { instances };

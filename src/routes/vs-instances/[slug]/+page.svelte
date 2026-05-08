@@ -3,8 +3,6 @@
 
 	import { resolve } from "$app/paths";
 
-	import { sleep } from "$lib/utils";
-
 	import { App } from "$lib/classes/App.svelte";
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
@@ -35,8 +33,6 @@
 	 */
 	async function load(slug: string): Promise<{ instance: VSInstance }> {
 		try {
-			await sleep(2000);
-
 			const instance = App.data.vsInstances.find((i) => i.id === slug);
 
 			// If there is no instance with that id, redirect the user to the instances page.
