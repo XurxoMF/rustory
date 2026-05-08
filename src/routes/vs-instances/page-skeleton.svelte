@@ -9,10 +9,14 @@
 	{#each Array(6) as _, i (i)}
 		<Card.Root>
 			<Card.Header>
-				<Card.TitleSkeleton />
+				<Card.Title>
+					<Card.TitleSkeleton />
+				</Card.Title>
 
-				<Card.DescriptionSkeleton />
-				<Card.DescriptionSkeleton />
+				<Card.Description>
+					<Card.DescriptionSkeleton />
+					<Card.DescriptionSkeleton />
+				</Card.Description>
 
 				<Card.Action>
 					<Badge.Skeleton />
