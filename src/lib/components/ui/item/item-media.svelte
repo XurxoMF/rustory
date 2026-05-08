@@ -17,7 +17,7 @@
 	export type MediaVariants = VariantProps<typeof mediaVariants>["variant"];
 
 	export type MediaProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		variant?: MediaVariants;
+		variant?: MediaVariants | undefined;
 	};
 </script>
 

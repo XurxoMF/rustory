@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type ContentProps = WithoutChild<AlertDialogPrimitive.ContentProps> & {
-		size?: "default" | "sm";
-		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps>;
+		size?: "default" | "sm" | undefined;
+		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps> | undefined;
 	};
 </script>
 

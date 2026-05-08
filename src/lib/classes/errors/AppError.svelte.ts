@@ -12,7 +12,7 @@ export class AppError extends Error {
 	 */
 	private _code: AppErrorCodes;
 
-	constructor(code: AppErrorCodes, message: string, options?: ErrorOptions) {
+	constructor(code: AppErrorCodes, message: string, options?: ErrorOptions | undefined) {
 		super(message, options);
 		this._name = "AppError";
 		this._code = code;

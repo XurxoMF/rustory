@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RootProps = AvatarPrimitive.RootProps & {
-		size?: "default" | "sm" | "lg";
+		size?: "default" | "sm" | "lg" | undefined;
 	};
 </script>
 

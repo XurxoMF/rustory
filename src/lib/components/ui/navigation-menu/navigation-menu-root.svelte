@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RootProps = NavigationMenuPrimitive.RootProps & {
-		viewport?: boolean;
+		viewport?: boolean | undefined;
 	};
 </script>
 

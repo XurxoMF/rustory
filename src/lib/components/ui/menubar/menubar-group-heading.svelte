@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type GroupHeadingProps = MenubarPrimitive.GroupHeadingProps & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

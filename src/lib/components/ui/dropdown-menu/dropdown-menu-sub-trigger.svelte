@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type SubTriggerProps = DropdownMenuPrimitive.SubTriggerProps & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

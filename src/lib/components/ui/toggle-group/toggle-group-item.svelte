@@ -3,8 +3,8 @@
 	export type ToggleSizes = VariantProps<typeof Toggle.rootVariants>["size"];
 
 	export type ItemProps = ToggleGroupPrimitive.ItemProps & {
-		variant?: ToggleVariants;
-		size?: ToggleSizes;
+		variant?: ToggleVariants | undefined;
+		size?: ToggleSizes | undefined;
 	};
 </script>
 

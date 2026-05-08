@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = DropdownMenuPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<Dropdown.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<Dropdown.PortalProps> | undefined;
 	};
 </script>
 

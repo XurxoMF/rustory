@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type GroupActionProps = WithElementRef<HTMLButtonAttributes> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 	};
 </script>
 

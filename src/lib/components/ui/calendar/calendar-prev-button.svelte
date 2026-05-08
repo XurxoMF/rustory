@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type PrevButtonProps = CalendarPrimitive.PrevButtonProps & {
-		variant?: Button.RootVariants;
+		variant?: Button.RootVariants | undefined;
 	};
 </script>
 

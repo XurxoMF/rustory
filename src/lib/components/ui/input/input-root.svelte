@@ -2,7 +2,7 @@
 	export type RootTypes = Exclude<HTMLInputTypeAttribute, "file">;
 
 	export type RootProps = WithElementRef<
-		Omit<HTMLInputAttributes, "type"> & ({ type: "file"; files?: FileList } | { type?: RootTypes; files?: undefined })
+		Omit<HTMLInputAttributes, "type"> & ({ type: "file"; files?: FileList | undefined } | { type?: RootTypes | undefined; files?: undefined })
 	>;
 </script>
 

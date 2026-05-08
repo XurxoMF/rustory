@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type GroupHeadingProps = DropdownMenuPrimitive.GroupHeadingProps & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

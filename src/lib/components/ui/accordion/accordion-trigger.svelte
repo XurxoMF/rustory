@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type TriggerProps = WithoutChild<AccordionPrimitive.TriggerProps> & {
-		level?: AccordionPrimitive.HeaderProps["level"];
+		level?: AccordionPrimitive.HeaderProps["level"] | undefined;
 	};
 </script>
 

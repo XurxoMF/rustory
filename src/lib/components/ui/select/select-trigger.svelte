@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type TriggerProps = WithoutChild<SelectPrimitive.TriggerProps> & {
-		size?: "sm" | "default";
+		size?: "sm" | "default" | undefined;
 	};
 </script>
 

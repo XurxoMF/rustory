@@ -12,7 +12,7 @@ export class PageLoadError extends Error {
 	 */
 	private _code: PageLoadErrorCodes;
 
-	constructor(code: PageLoadErrorCodes, message: string, options?: ErrorOptions) {
+	constructor(code: PageLoadErrorCodes, message: string, options?: ErrorOptions | undefined) {
 		super(message, options);
 		this._name = "PageLoadError";
 		this._code = code;

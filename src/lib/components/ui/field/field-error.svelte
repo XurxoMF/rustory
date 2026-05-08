@@ -2,8 +2,8 @@
 	export type ErrorError = { message?: string | undefined };
 
 	export type ErrorProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		children?: Snippet;
-		errors?: ErrorError[];
+		children?: Snippet | undefined;
+		errors?: ErrorError[] | undefined;
 	};
 </script>
 

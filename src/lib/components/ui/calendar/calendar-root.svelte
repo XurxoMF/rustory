@@ -1,12 +1,12 @@
 <script lang="ts" module>
 	export type RootProps = WithoutChildrenOrChild<CalendarPrimitive.RootProps> & {
-		buttonVariant?: Button.RootVariants;
-		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label";
-		months?: CalendarPrimitive.MonthSelectProps["months"];
-		years?: CalendarPrimitive.YearSelectProps["years"];
-		monthFormat?: CalendarPrimitive.MonthSelectProps["monthFormat"];
-		yearFormat?: CalendarPrimitive.YearSelectProps["yearFormat"];
-		day?: Snippet<[{ day: DateValue; outsideMonth: boolean }]>;
+		buttonVariant?: Button.RootVariants | undefined;
+		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label" | undefined;
+		months?: CalendarPrimitive.MonthSelectProps["months"] | undefined;
+		years?: CalendarPrimitive.YearSelectProps["years"] | undefined;
+		monthFormat?: CalendarPrimitive.MonthSelectProps["monthFormat"] | undefined;
+		yearFormat?: CalendarPrimitive.YearSelectProps["yearFormat"] | undefined;
+		day?: Snippet<[{ day: DateValue; outsideMonth: boolean }]> | undefined;
 	};
 </script>
 

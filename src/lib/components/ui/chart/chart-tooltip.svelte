@@ -1,25 +1,27 @@
 <script lang="ts" module>
 	export type TooltipProps = WithoutChildren<WithElementRef<HTMLAttributes<HTMLDivElement>>> & {
-		hideLabel?: boolean;
-		label?: string;
-		indicator?: "line" | "dot" | "dashed";
-		nameKey?: string;
-		labelKey?: string;
-		hideIndicator?: boolean;
-		labelClassName?: string;
+		hideLabel?: boolean | undefined;
+		label?: string | undefined;
+		indicator?: "line" | "dot" | "dashed" | undefined;
+		nameKey?: string | undefined;
+		labelKey?: string | undefined;
+		hideIndicator?: boolean | undefined;
+		labelClassName?: string | undefined;
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		labelFormatter?: ((value: any, payload: Chart.TooltipPayload[]) => string | number | Snippet) | null;
-		formatter?: Snippet<
-			[
-				{
-					value: unknown;
-					name: string;
-					item: Chart.TooltipPayload;
-					index: number;
-					payload: Chart.TooltipPayload[];
-				}
-			]
-		>;
+		labelFormatter?: ((value: any, payload: Chart.TooltipPayload[]) => string | number | Snippet) | null | undefined;
+		formatter?:
+			| Snippet<
+					[
+						{
+							value: unknown;
+							name: string;
+							item: Chart.TooltipPayload;
+							index: number;
+							payload: Chart.TooltipPayload[];
+						}
+					]
+			  >
+			| undefined;
 	};
 </script>
 

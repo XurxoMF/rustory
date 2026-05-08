@@ -1,5 +1,7 @@
 <script lang="ts" module>
-	export type MenuSkeletonProps = WithElementRef<HTMLAttributes<HTMLElement>> & {};
+	export type MenuSkeletonProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
+		showIcon?: boolean | undefined;
+	};
 </script>
 
 <script lang="ts">
@@ -9,15 +11,7 @@
 
 	import * as Skeleton from "$lib/components/ui/skeleton";
 
-	let {
-		ref = $bindable(null),
-		class: className,
-		showIcon = false,
-		children,
-		...restProps
-	}: WithElementRef<HTMLAttributes<HTMLElement>> & {
-		showIcon?: boolean;
-	} = $props();
+	let { ref = $bindable(null), class: className, showIcon = false, children, ...restProps }: MenuSkeletonProps = $props();
 
 	// Random width between 50% and 90%
 	const width = `${Math.floor(Math.random() * 40) + 50}%`;

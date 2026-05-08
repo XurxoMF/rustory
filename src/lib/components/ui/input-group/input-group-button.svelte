@@ -17,7 +17,7 @@
 	export type ButtonSizes = VariantProps<typeof buttonVariants>["size"];
 
 	export type ButtonProps = Omit<Button.RootProps, "href" | "size"> & {
-		size?: ButtonSizes;
+		size?: ButtonSizes | undefined;
 	};
 </script>
 

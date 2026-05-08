@@ -15,10 +15,10 @@ export type CarouselOptions = EmblaCarouselConfig["options"];
 export type CarouselPlugins = EmblaCarouselConfig["plugins"];
 
 export type CarouselProps = {
-	opts?: CarouselOptions;
-	plugins?: CarouselPlugins;
-	setApi?: (api: CarouselAPI | undefined) => void;
-	orientation?: "horizontal" | "vertical";
+	opts?: CarouselOptions | undefined;
+	plugins?: CarouselPlugins | undefined;
+	setApi?: ((api: CarouselAPI | undefined) => void) | undefined;
+	orientation?: "horizontal" | "vertical" | undefined;
 } & WithElementRef<HTMLAttributes<HTMLDivElement>>;
 
 export const EMBLA_CAROUSEL_CONTEXT = Symbol("EMBLA_CAROUSEL_CONTEXT");
@@ -34,7 +34,7 @@ export type EmblaContext = {
 	options: CarouselOptions;
 	plugins: CarouselPlugins;
 	onInit: (e: CustomEvent<CarouselAPI>) => void;
-	scrollTo: (index: number, jump?: boolean) => void;
+	scrollTo: (index: number, jump?: boolean | undefined) => void;
 	scrollSnaps: number[];
 	selectedIndex: number;
 };

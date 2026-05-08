@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RadioItemProps = WithoutChild<ContextMenuPrimitive.RadioItemProps> & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

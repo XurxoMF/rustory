@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type GroupProps = CommandPrimitive.GroupProps & {
-		heading?: string;
+		heading?: string | undefined;
 	};
 </script>
 

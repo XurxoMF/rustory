@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type CheckboxItemProps = WithoutChildrenOrChild<ContextMenuPrimitive.CheckboxItemProps> & {
-		inset?: boolean;
-		children?: Snippet;
+		inset?: boolean | undefined;
+		children?: Snippet | undefined;
 	};
 </script>
 

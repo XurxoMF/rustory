@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type CancelProps = AlertDialogPrimitive.CancelProps & {
-		variant?: Button.RootVariants;
-		size?: Button.RootSizes;
+		variant?: Button.RootVariants | undefined;
+		size?: Button.RootSizes | undefined;
 	};
 </script>
 

@@ -15,7 +15,7 @@
 	export type RootVariants = VariantProps<typeof rootVariants>["variant"];
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		variant?: RootVariants;
+		variant?: RootVariants | undefined;
 	};
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type GroupHeadingProps = ContextMenuPrimitive.GroupHeadingProps & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

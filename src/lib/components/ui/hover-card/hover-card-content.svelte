@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = HoverCardPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<HoverCard.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<HoverCard.PortalProps> | undefined;
 	};
 </script>
 

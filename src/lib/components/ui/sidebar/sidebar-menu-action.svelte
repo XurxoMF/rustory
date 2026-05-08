@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type MenuActionProps = WithElementRef<HTMLButtonAttributes> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-		showOnHover?: boolean;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		showOnHover?: boolean | undefined;
 	};
 </script>
 

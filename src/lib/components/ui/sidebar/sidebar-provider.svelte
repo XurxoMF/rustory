@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type ProviderProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		open?: boolean;
-		onOpenChange?: (open: boolean) => void;
+		open?: boolean | undefined;
+		onOpenChange?: ((open: boolean) => void) | undefined;
 	};
 </script>
 

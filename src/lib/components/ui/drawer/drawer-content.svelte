@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = DrawerPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<Drawer.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<Drawer.PortalProps> | undefined;
 	};
 </script>
 

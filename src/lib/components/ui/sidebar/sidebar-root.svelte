@@ -1,8 +1,8 @@
 <script lang="ts" module>
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		side?: "left" | "right";
-		variant?: "sidebar" | "floating" | "inset";
-		collapsible?: "offcanvas" | "icon" | "none";
+		side?: "left" | "right" | undefined;
+		variant?: "sidebar" | "floating" | "inset" | undefined;
+		collapsible?: "offcanvas" | "icon" | "none" | undefined;
 	};
 </script>
 

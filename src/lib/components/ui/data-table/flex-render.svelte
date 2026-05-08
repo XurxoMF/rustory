@@ -7,16 +7,18 @@
 
 	type Props = {
 		/** The cell or header field of the current cell's column definition. */
-		content?: TContext extends HeaderContext<TData, TValue>
-			? ColumnDefTemplate<HeaderContext<TData, TValue>>
-			: TContext extends CellContext<TData, TValue>
-				? ColumnDefTemplate<CellContext<TData, TValue>>
-				: never;
+		content?:
+			| (TContext extends HeaderContext<TData, TValue>
+					? ColumnDefTemplate<HeaderContext<TData, TValue>>
+					: TContext extends CellContext<TData, TValue>
+						? ColumnDefTemplate<CellContext<TData, TValue>>
+						: never)
+			| undefined;
 		/** The result of the `getContext()` function of the header or cell */
 		context: TContext;
 
 		/** Used to pass attachments that can't be gotten through context */
-		attach?: Attachment;
+		attach?: Attachment | undefined;
 	};
 
 	let { content, context, attach }: Props = $props();

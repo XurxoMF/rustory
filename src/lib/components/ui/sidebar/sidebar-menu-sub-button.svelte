@@ -1,8 +1,8 @@
 <script lang="ts" module>
 	export type MenuSubButtonProps = WithElementRef<HTMLAnchorAttributes> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-		size?: "sm" | "md";
-		isActive?: boolean;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		size?: "sm" | "md" | undefined;
+		isActive?: boolean | undefined;
 	};
 </script>
 

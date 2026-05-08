@@ -1,8 +1,8 @@
 <script lang="ts" module>
 	export type ContentProps = WithoutChildrenOrChild<DialogPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<Dialog.PortalProps> | undefined;
 		children: Snippet;
-		showCloseButton?: boolean;
+		showCloseButton?: boolean | undefined;
 	};
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type LinkProps = WithElementRef<HTMLAnchorAttributes> & {
-		child?: Snippet<[{ props: HTMLAnchorAttributes }]>;
+		child?: Snippet<[{ props: HTMLAnchorAttributes }]> | undefined;
 	};
 </script>
 

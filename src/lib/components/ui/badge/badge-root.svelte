@@ -20,7 +20,7 @@
 	export type RootVariants = VariantProps<typeof rootVariants>["variant"];
 
 	export type RootProps = WithElementRef<HTMLAnchorAttributes> & {
-		variant?: RootVariants;
+		variant?: RootVariants | undefined;
 	};
 </script>
 

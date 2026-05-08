@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type PrevButtonProps = RangeCalendarPrimitive.PrevButtonProps & {
-		variant?: Button.RootVariants;
+		variant?: Button.RootVariants | undefined;
 	};
 </script>
 

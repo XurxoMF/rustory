@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = ContextMenuPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<ContextMenu.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<ContextMenu.PortalProps> | undefined;
 	};
 </script>
 

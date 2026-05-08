@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = WithoutChild<SelectPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<Select.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<Select.PortalProps> | undefined;
 	};
 </script>
 

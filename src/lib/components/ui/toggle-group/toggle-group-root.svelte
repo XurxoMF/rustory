@@ -2,8 +2,8 @@
 	type ToggleVariants = VariantProps<typeof Toggle.rootVariants>;
 
 	interface ToggleGroupContext extends ToggleVariants {
-		spacing?: number;
-		orientation?: "horizontal" | "vertical";
+		spacing?: number | undefined;
+		orientation?: "horizontal" | "vertical" | undefined;
 	}
 
 	export function setToggleGroupCtx(props: ToggleGroupContext) {
@@ -16,8 +16,8 @@
 
 	export type RootProps = ToggleGroupPrimitive.RootProps &
 		ToggleVariants & {
-			spacing?: number;
-			orientation?: "horizontal" | "vertical";
+			spacing?: number | undefined;
+			orientation?: "horizontal" | "vertical" | undefined;
 		};
 </script>
 

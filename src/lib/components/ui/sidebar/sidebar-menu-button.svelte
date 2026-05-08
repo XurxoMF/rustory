@@ -23,12 +23,12 @@
 	export type MenuButtonSizes = VariantProps<typeof menuButtonVariants>["size"];
 
 	export type MenuButtonProps = WithElementRef<HTMLAttributes<HTMLButtonElement>, HTMLButtonElement> & {
-		isActive?: boolean;
-		variant?: MenuButtonVariants;
-		size?: MenuButtonSizes;
-		tooltipContent?: Snippet | string;
-		tooltipContentProps?: WithoutChildrenOrChild<Tooltip.RootProps>;
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
+		isActive?: boolean | undefined;
+		variant?: MenuButtonVariants | undefined;
+		size?: MenuButtonSizes | undefined;
+		tooltipContent?: Snippet | string | undefined;
+		tooltipContentProps?: WithoutChildrenOrChild<Tooltip.RootProps> | undefined;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 	};
 </script>
 
@@ -69,7 +69,7 @@
 	});
 </script>
 
-{#snippet Button({ props }: { props?: Record<string, unknown> })}
+{#snippet Button({ props }: { props?: Record<string, unknown> | undefined })}
 	{@const mergedProps = mergeProps(buttonProps, props)}
 	{#if child}
 		{@render child({ props: mergedProps })}

@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type ContentProps = PopoverPrimitive.ContentProps & {
-		portalProps?: WithoutChildrenOrChild<Popover.PortalProps>;
+		portalProps?: WithoutChildrenOrChild<Popover.PortalProps> | undefined;
 	};
 </script>
 

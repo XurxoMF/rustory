@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type HandleProps = WithoutChildrenOrChild<ResizablePrimitive.PaneResizerProps> & {
-		withHandle?: boolean;
+		withHandle?: boolean | undefined;
 	};
 </script>
 

@@ -22,8 +22,8 @@
 	export type RootSizes = VariantProps<typeof rootVariants>["size"];
 
 	export type RootProps = TogglePrimitive.RootProps & {
-		variant?: RootVariants;
-		size?: RootSizes;
+		variant?: RootVariants | undefined;
+		size?: RootSizes | undefined;
 	};
 </script>
 

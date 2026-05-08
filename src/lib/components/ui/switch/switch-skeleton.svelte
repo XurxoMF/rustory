@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type SkeletonProps = Skeleton.RootProps & {
-		size?: "sm" | "default";
+		size?: "sm" | "default" | undefined;
 	};
 </script>
 

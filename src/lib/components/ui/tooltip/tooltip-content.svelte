@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type ContentProps = TooltipPrimitive.ContentProps & {
-		arrowClasses?: string;
-		portalProps?: WithoutChildrenOrChild<Tooltip.RootProps>;
+		arrowClasses?: string | undefined;
+		portalProps?: WithoutChildrenOrChild<Tooltip.RootProps> | undefined;
 	};
 </script>
 

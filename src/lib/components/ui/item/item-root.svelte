@@ -23,9 +23,9 @@
 	export type RootVariants = VariantProps<typeof rootVariants>["variant"];
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
-		variant?: RootVariants;
-		size?: RootSizes;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
+		variant?: RootVariants | undefined;
+		size?: RootSizes | undefined;
 	};
 </script>
 

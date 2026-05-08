@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type SkeletonProps = Skeleton.RootProps & {
-		orientation?: "horizontal" | "vertical";
+		orientation?: "horizontal" | "vertical" | undefined;
 	};
 </script>
 

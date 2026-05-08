@@ -15,7 +15,7 @@
 	export type ListVariants = VariantProps<typeof listVariants>["variant"];
 
 	export type ListProps = TabsPrimitive.ListProps & {
-		variant?: ListVariants;
+		variant?: ListVariants | undefined;
 	};
 </script>
 

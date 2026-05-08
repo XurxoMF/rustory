@@ -1,12 +1,12 @@
 <script lang="ts" module>
 	export type RootProps = WithoutChildrenOrChild<RangeCalendarPrimitive.RootProps> & {
-		buttonVariant?: Button.RootVariants;
-		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label";
-		months?: RangeCalendarPrimitive.MonthSelectProps["months"];
-		years?: RangeCalendarPrimitive.YearSelectProps["years"];
-		monthFormat?: RangeCalendarPrimitive.MonthSelectProps["monthFormat"];
-		yearFormat?: RangeCalendarPrimitive.YearSelectProps["yearFormat"];
-		day?: Snippet<[{ day: DateValue; outsideMonth: boolean }]>;
+		buttonVariant?: Button.RootVariants | undefined;
+		captionLayout?: "dropdown" | "dropdown-months" | "dropdown-years" | "label" | undefined;
+		months?: RangeCalendarPrimitive.MonthSelectProps["months"] | undefined;
+		years?: RangeCalendarPrimitive.YearSelectProps["years"] | undefined;
+		monthFormat?: RangeCalendarPrimitive.MonthSelectProps["monthFormat"] | undefined;
+		yearFormat?: RangeCalendarPrimitive.YearSelectProps["yearFormat"] | undefined;
+		day?: Snippet<[{ day: DateValue; outsideMonth: boolean }]> | undefined;
 	};
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RootProps = Omit<WithElementRef<HTMLSelectAttributes>, "size"> & {
-		size?: "sm" | "default";
+		size?: "sm" | "default" | undefined;
 	};
 </script>
 

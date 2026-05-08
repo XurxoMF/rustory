@@ -318,7 +318,7 @@ export class App {
 	 */
 	private static forwardConsole(
 		fnName: "log" | "debug" | "info" | "warn" | "error",
-		logger: (message: string, args?: { file: string; line: number }) => Promise<void>
+		logger: (message: string, args?: { file: string; line: number } | undefined) => Promise<void>
 	) {
 		const original = console[fnName];
 		console[fnName] = (message) => {

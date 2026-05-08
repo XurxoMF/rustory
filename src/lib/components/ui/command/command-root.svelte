@@ -2,7 +2,7 @@
 	export type RootApi = CommandPrimitive.Root;
 
 	export type RootProps = CommandPrimitive.RootProps & {
-		api?: RootApi | null;
+		api?: RootApi | null | undefined;
 	};
 </script>
 

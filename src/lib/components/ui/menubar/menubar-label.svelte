@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type LabelProps = WithElementRef<HTMLAttributes<HTMLElement>> & {
-		inset?: boolean;
+		inset?: boolean | undefined;
 	};
 </script>
 

@@ -17,7 +17,7 @@
 	export type RootOrientations = VariantProps<typeof rootVariants>["orientation"];
 
 	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		orientation?: RootOrientations;
+		orientation?: RootOrientations | undefined;
 	};
 </script>
 

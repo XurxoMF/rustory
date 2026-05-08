@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type CheckboxItemProps = WithoutChildrenOrChild<DropdownMenuPrimitive.CheckboxItemProps> & {
-		children?: Snippet;
+		children?: Snippet | undefined;
 	};
 </script>
 

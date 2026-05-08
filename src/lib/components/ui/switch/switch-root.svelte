@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type RootProps = WithoutChildrenOrChild<SwitchPrimitive.RootProps> & {
-		size?: "sm" | "default";
+		size?: "sm" | "default" | undefined;
 	};
 </script>
 

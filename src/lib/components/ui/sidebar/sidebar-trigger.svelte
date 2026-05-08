@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type TriggerProps = Button.RootProps & {
-		onclick?: (e: MouseEvent) => void;
+		onclick?: ((e: MouseEvent) => void) | undefined;
 	};
 </script>
 

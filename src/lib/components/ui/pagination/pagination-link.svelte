@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type LinkProps = PaginationPrimitive.PageProps & {
-		size?: Button.RootSizes;
-		isActive: boolean;
+		size?: Button.RootSizes | undefined;
+		isActive: boolean | undefined;
 	};
 </script>
 

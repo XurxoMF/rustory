@@ -2,9 +2,9 @@
 	export type ContentSides = "top" | "right" | "bottom" | "left";
 
 	export type ContentProps = WithoutChildrenOrChild<SheetPrimitive.ContentProps> & {
-		portalProps?: WithoutChildrenOrChild<Sheet.PortalProps>;
-		side?: ContentSides;
-		showCloseButton?: boolean;
+		portalProps?: WithoutChildrenOrChild<Sheet.PortalProps> | undefined;
+		side?: ContentSides | undefined;
+		showCloseButton?: boolean | undefined;
 		children: Snippet;
 	};
 </script>

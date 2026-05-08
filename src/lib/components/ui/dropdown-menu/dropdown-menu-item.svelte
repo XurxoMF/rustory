@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type ItemProps = DropdownMenuPrimitive.ItemProps & {
-		inset?: boolean;
-		variant?: "default" | "destructive";
+		inset?: boolean | undefined;
+		variant?: "default" | "destructive" | undefined;
 	};
 </script>
 

@@ -1,12 +1,12 @@
 <script lang="ts" module>
 	export type DialogProps = WithoutChildrenOrChild<DialogPrimitive.RootProps> &
 		WithoutChildrenOrChild<CommandPrimitive.RootProps> & {
-			portalProps?: DialogPrimitive.PortalProps;
-			children: Snippet;
-			title?: string;
-			description?: string;
-			showCloseButton?: boolean;
-			class?: string;
+			portalProps?: DialogPrimitive.PortalProps | undefined;
+			children: Snippet | undefined;
+			title?: string | undefined;
+			description?: string | undefined;
+			showCloseButton?: boolean | undefined;
+			class?: string | undefined;
 		};
 </script>
 

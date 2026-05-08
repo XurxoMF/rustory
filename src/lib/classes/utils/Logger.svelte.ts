@@ -30,7 +30,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public static async info(message: string, args?: { file: string; line: number }): Promise<void> {
+	public static async info(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		let msg = ``;
 
 		if (args) msg += `[${args.file}:${args.line}] `;
@@ -45,7 +45,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public static async warn(message: string, args?: { file: string; line: number }): Promise<void> {
+	public static async warn(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		let msg = ``;
 
 		if (args) msg += `[${args.file}:${args.line}] `;
@@ -60,7 +60,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public static async error(message: string, args?: { file: string; line: number }): Promise<void> {
+	public static async error(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		let msg = ``;
 
 		if (args) msg += `[${args.file}:${args.line}] `;
@@ -75,7 +75,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public static async debug(message: string, args?: { file: string; line: number }): Promise<void> {
+	public static async debug(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		let msg = ``;
 
 		if (args) msg += `[${args.file}:${args.line}] `;
@@ -90,7 +90,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public static async trace(message: string, args?: { file: string; line: number }): Promise<void> {
+	public static async trace(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		let msg = ``;
 
 		if (args) msg += `[${args.file}:${args.line}] `;
@@ -109,7 +109,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public async info(message: string, args?: { file: string; line: number }): Promise<void> {
+	public async info(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		return await Logger.info(message, args);
 	}
 
@@ -118,7 +118,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public async warn(message: string, args?: { file: string; line: number }): Promise<void> {
+	public async warn(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		return await Logger.warn(message, args);
 	}
 
@@ -127,7 +127,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public async error(message: string, args?: { file: string; line: number }): Promise<void> {
+	public async error(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		return await Logger.error(message, args);
 	}
 
@@ -136,7 +136,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public async debug(message: string, args?: { file: string; line: number }): Promise<void> {
+	public async debug(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		return await Logger.debug(message, args);
 	}
 
@@ -145,7 +145,7 @@ export class Logger {
 	 * @param message The message to log.
 	 * @param args Arguments to extend the log.
 	 */
-	public async trace(message: string, args?: { file: string; line: number }): Promise<void> {
+	public async trace(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
 		return await Logger.trace(message, args);
 	}
 }

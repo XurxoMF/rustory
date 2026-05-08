@@ -5,9 +5,9 @@ export const THEMES = { light: "", dark: ".dark" } as const;
 
 export type ChartConfig = {
 	[k in string]: {
-		label?: string;
-		icon?: Component;
-	} & ({ color?: string; theme?: never } | { color?: never; theme: Record<keyof typeof THEMES, string> });
+		label?: string | undefined;
+		icon?: Component | undefined;
+	} & ({ color?: string | undefined; theme?: never | undefined } | { color?: never | undefined; theme: Record<keyof typeof THEMES, string> });
 };
 
 export type ExtractSnippetParams<T> = T extends Snippet<[infer P]> ? P : never;
@@ -20,7 +20,7 @@ export function getPayloadConfigFromPayload(
 	payload: TooltipPayload,
 	key: string,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	data?: Record<string, any> | null
+	data?: Record<string, any> | null | undefined
 ) {
 	if (typeof payload !== "object" || payload === null) return undefined;
 

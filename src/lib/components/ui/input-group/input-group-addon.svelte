@@ -17,7 +17,7 @@
 	export type AddonAligns = VariantProps<typeof addonVariants>["align"];
 
 	export type AddonProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		align?: AddonAligns;
+		align?: AddonAligns | undefined;
 	};
 </script>
 

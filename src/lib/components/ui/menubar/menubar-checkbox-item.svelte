@@ -1,7 +1,7 @@
 <script lang="ts" module>
 	export type CheckboxItemProps = WithoutChildrenOrChild<MenubarPrimitive.CheckboxItemProps> & {
-		inset?: boolean;
-		children?: Snippet;
+		inset?: boolean | undefined;
+		children?: Snippet | undefined;
 	};
 </script>
 

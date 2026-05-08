@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type LegendProps = WithElementRef<HTMLAttributes<HTMLLegendElement>> & {
-		variant?: "legend" | "label";
+		variant?: "legend" | "label" | undefined;
 	};
 </script>
 

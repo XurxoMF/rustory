@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type TextProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		child?: Snippet<[{ props: Record<string, unknown> }]>;
+		child?: Snippet<[{ props: Record<string, unknown> }]> | undefined;
 	};
 </script>
 

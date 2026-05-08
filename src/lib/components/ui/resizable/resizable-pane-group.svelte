@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type PaneGroupProps = ResizablePrimitive.PaneGroupProps & {
-		this?: ResizablePrimitive.PaneGroup;
+		this?: ResizablePrimitive.PaneGroup | undefined;
 	};
 </script>
 

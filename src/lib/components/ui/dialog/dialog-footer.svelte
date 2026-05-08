@@ -1,6 +1,6 @@
 <script lang="ts" module>
 	export type FooterProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		showCloseButton?: boolean;
+		showCloseButton?: boolean | undefined;
 	};
 </script>
 
