@@ -5,38 +5,40 @@
 	import * as Table from "$lib/components/ui/table";
 </script>
 
-{#each Array(6) as _, i (i)}
-	<Card.Root>
-		<Card.Header>
-			<Card.TitleSkeleton />
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+	{#each Array(6) as _, i (i)}
+		<Card.Root>
+			<Card.Header>
+				<Card.TitleSkeleton />
 
-			<Card.DescriptionSkeleton />
-			<Card.DescriptionSkeleton />
+				<Card.DescriptionSkeleton />
+				<Card.DescriptionSkeleton />
 
-			<Card.Action>
-				<Badge.Skeleton />
-			</Card.Action>
-		</Card.Header>
+				<Card.Action>
+					<Badge.Skeleton />
+				</Card.Action>
+			</Card.Header>
 
-		<Card.Content class="mt-auto">
-			<Table.Root>
-				<Table.Body>
-					{#each Array(4) as _, j (j)}
-						<Table.Row>
-							<Table.CellSkeleton align="left" />
-							<Table.CellSkeleton align="right" />
-						</Table.Row>
-					{/each}
-				</Table.Body>
-			</Table.Root>
-		</Card.Content>
+			<Card.Content class="mt-auto">
+				<Table.Root>
+					<Table.Body>
+						{#each Array(4) as _, j (j)}
+							<Table.Row>
+								<Table.CellSkeleton align="left" />
+								<Table.CellSkeleton align="right" />
+							</Table.Row>
+						{/each}
+					</Table.Body>
+				</Table.Root>
+			</Card.Content>
 
-		<Card.Footer class="flex justify-end gap-2">
-			<Button.Skeleton class="flex-1" />
+			<Card.Footer class="flex justify-end gap-2">
+				<Button.Skeleton class="flex-1" />
 
-			<Button.Skeleton class="flex-1" />
+				<Button.Skeleton class="flex-1" />
 
-			<Button.Skeleton class="flex-1" />
-		</Card.Footer>
-	</Card.Root>
-{/each}
+				<Button.Skeleton class="flex-1" />
+			</Card.Footer>
+		</Card.Root>
+	{/each}
+</div>

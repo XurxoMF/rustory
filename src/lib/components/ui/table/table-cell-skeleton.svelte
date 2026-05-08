@@ -15,5 +15,5 @@
 </script>
 
 <td bind:this={ref} data-slot="table-cell" class={cn("p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0", className)} {...restProps}>
-	<Skeleton.Root class={cn("h-4.5 w-full max-w-(--skeleton-width) rounded-full", className)} style="--skeleton-width: {width};" />
+	<Skeleton.Root class={cn("h-5 w-full max-w-(--skeleton-width) rounded-full", className)} style="--skeleton-width: {width};" />
 </td>
