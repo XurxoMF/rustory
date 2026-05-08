@@ -22,8 +22,8 @@
 	import * as Card from "$lib/components/ui/card";
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Spinner from "$lib/components/ui/spinner";
-	import * as Separator from "$lib/components/ui/separator";
 	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Table from "$lib/components/ui/table";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let { data }: { data: { instances: VSInstance[] } } = $props();
@@ -97,39 +97,33 @@
 			</Card.Header>
 
 			<Card.Content class="mt-auto">
-				<div class="flex items-center justify-between gap-2 py-1">
-					<p class="text-muted-foreground">Vintage Story Version</p>
+				<Table.Root>
+					<Table.Body>
+						<Table.Row>
+							<Table.Cell class="text-muted-foreground" align="left">Vintage Story Version</Table.Cell>
+							<Table.Cell class="font-bold" align="right">{vsInstance.version.version}</Table.Cell>
+						</Table.Row>
 
-					<p class="font-bold">{vsInstance.version.version}</p>
-				</div>
+						<Table.Row>
+							<Table.Cell class="text-muted-foreground" align="left">Installed mods</Table.Cell>
+							<Table.Cell class="font-bold" align="right">{vsInstance.mods.length}</Table.Cell>
+						</Table.Row>
 
-				<Separator.Root />
+						<Table.Row>
+							<Table.Cell class="text-muted-foreground" align="left">Last time played</Table.Cell>
+							<Table.Cell class="font-bold" align="right">
+								{vsInstance.lastTimePlayed === 0 ? "Never" : new Date(vsInstance.lastTimePlayed).toLocaleString(App.config.locale)}
+							</Table.Cell>
+						</Table.Row>
 
-				<div class="flex items-center justify-between gap-2 py-1">
-					<p class="text-muted-foreground">Installed mods</p>
-
-					<p class="font-bold">{vsInstance.mods.length}</p>
-				</div>
-
-				<Separator.Root />
-
-				<div class="flex items-center justify-between gap-2 py-1">
-					<p class="text-muted-foreground">Last time played</p>
-
-					<p class="font-bold">
-						{vsInstance.lastTimePlayed === 0 ? "Never" : new Date(vsInstance.lastTimePlayed).toLocaleString(App.config.locale)}
-					</p>
-				</div>
-
-				<Separator.Root />
-
-				<div class="flex items-center justify-between gap-2 py-1">
-					<p class="text-muted-foreground">Total time played</p>
-
-					<p class="font-bold">
-						{`${formatTime(vsInstance.totalTimePlayed, { to: "minutes" })} minutes`}
-					</p>
-				</div>
+						<Table.Row>
+							<Table.Cell class="text-muted-foreground" align="left">Total time played</Table.Cell>
+							<Table.Cell class="font-bold" align="right">
+								{`${formatTime(vsInstance.totalTimePlayed, { to: "minutes" })} minutes`}
+							</Table.Cell>
+						</Table.Row>
+					</Table.Body>
+				</Table.Root>
 			</Card.Content>
 
 			<Card.Footer class="flex justify-end gap-2">
@@ -165,9 +159,9 @@
 					</Dialog.Content>
 				</Dialog.Root>
 
-				<Button.Root class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}
-					>Manage</Button.Root
-				>
+				<Button.Root class="flex-1" variant="outline" onclick={() => goto(resolve("/vs-instances/[slug]", { slug: vsInstance.id }))}>
+					Manage
+				</Button.Root>
 
 				<Button.Root class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button.Root>
 			</Card.Footer>
