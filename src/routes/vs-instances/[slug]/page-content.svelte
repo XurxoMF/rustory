@@ -10,6 +10,7 @@
 
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Button from "$lib/components/ui/button";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let { data }: { data: { instance: VSInstance } } = $props();
 
@@ -18,7 +19,7 @@
 
 <p>Checking {staticData.instance.name}</p>
 
-<div class="absolute right-3 bottom-3 z-20 flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl">
+<FloatingMenu.Root>
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
@@ -38,4 +39,4 @@
 			<p>Edit this Vintage Story Instance</p>
 		</Tooltip.Content>
 	</Tooltip.Root>
-</div>
+</FloatingMenu.Root>

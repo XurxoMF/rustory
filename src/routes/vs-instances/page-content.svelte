@@ -24,6 +24,7 @@
 	import * as Spinner from "$lib/components/ui/spinner";
 	import * as Separator from "$lib/components/ui/separator";
 	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let { data }: { data: { instances: VSInstance[] } } = $props();
 
@@ -174,7 +175,7 @@
 	{/each}
 </div>
 
-<div class="absolute right-3 bottom-3 z-20 flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl">
+<FloatingMenu.Root>
 	<Tooltip.Root>
 		<Tooltip.Trigger>
 			{#snippet child({ props })}
@@ -189,4 +190,4 @@
 			<p>Create new Vintage Story Instance</p>
 		</Tooltip.Content>
 	</Tooltip.Root>
-</div>
+</FloatingMenu.Root>
