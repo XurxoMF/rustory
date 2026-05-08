@@ -24,7 +24,6 @@
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
-	import * as Typo from "$lib/components/ui/typography";
 	import * as Command from "$lib/components/ui/command";
 	import * as Popover from "$lib/components/ui/popover";
 	import * as Button from "$lib/components/ui/button";
@@ -177,119 +176,202 @@
 	}
 </script>
 
-<Typo.H1>Create a Vintage Story Instance</Typo.H1>
-<Typo.Leading>Create a new Vintage Story Instance for your needs.</Typo.Leading>
+<Field.Group>
+	<Field.Set>
+		<Field.Legend>General</Field.Legend>
+		<Field.Description>General settings.</Field.Description>
 
-<div class="mt-6">
-	<Field.Group>
-		<Field.Set>
-			<Field.Legend>General</Field.Legend>
-			<Field.Description>General settings.</Field.Description>
+		<Field.Group>
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+				<!-- Name-->
+				<Field.Field data-invalid={nameErrors.length > 0}>
+					<Field.Label for="name">Name</Field.Label>
 
-			<Field.Group>
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-					<!-- Name-->
-					<Field.Field data-invalid={nameErrors.length > 0}>
-						<Field.Label for="name">Name</Field.Label>
+					<Input.Root bind:value={name} minlength={5} maxlength={50} id="name" placeholder="Choose a name..." aria-invalid={nameErrors.length > 0} />
 
-						<Input.Root
-							bind:value={name}
-							minlength={5}
-							maxlength={50}
-							id="name"
-							placeholder="Choose a name..."
-							aria-invalid={nameErrors.length > 0}
-						/>
+					{#if nameErrors.length > 0}
+						<Field.Error>
+							<List.Unordered>
+								{#each nameErrors as error (error)}
+									<List.Item>
+										{error}
+									</List.Item>
+								{/each}
+							</List.Unordered>
+						</Field.Error>
+					{/if}
 
-						{#if nameErrors.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each nameErrors as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
+					<Field.Description>This is the name of the instance. It must be at least 5 characters long and a maximum of 50.</Field.Description>
+				</Field.Field>
 
-						<Field.Description>This is the name of the instance. It must be at least 5 characters long and a maximum of 50.</Field.Description>
-					</Field.Field>
+				<!-- Vintage Story Version -->
+				<Field.Field>
+					<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
-					<!-- Vintage Story Version -->
-					<Field.Field>
-						<Field.Label for="vs-version">Vintage Story Version</Field.Label>
+					<Popover.Root bind:open={versionsOpen}>
+						<Popover.Trigger bind:ref={versionsTriggerRef}>
+							{#snippet child({ props })}
+								<Button.Root {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={versionsOpen}>
+									{version.version || "Select a version..."}
 
-						<Popover.Root bind:open={versionsOpen}>
-							<Popover.Trigger bind:ref={versionsTriggerRef}>
-								{#snippet child({ props })}
-									<Button.Root {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={versionsOpen}>
-										{version.version || "Select a version..."}
+									<IconSelector class="opacity-50" />
+								</Button.Root>
+							{/snippet}
+						</Popover.Trigger>
 
-										<IconSelector class="opacity-50" />
-									</Button.Root>
-								{/snippet}
-							</Popover.Trigger>
+						<Popover.Content class="w-(--bits-floating-anchor-width) p-0">
+							<Command.Root>
+								<Command.Input placeholder="Select the VS Version..." />
 
-							<Popover.Content class="w-(--bits-floating-anchor-width) p-0">
-								<Command.Root>
-									<Command.Input placeholder="Select the VS Version..." />
+								<Command.List>
+									<Command.Empty>No Vintage Story Versions found.</Command.Empty>
 
-									<Command.List>
-										<Command.Empty>No Vintage Story Versions found.</Command.Empty>
+									<Command.Group>
+										{#each versions as v (v.version)}
+											<Command.Item
+												data-checked={version.version === v.version}
+												value={v.version}
+												onSelect={() => {
+													version = v;
 
-										<Command.Group>
-											{#each versions as v (v.version)}
-												<Command.Item
-													data-checked={version.version === v.version}
-													value={v.version}
-													onSelect={() => {
-														version = v;
+													versionsOpen = false;
 
-														versionsOpen = false;
+													// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
+													tick().then(() => {
+														versionsTriggerRef.focus();
+													});
+												}}
+												class="flex w-full justify-between"
+											>
+												{#if App.data.vsVersions.some((v) => v.version === version.version)}
+													<IconCheck />
+												{:else}
+													<IconArrowDown />
+												{/if}
 
-														// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
-														tick().then(() => {
-															versionsTriggerRef.focus();
-														});
-													}}
-													class="flex w-full justify-between"
-												>
-													{#if App.data.vsVersions.some((v) => v.version === version.version)}
-														<IconCheck />
-													{:else}
-														<IconArrowDown />
-													{/if}
+												<span>{v.version}</span>
+											</Command.Item>
+										{/each}
+									</Command.Group>
+								</Command.List>
+							</Command.Root>
+						</Popover.Content>
+					</Popover.Root>
 
-													<span>{v.version}</span>
-												</Command.Item>
-											{/each}
-										</Command.Group>
-									</Command.List>
-								</Command.Root>
-							</Popover.Content>
-						</Popover.Root>
+					<Field.Description>The game version you select will be installed here.</Field.Description>
+				</Field.Field>
+			</div>
 
-						<Field.Description>The game version you select will be installed here.</Field.Description>
-					</Field.Field>
+			<!-- Description -->
+			<Field.Field data-invalid={descriptionErrors.length > 0}>
+				<Field.Label for="description">Description</Field.Label>
+
+				<Textarea.Root
+					bind:value={description}
+					id="description"
+					placeholder="Set a description..."
+					maxlength={250}
+					aria-invalid={descriptionErrors.length > 0}
+				/>
+
+				{#if descriptionErrors.length > 0}
+					<Field.Error>
+						<List.Unordered>
+							{#each descriptionErrors as error (error)}
+								<List.Item>
+									{error}
+								</List.Item>
+							{/each}
+						</List.Unordered>
+					</Field.Error>
+				{/if}
+
+				<Field.Description>This is the description of the instance. It's optional and has a maximum of 250 characters.</Field.Description>
+			</Field.Field>
+
+			<!-- Path-->
+			<Field.Field data-invalid={dirErrors.length > 0}>
+				<Field.Label for="path">Directory</Field.Label>
+
+				<div class="flex gap-2">
+					<Button.Root
+						id="path"
+						size="icon"
+						variant="outline"
+						onclick={async () => {
+							const path = await open({
+								directory: true,
+								defaultPath: App.info.dataDir.path,
+								recursive: true,
+								title: "Select a directory"
+							});
+
+							if (path) {
+								dir = await Directory.create(path);
+							}
+						}}
+						aria-invalid={dirErrors.length > 0}
+					>
+						<IconFolder />
+					</Button.Root>
+
+					<Input.Root value={dir?.path || ""} placeholder="Select a directory..." readonly aria-invalid={dirErrors.length > 0} />
 				</div>
 
-				<!-- Description -->
-				<Field.Field data-invalid={descriptionErrors.length > 0}>
-					<Field.Label for="description">Description</Field.Label>
+				{#if dirErrors.length > 0}
+					<Field.Error>
+						<List.Unordered>
+							{#each dirErrors as error (error)}
+								<List.Item>
+									{error}
+								</List.Item>
+							{/each}
+						</List.Unordered>
+					</Field.Error>
+				{/if}
 
-					<Textarea.Root
-						bind:value={description}
-						id="description"
-						placeholder="Set a description..."
-						maxlength={250}
-						aria-invalid={descriptionErrors.length > 0}
+				<Field.Description>
+					The game, the data and the backups will be stored here. It'll use the default path if you don't select one.
+				</Field.Description>
+			</Field.Field>
+		</Field.Group>
+	</Field.Set>
+
+	<Field.Separator />
+
+	<Field.Set>
+		<Field.Legend>Backups</Field.Legend>
+		<Field.Description>Backup settings.</Field.Description>
+
+		<Field.Group>
+			<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+				<!-- Backups Auto -->
+				<Field.Field>
+					<Field.Label for="backups-auto">Automatic backups</Field.Label>
+
+					<Switch.Root id="backups-auto" bind:checked={backupsAuto} />
+
+					<Field.Description>If this option is enabled, backups will be made before you play.</Field.Description>
+				</Field.Field>
+
+				<!-- Backups Limit -->
+				<Field.Field data-invalid={backupsLimitErrors.length > 0}>
+					<Field.Label for="backups-limit">Backups limit</Field.Label>
+
+					<Slider.Root
+						type="single"
+						id="backups-limit"
+						min={1}
+						max={10}
+						step={1}
+						bind:value={backupsLimit}
+						aria-invalid={backupsLimitErrors.length > 0}
 					/>
 
-					{#if descriptionErrors.length > 0}
+					{#if backupsLimitErrors.length > 0}
 						<Field.Error>
 							<List.Unordered>
-								{#each descriptionErrors as error (error)}
+								{#each backupsLimitErrors as error (error)}
 									<List.Item>
 										{error}
 									</List.Item>
@@ -298,42 +380,27 @@
 						</Field.Error>
 					{/if}
 
-					<Field.Description>This is the description of the instance. It's optional and has a maximum of 250 characters.</Field.Description>
+					<Field.Description>You need at least 1 backup and can have a maximum of 10 backups.</Field.Description>
 				</Field.Field>
 
-				<!-- Path-->
-				<Field.Field data-invalid={dirErrors.length > 0}>
-					<Field.Label for="path">Directory</Field.Label>
+				<!-- Backups Cmpression Level -->
+				<Field.Field class="lg:col-span-2 2xl:col-auto" data-invalid={backupsCompressionLevelErrors.length > 0}>
+					<Field.Label for="backups-compression-level">Backups compression level</Field.Label>
 
-					<div class="flex gap-2">
-						<Button.Root
-							id="path"
-							size="icon"
-							variant="outline"
-							onclick={async () => {
-								const path = await open({
-									directory: true,
-									defaultPath: App.info.dataDir.path,
-									recursive: true,
-									title: "Select a directory"
-								});
+					<Slider.Root
+						type="single"
+						id="backups-compression-level"
+						min={1}
+						max={9}
+						step={1}
+						bind:value={backupsCompressionLevel}
+						aria-invalid={backupsCompressionLevelErrors.length > 0}
+					/>
 
-								if (path) {
-									dir = await Directory.create(path);
-								}
-							}}
-							aria-invalid={dirErrors.length > 0}
-						>
-							<IconFolder />
-						</Button.Root>
-
-						<Input.Root value={dir?.path || ""} placeholder="Select a directory..." readonly aria-invalid={dirErrors.length > 0} />
-					</div>
-
-					{#if dirErrors.length > 0}
+					{#if backupsCompressionLevelErrors.length > 0}
 						<Field.Error>
 							<List.Unordered>
-								{#each dirErrors as error (error)}
+								{#each backupsCompressionLevelErrors as error (error)}
 									<List.Item>
 										{error}
 									</List.Item>
@@ -342,141 +409,60 @@
 						</Field.Error>
 					{/if}
 
-					<Field.Description>
-						The game, the data and the backups will be stored here. It'll use the default path if you don't select one.
-					</Field.Description>
+					<Field.Description>More compression means smaller backups but longer backup times.</Field.Description>
 				</Field.Field>
-			</Field.Group>
-		</Field.Set>
+			</div>
+		</Field.Group>
+	</Field.Set>
 
+	<Field.Separator />
+
+	<Field.Set>
+		<Field.Legend>Advanced</Field.Legend>
+		<Field.Description>Advanced settings.</Field.Description>
+
+		<Field.Group>
+			<!-- Start Params -->
+			<Field.Field>
+				<Field.Label for="start-params">Start params</Field.Label>
+
+				<Input.Root bind:value={startParams} id="start-params" placeholder="--param1=value1 --param2=value2..." />
+
+				<Field.Description>
+					You can change how the game behaves adding this params. You can check the documentation on the Vintage Story Wiki.
+				</Field.Description>
+			</Field.Field>
+
+			<!-- ENV Vars -->
+			<Field.Field>
+				<Field.Label for="env-vars">Start params</Field.Label>
+
+				<Input.Root bind:value={envVars} id="env-vars" placeholder="NEV1=value1,ENV2=value2..." />
+
+				<Field.Description>You can modify some things with ENV variables, not only for Vintage Story but for 3rd party tools.</Field.Description>
+			</Field.Field>
+		</Field.Group>
+	</Field.Set>
+
+	{#if App.info.osType === "linux"}
 		<Field.Separator />
 
 		<Field.Set>
-			<Field.Legend>Backups</Field.Legend>
-			<Field.Description>Backup settings.</Field.Description>
+			<Field.Legend>Linux</Field.Legend>
+			<Field.Description>Linux specific settings.</Field.Description>
 
 			<Field.Group>
-				<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
-					<!-- Backups Auto -->
-					<Field.Field>
-						<Field.Label for="backups-auto">Automatic backups</Field.Label>
-
-						<Switch.Root id="backups-auto" bind:checked={backupsAuto} />
-
-						<Field.Description>If this option is enabled, backups will be made before you play.</Field.Description>
-					</Field.Field>
-
-					<!-- Backups Limit -->
-					<Field.Field data-invalid={backupsLimitErrors.length > 0}>
-						<Field.Label for="backups-limit">Backups limit</Field.Label>
-
-						<Slider.Root
-							type="single"
-							id="backups-limit"
-							min={1}
-							max={10}
-							step={1}
-							bind:value={backupsLimit}
-							aria-invalid={backupsLimitErrors.length > 0}
-						/>
-
-						{#if backupsLimitErrors.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each backupsLimitErrors as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
-
-						<Field.Description>You need at least 1 backup and can have a maximum of 10 backups.</Field.Description>
-					</Field.Field>
-
-					<!-- Backups Cmpression Level -->
-					<Field.Field class="lg:col-span-2 2xl:col-auto" data-invalid={backupsCompressionLevelErrors.length > 0}>
-						<Field.Label for="backups-compression-level">Backups compression level</Field.Label>
-
-						<Slider.Root
-							type="single"
-							id="backups-compression-level"
-							min={1}
-							max={9}
-							step={1}
-							bind:value={backupsCompressionLevel}
-							aria-invalid={backupsCompressionLevelErrors.length > 0}
-						/>
-
-						{#if backupsCompressionLevelErrors.length > 0}
-							<Field.Error>
-								<List.Unordered>
-									{#each backupsCompressionLevelErrors as error (error)}
-										<List.Item>
-											{error}
-										</List.Item>
-									{/each}
-								</List.Unordered>
-							</Field.Error>
-						{/if}
-
-						<Field.Description>More compression means smaller backups but longer backup times.</Field.Description>
-					</Field.Field>
-				</div>
-			</Field.Group>
-		</Field.Set>
-
-		<Field.Separator />
-
-		<Field.Set>
-			<Field.Legend>Advanced</Field.Legend>
-			<Field.Description>Advanced settings.</Field.Description>
-
-			<Field.Group>
-				<!-- Start Params -->
+				<!-- MesaGL Thread -->
 				<Field.Field>
-					<Field.Label for="start-params">Start params</Field.Label>
+					<Field.Label for="mesagl-thread">MesaGL Thread</Field.Label>
 
-					<Input.Root bind:value={startParams} id="start-params" placeholder="--param1=value1 --param2=value2..." />
+					<Switch.Root id="mesagl-thread" bind:checked={mesaGlThread} />
 
-					<Field.Description>
-						You can change how the game behaves adding this params. You can check the documentation on the Vintage Story Wiki.
-					</Field.Description>
-				</Field.Field>
-
-				<!-- ENV Vars -->
-				<Field.Field>
-					<Field.Label for="env-vars">Start params</Field.Label>
-
-					<Input.Root bind:value={envVars} id="env-vars" placeholder="NEV1=value1,ENV2=value2..." />
-
-					<Field.Description>You can modify some things with ENV variables, not only for Vintage Story but for 3rd party tools.</Field.Description>
+					<Field.Description>MesaGL Thread may improve performance on some Linux systems. Disable it if it causes issues for you.</Field.Description>
 				</Field.Field>
 			</Field.Group>
 		</Field.Set>
+	{/if}
 
-		{#if App.info.osType === "linux"}
-			<Field.Separator />
-
-			<Field.Set>
-				<Field.Legend>Linux</Field.Legend>
-				<Field.Description>Linux specific settings.</Field.Description>
-
-				<Field.Group>
-					<!-- MesaGL Thread -->
-					<Field.Field>
-						<Field.Label for="mesagl-thread">MesaGL Thread</Field.Label>
-
-						<Switch.Root id="mesagl-thread" bind:checked={mesaGlThread} />
-
-						<Field.Description>MesaGL Thread may improve performance on some Linux systems. Disable it if it causes issues for you.</Field.Description
-						>
-					</Field.Field>
-				</Field.Group>
-			</Field.Set>
-		{/if}
-
-		<Button.Root onclick={() => handleCreation()}>Create</Button.Root>
-	</Field.Group>
-</div>
+	<Button.Root onclick={() => handleCreation()}>Create</Button.Root>
+</Field.Group>

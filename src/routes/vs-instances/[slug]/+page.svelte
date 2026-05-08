@@ -11,11 +11,20 @@
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
+
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
 
 	let { params }: PageProps = $props();
+
+	$effect(() => {
+		App.breadcrumbs.segments = [
+			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+			{ label: "Manage", href: resolve("/vs-instances/[slug]", { slug: params.slug }) }
+		];
+	});
 
 	const pageData = $derived.by(() => load(params.slug));
 
@@ -33,11 +42,6 @@
 			// If there is no instance with that id, redirect the user to the instances page.
 			if (instance === undefined) throw new PageLoadError(PageLoadErrorCodes.NOT_FOUND, "That Vintage Story Instance does not exist!");
 
-			App.breadcrumbs.segments = [
-				{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-				{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) }
-			];
-
 			return { instance };
 		} catch (err) {
 			App.logger.error(`There was an error loading the page data:\n${err}`);
@@ -45,6 +49,9 @@
 		}
 	}
 </script>
+
+<Typo.H1>Manage Vintage Story Instance</Typo.H1>
+<Typo.Leading>Manage a Vintage Story Instance to add mods, edit settings, etc...</Typo.Leading>
 
 {#await pageData}
 	<PageSkeleton />

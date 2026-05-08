@@ -8,7 +8,6 @@
 
 	import { type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
-	import * as Typo from "$lib/components/ui/typography";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Button from "$lib/components/ui/button";
 
@@ -16,6 +15,8 @@
 
 	const staticData = untrack(() => data);
 </script>
+
+<p>Checking {staticData.instance.name}</p>
 
 <div class="absolute right-3 bottom-3 z-20 flex items-center gap-1 rounded-xl bg-card/90 p-1 shadow-xl backdrop-blur-xl">
 	<Tooltip.Root>
@@ -37,11 +38,4 @@
 			<p>Edit this Vintage Story Instance</p>
 		</Tooltip.Content>
 	</Tooltip.Root>
-</div>
-
-<Typo.H1>{staticData.instance.name}</Typo.H1>
-<Typo.Leading>Manage this Vintage Story Instance.</Typo.Leading>
-
-<div class="mt-6">
-	<p>Checking {staticData.instance.name}</p>
 </div>

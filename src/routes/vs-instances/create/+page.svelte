@@ -11,11 +11,20 @@
 
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
+
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
 
-	const pageData = load();
+	$effect(() => {
+		App.breadcrumbs.segments = [
+			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+			{ label: "Create", href: resolve("/vs-instances/create") }
+		];
+	});
+
+	const pageData = $derived.by(() => load());
 
 	/**
 	 * Loads the page data.
@@ -39,11 +48,6 @@
 			const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();
 			const versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
 
-			App.breadcrumbs.segments = [
-				{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-				{ label: "Create", href: resolve("/vs-instances/create") }
-			];
-
 			return { name, dir, versions };
 		} catch (err) {
 			App.logger.error(`There was an error loading the page data:\n${err}`);
@@ -51,6 +55,9 @@
 		}
 	}
 </script>
+
+<Typo.H1>Create Vintage Story Instance</Typo.H1>
+<Typo.Leading>Create a new Vintage Story Instance with new mods, settings, worlds...</Typo.Leading>
 
 {#await pageData}
 	<PageSkeleton />

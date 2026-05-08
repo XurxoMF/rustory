@@ -13,11 +13,21 @@
 
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
+
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
 
 	let { params }: PageProps = $props();
+
+	$effect(() => {
+		App.breadcrumbs.segments = [
+			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+			{ label: "Manage", href: resolve("/vs-instances/[slug]", { slug: params.slug }) },
+			{ label: "Edit", href: resolve("/vs-instances/[slug]/edit", { slug: params.slug }) }
+		];
+	});
 
 	const pageData = $derived.by(() => load(params.slug));
 
@@ -42,12 +52,6 @@
 			const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();
 			const versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
 
-			App.breadcrumbs.segments = [
-				{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-				{ label: instance.name, href: resolve("/vs-instances/[slug]", { slug: instance.id }) },
-				{ label: "Edit", href: resolve("/vs-instances/[slug]/edit", { slug: instance.id }) }
-			];
-
 			return { instance, versions };
 		} catch (err) {
 			App.logger.error(`There was an error loading the page data:\n${err}`);
@@ -55,6 +59,9 @@
 		}
 	}
 </script>
+
+<Typo.H1>Edit Vintage Story Instance</Typo.H1>
+<Typo.Leading>Edit a Vintage Story Instance with to change it's settings...</Typo.Leading>
 
 {#await pageData}
 	<PageSkeleton />
