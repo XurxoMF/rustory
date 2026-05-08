@@ -24,8 +24,13 @@
 					<Table.Body>
 						{#each Array(4) as _, j (j)}
 							<Table.Row>
-								<Table.CellSkeleton align="left" />
-								<Table.CellSkeleton align="right" />
+								<Table.Cell align="left">
+									<Table.CellSkeleton />
+								</Table.Cell>
+
+								<Table.Cell align="right">
+									<Table.CellSkeleton />
+								</Table.Cell>
 							</Table.Row>
 						{/each}
 					</Table.Body>
