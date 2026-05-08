@@ -1,3 +1,7 @@
+import { App } from "$lib/classes/App.svelte";
+
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+
 import { VSAPIModRelease, type VSAPIModReleaseJSON } from "$lib/classes/api/VSAPIModRelease.svelte";
 import { VSAPIModScreenshot, type VSAPIModScreenshotJSON } from "$lib/classes/api/VSAPIModScreenshot.svelte";
 
@@ -399,6 +403,57 @@ export class VSAPIMod {
 	// ********************
 	// *  STATIC METHODS  *
 	// ********************
+
+	/**
+	 * Queries a mod from the ModDB API.
+	 * @param modid The id of the mod to query.
+	 * @returns The mod from the ModDB API or undefined.
+	 */
+	public static async getFromModDB(modid: string): Promise<VSAPIMod | undefined> {
+		try {
+			App.logger.debug(`Getting the API Mod of the Vintage Story Mod ${modid} from the ModDB...`);
+
+			if (!App.info.isOnline) return undefined;
+
+			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`);
+
+			const json: { mod: VSAPIModJSON } = await res.json();
+
+			const jsonMod: VSAPIModJSON = json.mod;
+
+			const apiMod = new VSAPIMod({
+				modid: jsonMod.modid,
+				assetid: jsonMod.assetid,
+				name: jsonMod.name,
+				text: jsonMod.text,
+				author: jsonMod.author,
+				urlalias: jsonMod.urlalias,
+				logofilename: jsonMod.logofilename,
+				logofile: jsonMod.logofile,
+				homepageurl: jsonMod.homepageurl,
+				sourcecodeurl: jsonMod.sourcecodeurl,
+				trailervideourl: jsonMod.trailervideourl,
+				issuetrackerurl: jsonMod.issuetrackerurl,
+				wikiurl: jsonMod.wikiurl,
+				downloads: jsonMod.downloads,
+				follows: jsonMod.follows,
+				trendingpoints: jsonMod.trendingpoints,
+				comments: jsonMod.comments,
+				side: jsonMod.side,
+				type: jsonMod.type,
+				createdat: jsonMod.createdat,
+				lastmodified: jsonMod.lastmodified,
+				tags: jsonMod.tags,
+				releases: jsonMod.releases.map((release) => new VSAPIModRelease(release)),
+				screenshots: jsonMod.screenshots.map((screenshot) => new VSAPIModScreenshot(screenshot))
+			});
+
+			return apiMod;
+		} catch (err) {
+			App.logger.error(`There was an error querying the Vintage Story API Mod:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error querying the Vintage Story API Mod!");
+		}
+	}
 
 	// **********************
 	// *  INSTANCE METHODS	*

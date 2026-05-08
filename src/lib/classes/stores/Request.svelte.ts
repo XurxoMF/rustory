@@ -94,6 +94,11 @@ export class Request {
 		try {
 			App.logger.debug("Making request...");
 
+			if (!App.info.isOnline) {
+				App.logger.error("Can't make a request while the app is offline!");
+				throw new AppError(AppErrorCodes.GENERIC_ERROR, "Can't make a request while the app is offline!");
+			}
+
 			const response = await fetch(url);
 
 			if (cache) {

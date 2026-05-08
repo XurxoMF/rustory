@@ -54,10 +54,10 @@ export class Data {
 
 			App.logger.debug("Loading Vintage Story Versions...");
 
-			let vsVersions: VSVersion[] = [];
+			const vsVersions: VSVersion[] = [];
 
 			if (dataJSON.vsVersionsPaths !== undefined && dataJSON.vsVersionsPaths.length > 0) {
-				const loadedVsVersions = await Promise.all(
+				await Promise.all(
 					dataJSON.vsVersionsPaths.map(async (vsVersionPath) => {
 						const dir = await Directory.create(vsVersionPath);
 
@@ -67,24 +67,24 @@ export class Data {
 
 						const version: string = await invoke("get_vs_version", { executablePath: executable.path });
 
-						return await VSVersion.create({
+						const vsVersion = await VSVersion.create({
 							version,
 							dir
 						});
+
+						vsVersions.push(vsVersion);
 					})
 				);
-
-				vsVersions = loadedVsVersions;
 			}
 
 			App.logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions.`);
 
 			App.logger.debug("Loading Vintage Story Instances...");
 
-			let vsInstances: VSInstance[] = [];
+			const vsInstances: VSInstance[] = [];
 
 			if (dataJSON.vsInstancesPaths !== undefined && dataJSON.vsInstancesPaths.length > 0) {
-				const loadedVsInstances = await Promise.all(
+				await Promise.all(
 					dataJSON.vsInstancesPaths.map(async (vsInstancePath) => {
 						const dir = await Directory.create(vsInstancePath);
 
@@ -116,7 +116,7 @@ export class Data {
 							version = newVersion;
 						}
 
-						return await VSInstance.create({
+						const vsInstance = await VSInstance.create({
 							file,
 							id: vsInstanceJSON.id,
 							name: vsInstanceJSON.name,
@@ -134,10 +134,12 @@ export class Data {
 							mesaGlThread: vsInstanceJSON.mesaGlThread ?? false,
 							envVars: vsInstanceJSON.envVars ?? ""
 						});
+
+						await vsInstance.loadMods();
+
+						vsInstances.push(vsInstance);
 					})
 				);
-
-				vsInstances = loadedVsInstances;
 			}
 
 			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances.`);

@@ -20,11 +20,11 @@
 		"opener:default",
 		{
 			"identifier": "http:default",
-			"allow": [{ "url": "https://api.rustory.xyz" }]
+			"allow": [{ "url": "https://api.rustory.xyz" }, { "url": "https://mods.vintagestory.at" }]
 		},
 		{
 			"identifier": "upload:default",
-			"allow": [{ "url": "https://api.rustory.xyz" }]
+			"allow": [{ "url": "https://api.rustory.xyz" }, { "url": "https://mods.vintagestory.at" }, { "url": "https://moddbcdn.vintagestory.at" }]
 		},
 		"dialog:default",
 		"fs:default",

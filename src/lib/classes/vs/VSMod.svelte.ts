@@ -1,4 +1,33 @@
-import type { File } from "../utils/File.svelte";
+import { App } from "$lib/classes/App.svelte";
+
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+
+import type { Zip } from "$lib/classes/utils/Zip.svelte";
+
+import { VSAPIMod } from "$lib/classes/api/VSAPIMod.svelte";
+
+export type VSModModinfoJSON = {
+	name?: string | undefined;
+	Name?: string | undefined;
+	modid?: string | undefined;
+	Modid?: string | undefined;
+	ModID?: string | undefined;
+	modId?: string | undefined;
+	version?: string | undefined;
+	Version?: string | undefined;
+	description?: string | undefined;
+	Description?: string | undefined;
+	side?: string | undefined;
+	Side?: string | undefined;
+	authors?: string[] | undefined;
+	Authors?: string[] | undefined;
+	author?: string | undefined;
+	Author?: string | undefined;
+	contributors?: string[] | undefined;
+	Contributors?: string[] | undefined;
+	type?: string | undefined;
+	Type?: string | undefined;
+};
 
 /**
  * Installed Vintage Story Mod info.
@@ -17,30 +46,28 @@ export class VSMod {
 	// ************************
 
 	public constructor(vsMod: {
-		vsInstanceId: string;
+		zip: Zip;
+		apiMod?: VSAPIMod | undefined;
 		name: string;
 		modid: string;
 		version: string;
-		file: File;
 		description?: string | undefined;
 		side?: string | undefined;
 		authors: string[];
 		contributors: string[];
 		type?: string | undefined;
-		image: boolean;
 		state?: VSModState | undefined;
 	}) {
-		this._vsInstanceId = vsMod.vsInstanceId;
+		this._zip = vsMod.zip;
+		this._apiMod = vsMod.apiMod;
 		this._name = vsMod.name;
 		this._modid = vsMod.modid;
 		this._version = vsMod.version;
-		this._file = vsMod.file;
 		this._description = vsMod.description;
 		this._side = vsMod.side;
 		this._authors = vsMod.authors;
 		this._contributors = vsMod.contributors;
 		this._type = vsMod.type;
-		this._image = vsMod.image;
 		this._state = $state(vsMod.state ?? VSModState.INSTALLED);
 	}
 
@@ -49,9 +76,14 @@ export class VSMod {
 	// *************************
 
 	/**
-	 * The id of the Vintage Story Instance this Vintage Story Mod is from.
+	 * The zip of the Vintage Story Mod.
 	 */
-	private _vsInstanceId: string;
+	private _zip: Zip;
+
+	/**
+	 * The API mod of the Vintage Story Mod.
+	 */
+	private _apiMod?: VSAPIMod | undefined;
 
 	/**
 	 * The name of the Vintage Story Mod.
@@ -67,11 +99,6 @@ export class VSMod {
 	 * The version of the Vintage Story Mod.
 	 */
 	private _version: string;
-
-	/**
-	 * The file of the Vintage Story Mod.
-	 */
-	private _file: File;
 
 	/**
 	 * The description of the Vintage Story Mod.
@@ -99,11 +126,6 @@ export class VSMod {
 	private _type?: string | undefined;
 
 	/**
-	 * If the Vintage Story Mod has an image.
-	 */
-	private _image: boolean;
-
-	/**
 	 * The state of the Vintage Story Mod.
 	 */
 	private _state: VSModState;
@@ -113,10 +135,17 @@ export class VSMod {
 	// *********************************
 
 	/**
-	 * The id of the Vintage Story Instance this Vintage Story Mod is from.
+	 * The zip of the Vintage Story Mod.
 	 */
-	public get vsInstanceId(): string {
-		return this._vsInstanceId;
+	public get zip(): Zip {
+		return this._zip;
+	}
+
+	/**
+	 * The API mod of the Vintage Story Mod.
+	 */
+	public get apiMod(): VSAPIMod | undefined {
+		return this._apiMod;
 	}
 
 	/**
@@ -138,13 +167,6 @@ export class VSMod {
 	 */
 	public get version(): string {
 		return this._version;
-	}
-
-	/**
-	 * The file of the Vintage Story Mod.
-	 */
-	public get file(): File {
-		return this._file;
 	}
 
 	/**
@@ -183,13 +205,6 @@ export class VSMod {
 	}
 
 	/**
-	 * If the Vintage Story Mod has an image.
-	 */
-	public get image(): boolean {
-		return this._image;
-	}
-
-	/**
 	 * The state of the Vintage Story Mod.
 	 */
 	public get state(): VSModState {
@@ -203,6 +218,15 @@ export class VSMod {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	public async loadModDBAPIMod(): Promise<void> {
+		try {
+			this._apiMod = await VSAPIMod.getFromModDB(this._modid);
+		} catch (error) {
+			App.logger.error(`There was an error loading the API Mod of the Vintage Story Mod:\n${error}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the API Mod of the Vintage Story Mod!");
+		}
+	}
 }
 
 /**

@@ -8,6 +8,7 @@
 
 	import { type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Button from "$lib/components/ui/button";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
@@ -17,7 +18,7 @@
 	const staticData = untrack(() => data);
 </script>
 
-<p>Checking {staticData.instance.name}</p>
+<Typo.P>Checking {staticData.instance.name}</Typo.P>
 
 <FloatingMenu.Root>
 	<Tooltip.Root>
