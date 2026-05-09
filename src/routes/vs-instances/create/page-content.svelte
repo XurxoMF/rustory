@@ -1,4 +1,14 @@
+<script lang="ts" module>
+	export type ContentPageData = { name: string; dir: Directory; versions: RAPIVSVersion[] };
+
+	export type ContentProps = PageProps & {
+		pageData: ContentPageData;
+	};
+</script>
+
 <script lang="ts">
+	import { type PageProps } from "./$types";
+
 	import { tick, untrack } from "svelte";
 	import { Debounced } from "runed";
 
@@ -34,11 +44,11 @@
 	import * as List from "$lib/components/ui/list";
 	import * as Textarea from "$lib/components/ui/textarea";
 
-	let { data }: { data: { name: string; dir: Directory; versions: RAPIVSVersion[] } } = $props();
+	let { pageData }: ContentProps = $props();
 
-	const staticData = untrack(() => data);
+	const staticPageData = untrack(() => pageData);
 
-	let versions: RAPIVSVersion[] = staticData.versions;
+	let versions: RAPIVSVersion[] = staticPageData.versions;
 
 	let versionsOpen: boolean = $state(false);
 	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
@@ -46,7 +56,7 @@
 	let manuallySelectedDir: boolean = $state(false);
 
 	// Name should not change once it's set so we untrack it.
-	let name: string = $state(staticData.name);
+	let name: string = $state(staticPageData.name);
 	let debouncedName: Debounced<string> = new Debounced(() => name, 500);
 	let nameErrors: string[] = $state([]);
 
@@ -54,7 +64,7 @@
 	let descriptionErrors: string[] = $state([]);
 
 	// Directory should not change once it's set so we untrack it.
-	let dir: Directory = $state(staticData.dir);
+	let dir: Directory = $state(staticPageData.dir);
 	let dirErrors: string[] = $state([]);
 
 	// Version should not change once it's set so we untrack it.
