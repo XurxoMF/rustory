@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type ContentPageData = { vsInstance: VSInstance; versions: RAPIVSVersion[] };
+	export type ContentPageData = { vsInstance: VSInstance; rApiVersions: RAPIVSVersion[] };
 
 	export type ContentProps = PageProps & {
 		pageData: ContentPageData;
@@ -49,10 +49,10 @@
 		{ label: "Edit" }
 	];
 
-	const versions: RAPIVSVersion[] = staticPageData.versions;
+	const rApiVersions: RAPIVSVersion[] = staticPageData.rApiVersions;
 
-	let versionsOpen: boolean = $state(false);
-	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
+	let rApiVersionsOpen: boolean = $state(false);
+	let rApiVersionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
 
 	let name: string = $state(vsInstance.name);
 	let nameErrors: string[] = $state([]);
@@ -60,7 +60,7 @@
 	let description: string = $state(vsInstance.description);
 	let descriptionErrors: string[] = $state([]);
 
-	let version: RAPIVSVersion = $state(versions.find((v) => v.version === vsInstance.version) ?? versions[0]);
+	let rApiVersion: RAPIVSVersion = $state(rApiVersions.find((v) => v.version === vsInstance.version) ?? rApiVersions[0]);
 
 	let backupsLimit: number = $state(vsInstance.backupsLimit);
 	let backupsLimitErrors: string[] = $state([]);
@@ -98,21 +98,21 @@
 				App.logger.info(`Editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}...`);
 
 				// If the selected version is not installed, install it.
-				if (!App.data.vsVersions.some((v) => v.version === version.version)) {
-					const newVersionPath = await App.config.vsVersionsDir.join(version.version);
+				if (!App.data.vsVersions.some((v) => v.version === rApiVersion.version)) {
+					const newVersionPath = await App.config.vsVersionsDir.join(rApiVersion.version);
 					const newVersionDir = await Directory.create(newVersionPath);
-					const newVersion = await VSVersion.create({ version: version.version, dir: newVersionDir });
+					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
 
 					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
 
 					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
-					newVersion.install(version);
+					newVersion.install(rApiVersion);
 				}
 
 				vsInstance.name = name;
 				vsInstance.description = description;
-				vsInstance.version = version.version;
+				vsInstance.version = rApiVersion.version;
 				vsInstance.backupsLimit = backupsLimit;
 				vsInstance.backupsAuto = backupsAuto;
 				vsInstance.backupsCompressionLevel = backupsCompressionLevel;
@@ -170,11 +170,11 @@
 				<Field.Field>
 					<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
-					<Popover.Root bind:open={versionsOpen}>
-						<Popover.Trigger bind:ref={versionsTriggerRef}>
+					<Popover.Root bind:open={rApiVersionsOpen}>
+						<Popover.Trigger bind:ref={rApiVersionsTriggerRef}>
 							{#snippet child({ props })}
-								<Button.Root {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={versionsOpen}>
-									{version.version || "Select a version..."}
+								<Button.Root {...props} id="vs-version" variant="outline" class="justify-between" role="combobox" aria-expanded={rApiVersionsOpen}>
+									{rApiVersion.version || "Select a version..."}
 
 									<IconSelector class="opacity-50" />
 								</Button.Root>
@@ -189,23 +189,23 @@
 									<Command.Empty>No Vintage Story Versions found.</Command.Empty>
 
 									<Command.Group>
-										{#each versions as v (v.version)}
+										{#each rApiVersions as v (v.version)}
 											<Command.Item
-												data-checked={version.version === v.version}
+												data-checked={rApiVersion.version === v.version}
 												value={v.version}
 												onSelect={() => {
-													version = v;
+													rApiVersion = v;
 
-													versionsOpen = false;
+													rApiVersionsOpen = false;
 
 													// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
 													tick().then(() => {
-														versionsTriggerRef.focus();
+														rApiVersionsTriggerRef.focus();
 													});
 												}}
 												class="flex w-full justify-between"
 											>
-												{#if App.data.vsVersions.some((v) => v.version === version.version)}
+												{#if App.data.vsVersions.some((v) => v.version === rApiVersion.version)}
 													<IconCheck />
 												{:else}
 													<IconArrowDown />
