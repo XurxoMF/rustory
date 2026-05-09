@@ -22,6 +22,7 @@
 	import * as Typo from "$lib/components/ui/typography";
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Button from "$lib/components/ui/button";
+	import * as Tabs from "$lib/components/ui/tabs";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	import DeleteVSInstanceDialog from "$lib/components/vs-instances/delete-dialog.svelte";
@@ -35,7 +36,29 @@
 	let deleteDialogOpen: boolean = $state(false);
 </script>
 
-<Typo.P>Checking {vsInstance.name}</Typo.P>
+<Tabs.Root value="info">
+	<Tabs.List class="w-full" variant="default">
+		<Tabs.Trigger value="info">Info</Tabs.Trigger>
+		<Tabs.Trigger value="mods">Mods</Tabs.Trigger>
+		<Tabs.Trigger value="backups">Backups</Tabs.Trigger>
+	</Tabs.List>
+
+	<Tabs.Content value="info">
+		<Typo.P>{vsInstance.name} info</Typo.P>
+	</Tabs.Content>
+
+	<Tabs.Content value="mods">
+		<Typo.P>{vsInstance.name} mods</Typo.P>
+
+		{#each vsInstance.mods as mod (mod.modid)}
+			<Typo.P>{mod.name} · {mod.version}</Typo.P>
+		{/each}
+	</Tabs.Content>
+
+	<Tabs.Content value="backups">
+		<Typo.P>{vsInstance.name} backups</Typo.P>
+	</Tabs.Content>
+</Tabs.Root>
 
 <DeleteVSInstanceDialog bind:open={deleteDialogOpen} onSuccess={() => goto(resolve("/vs-instances"))} {vsInstance} />
 
