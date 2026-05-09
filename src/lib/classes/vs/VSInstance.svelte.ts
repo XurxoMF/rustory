@@ -8,7 +8,6 @@ import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import { VSMod, type VSModModinfoJSON } from "$lib/classes/vs/VSMod.svelte";
-import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 /**
  * State of the Vintage Story Instance.
@@ -64,7 +63,7 @@ export class VSInstance {
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
-		version: VSVersion;
+		version: string;
 		mods: VSMod[];
 		backups: VSInstanceBackup[];
 		startParams: string;
@@ -111,7 +110,7 @@ export class VSInstance {
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
-		version: VSVersion;
+		version: string;
 		startParams: string;
 		backupsLimit: number;
 		backupsAuto: boolean;
@@ -191,7 +190,7 @@ export class VSInstance {
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	private _version: VSVersion;
+	private _version: string;
 
 	/**
 	 * The mods of the Vintage Story Instance.
@@ -318,14 +317,14 @@ export class VSInstance {
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	public get version(): VSVersion {
+	public get version(): string {
 		return this._version;
 	}
 
 	/**
 	 * The version of the Vintage Story Instance.
 	 */
-	public set version(version: VSVersion) {
+	public set version(version: string) {
 		this._version = version;
 	}
 
@@ -703,7 +702,7 @@ export class VSInstance {
 			id: this._id,
 			name: this._name,
 			description: this._description,
-			version: this._version.version,
+			version: this._version,
 			startParams: this._startParams,
 			backupsLimit: this._backupsLimit,
 			backupsAuto: this._backupsAuto,

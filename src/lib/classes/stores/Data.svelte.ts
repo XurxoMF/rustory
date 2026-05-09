@@ -99,21 +99,9 @@ export class Data {
 
 						const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
 
-						let version = vsVersions.find((v) => v.version === vsInstanceJSON.version);
-
 						if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
 							App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
 							throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
-						}
-
-						if (version === undefined) {
-							const newVersionPath = await App.config.vsVersionsDir.join(vsInstanceJSON.version);
-							const newVersionDir = await Directory.create(newVersionPath);
-							const newVersion = await VSVersion.create({ version: vsInstanceJSON.version, dir: newVersionDir });
-
-							await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
-
-							version = newVersion;
 						}
 
 						const vsInstance = await VSInstance.create({
@@ -124,7 +112,7 @@ export class Data {
 							dir,
 							dataDir,
 							backupsDir,
-							version,
+							version: vsInstanceJSON.version,
 							startParams: vsInstanceJSON.startParams ?? "",
 							backupsLimit: vsInstanceJSON.backupsLimit ?? 3,
 							backupsAuto: vsInstanceJSON.backupsAuto ?? false,

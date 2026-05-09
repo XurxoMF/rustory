@@ -43,7 +43,7 @@
 	let description: string = $state(instance.description);
 	let descriptionErrors: string[] = $state([]);
 
-	let version: RAPIVSVersion = $state(versions.find((v) => v.version === instance.version.version) ?? versions[0]);
+	let version: RAPIVSVersion = $state(versions.find((v) => v.version === instance.version) ?? versions[0]);
 
 	let backupsLimit: number = $state(instance.backupsLimit);
 	let backupsLimitErrors: string[] = $state([]);
@@ -80,16 +80,13 @@
 			try {
 				App.logger.info(`Editing the Vintage Story Instance ${instance.name} with id ${instance.id}...`);
 
-				let localVersion = App.data.vsVersions.find((v) => v.version === version.version);
-
-				if (localVersion === undefined) {
+				// If the selected version is not installed, install it.
+				if (!App.data.vsVersions.some((v) => v.version === version.version)) {
 					const newVersionPath = await App.config.vsVersionsDir.join(version.version);
 					const newVersionDir = await Directory.create(newVersionPath);
 					const newVersion = await VSVersion.create({ version: version.version, dir: newVersionDir });
 
 					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
-
-					localVersion = newVersion;
 
 					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
@@ -98,7 +95,7 @@
 
 				instance.name = name;
 				instance.description = description;
-				instance.version = localVersion;
+				instance.version = version.version;
 				instance.backupsLimit = backupsLimit;
 				instance.backupsAuto = backupsAuto;
 				instance.backupsCompressionLevel = backupsCompressionLevel;

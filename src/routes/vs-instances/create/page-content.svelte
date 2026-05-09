@@ -124,20 +124,17 @@
 				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				let localVersion = App.data.vsVersions.find((v) => v.version === version.version);
+				// If the selected version is not installed, install it.
+				if (!App.data.vsVersions.some((v) => v.version === version.version)) {
+					const newVersionPath = await App.config.vsVersionsDir.join(version.version);
+					const newVersionDir = await Directory.create(newVersionPath);
+					const newVersion = await VSVersion.create({ version: version.version, dir: newVersionDir });
 
-				if (localVersion === undefined) {
-					const newLocalVersionPath = await App.config.vsVersionsDir.join(version.version);
-					const newLocalVersionDir = await Directory.create(newLocalVersionPath);
-					const newLocalVersion = await VSVersion.create({ version: version.version, dir: newLocalVersionDir });
+					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
 
-					await App.data.setVsVersions([...App.data.vsVersions, newLocalVersion]);
+					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
-					localVersion = newLocalVersion;
-
-					App.logger.info(`Installing Vintage Story Version ${newLocalVersion.version}...`);
-
-					newLocalVersion.install(version);
+					newVersion.install(version);
 				}
 
 				const vsInstance = await VSInstance.create({
@@ -148,7 +145,7 @@
 					dir: dir,
 					dataDir,
 					backupsDir,
-					version: localVersion,
+					version: version.version,
 					startParams: startParams,
 					backupsLimit: backupsLimit,
 					backupsAuto: backupsAuto,
@@ -159,9 +156,9 @@
 					mesaGlThread: mesaGlThread
 				});
 
-				vsInstance.install();
-
 				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
+
+				vsInstance.install();
 
 				App.logger.info("New Vintage Story Instance created successfully!");
 

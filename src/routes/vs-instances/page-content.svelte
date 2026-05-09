@@ -65,12 +65,16 @@
 				<Card.Description class="line-clamp-2">{vsInstance.description}</Card.Description>
 
 				<Card.Action>
-					{#if vsInstance.version.state === VSVersionState.INSTALLING}
+					{@const vsVersion = App.data.vsVersions.find((v) => v.version === vsInstance.version)}
+
+					{#if vsVersion === undefined}
+						<Badge.Root variant="destructive">Stopped</Badge.Root>
+					{:else if vsVersion.state === VSVersionState.INSTALLING}
 						<Badge.Root>
 							<Spinner.Root />
 							Installing...
 						</Badge.Root>
-					{:else if vsInstance.version.state === VSVersionState.DELETING || vsInstance.state === VSInstanceState.DELETING}
+					{:else if vsVersion.state === VSVersionState.DELETING || vsInstance.state === VSInstanceState.DELETING}
 						<Badge.Root variant="destructive">
 							<Spinner.Root />
 							Deleting...
@@ -101,7 +105,7 @@
 					<Table.Body>
 						<Table.Row>
 							<Table.Cell class="text-muted-foreground" align="left">Vintage Story Version</Table.Cell>
-							<Table.Cell class="font-bold" align="right">{vsInstance.version.version}</Table.Cell>
+							<Table.Cell class="font-bold" align="right">{vsInstance.version}</Table.Cell>
 						</Table.Row>
 
 						<Table.Row>
