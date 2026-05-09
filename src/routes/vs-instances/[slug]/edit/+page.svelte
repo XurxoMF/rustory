@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
-	import { resolve } from "$app/paths";
+	import { tick } from "svelte";
 
 	import { App } from "$lib/classes/App.svelte";
 
@@ -9,23 +9,13 @@
 
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 
-	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
-
 	import * as Typo from "$lib/components/ui/typography";
 
 	import PageSkeleton from "./page-skeleton.svelte";
-	import PageContent from "./page-content.svelte";
+	import PageContent, { type ContentPageData } from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
 
 	let { params, data }: PageProps = $props();
-
-	$effect(() => {
-		App.breadcrumbs.segments = [
-			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-			{ label: "Manage", href: resolve("/vs-instances/[slug]", { slug: params.slug }) },
-			{ label: "Edit", href: resolve("/vs-instances/[slug]/edit", { slug: params.slug }) }
-		];
-	});
 
 	const pageDataPromise = $derived.by(() => load(params.slug));
 
@@ -34,7 +24,7 @@
 	 * @returns The page data.
 	 * @throws {PageLoadError} The error that happened while loading the page data.
 	 */
-	async function load(slug: string): Promise<{ vsInstance: VSInstance; versions: RAPIVSVersion[] }> {
+	async function load(slug: string): Promise<ContentPageData> {
 		try {
 			// If the app is offline, redirect the user to the homepage.
 			if (!App.info.isOnline) throw new PageLoadError(PageLoadErrorCodes.OFFLINE, "There is no internet connection!");
@@ -47,6 +37,9 @@
 			const resVersions: Response = await App.request.get("https://api.rustory.xyz/versions");
 			const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();
 			const versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
+
+			// Wait for the {#await} block to render the Skeleton again before returning the data.
+			await tick();
 
 			return { vsInstance, versions };
 		} catch (err) {

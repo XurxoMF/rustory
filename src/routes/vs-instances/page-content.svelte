@@ -35,6 +35,8 @@
 
 	let { pageData }: ContentProps = $props();
 
+	App.breadcrumbs.segments = [{ label: "Vintage Story Instances" }];
+
 	let idDeletingInstance: string | null = $state(null);
 </script>
 

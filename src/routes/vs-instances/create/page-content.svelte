@@ -48,6 +48,8 @@
 
 	const staticPageData = untrack(() => pageData);
 
+	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "Create" }];
+
 	let versions: RAPIVSVersion[] = staticPageData.versions;
 
 	let versionsOpen: boolean = $state(false);

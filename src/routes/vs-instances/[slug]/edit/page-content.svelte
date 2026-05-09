@@ -42,6 +42,12 @@
 
 	const vsInstance: VSInstance = staticPageData.vsInstance;
 
+	App.breadcrumbs.segments = [
+		{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
+		{ label: vsInstance.name, href: resolve("/vs-instances/[slug]", { slug: vsInstance.id }) },
+		{ label: "Edit" }
+	];
+
 	const versions: RAPIVSVersion[] = staticPageData.versions;
 
 	let versionsOpen: boolean = $state(false);

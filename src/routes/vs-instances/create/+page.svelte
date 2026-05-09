@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
-	import { resolve } from "$app/paths";
+	import { tick } from "svelte";
 
 	import { cleanForPath } from "$lib/utils";
 
@@ -21,12 +21,7 @@
 
 	let { params, data }: PageProps = $props();
 
-	$effect(() => {
-		App.breadcrumbs.segments = [
-			{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
-			{ label: "Create", href: resolve("/vs-instances/create") }
-		];
-	});
+	App.breadcrumbs.segments = null;
 
 	const pageDataPromise = $derived.by(() => load());
 
@@ -49,6 +44,9 @@
 			const resVersions: Response = await App.request.get("https://api.rustory.xyz/versions");
 			const jsonVersions: RAPIVSVersionJSON[] = await resVersions.json();
 			const versions = jsonVersions.map((v) => new RAPIVSVersion({ ...v }));
+
+			// Wait for the {#await} block to render the Skeleton again before returning the data.
+			await tick();
 
 			return { name, dir, versions };
 		} catch (err) {

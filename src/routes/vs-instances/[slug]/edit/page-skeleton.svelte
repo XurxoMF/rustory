@@ -15,6 +15,8 @@
 	import * as Textarea from "$lib/components/ui/textarea";
 
 	let _: SkeletonProps = $props();
+
+	App.breadcrumbs.segments = null;
 </script>
 
 <Field.Group>

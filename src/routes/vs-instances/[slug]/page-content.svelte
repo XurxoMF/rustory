@@ -17,6 +17,8 @@
 	import IconPencil from "@tabler/icons-svelte/icons/pencil";
 	import IconTrash from "@tabler/icons-svelte/icons/trash";
 
+	import { App } from "$lib/classes/App.svelte";
+
 	import { type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
 	import * as Typo from "$lib/components/ui/typography";
@@ -32,6 +34,8 @@
 	const staticPageData = untrack(() => pageData);
 
 	const vsInstance = staticPageData.vsInstance;
+
+	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: vsInstance.name }];
 
 	let deleteDialogOpen: boolean = $state(false);
 </script>

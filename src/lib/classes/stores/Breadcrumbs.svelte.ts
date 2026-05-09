@@ -13,7 +13,7 @@ import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
  */
 export type BreadcrumbsSegment = {
 	label: string;
-	href: ResolvedPathname;
+	href?: ResolvedPathname | undefined;
 };
 
 /**
@@ -33,7 +33,7 @@ export class Breadcrumbs {
 	// ************************
 
 	private constructor() {
-		this._segments = $state([]);
+		this._segments = $state(null);
 	}
 
 	/**
@@ -58,8 +58,7 @@ export class Breadcrumbs {
 	/**
 	 * Breadcrumbs from the current page. Set them manually on each page.
 	 */
-	private _segments: BreadcrumbsSegment[];
-
+	private _segments: BreadcrumbsSegment[] | null;
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
@@ -67,14 +66,15 @@ export class Breadcrumbs {
 	/**
 	 * Breadcrumbs from the current page. Set them manually on each page.
 	 */
-	public get segments(): BreadcrumbsSegment[] {
+	public get segments(): BreadcrumbsSegment[] | null {
 		return this._segments;
 	}
 
 	/**
 	 * Breadcrumbs from the current page. Set them manually on each page.
+	 * This will set the loading state to false.
 	 */
-	public set segments(segments: BreadcrumbsSegment[]) {
+	public set segments(segments: BreadcrumbsSegment[] | null) {
 		this._segments = segments;
 	}
 

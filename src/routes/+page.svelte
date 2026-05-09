@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
+	import { tick } from "svelte";
+
 	import { App } from "$lib/classes/App.svelte";
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
@@ -13,10 +15,6 @@
 
 	let { params, data }: PageProps = $props();
 
-	$effect(() => {
-		App.breadcrumbs.segments = [];
-	});
-
 	const pageDataPromise = $derived.by(() => load());
 
 	/**
@@ -27,6 +25,9 @@
 	async function load(): Promise<ContentPageData> {
 		try {
 			const pageData: ContentPageData = null;
+
+			// Wait for the {#await} block to render the Skeleton again before returning the data.
+			await tick();
 
 			return pageData;
 		} catch (err) {

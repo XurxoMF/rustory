@@ -5,12 +5,16 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
+	import { App } from "$lib/classes/App.svelte";
+
 	import * as Button from "$lib/components/ui/button";
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Card from "$lib/components/ui/card";
 	import * as Table from "$lib/components/ui/table";
 
 	let _: SkeletonProps = $props();
+
+	App.breadcrumbs.segments = null;
 </script>
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

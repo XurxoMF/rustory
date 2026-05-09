@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
+	import { page } from "$app/state";
 
 	import IconWorld from "@tabler/icons-svelte/icons/world";
 	import IconChevronDown from "@tabler/icons-svelte/icons/chevron-down";
@@ -16,6 +17,7 @@
 	import * as Breadcrumb from "$lib/components/ui/breadcrumb";
 	import * as Button from "$lib/components/ui/button";
 	import * as Sidebar from "$lib/components/ui/sidebar";
+	import * as Spinner from "$lib/components/ui/spinner";
 </script>
 
 <header
@@ -28,19 +30,34 @@
 		<Separator.Root orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
 
 		<Breadcrumb.Root class="hidden md:block">
-			<Breadcrumb.List>
-				<Breadcrumb.Item>
-					<Breadcrumb.Link href={resolve("/")}>Home</Breadcrumb.Link>
-				</Breadcrumb.Item>
-
-				{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.href)}
-					<Breadcrumb.Separator />
-
+			{#if App.breadcrumbs.segments === null}
+				<p class="flex items-center gap-2 text-sm text-muted-foreground">
+					<Spinner.Root />
+					<span>Loading...</span>
+				</p>
+			{:else}
+				<Breadcrumb.List>
 					<Breadcrumb.Item>
-						<Breadcrumb.Link href={breadcrumb.href}>{breadcrumb.label}</Breadcrumb.Link>
+						{#if page.url.pathname === "/"}
+							<Breadcrumb.Page>Home</Breadcrumb.Page>
+						{:else}
+							<Breadcrumb.Link href={resolve("/")}>Home</Breadcrumb.Link>
+						{/if}
 					</Breadcrumb.Item>
-				{/each}
-			</Breadcrumb.List>
+
+					{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.href)}
+						<Breadcrumb.Separator />
+
+						<Breadcrumb.Item>
+							{#if breadcrumb.href !== undefined}
+								<Breadcrumb.Link href={breadcrumb.href}>{breadcrumb.label}</Breadcrumb.Link>
+							{:else}
+								<Breadcrumb.Page>{breadcrumb.label}</Breadcrumb.Page>
+							{/if}
+						</Breadcrumb.Item>
+					{/each}
+				</Breadcrumb.List>
+			{/if}
 		</Breadcrumb.Root>
 	</div>
 

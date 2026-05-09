@@ -9,9 +9,13 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
+	import { App } from "$lib/classes/App.svelte";
+
 	import * as Typo from "$lib/components/ui/typography";
 
 	let { pageData: _ }: ContentProps = $props();
+
+	App.breadcrumbs.segments = [];
 </script>
 
 <Typo.P>

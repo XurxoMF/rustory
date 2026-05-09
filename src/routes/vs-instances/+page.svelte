@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
-	import { resolve } from "$app/paths";
+	import { tick } from "svelte";
 
 	import { App } from "$lib/classes/App.svelte";
 
@@ -15,10 +15,6 @@
 
 	let { params, data }: PageProps = $props();
 
-	$effect(() => {
-		App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }];
-	});
-
 	const pageDataPromise = $derived.by(() => load());
 
 	/**
@@ -29,6 +25,9 @@
 	async function load(): Promise<ContentPageData> {
 		try {
 			const vsInstances = App.data.vsInstances;
+
+			// Wait for the {#await} block to render the Skeleton again before returning the data.
+			await tick();
 
 			return { vsInstances };
 		} catch (err) {

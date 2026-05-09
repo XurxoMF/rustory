@@ -7,11 +7,15 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
+	import { App } from "$lib/classes/App.svelte";
+
 	import type { PageLoadError } from "$lib/classes/errors/PageLoadError.svelte";
 
 	import { P } from "$lib/components/ui/typography";
 
 	let { err }: ErrorProps = $props();
+
+	App.breadcrumbs.segments = [];
 </script>
 
 <P>{err.message}</P>
