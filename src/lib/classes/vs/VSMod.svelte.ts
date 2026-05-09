@@ -47,7 +47,6 @@ export class VSMod {
 
 	public constructor(vsMod: {
 		zip: Zip;
-		apiMod?: VSAPIMod | undefined;
 		name: string;
 		modid: string;
 		version: string;
@@ -59,7 +58,6 @@ export class VSMod {
 		state?: VSModState | undefined;
 	}) {
 		this._zip = vsMod.zip;
-		this._apiMod = vsMod.apiMod;
 		this._name = vsMod.name;
 		this._modid = vsMod.modid;
 		this._version = vsMod.version;
@@ -79,11 +77,6 @@ export class VSMod {
 	 * The zip of the Vintage Story Mod.
 	 */
 	private _zip: Zip;
-
-	/**
-	 * The API mod of the Vintage Story Mod.
-	 */
-	private _apiMod?: VSAPIMod | undefined;
 
 	/**
 	 * The name of the Vintage Story Mod.
@@ -140,14 +133,6 @@ export class VSMod {
 	public get zip(): Zip {
 		return this._zip;
 	}
-
-	/**
-	 * The API mod of the Vintage Story Mod.
-	 */
-	public get apiMod(): VSAPIMod | undefined {
-		return this._apiMod;
-	}
-
 	/**
 	 * The name of the Vintage Story Mod.
 	 */
@@ -219,9 +204,15 @@ export class VSMod {
 	// *  INSTANCE METHODS	*
 	// **********************
 
-	public async loadModDBAPIMod(): Promise<void> {
+	/**
+	 * Get's the Mod data from the ModDB API.
+	 * @returns The ModDB API Mod or undefined if it was not found.
+	 */
+	public async getApiMod(): Promise<VSAPIMod | undefined> {
 		try {
-			this._apiMod = await VSAPIMod.getFromModDB(this._modid);
+			const apiMod = await VSAPIMod.getFromModDB(this._modid);
+
+			return apiMod;
 		} catch (error) {
 			App.logger.error(`There was an error loading the API Mod of the Vintage Story Mod:\n${error}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the API Mod of the Vintage Story Mod!");
