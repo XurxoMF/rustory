@@ -26,38 +26,38 @@
 	import * as List from "$lib/components/ui/list";
 	import * as Textarea from "$lib/components/ui/textarea";
 
-	let { data }: { data: { instance: VSInstance; versions: RAPIVSVersion[] } } = $props();
+	let { data }: { data: { vsInstance: VSInstance; versions: RAPIVSVersion[] } } = $props();
 
 	const staticData = untrack(() => data);
 
-	const instance: VSInstance = staticData.instance;
+	const vsInstance: VSInstance = staticData.vsInstance;
 
 	const versions: RAPIVSVersion[] = staticData.versions;
 
 	let versionsOpen: boolean = $state(false);
 	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
 
-	let name: string = $state(instance.name);
+	let name: string = $state(vsInstance.name);
 	let nameErrors: string[] = $state([]);
 
-	let description: string = $state(instance.description);
+	let description: string = $state(vsInstance.description);
 	let descriptionErrors: string[] = $state([]);
 
-	let version: RAPIVSVersion = $state(versions.find((v) => v.version === instance.version) ?? versions[0]);
+	let version: RAPIVSVersion = $state(versions.find((v) => v.version === vsInstance.version) ?? versions[0]);
 
-	let backupsLimit: number = $state(instance.backupsLimit);
+	let backupsLimit: number = $state(vsInstance.backupsLimit);
 	let backupsLimitErrors: string[] = $state([]);
 
-	let backupsAuto: boolean = $state(untrack(() => instance.backupsAuto));
+	let backupsAuto: boolean = $state(untrack(() => vsInstance.backupsAuto));
 
-	let backupsCompressionLevel: number = $state(instance.backupsCompressionLevel);
+	let backupsCompressionLevel: number = $state(vsInstance.backupsCompressionLevel);
 	let backupsCompressionLevelErrors: string[] = $state([]);
 
-	let startParams: string = $state(instance.startParams);
+	let startParams: string = $state(vsInstance.startParams);
 
-	let envVars: string = $state(instance.envVars);
+	let envVars: string = $state(vsInstance.envVars);
 
-	let mesaGlThread: boolean = $state(instance.mesaGlThread);
+	let mesaGlThread: boolean = $state(vsInstance.mesaGlThread);
 
 	let totalErrors: number = $derived(nameErrors.length + descriptionErrors.length + backupsLimitErrors.length + backupsCompressionLevelErrors.length);
 
@@ -78,7 +78,7 @@
 
 		if (totalErrors === 0) {
 			try {
-				App.logger.info(`Editing the Vintage Story Instance ${instance.name} with id ${instance.id}...`);
+				App.logger.info(`Editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}...`);
 
 				// If the selected version is not installed, install it.
 				if (!App.data.vsVersions.some((v) => v.version === version.version)) {
@@ -93,26 +93,26 @@
 					newVersion.install(version);
 				}
 
-				instance.name = name;
-				instance.description = description;
-				instance.version = version.version;
-				instance.backupsLimit = backupsLimit;
-				instance.backupsAuto = backupsAuto;
-				instance.backupsCompressionLevel = backupsCompressionLevel;
-				instance.startParams = startParams;
-				instance.envVars = envVars;
-				instance.mesaGlThread = mesaGlThread;
+				vsInstance.name = name;
+				vsInstance.description = description;
+				vsInstance.version = version.version;
+				vsInstance.backupsLimit = backupsLimit;
+				vsInstance.backupsAuto = backupsAuto;
+				vsInstance.backupsCompressionLevel = backupsCompressionLevel;
+				vsInstance.startParams = startParams;
+				vsInstance.envVars = envVars;
+				vsInstance.mesaGlThread = mesaGlThread;
 
-				instance.save();
+				await vsInstance.save();
 
-				App.logger.info(`Vintage Story Instance ${instance.name} edited successfully!`);
+				App.logger.info(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
 
-				App.toaster.toast.success(`Vintage Story Instance ${instance.name} edited successfully!`);
+				App.toaster.toast.success(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
 
-				goto(resolve(`/vs-instances/[slug]`, { slug: instance.id }));
+				goto(resolve(`/vs-instances/[slug]`, { slug: vsInstance.id }));
 			} catch (err) {
-				App.logger.error(`There was an error editing the Vintage Story Instance ${instance.name} with id ${instance.id}:\n${err}`);
-				App.toaster.toast.error(`There was an error editing the Vintage Story Instance ${instance.name}! Contact support if the problem persists.`);
+				App.logger.error(`There was an error editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}:\n${err}`);
+				App.toaster.toast.error(`There was an error editing the Vintage Story Instance ${vsInstance.name}! Contact support if the problem persists.`);
 			}
 		}
 	}
@@ -143,7 +143,7 @@
 						</Field.Error>
 					{/if}
 
-					<Field.Description>This is the name of the instance. It must be at least 5 characters long and a maximum of 50.</Field.Description>
+					<Field.Description>This is the name of the vsInstance. It must be at least 5 characters long and a maximum of 50.</Field.Description>
 				</Field.Field>
 
 				<!-- Vintage Story Version -->
@@ -228,7 +228,7 @@
 					</Field.Error>
 				{/if}
 
-				<Field.Description>This is the description of the instance. It's optional and has a maximum of 250 characters.</Field.Description>
+				<Field.Description>This is the description of the vsInstance. It's optional and has a maximum of 250 characters.</Field.Description>
 			</Field.Field>
 		</Field.Group>
 	</Field.Set>

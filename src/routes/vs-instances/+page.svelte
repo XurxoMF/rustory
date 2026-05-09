@@ -24,11 +24,11 @@
 	 * @returns The page data.
 	 * @throws {PageLoadError} The error that happened while loading the page data.
 	 */
-	async function load(): Promise<{ instances: VSInstance[] }> {
+	async function load(): Promise<{ vsInstances: VSInstance[] }> {
 		try {
-			const instances = App.data.vsInstances;
+			const vsInstances = App.data.vsInstances;
 
-			return { instances };
+			return { vsInstances };
 		} catch (err) {
 			App.logger.error(`There was an error loading the page data:\n${err}`);
 			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");

@@ -577,7 +577,7 @@ export class VSInstance {
 				throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
 			}
 
-			const vsInstance = await VSInstance.create({
+			const instance = await VSInstance.create({
 				file,
 				id: vsInstanceJSON.id,
 				name: vsInstanceJSON.name,
@@ -596,7 +596,7 @@ export class VSInstance {
 				envVars: vsInstanceJSON.envVars ?? ""
 			});
 
-			return vsInstance;
+			return instance;
 		} catch (err) {
 			App.logger.error(`There was an error loading the Vintage Story Instance:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance!");
@@ -627,24 +627,6 @@ export class VSInstance {
 		} catch (err) {
 			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
-		}
-	}
-
-	/**
-	 * Installs the Vintage Story Instance.
-	 */
-	public async install(): Promise<void> {
-		try {
-			App.logger.debug(`Installing the Vintage Story Instance ${this._name}...`);
-
-			await this._dir.ensureExists();
-			await this._dataDir.ensureExists();
-			await this._backupsDir.ensureExists();
-
-			App.logger.debug(`Finished installing the Vintage Story Instance ${this._name}!`);
-		} catch (err) {
-			App.logger.error(`There was an error installing the Vintage Story Instance:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error installing the Vintage Story Instance!");
 		}
 	}
 

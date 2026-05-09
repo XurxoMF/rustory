@@ -156,9 +156,9 @@
 					mesaGlThread: mesaGlThread
 				});
 
-				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
+				await vsInstance.save();
 
-				vsInstance.install();
+				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
 
 				App.logger.info("New Vintage Story Instance created successfully!");
 
