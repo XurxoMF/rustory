@@ -8,6 +8,9 @@
 	import { App } from "$lib/classes/App.svelte";
 
 	import * as Typo from "$lib/components/ui/typography";
+	import * as Tabs from "$lib/components/ui/tabs";
+	import * as Button from "$lib/components/ui/button";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let _: SkeletonProps = $props();
 
@@ -15,6 +18,21 @@
 </script>
 
 <Typo.H1><Typo.H1Skeleton /></Typo.H1>
-<Typo.Leading>Manage this Vintage Story Instance's mods, settings, etc...</Typo.Leading>
+<Typo.Leading><Typo.LeadingSkeleton /></Typo.Leading>
 
-<Typo.P>Skeleton!</Typo.P>
+<Tabs.Root>
+	<Tabs.ListSkeleton class="w-full">
+		<Tabs.TriggerSkeleton />
+		<Tabs.TriggerSkeleton />
+		<Tabs.TriggerSkeleton />
+	</Tabs.ListSkeleton>
+
+	<Tabs.Content value="">
+		<Typo.P><Typo.PSkeleton /></Typo.P>
+	</Tabs.Content>
+</Tabs.Root>
+
+<FloatingMenu.Skeleton>
+	<Button.Skeleton size="icon" />
+	<Button.Skeleton size="icon" />
+</FloatingMenu.Skeleton>

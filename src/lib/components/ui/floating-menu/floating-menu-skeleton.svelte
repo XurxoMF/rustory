@@ -1,6 +1,6 @@
 <script lang="ts" module>
-	export const rootVariants = tv({
-		base: "absolute z-20 flex items-center gap-1 rounded-lg bg-muted p-1 shadow-xl",
+	export const skeletonVariants = tv({
+		base: "absolute z-20 flex items-center gap-1 rounded-lg bg-card p-1 shadow-xl",
 		variants: {
 			position: {
 				"top-left": "top-3 left-3",
@@ -18,10 +18,10 @@
 		}
 	});
 
-	export type RootPositions = VariantProps<typeof rootVariants>["position"];
+	export type SkeletonPositions = VariantProps<typeof skeletonVariants>["position"];
 
-	export type RootProps = WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-		position?: RootPositions | undefined;
+	export type SkeletonProps = HTMLAttributes<HTMLDivElement> & {
+		position?: SkeletonPositions | undefined;
 	};
 </script>
 
@@ -29,11 +29,11 @@
 	import { tv, type VariantProps } from "tailwind-variants";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	import { cn, type WithElementRef } from "$lib/utils";
+	import { cn } from "$lib/utils";
 
-	let { ref = $bindable(null), position = "bottom-right", class: className, children, ...restProps }: RootProps = $props();
+	let { position = "bottom-right", class: className, children, ...restProps }: SkeletonProps = $props();
 </script>
 
-<div bind:this={ref} class={cn(rootVariants({ position }), className)} {...restProps}>
+<div class={cn(skeletonVariants({ position }), className)} {...restProps}>
 	{@render children?.()}
 </div>

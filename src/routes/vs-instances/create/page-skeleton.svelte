@@ -20,47 +20,47 @@
 	App.breadcrumbs.segments = null;
 </script>
 
-<Typo.H1>Create Vintage Story Instance</Typo.H1>
-<Typo.Leading>Create a new Vintage Story Instance with new mods, settings, worlds...</Typo.Leading>
+<Typo.H1><Typo.H1Skeleton /></Typo.H1>
+<Typo.Leading><Typo.LeadingSkeleton /></Typo.Leading>
 
 <Field.Group>
 	<Field.Set>
-		<Field.Legend>General</Field.Legend>
-		<Field.Description>General settings.</Field.Description>
+		<Field.Legend><Field.LegendSkeleton /></Field.Legend>
+		<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 
 		<Field.Group>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 				<!-- Name-->
 				<Field.Field>
-					<Field.Label>Name</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Input.Skeleton />
 
-					<Field.Description>This is the name of the instance. It must be at least 5 characters long and a maximum of 50.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 
 				<!-- Vintage Story Version -->
 				<Field.Field>
-					<Field.Label>Vintage Story Version</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Button.Skeleton />
 
-					<Field.Description>The game version you select will be installed here.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 			</div>
 
 			<!-- Description -->
 			<Field.Field>
-				<Field.Label>Description</Field.Label>
+				<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 				<Textarea.Skeleton />
 
-				<Field.Description>This is the description of the instance. It's optional and has a maximum of 250 characters.</Field.Description>
+				<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 			</Field.Field>
 
 			<!-- Path-->
 			<Field.Field>
-				<Field.Label>Directory</Field.Label>
+				<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 				<div class="flex gap-2">
 					<Button.Skeleton size="icon" />
@@ -68,9 +68,7 @@
 					<Input.Skeleton />
 				</div>
 
-				<Field.Description>
-					The game, the data and the backups will be stored here. It'll use the default path if you don't select one.
-				</Field.Description>
+				<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 			</Field.Field>
 		</Field.Group>
 	</Field.Set>
@@ -78,36 +76,36 @@
 	<Field.Separator />
 
 	<Field.Set>
-		<Field.Legend>Backups</Field.Legend>
-		<Field.Description>Backup settings.</Field.Description>
+		<Field.Legend><Field.LegendSkeleton /></Field.Legend>
+		<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 
 		<Field.Group>
 			<div class="grid grid-cols-1 gap-4 lg:grid-cols-2 2xl:grid-cols-3">
 				<!-- Backups Auto -->
 				<Field.Field>
-					<Field.Label>Automatic backups</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Switch.Skeleton />
 
-					<Field.Description>If this option is enabled, backups will be made before you play.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 
 				<!-- Backups Limit -->
 				<Field.Field>
-					<Field.Label>Backups limit</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Slider.Skeleton />
 
-					<Field.Description>You need at least 1 backup and can have a maximum of 10 backups.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 
 				<!-- Backups Cmpression Level -->
 				<Field.Field class="lg:col-span-2 2xl:col-auto">
-					<Field.Label>Backups compression level</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Slider.Skeleton />
 
-					<Field.Description>More compression means smaller backups but longer backup times.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 			</div>
 		</Field.Group>
@@ -116,28 +114,26 @@
 	<Field.Separator />
 
 	<Field.Set>
-		<Field.Legend>Advanced</Field.Legend>
-		<Field.Description>Advanced settings.</Field.Description>
+		<Field.Legend><Field.LegendSkeleton /></Field.Legend>
+		<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 
 		<Field.Group>
 			<!-- Start Params -->
 			<Field.Field>
-				<Field.Label>Start params</Field.Label>
+				<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 				<Input.Skeleton />
 
-				<Field.Description>
-					You can change how the game behaves adding this params. You can check the documentation on the Vintage Story Wiki.
-				</Field.Description>
+				<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 			</Field.Field>
 
 			<!-- ENV Vars -->
 			<Field.Field>
-				<Field.Label>Start params</Field.Label>
+				<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 				<Input.Skeleton />
 
-				<Field.Description>You can modify some things with ENV variables, not only for Vintage Story but for 3rd party tools.</Field.Description>
+				<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 			</Field.Field>
 		</Field.Group>
 	</Field.Set>
@@ -146,17 +142,17 @@
 		<Field.Separator />
 
 		<Field.Set>
-			<Field.Legend>Linux</Field.Legend>
-			<Field.Description>Linux specific settings.</Field.Description>
+			<Field.Legend><Field.LegendSkeleton /></Field.Legend>
+			<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 
 			<Field.Group>
 				<!-- MesaGL Thread -->
 				<Field.Field>
-					<Field.Label>MesaGL Thread</Field.Label>
+					<Field.Label><Field.LabelSkeleton /></Field.Label>
 
 					<Switch.Skeleton />
 
-					<Field.Description>MesaGL Thread may improve performance on some Linux systems. Disable it if it causes issues for you.</Field.Description>
+					<Field.Description><Field.DescriptionSkeleton /></Field.Description>
 				</Field.Field>
 			</Field.Group>
 		</Field.Set>

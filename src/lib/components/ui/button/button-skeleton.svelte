@@ -1,5 +1,6 @@
 <script lang="ts" module>
 	export const skeletonVariants = tv({
+		base: "rounded-lg",
 		variants: {
 			size: {
 				default: "h-8 min-w-(--skeleton-width)",

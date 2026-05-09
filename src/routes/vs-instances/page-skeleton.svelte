@@ -12,14 +12,15 @@
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Card from "$lib/components/ui/card";
 	import * as Table from "$lib/components/ui/table";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	let _: SkeletonProps = $props();
 
 	App.breadcrumbs.segments = null;
 </script>
 
-<Typo.H1>Vintage Story Instances</Typo.H1>
-<Typo.Leading>Play and manage your Vintage Story Instances.</Typo.Leading>
+<Typo.H1><Typo.H1Skeleton /></Typo.H1>
+<Typo.Leading><Typo.LeadingSkeleton /></Typo.Leading>
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 	{#each Array(6) as _, i (i)}
@@ -67,3 +68,7 @@
 		</Card.Root>
 	{/each}
 </div>
+
+<FloatingMenu.Skeleton>
+	<Button.Skeleton size="icon" />
+</FloatingMenu.Skeleton>

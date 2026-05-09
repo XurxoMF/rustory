@@ -14,7 +14,17 @@
 	App.breadcrumbs.segments = null;
 </script>
 
-<Typo.H1>Welcome to Rustory!</Typo.H1>
-<Typo.Leading>Your daily source of Vintage Story!</Typo.Leading>
+<Typo.H1><Typo.H1Skeleton /></Typo.H1>
+<Typo.Leading><Typo.LeadingSkeleton /></Typo.Leading>
 
-<Typo.P>Skeleton!</Typo.P>
+<Typo.P>
+	<Typo.PSkeleton />
+	<Typo.PSkeleton />
+</Typo.P>
+
+<Typo.P>
+	<Typo.PSkeleton />
+	<Typo.PSkeleton />
+</Typo.P>
+
+<Typo.P><Typo.PSkeleton /></Typo.P>
