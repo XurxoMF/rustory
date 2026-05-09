@@ -70,8 +70,7 @@
 	let dir: Directory = $state(staticPageData.dir);
 	let dirErrors: string[] = $state([]);
 
-	// Version should not change once it's set so we untrack it.
-	let rApiVersion: RAPIVSVersion = $state(untrack(() => rApiVersions[0]));
+	let rApiVersion: RAPIVSVersion = $state(rApiVersions[0]);
 
 	let backupsLimit: number = $state(3);
 	let backupsLimitErrors: string[] = $state([]);

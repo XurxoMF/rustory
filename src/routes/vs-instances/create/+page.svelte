@@ -46,7 +46,7 @@
 			// Wait for the {#await} block to render the Skeleton again before returning the data.
 			await tick();
 
-			return { name, dir, vsApiVersions: versions };
+			return { name, dir, rApiVersions: versions };
 		} catch (err) {
 			App.logger.error(`There was an error loading the page data:\n${err}`);
 			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");
