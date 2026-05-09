@@ -1,3 +1,5 @@
+import { invoke } from "@tauri-apps/api/core";
+
 import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
@@ -110,6 +112,26 @@ export class VSVersion {
 	// ********************
 	// *  STATIC METHODS  *
 	// ********************
+
+	public static async loadFromDir(dir: Directory): Promise<VSVersion> {
+		try {
+			const executable = await VSVersion.getExecutable(dir);
+
+			await executable.setPermissions(0o755);
+
+			const version: string = await invoke("get_vs_version", { executablePath: executable.path });
+
+			const vsVersion = await VSVersion.create({
+				version,
+				dir
+			});
+
+			return vsVersion;
+		} catch (err) {
+			App.logger.error(`There was an error loading the Vintage Story Version:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Version!");
+		}
+	}
 
 	/**
 	 * Gets the executable path of the Vintage Story Version.

@@ -1,5 +1,3 @@
-import { invoke } from "@tauri-apps/api/core";
-
 import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
@@ -7,7 +5,7 @@ import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
 
-import { VSInstance, type VSInstanceJSON } from "$lib/classes/vs/VSInstance.svelte";
+import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 /**
@@ -61,23 +59,14 @@ export class Data {
 					dataJSON.vsVersionsPaths.map(async (vsVersionPath) => {
 						const dir = await Directory.create(vsVersionPath);
 
-						const executable = await VSVersion.getExecutable(dir);
-
-						await executable.setPermissions(0o755);
-
-						const version: string = await invoke("get_vs_version", { executablePath: executable.path });
-
-						const vsVersion = await VSVersion.create({
-							version,
-							dir
-						});
+						const vsVersion = await VSVersion.loadFromDir(dir);
 
 						vsVersions.push(vsVersion);
 					})
 				);
 			}
 
-			App.logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions.`);
+			App.logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions!`);
 
 			App.logger.debug("Loading Vintage Story Instances...");
 
@@ -88,49 +77,24 @@ export class Data {
 					dataJSON.vsInstancesPaths.map(async (vsInstancePath) => {
 						const dir = await Directory.create(vsInstancePath);
 
-						const dataPath = await dir.join("Data");
-						const dataDir = await Directory.create(dataPath);
-
-						const backupsPath = await dir.join("Backups");
-						const backupsDir = await Directory.create(backupsPath);
-
-						const filePath = await dir.join("instance.json");
-						const file = await File.create(filePath);
-
-						const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
-
-						if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
-							App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
-							throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
-						}
-
-						const vsInstance = await VSInstance.create({
-							file,
-							id: vsInstanceJSON.id,
-							name: vsInstanceJSON.name,
-							description: vsInstanceJSON.description ?? "",
-							dir,
-							dataDir,
-							backupsDir,
-							version: vsInstanceJSON.version,
-							startParams: vsInstanceJSON.startParams ?? "",
-							backupsLimit: vsInstanceJSON.backupsLimit ?? 3,
-							backupsAuto: vsInstanceJSON.backupsAuto ?? false,
-							backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel ?? 4,
-							lastTimePlayed: vsInstanceJSON.lastTimePlayed ?? 0,
-							totalTimePlayed: vsInstanceJSON.totalTimePlayed ?? 0,
-							mesaGlThread: vsInstanceJSON.mesaGlThread ?? false,
-							envVars: vsInstanceJSON.envVars ?? ""
-						});
-
-						await vsInstance.loadMods();
+						const vsInstance = await VSInstance.loadFromDir(dir);
 
 						vsInstances.push(vsInstance);
 					})
 				);
 			}
 
-			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances.`);
+			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances!`);
+
+			App.logger.debug("Loading Vinatge Story Instances Mods...");
+
+			await Promise.all(
+				vsInstances.map(async (vsInstance) => {
+					await vsInstance.loadMods();
+				})
+			);
+
+			App.logger.debug("Loaded all the mods of the Vintage Story Instances!");
 
 			const data = new Data({
 				file,

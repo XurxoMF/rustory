@@ -559,6 +559,50 @@ export class VSInstance {
 		return errors;
 	}
 
+	public static async loadFromDir(dir: Directory): Promise<VSInstance> {
+		try {
+			const dataPath = await dir.join("Data");
+			const dataDir = await Directory.create(dataPath);
+
+			const backupsPath = await dir.join("Backups");
+			const backupsDir = await Directory.create(backupsPath);
+
+			const filePath = await dir.join("instance.json");
+			const file = await File.create(filePath);
+
+			const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
+
+			if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
+				App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
+				throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
+			}
+
+			const vsInstance = await VSInstance.create({
+				file,
+				id: vsInstanceJSON.id,
+				name: vsInstanceJSON.name,
+				description: vsInstanceJSON.description ?? "",
+				dir,
+				dataDir,
+				backupsDir,
+				version: vsInstanceJSON.version,
+				startParams: vsInstanceJSON.startParams ?? "",
+				backupsLimit: vsInstanceJSON.backupsLimit ?? 3,
+				backupsAuto: vsInstanceJSON.backupsAuto ?? false,
+				backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel ?? 4,
+				lastTimePlayed: vsInstanceJSON.lastTimePlayed ?? 0,
+				totalTimePlayed: vsInstanceJSON.totalTimePlayed ?? 0,
+				mesaGlThread: vsInstanceJSON.mesaGlThread ?? false,
+				envVars: vsInstanceJSON.envVars ?? ""
+			});
+
+			return vsInstance;
+		} catch (err) {
+			App.logger.error(`There was an error loading the Vintage Story Instance:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance!");
+		}
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
