@@ -40,6 +40,9 @@
 	let deleteDialogOpen: boolean = $state(false);
 </script>
 
+<Typo.H1>{vsInstance.name}</Typo.H1>
+<Typo.Leading>Manage this Vintage Story Instance's mods, settings, etc...</Typo.Leading>
+
 <Tabs.Root value="info">
 	<Tabs.List class="w-full" variant="default">
 		<Tabs.Trigger value="info">Info</Tabs.Trigger>

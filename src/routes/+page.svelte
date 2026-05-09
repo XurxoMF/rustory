@@ -7,8 +7,6 @@
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
 
-	import * as Typo from "$lib/components/ui/typography";
-
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent, { type ContentPageData } from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
@@ -36,9 +34,6 @@
 		}
 	}
 </script>
-
-<Typo.H1>Welcome to Rustory!</Typo.H1>
-<Typo.Leading>Your daily source of Vintage Story!</Typo.Leading>
 
 {#await pageDataPromise}
 	<PageSkeleton {params} {data} />

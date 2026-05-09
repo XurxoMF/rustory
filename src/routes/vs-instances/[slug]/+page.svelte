@@ -7,11 +7,10 @@
 
 	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
 
-	import * as Typo from "$lib/components/ui/typography";
-
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent, { type ContentPageData } from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
+	import { sleep } from "$lib/utils";
 
 	let { params, data }: PageProps = $props();
 
@@ -24,6 +23,8 @@
 	 */
 	async function load(slug: string): Promise<ContentPageData> {
 		try {
+			await sleep(1000);
+
 			const vsInstance = App.data.vsInstances.find((i) => i.id === slug);
 
 			// If there is no instance with that id, redirect the user to the instances page.
@@ -39,9 +40,6 @@
 		}
 	}
 </script>
-
-<Typo.H1>Manage Vintage Story Instance</Typo.H1>
-<Typo.Leading>Manage a Vintage Story Instance to add mods, edit settings, etc...</Typo.Leading>
 
 {#await pageDataPromise}
 	<PageSkeleton {params} {data} />

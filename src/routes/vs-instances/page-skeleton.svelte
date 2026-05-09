@@ -7,6 +7,7 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Button from "$lib/components/ui/button";
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Card from "$lib/components/ui/card";
@@ -16,6 +17,9 @@
 
 	App.breadcrumbs.segments = null;
 </script>
+
+<Typo.H1>Vintage Story Instances</Typo.H1>
+<Typo.Leading>Play and manage your Vintage Story Instances.</Typo.Leading>
 
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 	{#each Array(6) as _, i (i)}

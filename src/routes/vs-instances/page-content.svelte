@@ -23,6 +23,7 @@
 	import { VSInstanceState, type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersionState } from "$lib/classes/vs/VSVersion.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Button from "$lib/components/ui/button";
 	import * as Card from "$lib/components/ui/card";
 	import * as Badge from "$lib/components/ui/badge";
@@ -39,6 +40,9 @@
 
 	let idDeletingInstance: string | null = $state(null);
 </script>
+
+<Typo.H1>Vintage Story Instances</Typo.H1>
+<Typo.Leading>Play and manage your Vintage Story Instances.</Typo.Leading>
 
 <!-- List of Vintage Story Instances -->
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">

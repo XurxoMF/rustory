@@ -34,6 +34,7 @@
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Command from "$lib/components/ui/command";
 	import * as Popover from "$lib/components/ui/popover";
 	import * as Button from "$lib/components/ui/button";
@@ -184,6 +185,9 @@
 		}
 	}
 </script>
+
+<Typo.H1>Create Vintage Story Instance</Typo.H1>
+<Typo.Leading>Create a new Vintage Story Instance with new mods, settings, worlds...</Typo.Leading>
 
 <Field.Group>
 	<Field.Set>

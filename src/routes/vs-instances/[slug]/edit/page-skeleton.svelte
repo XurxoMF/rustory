@@ -7,6 +7,7 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
+	import * as Typo from "$lib/components/ui/typography";
 	import * as Button from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
 	import * as Input from "$lib/components/ui/input";
@@ -18,6 +19,9 @@
 
 	App.breadcrumbs.segments = null;
 </script>
+
+<Typo.H1>Edit Vintage Story Instance</Typo.H1>
+<Typo.Leading>Edit this Vintage Story Instance settings...</Typo.Leading>
 
 <Field.Group>
 	<Field.Set>

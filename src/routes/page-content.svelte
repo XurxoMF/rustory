@@ -18,6 +18,9 @@
 	App.breadcrumbs.segments = [];
 </script>
 
+<Typo.H1>Welcome to Rustory!</Typo.H1>
+<Typo.Leading>Your daily source of Vintage Story!</Typo.Leading>
+
 <Typo.P>
 	The app is still on early development and it's not really usable yet! If you're seeing this then you are probably a developer, tester or translator,
 	if that's the case, hiiiI!

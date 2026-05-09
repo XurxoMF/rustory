@@ -9,8 +9,6 @@
 
 	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
 
-	import * as Typo from "$lib/components/ui/typography";
-
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent, { type ContentPageData } from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
@@ -48,9 +46,6 @@
 		}
 	}
 </script>
-
-<Typo.H1>Edit Vintage Story Instance</Typo.H1>
-<Typo.Leading>Edit a Vintage Story Instance with to change it's settings...</Typo.Leading>
 
 {#await pageDataPromise}
 	<PageSkeleton {params} {data} />
