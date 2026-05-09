@@ -1,7 +1,7 @@
 /**
  * JSON of the Mod queried from the ModDB.
  */
-export type VSAPIModListedType = {
+export type VSAPIModOnListJSON = {
 	modid: number;
 	assetid: number;
 	downloads: number;
