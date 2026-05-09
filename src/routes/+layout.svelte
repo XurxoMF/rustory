@@ -46,7 +46,7 @@
 
 		<Confirm.Root />
 
-		<Toaster.Root position="top-center" />
+		<Toaster.Root position="top-center" closeButton richColors visibleToasts={10} />
 
 		<Sidebar.Provider open={true}>
 			<AppSidebar />
