@@ -3,8 +3,6 @@
 
 	import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 
-	import { App } from "$lib/classes/App.svelte";
-
 	import * as Sidebar from "$lib/components/ui/sidebar";
 </script>
 
@@ -22,18 +20,5 @@
 				{/snippet}
 			</Sidebar.MenuButton>
 		</Sidebar.MenuItem>
-
-		{#each App.data.vsInstances as vsInstance (vsInstance.id)}
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton tooltipContent={vsInstance.name}>
-					{#snippet child({ props })}
-						<a href={resolve("/vs-instances/[slug]", { slug: vsInstance.id })} {...props}>
-							<IconDeviceGamepad />
-							<span>{vsInstance.name}</span>
-						</a>
-					{/snippet}
-				</Sidebar.MenuButton>
-			</Sidebar.MenuItem>
-		{/each}
 	</Sidebar.Menu>
 </Sidebar.Group>
