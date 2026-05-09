@@ -1,4 +1,14 @@
+<script lang="ts" module>
+	export type ContentPageData = { vsInstance: VSInstance };
+
+	export type ContentProps = PageProps & {
+		pageData: ContentPageData;
+	};
+</script>
+
 <script lang="ts">
+	import { type PageProps } from "./$types";
+
 	import { untrack } from "svelte";
 
 	import { goto } from "$app/navigation";
@@ -16,11 +26,11 @@
 
 	import DeleteVSInstanceDialog from "$lib/components/vs-instances/delete-dialog.svelte";
 
-	let { data }: { data: { vsInstance: VSInstance } } = $props();
+	let { pageData }: ContentProps = $props();
 
-	const staticData = untrack(() => data);
+	const staticPageData = untrack(() => pageData);
 
-	const vsInstance = staticData.vsInstance;
+	const vsInstance = staticPageData.vsInstance;
 
 	let deleteDialogOpen: boolean = $state(false);
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { PageProps } from "./$types";
+	import { type PageProps } from "./$types";
 
 	import { resolve } from "$app/paths";
 
@@ -15,7 +15,7 @@
 	import PageContent from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
 
-	let { params }: PageProps = $props();
+	let { params, data }: PageProps = $props();
 
 	$effect(() => {
 		App.breadcrumbs.segments = [
@@ -24,7 +24,7 @@
 		];
 	});
 
-	const pageData = $derived.by(() => load(params.slug));
+	const pageDataPromise = $derived.by(() => load(params.slug));
 
 	/**
 	 * Loads the page data.
@@ -49,10 +49,10 @@
 <Typo.H1>Manage Vintage Story Instance</Typo.H1>
 <Typo.Leading>Manage a Vintage Story Instance to add mods, edit settings, etc...</Typo.Leading>
 
-{#await pageData}
-	<PageSkeleton />
-{:then data}
-	<PageContent {data} />
+{#await pageDataPromise}
+	<PageSkeleton {params} {data} />
+{:then pageData}
+	<PageContent {params} {data} {pageData} />
 {:catch err: PageLoadError}
-	<PageError {err} />
+	<PageError {params} {data} {err} />
 {/await}

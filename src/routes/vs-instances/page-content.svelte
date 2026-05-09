@@ -1,4 +1,16 @@
+<script lang="ts" module>
+	export type ContentPageData = {
+		vsInstances: VSInstance[];
+	};
+
+	export type ContentProps = PageProps & {
+		pageData: ContentPageData;
+	};
+</script>
+
 <script lang="ts">
+	import { type PageProps } from "./$types";
+
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
@@ -21,14 +33,14 @@
 
 	import DeleteVSInstanceDialog from "$lib/components/vs-instances/delete-dialog.svelte";
 
-	let { data }: { data: { vsInstances: VSInstance[] } } = $props();
+	let { pageData }: ContentProps = $props();
 
 	let idDeletingInstance: string | null = $state(null);
 </script>
 
 <!-- List of Vintage Story Instances -->
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-	{#each data.vsInstances as vsInstance (vsInstance.id)}
+	{#each pageData.vsInstances as vsInstance (vsInstance.id)}
 		<Card.Root>
 			<Card.Header>
 				<Card.Title class="text-lg">{vsInstance.name}</Card.Title>

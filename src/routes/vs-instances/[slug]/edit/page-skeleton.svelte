@@ -1,4 +1,10 @@
 <script lang="ts" module>
+	export type SkeletonProps = PageProps;
+</script>
+
+<script lang="ts">
+	import { type PageProps } from "./$types";
+
 	import { App } from "$lib/classes/App.svelte";
 
 	import * as Button from "$lib/components/ui/button";
@@ -7,6 +13,8 @@
 	import * as Slider from "$lib/components/ui/slider";
 	import * as Switch from "$lib/components/ui/switch";
 	import * as Textarea from "$lib/components/ui/textarea";
+
+	let _: SkeletonProps = $props();
 </script>
 
 <Field.Group>

@@ -1,4 +1,14 @@
+<script lang="ts" module>
+	export type ContentPageData = { vsInstance: VSInstance; versions: RAPIVSVersion[] };
+
+	export type ContentProps = PageProps & {
+		pageData: ContentPageData;
+	};
+</script>
+
 <script lang="ts">
+	import { type PageProps } from "./$types";
+
 	import { tick, untrack } from "svelte";
 
 	import { goto } from "$app/navigation";
@@ -26,13 +36,13 @@
 	import * as List from "$lib/components/ui/list";
 	import * as Textarea from "$lib/components/ui/textarea";
 
-	let { data }: { data: { vsInstance: VSInstance; versions: RAPIVSVersion[] } } = $props();
+	let { pageData }: ContentProps = $props();
 
-	const staticData = untrack(() => data);
+	const staticPageData = untrack(() => pageData);
 
-	const vsInstance: VSInstance = staticData.vsInstance;
+	const vsInstance: VSInstance = staticPageData.vsInstance;
 
-	const versions: RAPIVSVersion[] = staticData.versions;
+	const versions: RAPIVSVersion[] = staticPageData.versions;
 
 	let versionsOpen: boolean = $state(false);
 	let versionsTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
