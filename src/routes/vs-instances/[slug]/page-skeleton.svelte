@@ -14,7 +14,7 @@
 	App.breadcrumbs.segments = null;
 </script>
 
-<Typo.H1>Vintage Story Instance</Typo.H1>
+<Typo.H1><Typo.H1Skeleton /></Typo.H1>
 <Typo.Leading>Manage this Vintage Story Instance's mods, settings, etc...</Typo.Leading>
 
 <Typo.P>Skeleton!</Typo.P>

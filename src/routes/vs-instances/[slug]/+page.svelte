@@ -10,7 +10,6 @@
 	import PageSkeleton from "./page-skeleton.svelte";
 	import PageContent, { type ContentPageData } from "./page-content.svelte";
 	import PageError from "./page-error.svelte";
-	import { sleep } from "$lib/utils";
 
 	let { params, data }: PageProps = $props();
 
@@ -23,8 +22,6 @@
 	 */
 	async function load(slug: string): Promise<ContentPageData> {
 		try {
-			await sleep(1000);
-
 			const vsInstance = App.data.vsInstances.find((i) => i.id === slug);
 
 			// If there is no instance with that id, redirect the user to the instances page.
