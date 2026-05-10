@@ -90,7 +90,9 @@ export class Data {
 
 			await Promise.all(
 				vsInstances.map(async (vsInstance) => {
-					await vsInstance.loadMods();
+					const vsMods = await vsInstance.loadMods();
+
+					vsInstance.mods = vsMods;
 				})
 			);
 

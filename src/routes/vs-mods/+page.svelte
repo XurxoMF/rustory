@@ -3,7 +3,7 @@
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
-	import { VSAPIModOnList, type VSAPIModOnListJSON } from "$lib/classes/api/VSAPIModOnList.svelte";
+	import { VSAPIModOnList } from "$lib/classes/api/VSAPIModOnList.svelte";
 
 	import * as Typo from "$lib/components/ui/typography";
 	import * as Combobox from "$lib/components/ui/combobox";
@@ -11,22 +11,11 @@
 	import VsApiModOnListCard from "./vs-api-mod-on-list-card.svelte";
 	import VsApiModOnListCardSkeleton from "./vs-api-mod-on-list-card-skeleton.svelte";
 
-	const vsApiModsOnListPromise = loadVsApiModsOnList();
+	const vsApiModsOnListPromise = VSAPIModOnList.getAllFromModDB();
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Mods" }];
 
 	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
-
-	/**
-	 * Loads the VS API mods from the Vintage Story ModDB API.
-	 */
-	async function loadVsApiModsOnList(): Promise<VSAPIModOnList[]> {
-		const resApiModsOnList: Response = await App.request.get("https://mods.vintagestory.at/api/mods");
-		const jsonApiModsOnList: { mods: VSAPIModOnListJSON[] } = await resApiModsOnList.json();
-		const vsApiModsOnList = jsonApiModsOnList.mods.map((m) => new VSAPIModOnList({ ...m }));
-
-		return vsApiModsOnList;
-	}
 </script>
 
 <Typo.H1>Vintage Story Mods</Typo.H1>
@@ -57,8 +46,10 @@
 			<VsApiModOnListCardSkeleton />
 		{/each}
 	{:then vsApiModsOnList}
-		{#each vsApiModsOnList.sort((a, b) => b.downloads - a.downloads).slice(0, 20) as vsApiModOnList (vsApiModOnList.modid)}
-			<VsApiModOnListCard {vsApiModOnList} />
+		{#each vsApiModsOnList?.sort((a, b) => b.downloads - a.downloads).slice(0, 20) as vsApiModOnList (vsApiModOnList.modid)}
+			<VsApiModOnListCard {vsApiModOnList} {vsInstance} />
+		{:else}
+			<Typo.P>No mods found. Check if you're connected to the internet and try again!</Typo.P>
 		{/each}
 	{/await}
 </div>

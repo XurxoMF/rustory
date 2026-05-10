@@ -7,7 +7,7 @@ import { File } from "$lib/classes/utils/File.svelte";
 import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
-import { VSMod, type VSModModinfoJSON } from "$lib/classes/vs/VSMod.svelte";
+import { VSMod } from "$lib/classes/vs/VSMod.svelte";
 
 /**
  * State of the Vintage Story Instance.
@@ -599,9 +599,9 @@ export class VSInstance {
 	}
 
 	/**
-	 * Loads the mods of the Vintage Story Instance.
+	 * Loads the Vintage Story Mods of this Vintage Story Instance.
 	 */
-	public async loadMods(): Promise<void> {
+	public async loadMods(): Promise<VSMod[]> {
 		try {
 			App.logger.debug(`Loading the mods of the Vintage Story Instance ${this._name}...`);
 
@@ -609,65 +609,24 @@ export class VSInstance {
 
 			const modsDirContents = await modsDir.getContents();
 
+			const vsMods: VSMod[] = [];
+
 			await Promise.all(
 				modsDirContents.files.map(async (modFile) => {
 					if (modFile.path.endsWith(".zip")) {
 						const zip = await Zip.create(modFile.path);
 
-						await this.loadMod(zip);
+						const vsMod = await VSMod.loadFromZip(zip);
+
+						if (vsMod !== undefined) vsMods.push(vsMod);
 					}
 				})
 			);
+
+			return vsMods;
 		} catch (err) {
 			App.logger.error(`There was an error loading the Vintage Story Instance Mods:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance Mods!");
-		}
-	}
-
-	/**
-	 * Loads a mod on the Vintage Story Instance.
-	 */
-	public async loadMod(zip: Zip): Promise<void> {
-		try {
-			App.logger.debug(`Loading the mod on the zip ${zip.path} on the Vintage Story Instance ${this._name}...`);
-
-			const modinfo = await zip.readJSONFromFile<VSModModinfoJSON>("modinfo.json");
-
-			App.logger.trace(JSON.stringify(modinfo));
-
-			const name = modinfo.name ?? modinfo.Name;
-			const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid;
-			const version = modinfo.version ?? modinfo.Version;
-
-			if (name === undefined || name === "" || modid === undefined || modid === "" || version === undefined || version === "") {
-				App.logger.warn(`Couldn't identify the mod on the zip ${zip.path}!`);
-				return;
-			}
-
-			const description = modinfo.description ?? modinfo.Description;
-			const side = modinfo.side ?? modinfo.Side;
-			const authors = modinfo.authors ?? modinfo.Authors ?? [];
-			const contributors = modinfo.contributors ?? modinfo.Contributors ?? [];
-			const type = modinfo.type ?? modinfo.Type;
-
-			const mod = new VSMod({
-				zip,
-				name,
-				modid,
-				version,
-				description,
-				side,
-				authors,
-				contributors,
-				type
-			});
-
-			this._mods = [...this._mods, mod];
-
-			App.logger.debug(`Finished loading the mod on the zip ${zip.path}!`);
-		} catch (err) {
-			App.logger.error(`There was an error loading the Vintage Story Instance Mod:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance Mod!");
 		}
 	}
 

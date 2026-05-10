@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { dirname } from "@tauri-apps/api/path";
-import { exists } from "@tauri-apps/plugin-fs";
+import { exists, remove } from "@tauri-apps/plugin-fs";
 
 import { App } from "$lib/classes/App.svelte";
 
@@ -99,6 +99,24 @@ export class Zip {
 		} catch (err) {
 			App.logger.error(`There was an error chcking if the zip exists:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
+		}
+	}
+
+	/**
+	 * Deletes the zip.
+	 */
+	public async delete(): Promise<void> {
+		try {
+			App.logger.debug(`Deleting the zip ${this.path}...`);
+
+			const zipExists = await exists(this.path);
+
+			if (!zipExists) return;
+
+			await remove(this.path);
+		} catch (err) {
+			App.logger.error(`There was an error deleting the zip ${this.path}:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the zip ${this.path}`);
 		}
 	}
 

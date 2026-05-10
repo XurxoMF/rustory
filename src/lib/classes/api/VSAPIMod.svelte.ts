@@ -2,8 +2,11 @@ import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
+import { VSMod } from "../vs/VSMod.svelte";
+
 import { VSAPIModRelease, type VSAPIModReleaseJSON } from "$lib/classes/api/VSAPIModRelease.svelte";
 import { VSAPIModScreenshot, type VSAPIModScreenshotJSON } from "$lib/classes/api/VSAPIModScreenshot.svelte";
+import type { Directory } from "../utils/Directory.svelte";
 
 /**
  * JSON of the Mod queried from the ModDB.
@@ -409,7 +412,7 @@ export class VSAPIMod {
 	 * @param modid The id of the mod to query.
 	 * @returns The mod from the ModDB API or undefined.
 	 */
-	public static async getFromModDB(modid: string): Promise<VSAPIMod | undefined> {
+	public static async getFromModDB(modid: string | number): Promise<VSAPIMod | undefined> {
 		try {
 			App.logger.debug(`Getting the API Mod of the Vintage Story Mod ${modid} from the ModDB...`);
 
@@ -458,4 +461,32 @@ export class VSAPIMod {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Installs this Vintage Story Mod on the selected directory.
+	 * @param dir The directory to download this mod to.
+	 * @param release The release to install.
+	 * @returns The installed Vintage Story Mod.
+	 */
+	public async install(dir: Directory, release: VSAPIModRelease): Promise<VSMod> {
+		try {
+			App.logger.debug(`Installing the Vintage Story Mod ${this._name}...`);
+
+			const zip = await release.download(dir, this._name);
+
+			const mod = await VSMod.loadFromZip(zip);
+
+			if (mod === undefined) {
+				await zip.delete();
+
+				App.logger.error(`The installed Vintage Story Mod ${this._name} could not be identified! Removing it!`);
+				throw new AppError(AppErrorCodes.GENERIC_ERROR, `The installed Vintage Story Mod ${this._name} could not be identified! Removing it!`);
+			}
+
+			return mod;
+		} catch (err) {
+			App.logger.error(`There was an error installing the Vintage Story Mod ${this._name}:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error installing the Vintage Story Mod ${this._name}!`);
+		}
+	}
 }

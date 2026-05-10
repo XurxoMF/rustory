@@ -1,3 +1,9 @@
+import { App } from "$lib/classes/App.svelte";
+
+import { VSAPIMod } from "$lib/classes/api/VSAPIMod.svelte";
+
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+
 /**
  * JSON of the Mod queried from the ModDB.
  */
@@ -277,7 +283,46 @@ export class VSAPIModOnList {
 	// *  STATIC METHODS  *
 	// ********************
 
+	/**
+	 * Queries all the Vintage Story API Mods from the ModDB API.
+	 * @param modid The id of the mod to query.
+	 * @returns The mod from the ModDB API or undefined.
+	 */
+	public static async getAllFromModDB(): Promise<VSAPIModOnList[] | undefined> {
+		try {
+			App.logger.debug(`Getting all the API Mods On List from the ModDB...`);
+
+			if (!App.info.isOnline) return undefined;
+
+			const res: Response = await App.request.get("https://mods.vintagestory.at/api/mods");
+
+			const json: { mods: VSAPIModOnListJSON[] } = await res.json();
+
+			const jsonMods: VSAPIModOnListJSON[] = json.mods;
+
+			const mods = jsonMods.map((m) => new VSAPIModOnList({ ...m }));
+
+			return mods;
+		} catch (err) {
+			App.logger.error(`There was an error querying the Vintage Story API Mods On List:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error querying the Vintage Story API Mods On List!");
+		}
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	public async getCompleteModFromModDB(): Promise<VSAPIMod | undefined> {
+		try {
+			App.logger.debug(`Getting the complete Vintage Story API Mod ${this._name} from the ModDB...`);
+
+			const mod = await VSAPIMod.getFromModDB(this._modid);
+
+			return mod;
+		} catch (err) {
+			App.logger.error(`There was an error getting the complete Vintage Story API Mod:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error getting the complete Vintage Story API Mod!");
+		}
+	}
 }

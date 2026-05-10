@@ -200,6 +200,51 @@ export class VSMod {
 	// *  STATIC METHODS  *
 	// ********************
 
+	/**
+	 * Loads a Vintage Story Mod from a zip.
+	 */
+	public static async loadFromZip(zip: Zip): Promise<VSMod | undefined> {
+		try {
+			App.logger.debug(`Loading a Vintage Story Mod from the zip ${zip.path}...`);
+
+			const modinfo = await zip.readJSONFromFile<VSModModinfoJSON>("modinfo.json");
+
+			App.logger.trace(JSON.stringify(modinfo));
+
+			const name = modinfo.name ?? modinfo.Name;
+			const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid;
+			const version = modinfo.version ?? modinfo.Version;
+
+			if (name === undefined || name === "" || modid === undefined || modid === "" || version === undefined || version === "") {
+				App.logger.warn(`Couldn't identify the mod of the zip ${zip.path}!`);
+				return;
+			}
+
+			const description = modinfo.description ?? modinfo.Description;
+			const side = modinfo.side ?? modinfo.Side;
+			const authors = modinfo.authors ?? modinfo.Authors ?? [];
+			const contributors = modinfo.contributors ?? modinfo.Contributors ?? [];
+			const type = modinfo.type ?? modinfo.Type;
+
+			const mod = new VSMod({
+				zip,
+				name,
+				modid,
+				version,
+				description,
+				side,
+				authors,
+				contributors,
+				type
+			});
+
+			return mod;
+		} catch (err) {
+			App.logger.error(`There was an error loading the Vintage Story Mod from the zip ${zip.path}:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error loading the Vintage Story Mod from the zip ${zip.path}`);
+		}
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************

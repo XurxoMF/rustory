@@ -1,11 +1,14 @@
 <script lang="ts" module>
 	export type VSAPIModOnListCardProps = {
 		vsApiModOnList: VSAPIModOnList;
+		vsInstance?: VSInstance | undefined;
 	};
 </script>
 
 <script lang="ts">
 	import { App } from "$lib/classes/App.svelte";
+
+	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
 	import type { VSAPIModOnList } from "$lib/classes/api/VSAPIModOnList.svelte";
 
@@ -15,7 +18,9 @@
 	import * as Table from "$lib/components/ui/table";
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
 
-	let { vsApiModOnList }: VSAPIModOnListCardProps = $props();
+	let { vsApiModOnList, vsInstance }: VSAPIModOnListCardProps = $props();
+
+	const vsApiModPromise = $derived(vsApiModOnList.getCompleteModFromModDB());
 </script>
 
 <Card.Root>
@@ -62,6 +67,20 @@
 	<Card.Footer class="flex justify-end gap-2">
 		<Button.Root class="flex-1" variant="outline" onclick={() => App.toaster.toast.info("Not implemented yet!")}>View</Button.Root>
 
-		<Button.Root class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Install</Button.Root>
+		{#await vsApiModPromise}
+			<Button.Skeleton class="flex-1" />
+		{:then vsApiMod}
+			<Button.Root
+				class="flex-1"
+				onclick={async () => {
+					const vsMod = await vsApiMod!.install(vsInstance!.modsDir, vsApiMod!.releases[0]);
+
+					vsInstance!.mods = [...vsInstance!.mods, vsMod];
+				}}
+				disabled={!vsInstance || !vsApiMod}
+			>
+				Install
+			</Button.Root>
+		{/await}
 	</Card.Footer>
 </Card.Root>

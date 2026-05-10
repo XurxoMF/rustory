@@ -1,3 +1,12 @@
+import { download } from "@tauri-apps/plugin-upload";
+
+import { App } from "$lib/classes/App.svelte";
+
+import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+
+import { Directory } from "$lib/classes/utils/Directory.svelte";
+import { Zip } from "$lib/classes/utils/Zip.svelte";
+
 /**
  * JSON of the Mod Release queried from the ModDB.
  */
@@ -189,4 +198,33 @@ export class VSAPIModRelease {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Downloads the release to the specified directory.
+	 * @param dir The directory to download the release to.
+	 * @param modName The name of the mod.
+	 * @returns The zip of the mod.
+	 */
+	public async download(dir: Directory, modName: string): Promise<Zip> {
+		try {
+			App.logger.debug(`Downloading the Vintage Story Mod Release ${this._releaseid}...`);
+
+			await dir.ensureExists();
+
+			const downloadPath = await dir.join(`${modName}-${this._modversion}.zip`);
+
+			App.logger.debug(`Downloading on ${downloadPath} from ${this._mainfile}...`);
+
+			await download(this._mainfile, downloadPath);
+
+			App.logger.debug(`Finished downloading the Vintage Story Mod Release ${this._releaseid}!`);
+
+			const zip = await Zip.create(downloadPath);
+
+			return zip;
+		} catch (err) {
+			App.logger.error(`There was an error downloading the Vintage Story Mod:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error downloading the Vintage Story Mod!");
+		}
+	}
 }

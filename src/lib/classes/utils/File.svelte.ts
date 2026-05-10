@@ -1,5 +1,5 @@
 import { dirname } from "@tauri-apps/api/path";
-import { create, exists, readTextFile, writeTextFile } from "@tauri-apps/plugin-fs";
+import { create, exists, readTextFile, remove, writeTextFile } from "@tauri-apps/plugin-fs";
 import { invoke } from "@tauri-apps/api/core";
 
 import { App } from "$lib/classes/App.svelte";
@@ -117,6 +117,24 @@ export class File {
 		} catch (err) {
 			App.logger.error(`There was an error chcking if the file exists:\n${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
+		}
+	}
+
+	/**
+	 * Deletes the file.
+	 */
+	public async delete(): Promise<void> {
+		try {
+			App.logger.debug(`Deleting the file ${this.path}...`);
+
+			const fileExists = await exists(this.path);
+
+			if (!fileExists) return;
+
+			await remove(this.path);
+		} catch (err) {
+			App.logger.error(`There was an error deleting the file ${this.path}:\n${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the file ${this.path}`);
 		}
 	}
 
