@@ -1,5 +1,3 @@
-import { SvelteMap } from "svelte/reactivity";
-
 import { fetch } from "@tauri-apps/plugin-http";
 
 import { App } from "$lib/classes/App.svelte";
@@ -23,7 +21,8 @@ export class Request {
 	// ************************
 
 	private constructor() {
-		this._cache = new SvelteMap<string, RequestResponse>();
+		// eslint-disable-next-line svelte/prefer-svelte-reactivity
+		this._cache = new Map<string, RequestResponse>();
 	}
 
 	/**
