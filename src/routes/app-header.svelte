@@ -45,7 +45,7 @@
 						{/if}
 					</Breadcrumb.Item>
 
-					{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.href)}
+					{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.label + breadcrumb.href)}
 						<Breadcrumb.Separator />
 
 						<Breadcrumb.Item>

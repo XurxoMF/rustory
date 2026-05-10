@@ -1,47 +1,100 @@
 <script lang="ts">
 	import { type PageProps } from "./$types";
 
-	import { tick } from "svelte";
+	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+
+	import IconPencil from "@tabler/icons-svelte/icons/pencil";
+	import IconTrash from "@tabler/icons-svelte/icons/trash";
 
 	import { App } from "$lib/classes/App.svelte";
 
-	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
+	import { type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
-	import PageSkeleton from "./page-skeleton.svelte";
-	import PageContent, { type ContentPageData } from "./page-content.svelte";
-	import PageError from "./page-error.svelte";
+	import * as Typo from "$lib/components/ui/typography";
+	import * as Tooltip from "$lib/components/ui/tooltip";
+	import * as Button from "$lib/components/ui/button";
+	import * as Tabs from "$lib/components/ui/tabs";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
-	let { params, data }: PageProps = $props();
+	import DeleteVSInstanceDialog from "$lib/components/vs-instances/delete-dialog.svelte";
 
-	const pageDataPromise = $derived.by(() => load(params.slug));
+	let { params }: PageProps = $props();
 
-	/**
-	 * Loads the page data.
-	 * @returns The page data.
-	 * @throws {PageLoadError} The error that happened while loading the page data.
-	 */
-	async function load(slug: string): Promise<ContentPageData> {
-		try {
-			const vsInstance = App.data.vsInstances.find((i) => i.id === slug);
+	const vsInstance: VSInstance | undefined = $derived(App.data.vsInstances.find((i) => i.id === params.slug));
 
-			// If there is no instance with that id, redirect the user to the instances page.
-			if (vsInstance === undefined) throw new PageLoadError(PageLoadErrorCodes.NOT_FOUND, "That Vintage Story Instance does not exist!");
-
-			// Wait for the {#await} block to render the Skeleton again before returning the data.
-			await tick();
-
-			return { vsInstance };
-		} catch (err) {
-			App.logger.error(`There was an error loading the page data:\n${err}`);
-			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");
+	$effect(() => {
+		if (vsInstance !== undefined) {
+			App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: vsInstance.name }];
+		} else {
+			App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "???" }];
 		}
-	}
+	});
+
+	let deleteDialogOpen: boolean = $state(false);
 </script>
 
-{#await pageDataPromise}
-	<PageSkeleton {params} {data} />
-{:then pageData}
-	<PageContent {params} {data} {pageData} />
-{:catch err: PageLoadError}
-	<PageError {params} {data} {err} />
-{/await}
+<Typo.H1>{vsInstance ? `${vsInstance?.name}` : "Not found"}</Typo.H1>
+<Typo.Leading>Manage this Vintage Story Instance's mods, settings, etc...</Typo.Leading>
+
+{#if vsInstance === undefined}
+	<Typo.P>This Vintage Story Instance doesn't exist.</Typo.P>
+{:else}
+	<Tabs.Root value="info">
+		<Tabs.List class="w-full" variant="default">
+			<Tabs.Trigger value="info">Info</Tabs.Trigger>
+			<Tabs.Trigger value="mods">Mods</Tabs.Trigger>
+			<Tabs.Trigger value="backups">Backups</Tabs.Trigger>
+		</Tabs.List>
+
+		<Tabs.Content value="info">
+			<Typo.P>{vsInstance.name} info</Typo.P>
+		</Tabs.Content>
+
+		<Tabs.Content value="mods">
+			<Typo.P>{vsInstance.name} mods</Typo.P>
+
+			{#each vsInstance.mods as mod (mod.modid)}
+				<Typo.P>{mod.name} · {mod.version}</Typo.P>
+			{/each}
+		</Tabs.Content>
+
+		<Tabs.Content value="backups">
+			<Typo.P>{vsInstance.name} backups</Typo.P>
+		</Tabs.Content>
+	</Tabs.Root>
+
+	<DeleteVSInstanceDialog bind:open={deleteDialogOpen} onSuccess={() => goto(resolve("/vs-instances"))} {vsInstance} />
+
+	<FloatingMenu.Root>
+		<Tooltip.Root>
+			<Tooltip.Trigger>
+				{#snippet child({ props })}
+					<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: vsInstance.id }))}>
+						<IconPencil />
+						<span class="sr-only">Edit this Vintage Story Instance</span>
+					</Button.Root>
+				{/snippet}
+			</Tooltip.Trigger>
+
+			<Tooltip.Content>
+				<p>Edit this Vintage Story Instance</p>
+			</Tooltip.Content>
+		</Tooltip.Root>
+
+		<Tooltip.Root>
+			<Tooltip.Trigger>
+				{#snippet child({ props })}
+					<Button.Root {...props} variant="destructive" size="icon" onclick={() => (deleteDialogOpen = true)}>
+						<IconTrash />
+						<span class="sr-only">Delete this Vintage Story Instance</span>
+					</Button.Root>
+				{/snippet}
+			</Tooltip.Trigger>
+
+			<Tooltip.Content>
+				<p>Delete this Vintage Story Instance</p>
+			</Tooltip.Content>
+		</Tooltip.Root>
+	</FloatingMenu.Root>
+{/if}

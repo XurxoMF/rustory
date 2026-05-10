@@ -1,44 +1,21 @@
 <script lang="ts">
-	import { type PageProps } from "./$types";
-
-	import { tick } from "svelte";
-
 	import { App } from "$lib/classes/App.svelte";
+	import * as Typo from "$lib/components/ui/typography";
 
-	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
-
-	import PageSkeleton from "./page-skeleton.svelte";
-	import PageContent, { type ContentPageData } from "./page-content.svelte";
-	import PageError from "./page-error.svelte";
-
-	let { params, data }: PageProps = $props();
-
-	const pageDataPromise = $derived.by(() => load());
-
-	/**
-	 * Loads the page data.
-	 * @returns The page data.
-	 * @throws {PageLoadError} The error that happened while loading the page data.
-	 */
-	async function load(): Promise<ContentPageData> {
-		try {
-			const pageData: ContentPageData = null;
-
-			// Wait for the {#await} block to render the Skeleton again before returning the data.
-			await tick();
-
-			return pageData;
-		} catch (err) {
-			App.logger.error(`There was an error loading the page data:\n${err}`);
-			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");
-		}
-	}
+	App.breadcrumbs.segments = [];
 </script>
 
-{#await pageDataPromise}
-	<PageSkeleton {params} {data} />
-{:then pageData}
-	<PageContent {params} {data} {pageData} />
-{:catch err: PageLoadError}
-	<PageError {params} {data} {err} />
-{/await}
+<Typo.H1>Welcome to Rustory!</Typo.H1>
+<Typo.Leading>Your daily source of Vintage Story!</Typo.Leading>
+
+<Typo.P>
+	The app is still on early development and it's not really usable yet! If you're seeing this then you are probably a developer, tester or translator,
+	if that's the case, hiiiI!
+</Typo.P>
+
+<Typo.P>
+	I'm trying my best to finish the app as soon as possible while keeping it easy to use, bug free, developer friendly, optimized and... a lot of other
+	cool things!
+</Typo.P>
+
+<Typo.P>If you have any suggestion feel free to share it here!</Typo.P>

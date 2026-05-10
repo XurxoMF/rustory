@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { tick } from "svelte";
-
-	import IconSelector from "@tabler/icons-svelte/icons/selector";
-
 	import { App } from "$lib/classes/App.svelte";
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
@@ -15,13 +11,11 @@
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Table from "$lib/components/ui/table";
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
-	import * as Command from "$lib/components/ui/command";
-	import * as Popover from "$lib/components/ui/popover";
+	import * as Combobox from "$lib/components/ui/combobox";
 
 	const vsApiModsOnListPromise = loadVsApiModsOnList();
 
-	let vsInstancesOpen: boolean = $state(false);
-	let vsInstancesTriggerRef: HTMLButtonElement = $state<HTMLButtonElement>(null!);
+	App.breadcrumbs.segments = [{ label: "Vintage Story Mods" }];
 
 	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
 
@@ -40,49 +34,23 @@
 <Typo.H1>Vintage Story Mods</Typo.H1>
 <Typo.Leading>View, install and manage Vintage Story Mods on your Vintage Story Instances.</Typo.Leading>
 
-<Popover.Root bind:open={vsInstancesOpen}>
-	<Popover.Trigger bind:ref={vsInstancesTriggerRef}>
-		{#snippet child({ props })}
-			<Button.Root {...props} id="vs-instance" variant="outline" class="justify-between" role="combobox" aria-expanded={vsInstancesOpen}>
-				{vsInstance?.name || "Select a VS Instance..."}
+<Combobox.Root value={App.data.vsInstances[0].id} onchange={(v) => (vsInstance = App.data.vsInstances.find((i) => i.id === v))}>
+	<Combobox.Trigger>{vsInstance?.name || "Select a Vintage Story Instance..."}</Combobox.Trigger>
 
-				<IconSelector class="opacity-50" />
-			</Button.Root>
-		{/snippet}
-	</Popover.Trigger>
+	<Combobox.Content>
+		<Combobox.Input placeholder="Buscar..." />
 
-	<Popover.Content class="w-(--bits-floating-anchor-width) p-0">
-		<Command.Root>
-			<Command.Input placeholder="Select a Vintage Story Instance..." />
+		<Combobox.List>
+			<Combobox.Empty>No Vintage Story Instances found.</Combobox.Empty>
 
-			<Command.List>
-				<Command.Empty>No Vintage Story Instances found.</Command.Empty>
-
-				<Command.Group>
-					{#each App.data.vsInstances as i (i.id)}
-						<Command.Item
-							data-checked={vsInstance?.id === i.id}
-							value={i.id}
-							onSelect={() => {
-								vsInstance = i;
-
-								vsInstancesOpen = false;
-
-								// Refocus the trigger button when the user selects an item so users can continue navigating the rest of the form with the keyboard.
-								tick().then(() => {
-									vsInstancesTriggerRef.focus();
-								});
-							}}
-							class="flex w-full justify-between"
-						>
-							<span>{i.name}</span>
-						</Command.Item>
-					{/each}
-				</Command.Group>
-			</Command.List>
-		</Command.Root>
-	</Popover.Content>
-</Popover.Root>
+			<Combobox.Group>
+				{#each App.data.vsInstances as i (i.id)}
+					<Combobox.Item value={i.id}>{i.name}</Combobox.Item>
+				{/each}
+			</Combobox.Group>
+		</Combobox.List>
+	</Combobox.Content>
+</Combobox.Root>
 
 <!-- List of Vintage Story Instances -->
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
