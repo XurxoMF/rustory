@@ -63,6 +63,7 @@ export class VSInstance {
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
+		modsDir: Directory;
 		version: string;
 		mods: VSMod[];
 		backups: VSInstanceBackup[];
@@ -83,6 +84,7 @@ export class VSInstance {
 		this._dir = vsInstance.dir;
 		this._dataDir = vsInstance.dataDir;
 		this._backupsDir = vsInstance.backupsDir;
+		this._modsDir = vsInstance.modsDir;
 		this._version = $state(vsInstance.version);
 		this._mods = $state(vsInstance.mods);
 		this._backups = $state(vsInstance.backups);
@@ -110,6 +112,7 @@ export class VSInstance {
 		dir: Directory;
 		dataDir: Directory;
 		backupsDir: Directory;
+		modsDir: Directory;
 		version: string;
 		startParams: string;
 		backupsLimit: number;
@@ -129,6 +132,7 @@ export class VSInstance {
 				dir: vsInstance.dir,
 				dataDir: vsInstance.dataDir,
 				backupsDir: vsInstance.backupsDir,
+				modsDir: vsInstance.modsDir,
 				version: vsInstance.version,
 				mods: [],
 				backups: [],
@@ -186,6 +190,11 @@ export class VSInstance {
 	 * The backups directory of the Vintage Story Instance.
 	 */
 	private _backupsDir: Directory;
+
+	/**
+	 * The mods directory of the Vintage Story Instance.
+	 */
+	private _modsDir: Directory;
 
 	/**
 	 * The version of the Vintage Story Instance.
@@ -312,6 +321,13 @@ export class VSInstance {
 	 */
 	public get backupsDir(): Directory {
 		return this._backupsDir;
+	}
+
+	/**
+	 * The mods directory of the Vintage Story Instance.
+	 */
+	public get modsDir(): Directory {
+		return this._modsDir;
 	}
 
 	/**
@@ -499,6 +515,9 @@ export class VSInstance {
 			const backupsPath = await dir.join("Backups");
 			const backupsDir = await Directory.create(backupsPath);
 
+			const modsPath = await dataDir.join("Mods");
+			const modsDir = await Directory.create(modsPath);
+
 			const filePath = await dir.join("instance.json");
 			const file = await File.create(filePath);
 
@@ -517,6 +536,7 @@ export class VSInstance {
 				dir,
 				dataDir,
 				backupsDir,
+				modsDir,
 				version: vsInstanceJSON.version,
 				startParams: vsInstanceJSON.startParams ?? "",
 				backupsLimit: vsInstanceJSON.backupsLimit ?? 3,

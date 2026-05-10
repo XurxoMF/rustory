@@ -163,6 +163,9 @@
 				const backupsPath = await dir.join("Backups");
 				const backupsDir = await Directory.create(backupsPath);
 
+				const modsPath = await dataDir.join("Mods");
+				const modsDir = await Directory.create(modsPath);
+
 				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
@@ -189,6 +192,7 @@
 					dir: dir,
 					dataDir,
 					backupsDir,
+					modsDir,
 					version: rApiVersion!.version,
 					startParams: form.startParams.value,
 					backupsLimit: form.backupsLimit.value,
