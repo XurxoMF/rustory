@@ -21,6 +21,7 @@
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Table from "$lib/components/ui/table";
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
+	import { goto } from "$app/navigation";
 
 	const modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll();
 
@@ -91,8 +92,6 @@
 
 				<Card.Footer class="flex justify-end gap-2">
 					<Button.Skeleton class="flex-1" />
-
-					<Button.Skeleton class="flex-1" />
 				</Card.Footer>
 			</Card.Root>
 		{/each}
@@ -161,7 +160,13 @@
 					</Card.Content>
 
 					<Card.Footer class="flex justify-end gap-2">
-						<Button.Root class="flex-1" variant="outline" onclick={() => App.toaster.toast.info("Not implemented yet!")}>View</Button.Root>
+						<Button.Root
+							class="flex-1"
+							variant="outline"
+							onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}
+						>
+							View
+						</Button.Root>
 					</Card.Footer>
 				</Card.Root>
 			{/each}
