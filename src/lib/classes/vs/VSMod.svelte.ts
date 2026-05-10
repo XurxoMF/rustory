@@ -261,7 +261,7 @@ export class VSMod {
 	 * Fetches the ModDB API Mod of this Vintage Story Mod.
 	 * @returns The ModDB API Mod.
 	 */
-	public async toModDBApiMod(): Promise<ModDBApiMod> {
+	public async toModDBApiMod(): Promise<ModDBApiMod | undefined> {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod of the Vintage Story Mod ${this._name}...`);
 

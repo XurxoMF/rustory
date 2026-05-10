@@ -34,6 +34,7 @@
     "@tauri-apps/plugin-updater": "~2.10.1",
     "@tauri-apps/plugin-upload": "~2.4.0",
     "@tauri-apps/plugin-window-state": "~2.4.1",
+    "embla-carousel-autoplay": "^8.6.0",
     "runed": "^0.37.1",
     "tailwindcss": "^4.3.0"
   },

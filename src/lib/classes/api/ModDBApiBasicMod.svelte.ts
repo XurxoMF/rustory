@@ -318,7 +318,7 @@ export class ModDBApiBasicMod {
 	 * Fetches the ModDB API Mod of this ModDB API Basic Mod.
 	 * @returns The ModDB API Mod.
 	 */
-	public async toModDBApiMod(): Promise<ModDBApiMod> {
+	public async toModDBApiMod(): Promise<ModDBApiMod | undefined> {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 

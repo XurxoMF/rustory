@@ -152,7 +152,7 @@
 								</Table.Row>
 
 								<Table.Row>
-									<Table.Cell class="text-muted-foreground" align="left">Total time played</Table.Cell>
+									<Table.Cell class="text-muted-foreground" align="left">Comments</Table.Cell>
 									<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.comments}</Table.Cell>
 								</Table.Row>
 							</Table.Body>

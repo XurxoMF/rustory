@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type TriggerProps = {
+	export type TriggerProps = Popover.TriggerProps & {
 		class?: string | undefined;
 		children: Snippet;
 		size?: "sm" | "default" | undefined;
@@ -18,12 +18,12 @@
 
 	import { getComboboxContext } from "./combobox-context.svelte";
 
-	let { class: className, children, size = "default" }: TriggerProps = $props();
+	let { class: className, children, size = "default", ...restProps }: TriggerProps = $props();
 
 	const ctx = getComboboxContext();
 </script>
 
-<Popover.Trigger bind:ref={ctx.triggerRef}>
+<Popover.Trigger bind:ref={ctx.triggerRef} {...restProps}>
 	{#snippet child({ props })}
 		<Button.Root
 			{...props}

@@ -28,7 +28,7 @@ export type ModDBApiModJSON = {
 	comments: number;
 	side: string;
 	type: string;
-	createdat: string;
+	created: string;
 	lastmodified: string;
 	tags: string[];
 	releases: ModDBApiModReleaseJSON[];
@@ -72,7 +72,7 @@ export class ModDBApiMod {
 		comments: number;
 		side: string;
 		type: string;
-		createdat: string;
+		created: string;
 		lastmodified: string;
 		tags: string[];
 		releases: ModDBApiModRelease[];
@@ -97,7 +97,7 @@ export class ModDBApiMod {
 		this._comments = modDBApiMod.comments;
 		this._side = modDBApiMod.side;
 		this._type = modDBApiMod.type;
-		this._createdat = modDBApiMod.createdat;
+		this._created = modDBApiMod.created;
 		this._lastmodified = modDBApiMod.lastmodified;
 		this._tags = modDBApiMod.tags;
 		this._releases = modDBApiMod.releases;
@@ -206,7 +206,7 @@ export class ModDBApiMod {
 	/**
 	 * The created at of the mod.
 	 */
-	private _createdat: string;
+	private _created: string;
 
 	/**
 	 * The last modified of the mod.
@@ -366,10 +366,11 @@ export class ModDBApiMod {
 	}
 
 	/**
-	 * The createdat of the mod.
+	 * The created
+	  of the mod.
 	 */
-	public get createdat(): string {
-		return this._createdat;
+	public get created(): string {
+		return this._created;
 	}
 
 	/**
@@ -409,7 +410,7 @@ export class ModDBApiMod {
 	 * @param modid The id of the Mod.
 	 * @returns The ModDB API Mod.
 	 */
-	public static async fetch(modid: string | number): Promise<ModDBApiMod> {
+	public static async fetch(modid: string | number): Promise<ModDBApiMod | undefined> {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
 
@@ -441,7 +442,7 @@ export class ModDBApiMod {
 				comments: jsonMod.comments,
 				side: jsonMod.side,
 				type: jsonMod.type,
-				createdat: jsonMod.createdat,
+				created: jsonMod.created,
 				lastmodified: jsonMod.lastmodified,
 				tags: jsonMod.tags,
 				releases: jsonMod.releases.map((release) => new ModDBApiModRelease(release)),
