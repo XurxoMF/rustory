@@ -46,7 +46,8 @@ export class Breadcrumbs {
 
 			return new Breadcrumbs();
 		} catch (err) {
-			App.logger.error(`There was an error initializating the breadcrumbs:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the breadcrumbs: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
 		}
 	}

@@ -147,7 +147,8 @@ export class VSInstance {
 				state: VSInstanceState.STOPPED
 			});
 		} catch (err) {
-			App.logger.error(`There was an error creating the Vintage Story Instance:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error creating the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
 		}
 	}
@@ -507,8 +508,15 @@ export class VSInstance {
 	 * @param dir The directory to load the Vintage Story Instance from.
 	 * @returns The Vintage Story Instance.
 	 */
-	public static async loadFromDir(dir: Directory): Promise<VSInstance> {
+	public static async fromDir(dir: Directory): Promise<VSInstance> {
 		try {
+			App.logger.debug(`Loading the Vintage Story Instance from the directory ${dir.path}...`);
+
+			const filePath = await dir.join("instance.json");
+			const file = await File.create(filePath);
+
+			if (!file.exists()) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There is no instance.json file in the directory ${dir.path}!`);
+
 			const dataPath = await dir.join("Data");
 			const dataDir = await Directory.create(dataPath);
 
@@ -518,17 +526,19 @@ export class VSInstance {
 			const modsPath = await dataDir.join("Mods");
 			const modsDir = await Directory.create(modsPath);
 
-			const filePath = await dir.join("instance.json");
-			const file = await File.create(filePath);
+			App.logger.debug(`Reading the Vintage Story Instance data from the file ${file.path}...`);
 
 			const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
 
-			if (vsInstanceJSON.id === undefined || vsInstanceJSON.name === undefined || vsInstanceJSON.version === undefined) {
-				App.logger.error(`Invalid Vintage Story Instance!\n${JSON.stringify(vsInstanceJSON, null, 4)}`);
-				throw new AppError(AppErrorCodes.MALFORMED_DATA, "Invalid Vintage Story Instance!");
-			}
+			if (vsInstanceJSON.id === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance ID is missing!");
 
-			const instance = await VSInstance.create({
+			if (vsInstanceJSON.name === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance name is missing!");
+
+			if (vsInstanceJSON.version === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance version is missing!");
+
+			App.logger.debug(`Creating the Vintage Story Instance ${vsInstanceJSON.name} with the data from the file ${file.path}!`);
+
+			const vsInstance = await VSInstance.create({
 				file,
 				id: vsInstanceJSON.id,
 				name: vsInstanceJSON.name,
@@ -548,10 +558,13 @@ export class VSInstance {
 				envVars: vsInstanceJSON.envVars ?? ""
 			});
 
-			return instance;
+			App.logger.debug(`Finished creating the Vintage Story Instance ${vsInstanceJSON.name}!`);
+
+			return vsInstance;
 		} catch (err) {
-			App.logger.error(`There was an error loading the Vintage Story Instance:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error loading the Vintage Story Instance from the directory ${dir.path}: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error loading the Vintage Story Instance from the directory ${dir.path}!`);
 		}
 	}
 
@@ -562,7 +575,7 @@ export class VSInstance {
 	/**
 	 * Deletes the Vintage Story Instance.
 	 *
-	 * NOTE: This doesn't delete the Instance from the App data. You must remove it manually.
+	 * NOTE: This doesn't delete the Instance from the App data store. You must remove it manually.
 	 * @param deleteContents If the data, backups... should be deleted.
 	 */
 	public async delete(deleteContents: boolean): Promise<void> {
@@ -572,61 +585,79 @@ export class VSInstance {
 			this._state = VSInstanceState.DELETING;
 
 			if (deleteContents) {
-				App.logger.debug(`Deleting the contents of the Vintage Story Instance...`);
+				App.logger.debug(`Delete contents selected! Deleting the Vintage Story Instance directory ${this._dir.path}...`);
 
 				await this._dir.delete();
+
+				App.logger.debug(`Deleted the Vintage Story Instance directory ${this._dir.path}!`);
 			}
+
+			App.logger.debug(`Deleted the Vintage Story Instance ${this._name}!`);
 		} catch (err) {
-			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the Vintage Story Instance ${this._name}: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the Vintage Story Instance ${this._name}!`);
 		}
 	}
 
 	/**
-	 * Saves the Vintage Story Isntance to the instance file.
+	 * Saves the Vintage Story Isntance to the instance.json file.
 	 */
 	public async save(): Promise<void> {
 		try {
-			App.logger.debug(`Saving the Vintage Story Instance ${this._name}...`);
+			App.logger.debug(`Saving the Vintage Story Instance ${this._name} to ${this._file.path}...`);
 
 			const JSON = await this.exportToJSON();
 
 			this._file.writeJSON(JSON);
+
+			App.logger.debug(`Saved the Vintage Story Instance ${this._name} to ${this._file.path}!`);
 		} catch (err) {
-			App.logger.error(`There was an error saving the Vintage Story Instance:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
 		}
 	}
 
 	/**
-	 * Loads the Vintage Story Mods of this Vintage Story Instance.
+	 * Loads the Vintage Story Mods of the Vintage Story Instance.
 	 */
 	public async loadMods(): Promise<VSMod[]> {
 		try {
-			App.logger.debug(`Loading the mods of the Vintage Story Instance ${this._name}...`);
+			App.logger.debug(`Loading the Vintage Story Mods of the Vintage Story Instance ${this._name}...`);
 
-			const modsDir = await Directory.create(await this._dataDir.join("Mods"));
-
-			const modsDirContents = await modsDir.getContents();
+			const modsDirContents = await this._modsDir.getContents();
 
 			const vsMods: VSMod[] = [];
+
+			App.logger.debug(`Trying to load the Vintage Story Mods from ${modsDirContents.files.length} found files!`);
 
 			await Promise.all(
 				modsDirContents.files.map(async (modFile) => {
 					if (modFile.path.endsWith(".zip")) {
+						App.logger.debug(`Trying to load the Vintage Story Mod from the file ${modFile.path}...`);
+
 						const zip = await Zip.create(modFile.path);
 
-						const vsMod = await VSMod.loadFromZip(zip);
+						const vsMod = await VSMod.fromZip(zip);
 
-						if (vsMod !== undefined) vsMods.push(vsMod);
+						App.logger.debug(`Loaded the Vintage Story Mod ${vsMod.name} from the file ${modFile.path}!`);
+
+						vsMods.push(vsMod);
 					}
 				})
 			);
 
+			App.logger.debug(`Loaded ${vsMods.length} Vintage Story Mods of the Vintage Story Instance ${this._name}!`);
+
 			return vsMods;
 		} catch (err) {
-			App.logger.error(`There was an error loading the Vintage Story Instance Mods:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error loading the Vintage Story Instance Mods!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}: ${err}`);
+			throw new AppError(
+				AppErrorCodes.GENERIC_ERROR,
+				`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}!`
+			);
 		}
 	}
 

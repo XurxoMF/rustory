@@ -61,7 +61,8 @@ export class Tray {
 
 			return new Tray({ menu, options, icon });
 		} catch (err) {
-			App.logger.error(`There was an error initializating the tray:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the tray: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
 		}
 	}

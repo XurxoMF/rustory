@@ -3,7 +3,7 @@
 		name: { value: string; errors: string[] };
 		description: { value: string; errors: string[] };
 		dir: { value: Directory | undefined; errors: string[] };
-		rApiVersion: { value: RAPIVSVersion | undefined; errors: string[] };
+		rApiVersion: { value: RustoryApiVSVersion | undefined; errors: string[] };
 		backupsLimit: { value: number; errors: string[] };
 		backupsAuto: { value: boolean; errors: string[] };
 		backupsCompressionLevel: { value: number; errors: string[] };
@@ -27,15 +27,13 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
-	import { PageLoadError, PageLoadErrorCodes } from "$lib/classes/errors/PageLoadError.svelte";
-
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 	import { File } from "$lib/classes/utils/File.svelte";
 
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
-	import { RAPIVSVersion, type RAPIVSVersionJSON } from "$lib/classes/api/RAPIVSVersion.svelte";
+	import { RustoryApiVSVersion } from "$lib/classes/api/RustoryApiVSVersion.svelte";
 
 	import * as Typo from "$lib/components/ui/typography";
 	import * as Button from "$lib/components/ui/button";
@@ -47,7 +45,7 @@
 	import * as Combobox from "$lib/components/ui/combobox";
 	import * as Textarea from "$lib/components/ui/textarea";
 
-	const rApiVersionsPromise: Promise<RAPIVSVersion[]> = loadRApiVersions();
+	const rApiVersionsPromise: Promise<RustoryApiVSVersion[]> = RustoryApiVSVersion.fetchAll();
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "Create" }];
 
@@ -119,7 +117,7 @@
 		}
 
 		// Check Rustory API vVrsion
-		if (form.rApiVersion.value === undefined) rApiVersionErrors.push("A RAPI version must be selected.");
+		if (form.rApiVersion.value === undefined) rApiVersionErrors.push("A RustoryApi version must be selected.");
 
 		// Check backups limit
 		if (form.backupsLimit.value < 1 || form.backupsLimit.value > 10) backupsLimitErrors.push("Backups limit must be at least 1 and a maximum of 10.");
@@ -169,10 +167,10 @@
 				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				const isRApiVersionInstalled = App.data.vsVersions.some((v) => v.version === rApiVersion.version);
+				const isRustoryApiVersionInstalled = App.data.vsVersions.some((v) => v.version === rApiVersion.version);
 
 				// If the selected version is not installed, install it.
-				if (!isRApiVersionInstalled) {
+				if (!isRustoryApiVersionInstalled) {
 					const newVersionPath = await App.config.vsVersionsDir.join(rApiVersion.version);
 					const newVersionDir = await Directory.create(newVersionPath);
 					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
@@ -214,25 +212,9 @@
 
 				goto(resolve(`/vs-instances/[slug]`, { slug: id }));
 			} catch (err) {
-				App.logger.error(`There was an error creating the new Vintage Story Instance:\n${err}`);
+				App.logger.error(`There was an error creating the new Vintage Story Instance: ${err}`);
 				App.toaster.toast.error("There was an error creating the new Vintage Story Instance!");
 			}
-		}
-	}
-
-	/**
-	 * Loads the Rustory API Versions.
-	 */
-	async function loadRApiVersions(): Promise<RAPIVSVersion[]> {
-		try {
-			const resRApiVersions: Response = await App.request.get("https://api.rustory.xyz/versions");
-			const jsonRApiVersions: RAPIVSVersionJSON[] = await resRApiVersions.json();
-			const rApiVersions = jsonRApiVersions.map((v) => new RAPIVSVersion({ ...v }));
-
-			return rApiVersions;
-		} catch (err) {
-			App.logger.error(`There was an error loading the page data:\n${err}`);
-			throw new PageLoadError(PageLoadErrorCodes.GENERIC_ERROR, "There was an error loading the page data!");
 		}
 	}
 </script>

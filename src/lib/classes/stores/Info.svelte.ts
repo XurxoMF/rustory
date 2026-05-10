@@ -165,7 +165,8 @@ export class Info {
 				logsDir
 			});
 		} catch (err) {
-			App.logger.error(`There was an error initializating the info:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the info: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
 		}
 	}

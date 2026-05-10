@@ -8,9 +8,9 @@ import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 /**
- * JSON of the Mod Release queried from the ModDB.
+ * JSON of the ModDB API Mod Release.
  */
-export type VSAPIModReleaseJSON = {
+export type ModDBApiModReleaseJSON = {
 	releaseid: number;
 	mainfile: string;
 	filename: string;
@@ -24,9 +24,9 @@ export type VSAPIModReleaseJSON = {
 };
 
 /**
- * Mod Release queried from ModDB.
+ * ModDB API Mod Release fetched from the ModDB.
  */
-export class VSAPIModRelease {
+export class ModDBApiModRelease {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -39,7 +39,7 @@ export class VSAPIModRelease {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModRelease: {
+	public constructor(modDBApiModRelease: {
 		releaseid: number;
 		mainfile: string;
 		filename: string;
@@ -51,16 +51,16 @@ export class VSAPIModRelease {
 		created: string;
 		changelog: string;
 	}) {
-		this._releaseid = vsApiModRelease.releaseid;
-		this._mainfile = vsApiModRelease.mainfile;
-		this._filename = vsApiModRelease.filename;
-		this._fileid = vsApiModRelease.fileid;
-		this._downloads = vsApiModRelease.downloads;
-		this._tags = vsApiModRelease.tags;
-		this._modidstr = vsApiModRelease.modidstr;
-		this._modversion = vsApiModRelease.modversion;
-		this._created = vsApiModRelease.created;
-		this._changelog = vsApiModRelease.changelog;
+		this._releaseid = modDBApiModRelease.releaseid;
+		this._mainfile = modDBApiModRelease.mainfile;
+		this._filename = modDBApiModRelease.filename;
+		this._fileid = modDBApiModRelease.fileid;
+		this._downloads = modDBApiModRelease.downloads;
+		this._tags = modDBApiModRelease.tags;
+		this._modidstr = modDBApiModRelease.modidstr;
+		this._modversion = modDBApiModRelease.modversion;
+		this._created = modDBApiModRelease.created;
+		this._changelog = modDBApiModRelease.changelog;
 	}
 
 	// *************************
@@ -200,31 +200,41 @@ export class VSAPIModRelease {
 	// **********************
 
 	/**
-	 * Downloads the release to the specified directory.
-	 * @param dir The directory to download the release to.
-	 * @param modName The name of the mod.
-	 * @returns The zip of the mod.
+	 * Downloads the Vintage Story Mod of this ModDB API Mod Release to the specified directory.
+	 * @param dir The directory to download the ModDB API Mod Release to.
+	 * @param modName The name of the ModAB API Mod.
+	 * @returns The zip of the Vintage Story Mod.
 	 */
 	public async download(dir: Directory, modName: string): Promise<Zip> {
 		try {
-			App.logger.debug(`Downloading the Vintage Story Mod Release ${this._releaseid}...`);
+			App.logger.debug(`Downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}...`);
+
+			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't download the Vintage Story Mod if the app is offline!");
 
 			await dir.ensureExists();
 
 			const downloadPath = await dir.join(`${modName}-${this._modversion}.zip`);
 
-			App.logger.debug(`Downloading on ${downloadPath} from ${this._mainfile}...`);
+			App.logger.debug(`Downloading the Vintage Story Mod ${modName} on ${downloadPath} from ${this._mainfile}...`);
 
 			await download(this._mainfile, downloadPath);
 
-			App.logger.debug(`Finished downloading the Vintage Story Mod Release ${this._releaseid}!`);
+			App.logger.debug(
+				`Finished downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid} on ${downloadPath}!`
+			);
 
 			const zip = await Zip.create(downloadPath);
 
 			return zip;
 		} catch (err) {
-			App.logger.error(`There was an error downloading the Vintage Story Mod:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error downloading the Vintage Story Mod!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(
+				`There was an error downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}: ${err}`
+			);
+			throw new AppError(
+				AppErrorCodes.GENERIC_ERROR,
+				`There was an error downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}!`
+			);
 		}
 	}
 }

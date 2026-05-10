@@ -1,13 +1,13 @@
 import { App } from "$lib/classes/App.svelte";
 
-import { VSAPIMod } from "$lib/classes/api/VSAPIMod.svelte";
+import { ModDBApiMod } from "$lib/classes/api/ModDBApiMod.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 /**
- * JSON of the Mod queried from the ModDB.
+ * JSON of the ModDB API Basic Mod.
  */
-export type VSAPIModOnListJSON = {
+export type ModDBApiBasicModJSON = {
 	modid: number;
 	assetid: number;
 	downloads: number;
@@ -27,10 +27,10 @@ export type VSAPIModOnListJSON = {
 };
 
 /**
- * Mod queried from the ModDB.
- * This is the simplified mod from /api/mods.
+ * ModDB API Basic Mod fetched from the ModDB.
+ * This is the Basic Mod from /api/mods.
  */
-export class VSAPIModOnList {
+export class ModDBApiBasicMod {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -43,7 +43,7 @@ export class VSAPIModOnList {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModOnList: {
+	public constructor(modDBApiModOnList: {
 		modid: number;
 		assetid: number;
 		downloads: number;
@@ -61,22 +61,22 @@ export class VSAPIModOnList {
 		tags: string[];
 		lastreleased: string;
 	}) {
-		this._modid = vsApiModOnList.modid;
-		this._assetid = vsApiModOnList.assetid;
-		this._downloads = vsApiModOnList.downloads;
-		this._follows = vsApiModOnList.follows;
-		this._trendingpoints = vsApiModOnList.trendingpoints;
-		this._comments = vsApiModOnList.comments;
-		this._name = vsApiModOnList.name;
-		this._summary = vsApiModOnList.summary;
-		this._modidstrs = vsApiModOnList.modidstrs;
-		this._author = vsApiModOnList.author;
-		this._urlalias = vsApiModOnList.urlalias;
-		this._side = vsApiModOnList.side;
-		this._type = vsApiModOnList.type;
-		this._logo = vsApiModOnList.logo;
-		this._tags = vsApiModOnList.tags;
-		this._lastreleased = vsApiModOnList.lastreleased;
+		this._modid = modDBApiModOnList.modid;
+		this._assetid = modDBApiModOnList.assetid;
+		this._downloads = modDBApiModOnList.downloads;
+		this._follows = modDBApiModOnList.follows;
+		this._trendingpoints = modDBApiModOnList.trendingpoints;
+		this._comments = modDBApiModOnList.comments;
+		this._name = modDBApiModOnList.name;
+		this._summary = modDBApiModOnList.summary;
+		this._modidstrs = modDBApiModOnList.modidstrs;
+		this._author = modDBApiModOnList.author;
+		this._urlalias = modDBApiModOnList.urlalias;
+		this._side = modDBApiModOnList.side;
+		this._type = modDBApiModOnList.type;
+		this._logo = modDBApiModOnList.logo;
+		this._tags = modDBApiModOnList.tags;
+		this._lastreleased = modDBApiModOnList.lastreleased;
 	}
 
 	// *************************
@@ -284,28 +284,29 @@ export class VSAPIModOnList {
 	// ********************
 
 	/**
-	 * Queries all the Vintage Story API Mods from the ModDB API.
+	 * Fetches all the ModDB API Mods.
 	 * @param modid The id of the mod to query.
 	 * @returns The mod from the ModDB API or undefined.
 	 */
-	public static async getAllFromModDB(): Promise<VSAPIModOnList[] | undefined> {
+	public static async fetchAll(): Promise<ModDBApiBasicMod[]> {
 		try {
-			App.logger.debug(`Getting all the API Mods On List from the ModDB...`);
+			App.logger.debug(`Fetching all the ModDB API Basic Mods...`);
 
-			if (!App.info.isOnline) return undefined;
+			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch all the ModDB API Basic Mods while offline!");
 
 			const res: Response = await App.request.get("https://mods.vintagestory.at/api/mods");
 
-			const json: { mods: VSAPIModOnListJSON[] } = await res.json();
+			const json: { mods: ModDBApiBasicModJSON[] } = await res.json();
 
-			const jsonMods: VSAPIModOnListJSON[] = json.mods;
+			const jsonMods: ModDBApiBasicModJSON[] = json.mods;
 
-			const mods = jsonMods.map((m) => new VSAPIModOnList({ ...m }));
+			const mods = jsonMods.map((m) => new ModDBApiBasicMod({ ...m }));
 
 			return mods;
 		} catch (err) {
-			App.logger.error(`There was an error querying the Vintage Story API Mods On List:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error querying the Vintage Story API Mods On List!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error fetching all the ModDB API Basic Mods: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error fetching all the ModDB API Basic Mods!");
 		}
 	}
 
@@ -313,16 +314,21 @@ export class VSAPIModOnList {
 	// *  INSTANCE METHODS	*
 	// **********************
 
-	public async getCompleteModFromModDB(): Promise<VSAPIMod | undefined> {
+	/**
+	 * Fetches the ModDB API Mod of this ModDB API Basic Mod.
+	 * @returns The ModDB API Mod.
+	 */
+	public async toModDBApiMod(): Promise<ModDBApiMod> {
 		try {
-			App.logger.debug(`Getting the complete Vintage Story API Mod ${this._name} from the ModDB...`);
+			App.logger.debug(`Fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 
-			const mod = await VSAPIMod.getFromModDB(this._modid);
+			const mod = await ModDBApiMod.fetch(this._modid);
 
 			return mod;
 		} catch (err) {
-			App.logger.error(`There was an error getting the complete Vintage Story API Mod:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error getting the complete Vintage Story API Mod!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 		}
 	}
 }

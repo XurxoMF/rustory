@@ -1,7 +1,7 @@
 /**
- * JSON of the Mod Screenshot queried from the ModDB.
+ * JSON of the ModDB API Mod Screenshot.
  */
-export type VSAPIModScreenshotJSON = {
+export type ModDBApiModScreenshotJSON = {
 	fileid: number;
 	mainfile: string;
 	filename: string;
@@ -10,9 +10,9 @@ export type VSAPIModScreenshotJSON = {
 };
 
 /**
- * Mod Screenshot queried from the ModDB.
+ * ModDB API Mod Screenshot fetched from the ModDB.
  */
-export class VSAPIModScreenshot {
+export class ModDBApiModScreenshot {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -25,12 +25,12 @@ export class VSAPIModScreenshot {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
-		this._fileid = vsApiModScreenshot.fileid;
-		this._mainfile = vsApiModScreenshot.mainfile;
-		this._filename = vsApiModScreenshot.filename;
-		this._thumbnailfile = vsApiModScreenshot.thumbnailfile;
-		this._createdat = vsApiModScreenshot.createdat;
+	public constructor(modDBApiModScreenshot: { fileid: number; mainfile: string; filename: string; thumbnailfile: string; createdat: string }) {
+		this._fileid = modDBApiModScreenshot.fileid;
+		this._mainfile = modDBApiModScreenshot.mainfile;
+		this._filename = modDBApiModScreenshot.filename;
+		this._thumbnailfile = modDBApiModScreenshot.thumbnailfile;
+		this._createdat = modDBApiModScreenshot.createdat;
 	}
 
 	// *************************

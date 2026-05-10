@@ -42,7 +42,8 @@ export class Zip {
 
 			return new Zip({ path, directory });
 		} catch (err) {
-			App.logger.error(`There was an error creating the zip:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error creating the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the zip!");
 		}
 	}
@@ -97,7 +98,8 @@ export class Zip {
 
 			return await exists(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error chcking if the zip exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error chcking if the zip exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
 		}
 	}
@@ -115,7 +117,8 @@ export class Zip {
 
 			await remove(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error deleting the zip ${this.path}:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the zip ${this.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the zip ${this.path}`);
 		}
 	}
@@ -137,7 +140,8 @@ export class Zip {
 				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 			}
 		} catch (err) {
-			App.logger.error(`There was an error extracting the zip:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error extracting the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 		}
 	}
@@ -155,7 +159,8 @@ export class Zip {
 
 			return fileContents;
 		} catch (err) {
-			App.logger.error(`There was an error reading the text from the file inside the zip:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error reading the text from the file inside the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the text from the file inside the zip!");
 		}
 	}
@@ -170,7 +175,8 @@ export class Zip {
 
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
-			App.logger.error(`There was an error reading the JSON from the file inside the zip:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error reading the JSON from the file inside the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the JSON from the file inside the zip!");
 		}
 	}

@@ -51,7 +51,8 @@ export class Directory {
 
 			return new Directory({ path, parent });
 		} catch (err) {
-			App.logger.error(`There was an error creating the directory:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error creating the directory: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
 		}
 	}
@@ -107,7 +108,8 @@ export class Directory {
 
 			if (!directoryExists) await mkdir(this.path, { recursive: true });
 		} catch (err) {
-			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -122,7 +124,8 @@ export class Directory {
 
 			return await exists(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error chcking if the directory exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error chcking if the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
 		}
 	}
@@ -139,7 +142,8 @@ export class Directory {
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
-			App.logger.error(`There was an error setting the directory permissions:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the directory permissions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
 		}
 	}
@@ -160,7 +164,8 @@ export class Directory {
 
 			return files.length === 0;
 		} catch (err) {
-			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -196,7 +201,8 @@ export class Directory {
 
 			return { files, directories };
 		} catch (err) {
-			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -214,7 +220,8 @@ export class Directory {
 
 			await remove(this.path, { recursive: true });
 		} catch (err) {
-			App.logger.error(`There was an error deleting the directory:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the directory: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
 		}
 	}
@@ -262,7 +269,8 @@ export class Directory {
 
 			return zip;
 		} catch (err) {
-			App.logger.error(`There was an error compressing the directory to a zip:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error compressing the directory to a zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 		}
 	}

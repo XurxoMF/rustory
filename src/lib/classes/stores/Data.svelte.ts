@@ -59,7 +59,7 @@ export class Data {
 					dataJSON.vsVersionsPaths.map(async (vsVersionPath) => {
 						const dir = await Directory.create(vsVersionPath);
 
-						const vsVersion = await VSVersion.loadFromDir(dir);
+						const vsVersion = await VSVersion.fromDir(dir);
 
 						vsVersions.push(vsVersion);
 					})
@@ -77,7 +77,7 @@ export class Data {
 					dataJSON.vsInstancesPaths.map(async (vsInstancePath) => {
 						const dir = await Directory.create(vsInstancePath);
 
-						const vsInstance = await VSInstance.loadFromDir(dir);
+						const vsInstance = await VSInstance.fromDir(dir);
 
 						vsInstances.push(vsInstance);
 					})
@@ -114,7 +114,8 @@ export class Data {
 
 			return data;
 		} catch (err) {
-			App.logger.error(`There was an error initializating the data:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the data: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
 		}
 	}
@@ -183,7 +184,8 @@ export class Data {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error saving the new Vintage Story Versions:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the new Vintage Story Versions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions!");
 		}
 	}
@@ -200,7 +202,8 @@ export class Data {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error saving the new Vintage Story Instances:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the new Vintage Story Instances: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances!");
 		}
 	}
@@ -216,7 +219,8 @@ export class Data {
 
 			this._file.writeJSON(JSON);
 		} catch (err) {
-			App.logger.error(`There was an error saving the data:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the data: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
 		}
 	}

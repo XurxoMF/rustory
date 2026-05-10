@@ -38,7 +38,8 @@
 
 			onSuccess?.();
 		} catch (err) {
-			App.logger.error(`There was an error deleting the Vintage Story Instance:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}

@@ -290,7 +290,7 @@ export class App {
 
 			App._isInitialized = true;
 		} catch (err) {
-			App._logger.error(`There was an error initializating the app:\n${err}`);
+			App._logger.error(`There was an error initializating the app: ${err}`);
 			App.exit(1);
 		}
 	}

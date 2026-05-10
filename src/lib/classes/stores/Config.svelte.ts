@@ -141,7 +141,8 @@ export class Config {
 
 			return config;
 		} catch (err) {
-			App.logger.error(`There was an error initializating the config:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the config: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
@@ -268,7 +269,8 @@ export class Config {
 
 			App.logger.debug(`Locale set to ${locale}!`);
 		} catch (err) {
-			App.logger.error(`There was an error setting the new locale:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the new locale: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new locale!");
 		}
 	}
@@ -297,7 +299,8 @@ export class Config {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error setting the new theme:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the new theme: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
 		}
 	}
@@ -330,7 +333,8 @@ export class Config {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error setting the new scale:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the new scale: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
 		}
 	}
@@ -357,7 +361,8 @@ export class Config {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error setting the new log level:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the new log level: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new log level!");
 		}
 	}
@@ -374,7 +379,8 @@ export class Config {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error saving the new Vintage Story Versions path:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the new Vintage Story Versions path: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
 		}
 	}
@@ -391,7 +397,8 @@ export class Config {
 
 			await this.save();
 		} catch (err) {
-			App.logger.error(`There was an error saving the new Vintage Story Instances path:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the new Vintage Story Instances path: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
 		}
 	}
@@ -407,7 +414,8 @@ export class Config {
 
 			this._file.writeJSON(JSON);
 		} catch (err) {
-			App.logger.error(`There was an error saving the config:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error saving the config: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
 		}
 	}

@@ -1,15 +1,16 @@
 /**
- * JSON of the Mod Author queried from the ModDB.
+ * JSON of the ModDB API Mod Tag.
  */
-export type VSAPIModAuthorJSON = {
-	userid: string;
+export type ModDBApiModTagJSON = {
+	tagid: number;
 	name: string;
+	color: string;
 };
 
 /**
- * Mod Author info queried from the ModDB.
+ * ModDB API Mod Tag fetched from the ModDB.
  */
-export class VSAPIModAuthor {
+export class ModDBApiModTag {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -22,9 +23,10 @@ export class VSAPIModAuthor {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModAuthor: { userid: string; name: string }) {
-		this._userid = vsApiModAuthor.userid;
-		this._name = vsApiModAuthor.name;
+	public constructor(modDBApiModTag: { tagid: number; name: string; color: string }) {
+		this._tagid = modDBApiModTag.tagid;
+		this._name = modDBApiModTag.name;
+		this._color = modDBApiModTag.color;
 	}
 
 	// *************************
@@ -32,31 +34,43 @@ export class VSAPIModAuthor {
 	// *************************
 
 	/**
-	 * The id of the author.
+	 * The id of the tag.
 	 */
-	private _userid: string;
+	private _tagid: number;
 
 	/**
-	 * The name of the author.
+	 * The name of the tag.
 	 */
 	private _name: string;
+
+	/**
+	 * The color of the tag.
+	 */
+	private _color: string;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
 
 	/**
-	 * The id of the author.
+	 * The id of the tag.
 	 */
-	public get userid(): string {
-		return this._userid;
+	public get tagid(): number {
+		return this._tagid;
 	}
 
 	/**
-	 * The name of the author.
+	 * The name of the tag.
 	 */
 	public get name(): string {
 		return this._name;
+	}
+
+	/**
+	 * The color of the tag.
+	 */
+	public get color(): string {
+		return this._color;
 	}
 
 	// ********************

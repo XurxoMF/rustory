@@ -3,15 +3,16 @@
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
-	import { VSAPIModOnList } from "$lib/classes/api/VSAPIModOnList.svelte";
+	import { ModDBApiBasicMod } from "$lib/classes/api/ModDBApiBasicMod.svelte";
 
 	import * as Typo from "$lib/components/ui/typography";
 	import * as Combobox from "$lib/components/ui/combobox";
 
-	import VsApiModOnListCard from "./vs-api-mod-on-list-card.svelte";
-	import VsApiModOnListCardSkeleton from "./vs-api-mod-on-list-card-skeleton.svelte";
+	import ModDBApiBasicModCard from "./moddb-api-basic-mod-card.svelte";
+	import ModDBApiBasicModCardSkeleton from "./moddb-api-basic-mod-card-skeleton.svelte";
+	import { AppError } from "$lib/classes/errors/AppError.svelte";
 
-	const vsApiModsOnListPromise = VSAPIModOnList.getAllFromModDB();
+	const modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll();
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Mods" }];
 
@@ -41,15 +42,21 @@
 
 <!-- List of Vintage Story Instances -->
 <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-	{#await vsApiModsOnListPromise}
+	{#await modDBApiBasicModsPromise}
 		{#each Array(20) as _, i (i)}
-			<VsApiModOnListCardSkeleton />
+			<ModDBApiBasicModCardSkeleton />
 		{/each}
-	{:then vsApiModsOnList}
-		{#each vsApiModsOnList?.sort((a, b) => b.downloads - a.downloads).slice(0, 20) as vsApiModOnList (vsApiModOnList.modid)}
-			<VsApiModOnListCard {vsApiModOnList} {vsInstance} />
+	{:then modDBApiModsOnList}
+		{#each modDBApiModsOnList?.sort((a, b) => b.downloads - a.downloads).slice(0, 20) as modDBApiModOnList (modDBApiModOnList.modid)}
+			<ModDBApiBasicModCard modDBApiBasicMod={modDBApiModOnList} {vsInstance} />
 		{:else}
 			<Typo.P>No mods found. Check if you're connected to the internet and try again!</Typo.P>
 		{/each}
+	{:catch err}
+		{#if err instanceof AppError}
+			<Typo.P>Error loading mods!</Typo.P>
+			<Typo.P>{err.code}</Typo.P>
+			<Typo.P>{err.message}</Typo.P>
+		{/if}
 	{/await}
 </div>

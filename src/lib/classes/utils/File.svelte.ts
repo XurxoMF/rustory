@@ -42,7 +42,8 @@ export class File {
 
 			return new File({ path, directory });
 		} catch (err) {
-			App.logger.error(`There was an error creating the file:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error creating the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
 		}
 	}
@@ -100,7 +101,8 @@ export class File {
 
 			if (!fileExists) await create(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error ensuring the directory exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -115,7 +117,8 @@ export class File {
 
 			return await exists(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error chcking if the file exists:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error chcking if the file exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
 		}
 	}
@@ -133,7 +136,8 @@ export class File {
 
 			await remove(this.path);
 		} catch (err) {
-			App.logger.error(`There was an error deleting the file ${this.path}:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the file ${this.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the file ${this.path}`);
 		}
 	}
@@ -150,7 +154,8 @@ export class File {
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
-			App.logger.error(`There was an error setting the file permissions:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error setting the file permissions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
 		}
 	}
@@ -169,7 +174,8 @@ export class File {
 
 			return fileContents;
 		} catch (err) {
-			App.logger.error(`There was an error reading the file:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error reading the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -186,7 +192,8 @@ export class File {
 
 			await writeTextFile(this.path, text);
 		} catch (err) {
-			App.logger.error(`There was an error writing the file:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error writing the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}
@@ -207,7 +214,8 @@ export class File {
 
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
-			App.logger.error(`There was an error reading the file:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error reading the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -224,7 +232,8 @@ export class File {
 
 			await writeTextFile(this.path, JSON.stringify(data, null, 4));
 		} catch (err) {
-			App.logger.error(`There was an error writing the file:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error writing the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}

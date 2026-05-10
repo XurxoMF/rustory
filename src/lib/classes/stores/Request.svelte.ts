@@ -36,7 +36,8 @@ export class Request {
 
 			return new Request();
 		} catch (err) {
-			App.logger.error(`There was an error initializating the request:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the request: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
 		}
 	}
@@ -94,10 +95,7 @@ export class Request {
 		try {
 			App.logger.debug("Making request...");
 
-			if (!App.info.isOnline) {
-				App.logger.error("Can't make a request while the app is offline!");
-				throw new AppError(AppErrorCodes.GENERIC_ERROR, "Can't make a request while the app is offline!");
-			}
+			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't make a request while offline!");
 
 			const response = await fetch(url);
 
@@ -109,7 +107,8 @@ export class Request {
 
 			return response;
 		} catch (err) {
-			App.logger.error(`There was an error making the request to ${url}:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error making the request to ${url}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
 		}
 	}

@@ -48,7 +48,8 @@ export class Hotkeys {
 				hotkeys: hks
 			});
 		} catch (err) {
-			App.logger.error(`There was an error initializating the hotkeys:\n${err}`);
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error initializating the hotkeys: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
 		}
 	}

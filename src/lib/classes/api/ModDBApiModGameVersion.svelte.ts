@@ -1,16 +1,16 @@
 /**
- * JSON of the Mod Game Version queried from the ModDB.
+ * JSON of the ModDB API Mod Game Version.
  */
-export type VSAPIModGameVersionJSON = {
+export type ModDBApiModGameVersionJSON = {
 	tagid: string;
 	name: string;
 	color: string;
 };
 
 /**
- * Mod Game Version queried from the ModDB.
+ * ModDB API Mod Game Version fetched from the ModDB.
  */
-export class VSAPIModGameVersion {
+export class ModDBApiModGameVersion {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -23,10 +23,10 @@ export class VSAPIModGameVersion {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiModGameVersion: { tagid: string; name: string; color: string }) {
-		this._tagid = vsApiModGameVersion.tagid;
-		this._name = vsApiModGameVersion.name;
-		this._color = vsApiModGameVersion.color;
+	public constructor(modDBApiModGameVersion: { tagid: string; name: string; color: string }) {
+		this._tagid = modDBApiModGameVersion.tagid;
+		this._name = modDBApiModGameVersion.name;
+		this._color = modDBApiModGameVersion.color;
 	}
 
 	// *************************

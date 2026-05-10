@@ -2,16 +2,13 @@ import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
-import { VSMod } from "../vs/VSMod.svelte";
-
-import { VSAPIModRelease, type VSAPIModReleaseJSON } from "$lib/classes/api/VSAPIModRelease.svelte";
-import { VSAPIModScreenshot, type VSAPIModScreenshotJSON } from "$lib/classes/api/VSAPIModScreenshot.svelte";
-import type { Directory } from "../utils/Directory.svelte";
+import { ModDBApiModRelease, type ModDBApiModReleaseJSON } from "$lib/classes/api/ModDBApiModRelease.svelte";
+import { ModDBApiModScreenshot, type ModDBApiModScreenshotJSON } from "$lib/classes/api/ModDBApiModScreenshot.svelte";
 
 /**
- * JSON of the Mod queried from the ModDB.
+ * JSON of the ModDB API Mod.
  */
-export type VSAPIModJSON = {
+export type ModDBApiModJSON = {
 	modid: number;
 	assetid: number;
 	name: string;
@@ -34,15 +31,15 @@ export type VSAPIModJSON = {
 	createdat: string;
 	lastmodified: string;
 	tags: string[];
-	releases: VSAPIModReleaseJSON[];
-	screenshots: VSAPIModScreenshotJSON[];
+	releases: ModDBApiModReleaseJSON[];
+	screenshots: ModDBApiModScreenshotJSON[];
 };
 
 /**
- * Mod info queried from the ModDB.
- * This is the complete mod from /api/mods/{modid}.
+ * ModDB API Mod fetched from the ModDB.
+ * This is the complete Mod from /api/mod/{modid}.
  */
-export class VSAPIMod {
+export class ModDBApiMod {
 	// ***********************
 	// *  STATIC PROPERTIES  *
 	// ***********************
@@ -55,7 +52,7 @@ export class VSAPIMod {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor(vsApiMod: {
+	public constructor(modDBApiMod: {
 		modid: number;
 		assetid: number;
 		name: string;
@@ -78,33 +75,33 @@ export class VSAPIMod {
 		createdat: string;
 		lastmodified: string;
 		tags: string[];
-		releases: VSAPIModRelease[];
-		screenshots: VSAPIModScreenshot[];
+		releases: ModDBApiModRelease[];
+		screenshots: ModDBApiModScreenshot[];
 	}) {
-		this._modid = vsApiMod.modid;
-		this._assetid = vsApiMod.assetid;
-		this._name = vsApiMod.name;
-		this._text = vsApiMod.text;
-		this._author = vsApiMod.author;
-		this._urlalias = vsApiMod.urlalias;
-		this._logofilename = vsApiMod.logofilename;
-		this._logofile = vsApiMod.logofile;
-		this._homepageurl = vsApiMod.homepageurl;
-		this._sourcecodeurl = vsApiMod.sourcecodeurl;
-		this._trailervideourl = vsApiMod.trailervideourl;
-		this._issuetrackerurl = vsApiMod.issuetrackerurl;
-		this._wikiurl = vsApiMod.wikiurl;
-		this._downloads = vsApiMod.downloads;
-		this._follows = vsApiMod.follows;
-		this._trendingpoints = vsApiMod.trendingpoints;
-		this._comments = vsApiMod.comments;
-		this._side = vsApiMod.side;
-		this._type = vsApiMod.type;
-		this._createdat = vsApiMod.createdat;
-		this._lastmodified = vsApiMod.lastmodified;
-		this._tags = vsApiMod.tags;
-		this._releases = vsApiMod.releases;
-		this._screenshots = vsApiMod.screenshots;
+		this._modid = modDBApiMod.modid;
+		this._assetid = modDBApiMod.assetid;
+		this._name = modDBApiMod.name;
+		this._text = modDBApiMod.text;
+		this._author = modDBApiMod.author;
+		this._urlalias = modDBApiMod.urlalias;
+		this._logofilename = modDBApiMod.logofilename;
+		this._logofile = modDBApiMod.logofile;
+		this._homepageurl = modDBApiMod.homepageurl;
+		this._sourcecodeurl = modDBApiMod.sourcecodeurl;
+		this._trailervideourl = modDBApiMod.trailervideourl;
+		this._issuetrackerurl = modDBApiMod.issuetrackerurl;
+		this._wikiurl = modDBApiMod.wikiurl;
+		this._downloads = modDBApiMod.downloads;
+		this._follows = modDBApiMod.follows;
+		this._trendingpoints = modDBApiMod.trendingpoints;
+		this._comments = modDBApiMod.comments;
+		this._side = modDBApiMod.side;
+		this._type = modDBApiMod.type;
+		this._createdat = modDBApiMod.createdat;
+		this._lastmodified = modDBApiMod.lastmodified;
+		this._tags = modDBApiMod.tags;
+		this._releases = modDBApiMod.releases;
+		this._screenshots = modDBApiMod.screenshots;
 	}
 
 	// *************************
@@ -224,12 +221,12 @@ export class VSAPIMod {
 	/**
 	 * The releases of the mod.
 	 */
-	private _releases: VSAPIModRelease[];
+	private _releases: ModDBApiModRelease[];
 
 	/**
 	 * The screenshots of the mod.
 	 */
-	private _screenshots: VSAPIModScreenshot[];
+	private _screenshots: ModDBApiModScreenshot[];
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
@@ -392,14 +389,14 @@ export class VSAPIMod {
 	/**
 	 * The releases of the mod.
 	 */
-	public get releases(): VSAPIModRelease[] {
+	public get releases(): ModDBApiModRelease[] {
 		return this._releases;
 	}
 
 	/**
 	 * The screenshots of the mod.
 	 */
-	public get screenshots(): VSAPIModScreenshot[] {
+	public get screenshots(): ModDBApiModScreenshot[] {
 		return this._screenshots;
 	}
 
@@ -408,23 +405,23 @@ export class VSAPIMod {
 	// ********************
 
 	/**
-	 * Queries a mod from the ModDB API.
-	 * @param modid The id of the mod to query.
-	 * @returns The mod from the ModDB API or undefined.
+	 * Fetches a ModDB API Mod.
+	 * @param modid The id of the Mod.
+	 * @returns The ModDB API Mod.
 	 */
-	public static async getFromModDB(modid: string | number): Promise<VSAPIMod | undefined> {
+	public static async fetch(modid: string | number): Promise<ModDBApiMod> {
 		try {
-			App.logger.debug(`Getting the API Mod of the Vintage Story Mod ${modid} from the ModDB...`);
+			App.logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
 
-			if (!App.info.isOnline) return undefined;
+			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch the ModDB API Mod while offline!");
 
 			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`);
 
-			const json: { mod: VSAPIModJSON } = await res.json();
+			const json: { mod: ModDBApiModJSON } = await res.json();
 
-			const jsonMod: VSAPIModJSON = json.mod;
+			const jsonMod: ModDBApiModJSON = json.mod;
 
-			const apiMod = new VSAPIMod({
+			const apiMod = new ModDBApiMod({
 				modid: jsonMod.modid,
 				assetid: jsonMod.assetid,
 				name: jsonMod.name,
@@ -447,46 +444,19 @@ export class VSAPIMod {
 				createdat: jsonMod.createdat,
 				lastmodified: jsonMod.lastmodified,
 				tags: jsonMod.tags,
-				releases: jsonMod.releases.map((release) => new VSAPIModRelease(release)),
-				screenshots: jsonMod.screenshots.map((screenshot) => new VSAPIModScreenshot(screenshot))
+				releases: jsonMod.releases.map((release) => new ModDBApiModRelease(release)),
+				screenshots: jsonMod.screenshots.map((screenshot) => new ModDBApiModScreenshot(screenshot))
 			});
 
 			return apiMod;
 		} catch (err) {
-			App.logger.error(`There was an error querying the Vintage Story API Mod:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error querying the Vintage Story API Mod!");
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error fetching the ModDB API Mod with ID ${modid}: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod with ID ${modid}!`);
 		}
 	}
 
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
-
-	/**
-	 * Installs this Vintage Story Mod on the selected directory.
-	 * @param dir The directory to download this mod to.
-	 * @param release The release to install.
-	 * @returns The installed Vintage Story Mod.
-	 */
-	public async install(dir: Directory, release: VSAPIModRelease): Promise<VSMod> {
-		try {
-			App.logger.debug(`Installing the Vintage Story Mod ${this._name}...`);
-
-			const zip = await release.download(dir, this._name);
-
-			const mod = await VSMod.loadFromZip(zip);
-
-			if (mod === undefined) {
-				await zip.delete();
-
-				App.logger.error(`The installed Vintage Story Mod ${this._name} could not be identified! Removing it!`);
-				throw new AppError(AppErrorCodes.GENERIC_ERROR, `The installed Vintage Story Mod ${this._name} could not be identified! Removing it!`);
-			}
-
-			return mod;
-		} catch (err) {
-			App.logger.error(`There was an error installing the Vintage Story Mod ${this._name}:\n${err}`);
-			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error installing the Vintage Story Mod ${this._name}!`);
-		}
-	}
 }
