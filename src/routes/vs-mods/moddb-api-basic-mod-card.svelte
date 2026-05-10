@@ -1,15 +1,11 @@
 <script lang="ts" module>
 	export type ModDBApiModOnListCardProps = {
 		modDBApiBasicMod: ModDBApiBasicMod;
-		vsInstance?: VSInstance | undefined;
 	};
 </script>
 
 <script lang="ts">
 	import { App } from "$lib/classes/App.svelte";
-
-	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
-	import { VSMod } from "$lib/classes/vs/VSMod.svelte";
 
 	import type { ModDBApiBasicMod } from "$lib/classes/api/ModDBApiBasicMod.svelte";
 
@@ -19,9 +15,7 @@
 	import * as Table from "$lib/components/ui/table";
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
 
-	let { modDBApiBasicMod, vsInstance }: ModDBApiModOnListCardProps = $props();
-
-	const modDBApiModPromise = $derived(modDBApiBasicMod.toModDBApiMod());
+	let { modDBApiBasicMod }: ModDBApiModOnListCardProps = $props();
 </script>
 
 <Card.Root>
@@ -67,23 +61,5 @@
 
 	<Card.Footer class="flex justify-end gap-2">
 		<Button.Root class="flex-1" variant="outline" onclick={() => App.toaster.toast.info("Not implemented yet!")}>View</Button.Root>
-
-		{#await modDBApiModPromise}
-			<Button.Skeleton class="flex-1" />
-		{:then modDBApiMod}
-			<Button.Root
-				class="flex-1"
-				onclick={async () => {
-					const zip = await modDBApiMod!.releases[0]?.download(vsInstance!.modsDir, modDBApiMod!.name);
-
-					const vsMod = await VSMod.fromZip(zip);
-
-					vsInstance!.mods = [...vsInstance!.mods, vsMod];
-				}}
-				disabled={!vsInstance || !modDBApiMod}
-			>
-				Install
-			</Button.Root>
-		{/await}
 	</Card.Footer>
 </Card.Root>

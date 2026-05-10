@@ -20,6 +20,8 @@
 
 	import { App } from "$lib/classes/App.svelte";
 
+	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+
 	import { Directory } from "$lib/classes/utils/Directory.svelte";
 
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
@@ -39,7 +41,15 @@
 
 	let { params }: PageProps = $props();
 
-	const rApiVersionsPromise: Promise<RustoryApiVSVersion[]> = RustoryApiVSVersion.fetchAll();
+	const rustoryApiVersionsPromise: Promise<RustoryApiVSVersion[]> = RustoryApiVSVersion.fetchAll();
+
+	$effect(() => {
+		rustoryApiVersionsPromise.catch(() =>
+			App.toaster.toast.error("You're offline!", {
+				description: "Vintage Story Versions could not be fetched because you're offline! Check your internet connection and try again!"
+			})
+		);
+	});
 
 	const vsInstance: VSInstance | undefined = $derived(App.data.vsInstances.find((vsInstance) => vsInstance.id === params.slug));
 
@@ -70,7 +80,9 @@
 	$effect(() => {
 		form.name.value = vsInstance?.name ?? "";
 		form.description.value = vsInstance?.description ?? "";
-		rApiVersionsPromise.then((rApiVersions) => (form.rApiVersion.value = rApiVersions.find((v) => v.version === vsInstance?.version) ?? undefined));
+		rustoryApiVersionsPromise.then(
+			(rustoryApiVersions) => (form.rApiVersion.value = rustoryApiVersions.find((v) => v.version === vsInstance?.version) ?? undefined)
+		);
 		form.backupsLimit.value = vsInstance?.backupsLimit ?? 3;
 		form.backupsAuto.value = vsInstance?.backupsAuto ?? false;
 		form.backupsCompressionLevel.value = vsInstance?.backupsCompressionLevel ?? 4;
@@ -235,12 +247,12 @@
 					<Field.Field data-invalid={form.rApiVersion.errors.length > 0}>
 						<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
-						{#await rApiVersionsPromise}
+						{#await rustoryApiVersionsPromise}
 							<Button.Skeleton />
-						{:then rApiVersions}
+						{:then rustoryApiVersions}
 							<Combobox.Root
 								value={form.rApiVersion.value?.version}
-								onchange={(v) => (form.rApiVersion.value = rApiVersions.find((vs) => vs.version === v))}
+								onchange={(v) => (form.rApiVersion.value = rustoryApiVersions.find((vs) => vs.version === v))}
 							>
 								<Combobox.Trigger>{form.rApiVersion.value?.version || "Select a version..."}</Combobox.Trigger>
 
@@ -251,13 +263,23 @@
 										<Combobox.Empty>No Vintage Story Versions found.</Combobox.Empty>
 
 										<Combobox.Group>
-											{#each rApiVersions as v (v.version)}
+											{#each rustoryApiVersions as v (v.version)}
 												<Combobox.Item value={v.version}>{v.version}</Combobox.Item>
 											{/each}
 										</Combobox.Group>
 									</Combobox.List>
 								</Combobox.Content>
 							</Combobox.Root>
+						{:catch err}
+							{#if err instanceof AppError}
+								{#if err.code === AppErrorCodes.OFFLINE}
+									<Typo.P class="text-destructive">You're offline!</Typo.P>
+								{:else}
+									<Typo.P class="text-destructive">An error has ocurred!</Typo.P>
+								{/if}
+							{:else}
+								<Typo.P class="text-destructive">An error has ocurred!</Typo.P>
+							{/if}
 						{/await}
 
 						{#if form.rApiVersion.errors.length > 0}

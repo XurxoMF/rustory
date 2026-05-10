@@ -66,7 +66,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-red-500!")}>
+						<Button.Root {...props} variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-destructive!")}>
 							<IconWorld />
 							<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>
 						</Button.Root>

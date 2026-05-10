@@ -93,7 +93,7 @@ export class Info {
 			const capitalizedName = `${name.charAt(0).toUpperCase()}${name.slice(1)}`;
 			const version = await app.getVersion();
 			const icon = await defaultWindowIcon();
-			const isOnline = navigator.onLine;
+			const isOnline = false;
 
 			App.logger.debug("Loading OS info...");
 

@@ -46,7 +46,7 @@
 
 		<Confirm.Root />
 
-		<Toaster.Root position="top-center" closeButton richColors visibleToasts={10} />
+		<Toaster.Root position="top-right" closeButton richColors visibleToasts={10} duration={10_000} />
 
 		<Sidebar.Provider open={true}>
 			<AppSidebar />
@@ -57,7 +57,7 @@
 				<AppHeader />
 
 				<ScrollArea.Root class="h-[calc(100%-var(--header-height))] w-full">
-					<div class="flex flex-col gap-4 p-4">
+					<div class="flex min-h-full w-full flex-col gap-4 p-4">
 						{@render children()}
 					</div>
 				</ScrollArea.Root>
