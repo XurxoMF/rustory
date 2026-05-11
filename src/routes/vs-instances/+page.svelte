@@ -150,18 +150,20 @@
 {/if}
 
 <FloatingMenu.Root>
-	<Tooltip.Root>
-		<Tooltip.Trigger>
-			{#snippet child({ props })}
-				<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/create"))}>
-					<IconPlus />
-					<span class="sr-only">Create new Vintage Story Instance</span>
-				</Button.Root>
-			{/snippet}
-		</Tooltip.Trigger>
+	<FloatingMenu.Group>
+		<Tooltip.Root>
+			<Tooltip.Trigger>
+				{#snippet child({ props })}
+					<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/create"))}>
+						<IconPlus />
+						<span class="sr-only">Create new Vintage Story Instance</span>
+					</Button.Root>
+				{/snippet}
+			</Tooltip.Trigger>
 
-		<Tooltip.Content>
-			<p>Create new Vintage Story Instance</p>
-		</Tooltip.Content>
-	</Tooltip.Root>
+			<Tooltip.Content>
+				<p>Create new Vintage Story Instance</p>
+			</Tooltip.Content>
+		</Tooltip.Root>
+	</FloatingMenu.Group>
 </FloatingMenu.Root>

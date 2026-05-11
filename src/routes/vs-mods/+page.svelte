@@ -1,9 +1,21 @@
 <script lang="ts">
+	import { PersistedState } from "runed";
+
+	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
 	import IconWorld from "@tabler/icons-svelte/icons/world";
 	import IconError404 from "@tabler/icons-svelte/icons/error-404";
 	import IconTool from "@tabler/icons-svelte/icons/tool";
+	import IconFilter from "@tabler/icons-svelte/icons/filter";
+	import IconLayoutGrid from "@tabler/icons-svelte/icons/layout-grid";
+	import IconLayoutList from "@tabler/icons-svelte/icons/layout-list";
+	import IconLetterCase from "@tabler/icons-svelte/icons/letter-case";
+	import IconDownload from "@tabler/icons-svelte/icons/download";
+	import IconTrendingUp from "@tabler/icons-svelte/icons/trending-up";
+	import IconStar from "@tabler/icons-svelte/icons/star";
+	import IconSortAscending2 from "@tabler/icons-svelte/icons/sort-ascending-2";
+	import IconSortDescending2 from "@tabler/icons-svelte/icons/sort-descending-2";
 
 	import { App } from "$lib/classes/App.svelte";
 
@@ -17,17 +29,49 @@
 	import * as Combobox from "$lib/components/ui/combobox";
 	import * as Empty from "$lib/components/ui/empty";
 	import * as Button from "$lib/components/ui/button";
+	import * as ToggleGroup from "$lib/components/ui/toggle-group";
 	import * as Card from "$lib/components/ui/card";
+	import * as Item from "$lib/components/ui/item";
 	import * as Badge from "$lib/components/ui/badge";
 	import * as Table from "$lib/components/ui/table";
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
-	import { goto } from "$app/navigation";
+	import * as Pagination from "$lib/components/ui/pagination";
+	import * as Sheet from "$lib/components/ui/sheet";
+	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	const modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll();
 
+	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
+
 	App.breadcrumbs.segments = [{ label: "Vintage Story Mods" }];
 
-	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
+	let currentPage: number = $state(1);
+
+	const itemsPerPage = new PersistedState<number>("vs-mods-items-per-page", 20);
+	const layout = new PersistedState<"grid" | "list">("vs-mods-layout", "grid");
+	const sortBy = new PersistedState<"name" | "downloads" | "trending" | "follows">("vs-mods-sort-by", "name");
+	const sortOrder = new PersistedState<"asc" | "desc">("vs-mods-sort-order", "desc");
+
+	function orderModDBApiBasicMods(modDBApiBasicMods: ModDBApiBasicMod[]): ModDBApiBasicMod[] {
+		return modDBApiBasicMods.sort((a, b) => {
+			switch (sortBy.current) {
+				case "name":
+					if (sortOrder.current === "desc") return b.name.localeCompare(a.name);
+					return a.name.localeCompare(b.name);
+				case "downloads":
+					if (sortOrder.current === "desc") return b.downloads - a.downloads;
+					return a.downloads - b.downloads;
+				case "trending":
+					if (sortOrder.current === "desc") return b.trendingpoints - a.trendingpoints;
+					return a.trendingpoints - b.trendingpoints;
+				case "follows":
+					if (sortOrder.current === "desc") return b.follows - a.follows;
+					return a.follows - b.follows;
+				default:
+					return 0;
+			}
+		});
+	}
 </script>
 
 <Typo.H1>Vintage Story Mods</Typo.H1>
@@ -54,48 +98,93 @@
 
 <!-- List of Vintage Story Mods -->
 {#await modDBApiBasicModsPromise}
-	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-		{#each Array(20) as _, i (i)}
-			<Card.Root>
-				<Card.Header>
-					<Card.Title><Card.TitleSkeleton /></Card.Title>
+	{#if layout.current === "grid"}
+		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+			{#each Array(itemsPerPage) as _, i (i)}
+				<Card.Root>
+					<Card.Header>
+						<Card.Title><Card.TitleSkeleton /></Card.Title>
 
-					<Card.Description>
-						<Card.DescriptionSkeleton />
-						<Card.DescriptionSkeleton />
-					</Card.Description>
+						<Card.Description>
+							<Card.DescriptionSkeleton />
+							<Card.DescriptionSkeleton />
+						</Card.Description>
 
-					<Card.Action>
-						<Badge.Skeleton />
-					</Card.Action>
-				</Card.Header>
+						<Card.Action>
+							<Badge.Skeleton />
+						</Card.Action>
+					</Card.Header>
 
-				<Card.Content class="mt-auto">
-					<AspectRatio.Skeleton ratio={3 / 2} class="overflow-hidden rounded-lg" />
+					<Card.Content class="mt-auto">
+						<AspectRatio.Skeleton ratio={3 / 2} class="overflow-hidden rounded-lg" />
 
-					<Table.Root class="mt-4">
-						<Table.Body>
-							{#each Array(4) as _, j (j)}
-								<Table.Row>
-									<Table.Cell align="left">
-										<Table.CellSkeleton />
-									</Table.Cell>
+						<Table.Root class="mt-4">
+							<Table.Body>
+								{#each Array(4) as _, j (j)}
+									<Table.Row>
+										<Table.Cell align="left">
+											<Table.CellSkeleton />
+										</Table.Cell>
 
-									<Table.Cell align="right">
-										<Table.CellSkeleton />
-									</Table.Cell>
-								</Table.Row>
-							{/each}
-						</Table.Body>
-					</Table.Root>
-				</Card.Content>
+										<Table.Cell align="right">
+											<Table.CellSkeleton />
+										</Table.Cell>
+									</Table.Row>
+								{/each}
+							</Table.Body>
+						</Table.Root>
+					</Card.Content>
 
-				<Card.Footer class="flex justify-end gap-2">
-					<Button.Skeleton class="flex-1" />
-				</Card.Footer>
-			</Card.Root>
-		{/each}
-	</div>
+					<Card.Footer class="flex justify-end gap-2">
+						<Button.Skeleton class="flex-1" />
+					</Card.Footer>
+				</Card.Root>
+			{/each}
+		</div>
+	{:else}
+		<div class="flex flex-col gap-4">
+			{#each Array(itemsPerPage) as _, i (i)}
+				<Card.Root>
+					<Card.Header>
+						<Card.Title><Card.TitleSkeleton /></Card.Title>
+
+						<Card.Description>
+							<Card.DescriptionSkeleton />
+							<Card.DescriptionSkeleton />
+						</Card.Description>
+
+						<Card.Action>
+							<Badge.Skeleton />
+						</Card.Action>
+					</Card.Header>
+
+					<Card.Content class="mt-auto">
+						<AspectRatio.Skeleton ratio={3 / 2} class="overflow-hidden rounded-lg" />
+
+						<Table.Root class="mt-4">
+							<Table.Body>
+								{#each Array(4) as _, j (j)}
+									<Table.Row>
+										<Table.Cell align="left">
+											<Table.CellSkeleton />
+										</Table.Cell>
+
+										<Table.Cell align="right">
+											<Table.CellSkeleton />
+										</Table.Cell>
+									</Table.Row>
+								{/each}
+							</Table.Body>
+						</Table.Root>
+					</Card.Content>
+
+					<Card.Footer class="flex justify-end gap-2">
+						<Button.Skeleton class="flex-1" />
+					</Card.Footer>
+				</Card.Root>
+			{/each}
+		</div>
+	{/if}
 {:then modDBApiBasicMods}
 	{#if modDBApiBasicMods.length === 0}
 		<Empty.Root>
@@ -116,61 +205,129 @@
 			</Empty.Content>
 		</Empty.Root>
 	{:else}
-		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-			{#each modDBApiBasicMods?.sort((a, b) => b.downloads - a.downloads).slice(0, 20) as modDBApiBasicMod (modDBApiBasicMod.modid)}
-				<Card.Root>
-					<Card.Header>
-						<Card.Title class="text-lg">{modDBApiBasicMod.name}</Card.Title>
+		{#if layout.current === "grid"}
+			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * itemsPerPage.current - itemsPerPage.current, currentPage * itemsPerPage.current) as modDBApiBasicMod (modDBApiBasicMod.modid)}
+					<Card.Root>
+						<Card.Header>
+							<Card.Title class="text-lg">{modDBApiBasicMod.name}</Card.Title>
 
-						<Card.Description class="line-clamp-2">{modDBApiBasicMod.summary}</Card.Description>
+							<Card.Description class="line-clamp-2">{modDBApiBasicMod.summary}</Card.Description>
 
-						<Card.Action>
-							<Badge.Root variant="outline">{modDBApiBasicMod.side}</Badge.Root>
-						</Card.Action>
-					</Card.Header>
+							<Card.Action>
+								<Badge.Root variant="outline">{modDBApiBasicMod.side}</Badge.Root>
+							</Card.Action>
+						</Card.Header>
 
-					<Card.Content class="mt-auto">
-						<AspectRatio.Root ratio={3 / 2} class="overflow-hidden rounded-lg">
-							<img src={modDBApiBasicMod.logo} alt={`${modDBApiBasicMod.name} logo`} />
-						</AspectRatio.Root>
+						<Card.Content class="mt-auto">
+							<AspectRatio.Root ratio={3 / 2} class="overflow-hidden rounded-lg">
+								<img src={modDBApiBasicMod.logo} alt={`${modDBApiBasicMod.name} logo`} />
+							</AspectRatio.Root>
 
-						<Table.Root class="mt-4">
-							<Table.Body>
-								<Table.Row>
-									<Table.Cell class="text-muted-foreground" align="left">Author</Table.Cell>
-									<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.author}</Table.Cell>
-								</Table.Row>
+							<Table.Root class="mt-4">
+								<Table.Body>
+									<Table.Row>
+										<Table.Cell class="text-muted-foreground" align="left">Author</Table.Cell>
+										<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.author}</Table.Cell>
+									</Table.Row>
 
-								<Table.Row>
-									<Table.Cell class="text-muted-foreground" align="left">Follows</Table.Cell>
-									<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.follows}</Table.Cell>
-								</Table.Row>
+									<Table.Row>
+										<Table.Cell class="text-muted-foreground" align="left">Follows</Table.Cell>
+										<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.follows}</Table.Cell>
+									</Table.Row>
 
-								<Table.Row>
-									<Table.Cell class="text-muted-foreground" align="left">Downloads</Table.Cell>
-									<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.downloads}</Table.Cell>
-								</Table.Row>
+									<Table.Row>
+										<Table.Cell class="text-muted-foreground" align="left">Downloads</Table.Cell>
+										<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.downloads}</Table.Cell>
+									</Table.Row>
 
-								<Table.Row>
-									<Table.Cell class="text-muted-foreground" align="left">Comments</Table.Cell>
-									<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.comments}</Table.Cell>
-								</Table.Row>
-							</Table.Body>
-						</Table.Root>
-					</Card.Content>
+									<Table.Row>
+										<Table.Cell class="text-muted-foreground" align="left">Comments</Table.Cell>
+										<Table.Cell class="font-bold" align="right">{modDBApiBasicMod.comments}</Table.Cell>
+									</Table.Row>
+								</Table.Body>
+							</Table.Root>
+						</Card.Content>
 
-					<Card.Footer class="flex justify-end gap-2">
-						<Button.Root
-							class="flex-1"
-							variant="outline"
-							onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}
-						>
-							View
-						</Button.Root>
-					</Card.Footer>
-				</Card.Root>
-			{/each}
-		</div>
+						<Card.Footer class="flex justify-end gap-2">
+							<Button.Root
+								class="flex-1"
+								variant="outline"
+								onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}
+							>
+								View
+							</Button.Root>
+						</Card.Footer>
+					</Card.Root>
+				{/each}
+			</div>
+		{:else}
+			<div class="flex flex-col gap-4">
+				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * itemsPerPage.current - itemsPerPage.current, currentPage * itemsPerPage.current) as modDBApiBasicMod (modDBApiBasicMod.modid)}
+					<Item.Root variant="outline">
+						<Item.Media variant="image">
+							<AspectRatio.Root ratio={3 / 3} class="overflow-hidden rounded-lg">
+								<img src={modDBApiBasicMod.logo} alt={`${modDBApiBasicMod.name} logo`} />
+							</AspectRatio.Root>
+						</Item.Media>
+
+						<Item.Content>
+							<Item.Title class="line-clamp-1">
+								{modDBApiBasicMod.name} -
+								<span class="text-muted-foreground">{modDBApiBasicMod.author}</span>
+							</Item.Title>
+
+							<Item.Description>
+								Follows: {modDBApiBasicMod.follows} · Downloads: {modDBApiBasicMod.downloads} · Comments: {modDBApiBasicMod.comments}
+							</Item.Description>
+						</Item.Content>
+
+						<Item.Actions>
+							<Button.Root
+								class="flex-1"
+								variant="outline"
+								size="sm"
+								onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}
+							>
+								View
+							</Button.Root>
+						</Item.Actions>
+					</Item.Root>
+				{/each}
+			</div>
+		{/if}
+
+		<Pagination.Root
+			count={modDBApiBasicMods.length}
+			bind:page={currentPage}
+			onPageChange={() => App.UI.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
+		>
+			{#snippet children({ pages, currentPage })}
+				<Pagination.Content>
+					<Pagination.Item>
+						<Pagination.PrevButton />
+					</Pagination.Item>
+
+					{#each pages as page (page.key)}
+						{#if page.type === "ellipsis"}
+							<Pagination.Item>
+								<Pagination.Ellipsis />
+							</Pagination.Item>
+						{:else}
+							<Pagination.Item>
+								<Pagination.Link {page} isActive={currentPage === page.value}>
+									{page.value}
+								</Pagination.Link>
+							</Pagination.Item>
+						{/if}
+					{/each}
+
+					<Pagination.Item>
+						<Pagination.NextButton />
+					</Pagination.Item>
+				</Pagination.Content>
+			{/snippet}
+		</Pagination.Root>
 	{/if}
 {:catch err}
 	{#if err instanceof AppError && err.code === AppErrorCodes.OFFLINE}
@@ -211,3 +368,62 @@
 		</Empty.Root>
 	{/if}
 {/await}
+
+<FloatingMenu.Root>
+	<FloatingMenu.Group>
+		<ToggleGroup.Root type="single" variant="outline" bind:value={sortBy.current}>
+			<ToggleGroup.Item value="name" aria-label="Sort by name">
+				<IconLetterCase />
+			</ToggleGroup.Item>
+
+			<ToggleGroup.Item value="downloads" aria-label="Sort by downloads">
+				<IconDownload />
+			</ToggleGroup.Item>
+
+			<ToggleGroup.Item value="trending" aria-label="Sort by trending">
+				<IconTrendingUp />
+			</ToggleGroup.Item>
+
+			<ToggleGroup.Item value="follows" aria-label="Sort by follows">
+				<IconStar />
+			</ToggleGroup.Item>
+		</ToggleGroup.Root>
+
+		<ToggleGroup.Root type="single" variant="outline" bind:value={sortOrder.current}>
+			<ToggleGroup.Item value="desc" aria-label="Sort in descending order">
+				<IconSortDescending2 />
+			</ToggleGroup.Item>
+
+			<ToggleGroup.Item value="asc" aria-label="Sort in ascending order">
+				<IconSortAscending2 />
+			</ToggleGroup.Item>
+		</ToggleGroup.Root>
+	</FloatingMenu.Group>
+
+	<FloatingMenu.Group>
+		<ToggleGroup.Root type="single" variant="outline" bind:value={layout.current}>
+			<ToggleGroup.Item value="grid" aria-label="Change layout to grid">
+				<IconLayoutGrid />
+			</ToggleGroup.Item>
+
+			<ToggleGroup.Item value="list" aria-label="Change layout to list">
+				<IconLayoutList />
+			</ToggleGroup.Item>
+		</ToggleGroup.Root>
+	</FloatingMenu.Group>
+
+	<FloatingMenu.Group>
+		<Sheet.Root>
+			<Sheet.Trigger class={Button.rootVariants({ variant: "outline", size: "icon" })}>
+				<IconFilter />
+			</Sheet.Trigger>
+
+			<Sheet.Content>
+				<Sheet.Header>
+					<Sheet.Title>Filter mods</Sheet.Title>
+					<Sheet.Description>You can customize the mods you want to see here and how you want to see them!</Sheet.Description>
+				</Sheet.Header>
+			</Sheet.Content>
+		</Sheet.Root>
+	</FloatingMenu.Group>
+</FloatingMenu.Root>

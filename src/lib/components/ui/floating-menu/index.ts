@@ -1,15 +1,15 @@
 import Root, { type RootProps, type RootPositions, rootVariants } from "./floating-menu-root.svelte";
-import Skeleton, { type SkeletonProps, type SkeletonPositions, skeletonVariants } from "./floating-menu-skeleton.svelte";
+import Group, { type GroupProps, type GroupDirections, groupVariants } from "./floating-menu-group.svelte";
 
 export {
 	Root,
-	Skeleton,
+	Group,
 	//
-	type RootPositions,
-	type SkeletonPositions,
 	type RootProps,
-	type SkeletonProps,
+	type RootPositions,
+	type GroupProps,
+	type GroupDirections,
 	//
 	rootVariants,
-	skeletonVariants
+	groupVariants
 };

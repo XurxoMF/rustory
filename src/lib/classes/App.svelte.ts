@@ -19,6 +19,7 @@ import { Request } from "$lib/classes/stores/Request.svelte";
 import { Confirm } from "$lib/classes/stores/Confirm.svelte";
 import { Data } from "$lib/classes/stores/Data.svelte";
 import { Tray } from "$lib/classes/stores/Tray.svelte";
+import { UI } from "$lib/classes/stores/UI.svelte";
 
 /**
  * App manager. Used to initialize and store the different parts of the app.
@@ -47,6 +48,11 @@ export class App {
 	 * App toaster.
 	 */
 	private static _toaster: Toaster = new Toaster();
+
+	/**
+	 * App UI store.
+	 */
+	private static _UI: UI = new UI();
 
 	/**
 	 * App window.
@@ -133,6 +139,14 @@ export class App {
 	 */
 	public static get toaster(): Toaster {
 		return App._toaster;
+	}
+
+	/**
+	 * App UI store.
+	 */
+	public static get UI(): UI {
+		if (App._UI === null) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "UI not initialized!");
+		return App._UI;
 	}
 
 	/**

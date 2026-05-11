@@ -67,34 +67,36 @@
 	<DeleteVSInstanceDialog bind:open={deleteDialogOpen} onSuccess={() => goto(resolve("/vs-instances"))} {vsInstance} />
 
 	<FloatingMenu.Root>
-		<Tooltip.Root>
-			<Tooltip.Trigger>
-				{#snippet child({ props })}
-					<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: vsInstance.id }))}>
-						<IconPencil />
-						<span class="sr-only">Edit this Vintage Story Instance</span>
-					</Button.Root>
-				{/snippet}
-			</Tooltip.Trigger>
+		<FloatingMenu.Group>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} variant="outline" size="icon" onclick={() => goto(resolve("/vs-instances/[slug]/edit", { slug: vsInstance.id }))}>
+							<IconPencil />
+							<span class="sr-only">Edit this Vintage Story Instance</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<Tooltip.Content>
-				<p>Edit this Vintage Story Instance</p>
-			</Tooltip.Content>
-		</Tooltip.Root>
+				<Tooltip.Content>
+					<p>Edit this Vintage Story Instance</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 
-		<Tooltip.Root>
-			<Tooltip.Trigger>
-				{#snippet child({ props })}
-					<Button.Root {...props} variant="destructive" size="icon" onclick={() => (deleteDialogOpen = true)}>
-						<IconTrash />
-						<span class="sr-only">Delete this Vintage Story Instance</span>
-					</Button.Root>
-				{/snippet}
-			</Tooltip.Trigger>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} variant="destructive" size="icon" onclick={() => (deleteDialogOpen = true)}>
+							<IconTrash />
+							<span class="sr-only">Delete this Vintage Story Instance</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<Tooltip.Content>
-				<p>Delete this Vintage Story Instance</p>
-			</Tooltip.Content>
-		</Tooltip.Root>
+				<Tooltip.Content>
+					<p>Delete this Vintage Story Instance</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</FloatingMenu.Group>
 	</FloatingMenu.Root>
 {/if}

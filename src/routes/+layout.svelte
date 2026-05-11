@@ -56,7 +56,7 @@
 			>
 				<AppHeader />
 
-				<ScrollArea.Root class="h-[calc(100%-var(--header-height))] w-full">
+				<ScrollArea.Root bind:viewportRef={App.UI.contentRef} class="h-[calc(100%-var(--header-height))] w-full">
 					<div class="flex min-h-full w-full flex-col gap-4 p-4">
 						{@render children()}
 					</div>
