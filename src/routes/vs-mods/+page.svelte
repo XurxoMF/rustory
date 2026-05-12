@@ -48,7 +48,7 @@
 
 	let currentPage: number = $state(1);
 
-	const itemsPerPage = new PersistedState<number>("vs-mods-items-per-page", 20);
+	const itemsPerPage = new PersistedState<"20" | "60" | "100">("vs-mods-items-per-page", "20");
 	const layout = new PersistedState<"grid" | "list">("vs-mods-layout", "grid");
 	const sortBy = new PersistedState<"name" | "downloads" | "trending" | "follows">("vs-mods-sort-by", "name");
 	const sortOrder = new PersistedState<"asc" | "desc">("vs-mods-sort-order", "desc");
@@ -206,9 +206,11 @@
 			</Empty.Content>
 		</Empty.Root>
 	{:else}
+		{@render pagination({ count: modDBApiBasicMods.length })}
+
 		{#if layout.current === "grid"}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * itemsPerPage.current - itemsPerPage.current, currentPage * itemsPerPage.current) as modDBApiBasicMod (modDBApiBasicMod.modid)}
+				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
 					<Card.Root>
 						<Card.Header>
 							<Card.Title class="text-lg">{modDBApiBasicMod.name}</Card.Title>
@@ -264,7 +266,7 @@
 			</div>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * itemsPerPage.current - itemsPerPage.current, currentPage * itemsPerPage.current) as modDBApiBasicMod (modDBApiBasicMod.modid)}
+				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
 					<Item.Root variant="outline">
 						<Item.Media variant="image">
 							<AspectRatio.Root ratio={3 / 3} class="overflow-hidden rounded-lg">
@@ -298,38 +300,7 @@
 			</div>
 		{/if}
 
-		<Pagination.Root
-			count={modDBApiBasicMods.length}
-			perPage={itemsPerPage.current}
-			bind:page={currentPage}
-			onPageChange={() => App.UI.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
-		>
-			{#snippet children({ pages, currentPage })}
-				<Pagination.Content>
-					<Pagination.Item>
-						<Pagination.PrevButton />
-					</Pagination.Item>
-
-					{#each pages as page (page.key)}
-						{#if page.type === "ellipsis"}
-							<Pagination.Item>
-								<Pagination.Ellipsis />
-							</Pagination.Item>
-						{:else}
-							<Pagination.Item>
-								<Pagination.Link {page} isActive={currentPage === page.value}>
-									{page.value}
-								</Pagination.Link>
-							</Pagination.Item>
-						{/if}
-					{/each}
-
-					<Pagination.Item>
-						<Pagination.NextButton />
-					</Pagination.Item>
-				</Pagination.Content>
-			{/snippet}
-		</Pagination.Root>
+		{@render pagination({ count: modDBApiBasicMods.length })}
 	{/if}
 {:catch err}
 	{#if err instanceof AppError && err.code === AppErrorCodes.OFFLINE}
@@ -496,6 +467,46 @@
 	</FloatingMenu.Group>
 
 	<FloatingMenu.Group>
+		<ToggleGroup.Root type="single" variant="outline" bind:value={itemsPerPage.current}>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="20" disabled={itemsPerPage.current === "20"} aria-label="Show 20 items">20</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Show 20 items</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="60" disabled={itemsPerPage.current === "60"} aria-label="Show 60 items">60</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Show 60 items</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="100" disabled={itemsPerPage.current === "100"} aria-label="Show 100 items">100</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Show 100 items</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</ToggleGroup.Root>
+	</FloatingMenu.Group>
+
+	<FloatingMenu.Group>
 		<Sheet.Root>
 			<Tooltip.Root>
 				<Tooltip.Trigger>
@@ -520,3 +531,38 @@
 		</Sheet.Root>
 	</FloatingMenu.Group>
 </FloatingMenu.Root>
+
+{#snippet pagination({ count }: { count: number })}
+	<Pagination.Root
+		{count}
+		perPage={Number(itemsPerPage.current)}
+		bind:page={currentPage}
+		onPageChange={() => App.UI.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
+	>
+		{#snippet children({ pages, currentPage })}
+			<Pagination.Content>
+				<Pagination.Item>
+					<Pagination.PrevButton />
+				</Pagination.Item>
+
+				{#each pages as page (page.key)}
+					{#if page.type === "ellipsis"}
+						<Pagination.Item>
+							<Pagination.Ellipsis />
+						</Pagination.Item>
+					{:else}
+						<Pagination.Item>
+							<Pagination.Link {page} isActive={currentPage === page.value}>
+								{page.value}
+							</Pagination.Link>
+						</Pagination.Item>
+					{/if}
+				{/each}
+
+				<Pagination.Item>
+					<Pagination.NextButton />
+				</Pagination.Item>
+			</Pagination.Content>
+		{/snippet}
+	</Pagination.Root>
+{/snippet}
