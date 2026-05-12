@@ -37,6 +37,7 @@
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
 	import * as Pagination from "$lib/components/ui/pagination";
 	import * as Sheet from "$lib/components/ui/sheet";
+	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
 	const modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll();
@@ -299,6 +300,7 @@
 
 		<Pagination.Root
 			count={modDBApiBasicMods.length}
+			perPage={itemsPerPage.current}
 			bind:page={currentPage}
 			onPageChange={() => App.UI.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
 		>
@@ -369,59 +371,150 @@
 	{/if}
 {/await}
 
+<!-- Filters and sorting menu -->
 <FloatingMenu.Root>
 	<FloatingMenu.Group>
 		<ToggleGroup.Root type="single" variant="outline" bind:value={sortBy.current}>
-			<ToggleGroup.Item value="name" aria-label="Sort by name">
-				<IconLetterCase />
-			</ToggleGroup.Item>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="name" disabled={sortBy.current === "name"} aria-label="Sort the mods by name">
+							<IconLetterCase />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<ToggleGroup.Item value="downloads" aria-label="Sort by downloads">
-				<IconDownload />
-			</ToggleGroup.Item>
+				<Tooltip.Content>
+					<p>Sort the mods by name</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 
-			<ToggleGroup.Item value="trending" aria-label="Sort by trending">
-				<IconTrendingUp />
-			</ToggleGroup.Item>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="downloads" disabled={sortBy.current === "downloads"} aria-label="Sort the mods by downloads">
+							<IconDownload />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<ToggleGroup.Item value="follows" aria-label="Sort by follows">
-				<IconStar />
-			</ToggleGroup.Item>
+				<Tooltip.Content>
+					<p>Sort the mods by downloads</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="trending" disabled={sortBy.current === "trending"} aria-label="Sort the mods by trending">
+							<IconTrendingUp />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Sort the mods by trending</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="follows" disabled={sortBy.current === "follows"} aria-label="Sort the mods by follows">
+							<IconStar />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Sort the mods by follows</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 		</ToggleGroup.Root>
 
 		<ToggleGroup.Root type="single" variant="outline" bind:value={sortOrder.current}>
-			<ToggleGroup.Item value="desc" aria-label="Sort in descending order">
-				<IconSortDescending2 />
-			</ToggleGroup.Item>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="desc" disabled={sortOrder.current === "desc"} aria-label="Sort in descending order">
+							<IconSortDescending2 />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<ToggleGroup.Item value="asc" aria-label="Sort in ascending order">
-				<IconSortAscending2 />
-			</ToggleGroup.Item>
+				<Tooltip.Content>
+					<p>Sort the mods in ascending order</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="asc" disabled={sortOrder.current === "asc"} aria-label="Sort in ascending order">
+							<IconSortAscending2 />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Sort the mods in descending order</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 		</ToggleGroup.Root>
 	</FloatingMenu.Group>
 
 	<FloatingMenu.Group>
 		<ToggleGroup.Root type="single" variant="outline" bind:value={layout.current}>
-			<ToggleGroup.Item value="grid" aria-label="Change layout to grid">
-				<IconLayoutGrid />
-			</ToggleGroup.Item>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="grid" disabled={layout.current === "grid"} aria-label="Change layout to grid">
+							<IconLayoutGrid />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
 
-			<ToggleGroup.Item value="list" aria-label="Change layout to list">
-				<IconLayoutList />
-			</ToggleGroup.Item>
+				<Tooltip.Content>
+					<p>Change layout to grid</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<ToggleGroup.Item {...props} value="list" disabled={layout.current === "list"} aria-label="Change layout to list">
+							<IconLayoutList />
+						</ToggleGroup.Item>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Change layout to list</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 		</ToggleGroup.Root>
 	</FloatingMenu.Group>
 
 	<FloatingMenu.Group>
 		<Sheet.Root>
-			<Sheet.Trigger class={Button.rootVariants({ variant: "outline", size: "icon" })}>
-				<IconFilter />
-			</Sheet.Trigger>
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Sheet.Trigger {...props} class={Button.rootVariants({ variant: "outline", size: "icon" })}>
+							<IconFilter />
+						</Sheet.Trigger>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Open the filters menu</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
 
 			<Sheet.Content>
 				<Sheet.Header>
-					<Sheet.Title>Filter mods</Sheet.Title>
-					<Sheet.Description>You can customize the mods you want to see here and how you want to see them!</Sheet.Description>
+					<Sheet.Title>Filters</Sheet.Title>
+					<Sheet.Description>You can filter mods by many properties here.</Sheet.Description>
 				</Sheet.Header>
 			</Sheet.Content>
 		</Sheet.Root>
