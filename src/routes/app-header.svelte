@@ -7,6 +7,9 @@
 	import IconMinus from "@tabler/icons-svelte/icons/minus";
 	import IconMaximize from "@tabler/icons-svelte/icons/maximize";
 	import IconX from "@tabler/icons-svelte/icons/x";
+	import IconArrowNarrowLeft from "@tabler/icons-svelte/icons/arrow-narrow-left";
+	import IconArrowNarrowRight from "@tabler/icons-svelte/icons/arrow-narrow-right";
+	import IconReload from "@tabler/icons-svelte/icons/reload";
 
 	import { cn } from "$lib/utils";
 
@@ -27,9 +30,58 @@
 	<div class="flex flex-1 flex-row items-center justify-start gap-2">
 		<Sidebar.Trigger />
 
-		<Separator.Root orientation="vertical" class="me-2 data-[orientation=vertical]:h-4" />
+		<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
 
-		<Breadcrumb.Root class="hidden md:block">
+		<div class="flex flex-row items-center">
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} onclick={() => App.reloader.executeTasks()} variant="ghost" size="icon-sm">
+							<IconReload />
+							<span class="sr-only">Reload</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Reload</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} onclick={() => history.back()} variant="ghost" size="icon-sm">
+							<IconArrowNarrowLeft />
+							<span class="sr-only">Go to previous page</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Go to previous page</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} onclick={() => history.forward()} variant="ghost" size="icon-sm">
+							<IconArrowNarrowRight />
+							<span class="sr-only">Go to next page</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Go to next page</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+		</div>
+
+		<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
+
+		<Breadcrumb.Root class="mx-2 hidden md:block">
 			{#if App.breadcrumbs.segments === null}
 				<p class="flex items-center gap-2 text-sm text-muted-foreground">
 					<Spinner.Root />
