@@ -402,7 +402,9 @@
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</ToggleGroup.Root>
+	</FloatingMenu.Group>
 
+	<FloatingMenu.Group>
 		<ToggleGroup.Root type="single" variant="outline" bind:value={sortOrder.current}>
 			<Tooltip.Root>
 				<Tooltip.Trigger>
