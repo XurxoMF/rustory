@@ -27,7 +27,7 @@
 	data-tauri-drag-region
 	class="flex h-(--header-height) w-full shrink-0 flex-row items-center justify-between gap-2 px-(--header-padding-x) transition-[width,height,padding] ease-linear"
 >
-	<div class="flex flex-1 flex-row items-center justify-start gap-2">
+	<div class="flex flex-1 flex-row items-center justify-start gap-2" data-tauri-drag-region>
 		<Sidebar.Trigger />
 
 		<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
@@ -79,9 +79,9 @@
 			</Tooltip.Root>
 		</div>
 
-		<Separator.Root orientation="vertical" class="data-[orientation=vertical]:h-4" />
+		<Separator.Root orientation="vertical" class=" hidden data-[orientation=vertical]:h-4 @4xl/main:block" />
 
-		<Breadcrumb.Root class="mx-2 hidden md:block">
+		<Breadcrumb.Root class="mx-2 hidden @4xl/main:block">
 			{#if App.breadcrumbs.segments === null}
 				<p class="flex items-center gap-2 text-sm text-muted-foreground">
 					<Spinner.Root />
@@ -113,7 +113,7 @@
 		</Breadcrumb.Root>
 	</div>
 
-	<div class="flex flex-1 flex-row items-center justify-end gap-2">
+	<div class="flex flex-1 flex-row items-center justify-end gap-2" data-tauri-drag-region>
 		<div class="flex flex-row items-center">
 			<Tooltip.Root>
 				<Tooltip.Trigger>
