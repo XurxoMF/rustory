@@ -64,23 +64,31 @@ export class Reloader {
 	/**
 	 * Add a new task to the reloader.
 	 * @param task - The task to add to the onReload list
+	 * @returns The id of the task
 	 */
-	public addTask(task: ReloaderTask) {
-		this._callbacks.push(task);
+	public addTask(task: Omit<ReloaderTask, "id">): string {
+		const id = crypto.randomUUID();
+
+		this._callbacks.push({
+			id,
+			...task
+		});
+
+		return id;
 	}
 
 	/**
 	 * Remove a task from the reloader.
 	 * @param id - The if of the task to remove from the onReload list
 	 */
-	public removeTask(id: string) {
+	public removeTask(id: string): void {
 		this._callbacks = this._callbacks.filter((task) => task.id !== id);
 	}
 
 	/**
 	 * Executes the reload tasks.
 	 */
-	public executeTasks() {
+	public reload(): void {
 		for (const task of this._callbacks) {
 			task.action();
 		}

@@ -36,7 +36,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.reloader.executeTasks()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => App.reloader.reload()} variant="ghost" size="icon-sm">
 							<IconReload />
 							<span class="sr-only">Reload</span>
 						</Button.Root>
