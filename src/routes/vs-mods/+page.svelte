@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { PersistedState } from "runed";
+	import { onMount } from "svelte";
 
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
@@ -40,7 +41,7 @@
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as FloatingMenu from "$lib/components/ui/floating-menu";
 
-	const modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll();
+	let modDBApiBasicModsPromise = $state(ModDBApiBasicMod.fetchAll());
 
 	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
 
@@ -52,6 +53,18 @@
 	const layout = new PersistedState<"grid" | "list">("vs-mods-layout", "grid");
 	const sortBy = new PersistedState<"name" | "downloads" | "trending" | "follows">("vs-mods-sort-by", "name");
 	const sortOrder = new PersistedState<"asc" | "desc">("vs-mods-sort-order", "desc");
+
+	onMount(() => {
+		const taskRefetchID = App.reloader.addTask({
+			action: () => {
+				modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll({ cache: false });
+			}
+		});
+
+		return () => {
+			App.reloader.removeTask(taskRefetchID);
+		};
+	});
 
 	function orderModDBApiBasicMods(modDBApiBasicMods: ModDBApiBasicMod[]): ModDBApiBasicMod[] {
 		return modDBApiBasicMods.sort((a, b) => {
@@ -99,9 +112,12 @@
 
 <!-- List of Vintage Story Mods -->
 {#await modDBApiBasicModsPromise}
+	{@render PaginationSkeletonSnippet()}
+
 	{#if layout.current === "grid"}
+		<!-- Grid layout activated -->
 		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-			{#each Array(itemsPerPage) as _, i (i)}
+			{#each Array(Number(itemsPerPage.current)) as _, i (i)}
 				<Card.Root>
 					<Card.Header>
 						<Card.Title><Card.TitleSkeleton /></Card.Title>
@@ -143,51 +159,32 @@
 			{/each}
 		</div>
 	{:else}
+		<!-- List layout activated -->
 		<div class="flex flex-col gap-4">
-			{#each Array(itemsPerPage) as _, i (i)}
-				<Card.Root>
-					<Card.Header>
-						<Card.Title><Card.TitleSkeleton /></Card.Title>
+			{#each Array(Number(itemsPerPage.current)) as _, i (i)}
+				<Item.Root variant="outline">
+					<Item.Media variant="image">
+						<AspectRatio.Skeleton ratio={3 / 3} class="overflow-hidden rounded-lg" />
+					</Item.Media>
 
-						<Card.Description>
-							<Card.DescriptionSkeleton />
-							<Card.DescriptionSkeleton />
-						</Card.Description>
+					<Item.Content>
+						<Item.Title><Item.TitleSkeleton /></Item.Title>
 
-						<Card.Action>
-							<Badge.Skeleton />
-						</Card.Action>
-					</Card.Header>
+						<Item.Description><Item.DescriptionSkeleton /></Item.Description>
+					</Item.Content>
 
-					<Card.Content class="mt-auto">
-						<AspectRatio.Skeleton ratio={3 / 2} class="overflow-hidden rounded-lg" />
-
-						<Table.Root class="mt-4">
-							<Table.Body>
-								{#each Array(4) as _, j (j)}
-									<Table.Row>
-										<Table.Cell align="left">
-											<Table.CellSkeleton />
-										</Table.Cell>
-
-										<Table.Cell align="right">
-											<Table.CellSkeleton />
-										</Table.Cell>
-									</Table.Row>
-								{/each}
-							</Table.Body>
-						</Table.Root>
-					</Card.Content>
-
-					<Card.Footer class="flex justify-end gap-2">
-						<Button.Skeleton class="flex-1" />
-					</Card.Footer>
-				</Card.Root>
+					<Item.Actions>
+						<Button.Skeleton class="flex-1" size="sm" />
+					</Item.Actions>
+				</Item.Root>
 			{/each}
 		</div>
 	{/if}
+
+	{@render PaginationSkeletonSnippet()}
 {:then modDBApiBasicMods}
 	{#if modDBApiBasicMods.length === 0}
+		<!--  No mods found -->
 		<Empty.Root>
 			<Empty.Header>
 				<Empty.Media variant="icon">
@@ -206,9 +203,11 @@
 			</Empty.Content>
 		</Empty.Root>
 	{:else}
-		{@render pagination({ count: modDBApiBasicMods.length })}
+		<!-- ModDB API Basic Mods list -->
+		{@render PaginationSnippet({ count: modDBApiBasicMods.length })}
 
 		{#if layout.current === "grid"}
+			<!-- Grid layout activated -->
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
 					<Card.Root>
@@ -265,6 +264,7 @@
 				{/each}
 			</div>
 		{:else}
+			<!-- List layout activated -->
 			<div class="flex flex-col gap-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
 					<Item.Root variant="outline">
@@ -300,10 +300,11 @@
 			</div>
 		{/if}
 
-		{@render pagination({ count: modDBApiBasicMods.length })}
+		{@render PaginationSnippet({ count: modDBApiBasicMods.length })}
 	{/if}
 {:catch err}
 	{#if err instanceof AppError && err.code === AppErrorCodes.OFFLINE}
+		<!-- Offline error -->
 		<Empty.Root>
 			<Empty.Header>
 				<Empty.Media variant="icon">
@@ -322,6 +323,7 @@
 			</Empty.Content>
 		</Empty.Root>
 	{:else}
+		<!-- Generic error -->
 		<Empty.Root>
 			<Empty.Header>
 				<Empty.Media variant="icon">
@@ -534,7 +536,7 @@
 	</FloatingMenu.Group>
 </FloatingMenu.Root>
 
-{#snippet pagination({ count }: { count: number })}
+{#snippet PaginationSnippet({ count }: { count: number })}
 	<Pagination.Root
 		{count}
 		perPage={Number(itemsPerPage.current)}
@@ -567,4 +569,16 @@
 			</Pagination.Content>
 		{/snippet}
 	</Pagination.Root>
+{/snippet}
+
+{#snippet PaginationSkeletonSnippet()}
+	<Pagination.RootSkeleton>
+		<Pagination.ContentSkeleton>
+			{#each Array(9) as _, i (i)}
+				<Pagination.ItemSkeleton>
+					<Pagination.LinkSkeleton />
+				</Pagination.ItemSkeleton>
+			{/each}
+		</Pagination.ContentSkeleton>
+	</Pagination.RootSkeleton>
 {/snippet}
