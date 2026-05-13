@@ -200,13 +200,13 @@ export class RustoryApiVSVersion {
 	 * @param version The version to get.
 	 * @returns The Rustory API Vintage Story Version.
 	 */
-	public static async fetch(version: string): Promise<RustoryApiVSVersion> {
+	public static async fetch(version: string, options?: { cache?: boolean | undefined } | undefined): Promise<RustoryApiVSVersion> {
 		try {
 			App.logger.debug(`Fetching the Rustory API Vintage Story Version ${version}...`);
 
 			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch the Rustory API Vintage Story Version if the app is offline!");
 
-			const res: Response = await App.request.get(`https://api.rustory.xyz/versions/${version}`);
+			const res: Response = await App.request.get(`https://api.rustory.xyz/versions/${version}`, options?.cache);
 
 			App.logger.trace(await res.text());
 
@@ -228,13 +228,13 @@ export class RustoryApiVSVersion {
 	 * Fetches all the Rustory API Vintage Story Versions.
 	 * @returns The Rustory API Vintage Story Versions.
 	 */
-	public static async fetchAll(): Promise<RustoryApiVSVersion[]> {
+	public static async fetchAll(options?: { cache?: boolean | undefined } | undefined): Promise<RustoryApiVSVersion[]> {
 		try {
 			App.logger.debug(`Fetching all the Rustory API Vintage Story Versions...`);
 
 			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch all the Rustory API Vintage Story Versions while offline!");
 
-			const res: Response = await App.request.get(`https://api.rustory.xyz/versions`);
+			const res: Response = await App.request.get(`https://api.rustory.xyz/versions`, options?.cache);
 
 			const json: RustoryApiVSVersionJSON[] = await res.json();
 

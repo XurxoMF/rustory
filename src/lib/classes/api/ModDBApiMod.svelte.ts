@@ -410,13 +410,13 @@ export class ModDBApiMod {
 	 * @param modid The id of the Mod.
 	 * @returns The ModDB API Mod.
 	 */
-	public static async fetch(modid: string | number): Promise<ModDBApiMod | undefined> {
+	public static async fetch(modid: string | number, options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiMod | undefined> {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
 
 			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch the ModDB API Mod while offline!");
 
-			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`);
+			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`, options?.cache);
 
 			const json: { mod: ModDBApiModJSON } = await res.json();
 

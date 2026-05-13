@@ -288,13 +288,13 @@ export class ModDBApiBasicMod {
 	 * @param modid The id of the mod to query.
 	 * @returns The mod from the ModDB API or undefined.
 	 */
-	public static async fetchAll(): Promise<ModDBApiBasicMod[]> {
+	public static async fetchAll(options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiBasicMod[]> {
 		try {
 			App.logger.debug(`Fetching all the ModDB API Basic Mods...`);
 
 			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch all the ModDB API Basic Mods while offline!");
 
-			const res: Response = await App.request.get("https://mods.vintagestory.at/api/mods");
+			const res: Response = await App.request.get("https://mods.vintagestory.at/api/mods", options?.cache);
 
 			const json: { mods: ModDBApiBasicModJSON[] } = await res.json();
 
@@ -318,11 +318,11 @@ export class ModDBApiBasicMod {
 	 * Fetches the ModDB API Mod of this ModDB API Basic Mod.
 	 * @returns The ModDB API Mod.
 	 */
-	public async toModDBApiMod(): Promise<ModDBApiMod | undefined> {
+	public async toModDBApiMod(options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiMod | undefined> {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 
-			const mod = await ModDBApiMod.fetch(this._modid);
+			const mod = await ModDBApiMod.fetch(this._modid, { cache: options?.cache });
 
 			return mod;
 		} catch (err) {
