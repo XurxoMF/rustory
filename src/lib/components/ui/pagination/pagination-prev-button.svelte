@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type PrevButtonProps = PaginationPrimitive.PrevButtonProps;
+	export type PrevButtonProps = WithoutChildren<PaginationPrimitive.PrevButtonProps>;
 </script>
 
 <script lang="ts">
@@ -7,27 +7,19 @@
 
 	import ChevronLeftIcon from "@tabler/icons-svelte/icons/chevron-left";
 
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithoutChildren } from "$lib/utils.js";
 
 	import * as Button from "$lib/components/ui/button";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: PrevButtonProps = $props();
+	let { ref = $bindable(null), class: className, ...restProps }: PrevButtonProps = $props();
 </script>
-
-{#snippet Fallback()}
-	<ChevronLeftIcon class={cn("size-4", className)} />
-	<span>Previous</span>
-{/snippet}
 
 <PaginationPrimitive.PrevButton
 	bind:ref
 	aria-label="Go to previous page"
-	class={cn(Button.rootVariants({ variant: "ghost" }), "pl-2!", className)}
+	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}
 >
-	{#if children}
-		{@render children?.()}
-	{:else}
-		{@render Fallback()}
-	{/if}
+	<ChevronLeftIcon />
+	<span class="sr-only">Previous</span>
 </PaginationPrimitive.PrevButton>

@@ -1,6 +1,5 @@
 <script lang="ts" module>
 	export type LinkProps = PaginationPrimitive.PageProps & {
-		size?: Button.RootSizes | undefined;
 		isActive: boolean | undefined;
 	};
 </script>
@@ -12,7 +11,7 @@
 
 	import * as Button from "$lib/components/ui/button";
 
-	let { ref = $bindable(null), class: className, size = "icon", isActive, page, children, ...restProps }: LinkProps = $props();
+	let { ref = $bindable(null), class: className, isActive, page, children, ...restProps }: LinkProps = $props();
 </script>
 
 {#snippet Fallback()}
@@ -25,8 +24,7 @@
 	aria-current={isActive ? "page" : undefined}
 	data-slot="pagination-link"
 	data-active={isActive}
-	data-size={size}
-	class={cn(Button.rootVariants({ size, variant: isActive ? "outline" : "ghost" }), "cn-pagination-link", className)}
+	class={cn(Button.rootVariants({ size: "icon", variant: isActive ? "outline" : "ghost" }), "cn-pagination-link", className)}
 	{...restProps}
 >
 	{#if children}

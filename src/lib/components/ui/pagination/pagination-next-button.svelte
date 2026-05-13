@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	export type NextButtonProps = PaginationPrimitive.NextButtonProps;
+	export type NextButtonProps = WithoutChildren<PaginationPrimitive.NextButtonProps>;
 </script>
 
 <script lang="ts">
@@ -7,27 +7,19 @@
 
 	import ChevronRightIcon from "@tabler/icons-svelte/icons/chevron-right";
 
-	import { cn } from "$lib/utils.js";
+	import { cn, type WithoutChildren } from "$lib/utils.js";
 
 	import * as Button from "$lib/components/ui/button";
 
-	let { ref = $bindable(null), class: className, children, ...restProps }: NextButtonProps = $props();
+	let { ref = $bindable(null), class: className, ...restProps }: NextButtonProps = $props();
 </script>
-
-{#snippet Fallback()}
-	<span>Next</span>
-	<ChevronRightIcon class={cn("size-4", className)} />
-{/snippet}
 
 <PaginationPrimitive.NextButton
 	bind:ref
 	aria-label="Go to next page"
-	class={cn(Button.rootVariants({ variant: "ghost" }), "pr-2!", className)}
+	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
 	{...restProps}
 >
-	{#if children}
-		{@render children?.()}
-	{:else}
-		{@render Fallback()}
-	{/if}
+	<span class="sr-only">Next</span>
+	<ChevronRightIcon />
 </PaginationPrimitive.NextButton>
