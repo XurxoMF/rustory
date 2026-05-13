@@ -36,21 +36,6 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.reloader.reload()} variant="ghost" size="icon-sm">
-							<IconReload />
-							<span class="sr-only">Reload</span>
-						</Button.Root>
-					{/snippet}
-				</Tooltip.Trigger>
-
-				<Tooltip.Content>
-					<p>Reload</p>
-				</Tooltip.Content>
-			</Tooltip.Root>
-
-			<Tooltip.Root>
-				<Tooltip.Trigger>
-					{#snippet child({ props })}
 						<Button.Root {...props} onclick={() => history.back()} variant="ghost" size="icon-sm">
 							<IconArrowNarrowLeft />
 							<span class="sr-only">Go to previous page</span>
@@ -75,6 +60,21 @@
 
 				<Tooltip.Content>
 					<p>Go to next page</p>
+				</Tooltip.Content>
+			</Tooltip.Root>
+
+			<Tooltip.Root>
+				<Tooltip.Trigger>
+					{#snippet child({ props })}
+						<Button.Root {...props} onclick={() => App.reloader.reload()} variant="ghost" size="icon-sm">
+							<IconReload />
+							<span class="sr-only">Reload</span>
+						</Button.Root>
+					{/snippet}
+				</Tooltip.Trigger>
+
+				<Tooltip.Content>
+					<p>Reload</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</div>
