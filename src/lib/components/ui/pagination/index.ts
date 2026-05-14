@@ -9,9 +9,7 @@ import LinkSkeleton, { type LinkSkeletonProps } from "./pagination-link-skeleton
 import Ellipsis, { type EllipsisProps } from "./pagination-ellipsis.svelte";
 import EllipsisSkeleton, { type EllipsisSkeletonProps } from "./pagination-ellipsis-skeleton.svelte";
 import Previous, { type PreviousProps } from "./pagination-previous.svelte";
-import PrevButton, { type PrevButtonProps } from "./pagination-prev-button.svelte";
 import Next, { type NextProps } from "./pagination-next.svelte";
-import NextButton, { type NextButtonProps } from "./pagination-next-button.svelte";
 
 export {
 	Root,
@@ -25,9 +23,7 @@ export {
 	Ellipsis,
 	EllipsisSkeleton,
 	Previous,
-	PrevButton,
 	Next,
-	NextButton,
 	//
 	type RootProps,
 	type RootSkeletonProps,
@@ -40,7 +36,5 @@ export {
 	type EllipsisProps,
 	type EllipsisSkeletonProps,
 	type PreviousProps,
-	type PrevButtonProps,
-	type NextProps,
-	type NextButtonProps
+	type NextProps
 };

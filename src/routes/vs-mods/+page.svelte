@@ -21,7 +21,7 @@
 	import Pagination from "./pagination.svelte";
 	import PaginationSkeleton from "./pagination-skeleton.svelte";
 	import Offline from "./offline.svelte";
-	import Error from "./error.svelte";
+	import GenericError from "./generic-error.svelte";
 	import Filters, { type ItemsPerPage, type Layout, type SortBy, type SortOrder } from "./filters.svelte";
 
 	let modDBApiBasicModsPromise = $state(ModDBApiBasicMod.fetchAll());
@@ -140,6 +140,6 @@
 	{#if err instanceof AppError && err.code === AppErrorCodes.OFFLINE}
 		<Offline />
 	{:else}
-		<Error />
+		<GenericError />
 	{/if}
 {/await}

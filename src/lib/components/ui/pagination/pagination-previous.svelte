@@ -1,16 +1,25 @@
 <script lang="ts" module>
-	export type PreviousProps = Pagination.LinkProps;
+	export type PreviousProps = PaginationPrimitive.PrevButtonProps;
 </script>
 
 <script lang="ts">
+	import { Pagination as PaginationPrimitive } from "bits-ui";
+
 	import IconChevronLeft from "@tabler/icons-svelte/icons/chevron-left";
 
-	import * as Pagination from ".";
+	import { cn } from "$lib/utils";
 
-	let { ...restProps }: PreviousProps = $props();
+	import * as Button from "$lib/components/ui/button";
+
+	let { ref = $bindable(null), class: className, ...restProps }: PreviousProps = $props();
 </script>
 
-<Pagination.Link aria-label="Go to previous page" {...restProps}>
-	<span class="cn-pagination-previous-text sr-only">Previous</span>
+<PaginationPrimitive.NextButton
+	bind:ref
+	aria-label="Go to previous page"
+	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
+	{...restProps}
+>
 	<IconChevronLeft />
-</Pagination.Link>
+	<span class="cn-pagination-previous-text sr-only">Previous</span>
+</PaginationPrimitive.NextButton>
