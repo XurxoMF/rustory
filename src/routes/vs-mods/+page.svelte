@@ -123,13 +123,13 @@
 		{#if layout.current === "grid"}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
-					<GridCard {modDBApiBasicMod} />
+					<GridCard {modDBApiBasicMod} {vsInstance} />
 				{/each}
 			</div>
 		{:else}
 			<div class="flex flex-col gap-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
-					<ListItem {modDBApiBasicMod} />
+					<ListItem {modDBApiBasicMod} {vsInstance} />
 				{/each}
 			</div>
 		{/if}
