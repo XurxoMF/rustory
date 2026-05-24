@@ -12,6 +12,7 @@
 	import { App } from "$lib/classes/App.svelte";
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
+	import { VSMod } from "$lib/classes/vs/VSMod.svelte";
 
 	import type { ModDBApiBasicMod } from "$lib/classes/api/ModDBApiBasicMod.svelte";
 
@@ -53,7 +54,7 @@
 		<Button.Root
 			class="flex-1"
 			variant="default"
-			disabled={!App.info.isOnline || vsInstance === undefined}
+			disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
 			onclick={async () => {
 				if (!App.info.isOnline) {
 					App.toaster.toast.error("You are offline!", { description: "You need to be online to install mods." });
@@ -84,6 +85,12 @@
 
 					await release.download(vsInstance.modsDir, modDBApiMod.name);
 
+					const zip = await release.download(vsInstance.modsDir, modDBApiMod.name);
+
+					const vsMod = await VSMod.fromZip(zip);
+
+					vsInstance.mods = [...vsInstance.mods, vsMod];
+
 					App.toaster.toast.success("Mod installed successfully!", {
 						description: `The mod ${modDBApiMod.name} has been installed successfully!`
 					});
@@ -95,7 +102,7 @@
 				}
 			}}
 		>
-			Install
+			{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
 		</Button.Root>
 	</Item.Actions>
 </Item.Root>
