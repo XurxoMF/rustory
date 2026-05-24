@@ -50,11 +50,13 @@
 	const rustoryApiVersionsPromise: Promise<RustoryApiVSVersion[]> = RustoryApiVSVersion.fetchAll();
 
 	$effect(() => {
-		rustoryApiVersionsPromise.catch(() =>
-			App.toaster.toast.error("You're offline!", {
-				description: "Vintage Story Versions could not be fetched because you're offline! Check your internet connection and try again!"
-			})
-		);
+		rustoryApiVersionsPromise
+			.then((rustoryApiVersions) => (form.rApiVersion.value = rustoryApiVersions[0]))
+			.catch(() =>
+				App.toaster.toast.error("You're offline!", {
+					description: "Vintage Story Versions could not be fetched because you're offline! Check your internet connection and try again!"
+				})
+			);
 	});
 
 	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "Create" }];
