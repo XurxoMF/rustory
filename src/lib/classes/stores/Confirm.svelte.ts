@@ -80,6 +80,8 @@ export class Confirm {
 	// **********************
 
 	public ask(question: Omit<ConfirmQuestion, "resolve">): Promise<boolean> {
+		App.logger.debug(`Asking a confirm...`);
+
 		return new Promise((resolve) => {
 			this.queue.push({
 				title: question.title,
@@ -91,6 +93,8 @@ export class Confirm {
 	}
 
 	public onaccept(question: ConfirmQuestion): void {
+		App.logger.debug(`Accepting a confirm...`);
+
 		if (question) {
 			question.resolve(true);
 		}
@@ -98,6 +102,8 @@ export class Confirm {
 	}
 
 	public oncancel(question: ConfirmQuestion): void {
+		App.logger.debug(`Canceling a confirm...`);
+
 		if (question) {
 			question.resolve(false);
 		}
@@ -105,6 +111,8 @@ export class Confirm {
 	}
 
 	private deleteQuestion(): void {
+		App.logger.debug(`Deleting a confirm...`);
+
 		this.queue.shift();
 	}
 }

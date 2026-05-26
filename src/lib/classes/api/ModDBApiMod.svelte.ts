@@ -447,6 +447,8 @@ export class ModDBApiMod {
 				screenshots: jsonMod.screenshots.map((screenshot) => new ModDBApiModScreenshot(screenshot))
 			});
 
+			App.logger.debug(`Fetched the ModDB API Mod with ID ${modid}.`);
+
 			return apiMod;
 		} catch (err) {
 			if (err instanceof AppError) throw err;

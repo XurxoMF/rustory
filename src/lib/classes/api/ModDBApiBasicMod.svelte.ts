@@ -322,6 +322,8 @@ export class ModDBApiBasicMod {
 
 			const mod = await ModDBApiMod.fetch(this._modid, { cache: options?.cache });
 
+			App.logger.debug(`Fetched the ModDB API Mod of the ${this._name} ModDB API Basic Mod!`);
+
 			return mod;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
