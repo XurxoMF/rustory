@@ -1,5 +1,3 @@
-import { download } from "@tauri-apps/plugin-upload";
-
 import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
@@ -209,15 +207,13 @@ export class ModDBApiModRelease {
 		try {
 			App.logger.debug(`Downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}...`);
 
-			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't download the Vintage Story Mod if the app is offline!");
-
 			await dir.ensureExists();
 
 			const downloadPath = await dir.join(`${modName}-${this._modversion}.zip`);
 
 			App.logger.debug(`Downloading the Vintage Story Mod ${modName} on ${downloadPath} from ${this._mainfile}...`);
 
-			await download(this._mainfile, downloadPath);
+			await App.request.download(this._mainfile, downloadPath);
 
 			App.logger.debug(
 				`Finished downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid} on ${downloadPath}!`

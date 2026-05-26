@@ -1,5 +1,3 @@
-import { download } from "@tauri-apps/plugin-upload";
-
 import { App } from "$lib/classes/App.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
@@ -256,12 +254,6 @@ export class RustoryApiVSVersion {
 		try {
 			App.logger.debug(`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version...`);
 
-			if (!App.info.isOnline)
-				throw new AppError(
-					AppErrorCodes.OFFLINE,
-					`Can't download the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version if the app is offline!`
-				);
-
 			const url = App.info.osType === "windows" ? this.windows : App.info.osType === "linux" ? this.linux : this.macos;
 			const sha256 = App.info.osType === "windows" ? this.windowsSha : App.info.osType === "linux" ? this.linuxSha : this.macosSha;
 
@@ -273,7 +265,7 @@ export class RustoryApiVSVersion {
 				`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version on ${downloadPath} from ${url}...`
 			);
 
-			await download(url, downloadPath);
+			await App.request.download(url, downloadPath);
 
 			App.logger.debug(`Finished downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`);
 

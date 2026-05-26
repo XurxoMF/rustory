@@ -1,4 +1,5 @@
 import { fetch } from "@tauri-apps/plugin-http";
+import { download } from "@tauri-apps/plugin-upload";
 
 import { App } from "$lib/classes/App.svelte";
 
@@ -109,6 +110,30 @@ export class Request {
 			if (err instanceof AppError) throw err;
 			App.logger.error(`There was an error making the request to ${url}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
+		}
+	}
+
+	/**
+	 *
+	 * @param url The URL to download from.
+	 * @param filePath The path to download the file to.
+	 * @param progressHandler The progress handler.
+	 * @param headers The headers to send with the request.
+	 * @param body The body of the request.
+	 */
+	public async download(...params: Parameters<typeof download>): Promise<void> {
+		try {
+			App.logger.debug(`Downloading file from ${params[0]} to ${params[1]}...`);
+
+			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't download a file while offline!");
+
+			await download(...params);
+
+			App.logger.debug(`Finished downloading file from ${params[0]} to ${params[1]}!`);
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error downloading the file from ${params[0]} to ${params[1]}: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error downloading the file from ${params[0]} to ${params[1]}!`);
 		}
 	}
 }
