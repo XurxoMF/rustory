@@ -13,6 +13,7 @@ export type VSModModinfoJSON = {
 	Modid?: string | undefined;
 	ModID?: string | undefined;
 	modId?: string | undefined;
+	modID?: string | undefined;
 	version?: string | undefined;
 	Version?: string | undefined;
 	description?: string | undefined;
@@ -200,7 +201,7 @@ export class VSMod {
 			App.logger.trace(JSON.stringify(modinfo));
 
 			const name = modinfo.name ?? modinfo.Name;
-			const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid;
+			const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid ?? modinfo.modID;
 			const version = modinfo.version ?? modinfo.Version;
 
 			if (name === undefined || name === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod name is missing!");
