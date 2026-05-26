@@ -14,10 +14,8 @@
 	import * as Combobox from "$lib/components/ui/combobox";
 
 	import NoMods from "./no-mods.svelte";
-	import GridCard from "./grid-card.svelte";
-	import GridCardSkeleton from "./grid-card-skeleton.svelte";
-	import ListItem from "./list-item.svelte";
-	import ListItemSkeleton from "./list-item-skeleton.svelte";
+	import Mod from "./mod.svelte";
+	import ModSkeleton from "./mod-skeleton.svelte";
 	import Pagination from "./pagination.svelte";
 	import PaginationSkeleton from "./pagination-skeleton.svelte";
 	import Offline from "./offline.svelte";
@@ -102,13 +100,13 @@
 	{#if layout.current === "grid"}
 		<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 			{#each Array(Number(itemsPerPage.current)) as _, i (i)}
-				<GridCardSkeleton />
+				<ModSkeleton layout="grid" />
 			{/each}
 		</div>
 	{:else}
 		<div class="flex flex-col gap-4">
 			{#each Array(Number(itemsPerPage.current)) as _, i (i)}
-				<ListItemSkeleton />
+				<ModSkeleton layout="list" />
 			{/each}
 		</div>
 	{/if}
@@ -123,13 +121,13 @@
 		{#if layout.current === "grid"}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
-					<GridCard {modDBApiBasicMod} {vsInstance} />
+					<Mod layout="grid" {modDBApiBasicMod} {vsInstance} />
 				{/each}
 			</div>
 		{:else}
 			<div class="flex flex-col gap-4">
 				{#each orderModDBApiBasicMods(modDBApiBasicMods).slice(currentPage * Number(itemsPerPage.current) - Number(itemsPerPage.current), currentPage * Number(itemsPerPage.current)) as modDBApiBasicMod (modDBApiBasicMod.modid)}
-					<ListItem {modDBApiBasicMod} {vsInstance} />
+					<Mod layout="list" {modDBApiBasicMod} {vsInstance} />
 				{/each}
 			</div>
 		{/if}

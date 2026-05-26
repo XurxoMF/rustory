@@ -8,6 +8,9 @@ import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import { VSMod } from "$lib/classes/vs/VSMod.svelte";
+import { cleanForPath } from "$lib/utils";
+import type { ModDBApiMod } from "../api/ModDBApiMod.svelte";
+import type { ModDBApiModRelease } from "../api/ModDBApiModRelease.svelte";
 
 /**
  * State of the Vintage Story Instance.
@@ -657,6 +660,33 @@ export class VSInstance {
 			throw new AppError(
 				AppErrorCodes.GENERIC_ERROR,
 				`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}!`
+			);
+		}
+	}
+
+	/**
+	 * Installs a ModDB API Mod to the Vintage Story Instance.
+	 * @param mod The ModDB API Mod to install.
+	 * @param modRelease The ModDB API Mod Release to install.
+	 */
+	public async installMod(mod: ModDBApiMod, modRelease: ModDBApiModRelease): Promise<void> {
+		try {
+			App.logger.debug(`Installing the ModDB API Mod with ID ${mod.modid}...`);
+
+			const cleanModName = cleanForPath(mod.name);
+
+			const zip = await modRelease.download(this.modsDir, cleanModName);
+
+			const vsMod = await VSMod.fromZip(zip);
+
+			this.mods = [...this.mods, vsMod];
+
+			App.logger.debug(`Installed the ModDB API Mod with ID ${mod.modid}!`);
+		} catch (err) {
+			App.logger.error(`Something went wrong while installing the ModDB API Mod with ID ${mod.modid} and couldn't be installed: ${err}`);
+			throw new AppError(
+				AppErrorCodes.GENERIC_ERROR,
+				`Something went wrong while installing the ModDB API Mod with ID ${mod.modid} and couldn't be installed!`
 			);
 		}
 	}
