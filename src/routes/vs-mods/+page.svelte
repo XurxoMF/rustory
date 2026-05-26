@@ -116,7 +116,7 @@
 	{#if modDBApiBasicMods.length === 0}
 		<NoMods />
 	{:else}
-		<Pagination count={modDBApiBasicMods.length} itemsPerPage={Number(itemsPerPage.current)} {currentPage} />
+		<Pagination count={modDBApiBasicMods.length} itemsPerPage={Number(itemsPerPage.current)} bind:currentPage />
 
 		{#if layout.current === "grid"}
 			<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
@@ -132,7 +132,7 @@
 			</div>
 		{/if}
 
-		<Pagination count={modDBApiBasicMods.length} itemsPerPage={Number(itemsPerPage.current)} {currentPage} />
+		<Pagination count={modDBApiBasicMods.length} itemsPerPage={Number(itemsPerPage.current)} bind:currentPage />
 	{/if}
 {:catch err}
 	{#if err instanceof AppError && err.code === AppErrorCodes.OFFLINE}
