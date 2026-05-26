@@ -194,7 +194,7 @@ export class VSMod {
 		try {
 			App.logger.debug(`Trying to load the Vintage Story Mod from the zip ${zip.path}...`);
 
-			App.logger.info(`Reading the Vintage Story Mod data from the zip modinfo.json file of the zip ${zip.path}...`);
+			App.logger.debug(`Reading the Vintage Story Mod data from the zip modinfo.json file of the zip ${zip.path}...`);
 
 			const modinfo = await zip.readJSONFromFile<VSModModinfoJSON>("modinfo.json");
 
