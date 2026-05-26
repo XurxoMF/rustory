@@ -414,8 +414,6 @@ export class ModDBApiMod {
 		try {
 			App.logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
 
-			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't fetch the ModDB API Mod while offline!");
-
 			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`, options?.cache);
 
 			const json: { mod: ModDBApiModJSON } = await res.json();
