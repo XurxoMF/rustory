@@ -54,6 +54,8 @@
 
 		<Card.Footer class="flex justify-end gap-2">
 			<Button.Skeleton class="flex-1" />
+
+			<Button.Skeleton class="flex-1" />
 		</Card.Footer>
 	</Card.Root>
 {:else}
@@ -69,7 +71,9 @@
 		</Item.Content>
 
 		<Item.Actions>
-			<Button.Skeleton class="flex-1" size="sm" />
+			<Button.Skeleton />
+
+			<Button.Skeleton />
 		</Item.Actions>
 	</Item.Root>
 {/if}
