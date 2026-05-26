@@ -36,6 +36,8 @@
 	 */
 	async function handleModInstall(instance: VSInstance | undefined): Promise<void> {
 		try {
+			App.logger.info(`Installing mod ${modDBApiBasicMod.name}...`);
+
 			if (instance === undefined) {
 				App.toaster.toast.error("No Instance selected!", { description: "You need to select a Vintage Story Instance to install mods." });
 				return;
@@ -48,19 +50,62 @@
 				return;
 			}
 
-			const releases = modDBApiMod.releases;
-
-			if (releases.length === 0) {
+			if (modDBApiMod.releases.length === 0) {
 				App.toaster.toast.error("No releases found!", { description: "The mod you're trying to install has no releases." });
 				return;
 			}
 
-			const release = releases[0];
+			const matchingRelease = modDBApiMod.releases.find((release) => release.tags.some((tag) => tag === instance.version));
 
-			instance.installMod(modDBApiMod, release);
+			if (matchingRelease !== undefined) {
+				await instance.installMod(modDBApiMod, matchingRelease);
 
-			App.toaster.toast.success("Mod installed successfully!", {
-				description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
+				App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
+
+				App.toaster.toast.success("Mod installed successfully!", {
+					description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
+				});
+
+				return;
+			}
+
+			const instanceVersionSegments = instance.version.split(".");
+			const minorInstanceVersion = `${instanceVersionSegments[0]}.${instanceVersionSegments[1]}`;
+
+			const partialMatchingRelease = modDBApiMod.releases.find((release) => release.tags.some((tag) => tag.startsWith(minorInstanceVersion)));
+
+			if (partialMatchingRelease !== undefined) {
+				const question = await App.confirm.ask({
+					title: "Partial match found!",
+					description: `The mod ${modDBApiMod.name} has a release for the Vintage Story Version ${minorInstanceVersion}.X but not for the exact Vintage Story Version ${instance.version} . Do you want to install it anyway?`,
+					mode: "default"
+				});
+
+				if (question) {
+					await instance.installMod(modDBApiMod, partialMatchingRelease);
+
+					App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
+
+					App.toaster.toast.success("Mod installed successfully!", {
+						description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
+					});
+
+					return;
+				} else {
+					App.logger.info(`Mod ${modDBApiMod.name} not installed on the Vintage Story Instance ${instance.name} because the user refused!`);
+
+					App.toaster.toast.warning("Mod not installed!", {
+						description: `The mod ${modDBApiMod.name} has not been installed on the Vintage Story Instance ${instance.name} because you decided so!`
+					});
+
+					return;
+				}
+			}
+
+			App.logger.error(`Mod ${modDBApiMod.name} has no release that matches the Vintage Story Version ${instance.version}!`);
+
+			App.toaster.toast.error("No matching release found!", {
+				description: `The mod ${modDBApiMod.name} has no release that matches the Vintage Story Version ${instance.version}! You can open the mod's page and install the version you want manually!`
 			});
 		} catch (err) {
 			App.logger.error(`Something went wrong while installing the ModDB API Mod with ID ${modDBApiBasicMod.modid} and couldn't be installed: ${err}`);
