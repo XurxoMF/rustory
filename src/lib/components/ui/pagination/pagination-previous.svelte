@@ -14,7 +14,7 @@
 	let { ref = $bindable(null), class: className, ...restProps }: PreviousProps = $props();
 </script>
 
-<PaginationPrimitive.NextButton
+<PaginationPrimitive.PrevButton
 	bind:ref
 	aria-label="Go to previous page"
 	class={cn(Button.rootVariants({ variant: "ghost", size: "icon" }), className)}
@@ -22,4 +22,4 @@
 >
 	<IconChevronLeft />
 	<span class="cn-pagination-previous-text sr-only">Previous</span>
-</PaginationPrimitive.NextButton>
+</PaginationPrimitive.PrevButton>
