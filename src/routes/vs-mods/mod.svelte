@@ -10,6 +10,8 @@
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
+	import IconDots from "@tabler/icons-svelte/icons/dots";
+
 	import { App } from "$lib/classes/App.svelte";
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
@@ -22,17 +24,19 @@
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
 	import * as Table from "$lib/components/ui/table";
 	import * as Button from "$lib/components/ui/button";
+	import * as ButtonGroup from "$lib/components/ui/button-group";
+	import * as DropdownMenu from "$lib/components/ui/dropdown-menu";
 
 	import { type Layout } from "./filters.svelte";
 
 	let { layout, modDBApiBasicMod, vsInstance }: ModProps = $props();
 
 	/**
-	 * Handles the installation of a mod on the selected Vintage Story Instance.
+	 * Handles the installation of a mod on a Vintage Story instance.
 	 */
-	async function handleModInstall() {
+	async function handleModInstall(instance: VSInstance | undefined): Promise<void> {
 		try {
-			if (vsInstance === undefined) {
+			if (instance === undefined) {
 				App.toaster.toast.error("No Instance selected!", { description: "You need to select a Vintage Story Instance to install mods." });
 				return;
 			}
@@ -53,10 +57,10 @@
 
 			const release = releases[0];
 
-			vsInstance.installMod(modDBApiMod, release);
+			instance.installMod(modDBApiMod, release);
 
 			App.toaster.toast.success("Mod installed successfully!", {
-				description: `The mod ${modDBApiMod.name} has been installed successfully!`
+				description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
 			});
 		} catch (err) {
 			App.logger.error(`Something went wrong while installing the ModDB API Mod with ID ${modDBApiBasicMod.modid} and couldn't be installed: ${err}`);
@@ -114,14 +118,39 @@
 				View
 			</Button.Root>
 
-			<Button.Root
-				class="flex-1"
-				variant="default"
-				disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
-				onclick={handleModInstall}
-			>
-				{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
-			</Button.Root>
+			<ButtonGroup.Root class="flex-1">
+				<Button.Root
+					class="flex-1"
+					variant="default"
+					disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+					onclick={() => handleModInstall(vsInstance)}
+				>
+					{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
+				</Button.Root>
+
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger disabled={App.data.vsInstances.length < 1}>
+						{#snippet child({ props })}
+							<Button.Root {...props} variant="default" size="icon">
+								<IconDots />
+							</Button.Root>
+						{/snippet}
+					</DropdownMenu.Trigger>
+
+					<DropdownMenu.Content align="end">
+						<DropdownMenu.Group>
+							{#each App.data.vsInstances as vsi (vsi.id)}
+								<DropdownMenu.Item
+									disabled={vsi.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+									onSelect={() => handleModInstall(vsi)}
+								>
+									{vsi.name}
+								</DropdownMenu.Item>
+							{/each}
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</ButtonGroup.Root>
 		</Card.Footer>
 	</Card.Root>
 {:else}
@@ -144,23 +173,42 @@
 		</Item.Content>
 
 		<Item.Actions>
-			<Button.Root
-				class="flex-1"
-				variant="outline"
-				size="sm"
-				onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}
-			>
+			<Button.Root variant="outline" size="sm" onclick={() => goto(resolve("/vs-mods/[slug]", { slug: modDBApiBasicMod.modid.toString() }))}>
 				View
 			</Button.Root>
 
-			<Button.Root
-				class="flex-1"
-				variant="default"
-				disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
-				onclick={handleModInstall}
-			>
-				{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
-			</Button.Root>
+			<ButtonGroup.Root>
+				<Button.Root
+					variant="default"
+					disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+					onclick={() => handleModInstall(vsInstance)}
+				>
+					{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
+				</Button.Root>
+
+				<DropdownMenu.Root>
+					<DropdownMenu.Trigger disabled={App.data.vsInstances.length < 1}>
+						{#snippet child({ props })}
+							<Button.Root {...props} variant="default" size="icon">
+								<IconDots />
+							</Button.Root>
+						{/snippet}
+					</DropdownMenu.Trigger>
+
+					<DropdownMenu.Content align="end">
+						<DropdownMenu.Group>
+							{#each App.data.vsInstances as vsi (vsi.id)}
+								<DropdownMenu.Item
+									disabled={vsi.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+									onSelect={() => handleModInstall(vsi)}
+								>
+									{vsi.name}
+								</DropdownMenu.Item>
+							{/each}
+						</DropdownMenu.Group>
+					</DropdownMenu.Content>
+				</DropdownMenu.Root>
+			</ButtonGroup.Root>
 		</Item.Actions>
 	</Item.Root>
 {/if}
