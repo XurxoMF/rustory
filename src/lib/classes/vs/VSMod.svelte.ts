@@ -55,7 +55,6 @@ export class VSMod {
 		authors: string[];
 		contributors: string[];
 		type?: string | undefined;
-		state?: VSModState | undefined;
 	}) {
 		this._zip = vsMod.zip;
 		this._name = vsMod.name;
@@ -66,7 +65,6 @@ export class VSMod {
 		this._authors = vsMod.authors;
 		this._contributors = vsMod.contributors;
 		this._type = vsMod.type;
-		this._state = $state(vsMod.state ?? VSModState.INSTALLED);
 	}
 
 	// *************************
@@ -117,11 +115,6 @@ export class VSMod {
 	 * The type of the Vintage Story Mod.
 	 */
 	private _type?: string | undefined;
-
-	/**
-	 * The state of the Vintage Story Mod.
-	 */
-	private _state: VSModState;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
@@ -189,13 +182,6 @@ export class VSMod {
 		return this._type;
 	}
 
-	/**
-	 * The state of the Vintage Story Mod.
-	 */
-	public get state(): VSModState {
-		return this._state;
-	}
-
 	// ********************
 	// *  STATIC METHODS  *
 	// ********************
@@ -258,6 +244,23 @@ export class VSMod {
 	// **********************
 
 	/**
+	 * Deletes this Vintage Story Mod.
+	 */
+	public async delete(): Promise<void> {
+		try {
+			App.logger.debug(`Deleting the Vintage Story Mod ${this._name}...`);
+
+			await this._zip.delete();
+
+			App.logger.debug(`Deleted the Vintage Story Mod ${this._name}!`);
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			App.logger.error(`There was an error deleting the Vintage Story Mod ${this._name}: ${err}`);
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the Vintage Story Mod ${this._name}!`);
+		}
+	}
+
+	/**
 	 * Fetches the ModDB API Mod of this Vintage Story Mod.
 	 * @returns The ModDB API Mod.
 	 */
@@ -275,15 +278,4 @@ export class VSMod {
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod of the Vintage Story Mod ${this._name}!`);
 		}
 	}
-}
-
-/**
- * State of the Vintage Story Mod.
- */
-export enum VSModState {
-	INSTALLED = "installed",
-	NOT_INSTALLED = "not_installed",
-	INSTALLING = "installing",
-	DELETING = "deleting",
-	UPDATING = "updating"
 }
