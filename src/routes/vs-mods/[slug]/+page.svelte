@@ -22,6 +22,7 @@
 	import * as AspectRatio from "$lib/components/ui/aspect-ratio";
 	import * as Table from "$lib/components/ui/table";
 	import * as Badge from "$lib/components/ui/badge";
+	import * as Skeleton from "$lib/components/ui/skeleton";
 
 	let { params }: PageProps = $props();
 
@@ -38,23 +39,26 @@
 	});
 </script>
 
-<Typo.H1>
-	{#await modDBApiModPromise}
-		<Typo.H1Skeleton />
-	{:then modDBApiMod}
+{#await modDBApiModPromise}
+	<Skeleton.Root class="h-10 w-64" />
+{:then modDBApiMod}
+	<Typo.H1>
 		{#if modDBApiMod === undefined}
 			Not found
 		{:else}
 			{modDBApiMod.name}
 		{/if}
-	{:catch}
-		???
-	{/await}
-</Typo.H1>
+	</Typo.H1>
+{:catch}
+	<Typo.H1>???</Typo.H1>
+{/await}
 <Typo.Leading>View, install and manage this Vintage Story Mod on your Vintage Story Instances.</Typo.Leading>
 
 {#await modDBApiModPromise}
-	<Typo.P>Skeleton</Typo.P>
+	<div class="grid w-full grid-cols-3 gap-8">
+		<Skeleton.Root class="col-span-3 aspect-video rounded-lg xl:col-span-2" />
+		<Skeleton.Root class="col-span-3 h-72 rounded-lg xl:col-span-1" />
+	</div>
 {:then modDBApiMod}
 	{#if modDBApiMod === undefined}
 		<Empty.Root>

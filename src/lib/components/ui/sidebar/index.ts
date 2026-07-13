@@ -12,7 +12,6 @@ import MenuAction, { type MenuActionProps } from "./sidebar-menu-action.svelte";
 import MenuBadge, { type MenuBadgeProps } from "./sidebar-menu-badge.svelte";
 import MenuButton, { type MenuButtonProps } from "./sidebar-menu-button.svelte";
 import MenuItem, { type MenuItemProps } from "./sidebar-menu-item.svelte";
-import MenuSkeleton, { type MenuSkeletonProps } from "./sidebar-menu-skeleton.svelte";
 import MenuSubButton, { type MenuSubButtonProps } from "./sidebar-menu-sub-button.svelte";
 import MenuSubItem, { type MenuSubItemProps } from "./sidebar-menu-sub-item.svelte";
 import MenuSub, { type MenuSubProps } from "./sidebar-menu-sub.svelte";
@@ -47,7 +46,6 @@ export {
 	MenuBadge,
 	MenuButton,
 	MenuItem,
-	MenuSkeleton,
 	MenuSub,
 	MenuSubButton,
 	MenuSubItem,
@@ -71,7 +69,6 @@ export {
 	type MenuBadgeProps,
 	type MenuButtonProps,
 	type MenuItemProps,
-	type MenuSkeletonProps,
 	type MenuSubProps,
 	type MenuSubButtonProps,
 	type MenuSubItemProps,

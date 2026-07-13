@@ -38,6 +38,7 @@
 	import * as List from "$lib/components/ui/list";
 	import * as Combobox from "$lib/components/ui/combobox";
 	import * as Textarea from "$lib/components/ui/textarea";
+	import * as Skeleton from "$lib/components/ui/skeleton";
 
 	let { params }: PageProps = $props();
 
@@ -248,7 +249,7 @@
 						<Field.Label for="vs-version">Vintage Story Version</Field.Label>
 
 						{#await rustoryApiVersionsPromise}
-							<Button.Skeleton />
+							<Skeleton.Root class="h-9 w-full" />
 						{:then rustoryApiVersions}
 							<Combobox.Root
 								value={form.rApiVersion.value?.version}
