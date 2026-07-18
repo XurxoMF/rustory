@@ -20,6 +20,34 @@ Segundo o mantedor, as funcionalidades xa implementadas funcionan, aínda que o 
 
 Limitación coñecida: o soporte de Vintage Story en macOS está roto porque o xogo distribúe agora artefactos x64 e ARM64 separados, pero non todas as versións antigas teñen ambos. Calquera solución debe admitir a arquitectura actual e a ausencia dalgún artefacto nas versións históricas. O formato exacto futuro da API para representalos non está confirmado neste repositorio.
 
+## Estado funcional confirmado
+
+Partes bastante completas:
+
+- Arranque de Tauri, single-instance, tray, logs e ventá personalizada.
+- Información do sistema e detección de runtimes .NET.
+- Configuración persistida de tema, idioma, escala, logs e directorios.
+- Navegación, sidebar, breadcrumbs, command palette, hotkeys e recarga.
+- Formulario de creación e edición de instancias.
+- Rexistro e eliminación de instancias.
+- Descarga/modelado de versións desde a API de Rustory.
+- Catálogo ModDB con grid/lista, ordenación, paxinación, cantidade por páxina, selección de instancia, detalle, screenshots e estados de carga/erro/baleiro/offline.
+- Instalación simple dun mod buscando unha release exacta ou parcialmente compatible.
+
+Partes incompletas:
+
+- O botón Play aínda non lanza o xogo.
+- Non existe lanzamento de cliente/servidor nin seguimento real do proceso.
+- `VSInstanceBackup` é só un modelo de datos; faltan crear, cargar, eliminar e restaurar.
+- As pestanas de mods e backups dunha instancia son placeholders.
+- Non hai desinstalación, actualización, activación/desactivación nin selección manual de release de mods.
+- O panel de filtros avanzados de mods está baleiro.
+- O updater Tauri está rexistrado e configurado, pero non hai chamadas frontend, estado, setting nin botón de actualización.
+- Non existe xestión explícita das versións instaladas.
+- A internacionalización está practicamente sen usar: os catálogos conteñen moi poucos textos e a UI está maioritariamente hardcodeada en inglés.
+- `VSAccount` existe pero non está integrado.
+- Servidores e modpacks só aparecen como intención no README.
+
 ## Arquitectura
 
 Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
