@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { App } from "$lib/classes/App.svelte";
+	import { Command as CommandStore } from "$lib/classes/stores/Command.svelte";
 
 	import * as Command from "$lib/components/ui/command";
 </script>
 
-<Command.Dialog bind:open={App.command.open} class="rounded-lg border shadow-md md:min-w-120">
+<Command.Dialog bind:open={CommandStore.instance.open} class="rounded-lg border shadow-md md:min-w-120">
 	<Command.Input placeholder="Type a command or search..." />
 
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 
-		{#each App.command.groups as { heading, items }, i (heading)}
+		{#each CommandStore.instance.groups as { heading, items }, i (heading)}
 			<Command.Group {heading}>
 				{#each items as { value, title, icon: Icon, keywords, onSelect } (value)}
 					<Command.Item
@@ -19,7 +19,7 @@
 						{keywords}
 						onSelect={() => {
 							onSelect();
-							App.command.open = false;
+							CommandStore.instance.open = false;
 						}}
 					>
 						{#if Icon}
@@ -31,7 +31,7 @@
 				{/each}
 			</Command.Group>
 
-			{#if i + 1 < App.command.groups.length}
+			{#if i + 1 < CommandStore.instance.groups.length}
 				<Command.Separator />
 			{/if}
 		{/each}

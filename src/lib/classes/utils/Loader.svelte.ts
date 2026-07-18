@@ -3,15 +3,21 @@ export class Loader {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Loader = new Loader();
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Loader {
+		return Loader._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	constructor() {
+	private constructor() {
 		this._showLoader = $state(true);
 		this._loadApp = $state(false);
 	}

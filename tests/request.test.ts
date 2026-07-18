@@ -16,27 +16,34 @@ mock.module("@tauri-apps/plugin-upload", () => ({
 	download: downloadMock
 }));
 
-mock.module("$lib/classes/App.svelte", () => ({
-	App: {
-		get info() {
+mock.module("$lib/classes/stores/Info.svelte", () => ({
+	Info: {
+		get instance() {
 			return requestState;
-		},
-		logger: {
-			debug: () => undefined,
-			error: () => undefined
 		}
 	}
 }));
 
 const { Request } = await import("../src/lib/classes/stores/Request.svelte");
 
-beforeEach(() => {
+beforeEach(async () => {
 	requestState.isOnline = true;
 	fetchMock.mockClear();
 	downloadMock.mockClear();
+
+	const request = await Request.init();
+	request.clearCache();
 });
 
 describe("Request.get", () => {
+	test("reuses the initialized request service", async () => {
+		const firstRequest = await Request.init();
+		const secondRequest = await Request.init();
+
+		expect(secondRequest).toBe(firstRequest);
+		expect(Request.instance).toBe(firstRequest);
+	});
+
 	test("caches a response and returns independent clones", async () => {
 		fetchMock.mockResolvedValueOnce(new Response(JSON.stringify({ value: 1 })));
 		const request = await Request.init();

@@ -1,4 +1,4 @@
-import { App } from "$lib/classes/App.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -164,7 +164,7 @@ export class VSInstance {
 			});
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error creating the Vintage Story Instance: ${err}`);
+			Logger.error(`There was an error creating the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the Vintage Story Instance!");
 		}
 	}
@@ -615,7 +615,7 @@ export class VSInstance {
 	 */
 	public static async fromDir(dir: Directory): Promise<VSInstance> {
 		try {
-			App.logger.debug(`Loading the Vintage Story Instance from the directory ${dir.path}...`);
+			Logger.debug(`Loading the Vintage Story Instance from the directory ${dir.path}...`);
 
 			const filePath = await dir.join("instance.json");
 			const file = await File.create(filePath);
@@ -632,12 +632,12 @@ export class VSInstance {
 			const modsPath = await dataDir.join("Mods");
 			const modsDir = await Directory.create(modsPath);
 
-			App.logger.debug(`Reading the Vintage Story Instance data from the file ${file.path}...`);
+			Logger.debug(`Reading the Vintage Story Instance data from the file ${file.path}...`);
 
 			const rawVSInstanceJSON = await file.readJSON<unknown>();
 			const vsInstanceJSON = VSInstance.parseJSON(rawVSInstanceJSON);
 
-			App.logger.debug(`Creating the Vintage Story Instance ${vsInstanceJSON.name} with the data from the file ${file.path}!`);
+			Logger.debug(`Creating the Vintage Story Instance ${vsInstanceJSON.name} with the data from the file ${file.path}!`);
 
 			const vsInstance = await VSInstance.create({
 				file,
@@ -659,12 +659,12 @@ export class VSInstance {
 				envVars: vsInstanceJSON.envVars
 			});
 
-			App.logger.debug(`Finished creating the Vintage Story Instance ${vsInstanceJSON.name}!`);
+			Logger.debug(`Finished creating the Vintage Story Instance ${vsInstanceJSON.name}!`);
 
 			return vsInstance;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error loading the Vintage Story Instance from the directory ${dir.path}: ${err}`);
+			Logger.error(`There was an error loading the Vintage Story Instance from the directory ${dir.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error loading the Vintage Story Instance from the directory ${dir.path}!`);
 		}
 	}
@@ -676,27 +676,27 @@ export class VSInstance {
 	/**
 	 * Deletes the Vintage Story Instance.
 	 *
-	 * NOTE: This doesn't delete the Instance from the App data store. You must remove it manually.
+	 * NOTE: This doesn't delete the Instance from the Data store. You must remove it manually.
 	 * @param deleteContents If the data, backups... should be deleted.
 	 */
 	public async delete(deleteContents: boolean): Promise<void> {
 		try {
-			App.logger.debug(`Deleting the Vintage Story Instance ${this._name}...`);
+			Logger.debug(`Deleting the Vintage Story Instance ${this._name}...`);
 
 			this._state = VSInstanceState.DELETING;
 
 			if (deleteContents) {
-				App.logger.debug(`Delete contents selected! Deleting the Vintage Story Instance directory ${this._dir.path}...`);
+				Logger.debug(`Delete contents selected! Deleting the Vintage Story Instance directory ${this._dir.path}...`);
 
 				await this._dir.delete();
 
-				App.logger.debug(`Deleted the Vintage Story Instance directory ${this._dir.path}!`);
+				Logger.debug(`Deleted the Vintage Story Instance directory ${this._dir.path}!`);
 			}
 
-			App.logger.debug(`Deleted the Vintage Story Instance ${this._name}!`);
+			Logger.debug(`Deleted the Vintage Story Instance ${this._name}!`);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the Vintage Story Instance ${this._name}: ${err}`);
+			Logger.error(`There was an error deleting the Vintage Story Instance ${this._name}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the Vintage Story Instance ${this._name}!`);
 		}
 	}
@@ -706,16 +706,16 @@ export class VSInstance {
 	 */
 	public async save(): Promise<void> {
 		try {
-			App.logger.debug(`Saving the Vintage Story Instance ${this._name} to ${this._file.path}...`);
+			Logger.debug(`Saving the Vintage Story Instance ${this._name} to ${this._file.path}...`);
 
 			const JSON = await this.exportToJSON();
 
 			await this._file.writeJSON(JSON);
 
-			App.logger.debug(`Saved the Vintage Story Instance ${this._name} to ${this._file.path}!`);
+			Logger.debug(`Saved the Vintage Story Instance ${this._name} to ${this._file.path}!`);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the Vintage Story Instance: ${err}`);
+			Logger.error(`There was an error saving the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the Vintage Story Instance!");
 		}
 	}
@@ -725,36 +725,36 @@ export class VSInstance {
 	 */
 	public async loadMods(): Promise<VSMod[]> {
 		try {
-			App.logger.debug(`Loading the Vintage Story Mods of the Vintage Story Instance ${this._name}...`);
+			Logger.debug(`Loading the Vintage Story Mods of the Vintage Story Instance ${this._name}...`);
 
 			const modsDirContents = await this._modsDir.getContents();
 
 			const vsMods: VSMod[] = [];
 
-			App.logger.debug(`Trying to load the Vintage Story Mods from ${modsDirContents.files.length} found files!`);
+			Logger.debug(`Trying to load the Vintage Story Mods from ${modsDirContents.files.length} found files!`);
 
 			await Promise.all(
 				modsDirContents.files.map(async (modFile) => {
 					if (modFile.path.endsWith(".zip")) {
-						App.logger.debug(`Trying to load the Vintage Story Mod from the file ${modFile.path}...`);
+						Logger.debug(`Trying to load the Vintage Story Mod from the file ${modFile.path}...`);
 
 						const zip = await Zip.create(modFile.path);
 
 						const vsMod = await VSMod.fromZip(zip);
 
-						App.logger.debug(`Loaded the Vintage Story Mod ${vsMod.name} from the file ${modFile.path}!`);
+						Logger.debug(`Loaded the Vintage Story Mod ${vsMod.name} from the file ${modFile.path}!`);
 
 						vsMods.push(vsMod);
 					}
 				})
 			);
 
-			App.logger.debug(`Loaded ${vsMods.length} Vintage Story Mods of the Vintage Story Instance ${this._name}!`);
+			Logger.debug(`Loaded ${vsMods.length} Vintage Story Mods of the Vintage Story Instance ${this._name}!`);
 
 			return vsMods;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}: ${err}`);
+			Logger.error(`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}: ${err}`);
 			throw new AppError(
 				AppErrorCodes.GENERIC_ERROR,
 				`There was an error loading the Vintage Story Mods of the Vintage Story Instance ${this._name}!`
@@ -769,7 +769,7 @@ export class VSInstance {
 	 */
 	public async installMod(mod: ModDBApiMod, modRelease: ModDBApiModRelease): Promise<void> {
 		try {
-			App.logger.debug(`Installing the ModDB API Mod with ID ${mod.modid}...`);
+			Logger.debug(`Installing the ModDB API Mod with ID ${mod.modid}...`);
 
 			const cleanModName = cleanForPath(mod.name);
 
@@ -779,9 +779,9 @@ export class VSInstance {
 
 			this.mods = [...this.mods, vsMod];
 
-			App.logger.debug(`Installed the ModDB API Mod with ID ${mod.modid}!`);
+			Logger.debug(`Installed the ModDB API Mod with ID ${mod.modid}!`);
 		} catch (err) {
-			App.logger.error(`Something went wrong while installing the ModDB API Mod with ID ${mod.modid} and couldn't be installed: ${err}`);
+			Logger.error(`Something went wrong while installing the ModDB API Mod with ID ${mod.modid} and couldn't be installed: ${err}`);
 			throw new AppError(
 				AppErrorCodes.GENERIC_ERROR,
 				`Something went wrong while installing the ModDB API Mod with ID ${mod.modid} and couldn't be installed!`

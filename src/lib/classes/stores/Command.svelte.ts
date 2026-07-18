@@ -8,9 +8,8 @@ import IconDeviceGamepad from "@tabler/icons-svelte/icons/device-gamepad";
 import IconPlus from "@tabler/icons-svelte/icons/plus";
 import IconSettings from "@tabler/icons-svelte/icons/settings";
 
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 export class CommandItem {
 	// ***********************
@@ -177,9 +176,16 @@ export class Command {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Command | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Command {
+		if (Command._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Command not initialized!");
+		return Command._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -194,8 +200,10 @@ export class Command {
 	 * Loads all the available commands.
 	 */
 	public static async init(): Promise<Command> {
+		if (Command._instance !== undefined) return Command._instance;
+
 		try {
-			App.logger.debug("Initializing command...");
+			Logger.debug("Initializing command...");
 
 			const pages = [
 				new CommandItem({ value: "home", title: "Home", icon: IconHome, keywords: ["page", "home"], onselect: () => goto(resolve("/")) }),
@@ -224,12 +232,15 @@ export class Command {
 
 			const pagesGroup = new CommandGroup({ heading: "Pages", items: pages });
 
-			return new Command({
+			const command = new Command({
 				groups: [pagesGroup]
 			});
+
+			Command._instance = command;
+			return command;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the command: ${err}`);
+			Logger.error(`There was an error initializating the command: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the command!");
 		}
 	}

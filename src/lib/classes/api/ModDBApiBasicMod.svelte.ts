@@ -1,4 +1,5 @@
-import { App } from "$lib/classes/App.svelte";
+import { Request } from "$lib/classes/stores/Request.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { ModDBApiMod } from "$lib/classes/api/ModDBApiMod.svelte";
 
@@ -290,9 +291,9 @@ export class ModDBApiBasicMod {
 	 */
 	public static async fetchAll(options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiBasicMod[]> {
 		try {
-			App.logger.debug(`Fetching all the ModDB API Basic Mods...`);
+			Logger.debug(`Fetching all the ModDB API Basic Mods...`);
 
-			const res: Response = await App.request.get("https://mods.vintagestory.at/api/mods", options?.cache);
+			const res: Response = await Request.instance.get("https://mods.vintagestory.at/api/mods", options?.cache);
 
 			const json: { mods: ModDBApiBasicModJSON[] } = await res.json();
 
@@ -303,7 +304,7 @@ export class ModDBApiBasicMod {
 			return mods;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error fetching all the ModDB API Basic Mods: ${err}`);
+			Logger.error(`There was an error fetching all the ModDB API Basic Mods: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error fetching all the ModDB API Basic Mods!");
 		}
 	}
@@ -318,16 +319,16 @@ export class ModDBApiBasicMod {
 	 */
 	public async toModDBApiMod(options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiMod | undefined> {
 		try {
-			App.logger.debug(`Fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
+			Logger.debug(`Fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 
 			const mod = await ModDBApiMod.fetch(this._modid, { cache: options?.cache });
 
-			App.logger.debug(`Fetched the ModDB API Mod of the ${this._name} ModDB API Basic Mod!`);
+			Logger.debug(`Fetched the ModDB API Mod of the ${this._name} ModDB API Basic Mod!`);
 
 			return mod;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...: ${err}`);
+			Logger.error(`There was an error fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod of the ${this._name} ModDB API Basic Mod...`);
 		}
 	}

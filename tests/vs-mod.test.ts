@@ -2,16 +2,6 @@ import { describe, expect, mock, test } from "bun:test";
 
 import { AppErrorCodes } from "../src/lib/classes/errors/AppError.svelte";
 
-mock.module("$lib/classes/App.svelte", () => ({
-	App: {
-		logger: {
-			debug: () => undefined,
-			error: () => undefined,
-			trace: () => undefined
-		}
-	}
-}));
-
 mock.module("$lib/classes/api/ModDBApiMod.svelte", () => ({
 	ModDBApiMod: class {}
 }));

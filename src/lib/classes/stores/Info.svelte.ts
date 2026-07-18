@@ -14,11 +14,10 @@ import { defaultWindowIcon } from "@tauri-apps/api/app";
 import type { Image } from "@tauri-apps/api/image";
 import { Command } from "@tauri-apps/plugin-shell";
 
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Directory } from "$lib/classes/utils/Directory.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Info of the app.
@@ -28,9 +27,20 @@ export class Info {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Info | undefined;
+	private static _initialization: Promise<Info> | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	/**
+	 * The initialized app info.
+	 */
+	public static get instance(): Info {
+		if (Info._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Info not initialized!");
+		return Info._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -83,10 +93,26 @@ export class Info {
 	 * @returns An instance of the info of the app.
 	 */
 	public static async init(): Promise<Info> {
-		try {
-			App.logger.debug("Initializing info...");
+		if (Info._instance !== undefined) return Info._instance;
+		if (Info._initialization !== undefined) return await Info._initialization;
 
-			App.logger.debug("Loading app info...");
+		Info._initialization = Info.load();
+
+		try {
+			const info = await Info._initialization;
+			Info._instance = info;
+
+			return info;
+		} finally {
+			Info._initialization = undefined;
+		}
+	}
+
+	private static async load(): Promise<Info> {
+		try {
+			Logger.debug("Initializing info...");
+
+			Logger.debug("Loading app info...");
 
 			// Load basic info.
 			const name = await app.getName();
@@ -95,7 +121,7 @@ export class Info {
 			const icon = await defaultWindowIcon();
 			const isOnline = navigator.onLine;
 
-			App.logger.debug("Loading OS info...");
+			Logger.debug("Loading OS info...");
 
 			// Load system info.
 			const osArch = getOsArch();
@@ -104,7 +130,7 @@ export class Info {
 			const osType = getOsType();
 			const osVersion = getOsVersion();
 
-			App.logger.debug("Loading .NET info...");
+			Logger.debug("Loading .NET info...");
 
 			// Load .NET SDKs info
 			const netSdksCommand = await Command.create("check-dotnet", ["--list-sdks"]).execute();
@@ -123,7 +149,7 @@ export class Info {
 				.map((line) => line.match(/^[\D]*(\d+)/)?.[1])
 				.filter((line) => line !== undefined);
 
-			App.logger.debug("Loading paths...");
+			Logger.debug("Loading paths...");
 
 			// Load config path
 			const configDirectory = await path.appConfigDir();
@@ -166,7 +192,7 @@ export class Info {
 			});
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the info: ${err}`);
+			Logger.error(`There was an error initializating the info: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the info!");
 		}
 	}

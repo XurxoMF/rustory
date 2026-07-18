@@ -53,7 +53,7 @@ Partes incompletas:
 Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 
 - `src/routes/`: páxinas e layout de SvelteKit. O SSR está desactivado e `adapter-static` xera unha SPA con fallback a `index.html`.
-- `src/lib/classes/App.svelte.ts`: singleton que inicializa e expón os servizos globais da aplicación.
+- `src/routes/+layout.svelte`: composition root do frontend; inicializa os servizos na orde necesaria, mostra a ventá, controla o loader e rexistra o reenvío de logs.
 - `src/lib/classes/stores/`: configuración, datos, información do sistema e servizos reactivos de UI.
 - `src/lib/classes/vs/`: modelos e operacións de dominio para versións, instancias, mods, backups e contas.
 - `src/lib/classes/api/`: modelos e clientes para a API de Rustory e a API de mods de Vintage Story.
@@ -70,9 +70,11 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 
 - `Config` persiste preferencias nun `config.json` baixo o directorio de configuración da aplicación.
 - `Data` persiste rutas a versións e instancias nun `data.json` baixo o directorio de datos da aplicación.
+- Cada servizo global é propietario da súa única instancia e exponse mediante `Clase.instance`; os servizos con carga asíncrona expóñense mediante `Clase.init()`. `Info`, `Config`, `Request` e `Data` comparten unha inicialización concorrente e permiten reintentar se a carga falla.
+- Os compoñentes importan directamente as clases que usan. Non existe un service locator ou fachada global `App`.
 - Cada instancia usa un `instance.json` e os subdirectorios `Data/Mods` e `Backups`.
 - `config.json`, `data.json` e `instance.json` usan actualmente `schemaVersion: 1`. Os ficheiros legacy sen `schemaVersion` son compatibles: valídanse, complétanse cos defaults existentes e escríbense co esquema actual no seguinte gardado. Unha versión explícita distinta de `1`, unha raíz que non sexa un obxecto ou un campo presente cun tipo/valor inválido produce `AppErrorCodes.MALFORMED_DATA`.
-- `App.info.tempDir` é o directorio temporal compartido da aplicación e corresponde a `tmp` dentro do directorio de caché resolto por Tauri. As descargas de versións usan un subdirectorio único `vs-version-installs/<UUID>` baixo esta raíz, separado do destino final.
+- `Info.instance.tempDir` é o directorio temporal compartido da aplicación e corresponde a `tmp` dentro do directorio de caché resolto por Tauri. As descargas de versións usan un subdirectorio único `vs-version-installs/<UUID>` baixo esta raíz, separado do destino final.
 - O frontend accede ao sistema mediante plugins Tauri e mediante os comandos Rust rexistrados en `src-tauri/src/lib.rs`.
 - As versións do xogo veñen de `https://api.rustory.xyz`; os mods veñen da API e CDN oficiais de mods de Vintage Story.
 
@@ -159,9 +161,11 @@ Estes fallos son débeda coñecida, non razón para omitir silenciosamente as co
 - Os compoñentes Svelte usan Svelte 5 e runes como `$state`, `$derived`, `$effect` e `$props`.
 - As clases reactivas usan o sufixo `.svelte.ts`.
 - As importacións internas usan preferentemente os aliases `$lib` e `$assets`.
+- Todas as clases e compoñentes importan só as dependencias concretas que necesitan, como `Logger`, `Info`, `Config`, `Data` ou `Request`; isto evita ciclos e permite tests unitarios illados.
+- Non convertas entidades de dominio en singletons: deben poder coexistir múltiples `VSInstance`, `VSVersion`, `VSMod` e `VSInstanceBackup`. O patrón singleton está reservado para servizos globais cun único ciclo de vida.
 - As clases principais están divididas en propiedades estáticas, inicialización, propiedades de instancia, getters/setters e métodos, con comentarios JSDoc.
 - Se unha transformación ou regra de dominio pertence claramente a unha clase existente, impleméntaa e próbaa como método desa clase. Reserva `src/lib/helpers/` para funcións simples transversais ou propiedades illadas que non teñan unha clase propietaria clara, como a comparación de versións do xogo.
-- Os erros do dominio envólvense normalmente en `AppError` e rexístranse mediante `App.logger`.
+- Os erros do dominio envólvense normalmente en `AppError` e rexístranse mediante `Logger`.
 - As operacións asíncronas públicas devolven `Promise` e deben propagarse ou esperarse explicitamente.
 - Un método `save()` non pode informar de éxito nin resolverse antes de que remate a escritura subxacente. Agarda sempre a operación de persistencia para que os erros cheguen ao `catch` do método; isto aplica por separado a configuración, datos globais e instancias.
 - Ao engadir ou modificar stores persistentes, comproba especificamente que as escrituras de `config.json`, `data.json` ou `instance.json` estean agardadas e cubertas polo manexo de erros do método.
@@ -175,13 +179,14 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 ## Decisións técnicas que se deben respectar
 
 - Manter Tauri como shell de escritorio e SvelteKit como frontend SPA; non introducir un servidor SSR.
+- Manter o arranque explícito no layout raíz e cada servizo global como propietario da súa instancia. Non reintroducir unha clase `App`, service locator ou fachada equivalente.
 - Manter compatibilidade con Windows, Linux, macOS x64 e macOS ARM64.
 - Tratar versións de xogo e instancias como entidades distintas: varias instancias poden compartir unha versión instalada, pero deben ter datos e mods illados.
 - Usar os directorios de aplicación resoltos por Tauri e as rutas configurables existentes; non codificar rutas específicas dun sistema operativo.
 - Manter as operacións privilexiadas ou non dispoñibles no webview detrás de plugins Tauri ou comandos IPC Rust.
 - Conceder só os permisos Tauri e dominios de rede necesarios. Calquera cambio en capabilities debe revisarse como cambio de seguridade.
 - As descargas, instalacións, actualizacións e restauracións deben ser recuperables: usar temporais/staging, validar antes de substituír datos e limpar tras un fallo.
-- Reutilizar `App.info.tempDir` para temporais de instalación; non descargar arquivos dentro do directorio final da versión. Cada intento debe ter un subdirectorio propio para evitar colisións entre operacións.
+- Reutilizar `Info.instance.tempDir` para temporais de instalación; non descargar arquivos dentro do directorio final da versión. Cada intento debe ter un subdirectorio propio para evitar colisións entre operacións.
 - Verificar checksums cando a API os proporciona; non usar o hash unicamente como parte do nome.
 - Non persistir unha versión ou instancia como dispoñible antes de completar e validar a operación correspondente.
 - Os cambios no formato JSON persistido deben ser retrocompatibles ou incluír unha migración explícita.
@@ -232,6 +237,7 @@ Antes de considerar unha tarefa terminada:
 4. Se se modificou Rust, executa `cargo fmt --all -- --check`, `cargo clippy --locked --all-targets -- -D warnings` e `cargo test --locked`.
 5. Engade ou actualiza tests cando exista lóxica verificable. Se non hai infraestrutura adecuada, documenta a carencia e proporciona pasos manuais concretos.
    - Prioriza contratos, transformacións, estados e fallos recuperables; non engadas tests que só repitan getters ou asignacións triviais.
+   - `tests/setup.ts`, cargado por `bunfig.toml`, substitúe unicamente o logger Tauri común. Cada test debe simular directamente o servizo concreto adicional que precise; non introduzas un mock ou rexistro global de servizos.
 6. Para filesystem, instalacións, mods, backups ou updater, verifica polo menos o camiño feliz e un fallo recuperable; comproba tamén que non quedan temporais nin rexistros fantasma.
 7. Para cambios multiplataforma, verifica por tests/fixtures as ramas de Windows, Linux, macOS x64 e macOS ARM64. Non afirmes ter probado fisicamente plataformas ás que non se tivo acceso.
 8. Para cambios de persistencia, comproba carga de datos existentes, escritura correcta, reinicio e recuperación ante JSON inválido ou incompleto.

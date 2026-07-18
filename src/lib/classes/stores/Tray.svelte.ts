@@ -1,9 +1,10 @@
 import { Menu } from "@tauri-apps/api/menu";
 import { TrayIcon, type TrayIconOptions } from "@tauri-apps/api/tray";
-
-import { App } from "$lib/classes/App.svelte";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Info } from "$lib/classes/stores/Info.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * App tray.
@@ -13,9 +14,16 @@ export class Tray {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Tray | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Tray {
+		if (Tray._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Tray not initialized!");
+		return Tray._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -32,37 +40,43 @@ export class Tray {
 	 * @returns The app tray instance.
 	 */
 	public static async init(): Promise<Tray> {
+		if (Tray._instance !== undefined) return Tray._instance;
+
 		try {
-			App.logger.debug("Initializing tray...");
+			Logger.debug("Initializing tray...");
+
+			const appWindow = getCurrentWindow();
 
 			const menu = await Menu.new({
 				items: [
 					{
 						id: "open",
 						text: "Open",
-						action: () => App.window.show()
+						action: () => appWindow.show()
 					},
 					{
 						id: "quit",
 						text: "Quit",
-						action: () => App.window.close()
+						action: () => appWindow.close()
 					}
 				]
 			});
 
 			const options: TrayIconOptions = {
 				title: "Rustory",
-				icon: App.info.icon ?? undefined,
+				icon: Info.instance.icon ?? undefined,
 				menu,
 				showMenuOnLeftClick: true
 			};
 
 			const icon = await TrayIcon.new(options);
 
-			return new Tray({ menu, options, icon });
+			const tray = new Tray({ menu, options, icon });
+			Tray._instance = tray;
+			return tray;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the tray: ${err}`);
+			Logger.error(`There was an error initializating the tray: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the tray!");
 		}
 	}

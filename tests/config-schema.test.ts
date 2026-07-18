@@ -8,18 +8,6 @@ mock.module("$lib/paraglide/runtime", () => ({
 	setLocale: () => undefined
 }));
 
-mock.module("$lib/classes/App.svelte", () => ({
-	App: {
-		logger: {
-			debug: () => undefined,
-			error: () => undefined,
-			warn: () => undefined
-		}
-	}
-}));
-
-mock.module("$lib/classes/utils/Directory.svelte", () => ({ Directory: class {} }));
-
 const { Config } = await import("../src/lib/classes/stores/Config.svelte");
 
 const defaults = {

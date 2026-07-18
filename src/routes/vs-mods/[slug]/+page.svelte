@@ -9,7 +9,8 @@
 	import IconError404 from "@tabler/icons-svelte/icons/error-404";
 	import IconTool from "@tabler/icons-svelte/icons/tool";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Config } from "$lib/classes/stores/Config.svelte";
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -31,9 +32,9 @@
 	$effect(() => {
 		modDBApiModPromise.then((modDBApiMod) => {
 			if (modDBApiMod !== undefined) {
-				App.breadcrumbs.segments = [{ label: "Vintage Story Mods", href: resolve("/vs-mods") }, { label: modDBApiMod.name }];
+				Breadcrumbs.instance.segments = [{ label: "Vintage Story Mods", href: resolve("/vs-mods") }, { label: modDBApiMod.name }];
 			} else {
-				App.breadcrumbs.segments = [{ label: "Vintage Story Mods", href: resolve("/vs-mods") }, { label: "???" }];
+				Breadcrumbs.instance.segments = [{ label: "Vintage Story Mods", href: resolve("/vs-mods") }, { label: "???" }];
 			}
 		});
 	});
@@ -132,12 +133,14 @@
 
 						<Table.Row>
 							<Table.Cell class="text-muted-foreground" align="left">Created</Table.Cell>
-							<Table.Cell class="font-bold" align="right">{new Date(modDBApiMod.created).toLocaleString(App.config.locale)}</Table.Cell>
+							<Table.Cell class="font-bold" align="right">{new Date(modDBApiMod.created).toLocaleString(Config.instance.locale)}</Table.Cell>
 						</Table.Row>
 
 						<Table.Row>
 							<Table.Cell class="text-muted-foreground" align="left">Updated</Table.Cell>
-							<Table.Cell class="font-bold" align="right">{new Date(modDBApiMod.releases[0].created).toLocaleString(App.config.locale)}</Table.Cell>
+							<Table.Cell class="font-bold" align="right"
+								>{new Date(modDBApiMod.releases[0].created).toLocaleString(Config.instance.locale)}</Table.Cell
+							>
 						</Table.Row>
 
 						<Table.Row>

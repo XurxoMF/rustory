@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { dirname } from "@tauri-apps/api/path";
 import { exists, remove } from "@tauri-apps/plugin-fs";
 
-import { App } from "$lib/classes/App.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -43,7 +43,7 @@ export class Zip {
 			return new Zip({ path, directory });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error creating the zip: ${err}`);
+			Logger.error(`There was an error creating the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the zip!");
 		}
 	}
@@ -94,12 +94,12 @@ export class Zip {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
-			App.logger.debug(`Checking if the zip ${this.path} exists...`);
+			Logger.debug(`Checking if the zip ${this.path} exists...`);
 
 			return await exists(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error chcking if the zip exists: ${err}`);
+			Logger.error(`There was an error chcking if the zip exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the zip exists!");
 		}
 	}
@@ -109,7 +109,7 @@ export class Zip {
 	 */
 	public async delete(): Promise<void> {
 		try {
-			App.logger.debug(`Deleting the zip ${this.path}...`);
+			Logger.debug(`Deleting the zip ${this.path}...`);
 
 			const zipExists = await exists(this.path);
 
@@ -118,7 +118,7 @@ export class Zip {
 			await remove(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the zip ${this.path}: ${err}`);
+			Logger.error(`There was an error deleting the zip ${this.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the zip ${this.path}`);
 		}
 	}
@@ -129,19 +129,19 @@ export class Zip {
 	 */
 	public async extract(destination: Directory): Promise<void> {
 		try {
-			App.logger.debug(`Extracting the zip ${this.path} to ${destination.path}...`);
+			Logger.debug(`Extracting the zip ${this.path} to ${destination.path}...`);
 
 			await destination.ensureExists();
 
 			const result: boolean = await invoke("extract_zip", { zipPath: this.path, destDir: destination.path });
 
 			if (!result) {
-				App.logger.error(`There was an error extracting the zip and couldn't be extracted!`);
+				Logger.error(`There was an error extracting the zip and couldn't be extracted!`);
 				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 			}
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error extracting the zip: ${err}`);
+			Logger.error(`There was an error extracting the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error extracting the zip!");
 		}
 	}
@@ -153,21 +153,21 @@ export class Zip {
 	 */
 	public async readTextFromFile(path: string): Promise<string> {
 		try {
-			App.logger.debug(`Reading the text from the file ${path}...`);
+			Logger.debug(`Reading the text from the file ${path}...`);
 
 			const fileContents: string = await invoke("read_string_from_zip", { zipPath: this.path, filePath: path });
 
 			return fileContents;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error reading the text from the file inside the zip: ${err}`);
+			Logger.error(`There was an error reading the text from the file inside the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the text from the file inside the zip!");
 		}
 	}
 
 	public async readJSONFromFile<T>(path: string): Promise<T> {
 		try {
-			App.logger.debug(`Reading the JSON from the file ${path}...`);
+			Logger.debug(`Reading the JSON from the file ${path}...`);
 
 			const fileContents = (await invoke<string>("read_string_from_zip", { zipPath: this.path, filePath: path })).trim();
 
@@ -180,7 +180,7 @@ export class Zip {
 				throw new AppError(AppErrorCodes.MALFORMED_DATA, `The file ${path} inside the zip ${this.path} does not contain valid JSON!`, {
 					cause: err
 				});
-			App.logger.error(`There was an error reading the JSON from the file inside the zip: ${err}`);
+			Logger.error(`There was an error reading the JSON from the file inside the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the JSON from the file inside the zip!");
 		}
 	}

@@ -6,15 +6,21 @@ export class UI {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: UI = new UI();
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): UI {
+		return UI._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
-	public constructor() {
+	private constructor() {
 		this._contentRef = $state(null);
 	}
 

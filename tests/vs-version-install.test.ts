@@ -1,14 +1,10 @@
-import { beforeEach, describe, expect, mock, test } from "bun:test";
+import { beforeEach, describe, expect, test } from "bun:test";
 
 import type { RustoryApiVSVersion } from "../src/lib/classes/api/RustoryApiVSVersion.svelte";
 import type { Directory } from "../src/lib/classes/utils/Directory.svelte";
 import type { Zip } from "../src/lib/classes/utils/Zip.svelte";
 
 const events: string[] = [];
-
-mock.module("$lib/classes/App.svelte", () => ({
-	App: {}
-}));
 
 const { VSVersion } = await import("../src/lib/classes/vs/VSVersion.svelte");
 

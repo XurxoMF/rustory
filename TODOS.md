@@ -122,3 +122,5 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
    - Verificación: unha persoa nova pode instalar, executar, comprobar e empaquetar seguindo a documentación.
 8. Crear smoke tests Windows, Linux, macOS x64 e ARM64.
    - Verificación: cada plataforma cobre arranque, instalación básica e fluxo mínimo de instancia.
+9. Cubrir o ciclo de inicialización de `Info`, `Config` e `Data` con dobres de Tauri.
+   - Verificación: inicialización concorrente comparte instancia, un fallo non publica estado parcial e unha chamada posterior pode reintentar.

@@ -5,7 +5,8 @@
 
 	import IconFolder from "@tabler/icons-svelte/icons/folder";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
 
 	import { Config } from "$lib/classes/stores/Config.svelte";
 
@@ -18,7 +19,7 @@
 	import * as Button from "$lib/components/ui/button";
 	import * as Field from "$lib/components/ui/field";
 
-	App.breadcrumbs.segments = [{ label: "Settings", href: resolve("/settings") }];
+	Breadcrumbs.instance.segments = [{ label: "Settings", href: resolve("/settings") }];
 </script>
 
 <Typo.H1>Settings</Typo.H1>
@@ -39,10 +40,10 @@
 
 						<Select.Root
 							type="single"
-							value={App.config.theme}
-							onValueChange={(value) => App.config.setTheme(value as (typeof Config.THEMES)[number]["key"])}
+							value={Config.instance.theme}
+							onValueChange={(value) => Config.instance.setTheme(value as (typeof Config.THEMES)[number]["key"])}
 						>
-							<Select.Trigger id="theme">{Config.THEMES.find(({ key }) => key === App.config.theme)?.name || "Theme"}</Select.Trigger>
+							<Select.Trigger id="theme">{Config.THEMES.find(({ key }) => key === Config.instance.theme)?.name || "Theme"}</Select.Trigger>
 
 							<Select.Content>
 								<Select.Group>
@@ -62,10 +63,10 @@
 
 						<Select.Root
 							type="single"
-							value={App.config.locale}
-							onValueChange={(value) => App.config.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
+							value={Config.instance.locale}
+							onValueChange={(value) => Config.instance.setLocale(value as (typeof Config.LOCALES)[number]["key"])}
 						>
-							<Select.Trigger id="locale">{Config.LOCALES.find(({ key }) => key === App.config.locale)?.name || "Locale"}</Select.Trigger>
+							<Select.Trigger id="locale">{Config.LOCALES.find(({ key }) => key === Config.instance.locale)?.name || "Locale"}</Select.Trigger>
 
 							<Select.Content>
 								<Select.Group>
@@ -90,9 +91,9 @@
 						min={0.5}
 						max={1.5}
 						step={0.1}
-						value={App.config.scale}
+						value={Config.instance.scale}
 						onValueCommit={(value) => {
-							if (value !== App.config.scale) App.config.setScale(value);
+							if (value !== Config.instance.scale) Config.instance.setScale(value);
 						}}
 					/>
 
@@ -115,10 +116,12 @@
 
 					<Select.Root
 						type="single"
-						value={App.config.logLevel}
-						onValueChange={(value) => App.config.setLogLevel(value as (typeof Config.LOG_LEVELS)[number]["key"])}
+						value={Config.instance.logLevel}
+						onValueChange={(value) => Config.instance.setLogLevel(value as (typeof Config.LOG_LEVELS)[number]["key"])}
 					>
-						<Select.Trigger id="log-level">{Config.LOG_LEVELS.find(({ key }) => key === App.config.logLevel)?.name || "Log level"}</Select.Trigger>
+						<Select.Trigger id="log-level"
+							>{Config.LOG_LEVELS.find(({ key }) => key === Config.instance.logLevel)?.name || "Log level"}</Select.Trigger
+						>
 
 						<Select.Content>
 							<Select.Group>
@@ -154,7 +157,7 @@
 							onclick={async () => {
 								const path = await open({
 									directory: true,
-									defaultPath: App.info.dataDir.path,
+									defaultPath: Info.instance.dataDir.path,
 									recursive: true,
 									title: "Select a directory"
 								});
@@ -162,14 +165,14 @@
 								if (path) {
 									const dir = await Directory.create(path);
 
-									App.config.setVSVersionsDir(dir);
+									Config.instance.setVSVersionsDir(dir);
 								}
 							}}
 						>
 							<IconFolder />
 						</Button.Root>
 
-						<Input.Root value={App.config.vsVersionsDir.path} readonly />
+						<Input.Root value={Config.instance.vsVersionsDir.path} readonly />
 					</div>
 
 					<Field.Description>Directory where Vintage Story Versions will be stored.</Field.Description>
@@ -187,7 +190,7 @@
 							onclick={async () => {
 								const path = await open({
 									directory: true,
-									defaultPath: App.info.dataDir.path,
+									defaultPath: Info.instance.dataDir.path,
 									recursive: true,
 									title: "Select a directory"
 								});
@@ -195,14 +198,14 @@
 								if (path) {
 									const dir = await Directory.create(path);
 
-									App.config.setVSInstancesDir(dir);
+									Config.instance.setVSInstancesDir(dir);
 								}
 							}}
 						>
 							<IconFolder />
 						</Button.Root>
 
-						<Input.Root value={App.config.vsInstancesDir.path} readonly />
+						<Input.Root value={Config.instance.vsInstancesDir.path} readonly />
 					</div>
 
 					<Field.Description>Directory where Vintage Story Instances will be stored.</Field.Description>

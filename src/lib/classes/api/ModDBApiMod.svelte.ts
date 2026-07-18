@@ -1,4 +1,5 @@
-import { App } from "$lib/classes/App.svelte";
+import { Request } from "$lib/classes/stores/Request.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -412,9 +413,9 @@ export class ModDBApiMod {
 	 */
 	public static async fetch(modid: string | number, options?: { cache?: boolean | undefined } | undefined): Promise<ModDBApiMod | undefined> {
 		try {
-			App.logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
+			Logger.debug(`Fetching the ModDB API Mod with ID ${modid}...`);
 
-			const res = await App.request.get(`https://mods.vintagestory.at/api/mod/${modid}`, options?.cache);
+			const res = await Request.instance.get(`https://mods.vintagestory.at/api/mod/${modid}`, options?.cache);
 
 			const json: { mod: ModDBApiModJSON } = await res.json();
 
@@ -447,12 +448,12 @@ export class ModDBApiMod {
 				screenshots: jsonMod.screenshots.map((screenshot) => new ModDBApiModScreenshot(screenshot))
 			});
 
-			App.logger.debug(`Fetched the ModDB API Mod with ID ${modid}.`);
+			Logger.debug(`Fetched the ModDB API Mod with ID ${modid}.`);
 
 			return apiMod;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error fetching the ModDB API Mod with ID ${modid}: ${err}`);
+			Logger.error(`There was an error fetching the ModDB API Mod with ID ${modid}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod with ID ${modid}!`);
 		}
 	}

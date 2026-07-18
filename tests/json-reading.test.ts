@@ -6,17 +6,6 @@ import type { Directory } from "../src/lib/classes/utils/Directory.svelte";
 let fileContents = "";
 let zipContents = "";
 
-mock.module("$lib/classes/App.svelte", () => ({
-	App: {
-		logger: {
-			debug: () => undefined,
-			error: () => undefined
-		}
-	}
-}));
-
-mock.module("$lib/classes/utils/Directory.svelte", () => ({ Directory: class {} }));
-
 mock.module("@tauri-apps/api/path", () => ({
 	dirname: async () => "/data"
 }));

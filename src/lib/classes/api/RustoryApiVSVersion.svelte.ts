@@ -1,4 +1,6 @@
-import { App } from "$lib/classes/App.svelte";
+import { Info } from "$lib/classes/stores/Info.svelte";
+import { Request } from "$lib/classes/stores/Request.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -200,22 +202,22 @@ export class RustoryApiVSVersion {
 	 */
 	public static async fetch(version: string, options?: { cache?: boolean | undefined } | undefined): Promise<RustoryApiVSVersion> {
 		try {
-			App.logger.debug(`Fetching the Rustory API Vintage Story Version ${version}...`);
+			Logger.debug(`Fetching the Rustory API Vintage Story Version ${version}...`);
 
-			const res: Response = await App.request.get(`https://api.rustory.xyz/versions/${version}`, options?.cache);
+			const res: Response = await Request.instance.get(`https://api.rustory.xyz/versions/${version}`, options?.cache);
 
-			App.logger.trace(await res.text());
+			Logger.trace(await res.text());
 
 			const json: RustoryApiVSVersionJSON = await res.json();
 
-			App.logger.trace(JSON.stringify(json, null, 4));
+			Logger.trace(JSON.stringify(json, null, 4));
 
 			const rustoryApiVsVersion = new RustoryApiVSVersion({ ...json });
 
 			return rustoryApiVsVersion;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error fetching the Rustory API Vintage Story Version ${version}: ${err}`);
+			Logger.error(`There was an error fetching the Rustory API Vintage Story Version ${version}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the Rustory API Vintage Story Version ${version}!`);
 		}
 	}
@@ -226,9 +228,9 @@ export class RustoryApiVSVersion {
 	 */
 	public static async fetchAll(options?: { cache?: boolean | undefined } | undefined): Promise<RustoryApiVSVersion[]> {
 		try {
-			App.logger.debug(`Fetching all the Rustory API Vintage Story Versions...`);
+			Logger.debug(`Fetching all the Rustory API Vintage Story Versions...`);
 
-			const res: Response = await App.request.get(`https://api.rustory.xyz/versions`, options?.cache);
+			const res: Response = await Request.instance.get(`https://api.rustory.xyz/versions`, options?.cache);
 
 			const json: RustoryApiVSVersionJSON[] = await res.json();
 
@@ -237,7 +239,7 @@ export class RustoryApiVSVersion {
 			return rustoryApiVsVersions;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error fetching all the Rustory API Vintage Story Versions: ${err}`);
+			Logger.error(`There was an error fetching all the Rustory API Vintage Story Versions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error fetching all the Rustory API Vintage Story Versions!");
 		}
 	}
@@ -252,29 +254,29 @@ export class RustoryApiVSVersion {
 	 */
 	public async download(dir: Directory): Promise<Zip> {
 		try {
-			App.logger.debug(`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version...`);
+			Logger.debug(`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version...`);
 
-			const url = App.info.osType === "windows" ? this.windows : App.info.osType === "linux" ? this.linux : this.macos;
-			const sha256 = App.info.osType === "windows" ? this.windowsSha : App.info.osType === "linux" ? this.linuxSha : this.macosSha;
+			const url = Info.instance.osType === "windows" ? this.windows : Info.instance.osType === "linux" ? this.linux : this.macos;
+			const sha256 = Info.instance.osType === "windows" ? this.windowsSha : Info.instance.osType === "linux" ? this.linuxSha : this.macosSha;
 
 			await dir.ensureExists();
 
-			const downloadPath = await dir.join(`${this.version}-${sha256}-${App.info.osType}.zip.tmp`);
+			const downloadPath = await dir.join(`${this.version}-${sha256}-${Info.instance.osType}.zip.tmp`);
 
-			App.logger.debug(
+			Logger.debug(
 				`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version on ${downloadPath} from ${url}...`
 			);
 
-			await App.request.download(url, downloadPath);
+			await Request.instance.download(url, downloadPath);
 
-			App.logger.debug(`Finished downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`);
+			Logger.debug(`Finished downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`);
 
 			const zip = await Zip.create(downloadPath);
 
 			return zip;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version: ${err}`);
+			Logger.error(`There was an error downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version: ${err}`);
 			throw new AppError(
 				AppErrorCodes.GENERIC_ERROR,
 				`There was an error downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`

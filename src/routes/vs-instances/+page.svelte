@@ -7,7 +7,10 @@
 
 	import { formatTime } from "$lib/utils";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Config } from "$lib/classes/stores/Config.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Toaster } from "$lib/classes/utils/Toaster.svelte";
 
 	import { VSInstanceState } from "$lib/classes/vs/VSInstance.svelte";
 	import { VSVersionState } from "$lib/classes/vs/VSVersion.svelte";
@@ -24,7 +27,7 @@
 
 	import DeleteVSInstanceDialog from "$lib/components/vs-instances/delete-dialog.svelte";
 
-	App.breadcrumbs.segments = [{ label: "Vintage Story Instances" }];
+	Breadcrumbs.instance.segments = [{ label: "Vintage Story Instances" }];
 
 	let idDeletingInstance: string | null = $state(null);
 </script>
@@ -33,7 +36,7 @@
 <Typo.Leading>Play and manage your Vintage Story Instances.</Typo.Leading>
 
 <!-- List of Vintage Story Instances -->
-{#if App.data.vsInstances.length === 0}
+{#if Data.instance.vsInstances.length === 0}
 	<Empty.Root>
 		<Empty.Header>
 			<Empty.Media variant="icon">
@@ -53,7 +56,7 @@
 	</Empty.Root>
 {:else}
 	<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-		{#each App.data.vsInstances as vsInstance (vsInstance.id)}
+		{#each Data.instance.vsInstances as vsInstance (vsInstance.id)}
 			<Card.Root>
 				<Card.Header>
 					<Card.Title class="text-lg">{vsInstance.name}</Card.Title>
@@ -61,7 +64,7 @@
 					<Card.Description class="line-clamp-2">{vsInstance.description}</Card.Description>
 
 					<Card.Action>
-						{@const vsVersion = App.data.vsVersions.find((v) => v.version === vsInstance.version)}
+						{@const vsVersion = Data.instance.vsVersions.find((v) => v.version === vsInstance.version)}
 
 						{#if vsVersion === undefined}
 							<Badge.Root variant="destructive">Stopped</Badge.Root>
@@ -112,7 +115,7 @@
 							<Table.Row>
 								<Table.Cell class="text-muted-foreground" align="left">Last time played</Table.Cell>
 								<Table.Cell class="font-bold" align="right">
-									{vsInstance.lastTimePlayed === 0 ? "Never" : new Date(vsInstance.lastTimePlayed).toLocaleString(App.config.locale)}
+									{vsInstance.lastTimePlayed === 0 ? "Never" : new Date(vsInstance.lastTimePlayed).toLocaleString(Config.instance.locale)}
 								</Table.Cell>
 							</Table.Row>
 
@@ -133,7 +136,7 @@
 						Manage
 					</Button.Root>
 
-					<Button.Root class="flex-1" onclick={() => App.toaster.toast.info("Not implemented yet!")}>Play</Button.Root>
+					<Button.Root class="flex-1" onclick={() => Toaster.toast.info("Not implemented yet!")}>Play</Button.Root>
 				</Card.Footer>
 
 				<DeleteVSInstanceDialog

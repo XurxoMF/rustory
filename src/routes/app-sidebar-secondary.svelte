@@ -8,7 +8,7 @@
 	import IconSearch from "@tabler/icons-svelte/icons/search";
 	import IconExternalLink from "@tabler/icons-svelte/icons/external-link";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Command } from "$lib/classes/stores/Command.svelte";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 </script>
@@ -25,7 +25,7 @@
 			</Sidebar.MenuItem>
 
 			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="sm" onclick={() => (App.command.open = true)}>
+				<Sidebar.MenuButton size="sm" onclick={() => (Command.instance.open = true)}>
 					<IconSearch />
 					<span>Search</span>
 				</Sidebar.MenuButton>

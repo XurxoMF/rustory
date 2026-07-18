@@ -1,9 +1,9 @@
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
+import { Info } from "$lib/classes/stores/Info.svelte";
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
@@ -29,6 +29,8 @@ export class Data {
 	 * Current data.json schema version.
 	 */
 	private static _SCHEMA_VERSION = 1 as const;
+	private static _instance: Data | undefined;
+	private static _initialization: Promise<Data> | undefined;
 
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
@@ -39,6 +41,14 @@ export class Data {
 	 */
 	public static get SCHEMA_VERSION(): typeof Data._SCHEMA_VERSION {
 		return Data._SCHEMA_VERSION;
+	}
+
+	/**
+	 * The initialized app data.
+	 */
+	public static get instance(): Data {
+		if (Data._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Data not initialized!");
+		return Data._instance;
 	}
 
 	// ************************
@@ -56,15 +66,31 @@ export class Data {
 	 * @returns An instance of the data of the app.
 	 */
 	public static async init(): Promise<Data> {
-		try {
-			App.logger.debug("Initializing data...");
+		if (Data._instance !== undefined) return Data._instance;
+		if (Data._initialization !== undefined) return await Data._initialization;
 
-			const path = await App.info.dataDir.join("data.json");
+		Data._initialization = Data.load();
+
+		try {
+			const data = await Data._initialization;
+			Data._instance = data;
+
+			return data;
+		} finally {
+			Data._initialization = undefined;
+		}
+	}
+
+	private static async load(): Promise<Data> {
+		try {
+			Logger.debug("Initializing data...");
+
+			const path = await Info.instance.dataDir.join("data.json");
 			const file = await File.create(path);
 			const rawDataJSON = await file.readJSON<unknown>();
 			const dataJSON = Data.parseJSON(rawDataJSON);
 
-			App.logger.debug("Loading Vintage Story Versions...");
+			Logger.debug("Loading Vintage Story Versions...");
 
 			const vsVersions: VSVersion[] = [];
 
@@ -80,9 +106,9 @@ export class Data {
 				);
 			}
 
-			App.logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions!`);
+			Logger.debug(`Loadded ${vsVersions.length} Vintage Story Versions!`);
 
-			App.logger.debug("Loading Vintage Story Instances...");
+			Logger.debug("Loading Vintage Story Instances...");
 
 			const vsInstances: VSInstance[] = [];
 
@@ -98,9 +124,9 @@ export class Data {
 				);
 			}
 
-			App.logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances!`);
+			Logger.debug(`Loadded ${vsInstances.length} Vintage Story Instances!`);
 
-			App.logger.debug("Loading Vinatge Story Instances Mods...");
+			Logger.debug("Loading Vinatge Story Instances Mods...");
 
 			await Promise.all(
 				vsInstances.map(async (vsInstance) => {
@@ -110,7 +136,7 @@ export class Data {
 				})
 			);
 
-			App.logger.debug("Loaded all the mods of the Vintage Story Instances!");
+			Logger.debug("Loaded all the mods of the Vintage Story Instances!");
 
 			const data = new Data({
 				file,
@@ -129,7 +155,7 @@ export class Data {
 			return data;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the data: ${err}`);
+			Logger.error(`There was an error initializating the data: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the data!");
 		}
 	}
@@ -232,14 +258,14 @@ export class Data {
 	 */
 	public async setVsVersions(vsVersions: VSVersion[]): Promise<void> {
 		try {
-			App.logger.debug("Setting new Vintage Story Versions...");
+			Logger.debug("Setting new Vintage Story Versions...");
 
 			this._vsVersions = vsVersions;
 
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the new Vintage Story Versions: ${err}`);
+			Logger.error(`There was an error saving the new Vintage Story Versions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions!");
 		}
 	}
@@ -250,14 +276,14 @@ export class Data {
 	 */
 	public async setVsInstances(vsInstances: VSInstance[]): Promise<void> {
 		try {
-			App.logger.debug("Setting new Vintage Story Instances...");
+			Logger.debug("Setting new Vintage Story Instances...");
 
 			this._vsInstances = vsInstances;
 
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the new Vintage Story Instances: ${err}`);
+			Logger.error(`There was an error saving the new Vintage Story Instances: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances!");
 		}
 	}
@@ -267,14 +293,14 @@ export class Data {
 	 */
 	public async save(): Promise<void> {
 		try {
-			App.logger.debug("Saving data...");
+			Logger.debug("Saving data...");
 
 			const JSON = await this.exportToJSON();
 
 			await this._file.writeJSON(JSON);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the data: ${err}`);
+			Logger.error(`There was an error saving the data: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the data!");
 		}
 	}

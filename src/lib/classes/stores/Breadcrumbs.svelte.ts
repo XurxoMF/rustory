@@ -1,8 +1,7 @@
 import type { ResolvedPathname } from "$app/types";
 
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Each breadcrumb segment. It's the same as the path segments.
@@ -24,9 +23,16 @@ export class Breadcrumbs {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Breadcrumbs | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Breadcrumbs {
+		if (Breadcrumbs._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Breadcrumbs not initialized!");
+		return Breadcrumbs._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -41,13 +47,17 @@ export class Breadcrumbs {
 	 * @returns An instance of the breadcrums of the app.
 	 */
 	public static async init(): Promise<Breadcrumbs> {
-		try {
-			App.logger.debug("Initializing breadcrumbs...");
+		if (Breadcrumbs._instance !== undefined) return Breadcrumbs._instance;
 
-			return new Breadcrumbs();
+		try {
+			Logger.debug("Initializing breadcrumbs...");
+
+			const breadcrumbs = new Breadcrumbs();
+			Breadcrumbs._instance = breadcrumbs;
+			return breadcrumbs;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the breadcrumbs: ${err}`);
+			Logger.error(`There was an error initializating the breadcrumbs: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the breadcrumbs!");
 		}
 	}

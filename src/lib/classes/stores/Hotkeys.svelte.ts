@@ -1,6 +1,6 @@
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Command } from "$lib/classes/stores/Command.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Hotkeys of the app.
@@ -10,9 +10,16 @@ export class Hotkeys {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Hotkeys | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Hotkeys {
+		if (Hotkeys._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Hotkeys not initialized!");
+		return Hotkeys._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -29,8 +36,10 @@ export class Hotkeys {
 	 * Loads all the hotkeys on this instance.
 	 */
 	public static async init(): Promise<Hotkeys> {
+		if (Hotkeys._instance !== undefined) return Hotkeys._instance;
+
 		try {
-			App.logger.debug("Initializing hotkeys...");
+			Logger.debug("Initializing hotkeys...");
 
 			const hks: Hotkey[] = [];
 
@@ -38,18 +47,21 @@ export class Hotkeys {
 				id: "hkOpenCommand",
 				keys: ["ctrl", "k"],
 				action: () => {
-					App.command.open = true;
+					Command.instance.open = true;
 				}
 			});
 
 			hks.push(hkOpenCommand);
 
-			return new Hotkeys({
+			const hotkeys = new Hotkeys({
 				hotkeys: hks
 			});
+
+			Hotkeys._instance = hotkeys;
+			return hotkeys;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the hotkeys: ${err}`);
+			Logger.error(`There was an error initializating the hotkeys: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the hotkeys!");
 		}
 	}

@@ -6,7 +6,9 @@
 </script>
 
 <script lang="ts">
-	import { App } from "$lib/classes/App.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Logger } from "$lib/classes/utils/Logger.svelte";
+	import { Toaster } from "$lib/classes/utils/Toaster.svelte";
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -26,20 +28,20 @@
 	 */
 	async function handleDeletetion(vsInstance: VSInstance): Promise<void> {
 		try {
-			App.logger.info(`Deleting the Vintage Story Instance ${vsInstance.name}...`);
+			Logger.info(`Deleting the Vintage Story Instance ${vsInstance.name}...`);
 
 			await vsInstance.delete(deleteContents);
 
-			await App.data.setVsInstances(App.data.vsInstances.filter((i) => i.id !== vsInstance.id));
+			await Data.instance.setVsInstances(Data.instance.vsInstances.filter((i) => i.id !== vsInstance.id));
 
-			App.logger.info("Vintage Story Instance deleted successfully!");
+			Logger.info("Vintage Story Instance deleted successfully!");
 
-			App.toaster.toast.success("Vintage Story Instance deleted successfully!");
+			Toaster.toast.success("Vintage Story Instance deleted successfully!");
 
 			onSuccess?.();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the Vintage Story Instance: ${err}`);
+			Logger.error(`There was an error deleting the Vintage Story Instance: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the Vintage Story Instance!");
 		}
 	}

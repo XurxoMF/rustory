@@ -1,6 +1,5 @@
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Store for the reaload functions.
@@ -12,9 +11,16 @@ export class Reloader {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Reloader | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Reloader {
+		if (Reloader._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Reloader not initialized!");
+		return Reloader._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -29,13 +35,17 @@ export class Reloader {
 	 * @returns An instance of the reloader of the app.
 	 */
 	public static async init(): Promise<Reloader> {
-		try {
-			App.logger.debug("Initializing reloader...");
+		if (Reloader._instance !== undefined) return Reloader._instance;
 
-			return new Reloader();
+		try {
+			Logger.debug("Initializing reloader...");
+
+			const reloader = new Reloader();
+			Reloader._instance = reloader;
+			return reloader;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the reloader: ${err}`);
+			Logger.error(`There was an error initializating the reloader: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the reloader!");
 		}
 	}

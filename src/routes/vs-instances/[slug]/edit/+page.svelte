@@ -18,7 +18,12 @@
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Config } from "$lib/classes/stores/Config.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
+	import { Logger } from "$lib/classes/utils/Logger.svelte";
+	import { Toaster } from "$lib/classes/utils/Toaster.svelte";
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -46,23 +51,23 @@
 
 	$effect(() => {
 		rustoryApiVersionsPromise.catch(() =>
-			App.toaster.toast.error("You're offline!", {
+			Toaster.toast.error("You're offline!", {
 				description: "Vintage Story Versions could not be fetched because you're offline! Check your internet connection and try again!"
 			})
 		);
 	});
 
-	const vsInstance: VSInstance | undefined = $derived(App.data.vsInstances.find((vsInstance) => vsInstance.id === params.slug));
+	const vsInstance: VSInstance | undefined = $derived(Data.instance.vsInstances.find((vsInstance) => vsInstance.id === params.slug));
 
 	$effect(() => {
 		if (vsInstance !== undefined) {
-			App.breadcrumbs.segments = [
+			Breadcrumbs.instance.segments = [
 				{ label: "Vintage Story Instances", href: resolve("/vs-instances") },
 				{ label: vsInstance.name, href: resolve("/vs-instances/[slug]", { slug: vsInstance.id }) },
 				{ label: "Edit" }
 			];
 		} else {
-			App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "???" }, { label: "Edit" }];
+			Breadcrumbs.instance.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "???" }, { label: "Edit" }];
 		}
 	});
 
@@ -103,7 +108,7 @@
 	 */
 	async function handleEdit(): Promise<void> {
 		if (vsInstance === undefined) {
-			App.toaster.toast.error("The Vintage Story Instance does not exist and can't be edited!");
+			Toaster.toast.error("The Vintage Story Instance does not exist and can't be edited!");
 			return;
 		}
 
@@ -119,7 +124,7 @@
 
 		// Check name
 		if (form.name.value.length < 5 || form.name.value.length > 50) nameErrors.push("Name must be at least 5 characters long and a maximum of 50.");
-		if (App.data.vsInstances.some((i) => i.id !== vsInstance.id && i.name.toLowerCase() === form.name.value.toLowerCase()))
+		if (Data.instance.vsInstances.some((i) => i.id !== vsInstance.id && i.name.toLowerCase() === form.name.value.toLowerCase()))
 			nameErrors.push("Name must be unique.");
 
 		// Check description
@@ -155,7 +160,7 @@
 		form.mesaGlThread.errors = mesaGlThreadErrors;
 
 		if (vsInstance === undefined) {
-			App.toaster.toast.error("The Vintage Story Instance you are trying to edit does not exist!");
+			Toaster.toast.error("The Vintage Story Instance you are trying to edit does not exist!");
 			return;
 		}
 
@@ -163,17 +168,17 @@
 			try {
 				const rApiVersion = form.rApiVersion.value!;
 
-				App.logger.info(`Editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}...`);
+				Logger.info(`Editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}...`);
 
 				// If the selected version is not installed, install it.
-				if (!App.data.vsVersions.some((v) => v.version === rApiVersion.version)) {
-					const newVersionPath = await App.config.vsVersionsDir.join(rApiVersion.version);
+				if (!Data.instance.vsVersions.some((v) => v.version === rApiVersion.version)) {
+					const newVersionPath = await Config.instance.vsVersionsDir.join(rApiVersion.version);
 					const newVersionDir = await Directory.create(newVersionPath);
 					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
 
-					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
+					await Data.instance.setVsVersions([...Data.instance.vsVersions, newVersion]);
 
-					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
+					Logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
 					newVersion.install(rApiVersion);
 				}
@@ -190,14 +195,14 @@
 
 				await vsInstance.save();
 
-				App.logger.info(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
+				Logger.info(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
 
-				App.toaster.toast.success(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
+				Toaster.toast.success(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
 
 				goto(resolve(`/vs-instances/[slug]`, { slug: vsInstance.id }));
 			} catch (err) {
-				App.logger.error(`There was an error editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}: ${err}`);
-				App.toaster.toast.error(`There was an error editing the Vintage Story Instance ${vsInstance.name}!`);
+				Logger.error(`There was an error editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}: ${err}`);
+				Toaster.toast.error(`There was an error editing the Vintage Story Instance ${vsInstance.name}!`);
 			}
 		}
 	}
@@ -481,7 +486,7 @@
 			</Field.Group>
 		</Field.Set>
 
-		{#if App.info.osType === "linux"}
+		{#if Info.instance.osType === "linux"}
 			<Field.Separator />
 
 			<Field.Set>

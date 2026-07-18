@@ -25,6 +25,8 @@ export class Toaster {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
+	private constructor() {}
+
 	// *************************
 	// *  INSTANCE PROPERTIES  *
 	// *************************
@@ -32,13 +34,6 @@ export class Toaster {
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
-
-	/**
-	 * The toast module.
-	 */
-	public get toast() {
-		return Toaster._toast;
-	}
 
 	// ********************
 	// *  STATIC METHODS  *

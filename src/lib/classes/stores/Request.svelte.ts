@@ -1,9 +1,9 @@
 import { fetch } from "@tauri-apps/plugin-http";
 import { download } from "@tauri-apps/plugin-upload";
 
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Info } from "$lib/classes/stores/Info.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Manage requests with cache.
@@ -13,9 +13,20 @@ export class Request {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Request | undefined;
+	private static _initialization: Promise<Request> | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	/**
+	 * The initialized request service.
+	 */
+	public static get instance(): Request {
+		if (Request._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Request not initialized!");
+		return Request._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -31,13 +42,29 @@ export class Request {
 	 * @returns An instance of the request of the app.
 	 */
 	public static async init(): Promise<Request> {
+		if (Request._instance !== undefined) return Request._instance;
+		if (Request._initialization !== undefined) return await Request._initialization;
+
+		Request._initialization = Request.load();
+
 		try {
-			App.logger.debug("Initializing request...");
+			const request = await Request._initialization;
+			Request._instance = request;
+
+			return request;
+		} finally {
+			Request._initialization = undefined;
+		}
+	}
+
+	private static async load(): Promise<Request> {
+		try {
+			Logger.debug("Initializing request...");
 
 			return new Request();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the request: ${err}`);
+			Logger.error(`There was an error initializating the request: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the request!");
 		}
 	}
@@ -64,23 +91,30 @@ export class Request {
 	// **********************
 
 	/**
+	 * Clears all cached responses.
+	 */
+	public clearCache(): void {
+		this._cache.clear();
+	}
+
+	/**
 	 * Makes a get request to the specified URL.
 	 * @param url The URL to request to.
 	 * @param cache Whether to get and set data to the cache or not.
 	 * @returns The Response returned by the request.
 	 */
 	public async get(url: string, cache: boolean | undefined = true): Promise<Response> {
-		App.logger.debug(`Making GET request to ${url}...`);
+		Logger.debug(`Making GET request to ${url}...`);
 
 		if (cache) {
-			App.logger.debug("Cache enabled! Looking for matches...");
+			Logger.debug("Cache enabled! Looking for matches...");
 
 			const cachedData = this._cache.get(url);
 
 			if (cachedData) {
 				// If the data is less than 30 minutes old, return it
 				if (Date.now() - cachedData.timestamp < 1000 * 60 * 30) {
-					App.logger.debug("Valid cache found! Returning it...");
+					Logger.debug("Valid cache found! Returning it...");
 
 					return cachedData.response.clone();
 				}
@@ -89,18 +123,18 @@ export class Request {
 				this._cache.delete(url);
 			}
 
-			App.logger.debug("No valid cache found!");
+			Logger.debug("No valid cache found!");
 		}
 
 		try {
-			App.logger.debug("Making request...");
+			Logger.debug("Making request...");
 
-			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't make a request while offline!");
+			if (!Info.instance.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't make a request while offline!");
 
 			const response = await fetch(url);
 
 			if (cache) {
-				App.logger.debug("Cache enabled! Saving new response...");
+				Logger.debug("Cache enabled! Saving new response...");
 
 				this._cache.set(url, { timestamp: Date.now(), response: response.clone() });
 			}
@@ -108,7 +142,7 @@ export class Request {
 			return response;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error making the request to ${url}: ${err}`);
+			Logger.error(`There was an error making the request to ${url}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error making the request to ${url}!`);
 		}
 	}
@@ -123,16 +157,16 @@ export class Request {
 	 */
 	public async download(...params: Parameters<typeof download>): Promise<void> {
 		try {
-			App.logger.debug(`Downloading file from ${params[0]} to ${params[1]}...`);
+			Logger.debug(`Downloading file from ${params[0]} to ${params[1]}...`);
 
-			if (!App.info.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't download a file while offline!");
+			if (!Info.instance.isOnline) throw new AppError(AppErrorCodes.OFFLINE, "Can't download a file while offline!");
 
 			await download(...params);
 
-			App.logger.debug(`Finished downloading file from ${params[0]} to ${params[1]}!`);
+			Logger.debug(`Finished downloading file from ${params[0]} to ${params[1]}!`);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error downloading the file from ${params[0]} to ${params[1]}: ${err}`);
+			Logger.error(`There was an error downloading the file from ${params[0]} to ${params[1]}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error downloading the file from ${params[0]} to ${params[1]}!`);
 		}
 	}

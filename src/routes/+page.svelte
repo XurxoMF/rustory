@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
 	import * as Typo from "$lib/components/ui/typography";
 
-	App.breadcrumbs.segments = [];
+	Breadcrumbs.instance.segments = [];
 </script>
 
 <Typo.H1>Welcome to Rustory!</Typo.H1>

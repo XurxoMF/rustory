@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { dirname, join } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
 
-import { App } from "$lib/classes/App.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -52,7 +52,7 @@ export class Directory {
 			return new Directory({ path, parent });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error creating the directory: ${err}`);
+			Logger.error(`There was an error creating the directory: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the directory!");
 		}
 	}
@@ -102,14 +102,14 @@ export class Directory {
 	 */
 	public async ensureExists(): Promise<void> {
 		try {
-			App.logger.debug(`Ensuring the directory ${this.path} exists...`);
+			Logger.debug(`Ensuring the directory ${this.path} exists...`);
 
 			const directoryExists = await exists(this.path);
 
 			if (!directoryExists) await mkdir(this.path, { recursive: true });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
+			Logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -120,12 +120,12 @@ export class Directory {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
-			App.logger.debug(`Checking if the directory ${this.path} exists...`);
+			Logger.debug(`Checking if the directory ${this.path} exists...`);
 
 			return await exists(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error chcking if the directory exists: ${err}`);
+			Logger.error(`There was an error chcking if the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the directory exists!");
 		}
 	}
@@ -136,14 +136,14 @@ export class Directory {
 	 */
 	public async setPermissions(mode: number): Promise<void> {
 		try {
-			App.logger.debug(`Setting the directory ${this.path} permissions to ${mode}...`);
+			Logger.debug(`Setting the directory ${this.path} permissions to ${mode}...`);
 
 			await this.ensureExists();
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the directory permissions: ${err}`);
+			Logger.error(`There was an error setting the directory permissions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the directory permissions!");
 		}
 	}
@@ -154,7 +154,7 @@ export class Directory {
 	 */
 	public async isEmpty(): Promise<boolean> {
 		try {
-			App.logger.debug(`Checking if the directory ${this.path} is empty...`);
+			Logger.debug(`Checking if the directory ${this.path} is empty...`);
 
 			const directoryExists = await exists(this.path);
 
@@ -165,7 +165,7 @@ export class Directory {
 			return files.length === 0;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
+			Logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -176,7 +176,7 @@ export class Directory {
 	 */
 	public async getContents(): Promise<{ files: File[]; directories: Directory[] }> {
 		try {
-			App.logger.debug(`Getting the contents of the directory ${this.path}...`);
+			Logger.debug(`Getting the contents of the directory ${this.path}...`);
 
 			const directoryExists = await exists(this.path);
 
@@ -202,7 +202,7 @@ export class Directory {
 			return { files, directories };
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
+			Logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -212,7 +212,7 @@ export class Directory {
 	 */
 	public async delete(): Promise<void> {
 		try {
-			App.logger.debug(`Deleting the directory ${this.path}...`);
+			Logger.debug(`Deleting the directory ${this.path}...`);
 
 			const directoryExists = await exists(this.path);
 
@@ -221,7 +221,7 @@ export class Directory {
 			await remove(this.path, { recursive: true });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the directory: ${err}`);
+			Logger.error(`There was an error deleting the directory: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
 		}
 	}
@@ -245,7 +245,7 @@ export class Directory {
 	 */
 	public async compress(destination: Directory, name: string, compressionLevel: number): Promise<Zip> {
 		try {
-			App.logger.debug(
+			Logger.debug(
 				`Compressing the directory ${this.path} to ${destination.path} with name ${name} and a compression level of ${compressionLevel}...`
 			);
 
@@ -259,7 +259,7 @@ export class Directory {
 			});
 
 			if (!result) {
-				App.logger.error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
+				Logger.error(`There was an error compressing the directory to a zip and couldn't be compressed!`);
 				throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 			}
 
@@ -270,7 +270,7 @@ export class Directory {
 			return zip;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error compressing the directory to a zip: ${err}`);
+			Logger.error(`There was an error compressing the directory to a zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error compressing the directory to a zip!");
 		}
 	}

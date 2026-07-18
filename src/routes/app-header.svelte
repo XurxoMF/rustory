@@ -13,7 +13,11 @@
 
 	import { cn } from "$lib/utils";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { getCurrentWindow } from "@tauri-apps/api/window";
+
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
+	import { Reloader } from "$lib/classes/stores/Reloader.svelte";
 
 	import * as Tooltip from "$lib/components/ui/tooltip";
 	import * as Separator from "$lib/components/ui/separator";
@@ -21,6 +25,8 @@
 	import * as Button from "$lib/components/ui/button";
 	import * as Sidebar from "$lib/components/ui/sidebar";
 	import * as Spinner from "$lib/components/ui/spinner";
+
+	const appWindow = getCurrentWindow();
 </script>
 
 <header
@@ -66,7 +72,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.reloader.reload()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => Reloader.instance.reload()} variant="ghost" size="icon-sm">
 							<IconReload />
 							<span class="sr-only">Reload</span>
 						</Button.Root>
@@ -82,7 +88,7 @@
 		<Separator.Root orientation="vertical" class=" hidden data-[orientation=vertical]:h-4 @4xl/main:block" />
 
 		<Breadcrumb.Root class="mx-2 hidden @4xl/main:block">
-			{#if App.breadcrumbs.segments === null}
+			{#if Breadcrumbs.instance.segments === null}
 				<p class="flex items-center gap-2 text-sm text-muted-foreground">
 					<Spinner.Root />
 					<span>Loading...</span>
@@ -97,7 +103,7 @@
 						{/if}
 					</Breadcrumb.Item>
 
-					{#each App.breadcrumbs.segments as breadcrumb (breadcrumb.label + breadcrumb.href)}
+					{#each Breadcrumbs.instance.segments as breadcrumb (breadcrumb.label + breadcrumb.href)}
 						<Breadcrumb.Separator />
 
 						<Breadcrumb.Item>
@@ -118,15 +124,15 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} variant="ghost" size="icon-sm" class={cn(App.info.isOnline ? "text-green-500!" : "text-destructive!")}>
+						<Button.Root {...props} variant="ghost" size="icon-sm" class={cn(Info.instance.isOnline ? "text-green-500!" : "text-destructive!")}>
 							<IconWorld />
-							<span class="sr-only">{App.info.isOnline ? "Online" : "Offline"}</span>
+							<span class="sr-only">{Info.instance.isOnline ? "Online" : "Offline"}</span>
 						</Button.Root>
 					{/snippet}
 				</Tooltip.Trigger>
 
 				<Tooltip.Content>
-					<p>{App.info.isOnline ? "Online" : "Offline"}</p>
+					<p>{Info.instance.isOnline ? "Online" : "Offline"}</p>
 				</Tooltip.Content>
 			</Tooltip.Root>
 		</div>
@@ -137,7 +143,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.window.hide()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => appWindow.hide()} variant="ghost" size="icon-sm">
 							<IconChevronDown />
 							<span class="sr-only">Hide app to tray</span>
 						</Button.Root>
@@ -152,7 +158,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.window.minimize()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => appWindow.minimize()} variant="ghost" size="icon-sm">
 							<IconMinus />
 							<span class="sr-only">Minimize app</span>
 						</Button.Root>
@@ -167,7 +173,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.window.toggleMaximize()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => appWindow.toggleMaximize()} variant="ghost" size="icon-sm">
 							<IconMaximize />
 							<span class="sr-only">Maximize or window app</span>
 						</Button.Root>
@@ -182,7 +188,7 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger>
 					{#snippet child({ props })}
-						<Button.Root {...props} onclick={() => App.window.close()} variant="ghost" size="icon-sm">
+						<Button.Root {...props} onclick={() => appWindow.close()} variant="ghost" size="icon-sm">
 							<IconX />
 							<span class="sr-only">Close app</span>
 						</Button.Root>

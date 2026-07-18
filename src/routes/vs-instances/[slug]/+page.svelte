@@ -7,7 +7,8 @@
 	import IconPencil from "@tabler/icons-svelte/icons/pencil";
 	import IconTrash from "@tabler/icons-svelte/icons/trash";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
 
 	import { type VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
@@ -21,13 +22,13 @@
 
 	let { params }: PageProps = $props();
 
-	const vsInstance: VSInstance | undefined = $derived(App.data.vsInstances.find((i) => i.id === params.slug));
+	const vsInstance: VSInstance | undefined = $derived(Data.instance.vsInstances.find((i) => i.id === params.slug));
 
 	$effect(() => {
 		if (vsInstance !== undefined) {
-			App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: vsInstance.name }];
+			Breadcrumbs.instance.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: vsInstance.name }];
 		} else {
-			App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "???" }];
+			Breadcrumbs.instance.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "???" }];
 		}
 	});
 

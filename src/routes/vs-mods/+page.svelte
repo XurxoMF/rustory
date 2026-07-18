@@ -2,7 +2,9 @@
 	import { PersistedState } from "runed";
 	import { onMount } from "svelte";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Reloader } from "$lib/classes/stores/Reloader.svelte";
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -24,9 +26,9 @@
 
 	let modDBApiBasicModsPromise = $state(ModDBApiBasicMod.fetchAll());
 
-	let vsInstance: VSInstance | undefined = $state(App.data.vsInstances[0]);
+	let vsInstance: VSInstance | undefined = $state(Data.instance.vsInstances[0]);
 
-	App.breadcrumbs.segments = [{ label: "Vintage Story Mods" }];
+	Breadcrumbs.instance.segments = [{ label: "Vintage Story Mods" }];
 
 	let currentPage: number = $state(1);
 
@@ -36,14 +38,14 @@
 	const sortOrder = new PersistedState<SortOrder>("vs-mods-sort-order", "desc");
 
 	onMount(() => {
-		const taskRefetchID = App.reloader.addTask({
+		const taskRefetchID = Reloader.instance.addTask({
 			action: () => {
 				modDBApiBasicModsPromise = ModDBApiBasicMod.fetchAll({ cache: false });
 			}
 		});
 
 		return () => {
-			App.reloader.removeTask(taskRefetchID);
+			Reloader.instance.removeTask(taskRefetchID);
 		};
 	});
 
@@ -75,7 +77,7 @@
 <Typo.Leading>View, install and manage Vintage Story Mods on your Vintage Story Instances.</Typo.Leading>
 
 <!-- Vintage Story Instance selector -->
-<Combobox.Root value={App.data.vsInstances[0]?.id} onchange={(v) => (vsInstance = App.data.vsInstances.find((i) => i.id === v))}>
+<Combobox.Root value={Data.instance.vsInstances[0]?.id} onchange={(v) => (vsInstance = Data.instance.vsInstances.find((i) => i.id === v))}>
 	<Combobox.Trigger>{vsInstance?.name || "Select a Vintage Story Instance..."}</Combobox.Trigger>
 
 	<Combobox.Content>
@@ -85,7 +87,7 @@
 			<Combobox.Empty>No Vintage Story Instances found! Create one to install mods!</Combobox.Empty>
 
 			<Combobox.Group>
-				{#each App.data.vsInstances as i (i.id)}
+				{#each Data.instance.vsInstances as i (i.id)}
 					<Combobox.Item value={i.id}>{i.name}</Combobox.Item>
 				{/each}
 			</Combobox.Group>

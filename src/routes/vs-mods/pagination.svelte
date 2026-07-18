@@ -7,7 +7,7 @@
 </script>
 
 <script lang="ts">
-	import { App } from "$lib/classes/App.svelte";
+	import { UI } from "$lib/classes/stores/UI.svelte";
 
 	import * as Pagination from "$lib/components/ui/pagination";
 
@@ -18,7 +18,7 @@
 	{count}
 	perPage={itemsPerPage}
 	bind:page={currentPage}
-	onPageChange={() => App.UI.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
+	onPageChange={() => UI.instance.contentRef?.scrollTo({ top: 0, behavior: "instant" })}
 	{...restProps}
 >
 	{#snippet children({ pages, currentPage })}

@@ -12,7 +12,11 @@
 
 	import IconDots from "@tabler/icons-svelte/icons/dots";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Confirm } from "$lib/classes/stores/Confirm.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
+	import { Logger } from "$lib/classes/utils/Logger.svelte";
+	import { Toaster } from "$lib/classes/utils/Toaster.svelte";
 
 	import type { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
 
@@ -38,22 +42,22 @@
 	 */
 	async function handleModInstall(instance: VSInstance | undefined): Promise<void> {
 		try {
-			App.logger.info(`Installing mod ${modDBApiBasicMod.name}...`);
+			Logger.info(`Installing mod ${modDBApiBasicMod.name}...`);
 
 			if (instance === undefined) {
-				App.toaster.toast.error("No Instance selected!", { description: "You need to select a Vintage Story Instance to install mods." });
+				Toaster.toast.error("No Instance selected!", { description: "You need to select a Vintage Story Instance to install mods." });
 				return;
 			}
 
 			const modDBApiMod = await modDBApiBasicMod.toModDBApiMod();
 
 			if (modDBApiMod === undefined) {
-				App.toaster.toast.error("No mod found!", { description: "The mod you're trying to install could not be found." });
+				Toaster.toast.error("No mod found!", { description: "The mod you're trying to install could not be found." });
 				return;
 			}
 
 			if (modDBApiMod.releases.length === 0) {
-				App.toaster.toast.error("No releases found!", { description: "The mod you're trying to install has no releases." });
+				Toaster.toast.error("No releases found!", { description: "The mod you're trying to install has no releases." });
 				return;
 			}
 
@@ -62,9 +66,9 @@
 			if (compatibleRelease?.type === "exact") {
 				await instance.installMod(modDBApiMod, compatibleRelease.release);
 
-				App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
+				Logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
 
-				App.toaster.toast.success("Mod installed successfully!", {
+				Toaster.toast.success("Mod installed successfully!", {
 					description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
 				});
 
@@ -74,7 +78,7 @@
 			const minorInstanceVersion = getMajorMinorVersion(instance.version) ?? instance.version;
 
 			if (compatibleRelease?.type === "minor") {
-				const question = await App.confirm.ask({
+				const question = await Confirm.instance.ask({
 					title: "Partial match found!",
 					description: `The mod ${modDBApiMod.name} has a release for the Vintage Story Version ${minorInstanceVersion}.X but not for the exact Vintage Story Version ${instance.version} . Do you want to install it anyway?`,
 					mode: "default"
@@ -83,17 +87,17 @@
 				if (question) {
 					await instance.installMod(modDBApiMod, compatibleRelease.release);
 
-					App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
+					Logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
 
-					App.toaster.toast.success("Mod installed successfully!", {
+					Toaster.toast.success("Mod installed successfully!", {
 						description: `The mod ${modDBApiMod.name} has been installed successfully on the Vintage Story Instance ${instance.name}!`
 					});
 
 					return;
 				} else {
-					App.logger.info(`Mod ${modDBApiMod.name} not installed on the Vintage Story Instance ${instance.name} because the user refused!`);
+					Logger.info(`Mod ${modDBApiMod.name} not installed on the Vintage Story Instance ${instance.name} because the user refused!`);
 
-					App.toaster.toast.warning("Mod not installed!", {
+					Toaster.toast.warning("Mod not installed!", {
 						description: `The mod ${modDBApiMod.name} has not been installed on the Vintage Story Instance ${instance.name} because you decided so!`
 					});
 
@@ -101,14 +105,14 @@
 				}
 			}
 
-			App.logger.error(`Mod ${modDBApiMod.name} has no release that matches the Vintage Story Version ${instance.version}!`);
+			Logger.error(`Mod ${modDBApiMod.name} has no release that matches the Vintage Story Version ${instance.version}!`);
 
-			App.toaster.toast.error("No matching release found!", {
+			Toaster.toast.error("No matching release found!", {
 				description: `The mod ${modDBApiMod.name} has no release that matches the Vintage Story Version ${instance.version}! You can open the mod's page and install the version you want manually!`
 			});
 		} catch (err) {
-			App.logger.error(`Something went wrong while installing the ModDB API Mod with ID ${modDBApiBasicMod.modid} and couldn't be installed: ${err}`);
-			App.toaster.toast.error("Something went wrong!", {
+			Logger.error(`Something went wrong while installing the ModDB API Mod with ID ${modDBApiBasicMod.modid} and couldn't be installed: ${err}`);
+			Toaster.toast.error("Something went wrong!", {
 				description: `Something went wrong while installing the mod ${modDBApiBasicMod.name} and couldn't be installed!`
 			});
 		}
@@ -166,14 +170,16 @@
 				<Button.Root
 					class="flex-1"
 					variant="default"
-					disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+					disabled={!Info.instance.isOnline ||
+						vsInstance === undefined ||
+						vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
 					onclick={() => handleModInstall(vsInstance)}
 				>
 					{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
 				</Button.Root>
 
 				<DropdownMenu.Root>
-					<DropdownMenu.Trigger disabled={App.data.vsInstances.length < 1}>
+					<DropdownMenu.Trigger disabled={Data.instance.vsInstances.length < 1}>
 						{#snippet child({ props })}
 							<Button.Root {...props} variant="default" size="icon">
 								<IconDots />
@@ -183,7 +189,7 @@
 
 					<DropdownMenu.Content align="end">
 						<DropdownMenu.Group>
-							{#each App.data.vsInstances as vsi (vsi.id)}
+							{#each Data.instance.vsInstances as vsi (vsi.id)}
 								<DropdownMenu.Item
 									disabled={vsi.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
 									onSelect={() => handleModInstall(vsi)}
@@ -224,14 +230,16 @@
 			<ButtonGroup.Root>
 				<Button.Root
 					variant="default"
-					disabled={!App.info.isOnline || vsInstance === undefined || vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
+					disabled={!Info.instance.isOnline ||
+						vsInstance === undefined ||
+						vsInstance.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
 					onclick={() => handleModInstall(vsInstance)}
 				>
 					{vsInstance?.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid)) ? "Installed" : "Install"}
 				</Button.Root>
 
 				<DropdownMenu.Root>
-					<DropdownMenu.Trigger disabled={App.data.vsInstances.length < 1}>
+					<DropdownMenu.Trigger disabled={Data.instance.vsInstances.length < 1}>
 						{#snippet child({ props })}
 							<Button.Root {...props} variant="default" size="icon">
 								<IconDots />
@@ -241,7 +249,7 @@
 
 					<DropdownMenu.Content align="end">
 						<DropdownMenu.Group>
-							{#each App.data.vsInstances as vsi (vsi.id)}
+							{#each Data.instance.vsInstances as vsi (vsi.id)}
 								<DropdownMenu.Item
 									disabled={vsi.mods.some((mod) => modDBApiBasicMod.modidstrs.includes(mod.modid))}
 									onSelect={() => handleModInstall(vsi)}

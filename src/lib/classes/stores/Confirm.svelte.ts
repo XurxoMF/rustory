@@ -1,6 +1,5 @@
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * Structure of the queue.
@@ -20,9 +19,16 @@ export class Confirm {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	private static _instance: Confirm | undefined;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	public static get instance(): Confirm {
+		if (Confirm._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Confirm not initialized!");
+		return Confirm._instance;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -33,13 +39,17 @@ export class Confirm {
 	}
 
 	public static async init(): Promise<Confirm> {
-		try {
-			App.logger.debug("Initializing confirm...");
+		if (Confirm._instance !== undefined) return Confirm._instance;
 
-			return new Confirm();
+		try {
+			Logger.debug("Initializing confirm...");
+
+			const confirm = new Confirm();
+			Confirm._instance = confirm;
+			return confirm;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the confirm: ${err}`);
+			Logger.error(`There was an error initializating the confirm: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the confirm!");
 		}
 	}
@@ -80,7 +90,7 @@ export class Confirm {
 	// **********************
 
 	public ask(question: Omit<ConfirmQuestion, "resolve">): Promise<boolean> {
-		App.logger.debug(`Asking a confirm...`);
+		Logger.debug(`Asking a confirm...`);
 
 		return new Promise((resolve) => {
 			this.queue.push({
@@ -93,7 +103,7 @@ export class Confirm {
 	}
 
 	public onaccept(question: ConfirmQuestion): void {
-		App.logger.debug(`Accepting a confirm...`);
+		Logger.debug(`Accepting a confirm...`);
 
 		if (question) {
 			question.resolve(true);
@@ -102,7 +112,7 @@ export class Confirm {
 	}
 
 	public oncancel(question: ConfirmQuestion): void {
-		App.logger.debug(`Canceling a confirm...`);
+		Logger.debug(`Canceling a confirm...`);
 
 		if (question) {
 			question.resolve(false);
@@ -111,7 +121,7 @@ export class Confirm {
 	}
 
 	private deleteQuestion(): void {
-		App.logger.debug(`Deleting a confirm...`);
+		Logger.debug(`Deleting a confirm...`);
 
 		this.queue.shift();
 	}

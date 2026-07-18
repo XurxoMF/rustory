@@ -1,21 +1,24 @@
 <script lang="ts">
-	import { App } from "$lib/classes/App.svelte";
+	import { Confirm as ConfirmStore } from "$lib/classes/stores/Confirm.svelte";
 
 	import * as AlertDialog from "$lib/components/ui/alert-dialog";
 </script>
 
-{#if App.confirm.queue.length > 0}
+{#if ConfirmStore.instance.queue.length > 0}
 	<AlertDialog.Root open={true}>
 		<AlertDialog.Content>
 			<AlertDialog.Header>
-				<AlertDialog.Title>{App.confirm.queue[0].title}</AlertDialog.Title>
+				<AlertDialog.Title>{ConfirmStore.instance.queue[0].title}</AlertDialog.Title>
 				<AlertDialog.Description>
-					{App.confirm.queue[0].description}
+					{ConfirmStore.instance.queue[0].description}
 				</AlertDialog.Description>
 			</AlertDialog.Header>
 			<AlertDialog.Footer>
-				<AlertDialog.Cancel onclick={() => App.confirm.oncancel(App.confirm.queue[0])}>Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action onclick={() => App.confirm.onaccept(App.confirm.queue[0])} variant={App.confirm.queue[0].mode}>Accept</AlertDialog.Action>
+				<AlertDialog.Cancel onclick={() => ConfirmStore.instance.oncancel(ConfirmStore.instance.queue[0])}>Cancel</AlertDialog.Cancel>
+				<AlertDialog.Action
+					onclick={() => ConfirmStore.instance.onaccept(ConfirmStore.instance.queue[0])}
+					variant={ConfirmStore.instance.queue[0].mode}>Accept</AlertDialog.Action
+				>
 			</AlertDialog.Footer>
 		</AlertDialog.Content>
 	</AlertDialog.Root>

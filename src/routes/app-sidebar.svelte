@@ -3,7 +3,7 @@
 
 	import RustoryIcon from "$assets/icon.png";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
 
 	import * as Sidebar from "$lib/components/ui/sidebar";
 
@@ -21,12 +21,12 @@
 					{#snippet child({ props })}
 						<a href={resolve("/")} {...props}>
 							<div class="flex aspect-square size-8 items-center justify-center rounded-lg">
-								<img src={RustoryIcon} alt={App.info.capitalizedName} />
+								<img src={RustoryIcon} alt={Info.instance.capitalizedName} />
 							</div>
 
 							<div class="flex flex-col truncate font-medium">
-								<span>{App.info.capitalizedName}</span>
-								<span class="text-xs text-muted-foreground">v{App.info.version}</span>
+								<span>{Info.instance.capitalizedName}</span>
+								<span class="text-xs text-muted-foreground">v{Info.instance.version}</span>
 							</div>
 						</a>
 					{/snippet}

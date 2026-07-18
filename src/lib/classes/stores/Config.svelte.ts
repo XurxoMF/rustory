@@ -1,11 +1,11 @@
 import { baseLocale, isLocale, setLocale } from "$lib/paraglide/runtime";
 
-import { App } from "$lib/classes/App.svelte";
-
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
+import { Info } from "$lib/classes/stores/Info.svelte";
 import { Directory } from "$lib/classes/utils/Directory.svelte";
 import { File } from "$lib/classes/utils/File.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 /**
  * JSON of the config.
@@ -32,6 +32,8 @@ export class Config {
 	 * Current config.json schema version.
 	 */
 	private static _SCHEMA_VERSION = 1 as const;
+	private static _instance: Config | undefined;
+	private static _initialization: Promise<Config> | undefined;
 
 	/**
 	 * Available themes.
@@ -92,6 +94,14 @@ export class Config {
 		return Config._SCHEMA_VERSION;
 	}
 
+	/**
+	 * The initialized app config.
+	 */
+	public static get instance(): Config {
+		if (Config._instance === undefined) throw new AppError(AppErrorCodes.NOT_INITIALIZED, "Config not initialized!");
+		return Config._instance;
+	}
+
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
@@ -118,14 +128,30 @@ export class Config {
 	 * Loads all the config of the app.
 	 */
 	public static async init(): Promise<Config> {
-		try {
-			App.logger.debug("Initializing config...");
+		if (Config._instance !== undefined) return Config._instance;
+		if (Config._initialization !== undefined) return await Config._initialization;
 
-			const path = await App.info.configDir.join("config.json");
+		Config._initialization = Config.load();
+
+		try {
+			const config = await Config._initialization;
+			Config._instance = config;
+
+			return config;
+		} finally {
+			Config._initialization = undefined;
+		}
+	}
+
+	private static async load(): Promise<Config> {
+		try {
+			Logger.debug("Initializing config...");
+
+			const path = await Info.instance.configDir.join("config.json");
 			const file = await File.create(path);
 			const rawConfigJSON = await file.readJSON<unknown>();
-			const defaultVSVersionsPath = await App.info.dataDir.join("VSVersions");
-			const defaultVSInstancesPath = await App.info.dataDir.join("VSInstances");
+			const defaultVSVersionsPath = await Info.instance.dataDir.join("VSVersions");
+			const defaultVSInstancesPath = await Info.instance.dataDir.join("VSInstances");
 			const configJSON = Config.parseJSON(rawConfigJSON, {
 				locale: baseLocale,
 				vsVersionsPath: defaultVSVersionsPath,
@@ -160,7 +186,7 @@ export class Config {
 			return config;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error initializating the config: ${err}`);
+			Logger.error(`There was an error initializating the config: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error initializating the config!");
 		}
 	}
@@ -345,10 +371,10 @@ export class Config {
 	 */
 	public async setLocale(locale: (typeof Config.LOCALES)[number]["key"]): Promise<void> {
 		try {
-			App.logger.debug(`Setting locale to ${locale}...`);
+			Logger.debug(`Setting locale to ${locale}...`);
 
 			if (!isLocale(locale)) {
-				App.logger.warn(`Locale ${locale} is not a valid locale! Setting to ${baseLocale}...`);
+				Logger.warn(`Locale ${locale} is not a valid locale! Setting to ${baseLocale}...`);
 
 				locale = baseLocale;
 			}
@@ -359,10 +385,10 @@ export class Config {
 
 			await this.save();
 
-			App.logger.debug(`Locale set to ${locale}!`);
+			Logger.debug(`Locale set to ${locale}!`);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the new locale: ${err}`);
+			Logger.error(`There was an error setting the new locale: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new locale!");
 		}
 	}
@@ -372,7 +398,7 @@ export class Config {
 	 * @param locale The locale to apply.
 	 */
 	private static applyLocale(locale: (typeof Config.LOCALES)[number]["key"]): void {
-		App.logger.debug(`Applying locale ${locale}...`);
+		Logger.debug(`Applying locale ${locale}...`);
 
 		setLocale(locale, { reload: false });
 	}
@@ -383,7 +409,7 @@ export class Config {
 	 */
 	public async setTheme(theme: (typeof Config.THEMES)[number]["key"]): Promise<void> {
 		try {
-			App.logger.debug(`Setting theme to ${theme}...`);
+			Logger.debug(`Setting theme to ${theme}...`);
 
 			Config.applyTheme(theme);
 
@@ -392,7 +418,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the new theme: ${err}`);
+			Logger.error(`There was an error setting the new theme: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new theme!");
 		}
 	}
@@ -402,7 +428,7 @@ export class Config {
 	 * @param theme The theme to apply.
 	 */
 	private static applyTheme(theme: (typeof Config.THEMES)[number]["key"]): void {
-		App.logger.debug(`Applying theme ${theme}...`);
+		Logger.debug(`Applying theme ${theme}...`);
 
 		if (theme === "dark") {
 			document.documentElement.classList.add("dark");
@@ -417,7 +443,7 @@ export class Config {
 	 */
 	public async setScale(scale: number): Promise<void> {
 		try {
-			App.logger.debug(`Setting scale to ${scale}...`);
+			Logger.debug(`Setting scale to ${scale}...`);
 
 			Config.applyScale(scale);
 
@@ -426,7 +452,7 @@ export class Config {
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the new scale: ${err}`);
+			Logger.error(`There was an error setting the new scale: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new scale!");
 		}
 	}
@@ -436,7 +462,7 @@ export class Config {
 	 * @param scale The scale.
 	 */
 	private static applyScale(scale: number): void {
-		App.logger.debug(`Applying scale ${scale}...`);
+		Logger.debug(`Applying scale ${scale}...`);
 
 		document.documentElement.style.fontSize = `${scale}rem`;
 	}
@@ -447,14 +473,14 @@ export class Config {
 	 */
 	public async setLogLevel(logLevel: (typeof Config.LOG_LEVELS)[number]["key"]): Promise<void> {
 		try {
-			App.logger.debug(`Setting log level to ${logLevel}...`);
+			Logger.debug(`Setting log level to ${logLevel}...`);
 
 			this._logLevel = logLevel;
 
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the new log level: ${err}`);
+			Logger.error(`There was an error setting the new log level: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the new log level!");
 		}
 	}
@@ -465,14 +491,14 @@ export class Config {
 	 */
 	public async setVSVersionsDir(dir: Directory): Promise<void> {
 		try {
-			App.logger.debug(`Setting Vintage Story Versions directory to ${dir.path}...`);
+			Logger.debug(`Setting Vintage Story Versions directory to ${dir.path}...`);
 
 			this._vsVersionsDir = dir;
 
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the new Vintage Story Versions path: ${err}`);
+			Logger.error(`There was an error saving the new Vintage Story Versions path: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Versions path!");
 		}
 	}
@@ -483,14 +509,14 @@ export class Config {
 	 */
 	public async setVSInstancesDir(dir: Directory): Promise<void> {
 		try {
-			App.logger.debug(`Setting Vintage Story Instances directory to ${dir.path}...`);
+			Logger.debug(`Setting Vintage Story Instances directory to ${dir.path}...`);
 
 			this._vsInstancesDir = dir;
 
 			await this.save();
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the new Vintage Story Instances path: ${err}`);
+			Logger.error(`There was an error saving the new Vintage Story Instances path: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the new Vintage Story Instances path!");
 		}
 	}
@@ -500,14 +526,14 @@ export class Config {
 	 */
 	private async save(): Promise<void> {
 		try {
-			App.logger.debug("Saving config...");
+			Logger.debug("Saving config...");
 
 			const JSON = await this.exportToJSON();
 
 			await this._file.writeJSON(JSON);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error saving the config: ${err}`);
+			Logger.error(`There was an error saving the config: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error saving the config!");
 		}
 	}

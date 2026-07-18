@@ -2,12 +2,28 @@
 	import { page } from "$app/state";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
+	import { getCurrentWindow } from "@tauri-apps/api/window";
+	import { exit as exitApp } from "@tauri-apps/plugin-process";
 
 	import "./layout.css";
 
 	import RustoryIcon from "$assets/icon.png";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { padSides, sleep } from "$lib/utils";
+
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Command as CommandStore } from "$lib/classes/stores/Command.svelte";
+	import { Config } from "$lib/classes/stores/Config.svelte";
+	import { Confirm as ConfirmStore } from "$lib/classes/stores/Confirm.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Hotkeys } from "$lib/classes/stores/Hotkeys.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
+	import { Reloader } from "$lib/classes/stores/Reloader.svelte";
+	import { Request } from "$lib/classes/stores/Request.svelte";
+	import { Tray } from "$lib/classes/stores/Tray.svelte";
+	import { UI } from "$lib/classes/stores/UI.svelte";
+	import { Loader } from "$lib/classes/utils/Loader.svelte";
+	import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 	import { locales, localizeHref } from "$lib/paraglide/runtime";
 
@@ -22,15 +38,99 @@
 	import AppSidebar from "./app-sidebar.svelte";
 
 	let { children } = $props();
+	let isInitialized = false;
 
 	onMount(() => {
-		// Initialize the app.
-		App.init();
+		const initialization = initializeApp();
+
+		initialization.catch(async (err) => {
+			await Logger.error(`There was an error initializing the app: ${err}`);
+			await exitApp(1);
+		});
 	});
+
+	async function initializeApp(): Promise<void> {
+		if (isInitialized) return;
+
+		await Logger.info("Initializing app...");
+		await Logger.info("Forwarding console logs to the logger...");
+
+		forwardConsole("log", Logger.trace);
+		forwardConsole("debug", Logger.debug);
+		forwardConsole("info", Logger.info);
+		forwardConsole("warn", Logger.warn);
+		forwardConsole("error", Logger.error);
+
+		const appWindow = getCurrentWindow();
+
+		await Logger.info("Initializing basic modules...");
+		await Info.init();
+		await Config.init();
+		await Tray.init();
+
+		await Logger.info("Showing window...");
+		await appWindow.show();
+
+		await Logger.info("Initializing UI and data modules...");
+		await CommandStore.init();
+		await Hotkeys.init();
+		await Breadcrumbs.init();
+		await Reloader.init();
+		await Request.init();
+		await ConfirmStore.init();
+		await Data.init();
+
+		await logWelcome();
+
+		Loader.instance.loadApp = true;
+		await sleep(500);
+		Loader.instance.showLoader = false;
+		isInitialized = true;
+	}
+
+	function forwardConsole(
+		fnName: "log" | "debug" | "info" | "warn" | "error",
+		logger: (message: string, args?: { file: string; line: number } | undefined) => Promise<void>
+	): void {
+		const original = console[fnName];
+
+		console[fnName] = (message) => {
+			original(message);
+			void logger(String(message));
+		};
+	}
+
+	async function logWelcome(): Promise<void> {
+		const width = 110;
+		const separator = `+${"-".repeat(width + 2)}+`;
+		const version = `Version: v${Info.instance.version}`;
+		const osInfo = `OS Type: ${Info.instance.osType} · OS Version: ${Info.instance.osVersion} · OS Arch: ${Info.instance.osArch}`;
+		const netSdksInfo = `.NET SDKs: ${Info.instance.netSdks.join(", ")}`;
+		const netRuntimes = `.NET Runtimes: ${Info.instance.netRuntimes.join(", ")}`;
+
+		await Logger.info("");
+		await Logger.info("");
+		await Logger.info(separator);
+		await Logger.info(`| ${padSides("    ____  __  _________________  ______  __", width)} |`);
+		await Logger.info(
+			`| ${padSides("   / __ \\/ / / / ___/_  __/ __ \\/ __ \\ \\/ /    Made with love by XurxoMF and all the contributors! ❤️", width)} |`
+		);
+		await Logger.info(`| ${padSides("  / /_/ / / / /\\__ \\ / / / / / / /_/ /\\  /     Copyright © 2025 - Today · XurxoMF", width)} |`);
+		await Logger.info(`| ${padSides(` / _, _/ /_/ /___/ // / / /_/ / _, _/ / /      ${version}`, width)} |`);
+		await Logger.info(`| ${padSides("/_/ |_|\\____//____//_/  \\____/_/ |_| /_/", width)} |`);
+		await Logger.info(separator);
+		await Logger.info(`| ${padSides(osInfo, width)} |`);
+		await Logger.info(separator);
+		await Logger.info(`| ${padSides(netSdksInfo, width)} |`);
+		await Logger.info(`| ${padSides(netRuntimes, width)} |`);
+		await Logger.info(separator);
+		await Logger.info("");
+		await Logger.info("");
+	}
 </script>
 
 <!-- Show the loader while configs, data and other things are loading. -->
-{#if App.loader.showLoader}
+{#if Loader.instance.showLoader}
 	<div
 		class="absolute top-0 right-0 bottom-0 left-0 z-1000 flex h-screen w-screen flex-col items-center justify-center gap-8 bg-background"
 		out:fade={{ duration: 150, delay: 200 }}
@@ -40,7 +140,7 @@
 {/if}
 
 <!-- Load the app when the configs, data dn other things are loaded. -->
-{#if App.loader.loadApp}
+{#if Loader.instance.loadApp}
 	<Tooltip.Provider delayDuration={500}>
 		<Command.Root />
 
@@ -56,7 +156,7 @@
 			>
 				<AppHeader />
 
-				<ScrollArea.Root bind:viewportRef={App.UI.contentRef} class="h-[calc(100%-var(--header-height))] w-full">
+				<ScrollArea.Root bind:viewportRef={UI.instance.contentRef} class="h-[calc(100%-var(--header-height))] w-full">
 					<div class="flex min-h-full w-full flex-col gap-4 p-4">
 						{@render children()}
 					</div>

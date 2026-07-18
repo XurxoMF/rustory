@@ -1,4 +1,5 @@
-import { App } from "$lib/classes/App.svelte";
+import { Request } from "$lib/classes/stores/Request.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -205,17 +206,17 @@ export class ModDBApiModRelease {
 	 */
 	public async download(dir: Directory, modName: string): Promise<Zip> {
 		try {
-			App.logger.debug(`Downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}...`);
+			Logger.debug(`Downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}...`);
 
 			await dir.ensureExists();
 
 			const downloadPath = await dir.join(`${modName}-${this._modversion}.zip`);
 
-			App.logger.debug(`Downloading the Vintage Story Mod ${modName} on ${downloadPath} from ${this._mainfile}...`);
+			Logger.debug(`Downloading the Vintage Story Mod ${modName} on ${downloadPath} from ${this._mainfile}...`);
 
-			await App.request.download(this._mainfile, downloadPath);
+			await Request.instance.download(this._mainfile, downloadPath);
 
-			App.logger.debug(
+			Logger.debug(
 				`Finished downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid} on ${downloadPath}!`
 			);
 
@@ -224,7 +225,7 @@ export class ModDBApiModRelease {
 			return zip;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(
+			Logger.error(
 				`There was an error downloading the Vintage Story Mod ${modName} from the ModDB API Mod Release with ID ${this._releaseid}: ${err}`
 			);
 			throw new AppError(

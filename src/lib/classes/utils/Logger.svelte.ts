@@ -13,6 +13,8 @@ export class Logger {
 	// *  CONSTRUCTOR & INIT  *
 	// ************************
 
+	private constructor() {}
+
 	// *************************
 	// *  INSTANCE PROPERTIES  *
 	// *************************
@@ -37,7 +39,7 @@ export class Logger {
 
 		msg += message;
 
-		info(msg);
+		return await info(msg);
 	}
 
 	/**
@@ -98,54 +100,5 @@ export class Logger {
 		msg += message;
 
 		return await trace(msg);
-	}
-
-	// **********************
-	// *  INSTANCE METHODS	*
-	// **********************
-
-	/**
-	 * Send an info log message.
-	 * @param message The message to log.
-	 * @param args Arguments to extend the log.
-	 */
-	public async info(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
-		return await Logger.info(message, args);
-	}
-
-	/**
-	 * Send a warning log message.
-	 * @param message The message to log.
-	 * @param args Arguments to extend the log.
-	 */
-	public async warn(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
-		return await Logger.warn(message, args);
-	}
-
-	/**
-	 * Send an error log message.
-	 * @param message The message to log.
-	 * @param args Arguments to extend the log.
-	 */
-	public async error(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
-		return await Logger.error(message, args);
-	}
-
-	/**
-	 * Send a debug log message.
-	 * @param message The message to log.
-	 * @param args Arguments to extend the log.
-	 */
-	public async debug(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
-		return await Logger.debug(message, args);
-	}
-
-	/**
-	 * Send a trace log message.
-	 * @param message The message to log.
-	 * @param args Arguments to extend the log.
-	 */
-	public async trace(message: string, args?: { file: string; line: number } | undefined): Promise<void> {
-		return await Logger.trace(message, args);
 	}
 }

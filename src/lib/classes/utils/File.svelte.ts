@@ -2,7 +2,7 @@ import { dirname } from "@tauri-apps/api/path";
 import { create, exists, readTextFile, remove, writeTextFile } from "@tauri-apps/plugin-fs";
 import { invoke } from "@tauri-apps/api/core";
 
-import { App } from "$lib/classes/App.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -43,7 +43,7 @@ export class File {
 			return new File({ path, directory });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error creating the file: ${err}`);
+			Logger.error(`There was an error creating the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error creating the file!");
 		}
 	}
@@ -93,7 +93,7 @@ export class File {
 	 */
 	public async ensureExists(): Promise<void> {
 		try {
-			App.logger.debug(`Ensuring the file ${this.path} exists...`);
+			Logger.debug(`Ensuring the file ${this.path} exists...`);
 
 			await this.dir.ensureExists();
 
@@ -102,7 +102,7 @@ export class File {
 			if (!fileExists) await create(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error ensuring the directory exists: ${err}`);
+			Logger.error(`There was an error ensuring the directory exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error ensuring the directory exists!");
 		}
 	}
@@ -113,12 +113,12 @@ export class File {
 	 */
 	public async exists(): Promise<boolean> {
 		try {
-			App.logger.debug(`Checking if the file ${this.path} exists...`);
+			Logger.debug(`Checking if the file ${this.path} exists...`);
 
 			return await exists(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error chcking if the file exists: ${err}`);
+			Logger.error(`There was an error chcking if the file exists: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error chcking if the file exists!");
 		}
 	}
@@ -128,7 +128,7 @@ export class File {
 	 */
 	public async delete(): Promise<void> {
 		try {
-			App.logger.debug(`Deleting the file ${this.path}...`);
+			Logger.debug(`Deleting the file ${this.path}...`);
 
 			const fileExists = await exists(this.path);
 
@@ -137,7 +137,7 @@ export class File {
 			await remove(this.path);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the file ${this.path}: ${err}`);
+			Logger.error(`There was an error deleting the file ${this.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the file ${this.path}`);
 		}
 	}
@@ -148,14 +148,14 @@ export class File {
 	 */
 	public async setPermissions(mode: number): Promise<void> {
 		try {
-			App.logger.debug(`Setting the file ${this.path} permissions to ${mode}...`);
+			Logger.debug(`Setting the file ${this.path} permissions to ${mode}...`);
 
 			await this.ensureExists();
 
 			await invoke("set_permissions", { path: this._path, mode });
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error setting the file permissions: ${err}`);
+			Logger.error(`There was an error setting the file permissions: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error setting the file permissions!");
 		}
 	}
@@ -166,7 +166,7 @@ export class File {
 	 */
 	public async readText(): Promise<string> {
 		try {
-			App.logger.debug(`Reading the file ${this.path} as text...`);
+			Logger.debug(`Reading the file ${this.path} as text...`);
 
 			await this.ensureExists();
 
@@ -175,7 +175,7 @@ export class File {
 			return fileContents;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error reading the file: ${err}`);
+			Logger.error(`There was an error reading the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -186,14 +186,14 @@ export class File {
 	 */
 	public async writeText(text: string): Promise<void> {
 		try {
-			App.logger.debug(`Writing the file ${this.path} as text...`);
+			Logger.debug(`Writing the file ${this.path} as text...`);
 
 			await this.ensureExists();
 
 			await writeTextFile(this.path, text);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error writing the file: ${err}`);
+			Logger.error(`There was an error writing the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}
@@ -204,7 +204,7 @@ export class File {
 	 */
 	public async readJSON<T>(): Promise<T> {
 		try {
-			App.logger.debug(`Reading the file ${this.path} as JSON...`);
+			Logger.debug(`Reading the file ${this.path} as JSON...`);
 
 			await this.ensureExists();
 
@@ -217,7 +217,7 @@ export class File {
 			if (err instanceof AppError) throw err;
 			if (err instanceof SyntaxError)
 				throw new AppError(AppErrorCodes.MALFORMED_DATA, `The file ${this.path} does not contain valid JSON!`, { cause: err });
-			App.logger.error(`There was an error reading the file: ${err}`);
+			Logger.error(`There was an error reading the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}
 	}
@@ -228,14 +228,14 @@ export class File {
 	 */
 	public async writeJSON<T>(data: T): Promise<void> {
 		try {
-			App.logger.debug(`Writing the file ${this.path} as JSON...`);
+			Logger.debug(`Writing the file ${this.path} as JSON...`);
 
 			await this.ensureExists();
 
 			await writeTextFile(this.path, JSON.stringify(data, null, 4));
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error writing the file: ${err}`);
+			Logger.error(`There was an error writing the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error writing the file!");
 		}
 	}

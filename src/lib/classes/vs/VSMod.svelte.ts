@@ -1,4 +1,4 @@
-import { App } from "$lib/classes/App.svelte";
+import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -234,29 +234,29 @@ export class VSMod {
 	 */
 	public static async fromZip(zip: Zip): Promise<VSMod> {
 		try {
-			App.logger.debug(`Trying to load the Vintage Story Mod from the zip ${zip.path}...`);
+			Logger.debug(`Trying to load the Vintage Story Mod from the zip ${zip.path}...`);
 
-			App.logger.debug(`Reading the Vintage Story Mod data from the zip modinfo.json file of the zip ${zip.path}...`);
+			Logger.debug(`Reading the Vintage Story Mod data from the zip modinfo.json file of the zip ${zip.path}...`);
 
 			const modinfo = await zip.readJSONFromFile<VSModModinfoJSON>("modinfo.json");
 
-			App.logger.trace(JSON.stringify(modinfo));
+			Logger.trace(JSON.stringify(modinfo));
 
 			const parsedModinfo = VSMod.parseModinfo(modinfo);
 
-			App.logger.debug(`Loading the Vintage Story Mod from the zip ${zip.path}...`);
+			Logger.debug(`Loading the Vintage Story Mod from the zip ${zip.path}...`);
 
 			const mod = new VSMod({
 				zip,
 				...parsedModinfo
 			});
 
-			App.logger.debug(`Loaded the Vintage Story Mod from the zip ${zip.path}!`);
+			Logger.debug(`Loaded the Vintage Story Mod from the zip ${zip.path}!`);
 
 			return mod;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error loading the Vintage Story Mod from the zip ${zip.path}: ${err}`);
+			Logger.error(`There was an error loading the Vintage Story Mod from the zip ${zip.path}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error loading the Vintage Story Mod from the zip ${zip.path}`);
 		}
 	}
@@ -270,14 +270,14 @@ export class VSMod {
 	 */
 	public async delete(): Promise<void> {
 		try {
-			App.logger.debug(`Deleting the Vintage Story Mod ${this._name}...`);
+			Logger.debug(`Deleting the Vintage Story Mod ${this._name}...`);
 
 			await this._zip.delete();
 
-			App.logger.debug(`Deleted the Vintage Story Mod ${this._name}!`);
+			Logger.debug(`Deleted the Vintage Story Mod ${this._name}!`);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
-			App.logger.error(`There was an error deleting the Vintage Story Mod ${this._name}: ${err}`);
+			Logger.error(`There was an error deleting the Vintage Story Mod ${this._name}: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error deleting the Vintage Story Mod ${this._name}!`);
 		}
 	}
@@ -288,15 +288,15 @@ export class VSMod {
 	 */
 	public async toModDBApiMod(): Promise<ModDBApiMod | undefined> {
 		try {
-			App.logger.debug(`Fetching the ModDB API Mod of the Vintage Story Mod ${this._name}...`);
+			Logger.debug(`Fetching the ModDB API Mod of the Vintage Story Mod ${this._name}...`);
 
 			const apiMod = await ModDBApiMod.fetch(this._modid);
 
-			App.logger.debug(`Fetched the ModDB API Mod of the Vintage Story Mod ${this._name}!`);
+			Logger.debug(`Fetched the ModDB API Mod of the Vintage Story Mod ${this._name}!`);
 
 			return apiMod;
 		} catch (error) {
-			App.logger.error(`There was an error fetching the ModDB API Mod of the Vintage Story Mod ${this._name}:\n${error}`);
+			Logger.error(`There was an error fetching the ModDB API Mod of the Vintage Story Mod ${this._name}:\n${error}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error fetching the ModDB API Mod of the Vintage Story Mod ${this._name}!`);
 		}
 	}

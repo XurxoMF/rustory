@@ -25,7 +25,12 @@
 
 	import { cleanForPath } from "$lib/utils";
 
-	import { App } from "$lib/classes/App.svelte";
+	import { Breadcrumbs } from "$lib/classes/stores/Breadcrumbs.svelte";
+	import { Config } from "$lib/classes/stores/Config.svelte";
+	import { Data } from "$lib/classes/stores/Data.svelte";
+	import { Info } from "$lib/classes/stores/Info.svelte";
+	import { Logger } from "$lib/classes/utils/Logger.svelte";
+	import { Toaster } from "$lib/classes/utils/Toaster.svelte";
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
@@ -54,18 +59,18 @@
 		rustoryApiVersionsPromise
 			.then((rustoryApiVersions) => (form.rApiVersion.value = rustoryApiVersions[0]))
 			.catch(() =>
-				App.toaster.toast.error("You're offline!", {
+				Toaster.toast.error("You're offline!", {
 					description: "Vintage Story Versions could not be fetched because you're offline! Check your internet connection and try again!"
 				})
 			);
 	});
 
-	App.breadcrumbs.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "Create" }];
+	Breadcrumbs.instance.segments = [{ label: "Vintage Story Instances", href: resolve("/vs-instances") }, { label: "Create" }];
 
 	let manuallySelectedDir: boolean = $state(false);
 
 	let form: Form = $state({
-		name: { value: `Instance ${App.data.vsInstances.length + 1}`, errors: [] },
+		name: { value: `Instance ${Data.instance.vsInstances.length + 1}`, errors: [] },
 		description: { value: "", errors: [] },
 		dir: { value: undefined, errors: [] },
 		rApiVersion: { value: undefined, errors: [] },
@@ -91,7 +96,7 @@
 		(async () => {
 			if (!manuallySelectedDir) {
 				const cleanName = cleanForPath(debouncedName.current);
-				const path = await App.config.vsInstancesDir.join(cleanName);
+				const path = await Config.instance.vsInstancesDir.join(cleanName);
 				form.dir.value = await Directory.create(path);
 			}
 		})();
@@ -114,7 +119,7 @@
 
 		// Check name
 		if (form.name.value.length < 5 || form.name.value.length > 50) nameErrors.push("Name must be at least 5 characters long and a maximum of 50.");
-		if (App.data.vsInstances.some((i) => i.name.toLowerCase() === form.name.value.toLowerCase())) nameErrors.push("Name must be unique.");
+		if (Data.instance.vsInstances.some((i) => i.name.toLowerCase() === form.name.value.toLowerCase())) nameErrors.push("Name must be unique.");
 
 		// Check description
 		if (form.description.value.length > 250) descriptionErrors.push("Description must be a maximum of 250 characters.");
@@ -122,7 +127,7 @@
 		// Check directory
 		if (form.dir.value === undefined) {
 			dirErrors.push("A directory must be selected.");
-		} else if (form.dir.value.path === App.config.vsInstancesDir.path) {
+		} else if (form.dir.value.path === Config.instance.vsInstancesDir.path) {
 			dirErrors.push("Directory must not be the same as the default Vintage Story Instances directory.");
 		} else {
 			const isDirEmpty = await form.dir.value.isEmpty();
@@ -164,7 +169,7 @@
 				const dir = form.dir.value!;
 				const rApiVersion = form.rApiVersion.value!;
 
-				App.logger.info("Creating a new Vintage Story Instance...");
+				Logger.info("Creating a new Vintage Story Instance...");
 
 				const id = crypto.randomUUID();
 
@@ -180,17 +185,17 @@
 				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				const isRustoryApiVersionInstalled = App.data.vsVersions.some((v) => v.version === rApiVersion.version);
+				const isRustoryApiVersionInstalled = Data.instance.vsVersions.some((v) => v.version === rApiVersion.version);
 
 				// If the selected version is not installed, install it.
 				if (!isRustoryApiVersionInstalled) {
-					const newVersionPath = await App.config.vsVersionsDir.join(rApiVersion.version);
+					const newVersionPath = await Config.instance.vsVersionsDir.join(rApiVersion.version);
 					const newVersionDir = await Directory.create(newVersionPath);
 					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
 
-					await App.data.setVsVersions([...App.data.vsVersions, newVersion]);
+					await Data.instance.setVsVersions([...Data.instance.vsVersions, newVersion]);
 
-					App.logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
+					Logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
 
 					newVersion.install(rApiVersion!);
 				}
@@ -217,16 +222,16 @@
 
 				await vsInstance.save();
 
-				await App.data.setVsInstances([...App.data.vsInstances, vsInstance]);
+				await Data.instance.setVsInstances([...Data.instance.vsInstances, vsInstance]);
 
-				App.logger.info("New Vintage Story Instance created successfully!");
+				Logger.info("New Vintage Story Instance created successfully!");
 
-				App.toaster.toast.success("New Vintage Story Instance created successfully!");
+				Toaster.toast.success("New Vintage Story Instance created successfully!");
 
 				goto(resolve(`/vs-instances/[slug]`, { slug: id }));
 			} catch (err) {
-				App.logger.error(`There was an error creating the new Vintage Story Instance: ${err}`);
-				App.toaster.toast.error("There was an error creating the new Vintage Story Instance!");
+				Logger.error(`There was an error creating the new Vintage Story Instance: ${err}`);
+				Toaster.toast.error("There was an error creating the new Vintage Story Instance!");
 			}
 		}
 	}
@@ -364,7 +369,7 @@
 						onclick={async () => {
 							const path = await open({
 								directory: true,
-								defaultPath: App.info.dataDir.path,
+								defaultPath: Info.instance.dataDir.path,
 								recursive: true,
 								title: "Select a directory"
 							});
@@ -553,7 +558,7 @@
 		</Field.Group>
 	</Field.Set>
 
-	{#if App.info.osType === "linux"}
+	{#if Info.instance.osType === "linux"}
 		<Field.Separator />
 
 		<Field.Set>
