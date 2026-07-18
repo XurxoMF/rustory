@@ -127,7 +127,7 @@ Estes fallos son débeda coñecida, non razón para omitir silenciosamente as co
 - As clases principais están divididas en propiedades estáticas, inicialización, propiedades de instancia, getters/setters e métodos, con comentarios JSDoc.
 - Os erros do dominio envólvense normalmente en `AppError` e rexístranse mediante `App.logger`.
 - As operacións asíncronas públicas devolven `Promise` e deben propagarse ou esperarse explicitamente.
-- Un método `save()` non pode informar de éxito nin resolverse antes de que remate a escritura subxacente. Agarda sempre a operación de persistencia para que os erros cheguen ao `catch` do método.
+- Un método `save()` non pode informar de éxito nin resolverse antes de que remate a escritura subxacente. Agarda sempre a operación de persistencia para que os erros cheguen ao `catch` do método; isto aplica por separado a configuración, datos globais e instancias.
 - Para facilitar a lectura, garda os resultados asíncronos que se vaian comprobar nunha variable descritiva antes do condicional (por exemplo, `const fileExists = await file.exists(); if (!fileExists) ...`). Evita chamadas con `await` incrustadas directamente na condición.
 - Fai explícita a posible ausencia nos tipos. Se unha propiedade, parámetro ou variable é opcional e usa `?:`, inclúe sempre `| undefined` no tipo: usa `algo?: string | undefined`, nunca `algo?: string`. Aplica a mesma regra aos demais tipos cando se use `?:`.
 - Rust debe manter `cargo fmt` e `clippy` sen warnings.
