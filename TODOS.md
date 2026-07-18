@@ -16,19 +16,17 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 2 — Persistencia e instalación de versións
 
-1. Descargar versións de Vintage Story a un directorio temporal independente do directorio final.
-   - Verificación: un fallo durante a descarga non deixa versións parcialmente rexistradas.
-2. Verificar SHA-256 antes de extraer cando a API proporcione checksum.
+1. Verificar SHA-256 antes de extraer cando a API proporcione checksum.
    - Verificación: checksum correcto instala; checksum incorrecto aborta e limpa temporais.
-3. Extraer a staging, validar executable/versión e renomear atomicamente ao directorio final.
+2. Extraer a staging, validar executable/versión e renomear atomicamente ao directorio final.
    - Verificación: unha extracción incompleta non substitúe unha instalación válida.
-4. Limpar temporais e facer rollback ao fallar.
+3. Limpar temporais e facer rollback ao fallar.
    - Verificación: corte de rede, ZIP inválido e falta de espazo non deixan instalacións fantasma.
-5. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
+4. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
    - Verificación: se a instalación falla, `data.json` e a UI non mostran a versión/instancia como dispoñible.
-6. Mostrar progreso e erro recuperable durante a instalación.
+5. Mostrar progreso e erro recuperable durante a instalación.
    - Verificación: a UI permite entender se está descargando, extraendo, validando ou limpando.
-7. Corrixir a instalación fire-and-forget ao crear/editar instancias.
+6. Corrixir a instalación fire-and-forget ao crear/editar instancias.
    - Verificación: as chamadas a `install()` rematan ou fallan antes de persistir o novo estado.
 
 ## Fase 3 — macOS x64/ARM64

@@ -72,6 +72,7 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 - `Data` persiste rutas a versións e instancias nun `data.json` baixo o directorio de datos da aplicación.
 - Cada instancia usa un `instance.json` e os subdirectorios `Data/Mods` e `Backups`.
 - `config.json`, `data.json` e `instance.json` usan actualmente `schemaVersion: 1`. Os ficheiros legacy sen `schemaVersion` son compatibles: valídanse, complétanse cos defaults existentes e escríbense co esquema actual no seguinte gardado. Unha versión explícita distinta de `1`, unha raíz que non sexa un obxecto ou un campo presente cun tipo/valor inválido produce `AppErrorCodes.MALFORMED_DATA`.
+- `App.info.tempDir` é o directorio temporal compartido da aplicación e corresponde a `tmp` dentro do directorio de caché resolto por Tauri. As descargas de versións usan un subdirectorio único `vs-version-installs/<UUID>` baixo esta raíz, separado do destino final.
 - O frontend accede ao sistema mediante plugins Tauri e mediante os comandos Rust rexistrados en `src-tauri/src/lib.rs`.
 - As versións do xogo veñen de `https://api.rustory.xyz`; os mods veñen da API e CDN oficiais de mods de Vintage Story.
 
@@ -180,6 +181,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - Manter as operacións privilexiadas ou non dispoñibles no webview detrás de plugins Tauri ou comandos IPC Rust.
 - Conceder só os permisos Tauri e dominios de rede necesarios. Calquera cambio en capabilities debe revisarse como cambio de seguridade.
 - As descargas, instalacións, actualizacións e restauracións deben ser recuperables: usar temporais/staging, validar antes de substituír datos e limpar tras un fallo.
+- Reutilizar `App.info.tempDir` para temporais de instalación; non descargar arquivos dentro do directorio final da versión. Cada intento debe ter un subdirectorio propio para evitar colisións entre operacións.
 - Verificar checksums cando a API os proporciona; non usar o hash unicamente como parte do nome.
 - Non persistir unha versión ou instancia como dispoñible antes de completar e validar a operación correspondente.
 - Os cambios no formato JSON persistido deben ser retrocompatibles ou incluír unha migración explícita.

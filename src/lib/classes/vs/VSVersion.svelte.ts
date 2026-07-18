@@ -115,6 +115,35 @@ export class VSVersion {
 	// ********************
 
 	/**
+	 * Downloads and installs a Vintage Story Version using a temporary directory independent from the final destination.
+	 * @param version The Rustory API Vintage Story Version to install.
+	 * @param destinationDir The final installation directory.
+	 * @param installTempDir The unique temporary directory for this installation attempt.
+	 */
+	public static async installFiles(version: RustoryApiVSVersion, destinationDir: Directory, installTempDir: Directory): Promise<void> {
+		let tempDirToClean: Directory | undefined = installTempDir;
+
+		try {
+			const zip = await version.download(installTempDir);
+
+			await destinationDir.delete();
+			await destinationDir.ensureExists();
+			await zip.extract(destinationDir);
+
+			await installTempDir.delete();
+			tempDirToClean = undefined;
+		} finally {
+			if (tempDirToClean !== undefined) {
+				try {
+					await tempDirToClean.delete();
+				} catch {
+					// Cleanup and rollback are completed in the following installation hardening steps.
+				}
+			}
+		}
+	}
+
+	/**
 	 * Loads a Vintage Story Version from a directory.
 	 * @param dir The directory to load the Vintage Story Version from.
 	 * @returns The Vintage Story Version.
@@ -229,20 +258,12 @@ export class VSVersion {
 
 			this._state = VSVersionState.INSTALLING;
 
-			const zip = await version.download(this._dir);
+			const installId = crypto.randomUUID();
+			const installTempPath = await App.info.tempDir.join("vs-version-installs", installId);
+			const installTempDir = await Directory.create(installTempPath);
+			await VSVersion.installFiles(version, this._dir, installTempDir);
 
-			App.logger.debug(`Downloaded the Vintage Story Version zip from the Rustory API Vintage Story Version on ${zip.path}!`);
-
-			await this._dir.delete();
-			await this._dir.ensureExists();
-
-			App.logger.debug(`Extracting the Vintage Story Version zip ${zip.path} on ${this._dir.path}...`);
-
-			await zip.extract(this._dir);
-
-			App.logger.debug(
-				`Extracted the Vintage Story Version zip ${zip.path} on ${this._dir.path}! Finished installing Vintage Story Version ${this._version}!`
-			);
+			App.logger.debug(`Finished installing Vintage Story Version ${this._version} on ${this._dir.path}!`);
 
 			this._state = VSVersionState.INSTALLED;
 
