@@ -1,3 +1,5 @@
+import { SvelteMap } from "svelte/reactivity";
+
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
 import { Info } from "$lib/classes/stores/Info.svelte";
@@ -6,7 +8,9 @@ import { File } from "$lib/classes/utils/File.svelte";
 import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
-import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
+import { VSVersion, VSVersionState } from "$lib/classes/vs/VSVersion.svelte";
+
+import type { RustoryApiVSVersion } from "$lib/classes/api/RustoryApiVSVersion.svelte";
 
 /**
  * JSON of the data.
@@ -59,6 +63,7 @@ export class Data {
 		this._file = data.file;
 		this._vsVersions = $state(data.vsVersions);
 		this._vsInstances = $state(data.vsInstances);
+		this._vsVersionInstallations = new SvelteMap();
 	}
 
 	/**
@@ -98,8 +103,7 @@ export class Data {
 				await Promise.all(
 					dataJSON.vsVersionsPaths.map(async (vsVersionPath) => {
 						const dir = await Directory.create(vsVersionPath);
-
-						const vsVersion = await VSVersion.fromDir(dir);
+						const vsVersion = await Data.loadVsVersion(dir);
 
 						vsVersions.push(vsVersion);
 					})
@@ -179,6 +183,11 @@ export class Data {
 	 */
 	private _vsInstances: VSInstance[];
 
+	/**
+	 * In-progress Vintage Story Version installations keyed by version.
+	 */
+	private _vsVersionInstallations: SvelteMap<string, Promise<void>>;
+
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
 	// *********************************
@@ -207,6 +216,23 @@ export class Data {
 	// ********************
 	// *  STATIC METHODS  *
 	// ********************
+
+	/**
+	 * Loads a registered Vintage Story Version and preserves it as not installed when validation fails.
+	 * @param dir The registered version directory.
+	 * @returns The validated or not-installed Vintage Story Version.
+	 */
+	public static async loadVsVersion(dir: Directory): Promise<VSVersion> {
+		try {
+			return await VSVersion.fromDir(dir);
+		} catch (err) {
+			const version = await dir.getName();
+			const vsVersion = await VSVersion.create({ version, dir, state: VSVersionState.NOT_INSTALLED });
+			await Data.logBackgroundError(`Vintage Story Version ${version} is registered but not installed correctly: ${err}`);
+
+			return vsVersion;
+		}
+	}
 
 	/**
 	 * Validates and migrates data.json data to the current schema.
@@ -251,6 +277,57 @@ export class Data {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Registers a Vintage Story Version and queues its installation without waiting for it to finish.
+	 * @param version The Rustory API Vintage Story Version to install.
+	 * @param versionsDir The directory containing shared Vintage Story Versions.
+	 */
+	public async queueVsVersionInstallation(version: RustoryApiVSVersion, versionsDir: Directory): Promise<void> {
+		let vsVersion = this.vsVersions.find((candidate) => candidate.version === version.version);
+
+		if (vsVersion === undefined) {
+			const versionPath = await versionsDir.join(version.version);
+			const versionDir = await Directory.create(versionPath);
+			vsVersion = await VSVersion.create({ version: version.version, dir: versionDir, state: VSVersionState.NOT_INSTALLED });
+			await this.setVsVersions([...this.vsVersions, vsVersion]);
+		}
+
+		if (vsVersion.state === VSVersionState.INSTALLED) return;
+
+		const installationExists = this._vsVersionInstallations.has(version.version);
+		if (installationExists) return;
+
+		const installation = this.installVsVersion(vsVersion, version).finally(() => this._vsVersionInstallations.delete(version.version));
+		this._vsVersionInstallations.set(version.version, installation);
+		void installation.catch(() => undefined);
+	}
+
+	private async installVsVersion(vsVersion: VSVersion, version: RustoryApiVSVersion): Promise<void> {
+		try {
+			await Logger.info(`Installing Vintage Story Version ${vsVersion.version}...`);
+			await vsVersion.install(version);
+			await this.save();
+		} catch (err) {
+			vsVersion.state = VSVersionState.NOT_INSTALLED;
+
+			try {
+				await this.save();
+			} catch (saveError) {
+				await Data.logBackgroundError(`There was an error saving the failed installation state of ${vsVersion.version}: ${saveError}`);
+			}
+
+			await Data.logBackgroundError(`There was an error installing Vintage Story Version ${vsVersion.version}: ${err}`);
+		}
+	}
+
+	private static async logBackgroundError(message: string): Promise<void> {
+		try {
+			await Logger.error(message);
+		} catch {
+			// Background installation errors must always be consumed.
+		}
+	}
 
 	/**
 	 * Sets the new Vintage Story Versions and saves them to the data file.

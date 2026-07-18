@@ -1,5 +1,5 @@
 import { invoke } from "@tauri-apps/api/core";
-import { dirname, join } from "@tauri-apps/api/path";
+import { basename, dirname, join } from "@tauri-apps/api/path";
 import { exists, mkdir, readDir, remove, rename } from "@tauri-apps/plugin-fs";
 
 import { Logger } from "$lib/classes/utils/Logger.svelte";
@@ -96,6 +96,20 @@ export class Directory {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Gets the final component of the directory path.
+	 * @returns The directory name.
+	 */
+	public async getName(): Promise<string> {
+		try {
+			return await basename(this.path);
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			Logger.error(`There was an error getting the name of the directory ${this.path}: ${err}`);
+			throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There was an error getting the name of the directory ${this.path}!`);
+		}
+	}
 
 	/**
 	 * Ensures the directory exists. If it doesn't exists, it'll be created.

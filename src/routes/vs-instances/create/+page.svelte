@@ -38,7 +38,6 @@
 	import { File } from "$lib/classes/utils/File.svelte";
 
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
-	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 	import { RustoryApiVSVersion } from "$lib/classes/api/RustoryApiVSVersion.svelte";
 
@@ -185,21 +184,6 @@
 				const filePath = await dir.join("instance.json");
 				const file = await File.create(filePath);
 
-				const isRustoryApiVersionInstalled = Data.instance.vsVersions.some((v) => v.version === rApiVersion.version);
-
-				// If the selected version is not installed, install it.
-				if (!isRustoryApiVersionInstalled) {
-					const newVersionPath = await Config.instance.vsVersionsDir.join(rApiVersion.version);
-					const newVersionDir = await Directory.create(newVersionPath);
-					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
-
-					await Data.instance.setVsVersions([...Data.instance.vsVersions, newVersion]);
-
-					Logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
-
-					newVersion.install(rApiVersion!);
-				}
-
 				const vsInstance = await VSInstance.create({
 					file,
 					id,
@@ -209,7 +193,7 @@
 					dataDir,
 					backupsDir,
 					modsDir,
-					version: rApiVersion!.version,
+					version: rApiVersion.version,
 					startParams: form.startParams.value,
 					backupsLimit: form.backupsLimit.value,
 					backupsAuto: form.backupsAuto.value,
@@ -223,6 +207,7 @@
 				await vsInstance.save();
 
 				await Data.instance.setVsInstances([...Data.instance.vsInstances, vsInstance]);
+				await Data.instance.queueVsVersionInstallation(rApiVersion, Config.instance.vsVersionsDir);
 
 				Logger.info("New Vintage Story Instance created successfully!");
 

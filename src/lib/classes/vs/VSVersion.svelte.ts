@@ -48,11 +48,12 @@ export class VSVersion {
 	 * @param path The path of the file.
 	 * @returns The File instance.
 	 */
-	public static async create(vsInstance: { version: string; dir: Directory }): Promise<VSVersion> {
+	public static async create(vsInstance: { version: string; dir: Directory; state?: VSVersionState | undefined }): Promise<VSVersion> {
 		try {
 			return new VSVersion({
 				version: vsInstance.version,
-				dir: vsInstance.dir
+				dir: vsInstance.dir,
+				state: vsInstance.state
 			});
 		} catch (err) {
 			if (err instanceof AppError) throw err;

@@ -66,8 +66,8 @@
 					<Card.Action>
 						{@const vsVersion = Data.instance.vsVersions.find((v) => v.version === vsInstance.version)}
 
-						{#if vsVersion === undefined}
-							<Badge.Root variant="destructive">Stopped</Badge.Root>
+						{#if vsVersion === undefined || vsVersion.state === VSVersionState.NOT_INSTALLED || vsVersion.state === VSVersionState.ERROR}
+							<Badge.Root variant="destructive">Version not installed</Badge.Root>
 						{:else if vsVersion.state === VSVersionState.INSTALLING}
 							<Badge.Root>
 								<Spinner.Root />

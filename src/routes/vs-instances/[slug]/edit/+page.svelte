@@ -27,10 +27,7 @@
 
 	import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
-	import { Directory } from "$lib/classes/utils/Directory.svelte";
-
 	import { VSInstance } from "$lib/classes/vs/VSInstance.svelte";
-	import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 
 	import { RustoryApiVSVersion } from "$lib/classes/api/RustoryApiVSVersion.svelte";
 
@@ -170,19 +167,6 @@
 
 				Logger.info(`Editing the Vintage Story Instance ${vsInstance.name} with id ${vsInstance.id}...`);
 
-				// If the selected version is not installed, install it.
-				if (!Data.instance.vsVersions.some((v) => v.version === rApiVersion.version)) {
-					const newVersionPath = await Config.instance.vsVersionsDir.join(rApiVersion.version);
-					const newVersionDir = await Directory.create(newVersionPath);
-					const newVersion = await VSVersion.create({ version: rApiVersion.version, dir: newVersionDir });
-
-					await Data.instance.setVsVersions([...Data.instance.vsVersions, newVersion]);
-
-					Logger.info(`Installing Vintage Story Version ${newVersion.version}...`);
-
-					newVersion.install(rApiVersion);
-				}
-
 				vsInstance.name = form.name.value;
 				vsInstance.description = form.description.value;
 				vsInstance.version = rApiVersion.version;
@@ -194,6 +178,7 @@
 				vsInstance.mesaGlThread = form.mesaGlThread.value;
 
 				await vsInstance.save();
+				await Data.instance.queueVsVersionInstallation(rApiVersion, Config.instance.vsVersionsDir);
 
 				Logger.info(`Vintage Story Instance ${vsInstance.name} edited successfully!`);
 

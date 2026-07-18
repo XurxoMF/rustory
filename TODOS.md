@@ -16,12 +16,8 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 2 — Persistencia e instalación de versións
 
-1. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
-   - Verificación: se a instalación falla, `data.json` e a UI non mostran a versión/instancia como dispoñible.
-2. Mostrar progreso e erro recuperable durante a instalación.
+1. Mostrar progreso e erro recuperable durante a instalación.
    - Verificación: a UI permite entender se está descargando, extraendo, validando ou limpando.
-3. Corrixir a instalación fire-and-forget ao crear/editar instancias.
-   - Verificación: as chamadas a `install()` rematan ou fallan antes de persistir o novo estado.
 
 ## Fase 3 — macOS x64/ARM64
 
@@ -34,15 +30,17 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 1. Construír un `LaunchSpec` independente da UI: executable, directorio de datos, argumentos e variables.
    - Verificación: unha instancia produce sempre unha especificación reproducible.
-2. Implementar variantes Windows, Linux e macOS.
+2. Antes de lanzar, comprobar o estado da versión e instalar ou reinstalar se non está dispoñible.
+   - Verificación: unha instancia cunha versión `NOT_INSTALLED` agarda unha instalación correcta e despois continúa automaticamente co lanzamento.
+3. Implementar variantes Windows, Linux e macOS.
    - Verificación: as rutas e argumentos son correctos por plataforma.
-3. Parsear variables de contorno de forma segura e aplicar Mesa GL só en Linux.
+4. Parsear variables de contorno de forma segura e aplicar Mesa GL só en Linux.
    - Verificación: entradas inválidas non rompen o lanzamento nin inxectan argumentos inesperados.
-4. Controlar proceso, estados, código de saída e concorrencia.
+5. Controlar proceso, estados, código de saída e concorrencia.
    - Verificación: non se pode lanzar dúas veces a mesma instancia sen control explícito.
-5. Actualizar `lastTimePlayed` e `totalTimePlayed`.
+6. Actualizar `lastTimePlayed` e `totalTimePlayed`.
    - Verificación: o tempo só cambia cando o proceso realmente arranca e remata.
-6. Engadir botón Play/Stop e erros visibles.
+7. Engadir botón Play/Stop e erros visibles.
    - Verificación: cada instancia arranca co seu `Data` illado e o estado volve a `STOPPED` ao saír.
 
 ## Fase 5 — Mods completos
