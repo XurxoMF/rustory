@@ -18,6 +18,8 @@
 
 	import type { ModDBApiBasicMod } from "$lib/classes/api/ModDBApiBasicMod.svelte";
 
+	import { findCompatibleRelease, getMajorMinorVersion } from "$lib/helpers/Versions";
+
 	import * as Card from "$lib/components/ui/card";
 	import * as Item from "$lib/components/ui/item";
 	import * as Badge from "$lib/components/ui/badge";
@@ -55,10 +57,10 @@
 				return;
 			}
 
-			const matchingRelease = modDBApiMod.releases.find((release) => release.tags.some((tag) => tag === instance.version));
+			const compatibleRelease = findCompatibleRelease(modDBApiMod.releases, instance.version);
 
-			if (matchingRelease !== undefined) {
-				await instance.installMod(modDBApiMod, matchingRelease);
+			if (compatibleRelease?.type === "exact") {
+				await instance.installMod(modDBApiMod, compatibleRelease.release);
 
 				App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
 
@@ -69,12 +71,9 @@
 				return;
 			}
 
-			const instanceVersionSegments = instance.version.split(".");
-			const minorInstanceVersion = `${instanceVersionSegments[0]}.${instanceVersionSegments[1]}`;
+			const minorInstanceVersion = getMajorMinorVersion(instance.version) ?? instance.version;
 
-			const partialMatchingRelease = modDBApiMod.releases.find((release) => release.tags.some((tag) => tag.startsWith(minorInstanceVersion)));
-
-			if (partialMatchingRelease !== undefined) {
+			if (compatibleRelease?.type === "minor") {
 				const question = await App.confirm.ask({
 					title: "Partial match found!",
 					description: `The mod ${modDBApiMod.name} has a release for the Vintage Story Version ${minorInstanceVersion}.X but not for the exact Vintage Story Version ${instance.version} . Do you want to install it anyway?`,
@@ -82,7 +81,7 @@
 				});
 
 				if (question) {
-					await instance.installMod(modDBApiMod, partialMatchingRelease);
+					await instance.installMod(modDBApiMod, compatibleRelease.release);
 
 					App.logger.info(`Mod ${modDBApiMod.name} installed successfully on the Vintage Story Instance ${instance.name}!`);
 

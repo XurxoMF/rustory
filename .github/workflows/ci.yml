@@ -37,11 +37,17 @@ jobs:
       - name: "Install frontend dependencies"
         run: bun install --frozen-lockfile
 
+      - name: "Compile Paraglide messages"
+        run: bun run paraglide:compile
+
       - name: "Check frontend"
         run: bun run check
 
       - name: "Lint frontend"
         run: bun run lint
+
+      - name: "Test frontend"
+        run: bun test
 
       - name: "Check Rust formatting"
         working-directory: "./src-tauri"

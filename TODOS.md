@@ -17,7 +17,7 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 1 — Base verificable
 
-1. Engadir tests unitarios para helpers de rutas, versións e compatibilidade.
+1. Ampliar tests unitarios para helpers de rutas e versións.
    - Verificación: os tests cobren casos válidos, inválidos e límites coñecidos.
 
 ## Fase 2 — Persistencia e instalación de versións

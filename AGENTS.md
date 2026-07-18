@@ -58,12 +58,13 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 - `src/lib/classes/vs/`: modelos e operacións de dominio para versións, instancias, mods, backups e contas.
 - `src/lib/classes/api/`: modelos e clientes para a API de Rustory e a API de mods de Vintage Story.
 - `src/lib/classes/utils/`: abstraccións de ficheiros, directorios, ZIP, logs e utilidades relacionadas.
+- `src/lib/helpers/`: funcións puras e helpers simples que non precisan estado nin forma de clase.
 - `src/lib/components/ui/`: biblioteca local de compoñentes UI baseada en Bits UI/shadcn-svelte/xmfcn-svelte. É extensa e maioritariamente código de infraestrutura visual.
 - `src-tauri/src/`: backend Rust. Os comandos IPC propios xestionan ZIPs, permisos Unix e detección da versión de Vintage Story.
 - `src-tauri/capabilities/`: permisos e allowlists de Tauri.
 - `messages/` e `rustory.inlang/`: configuración e catálogos de Paraglide/Inlang.
 - `.github/workflows/release.yml`: empaquetado e publicación para Windows, Linux, macOS x64 e macOS ARM64.
-- `.github/workflows/ci.yml`: comprobacións de PR/push con `check`, lint, Rust fmt, clippy e tests.
+- `.github/workflows/ci.yml`: comprobacións de PR/push con `check`, lint, `bun test`, Rust fmt, clippy e tests.
 
 ### Fluxo de datos
 
@@ -76,6 +77,7 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 ## Tecnoloxías confirmadas
 
 - Bun e `bun.lock` como xestor de paquetes frontend.
+- `@types/bun` proporciona os tipos oficiais de Bun e `bun:test`; non manteñas declaracións manuais para estes módulos salvo bloqueo confirmado.
 - Svelte 5, SvelteKit 2, TypeScript estrito e Vite 6.
 - Tailwind CSS 4, Bits UI, Tabler Icons e compoñentes UI locais.
 - Paraglide/Inlang para internacionalización. A maior parte da UI segue actualmente hardcodeada en inglés.
@@ -121,8 +123,10 @@ Non está documentada no repositorio unha lista completa de paquetes nativos nec
 Frontend:
 
 ```bash
+bun run paraglide:compile
 bun run check
 bun run lint
+bun test
 bun run build
 ```
 
@@ -139,7 +143,8 @@ Estado confirmado durante a auditoría de xullo de 2026:
 
 - `cargo fmt`, `cargo clippy` e `cargo test` pasan;
 - non hai tests Rust implementados: `cargo test` executa 0 tests;
-- non hai script nin framework de tests frontend;
+- hai tests frontend con `bun test`;
+- nun checkout limpo, executa `bun run paraglide:compile` antes de `bun run check`, `bun run lint`, `bun test` ou `bun run build`, porque parte do código importa os ficheiros xerados en `src/lib/paraglide/`;
 - `bun run lint` debe ignorar artefactos xerados como `build/`, `.svelte-kit/`, `package/`, `src/lib/paraglide/`, `src-tauri/gen/` e `src-tauri/target/`;
 - no contorno de Codex de xullo de 2026, `bun run check` e `bun run build` quedaron bloqueados ou limitados polo sandbox; o usuario informou de que `bun run check` funciona correctamente no seu contorno local habitual.
 
@@ -218,7 +223,7 @@ Antes de considerar unha tarefa terminada:
 
 1. Revisa `git diff` e confirma que só hai cambios relacionados.
 2. Executa Prettier/ESLint sobre os ficheiros modificados; se a tarefa resolve a configuración global, executa `bun run lint` completo.
-3. Executa `bun run check` e `bun run build`. Se seguen bloqueados ou fallan por unha causa preexistente, indícao expresamente coa saída ou timeout; non os marques como correctos.
+3. Executa `bun run paraglide:compile` antes das comprobacións frontend nun checkout limpo; despois executa `bun run check` e `bun run build`. Se seguen bloqueados ou fallan por unha causa preexistente, indícao expresamente coa saída ou timeout; non os marques como correctos.
 4. Se se modificou Rust, executa `cargo fmt --all -- --check`, `cargo clippy --locked --all-targets -- -D warnings` e `cargo test --locked`.
 5. Engade ou actualiza tests cando exista lóxica verificable. Se non hai infraestrutura adecuada, documenta a carencia e proporciona pasos manuais concretos.
 6. Para filesystem, instalacións, mods, backups ou updater, verifica polo menos o camiño feliz e un fallo recuperable; comproba tamén que non quedan temporais nin rexistros fantasma.
