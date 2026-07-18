@@ -111,7 +111,7 @@ Estado confirmado durante a auditoría de xullo de 2026:
 - `cargo fmt`, `cargo clippy` e `cargo test` pasan;
 - non hai tests Rust implementados: `cargo test` executa 0 tests;
 - non hai script nin framework de tests frontend;
-- `bun run lint` falla ao analizar ficheiros JavaScript xerados baixo `src-tauri/target`;
+- `bun run lint` debe ignorar artefactos xerados como `build/`, `.svelte-kit/`, `package/`, `src/lib/paraglide/`, `src-tauri/gen/` e `src-tauri/target/`;
 - no contorno de Codex de xullo de 2026, `bun run check` e `bun run build` quedaron bloqueados ou limitados polo sandbox; o usuario informou de que `bun run check` funciona correctamente no seu contorno local habitual.
 
 Estes fallos son débeda coñecida, non razón para omitir silenciosamente as comprobacións. Ao traballar neles, rexistra se o resultado cambia e distingue erros de código, configuración, sandbox e timeouts. Non cambies scripts estándar só para rodear unha limitación da contorna de Codex sen confirmalo antes co usuario.

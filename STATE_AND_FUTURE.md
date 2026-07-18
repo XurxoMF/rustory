@@ -176,7 +176,7 @@ Resultados obtidos:
 - `cargo fmt --check`: correcto.
 - `cargo clippy -D warnings`: correcto.
 - `cargo test --locked`: correcto, pero executa **0 tests**.
-- `bun run lint`: falla porque ESLint analiza JavaScript xerado dentro de `src-tauri/target`; 5 erros en `__global-api-script.js`.
+- `bun run lint`: corrixido para ignorar artefactos xerados como `build/`, `.svelte-kit/`, `package/`, `src/lib/paraglide/`, `src-tauri/gen/` e `src-tauri/target/`.
 - `svelte-check`: no contorno de Codex expirou ou quedou bloqueado, pero o usuario informou de que `bun run check` funciona correctamente no seu contorno local habitual.
 - `vite build`: no contorno de Codex quedou bloqueado ou fallou por limitacións do sandbox/esbuild; os resultados desta contorna non abondan para tratalo como erro confirmado do proxecto.
 - Git segue limpo.
@@ -216,7 +216,6 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 - O README e CONTRIBUTING non documentan realmente instalación, prerequisites, execución nin arquitectura.
 - Non hai migración/versionado dos JSON persistidos.
 - Non hai tests nin CI para PRs/main.
-- O script lint non ignora correctamente `src-tauri/target`.
 - A enorme biblioteca UI local incrementa superficie de mantemento e tempo de análise, aínda que moitos compoñentes non se usan.
 
 ### Correccións completadas
@@ -226,6 +225,7 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 - 2026-07-18: `Config.save()` agarda agora a escritura de `config.json`. As actualizacións de configuración xa non resolven antes de que a persistencia remate e os erros de `writeJSON()` chegan ao seu bloque `catch`.
 - 2026-07-18: `Data.save()` agarda agora a escritura de `data.json`. Con isto queda pechada a incidencia coñecida de métodos `save()` que resolvían antes de completar a escritura.
 - 2026-07-18: retirouse o workaround que substituía `svelte-kit sync`; non era unha corrección fiable do proxecto, senón unha adaptación á contorna de Codex.
+- 2026-07-18: ESLint ignora explicitamente os directorios xerados. `bun run lint` xa non analiza `src-tauri/target` nin outros artefactos de build.
 
 ## 7. Orde lóxica de desenvolvemento
 
@@ -233,11 +233,9 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 
 1. Reproducir nun contorno local normal calquera fallo real de `check` ou `build` antes de modificar scripts estándar.
    - Verificación: diferenciar erro do proxecto, erro de configuración e limitación da contorna de execución.
-2. Excluír `src-tauri/target`, `build` e xerados de ESLint.
-   - Verificación: `bun run lint` pasa.
-3. Crear CI para `check`, lint, Rust fmt, clippy e tests.
+2. Crear CI para `check`, lint, Rust fmt, clippy e tests.
    - Verificación: unha PR executa todas as comprobacións.
-4. Engadir tests unitarios para helpers de rutas, versións e compatibilidade.
+3. Engadir tests unitarios para helpers de rutas, versións e compatibilidade.
 
 ### Fase 2 — Corrixir persistencia e instalación de versións
 
