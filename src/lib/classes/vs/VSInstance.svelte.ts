@@ -517,8 +517,9 @@ export class VSInstance {
 
 			const filePath = await dir.join("instance.json");
 			const file = await File.create(filePath);
+			const fileExists = await file.exists();
 
-			if (!file.exists()) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There is no instance.json file in the directory ${dir.path}!`);
+			if (!fileExists) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There is no instance.json file in the directory ${dir.path}!`);
 
 			const dataPath = await dir.join("Data");
 			const dataDir = await Directory.create(dataPath);
