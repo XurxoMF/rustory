@@ -112,10 +112,9 @@ Estado confirmado durante a auditoría de xullo de 2026:
 - non hai tests Rust implementados: `cargo test` executa 0 tests;
 - non hai script nin framework de tests frontend;
 - `bun run lint` falla ao analizar ficheiros JavaScript xerados baixo `src-tauri/target`;
-- `bun run check` non rematou nun límite de 90 segundos;
-- `bun run build` non rematou nun límite de 120 segundos.
+- no contorno de Codex de xullo de 2026, `bun run check` e `bun run build` quedaron bloqueados ou limitados polo sandbox; o usuario informou de que `bun run check` funciona correctamente no seu contorno local habitual.
 
-Estes fallos son débeda coñecida, non razón para omitir silenciosamente as comprobacións. Ao traballar neles, rexistra se o resultado cambia e distingue erros de código, configuración e timeouts. Non afirmes que o frontend compila correctamente mentres non se poida verificar.
+Estes fallos son débeda coñecida, non razón para omitir silenciosamente as comprobacións. Ao traballar neles, rexistra se o resultado cambia e distingue erros de código, configuración, sandbox e timeouts. Non cambies scripts estándar só para rodear unha limitación da contorna de Codex sen confirmalo antes co usuario.
 
 ## Convencións de código existentes
 
