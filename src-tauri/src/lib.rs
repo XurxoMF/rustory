@@ -126,17 +126,54 @@ fn read_log_level() -> LevelFilter {
         Err(_) => return default_level,
     };
 
-    let json: serde_json::Value = match serde_json::from_str(&contents) {
+    read_log_level_from_contents(&contents).unwrap_or(default_level)
+}
+
+fn read_log_level_from_contents(contents: &str) -> Option<LevelFilter> {
+    let json: serde_json::Value = match serde_json::from_str(contents) {
         Ok(v) => v,
-        Err(_) => return default_level,
+        Err(_) => return None,
     };
 
     match json.get("logLevel").and_then(|v| v.as_str()) {
-        Some("trace") => LevelFilter::Trace,
-        Some("debug") => LevelFilter::Debug,
-        Some("info") => LevelFilter::Info,
-        Some("warn") => LevelFilter::Warn,
-        Some("error") => LevelFilter::Error,
-        _ => default_level,
+        Some("trace") => Some(LevelFilter::Trace),
+        Some("debug") => Some(LevelFilter::Debug),
+        Some("info") => Some(LevelFilter::Info),
+        Some("warn") => Some(LevelFilter::Warn),
+        Some("error") => Some(LevelFilter::Error),
+        _ => None,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn parses_every_supported_log_level() {
+        let cases = [
+            ("trace", LevelFilter::Trace),
+            ("debug", LevelFilter::Debug),
+            ("info", LevelFilter::Info),
+            ("warn", LevelFilter::Warn),
+            ("error", LevelFilter::Error),
+        ];
+
+        for (value, expected) in cases {
+            let contents = format!(r#"{{"logLevel":"{value}"}}"#);
+
+            assert_eq!(read_log_level_from_contents(&contents), Some(expected));
+        }
+    }
+
+    #[test]
+    fn rejects_missing_unknown_and_malformed_log_levels() {
+        assert_eq!(read_log_level_from_contents(r#"{}"#), None);
+        assert_eq!(
+            read_log_level_from_contents(r#"{"logLevel":"verbose"}"#),
+            None
+        );
+        assert_eq!(read_log_level_from_contents(r#"{"logLevel":5}"#), None);
+        assert_eq!(read_log_level_from_contents("not-json"), None);
     }
 }

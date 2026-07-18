@@ -13,7 +13,9 @@ describe("getMajorMinorVersion", () => {
 	});
 
 	test("returns undefined for malformed versions", () => {
+		expect(getMajorMinorVersion("")).toBeUndefined();
 		expect(getMajorMinorVersion("1")).toBeUndefined();
+		expect(getMajorMinorVersion("1.")).toBeUndefined();
 		expect(getMajorMinorVersion("one.20.4")).toBeUndefined();
 		expect(getMajorMinorVersion("1.20x.4")).toBeUndefined();
 	});
@@ -63,6 +65,33 @@ describe("findCompatibleRelease", () => {
 		const match = findCompatibleRelease(releases, "1.20.0");
 
 		expect(match).toBeUndefined();
+	});
+
+	test("returns undefined when there are no compatible releases", () => {
+		expect(findCompatibleRelease([], "1.20.0")).toBeUndefined();
+		expect(findCompatibleRelease([createRelease("other", ["1.19.8"], "2026-01-01T00:00:00Z")], "1.20.0")).toBeUndefined();
+	});
+
+	test("keeps input order as the tie breaker and does not mutate the releases", () => {
+		const releases: TestRelease[] = [createRelease("first", ["1.20.3"], "invalid-date"), createRelease("second", ["1.20.2"], "invalid-date")];
+		const originalOrder = [...releases];
+
+		const match = findCompatibleRelease(releases, "1.20.4");
+
+		expect(match?.release.id).toBe("first");
+		expect(releases).toEqual(originalOrder);
+	});
+
+	test("prefers an exact match even when a minor match is newer", () => {
+		const releases: TestRelease[] = [
+			createRelease("exact", ["1.20.4"], "2026-01-01T00:00:00Z"),
+			createRelease("newer-minor", ["1.20.3"], "2026-03-01T00:00:00Z")
+		];
+
+		const match = findCompatibleRelease(releases, "1.20.4");
+
+		expect(match?.type).toBe("exact");
+		expect(match?.release.id).toBe("exact");
 	});
 });
 

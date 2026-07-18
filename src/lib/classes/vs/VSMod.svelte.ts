@@ -30,6 +30,17 @@ export type VSModModinfoJSON = {
 	Type?: string | undefined;
 };
 
+export type VSModInfo = {
+	name: string;
+	modid: string;
+	version: string;
+	description?: string | undefined;
+	side?: string | undefined;
+	authors: string[];
+	contributors: string[];
+	type?: string | undefined;
+};
+
 /**
  * Installed Vintage Story Mod info.
  */
@@ -188,6 +199,37 @@ export class VSMod {
 	// ********************
 
 	/**
+	 * Normalizes the supported modinfo.json field variants.
+	 * @param modinfo The raw modinfo.json data.
+	 * @returns The normalized Vintage Story Mod info.
+	 */
+	public static parseModinfo(modinfo: VSModModinfoJSON): VSModInfo {
+		const name = modinfo.name ?? modinfo.Name;
+		const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid ?? modinfo.modID;
+		const version = modinfo.version ?? modinfo.Version;
+
+		if (name === undefined || name === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod name is missing!");
+
+		if (modid === undefined || modid === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod modid is missing!");
+
+		if (version === undefined || version === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod version is missing!");
+
+		return {
+			name,
+			modid,
+			version,
+			description: modinfo.description ?? modinfo.Description,
+			side: modinfo.side ?? modinfo.Side,
+			authors:
+				modinfo.authors ??
+				modinfo.Authors ??
+				(modinfo.author !== undefined ? [modinfo.author] : modinfo.Author !== undefined ? [modinfo.Author] : []),
+			contributors: modinfo.contributors ?? modinfo.Contributors ?? [],
+			type: modinfo.type ?? modinfo.Type
+		};
+	}
+
+	/**
 	 * Loads a Vintage Story Mod from a zip.
 	 */
 	public static async fromZip(zip: Zip): Promise<VSMod> {
@@ -200,34 +242,13 @@ export class VSMod {
 
 			App.logger.trace(JSON.stringify(modinfo));
 
-			const name = modinfo.name ?? modinfo.Name;
-			const modid = modinfo.modid ?? modinfo.ModID ?? modinfo.modId ?? modinfo.Modid ?? modinfo.modID;
-			const version = modinfo.version ?? modinfo.Version;
-
-			if (name === undefined || name === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod name is missing!");
-
-			if (modid === undefined || modid === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod modid is missing!");
-
-			if (version === undefined || version === "") throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Mod version is missing!");
+			const parsedModinfo = VSMod.parseModinfo(modinfo);
 
 			App.logger.debug(`Loading the Vintage Story Mod from the zip ${zip.path}...`);
 
-			const description = modinfo.description ?? modinfo.Description;
-			const side = modinfo.side ?? modinfo.Side;
-			const authors = modinfo.authors ?? modinfo.Authors ?? [];
-			const contributors = modinfo.contributors ?? modinfo.Contributors ?? [];
-			const type = modinfo.type ?? modinfo.Type;
-
 			const mod = new VSMod({
 				zip,
-				name,
-				modid,
-				version,
-				description,
-				side,
-				authors,
-				contributors,
-				type
+				...parsedModinfo
 			});
 
 			App.logger.debug(`Loaded the Vintage Story Mod from the zip ${zip.path}!`);

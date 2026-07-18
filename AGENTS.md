@@ -142,8 +142,8 @@ cargo test --locked
 Estado confirmado durante a auditoría de xullo de 2026:
 
 - `cargo fmt`, `cargo clippy` e `cargo test` pasan;
-- non hai tests Rust implementados: `cargo test` executa 0 tests;
-- hai tests frontend con `bun test`;
+- hai tests Rust para parsing do nivel de log, permisos recursivos e operacións ZIP; non hai aínda tests de integración da aplicación Tauri completa;
+- hai tests frontend con `bun test` para compatibilidade de versións/releases, normalización de `modinfo.json` e comportamento de cache, offline e erros de transporte de `Request`;
 - nun checkout limpo, executa `bun run paraglide:compile` antes de `bun run check`, `bun run lint`, `bun test` ou `bun run build`, porque parte do código importa os ficheiros xerados en `src/lib/paraglide/`;
 - `bun run lint` debe ignorar artefactos xerados como `build/`, `.svelte-kit/`, `package/`, `src/lib/paraglide/`, `src-tauri/gen/` e `src-tauri/target/`;
 - no contorno de Codex de xullo de 2026, `bun run check` e `bun run build` quedaron bloqueados ou limitados polo sandbox; o usuario informou de que `bun run check` funciona correctamente no seu contorno local habitual.
@@ -158,6 +158,7 @@ Estes fallos son débeda coñecida, non razón para omitir silenciosamente as co
 - As clases reactivas usan o sufixo `.svelte.ts`.
 - As importacións internas usan preferentemente os aliases `$lib` e `$assets`.
 - As clases principais están divididas en propiedades estáticas, inicialización, propiedades de instancia, getters/setters e métodos, con comentarios JSDoc.
+- Se unha transformación ou regra de dominio pertence claramente a unha clase existente, impleméntaa e próbaa como método desa clase. Reserva `src/lib/helpers/` para funcións simples transversais ou propiedades illadas que non teñan unha clase propietaria clara, como a comparación de versións do xogo.
 - Os erros do dominio envólvense normalmente en `AppError` e rexístranse mediante `App.logger`.
 - As operacións asíncronas públicas devolven `Promise` e deben propagarse ou esperarse explicitamente.
 - Un método `save()` non pode informar de éxito nin resolverse antes de que remate a escritura subxacente. Agarda sempre a operación de persistencia para que os erros cheguen ao `catch` do método; isto aplica por separado a configuración, datos globais e instancias.
@@ -226,6 +227,7 @@ Antes de considerar unha tarefa terminada:
 3. Executa `bun run paraglide:compile` antes das comprobacións frontend nun checkout limpo; despois executa `bun run check` e `bun run build`. Se seguen bloqueados ou fallan por unha causa preexistente, indícao expresamente coa saída ou timeout; non os marques como correctos.
 4. Se se modificou Rust, executa `cargo fmt --all -- --check`, `cargo clippy --locked --all-targets -- -D warnings` e `cargo test --locked`.
 5. Engade ou actualiza tests cando exista lóxica verificable. Se non hai infraestrutura adecuada, documenta a carencia e proporciona pasos manuais concretos.
+   - Prioriza contratos, transformacións, estados e fallos recuperables; non engadas tests que só repitan getters ou asignacións triviais.
 6. Para filesystem, instalacións, mods, backups ou updater, verifica polo menos o camiño feliz e un fallo recuperable; comproba tamén que non quedan temporais nin rexistros fantasma.
 7. Para cambios multiplataforma, verifica por tests/fixtures as ramas de Windows, Linux, macOS x64 e macOS ARM64. Non afirmes ter probado fisicamente plataformas ás que non se tivo acceso.
 8. Para cambios de persistencia, comproba carga de datos existentes, escritura correcta, reinicio e recuperación ante JSON inválido ou incompleto.

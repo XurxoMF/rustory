@@ -6,19 +6,13 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Prioridade actual
 
-1. Base verificable e CI.
-2. Persistencia e instalación transaccional de versións.
-3. macOS x64/ARM64.
-4. Lanzamento do xogo.
-5. Xestión completa de mods.
-6. Backups.
-7. Updater visible e configurable.
-8. Robustez, documentación e acabamento.
-
-## Fase 1 — Base verificable
-
-1. Ampliar tests unitarios para helpers de rutas e versións.
-   - Verificación: os tests cobren casos válidos, inválidos e límites coñecidos.
+1. Persistencia e instalación transaccional de versións.
+2. macOS x64/ARM64.
+3. Lanzamento do xogo.
+4. Xestión completa de mods.
+5. Backups.
+6. Updater visible e configurable.
+7. Robustez, documentación e acabamento.
 
 ## Fase 2 — Persistencia e instalación de versións
 
@@ -67,21 +61,19 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 5 — Mods completos
 
-1. Crear un resolver determinista de releases compatibles con tests.
-   - Verificación: non confunde `1.2` con `1.20` e escolle a release máis recente válida.
-2. Descargar mods a `.tmp` e mover tras validar `modinfo.json`.
+1. Descargar mods a `.tmp` e mover tras validar `modinfo.json`.
    - Verificación: un ZIP inválido non aparece como mod instalado.
-3. Evitar duplicados e colisións de nomes.
+2. Evitar duplicados e colisións de nomes.
    - Verificación: instalar o mesmo mod dúas veces ten comportamento definido.
-4. Implementar desinstalación.
+3. Implementar desinstalación.
    - Verificación: disco e estado UI quedan sincronizados.
-5. Implementar actualización individual e “actualizar todos”.
+4. Implementar actualización individual e “actualizar todos”.
    - Verificación: se unha actualización falla, os demais mods non quedan bloqueados.
-6. Permitir escoller unha release manual.
+5. Permitir escoller unha release manual.
    - Verificación: o usuario pode instalar unha versión compatible concreta.
-7. Construír a pestana de mods da instancia.
+6. Construír a pestana de mods da instancia.
    - Verificación: lista mods instalados, estado e accións dispoñibles.
-8. Completar os filtros avanzados.
+7. Completar os filtros avanzados.
    - Verificación: filtros, layout e paxinación manteñen resultados coherentes.
 
 ## Fase 6 — Backups
