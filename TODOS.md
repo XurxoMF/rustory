@@ -16,13 +16,11 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 2 — Persistencia e instalación de versións
 
-1. Limpar temporais e facer rollback ao fallar.
-   - Verificación: corte de rede, ZIP inválido e falta de espazo non deixan instalacións fantasma.
-2. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
+1. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
    - Verificación: se a instalación falla, `data.json` e a UI non mostran a versión/instancia como dispoñible.
-3. Mostrar progreso e erro recuperable durante a instalación.
+2. Mostrar progreso e erro recuperable durante a instalación.
    - Verificación: a UI permite entender se está descargando, extraendo, validando ou limpando.
-4. Corrixir a instalación fire-and-forget ao crear/editar instancias.
+3. Corrixir a instalación fire-and-forget ao crear/editar instancias.
    - Verificación: as chamadas a `install()` rematan ou fallan antes de persistir o novo estado.
 
 ## Fase 3 — macOS x64/ARM64

@@ -116,6 +116,30 @@ export class VSVersion {
 	// ********************
 
 	/**
+	 * Deletes an installation working directory without masking the installation result.
+	 * A transient filesystem failure is retried once and a permanent failure is logged.
+	 * @param dir The working directory to clean.
+	 */
+	private static async cleanupInstallDirectory(dir: Directory): Promise<void> {
+		try {
+			await dir.delete();
+			return;
+		} catch {
+			// Retry once in case the filesystem has not released a downloaded or extracted file yet.
+		}
+
+		try {
+			await dir.delete();
+		} catch (err) {
+			try {
+				await Logger.error(`There was an error cleaning the installation working directory ${dir.path}: ${err}`);
+			} catch {
+				// Logging must never replace the original installation result.
+			}
+		}
+	}
+
+	/**
 	 * Downloads and installs a Vintage Story Version using a temporary directory independent from the final destination.
 	 * @param version The Rustory API Vintage Story Version to install.
 	 * @param destinationDir The final installation directory.
@@ -128,7 +152,6 @@ export class VSVersion {
 		installTempDir: Directory,
 		stagingDir: Directory
 	): Promise<void> {
-		let tempDirToClean: Directory | undefined = installTempDir;
 		let stagingDirToClean: Directory | undefined = stagingDir;
 
 		try {
@@ -146,25 +169,9 @@ export class VSVersion {
 
 			await stagingDir.rename(destinationDir);
 			stagingDirToClean = undefined;
-
-			await installTempDir.delete();
-			tempDirToClean = undefined;
 		} finally {
-			if (stagingDirToClean !== undefined) {
-				try {
-					await stagingDirToClean.delete();
-				} catch {
-					// Cleanup and rollback are completed in the following installation hardening step.
-				}
-			}
-
-			if (tempDirToClean !== undefined) {
-				try {
-					await tempDirToClean.delete();
-				} catch {
-					// Cleanup and rollback are completed in the following installation hardening step.
-				}
-			}
+			if (stagingDirToClean !== undefined) await VSVersion.cleanupInstallDirectory(stagingDirToClean);
+			await VSVersion.cleanupInstallDirectory(installTempDir);
 		}
 	}
 
@@ -300,6 +307,8 @@ export class VSVersion {
 
 			this._state = VSVersionState.INSTALLED;
 		} catch (err) {
+			this._state = VSVersionState.ERROR;
+
 			if (err instanceof AppError) throw err;
 			Logger.error(`There was an error installing the Vintage Story Version ${this._version} from the Rustory API Vintage Story Version: ${err}`);
 			throw new AppError(

@@ -151,4 +151,67 @@ describe("VSVersion.installFiles", () => {
 
 		expect(events).toEqual(["download", "extract-staging", "validate-staging", "delete-staging", "delete-temp"]);
 	});
+
+	test("retries a transient temporary directory cleanup failure", async () => {
+		let cleanupAttempts = 0;
+		installTempDir.delete = async () => {
+			cleanupAttempts += 1;
+			events.push("delete-temp");
+			if (cleanupAttempts === 1) throw new Error("Temporary file is still in use");
+		};
+
+		const apiVersion = {
+			version: "1.20.4",
+			download: async () => {
+				events.push("download");
+				return downloadedZip;
+			}
+		} as unknown as RustoryApiVSVersion;
+
+		await VSVersion.installFiles(apiVersion, targetDir, installTempDir, stagingDir);
+
+		expect(events).toEqual(["download", "extract-staging", "validate-staging", "rename-staging", "delete-temp", "delete-temp"]);
+	});
+
+	test("does not invalidate a published installation when temporary cleanup keeps failing", async () => {
+		installTempDir.delete = async () => {
+			events.push("delete-temp");
+			throw new Error("Cannot delete temporary directory");
+		};
+
+		const apiVersion = {
+			version: "1.20.4",
+			download: async () => {
+				events.push("download");
+				return downloadedZip;
+			}
+		} as unknown as RustoryApiVSVersion;
+
+		await VSVersion.installFiles(apiVersion, targetDir, installTempDir, stagingDir);
+
+		expect(events).toEqual(["download", "extract-staging", "validate-staging", "rename-staging", "delete-temp", "delete-temp"]);
+	});
+
+	test("preserves the original installation error when every cleanup attempt fails", async () => {
+		stagingDir.delete = async () => {
+			events.push("delete-staging");
+			throw new Error("Cannot delete staging");
+		};
+		installTempDir.delete = async () => {
+			events.push("delete-temp");
+			throw new Error("Cannot delete temporary directory");
+		};
+
+		const installationError = new Error("Download failed");
+		const apiVersion = {
+			download: async () => {
+				events.push("download");
+				throw installationError;
+			}
+		} as unknown as RustoryApiVSVersion;
+
+		await expect(VSVersion.installFiles(apiVersion, targetDir, installTempDir, stagingDir)).rejects.toBe(installationError);
+
+		expect(events).toEqual(["download", "delete-staging", "delete-staging", "delete-temp", "delete-temp"]);
+	});
 });
