@@ -193,15 +193,11 @@ O workflow de release compila Windows, Linux, macOS ARM64 e macOS x64, pero non 
 
 A descarga gárdase dentro do directorio final da versión en [RustoryApiVSVersion.svelte.ts:262](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/api/RustoryApiVSVersion.svelte.ts:262), pero `install()` elimina ese directorio antes de extraer o mesmo ZIP en [VSVersion.svelte.ts:232](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/vs/VSVersion.svelte.ts:232). Estáticamente, ese fluxo debería deixar o obxecto `Zip` apuntando a un ficheiro xa eliminado. Convén reproducilo inmediatamente nunha instalación limpa.
 
-2. Escrituras non agardadas.
-
-`Data.save` aínda chama `writeJSON()` sen `await`: [Data.svelte.ts:220](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/stores/Data.svelte.ts:220). Ese método informa de éxito antes de que os datos estean realmente no disco e non captura os erros asíncronos. `Config.save` e `VSInstance.save` xa están corrixidos.
-
-3. Instalación fire-and-forget.
+2. Instalación fire-and-forget.
 
 A creación dunha instancia chama `newVersion.install(...)` sen `await` en [create/+page.svelte:195](/home/xurxomf/Desarrollo/Rustory/rustory/src/routes/vs-instances/create/+page.svelte:195). A instancia queda rexistrada aínda que a descarga ou extracción falle, e un rexeitamento pode quedar sen manexar.
 
-4. macOS non modela arquitectura.
+3. macOS non modela arquitectura.
 
 A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelte.ts:11](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/api/RustoryApiVSVersion.svelte.ts:11). A descarga decide só polo sistema operativo. Cómpre representar artefactos opcionais por plataforma e arquitectura, mantendo fallback para versións antigas.
 
@@ -228,6 +224,7 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 - 2026-07-18: a carga dunha instancia agarda agora o resultado de `File.exists()` antes de decidir se falta `instance.json`. Deste modo, unha ruta rexistrada sen o seu ficheiro de configuración produce o `FILE_SYSTEM_ERROR` previsto en lugar de continuar cunha Promise truthy.
 - 2026-07-18: `VSInstance.save()` agarda agora a escritura de `instance.json`. O método só rexistra o éxito despois de persistir os datos e os erros de `writeJSON()` chegan ao seu bloque `catch`.
 - 2026-07-18: `Config.save()` agarda agora a escritura de `config.json`. As actualizacións de configuración xa non resolven antes de que a persistencia remate e os erros de `writeJSON()` chegan ao seu bloque `catch`.
+- 2026-07-18: `Data.save()` agarda agora a escritura de `data.json`. Con isto queda pechada a incidencia coñecida de métodos `save()` que resolvían antes de completar a escritura.
 
 ## 7. Orde lóxica de desenvolvemento
 
@@ -243,14 +240,13 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 
 ### Fase 2 — Corrixir persistencia e instalación de versións
 
-5. Engadir o `await` aínda ausente en `Data.save()` e propagar os erros de escritura. `Config.save()` e `VSInstance.save()` xa están corrixidos.
-6. Introducir versión de esquema e validación de `config.json`, `data.json` e `instance.json`.
-7. Descargar a un directorio temporal independente.
-8. Verificar SHA-256 antes de extraer.
-9. Extraer a staging, validar executable/versión e renomear atomicamente.
-10. Limpar temporais e facer rollback ao fallar.
-11. Non rexistrar a versión nin crear a instancia ata finalizar a instalación.
-12. Mostrar progreso e erro recuperable.
+5. Introducir versión de esquema e validación de `config.json`, `data.json` e `instance.json`.
+6. Descargar a un directorio temporal independente.
+7. Verificar SHA-256 antes de extraer.
+8. Extraer a staging, validar executable/versión e renomear atomicamente.
+9. Limpar temporais e facer rollback ao fallar.
+10. Non rexistrar a versión nin crear a instancia ata finalizar a instalación.
+11. Mostrar progreso e erro recuperable.
 
 - Verificación: éxito, checksum incorrecto, corte de rede e falta de espazo non deixan instalacións fantasma.
 

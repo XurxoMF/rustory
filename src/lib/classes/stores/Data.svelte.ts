@@ -217,7 +217,7 @@ export class Data {
 
 			const JSON = await this.exportToJSON();
 
-			this._file.writeJSON(JSON);
+			await this._file.writeJSON(JSON);
 		} catch (err) {
 			if (err instanceof AppError) throw err;
 			App.logger.error(`There was an error saving the data: ${err}`);
