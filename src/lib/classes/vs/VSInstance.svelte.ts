@@ -28,6 +28,7 @@ export enum VSInstanceState {
  * JSON of the Vintage Story Instance.
  */
 export type VSInstanceJSON = {
+	schemaVersion: typeof VSInstance.SCHEMA_VERSION;
 	id: string;
 	name: string;
 	description: string;
@@ -50,9 +51,21 @@ export class VSInstance {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	/**
+	 * Current instance.json schema version.
+	 */
+	private static _SCHEMA_VERSION = 1 as const;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	/**
+	 * Current instance.json schema version.
+	 */
+	public static get SCHEMA_VERSION(): typeof VSInstance._SCHEMA_VERSION {
+		return VSInstance._SCHEMA_VERSION;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -507,6 +520,95 @@ export class VSInstance {
 	// ********************
 
 	/**
+	 * Validates and migrates instance.json data to the current schema.
+	 * @param vsInstanceJSON The raw instance.json data.
+	 * @returns Valid Vintage Story Instance data using the current schema.
+	 */
+	public static parseJSON(vsInstanceJSON: unknown): VSInstanceJSON {
+		if (!VSInstance.isRecord(vsInstanceJSON))
+			throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance data must be a JSON object!");
+
+		VSInstance.validateSchemaVersion(vsInstanceJSON.schemaVersion);
+
+		const id = VSInstance.readRequiredString(vsInstanceJSON.id, "ID");
+		const name = VSInstance.readRequiredString(vsInstanceJSON.name, "name");
+		const version = VSInstance.readRequiredString(vsInstanceJSON.version, "version");
+		const description = VSInstance.readOptionalString(vsInstanceJSON.description, "description", "");
+		const startParams = VSInstance.readOptionalString(vsInstanceJSON.startParams, "start parameters", "");
+		const backupsLimit = VSInstance.readOptionalInteger(vsInstanceJSON.backupsLimit, "backups limit", 3, 1, 10);
+		const backupsAuto = VSInstance.readOptionalBoolean(vsInstanceJSON.backupsAuto, "automatic backups", false);
+		const backupsCompressionLevel = VSInstance.readOptionalInteger(vsInstanceJSON.backupsCompressionLevel, "backups compression level", 4, 0, 9);
+		const lastTimePlayed = VSInstance.readOptionalNumber(vsInstanceJSON.lastTimePlayed, "last time played", 0, 0);
+		const totalTimePlayed = VSInstance.readOptionalNumber(vsInstanceJSON.totalTimePlayed, "total time played", 0, 0);
+		const mesaGlThread = VSInstance.readOptionalBoolean(vsInstanceJSON.mesaGlThread, "Mesa GL threading", false);
+		const envVars = VSInstance.readOptionalString(vsInstanceJSON.envVars, "environment variables", "");
+
+		return {
+			schemaVersion: VSInstance.SCHEMA_VERSION,
+			id,
+			name,
+			description,
+			version,
+			startParams,
+			backupsLimit,
+			backupsAuto,
+			backupsCompressionLevel,
+			lastTimePlayed,
+			totalTimePlayed,
+			mesaGlThread,
+			envVars
+		};
+	}
+
+	private static validateSchemaVersion(schemaVersion: unknown): void {
+		if (schemaVersion === undefined) return;
+		if (schemaVersion === VSInstance.SCHEMA_VERSION) return;
+
+		throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance schema version ${String(schemaVersion)} is not supported!`);
+	}
+
+	private static readRequiredString(value: unknown, name: string): string {
+		if (typeof value !== "string" || value === "")
+			throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance ${name} is missing or invalid!`);
+
+		return value;
+	}
+
+	private static readOptionalString(value: unknown, name: string, defaultValue: string): string {
+		if (value === undefined) return defaultValue;
+		if (typeof value !== "string") throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance ${name} must be a string!`);
+
+		return value;
+	}
+
+	private static readOptionalBoolean(value: unknown, name: string, defaultValue: boolean): boolean {
+		if (value === undefined) return defaultValue;
+		if (typeof value !== "boolean") throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance ${name} must be a boolean!`);
+
+		return value;
+	}
+
+	private static readOptionalNumber(value: unknown, name: string, defaultValue: number, minimum: number): number {
+		if (value === undefined) return defaultValue;
+		if (typeof value !== "number" || !Number.isFinite(value) || value < minimum)
+			throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance ${name} must be a number greater than or equal to ${minimum}!`);
+
+		return value;
+	}
+
+	private static readOptionalInteger(value: unknown, name: string, defaultValue: number, minimum: number, maximum: number): number {
+		if (value === undefined) return defaultValue;
+		if (typeof value !== "number" || !Number.isInteger(value) || value < minimum || value > maximum)
+			throw new AppError(AppErrorCodes.MALFORMED_DATA, `The Vintage Story Instance ${name} must be an integer between ${minimum} and ${maximum}!`);
+
+		return value;
+	}
+
+	private static isRecord(value: unknown): value is Record<string, unknown> {
+		return typeof value === "object" && value !== null && !Array.isArray(value);
+	}
+
+	/**
 	 * Loads a Vintage Story Instance from a directory.
 	 * @param dir The directory to load the Vintage Story Instance from.
 	 * @returns The Vintage Story Instance.
@@ -532,13 +634,8 @@ export class VSInstance {
 
 			App.logger.debug(`Reading the Vintage Story Instance data from the file ${file.path}...`);
 
-			const vsInstanceJSON = await file.readJSON<Partial<VSInstanceJSON>>();
-
-			if (vsInstanceJSON.id === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance ID is missing!");
-
-			if (vsInstanceJSON.name === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance name is missing!");
-
-			if (vsInstanceJSON.version === undefined) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The Vintage Story Instance version is missing!");
+			const rawVSInstanceJSON = await file.readJSON<unknown>();
+			const vsInstanceJSON = VSInstance.parseJSON(rawVSInstanceJSON);
 
 			App.logger.debug(`Creating the Vintage Story Instance ${vsInstanceJSON.name} with the data from the file ${file.path}!`);
 
@@ -546,20 +643,20 @@ export class VSInstance {
 				file,
 				id: vsInstanceJSON.id,
 				name: vsInstanceJSON.name,
-				description: vsInstanceJSON.description ?? "",
+				description: vsInstanceJSON.description,
 				dir,
 				dataDir,
 				backupsDir,
 				modsDir,
 				version: vsInstanceJSON.version,
-				startParams: vsInstanceJSON.startParams ?? "",
-				backupsLimit: vsInstanceJSON.backupsLimit ?? 3,
-				backupsAuto: vsInstanceJSON.backupsAuto ?? false,
-				backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel ?? 4,
-				lastTimePlayed: vsInstanceJSON.lastTimePlayed ?? 0,
-				totalTimePlayed: vsInstanceJSON.totalTimePlayed ?? 0,
-				mesaGlThread: vsInstanceJSON.mesaGlThread ?? false,
-				envVars: vsInstanceJSON.envVars ?? ""
+				startParams: vsInstanceJSON.startParams,
+				backupsLimit: vsInstanceJSON.backupsLimit,
+				backupsAuto: vsInstanceJSON.backupsAuto,
+				backupsCompressionLevel: vsInstanceJSON.backupsCompressionLevel,
+				lastTimePlayed: vsInstanceJSON.lastTimePlayed,
+				totalTimePlayed: vsInstanceJSON.totalTimePlayed,
+				mesaGlThread: vsInstanceJSON.mesaGlThread,
+				envVars: vsInstanceJSON.envVars
 			});
 
 			App.logger.debug(`Finished creating the Vintage Story Instance ${vsInstanceJSON.name}!`);
@@ -698,6 +795,7 @@ export class VSInstance {
 	 */
 	private async exportToJSON(): Promise<VSInstanceJSON> {
 		return {
+			schemaVersion: VSInstance.SCHEMA_VERSION,
 			id: this._id,
 			name: this._name,
 			description: this._description,

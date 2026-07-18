@@ -16,21 +16,19 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 2 — Persistencia e instalación de versións
 
-1. Introducir versión de esquema e validación de `config.json`, `data.json` e `instance.json`.
-   - Verificación: datos actuais, datos antigos e JSON incompleto/corrupto teñen comportamento definido.
-2. Descargar versións de Vintage Story a un directorio temporal independente do directorio final.
+1. Descargar versións de Vintage Story a un directorio temporal independente do directorio final.
    - Verificación: un fallo durante a descarga non deixa versións parcialmente rexistradas.
-3. Verificar SHA-256 antes de extraer cando a API proporcione checksum.
+2. Verificar SHA-256 antes de extraer cando a API proporcione checksum.
    - Verificación: checksum correcto instala; checksum incorrecto aborta e limpa temporais.
-4. Extraer a staging, validar executable/versión e renomear atomicamente ao directorio final.
+3. Extraer a staging, validar executable/versión e renomear atomicamente ao directorio final.
    - Verificación: unha extracción incompleta non substitúe unha instalación válida.
-5. Limpar temporais e facer rollback ao fallar.
+4. Limpar temporais e facer rollback ao fallar.
    - Verificación: corte de rede, ZIP inválido e falta de espazo non deixan instalacións fantasma.
-6. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
+5. Non rexistrar unha versión nin crear unha instancia ata finalizar e validar a instalación.
    - Verificación: se a instalación falla, `data.json` e a UI non mostran a versión/instancia como dispoñible.
-7. Mostrar progreso e erro recuperable durante a instalación.
+6. Mostrar progreso e erro recuperable durante a instalación.
    - Verificación: a UI permite entender se está descargando, extraendo, validando ou limpando.
-8. Corrixir a instalación fire-and-forget ao crear/editar instancias.
+7. Corrixir a instalación fire-and-forget ao crear/editar instancias.
    - Verificación: as chamadas a `install()` rematan ou fallan antes de persistir o novo estado.
 
 ## Fase 3 — macOS x64/ARM64

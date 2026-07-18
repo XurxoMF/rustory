@@ -169,13 +169,17 @@ export class Zip {
 		try {
 			App.logger.debug(`Reading the JSON from the file ${path}...`);
 
-			const fileContents: string = await invoke("read_string_from_zip", { zipPath: this.path, filePath: path });
+			const fileContents = (await invoke<string>("read_string_from_zip", { zipPath: this.path, filePath: path })).trim();
 
-			if (!fileContents.startsWith("{")) return {} as T;
+			if (fileContents === "") return {} as T;
 
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
+			if (err instanceof SyntaxError)
+				throw new AppError(AppErrorCodes.MALFORMED_DATA, `The file ${path} inside the zip ${this.path} does not contain valid JSON!`, {
+					cause: err
+				});
 			App.logger.error(`There was an error reading the JSON from the file inside the zip: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the JSON from the file inside the zip!");
 		}

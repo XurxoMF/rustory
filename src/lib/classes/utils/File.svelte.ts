@@ -208,13 +208,15 @@ export class File {
 
 			await this.ensureExists();
 
-			const fileContents = await readTextFile(this.path);
+			const fileContents = (await readTextFile(this.path)).trim();
 
-			if (!fileContents.startsWith("{")) return {} as T;
+			if (fileContents === "") return {} as T;
 
 			return JSON.parse(fileContents) as T;
 		} catch (err) {
 			if (err instanceof AppError) throw err;
+			if (err instanceof SyntaxError)
+				throw new AppError(AppErrorCodes.MALFORMED_DATA, `The file ${this.path} does not contain valid JSON!`, { cause: err });
 			App.logger.error(`There was an error reading the file: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error reading the file!");
 		}

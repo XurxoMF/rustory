@@ -71,6 +71,7 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 - `Config` persiste preferencias nun `config.json` baixo o directorio de configuración da aplicación.
 - `Data` persiste rutas a versións e instancias nun `data.json` baixo o directorio de datos da aplicación.
 - Cada instancia usa un `instance.json` e os subdirectorios `Data/Mods` e `Backups`.
+- `config.json`, `data.json` e `instance.json` usan actualmente `schemaVersion: 1`. Os ficheiros legacy sen `schemaVersion` son compatibles: valídanse, complétanse cos defaults existentes e escríbense co esquema actual no seguinte gardado. Unha versión explícita distinta de `1`, unha raíz que non sexa un obxecto ou un campo presente cun tipo/valor inválido produce `AppErrorCodes.MALFORMED_DATA`.
 - O frontend accede ao sistema mediante plugins Tauri e mediante os comandos Rust rexistrados en `src-tauri/src/lib.rs`.
 - As versións do xogo veñen de `https://api.rustory.xyz`; os mods veñen da API e CDN oficiais de mods de Vintage Story.
 
@@ -182,6 +183,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - Verificar checksums cando a API os proporciona; non usar o hash unicamente como parte do nome.
 - Non persistir unha versión ou instancia como dispoñible antes de completar e validar a operación correspondente.
 - Os cambios no formato JSON persistido deben ser retrocompatibles ou incluír unha migración explícita.
+- Ao cambiar `config.json`, `data.json` ou `instance.json`, incrementa a versión de esquema e engade a migración desde todas as versións que continúen soportadas. A ausencia de `schemaVersion` representa o formato legacy anterior ao esquema `1`; non a reutilices para formatos novos.
 - Non asumir que a orde devolta por unha API equivale a “máis recente”; ordenar ou comparar versións explicitamente.
 - O updater debe respectar a elección do usuario: setting para comprobación automática e acción manual separada.
 - Non ampliar o alcance a servidores ou modpacks durante o MVP salvo petición explícita.

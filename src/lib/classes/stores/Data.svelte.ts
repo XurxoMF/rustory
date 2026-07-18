@@ -12,8 +12,9 @@ import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
  * JSON of the data.
  */
 export type DataJSON = {
-	vsVersionsPaths?: string[] | undefined;
-	vsInstancesPaths?: string[] | undefined;
+	schemaVersion: typeof Data.SCHEMA_VERSION;
+	vsVersionsPaths: string[];
+	vsInstancesPaths: string[];
 };
 
 /**
@@ -24,9 +25,21 @@ export class Data {
 	// *  STATIC PROPERTIES  *
 	// ***********************
 
+	/**
+	 * Current data.json schema version.
+	 */
+	private static _SCHEMA_VERSION = 1 as const;
+
 	// *******************************
 	// *  STATIC GETTERS & SETTERS	 *
 	// *******************************
+
+	/**
+	 * Current data.json schema version.
+	 */
+	public static get SCHEMA_VERSION(): typeof Data._SCHEMA_VERSION {
+		return Data._SCHEMA_VERSION;
+	}
 
 	// ************************
 	// *  CONSTRUCTOR & INIT  *
@@ -48,13 +61,14 @@ export class Data {
 
 			const path = await App.info.dataDir.join("data.json");
 			const file = await File.create(path);
-			const dataJSON = await file.readJSON<DataJSON>();
+			const rawDataJSON = await file.readJSON<unknown>();
+			const dataJSON = Data.parseJSON(rawDataJSON);
 
 			App.logger.debug("Loading Vintage Story Versions...");
 
 			const vsVersions: VSVersion[] = [];
 
-			if (dataJSON.vsVersionsPaths !== undefined && dataJSON.vsVersionsPaths.length > 0) {
+			if (dataJSON.vsVersionsPaths.length > 0) {
 				await Promise.all(
 					dataJSON.vsVersionsPaths.map(async (vsVersionPath) => {
 						const dir = await Directory.create(vsVersionPath);
@@ -72,7 +86,7 @@ export class Data {
 
 			const vsInstances: VSInstance[] = [];
 
-			if (dataJSON.vsInstancesPaths !== undefined && dataJSON.vsInstancesPaths.length > 0) {
+			if (dataJSON.vsInstancesPaths.length > 0) {
 				await Promise.all(
 					dataJSON.vsInstancesPaths.map(async (vsInstancePath) => {
 						const dir = await Directory.create(vsInstancePath);
@@ -168,6 +182,46 @@ export class Data {
 	// *  STATIC METHODS  *
 	// ********************
 
+	/**
+	 * Validates and migrates data.json data to the current schema.
+	 * @param dataJSON The raw data.json data.
+	 * @returns Valid app data using the current schema.
+	 */
+	public static parseJSON(dataJSON: unknown): DataJSON {
+		if (!Data.isRecord(dataJSON)) throw new AppError(AppErrorCodes.MALFORMED_DATA, "The app data must be a JSON object!");
+
+		Data.validateSchemaVersion(dataJSON.schemaVersion);
+
+		const vsVersionsPaths = dataJSON.vsVersionsPaths ?? [];
+		const vsInstancesPaths = dataJSON.vsInstancesPaths ?? [];
+
+		Data.validatePaths(vsVersionsPaths, "Vintage Story Versions");
+		Data.validatePaths(vsInstancesPaths, "Vintage Story Instances");
+
+		return {
+			schemaVersion: Data.SCHEMA_VERSION,
+			vsVersionsPaths,
+			vsInstancesPaths
+		};
+	}
+
+	private static validateSchemaVersion(schemaVersion: unknown): void {
+		if (schemaVersion === undefined) return;
+		if (schemaVersion === Data.SCHEMA_VERSION) return;
+
+		throw new AppError(AppErrorCodes.MALFORMED_DATA, `The app data schema version ${String(schemaVersion)} is not supported!`);
+	}
+
+	private static validatePaths(paths: unknown, name: string): asserts paths is string[] {
+		const pathsAreValid = Array.isArray(paths) && paths.every((path) => typeof path === "string" && path !== "");
+
+		if (!pathsAreValid) throw new AppError(AppErrorCodes.MALFORMED_DATA, `The ${name} paths must be an array of non-empty strings!`);
+	}
+
+	private static isRecord(value: unknown): value is Record<string, unknown> {
+		return typeof value === "object" && value !== null && !Array.isArray(value);
+	}
+
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
@@ -231,6 +285,7 @@ export class Data {
 	 */
 	private async exportToJSON(): Promise<DataJSON> {
 		return {
+			schemaVersion: Data.SCHEMA_VERSION,
 			vsVersionsPaths: this._vsVersions.map((vsVersion) => vsVersion.dir.path),
 			vsInstancesPaths: this._vsInstances.map((vsInstance) => vsInstance.dir.path)
 		};
