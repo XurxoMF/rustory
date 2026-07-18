@@ -20,8 +20,15 @@ export type RustoryApiVSVersionJSON = {
 	windowsSha: string;
 	linux: string;
 	linuxSha: string;
-	macos: string;
-	macosSha: string;
+	macosX64: string;
+	macosX64Sha: string;
+	macosArm64: string;
+	macosArm64Sha: string;
+};
+
+export type RustoryApiVSVersionArtifact = {
+	url: string;
+	sha256: string;
 };
 
 /**
@@ -49,8 +56,10 @@ export class RustoryApiVSVersion {
 		windowsSha: string;
 		linux: string;
 		linuxSha: string;
-		macos: string;
-		macosSha: string;
+		macosX64: string;
+		macosX64Sha: string;
+		macosArm64: string;
+		macosArm64Sha: string;
 	}) {
 		this._version = rustoryApiVsVersion.version;
 		this._type = rustoryApiVsVersion.type;
@@ -60,8 +69,10 @@ export class RustoryApiVSVersion {
 		this._windowsSha = rustoryApiVsVersion.windowsSha;
 		this._linux = rustoryApiVsVersion.linux;
 		this._linuxSha = rustoryApiVsVersion.linuxSha;
-		this._macos = rustoryApiVsVersion.macos;
-		this._macosSha = rustoryApiVsVersion.macosSha;
+		this._macosX64 = rustoryApiVsVersion.macosX64;
+		this._macosX64Sha = rustoryApiVsVersion.macosX64Sha;
+		this._macosArm64 = rustoryApiVsVersion.macosArm64;
+		this._macosArm64Sha = rustoryApiVsVersion.macosArm64Sha;
 	}
 
 	// *************************
@@ -109,14 +120,24 @@ export class RustoryApiVSVersion {
 	private _linuxSha: string;
 
 	/**
-	 * The download link for macOS.
+	 * The download link for macOS x64.
 	 */
-	private _macos: string;
+	private _macosX64: string;
 
 	/**
-	 * The sha256 checksum for macOS.
+	 * The sha256 checksum for macOS x64.
 	 */
-	private _macosSha: string;
+	private _macosX64Sha: string;
+
+	/**
+	 * The download link for macOS ARM64.
+	 */
+	private _macosArm64: string;
+
+	/**
+	 * The sha256 checksum for macOS ARM64.
+	 */
+	private _macosArm64Sha: string;
 
 	// *********************************
 	// *  INSTANCE GETTERS & SETTERS	 *
@@ -179,17 +200,31 @@ export class RustoryApiVSVersion {
 	}
 
 	/**
-	 * The download link for macOS.
+	 * The download link for macOS x64.
 	 */
-	public get macos(): string {
-		return this._macos;
+	public get macosX64(): string {
+		return this._macosX64;
 	}
 
 	/**
-	 * The sha256 checksum for macOS.
+	 * The sha256 checksum for macOS x64.
 	 */
-	public get macosSha(): string {
-		return this._macosSha;
+	public get macosX64Sha(): string {
+		return this._macosX64Sha;
+	}
+
+	/**
+	 * The download link for macOS ARM64.
+	 */
+	public get macosArm64(): string {
+		return this._macosArm64;
+	}
+
+	/**
+	 * The sha256 checksum for macOS ARM64.
+	 */
+	public get macosArm64Sha(): string {
+		return this._macosArm64Sha;
 	}
 
 	// ********************
@@ -264,6 +299,24 @@ export class RustoryApiVSVersion {
 	// **********************
 
 	/**
+	 * Selects the download artifact for an operating system and architecture.
+	 * @param osType The operating system type.
+	 * @param osArch The system architecture.
+	 * @returns The matching download artifact.
+	 */
+	public getArtifact(osType: Info["osType"], osArch: Info["osArch"]): RustoryApiVSVersionArtifact {
+		if (osType === "windows") return { url: this.windows, sha256: this.windowsSha };
+		if (osType === "linux") return { url: this.linux, sha256: this.linuxSha };
+
+		if (osType === "macos") {
+			if (osArch === "x86_64") return { url: this.macosX64, sha256: this.macosX64Sha };
+			if (osArch === "aarch64") return { url: this.macosArm64, sha256: this.macosArm64Sha };
+		}
+
+		throw new AppError(AppErrorCodes.UNSUPPORTED_PLATFORM, `There is no Vintage Story artifact for ${osType} ${osArch}!`);
+	}
+
+	/**
 	 * Downloads the Vintage Story Version from this Rustory API Vintage Story Version to the specified directory.
 	 * @returns The zip of the Vintage Story Version.
 	 */
@@ -271,24 +324,23 @@ export class RustoryApiVSVersion {
 		try {
 			Logger.debug(`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version...`);
 
-			const url = Info.instance.osType === "windows" ? this.windows : Info.instance.osType === "linux" ? this.linux : this.macos;
-			const sha256 = Info.instance.osType === "windows" ? this.windowsSha : Info.instance.osType === "linux" ? this.linuxSha : this.macosSha;
+			const artifact = this.getArtifact(Info.instance.osType, Info.instance.osArch);
 
 			await dir.ensureExists();
 
-			const downloadPath = await dir.join(`${this.version}-${Info.instance.osType}.zip.tmp`);
+			const downloadPath = await dir.join(`${this.version}-${Info.instance.osType}-${Info.instance.osArch}.zip.tmp`);
 
 			Logger.debug(
-				`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version on ${downloadPath} from ${url}...`
+				`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version on ${downloadPath} from ${artifact.url}...`
 			);
 
-			await Request.instance.download(url, downloadPath);
+			await Request.instance.download(artifact.url, downloadPath);
 
 			Logger.debug(`Finished downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`);
 
 			const file = await File.create(downloadPath);
 			const calculatedSha256 = await file.getSha256();
-			RustoryApiVSVersion.validateSha256(sha256, calculatedSha256);
+			RustoryApiVSVersion.validateSha256(artifact.sha256, calculatedSha256);
 
 			const zip = await Zip.create(downloadPath);
 

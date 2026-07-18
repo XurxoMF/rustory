@@ -18,7 +18,7 @@ O README menciona tamén servidores e modpacks, pero non hai unha implementació
 
 Segundo o mantedor, as funcionalidades xa implementadas funcionan, aínda que o produto non está rematado. A creación de instancias e a instalación de versións existen; executar o xogo aínda non. O traballo funcional máis recente é a páxina de mods, incluíndo layouts, ordenación, paxinación e unha selección simple da última release compatible para instalar un mod.
 
-Limitación coñecida: o soporte de Vintage Story en macOS está roto porque o xogo distribúe agora artefactos x64 e ARM64 separados, pero non todas as versións antigas teñen ambos. Calquera solución debe admitir a arquitectura actual e a ausencia dalgún artefacto nas versións históricas. O formato exacto futuro da API para representalos non está confirmado neste repositorio.
+Vintage Story distribúe artefactos macOS x64 e ARM64 separados nas versións actuais, mentres que as versións antigas usan o paquete x64 para ambas arquitecturas. A API represéntaos cos campos obrigatorios `macosX64`, `macosX64Sha`, `macosArm64` e `macosArm64Sha`; para releases antigas pode devolver o mesmo URL e SHA nos dous artefactos como fallback. O launcher selecciona `macosX64` para `x86_64` e `macosArm64` para `aarch64`.
 
 ## Estado funcional confirmado
 
@@ -184,6 +184,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - Tratar versións de xogo e instancias como entidades distintas: varias instancias poden compartir unha versión instalada, pero deben ter datos e mods illados.
 - Usar os directorios de aplicación resoltos por Tauri e as rutas configurables existentes; non codificar rutas específicas dun sistema operativo.
 - Manter as operacións privilexiadas ou non dispoñibles no webview detrás de plugins Tauri ou comandos IPC Rust.
+- Consumir información xa centralizada polos stores a través das súas clases (`Info`, `Config`, `Data`, etc.). Non importar plugins Tauri directamente noutras clases para obter datos ou tipos que o store correspondente xa expón.
 - Conceder só os permisos Tauri e dominios de rede necesarios. Calquera cambio en capabilities debe revisarse como cambio de seguridade.
 - As descargas, instalacións, actualizacións e restauracións deben ser recuperables: usar temporais/staging, validar antes de substituír datos e limpar tras un fallo.
 - Reutilizar `Info.instance.tempDir` para temporais de instalación; non descargar arquivos dentro do directorio final da versión. Cada intento debe ter un subdirectorio propio para evitar colisións entre operacións.
@@ -192,6 +193,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - Os cambios no formato JSON persistido deben ser retrocompatibles ou incluír unha migración explícita.
 - Ao cambiar `config.json`, `data.json` ou `instance.json`, incrementa a versión de esquema e engade a migración desde todas as versións que continúen soportadas. A ausencia de `schemaVersion` representa o formato legacy anterior ao esquema `1`; non a reutilices para formatos novos.
 - Non asumir que a orde devolta por unha API equivale a “máis recente”; ordenar ou comparar versións explicitamente.
+- Seleccionar os artefactos macOS exclusivamente mediante os campos da API e `Info.instance.osArch`: `x86_64` corresponde a `macosX64` e `aarch64` a `macosArm64`. Non construír URLs de descarga no cliente nin facer fallback entre arquitecturas fóra do contrato da API.
 - O updater debe respectar a elección do usuario: setting para comprobación automática e acción manual separada.
 - Non ampliar o alcance a servidores ou modpacks durante o MVP salvo petición explícita.
 

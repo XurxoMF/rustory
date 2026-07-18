@@ -29,13 +29,9 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 3 — macOS x64/ARM64
 
-1. Cambiar o modelo da API a artefactos por `OS + arquitectura`, con campos opcionais.
-   - Verificación: o modelo representa macOS x64, macOS ARM64 e ausencia dalgún artefacto.
-2. Definir fallback para releases antigas cun único paquete macOS.
-   - Verificación: versións antigas seguen sendo instalables cando corresponda.
-3. Engadir fixtures para macOS Intel, Apple Silicon e versións sen paquete nativo.
-   - Verificación: a selección de artefacto está cuberta por tests.
-4. Validar o executable dentro do `.app`/paquete real de Vintage Story.
+1. Corrixir ou verificar na API o URL `macosArm64` de `1.22.3`: o 18 de xullo de 2026 apunta a `1.22.3-X64.zip`, pero publica un SHA distinto ao x64.
+   - Verificación: descargar ambos artefactos produce os SHA publicados e cada URL identifica a arquitectura correcta.
+2. Validar o executable dentro do `.app`/paquete real de Vintage Story.
    - Verificación: a instalación falla de forma recuperable se o executable esperado non existe.
 
 ## Fase 4 — Lanzar o xogo
