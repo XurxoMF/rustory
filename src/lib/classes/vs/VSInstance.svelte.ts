@@ -613,7 +613,7 @@ export class VSInstance {
 
 			const JSON = await this.exportToJSON();
 
-			this._file.writeJSON(JSON);
+			await this._file.writeJSON(JSON);
 
 			App.logger.debug(`Saved the Vintage Story Instance ${this._name} to ${this._file.path}!`);
 		} catch (err) {

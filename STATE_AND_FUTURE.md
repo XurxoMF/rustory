@@ -195,7 +195,7 @@ A descarga gárdase dentro do directorio final da versión en [RustoryApiVSVersi
 
 2. Escrituras non agardadas.
 
-`Config.save`, `Data.save` e `VSInstance.save` chaman `writeJSON()` sen `await`, por exemplo [Config.svelte.ts:415](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/stores/Config.svelte.ts:415) e [VSInstance.svelte.ts:615](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/vs/VSInstance.svelte.ts:615). O método informa de éxito antes de que os datos estean realmente no disco e non captura os erros asíncronos.
+`Config.save` e `Data.save` aínda chaman `writeJSON()` sen `await`, por exemplo [Config.svelte.ts:415](/home/xurxomf/Desarrollo/Rustory/rustory/src/lib/classes/stores/Config.svelte.ts:415). Estes métodos informan de éxito antes de que os datos estean realmente no disco e non capturan os erros asíncronos. `VSInstance.save` xa está corrixido.
 
 3. Instalación fire-and-forget.
 
@@ -226,6 +226,7 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 ### Correccións completadas
 
 - 2026-07-18: a carga dunha instancia agarda agora o resultado de `File.exists()` antes de decidir se falta `instance.json`. Deste modo, unha ruta rexistrada sen o seu ficheiro de configuración produce o `FILE_SYSTEM_ERROR` previsto en lugar de continuar cunha Promise truthy.
+- 2026-07-18: `VSInstance.save()` agarda agora a escritura de `instance.json`. O método só rexistra o éxito despois de persistir os datos e os erros de `writeJSON()` chegan ao seu bloque `catch`.
 
 ## 7. Orde lóxica de desenvolvemento
 
@@ -241,7 +242,7 @@ A API só define `macos` e `macosSha`, non x64/ARM64: [RustoryApiVSVersion.svelt
 
 ### Fase 2 — Corrixir persistencia e instalación de versións
 
-5. Engadir os `await` ausentes e propagar erros de escritura.
+5. Engadir os `await` aínda ausentes en `Config.save()` e `Data.save()` e propagar os erros de escritura. `VSInstance.save()` xa está corrixido.
 6. Introducir versión de esquema e validación de `config.json`, `data.json` e `instance.json`.
 7. Descargar a un directorio temporal independente.
 8. Verificar SHA-256 antes de extraer.
