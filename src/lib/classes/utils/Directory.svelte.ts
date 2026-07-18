@@ -1,6 +1,6 @@
 import { invoke } from "@tauri-apps/api/core";
 import { dirname, join } from "@tauri-apps/api/path";
-import { exists, mkdir, readDir, remove } from "@tauri-apps/plugin-fs";
+import { exists, mkdir, readDir, remove, rename } from "@tauri-apps/plugin-fs";
 
 import { Logger } from "$lib/classes/utils/Logger.svelte";
 
@@ -223,6 +223,28 @@ export class Directory {
 			if (err instanceof AppError) throw err;
 			Logger.error(`There was an error deleting the directory: ${err}`);
 			throw new AppError(AppErrorCodes.GENERIC_ERROR, "There was an error deleting the directory!");
+		}
+	}
+
+	/**
+	 * Atomically renames this directory to a destination on the same filesystem.
+	 * @param destination The destination directory.
+	 */
+	public async rename(destination: Directory): Promise<void> {
+		try {
+			Logger.debug(`Renaming the directory ${this.path} to ${destination.path}...`);
+
+			const sourceExists = await this.exists();
+			if (!sourceExists) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `The directory ${this.path} does not exist!`);
+
+			const destinationExists = await destination.exists();
+			if (destinationExists) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `The destination directory ${destination.path} already exists!`);
+
+			await rename(this.path, destination.path);
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			Logger.error(`There was an error renaming the directory ${this.path} to ${destination.path}: ${err}`);
+			throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There was an error renaming the directory ${this.path} to ${destination.path}!`);
 		}
 	}
 

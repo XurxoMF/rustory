@@ -120,25 +120,49 @@ export class VSVersion {
 	 * @param version The Rustory API Vintage Story Version to install.
 	 * @param destinationDir The final installation directory.
 	 * @param installTempDir The unique temporary directory for this installation attempt.
+	 * @param stagingDir The unique staging directory next to the final destination.
 	 */
-	public static async installFiles(version: RustoryApiVSVersion, destinationDir: Directory, installTempDir: Directory): Promise<void> {
+	public static async installFiles(
+		version: RustoryApiVSVersion,
+		destinationDir: Directory,
+		installTempDir: Directory,
+		stagingDir: Directory
+	): Promise<void> {
 		let tempDirToClean: Directory | undefined = installTempDir;
+		let stagingDirToClean: Directory | undefined = stagingDir;
 
 		try {
 			const zip = await version.download(installTempDir);
 
-			await destinationDir.delete();
-			await destinationDir.ensureExists();
-			await zip.extract(destinationDir);
+			await zip.extract(stagingDir);
+
+			const installedVersion = await VSVersion.fromDir(stagingDir);
+			const versionMatches = installedVersion.version === version.version;
+			if (!versionMatches)
+				throw new AppError(
+					AppErrorCodes.VERSION_MISMATCH,
+					`The extracted Vintage Story Version ${installedVersion.version} does not match the expected version ${version.version}!`
+				);
+
+			await stagingDir.rename(destinationDir);
+			stagingDirToClean = undefined;
 
 			await installTempDir.delete();
 			tempDirToClean = undefined;
 		} finally {
+			if (stagingDirToClean !== undefined) {
+				try {
+					await stagingDirToClean.delete();
+				} catch {
+					// Cleanup and rollback are completed in the following installation hardening step.
+				}
+			}
+
 			if (tempDirToClean !== undefined) {
 				try {
 					await tempDirToClean.delete();
 				} catch {
-					// Cleanup and rollback are completed in the following installation hardening steps.
+					// Cleanup and rollback are completed in the following installation hardening step.
 				}
 			}
 		}
@@ -262,7 +286,15 @@ export class VSVersion {
 			const installId = crypto.randomUUID();
 			const installTempPath = await Info.instance.tempDir.join("vs-version-installs", installId);
 			const installTempDir = await Directory.create(installTempPath);
-			await VSVersion.installFiles(version, this._dir, installTempDir);
+
+			const destinationParent = this._dir.parent;
+			if (destinationParent === null)
+				throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `The destination directory ${this._dir.path} does not have a parent directory!`);
+
+			const stagingPath = await destinationParent.join(`.${this._version}.staging-${installId}`);
+			const stagingDir = await Directory.create(stagingPath);
+
+			await VSVersion.installFiles(version, this._dir, installTempDir, stagingDir);
 
 			Logger.debug(`Finished installing Vintage Story Version ${this._version} on ${this._dir.path}!`);
 

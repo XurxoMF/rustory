@@ -75,6 +75,7 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 - Cada instancia usa un `instance.json` e os subdirectorios `Data/Mods` e `Backups`.
 - `config.json`, `data.json` e `instance.json` usan actualmente `schemaVersion: 1`. Os ficheiros legacy sen `schemaVersion` son compatibles: valídanse, complétanse cos defaults existentes e escríbense co esquema actual no seguinte gardado. Unha versión explícita distinta de `1`, unha raíz que non sexa un obxecto ou un campo presente cun tipo/valor inválido produce `AppErrorCodes.MALFORMED_DATA`.
 - `Info.instance.tempDir` é o directorio temporal compartido da aplicación e corresponde a `tmp` dentro do directorio de caché resolto por Tauri. As descargas de versións usan un subdirectorio único `vs-version-installs/<UUID>` baixo esta raíz, separado do destino final.
+- A extracción dunha versión faise nun directorio oculto de staging, irmán do destino final e co mesmo UUID do intento. Tras localizar o executable e confirmar que a versión executada coincide coa solicitada, `Directory.rename()` publica o staging no destino. O staging debe estar no mesmo filesystem para que o renomeado sexa atómico e nunca pode sobrescribir un destino existente.
 - O frontend accede ao sistema mediante plugins Tauri e mediante os comandos Rust rexistrados en `src-tauri/src/lib.rs`. `File.getSha256()` delega nun comando Rust que le por bloques, para non cargar arquivos grandes completos na memoria do webview.
 - As versións do xogo veñen de `https://api.rustory.xyz`; os mods veñen da API e CDN oficiais de mods de Vintage Story.
 
@@ -188,6 +189,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - Conceder só os permisos Tauri e dominios de rede necesarios. Calquera cambio en capabilities debe revisarse como cambio de seguridade.
 - As descargas, instalacións, actualizacións e restauracións deben ser recuperables: usar temporais/staging, validar antes de substituír datos e limpar tras un fallo.
 - Reutilizar `Info.instance.tempDir` para temporais de instalación; non descargar arquivos dentro do directorio final da versión. Cada intento debe ter un subdirectorio propio para evitar colisións entre operacións.
+- Extraer versións nun staging irmán do destino final, non no temporal de caché, para garantir que o renomeado final non cruce filesystems. Validar o executable e a versión antes de publicar; non borrar nin sobrescribir unha instalación existente durante esta operación.
 - Verificar sempre o SHA-256 descargado antes de crear ou extraer o ZIP. Todo artefacto proporcionado pola API ten obrigatoriamente un checksum; unha diferenza produce `AppErrorCodes.CHECKSUM_MISMATCH`. Non usar o hash unicamente como parte do nome.
 - Non persistir unha versión ou instancia como dispoñible antes de completar e validar a operación correspondente.
 - Os cambios no formato JSON persistido deben ser retrocompatibles ou incluír unha migración explícita.
