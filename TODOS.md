@@ -17,9 +17,7 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 1 — Base verificable
 
-1. Crear CI para `check`, lint, Rust fmt, clippy e tests.
-   - Verificación: unha PR executa todas as comprobacións.
-2. Engadir tests unitarios para helpers de rutas, versións e compatibilidade.
+1. Engadir tests unitarios para helpers de rutas, versións e compatibilidade.
    - Verificación: os tests cobren casos válidos, inválidos e límites coñecidos.
 
 ## Fase 2 — Persistencia e instalación de versións

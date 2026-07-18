@@ -63,6 +63,7 @@ Rustory é unha aplicación Tauri 2 cun frontend SvelteKit en modo SPA:
 - `src-tauri/capabilities/`: permisos e allowlists de Tauri.
 - `messages/` e `rustory.inlang/`: configuración e catálogos de Paraglide/Inlang.
 - `.github/workflows/release.yml`: empaquetado e publicación para Windows, Linux, macOS x64 e macOS ARM64.
+- `.github/workflows/ci.yml`: comprobacións de PR/push con `check`, lint, Rust fmt, clippy e tests.
 
 ### Fluxo de datos
 
@@ -189,6 +190,7 @@ Non copies automaticamente patróns existentes se conteñen un erro evidente. En
 - `src/lib/classes/vs/VSVersion.svelte.ts`: instala e elimina versións compartidas por instancias.
 - `src/lib/classes/stores/Request.svelte.ts` e clientes de `src/lib/classes/api/`: límites de confianza para datos externos.
 - `.github/workflows/release.yml`: publicación multiplataforma e uso dos secrets de sinatura.
+- `.github/workflows/ci.yml`: validación automática. Mantén as comprobacións aliñadas cos comandos documentados en “Probar e verificar” e non engadas ferramentas fóra de Bun/Rust sen aprobación explícita.
 - `bun.lock` e `src-tauri/Cargo.lock`: deben cambiar só cando se actualicen dependencias intencionadamente.
 - `src/lib/paraglide/`, `.svelte-kit/`, `build/`, `package/`, `src-tauri/gen/` e `src-tauri/target/`: artefactos xerados; non editalos nin versionalos manualmente.
 - `src/lib/components/ui/`: biblioteca visual ampla. Evita cambios masivos ou rexeneracións completas para resolver unha necesidade local.
