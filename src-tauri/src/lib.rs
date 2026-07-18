@@ -101,6 +101,7 @@ pub fn run() {
 
     builder
         .invoke_handler(tauri::generate_handler![
+            commands::file_system::get_file_sha256,
             commands::file_system::set_permissions,
             commands::vs_versions::get_vs_version,
             commands::zip::compress_to_zip,

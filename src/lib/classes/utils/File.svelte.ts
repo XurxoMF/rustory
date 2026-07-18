@@ -161,6 +161,27 @@ export class File {
 	}
 
 	/**
+	 * Calculates the SHA-256 checksum of the file without loading it fully into the webview memory.
+	 * @returns The lowercase hexadecimal SHA-256 checksum.
+	 */
+	public async getSha256(): Promise<string> {
+		try {
+			Logger.debug(`Calculating the SHA-256 checksum of the file ${this.path}...`);
+
+			const fileExists = await this.exists();
+			if (!fileExists) throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `The file ${this.path} does not exist!`);
+
+			const checksum: string = await invoke("get_file_sha256", { path: this.path });
+
+			return checksum;
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			Logger.error(`There was an error calculating the SHA-256 checksum of the file ${this.path}: ${err}`);
+			throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There was an error calculating the SHA-256 checksum of the file ${this.path}!`);
+		}
+	}
+
+	/**
 	 * Reads a text from the file.
 	 * @returns The readed text.
 	 */

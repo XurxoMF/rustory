@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
 
+import { AppError, AppErrorCodes } from "../src/lib/classes/errors/AppError.svelte";
 import type { RustoryApiVSVersion } from "../src/lib/classes/api/RustoryApiVSVersion.svelte";
 import type { Directory } from "../src/lib/classes/utils/Directory.svelte";
 import type { Zip } from "../src/lib/classes/utils/Zip.svelte";
@@ -69,6 +70,24 @@ describe("VSVersion.installFiles", () => {
 			throw new Error("Expected installation to fail");
 		} catch (err) {
 			expect(err).toHaveProperty("message", "Download failed");
+		}
+
+		expect(events).toEqual(["download", "delete-temp"]);
+	});
+
+	test("cleans the temporary directory without touching the final directory when checksum validation fails", async () => {
+		const apiVersion = {
+			download: async () => {
+				events.push("download");
+				throw new AppError(AppErrorCodes.CHECKSUM_MISMATCH, "Checksum mismatch");
+			}
+		} as unknown as RustoryApiVSVersion;
+
+		try {
+			await VSVersion.installFiles(apiVersion, targetDir, installTempDir);
+			throw new Error("Expected installation to fail");
+		} catch (err) {
+			expect(err).toHaveProperty("code", AppErrorCodes.CHECKSUM_MISMATCH);
 		}
 
 		expect(events).toEqual(["download", "delete-temp"]);

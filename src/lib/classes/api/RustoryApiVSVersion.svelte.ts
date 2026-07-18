@@ -4,6 +4,7 @@ import { Logger } from "$lib/classes/utils/Logger.svelte";
 
 import { AppError, AppErrorCodes } from "$lib/classes/errors/AppError.svelte";
 
+import { File } from "$lib/classes/utils/File.svelte";
 import { Zip } from "$lib/classes/utils/Zip.svelte";
 import type { Directory } from "$lib/classes/utils/Directory.svelte";
 
@@ -196,6 +197,20 @@ export class RustoryApiVSVersion {
 	// ********************
 
 	/**
+	 * Validates a calculated SHA-256 checksum against the expected checksum.
+	 * @param expectedChecksum The checksum provided by the API.
+	 * @param calculatedChecksum The checksum calculated from the downloaded file.
+	 */
+	public static validateSha256(expectedChecksum: string, calculatedChecksum: string): void {
+		const checksumMatches = expectedChecksum.toLowerCase() === calculatedChecksum.toLowerCase();
+		if (!checksumMatches)
+			throw new AppError(
+				AppErrorCodes.CHECKSUM_MISMATCH,
+				`The downloaded file checksum ${calculatedChecksum} does not match the expected checksum ${expectedChecksum}!`
+			);
+	}
+
+	/**
 	 * Fetches a Rustory API Vintage Story Version.
 	 * @param version The version to get.
 	 * @returns The Rustory API Vintage Story Version.
@@ -261,7 +276,7 @@ export class RustoryApiVSVersion {
 
 			await dir.ensureExists();
 
-			const downloadPath = await dir.join(`${this.version}-${sha256}-${Info.instance.osType}.zip.tmp`);
+			const downloadPath = await dir.join(`${this.version}-${Info.instance.osType}.zip.tmp`);
 
 			Logger.debug(
 				`Downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version on ${downloadPath} from ${url}...`
@@ -270,6 +285,10 @@ export class RustoryApiVSVersion {
 			await Request.instance.download(url, downloadPath);
 
 			Logger.debug(`Finished downloading the Vintage Story Version ${this.version} from the Rustory API Vintage Story Version!`);
+
+			const file = await File.create(downloadPath);
+			const calculatedSha256 = await file.getSha256();
+			RustoryApiVSVersion.validateSha256(sha256, calculatedSha256);
 
 			const zip = await Zip.create(downloadPath);
 
