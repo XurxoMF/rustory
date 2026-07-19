@@ -23,15 +23,13 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Fase 4 — Lanzar o xogo
 
-1. Implementar variantes Windows, Linux e macOS.
-   - Verificación: as rutas e argumentos son correctos por plataforma.
-2. Parsear os parámetros de inicio e as variables de contorno de forma segura, e aplicar Mesa GL só en Linux.
+1. Parsear os parámetros de inicio e as variables de contorno de forma segura, e aplicar Mesa GL só en Linux.
    - Verificación: entradas inválidas non rompen o lanzamento nin inxectan argumentos inesperados.
-3. Engadir `play()` e `stop()` a `VSInstance`, controlando proceso, estados, código de saída e concorrencia.
+2. Engadir `play()` e `stop()` a `VSInstance`, controlando proceso, estados, código de saída e concorrencia.
    - Verificación: non se pode lanzar dúas veces a mesma instancia sen control explícito.
-4. Actualizar `lastTimePlayed` e `totalTimePlayed`.
+3. Actualizar `lastTimePlayed` e `totalTimePlayed`.
    - Verificación: o tempo só cambia cando o proceso realmente arranca e remata.
-5. Engadir botón Play/Stop e erros visibles.
+4. Engadir botón Play/Stop e erros visibles.
    - Verificación: cada instancia arranca co seu `Data` illado e o estado volve a `STOPPED` ao saír.
 
 ## Fase 5 — Mods completos

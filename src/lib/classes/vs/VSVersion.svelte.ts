@@ -117,6 +117,27 @@ export class VSVersion {
 	// ********************
 
 	/**
+	 * Gets the final component of a path without depending on the host path separator.
+	 * @param path The path to inspect.
+	 * @returns The final path component.
+	 */
+	private static getPathName(path: string): string {
+		return path.replaceAll("\\", "/").split("/").at(-1) ?? "";
+	}
+
+	/**
+	 * Gets the executable name for a platform.
+	 * @param osType The operating system type.
+	 * @returns The executable name to look for in the version root.
+	 */
+	private static getExecutableName(osType: Info["osType"]): string {
+		if (osType === "windows") return "Vintagestory.exe";
+		if (osType === "linux" || osType === "macos") return "Vintagestory";
+
+		throw new AppError(AppErrorCodes.UNSUPPORTED_PLATFORM, `Vintage Story launching is not supported on ${osType}!`);
+	}
+
+	/**
 	 * Deletes an installation working directory without masking the installation result.
 	 * A transient filesystem failure is retried once and a permanent failure is logged.
 	 * @param dir The working directory to clean.
@@ -213,58 +234,21 @@ export class VSVersion {
 	/**
 	 * Gets the executable path of the Vintage Story Version.
 	 * @param dir The directory to look for the executable.
+	 * @param osType The operating system type. Defaults to the current platform reported by Info.
 	 * @returns The file of the executable.
 	 */
-	public static async getExecutable(dir: Directory): Promise<File> {
+	public static async getExecutable(dir: Directory, osType: Info["osType"] = Info.instance.osType): Promise<File> {
 		try {
 			Logger.debug(`Getting the executable path of the Vintage Story Version from the directory ${dir.path}...`);
 
+			const executableName = VSVersion.getExecutableName(osType);
 			const contents = await dir.getContents();
+			const executable = contents.files.find((file) => VSVersion.getPathName(file.path) === executableName);
 
-			let executablePath: string | undefined;
+			if (executable === undefined)
+				throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, `There is no Vintage Story executable in the root of ${dir.path} for ${osType}!`);
 
-			if (Info.instance.osType === "windows") {
-				for (const file of contents.files) {
-					if (file.path.endsWith("Vintagestory.exe")) {
-						executablePath = file.path;
-						break;
-					}
-				}
-			}
-
-			if (Info.instance.osType === "linux") {
-				for (const file of contents.files) {
-					if (file.path.endsWith("Vintagestory")) {
-						executablePath = file.path;
-						break;
-					} else if (file.path.endsWith("Vintagestory.exe")) {
-						executablePath = file.path;
-						break;
-					}
-				}
-			}
-
-			if (Info.instance.osType === "macos") {
-				for (const file of contents.files) {
-					if (file.path.endsWith("Vintagestory")) {
-						executablePath = file.path;
-						break;
-					} else if (file.path.endsWith("Vintagestory.exe")) {
-						executablePath = file.path;
-						break;
-					}
-				}
-			}
-
-			if (executablePath === undefined)
-				throw new AppError(
-					AppErrorCodes.GENERIC_ERROR,
-					`There is no executable path of the Vintage Story Version on the path ${dir.path} for the user platform!`
-				);
-
-			Logger.debug(`Found the executable ${executablePath} of the Vintage Story Version!`);
-
-			const executable = await File.create(executablePath);
+			Logger.debug(`Found the executable ${executable.path} of the Vintage Story Version!`);
 
 			return executable;
 		} catch (err) {
