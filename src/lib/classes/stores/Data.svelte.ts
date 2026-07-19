@@ -63,6 +63,7 @@ export class Data {
 		this._file = data.file;
 		this._vsVersions = $state(data.vsVersions);
 		this._vsInstances = $state(data.vsInstances);
+		this._vsVersionRegistrations = new SvelteMap();
 		this._vsVersionInstallations = new SvelteMap();
 	}
 
@@ -184,6 +185,11 @@ export class Data {
 	private _vsInstances: VSInstance[];
 
 	/**
+	 * In-progress Vintage Story Version registrations keyed by version.
+	 */
+	private _vsVersionRegistrations: SvelteMap<string, Promise<VSVersion>>;
+
+	/**
 	 * In-progress Vintage Story Version installations keyed by version.
 	 */
 	private _vsVersionInstallations: SvelteMap<string, Promise<void>>;
@@ -284,23 +290,69 @@ export class Data {
 	 * @param versionsDir The directory containing shared Vintage Story Versions.
 	 */
 	public async queueVsVersionInstallation(version: RustoryApiVSVersion, versionsDir: Directory): Promise<void> {
-		let vsVersion = this.vsVersions.find((candidate) => candidate.version === version.version);
-
-		if (vsVersion === undefined) {
-			const versionPath = await versionsDir.join(version.version);
-			const versionDir = await Directory.create(versionPath);
-			vsVersion = await VSVersion.create({ version: version.version, dir: versionDir, state: VSVersionState.NOT_INSTALLED });
-			await this.setVsVersions([...this.vsVersions, vsVersion]);
-		}
+		const vsVersion = await this.getOrCreateVsVersion(version, versionsDir);
 
 		if (vsVersion.state === VSVersionState.INSTALLED) return;
 
-		const installationExists = this._vsVersionInstallations.has(version.version);
-		if (installationExists) return;
+		const installation = this.getOrStartVsVersionInstallation(vsVersion, version);
+		void installation.catch(() => undefined);
+	}
+
+	/**
+	 * Returns an installed Vintage Story Version, waiting for or starting its installation when necessary.
+	 * Unlike queueVsVersionInstallation(), installation failures are propagated to the caller so a launch can stop safely.
+	 * @param version The Rustory API Vintage Story Version required by the instance.
+	 * @param versionsDir The directory containing shared Vintage Story Versions.
+	 * @returns The installed Vintage Story Version.
+	 */
+	public async ensureVsVersionInstalled(version: RustoryApiVSVersion, versionsDir: Directory): Promise<VSVersion> {
+		const vsVersion = await this.getOrCreateVsVersion(version, versionsDir);
+
+		if (vsVersion.state === VSVersionState.INSTALLED) return vsVersion;
+
+		const installation = this.getOrStartVsVersionInstallation(vsVersion, version);
+		await installation;
+
+		const versionIsInstalled = vsVersion.state === VSVersionState.INSTALLED;
+		if (!versionIsInstalled)
+			throw new AppError(
+				AppErrorCodes.GENERIC_ERROR,
+				`The Vintage Story Version ${vsVersion.version} installation finished without an installed state!`
+			);
+
+		return vsVersion;
+	}
+
+	private async getOrCreateVsVersion(version: RustoryApiVSVersion, versionsDir: Directory): Promise<VSVersion> {
+		const registeredVersion = this.vsVersions.find((candidate) => candidate.version === version.version);
+		if (registeredVersion !== undefined) return registeredVersion;
+
+		const currentRegistration = this._vsVersionRegistrations.get(version.version);
+		if (currentRegistration !== undefined) return await currentRegistration;
+
+		const registration = this.registerVsVersion(version, versionsDir).finally(() => this._vsVersionRegistrations.delete(version.version));
+		this._vsVersionRegistrations.set(version.version, registration);
+
+		return await registration;
+	}
+
+	private async registerVsVersion(version: RustoryApiVSVersion, versionsDir: Directory): Promise<VSVersion> {
+		const versionPath = await versionsDir.join(version.version);
+		const versionDir = await Directory.create(versionPath);
+		const vsVersion = await VSVersion.create({ version: version.version, dir: versionDir, state: VSVersionState.NOT_INSTALLED });
+		await this.setVsVersions([...this.vsVersions, vsVersion]);
+
+		return vsVersion;
+	}
+
+	private getOrStartVsVersionInstallation(vsVersion: VSVersion, version: RustoryApiVSVersion): Promise<void> {
+		const currentInstallation = this._vsVersionInstallations.get(version.version);
+		if (currentInstallation !== undefined) return currentInstallation;
 
 		const installation = this.installVsVersion(vsVersion, version).finally(() => this._vsVersionInstallations.delete(version.version));
 		this._vsVersionInstallations.set(version.version, installation);
-		void installation.catch(() => undefined);
+
+		return installation;
 	}
 
 	private async installVsVersion(vsVersion: VSVersion, version: RustoryApiVSVersion): Promise<void> {
@@ -318,6 +370,9 @@ export class Data {
 			}
 
 			await Data.logBackgroundError(`There was an error installing Vintage Story Version ${vsVersion.version}: ${err}`);
+
+			if (err instanceof AppError) throw err;
+			throw new AppError(AppErrorCodes.GENERIC_ERROR, `There was an error installing Vintage Story Version ${vsVersion.version}!`, { cause: err });
 		}
 	}
 

@@ -1,5 +1,6 @@
 import { afterEach, beforeEach, describe, expect, spyOn, test } from "bun:test";
 
+import { AppError, AppErrorCodes } from "../src/lib/classes/errors/AppError.svelte";
 import type { RustoryApiVSVersion } from "../src/lib/classes/api/RustoryApiVSVersion.svelte";
 import type { Data as DataType } from "../src/lib/classes/stores/Data.svelte";
 import type { Directory as DirectoryType } from "../src/lib/classes/utils/Directory.svelte";
@@ -22,6 +23,7 @@ function createData(versions: VSVersionType[] = []): DataType {
 	type DataTestDouble = {
 		_vsVersions: VSVersionType[];
 		_vsInstances: VSInstanceType[];
+		_vsVersionRegistrations: Map<string, Promise<VSVersionType>>;
 		_vsVersionInstallations: Map<string, Promise<void>>;
 		setVsVersions: (versions: VSVersionType[]) => Promise<void>;
 	};
@@ -29,6 +31,7 @@ function createData(versions: VSVersionType[] = []): DataType {
 
 	data._vsVersions = versions;
 	data._vsInstances = [];
+	data._vsVersionRegistrations = new Map();
 	data._vsVersionInstallations = new Map();
 	data.setVsVersions = async (newVersions: VSVersionType[]) => {
 		data._vsVersions = newVersions;
@@ -162,6 +165,112 @@ describe("Data.queueVsVersionInstallation", () => {
 
 		finishInstallation?.();
 		await backgroundSave;
+	});
+
+	test("does not register or install a new version twice when requests are concurrent", async () => {
+		let finishRegistration: (() => void) | undefined;
+		const registrationGate = new Promise<void>((resolve) => (finishRegistration = resolve));
+		versionsDir.join = async (version: string) => {
+			events.push(`join:${version}`);
+			await registrationGate;
+			return `/games/versions/${version}`;
+		};
+		newVersion.install = async () => {
+			events.push("install");
+			newVersion.state = VSVersionState.INSTALLED;
+		};
+		const data = createData();
+		data.save = async () => undefined;
+
+		const firstRequest = data.queueVsVersionInstallation(apiVersion, versionsDir);
+		const secondRequest = data.queueVsVersionInstallation(apiVersion, versionsDir);
+		await Promise.resolve();
+
+		finishRegistration?.();
+		await Promise.all([firstRequest, secondRequest]);
+		await Promise.resolve();
+
+		expect(data.vsVersions).toEqual([newVersion]);
+		expect(events.filter((event) => event === "join:1.20.4")).toHaveLength(1);
+		expect(events.filter((event) => event === "create-version")).toHaveLength(1);
+		expect(events.filter((event) => event === "install")).toHaveLength(1);
+	});
+});
+
+describe("Data.ensureVsVersionInstalled", () => {
+	test("returns an already installed version without starting an installation", async () => {
+		const installedVersion = { version: "1.20.4", state: VSVersionState.INSTALLED } as VSVersionType;
+		const data = createData([installedVersion]);
+
+		const result = await data.ensureVsVersionInstalled(apiVersion, versionsDir);
+
+		expect(result).toBe(installedVersion);
+		expect(events).toEqual([]);
+	});
+
+	test("waits for a new installation and returns the installed version", async () => {
+		newVersion.install = async () => {
+			events.push("install");
+			newVersion.state = VSVersionState.INSTALLED;
+		};
+		const data = createData();
+		data.save = async () => {
+			events.push("save-installation-state");
+		};
+
+		const result = await data.ensureVsVersionInstalled(apiVersion, versionsDir);
+
+		expect(result).toBe(newVersion);
+		expect(data.vsVersions).toEqual([newVersion]);
+		expect(events).toEqual([
+			"join:1.20.4",
+			"create-directory:/games/versions/1.20.4",
+			"create-version",
+			"register",
+			"install",
+			"save-installation-state"
+		]);
+	});
+
+	test("waits for an installation already queued in the background", async () => {
+		let finishInstallation: (() => void) | undefined;
+		const installationGate = new Promise<void>((resolve) => (finishInstallation = resolve));
+		let installationCalls = 0;
+		newVersion.install = async () => {
+			installationCalls += 1;
+			await installationGate;
+			newVersion.state = VSVersionState.INSTALLED;
+		};
+		const data = createData([newVersion]);
+		data.save = async () => undefined;
+
+		await data.queueVsVersionInstallation(apiVersion, versionsDir);
+		const ensuredVersion = data.ensureVsVersionInstalled(apiVersion, versionsDir);
+		await Promise.resolve();
+
+		expect(installationCalls).toBe(1);
+
+		finishInstallation?.();
+		await expect(ensuredVersion).resolves.toBe(newVersion);
+	});
+
+	test("keeps a failed version registered as not installed and propagates the error", async () => {
+		newVersion.state = VSVersionState.ERROR;
+		newVersion.install = async () => {
+			events.push("install");
+			throw new AppError(AppErrorCodes.FILE_SYSTEM_ERROR, "Installation failed");
+		};
+		const data = createData([newVersion]);
+		data.save = async () => {
+			events.push("save-installation-state");
+		};
+
+		await expect(data.ensureVsVersionInstalled(apiVersion, versionsDir)).rejects.toEqual(
+			expect.objectContaining({ code: AppErrorCodes.FILE_SYSTEM_ERROR })
+		);
+		expect(data.vsVersions).toEqual([newVersion]);
+		expect(newVersion.state).toBe(VSVersionState.NOT_INSTALLED);
+		expect(events).toEqual(["install", "save-installation-state"]);
 	});
 });
 
