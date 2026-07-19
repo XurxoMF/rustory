@@ -8,6 +8,7 @@ import { Zip } from "$lib/classes/utils/Zip.svelte";
 
 import type { VSInstanceBackup } from "$lib/classes/vs/VSInstanceBackup.svelte";
 import { VSMod } from "$lib/classes/vs/VSMod.svelte";
+import { VSVersion } from "$lib/classes/vs/VSVersion.svelte";
 import { cleanForPath } from "$lib/utils";
 import type { ModDBApiMod } from "../api/ModDBApiMod.svelte";
 import type { ModDBApiModRelease } from "../api/ModDBApiModRelease.svelte";
@@ -42,6 +43,19 @@ export type VSInstanceJSON = {
 	mesaGlThread: boolean;
 	envVars: string;
 };
+
+/**
+ * Reproducible configuration required to launch a Vintage Story Instance.
+ */
+export type VSLaunchSpec = Readonly<{
+	instanceId: string;
+	version: string;
+	executable: File;
+	workingDir: Directory;
+	dataDir: Directory;
+	arguments: readonly string[];
+	environmentVariables: Readonly<Record<string, string>>;
+}>;
 
 /**
  * Vinstage Story Instance.
@@ -672,6 +686,43 @@ export class VSInstance {
 	// **********************
 	// *  INSTANCE METHODS	*
 	// **********************
+
+	/**
+	 * Creates an immutable and reproducible launch configuration for this Vintage Story Instance.
+	 * @param vsVersion The installed game version assigned to this instance.
+	 * @returns The launch configuration.
+	 */
+	public async createLaunchSpec(vsVersion: VSVersion): Promise<VSLaunchSpec> {
+		try {
+			const versionMatches = this._version === vsVersion.version;
+			if (!versionMatches)
+				throw new AppError(
+					AppErrorCodes.VERSION_MISMATCH,
+					`The Vintage Story Instance version ${this._version} does not match the provided version ${vsVersion.version}!`
+				);
+
+			const executable = await VSVersion.getExecutable(vsVersion.dir);
+			const args = Object.freeze(["--dataPath", this._dataDir.path]);
+			const environmentVariables: Readonly<Record<string, string>> = Object.freeze({});
+
+			return Object.freeze({
+				instanceId: this._id,
+				version: this._version,
+				executable,
+				workingDir: vsVersion.dir,
+				dataDir: this._dataDir,
+				arguments: args,
+				environmentVariables
+			});
+		} catch (err) {
+			if (err instanceof AppError) throw err;
+			Logger.error(`There was an error creating the launch configuration of the Vintage Story Instance ${this._name}: ${err}`);
+			throw new AppError(
+				AppErrorCodes.GENERIC_ERROR,
+				`There was an error creating the launch configuration of the Vintage Story Instance ${this._name}!`
+			);
+		}
+	}
 
 	/**
 	 * Deletes the Vintage Story Instance.

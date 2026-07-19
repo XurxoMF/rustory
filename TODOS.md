@@ -6,41 +6,34 @@ Este ficheiro só debe conter cousas pendentes por facer, corrixir ou verificar.
 
 ## Prioridade actual
 
-1. Persistencia e instalación transaccional de versións.
-2. macOS x64/ARM64.
-3. Lanzamento do xogo.
-4. Xestión completa de mods.
-5. Backups.
-6. Updater visible e configurable.
-7. Robustez, documentación e acabamento.
+1. Lanzamento do xogo.
+2. Xestión completa de mods.
+3. Backups.
+4. Updater visible e configurable.
+5. Robustez, documentación e acabamento.
 
-## Fase 2 — Persistencia e instalación de versións
+## Aprazado por dependencias externas
 
-1. Mostrar progreso e erro recuperable durante a instalación.
-   - Verificación: a UI permite entender se está descargando, extraendo, validando ou limpando.
-
-## Fase 3 — macOS x64/ARM64
-
-1. Corrixir ou verificar na API o URL `macosArm64` de `1.22.3`: o 18 de xullo de 2026 apunta a `1.22.3-X64.zip`, pero publica un SHA distinto ao x64.
-   - Verificación: descargar ambos artefactos produce os SHA publicados e cada URL identifica a arquitectura correcta.
-2. Validar o executable dentro do `.app`/paquete real de Vintage Story.
-   - Verificación: a instalación falla de forma recuperable se o executable esperado non existe.
+1. (Aplazado) Mostrar progreso detallado e erro recuperable durante a instalación.
+   - Bloqueo: a API de versións non informa aínda do tamaño total do artefacto, polo que non se pode calcular unha porcentaxe real de descarga.
+   - Verificación futura: a UI permite entender se está descargando, verificando, extraendo, validando ou limpando, e mostra a porcentaxe real durante a descarga.
+2. (Manual) Corrixir ou verificar na API o URL `macosArm64` de `1.22.3`: o 18 de xullo de 2026 apunta a `1.22.3-X64.zip`, pero publica un SHA distinto ao x64.
+   - Bloqueo: o mantedor confirmou que se corrixirá na API.
+   - Verificación futura: descargar ambos artefactos produce os SHA publicados e cada URL identifica a arquitectura correcta.
 
 ## Fase 4 — Lanzar o xogo
 
-1. Construír un `LaunchSpec` independente da UI: executable, directorio de datos, argumentos e variables.
-   - Verificación: unha instancia produce sempre unha especificación reproducible.
-2. Antes de lanzar, comprobar o estado da versión e instalar ou reinstalar se non está dispoñible.
+1. Antes de lanzar, comprobar o estado da versión e instalar ou reinstalar se non está dispoñible.
    - Verificación: unha instancia cunha versión `NOT_INSTALLED` agarda unha instalación correcta e despois continúa automaticamente co lanzamento.
-3. Implementar variantes Windows, Linux e macOS.
+2. Implementar variantes Windows, Linux e macOS.
    - Verificación: as rutas e argumentos son correctos por plataforma.
-4. Parsear variables de contorno de forma segura e aplicar Mesa GL só en Linux.
+3. Parsear os parámetros de inicio e as variables de contorno de forma segura, e aplicar Mesa GL só en Linux.
    - Verificación: entradas inválidas non rompen o lanzamento nin inxectan argumentos inesperados.
-5. Controlar proceso, estados, código de saída e concorrencia.
+4. Engadir `play()` e `stop()` a `VSInstance`, controlando proceso, estados, código de saída e concorrencia.
    - Verificación: non se pode lanzar dúas veces a mesma instancia sen control explícito.
-6. Actualizar `lastTimePlayed` e `totalTimePlayed`.
+5. Actualizar `lastTimePlayed` e `totalTimePlayed`.
    - Verificación: o tempo só cambia cando o proceso realmente arranca e remata.
-7. Engadir botón Play/Stop e erros visibles.
+6. Engadir botón Play/Stop e erros visibles.
    - Verificación: cada instancia arranca co seu `Data` illado e o estado volve a `STOPPED` ao saír.
 
 ## Fase 5 — Mods completos
